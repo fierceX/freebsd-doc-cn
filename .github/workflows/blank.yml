@@ -27,11 +27,14 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: sudo apt update
-             sudo apt install po4a
+        run: |
+              sudo apt update
+              sudo apt install po4a
 
       # Runs a set of commands using the runners shell
       - name: update_po
-        run: cd Upstream && bash tools/update_translate_template.sh
+        run: |
+              cd Upstream 
+              bash tools/update_translate_template.sh
       - name: ls
         run: ls -lh Upstream/documentation/en/books/handbook/introduction
