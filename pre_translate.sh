@@ -27,6 +27,10 @@ for remove_file in $GIT_IGNORE_FILES; do
 	find $ALL_COMPONENTS/content/en/ -name "$remove_file" -delete -print || exit 1
 done
 
+if [ ! -d " $NEW_PATH" ]; then
+  mkdir  $NEW_PATH
+fi
+
 rm -rf $NEW_PATH/*
 
 for component in $COMPONENTS; do
