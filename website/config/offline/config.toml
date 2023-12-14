@@ -1,0 +1,45 @@
+# FreeBSD documentation
+
+baseURL = ""
+title = "FreeBSD Documentation Portal"
+copyright = "BSD 2-clause 'Simplified' License"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
+disablePathToLower = true
+theme = "beastie"
+disableKinds = [ "taxonomy", "term", "RSS", "sitemap", "robotsTXT", "404" ]
+authors = [ "carlavilla@FreeBSD.org" ]
+ignoreFiles = [ "chapter.adoc$", "contrib-386bsd.adoc$", "contrib-additional.adoc$", "contrib-committers.adoc$", "contrib-corealumni.adoc$", "contrib-develalumni.adoc$", "contrib-develinmemoriam.adoc$", "contrib-portmgralumni.adoc$", "books.adoc$", "\\.po$" ]
+enableRobotsTXT = true
+relativeURLs = true
+timeout = 180000
+
+[params]
+  websiteURL = "https://www.FreeBSD.org"
+  description = "FreeBSD Documentation Portal"
+  isOnline = false
+
+[security]
+  enableInlineShortcodes = false
+  [security.exec]
+    allow = ["^dart-sass-embedded$", "^go$", "^npx$", "^postcss$", "^asciidoctor$"]
+    osEnv = ["(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|LOAD_PATH|RUBYLIB)$"]
+  [security.funcs]
+    getenv = ["^HUGO_"]
+  [security.http]
+    methods = ["(?i)GET|POST"]
+    urls = [".*"]
+
+[markup.asciidocExt]
+  # extensions = ["man-macro", "inter-document-references-macro", "cross-document-references-macro", "sectnumoffset-treeprocessor", "packages-macro", "git-macro"]
+  [markup.asciidocExt.attributes]
+    env-beastie = true
+    isOnline = false
+    skip-front-matter = true
+
+[outputs]
+home = [ "HTML" ]
+page = [ "HTML" ]
+list = [ "HTML" ]
+single = [ "HTML" ]
+section = [ "HTML" ]

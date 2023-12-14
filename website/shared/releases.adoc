@@ -1,0 +1,318 @@
+// XXX rel.current and u-rel-* should be available in doc/
+// The currently released versions of FreeBSD.  This value is used to
+// create some links on web sites and such, so do NOT change it until
+// it's really release time.  When you update this, you should also
+// update (at least) the following:
+//
+// -similar entity in the Handbook
+// -similar entity in the Relnotes
+// -releases/index.adoc has the date of the current release
+// -the FAQ has links to the release FTP url
+// -"versions supported" in security.adoc
+//
+// (If you're the release engineer, feel free to update this list with
+// other doc-related things you had to do.  It'll save you time and
+// trouble the next time around :-).)
+//
+// As of 5.0, we now have the concept of two different "currently"
+// released versions (from two different development branches).  Use
+// rel.* and u-rel-* for the "latest and greatest" version and
+// rel2.* and u-rel2-* for the "conservative users" version.
+
+// Number of ports
+:numports: 36000
+:ports-size: 3 GB
+
+// Do not set this to 'INCLUDE' in this file.
+:beta-local-where: IGNORE
+:beta2-local-where: IGNORE
+:beta3-local-where: IGNORE
+
+:rel-head-major: 15
+:rel-head: {rel-head-major}.0
+
+// If there is no release currently in the release cycle (i.e. we
+// don't have something in BETAn or RCn), then change %beta.testing
+// below to "IGNORE".  If we do, use "INCLUDE".
+
+// Set to 'INCLUDE' when the schedule is available.
+
+:beta-upcoming: IGNORE
+
+// Set to 'INCLUDE' when the installation images are available.
+
+:beta-testing: IGNORE
+:betarel-current-major: 13
+:betarel-current: 13.2
+:betarel-vers: RELEASE
+:u-betarel-schedule: https://www.FreeBSD.org/releases/{betarel-current}R/schedule/
+
+// If we have a second release in the release cycle (e.g. 5.x and 6.y
+// are having release candidates at the same time), do the same here.
+
+// Set to 'INCLUDE' when the schedule is available.
+
+:beta2-upcoming: IGNORE
+
+// Set to 'INCLUDE' when the installation images are available.
+
+:beta2-testing: IGNORE
+:betarel2-current: 13.2
+:betarel2-vers: RELEASE
+:u-betarel2-schedule: https://www.FreeBSD.org/releases/{betarel2-current}R/schedule/
+
+// Set to 'INCLUDE' when the schedule is available.
+
+:beta3-upcoming: IGNORE
+
+// Set to 'INCLUDE' when the installation images are available.
+
+:beta3-testing: IGNORE
+:betarel3-current: 14.0
+:betarel3-vers: RELEASE
+:u-betarel3-schedule: https://www.FreeBSD.org/releases/{betarel3-current}R/schedule/
+
+// Release-specific macros to help keep other macros such as
+// rel.current up-to-date without needing to do an entire tree
+// sweep.  This allows switching rel.current, rel1.current, and
+// rel2.current versions below with updated macros here, ultimately
+// touching as few files as necessary.
+//
+// Note, this is a first pass at this structure, and by no means
+// fully complete yet.  I plan to followup on this and expand it
+// more (in addition to cleaning up this file) following the 11.3
+// release (likely as part of the 11.3 announcement commit). -gjb
+
+:rel140-current-major: 14
+:rel140-current: 14.0
+:rel140-current-date: November 20, 2023
+
+:u-rel140-notes: https://www.FreeBSD.org/releases/{rel140-current}R/relnotes/
+:u-rel140-announce: https://www.FreeBSD.org/releases/{rel140-current}R/announce/
+:u-rel140-errata: https://www.FreeBSD.org/releases/{rel140-current}R/errata/
+:u-rel140-hardware: https://www.FreeBSD.org/releases/{rel140-current}R/hardware/
+:u-rel140-installation: https://www.FreeBSD.org/releases/{rel140-current}R/installation/
+:u-rel140-readme: https://www.FreeBSD.org/releases/{rel140-current}R/readme/
+:u-rel140-signatures: https://www.FreeBSD.org/releases/{rel140-current}R/signatures/
+
+:rel132-current-major: 13
+:rel132-current: 13.2
+:rel132-current-date: April 11, 2023
+
+:u-rel132-notes: https://www.FreeBSD.org/releases/{rel132-current}R/relnotes/
+:u-rel132-announce: https://www.FreeBSD.org/releases/{rel132-current}R/announce/
+:u-rel132-errata: https://www.FreeBSD.org/releases/{rel132-current}R/errata/
+:u-rel132-hardware: https://www.FreeBSD.org/releases/{rel132-current}R/hardware/
+:u-rel132-installation: https://www.FreeBSD.org/releases/{rel132-current}R/installation/
+:u-rel132-readme: https://www.FreeBSD.org/releases/{rel132-current}R/readme/
+:u-rel132-signatures: https://www.FreeBSD.org/releases/{rel132-current}R/signatures/
+
+:rel131-current-major: 13
+:rel131-current: 13.1
+:rel131-current-date: May 16, 2022
+
+:u-rel131-notes: https://www.FreeBSD.org/releases/{rel131-current}R/relnotes/
+:u-rel131-announce: https://www.FreeBSD.org/releases/{rel131-current}R/announce/
+:u-rel131-errata: https://www.FreeBSD.org/releases/{rel131-current}R/errata/
+:u-rel131-hardware: https://www.FreeBSD.org/releases/{rel131-current}R/hardware/
+:u-rel131-installation: https://www.FreeBSD.org/releases/{rel131-current}R/installation/
+:u-rel131-readme: https://www.FreeBSD.org/releases/{rel131-current}R/readme/
+:u-rel131-signatures: https://www.FreeBSD.org/releases/{rel131-current}R/signatures/
+
+:rel130-current-major: 13
+:rel130-current: 13.0
+:rel130-current-date: April 13, 2021
+
+:u-rel130-notes: https://www.FreeBSD.org/releases/{rel130-current}R/relnotes/
+:u-rel130-announce: https://www.FreeBSD.org/releases/{rel130-current}R/announce/
+:u-rel130-errata: https://www.FreeBSD.org/releases/{rel130-current}R/errata/
+:u-rel130-hardware: https://www.FreeBSD.org/releases/{rel130-current}R/hardware/
+:u-rel130-installation: https://www.FreeBSD.org/releases/{rel130-current}R/installation/
+:u-rel130-readme: https://www.FreeBSD.org/releases/{rel130-current}R/readme/
+:u-rel130-signatures: https://www.FreeBSD.org/releases/{rel130-current}R/signatures/
+
+:rel124-current-major: 12
+:rel124-current: 12.4
+:rel124-current-date: December 5, 2022
+
+:u-rel124-notes: https://www.FreeBSD.org/releases/{rel124-current}R/relnotes/
+:u-rel124-announce: https://www.FreeBSD.org/releases/{rel124-current}R/announce/
+:u-rel124-errata: https://www.FreeBSD.org/releases/{rel124-current}R/errata/
+:u-rel124-hardware: https://www.FreeBSD.org/releases/{rel124-current}R/hardware/
+:u-rel124-installation: https://www.FreeBSD.org/releases/{rel124-current}R/installation/
+:u-rel124-readme: https://www.FreeBSD.org/releases/{rel124-current}R/readme/
+:u-rel124-signatures: https://www.FreeBSD.org/releases/{rel124-current}R/signatures/
+
+:rel123-current-major: 12
+:rel123-current: 12.3
+:rel123-current-date: December 7, 2021
+
+:u-rel123-notes: https://www.FreeBSD.org/releases/{rel123-current}R/relnotes/
+:u-rel123-announce: https://www.FreeBSD.org/releases/{rel123-current}R/announce/
+:u-rel123-errata: https://www.FreeBSD.org/releases/{rel123-current}R/errata/
+:u-rel123-hardware: https://www.FreeBSD.org/releases/{rel123-current}R/hardware/
+:u-rel123-installation: https://www.FreeBSD.org/releases/{rel123-current}R/installation/
+:u-rel123-readme: https://www.FreeBSD.org/releases/{rel123-current}R/readme/
+:u-rel123-signatures: https://www.FreeBSD.org/releases/{rel123-current}R/signatures/
+
+:rel122-current-major: 12
+:rel122-current: 12.2
+:rel122-current-date: October 27, 2020
+
+:u-rel122-notes: https://www.FreeBSD.org/releases/{rel122-current}R/relnotes/
+:u-rel122-announce: https://www.FreeBSD.org/releases/{rel122-current}R/announce/
+:u-rel122-errata: https://www.FreeBSD.org/releases/{rel122-current}R/errata/
+:u-rel122-hardware: https://www.FreeBSD.org/releases/{rel122-current}R/hardware/
+:u-rel122-installation: https://www.FreeBSD.org/releases/{rel122-current}R/installation/
+:u-rel122-readme: https://www.FreeBSD.org/releases/{rel122-current}R/readme/
+:u-rel122-signatures: https://www.FreeBSD.org/releases/{rel122-current}R/signatures/
+
+:rel121-current-major: 12
+:rel121-current: 12.1
+:rel121-current-date: November 4, 2019
+
+// URLs to information on the latest release
+:u-rel121-notes: https://www.FreeBSD.org/releases/{rel121-current}R/relnotes/
+:u-rel121-announce: https://www.FreeBSD.org/releases/{rel121-current}R/announce/
+:u-rel121-errata: https://www.FreeBSD.org/releases/{rel121-current}R/errata/
+:u-rel121-hardware: https://www.FreeBSD.org/releases/{rel121-current}R/hardware/
+:u-rel121-installation: https://www.FreeBSD.org/releases/{rel121-current}R/installation/
+:u-rel121-readme: https://www.FreeBSD.org/releases/{rel121-current}R/readme/
+:u-rel121-signatures: https://www.FreeBSD.org/releases/{rel121-current}R/signatures/
+
+:rel120-current-major: 12
+:rel120-current: 12.0
+:rel120-current-date: December 11, 2018
+
+// URLs to information on the latest release
+:u-rel120-notes: https://www.FreeBSD.org/releases/{rel120-current}R/relnotes/
+:u-rel120-announce: https://www.FreeBSD.org/releases/{rel120-current}R/announce/
+:u-rel120-errata: https://www.FreeBSD.org/releases/{rel120-current}R/errata/
+:u-rel120-hardware: https://www.FreeBSD.org/releases/{rel120-current}R/hardware/
+:u-rel120-installation: https://www.FreeBSD.org/releases/{rel120-current}R/installation/
+:u-rel120-readme: https://www.FreeBSD.org/releases/{rel120-current}R/readme/
+:u-rel120-signatures: https://www.FreeBSD.org/releases/{rel120-current}R/signatures/
+
+:rel114-current-major: 11
+:rel114-current: 11.4
+:rel114-current-date: June 23, 2020
+
+// URLs to information on the latest release
+:u-rel114-notes: https://www.FreeBSD.org/releases/{rel114-current}R/relnotes
+:u-rel114-announce: https://www.FreeBSD.org/releases/{rel114-current}R/announce/
+:u-rel114-errata: https://www.FreeBSD.org/releases/{rel114-current}R/errata
+:u-rel114-hardware: https://www.FreeBSD.org/releases/{rel114-current}R/hardware
+:u-rel114-installation: https://www.FreeBSD.org/releases/{rel114-current}R/installation
+:u-rel114-readme: https://www.FreeBSD.org/releases/{rel114-current}R/readme
+:u-rel114-signatures: https://www.FreeBSD.org/releases/{rel114-current}R/signatures/
+
+:rel113-current-major: 11
+:rel113-current: 11.3
+:rel113-current-date: July 9, 2019
+
+// URLs to information on the latest release
+:u-rel113-notes: https://www.FreeBSD.org/releases/{rel113-current}R/relnotes
+:u-rel113-announce: https://www.FreeBSD.org/releases/{rel113-current}R/announce
+:u-rel113-errata: https://www.FreeBSD.org/releases/{rel113-current}R/errata
+:u-rel113-hardware: https://www.FreeBSD.org/releases/{rel113-current}R/hardware
+:u-rel113-installation: https://www.FreeBSD.org/releases/{rel113-current}R/installation
+:u-rel113-readme: https://www.FreeBSD.org/releases/{rel113-current}R/readme
+:u-rel113-signatures: https://www.FreeBSD.org/releases/{rel113-current}R/signatures
+
+:rel112-current-major: 11
+:rel112-current: 11.2
+:rel112-current-date: June 28, 2018
+
+// URLs to information on the latest release
+:u-rel112-notes: https://www.FreeBSD.org/releases/{rel112-current}R/relnotes
+:u-rel112-announce: https://www.FreeBSD.org/releases/{rel112-current}R/announce
+:u-rel112-errata: https://www.FreeBSD.org/releases/{rel112-current}R/errata
+:u-rel112-hardware: https://www.FreeBSD.org/releases/{rel112-current}R/hardware
+:u-rel112-installation: https://www.FreeBSD.org/releases/{rel112-current}R/installation
+:u-rel112-readme: https://www.FreeBSD.org/releases/{rel112-current}R/readme
+:u-rel112-signatures: https://www.FreeBSD.org/releases/{rel112-current}R/signatures
+
+:rel111-current-date: July 26, 2017
+:rel110-current-date: October 10, 2016
+
+:rel104-current-date: October 3, 2017
+:rel103-current-date: April 4, 2016
+:rel102-current-date: August 13, 2015
+:rel101-current-date: November 14, 2014
+:rel100-current-date: January 20, 2014
+
+:rel93-current-date: July 16, 2014
+:rel92-current-date: September 30, 2013
+:rel91-current-date: December 30, 2012
+:rel90-current-date: January 12, 2012
+
+:rel84-current-date: June 7, 2013
+:rel83-current-date: April 18, 2012
+:rel82-current-date: February 24, 2011
+:rel81-current-date: July 23, 2010
+:rel80-current-date: November 25, 2009
+
+:rel74-current-date: February 24, 2011
+:rel73-current-date: March 23, 2010
+:rel72-current-date: May 4, 2009
+:rel71-current-date: January 4, 2009
+:rel70-current-date: February 27, 2008
+
+:rel64-current-date: November 28, 2008
+:rel63-current-date: January 18, 2008
+:rel62-current-date: January 15, 2007
+:rel61-current-date: May 8, 2006
+:rel60-current-date: November 4, 2005
+
+:rel55-current-date: May 25, 2006
+:rel54-current-date: May 9, 2005
+:rel53-current-date: November 6, 2004
+:rel52-1-current-date: February 25, 2004
+:rel52-current-date: January 9, 2004
+:rel51-current-date: June 9, 2003
+:rel50-current-date: January 14, 2003
+
+:rel411-current-date: January 25, 2005
+:rel410-current-date: May 27, 2004
+:rel49-current-date: October 28, 2003
+:rel48-current-date: April 3, 2003
+:rel47-current-date: October 10, 2002
+:rel46-2-current-date: August 15, 2002
+:rel46-current-date: June 15, 2002
+:rel45-current-date: January 29, 2002
+:rel44-current-date: September 20, 2001
+:rel43-current-date: April 20, 2001
+:rel42-current-date: November 21, 2000
+:rel41-1-current-date: September 27, 2000
+:rel41-current-date: July 27, 2000
+:rel40-current-date: March 14, 2000
+
+:rel35-current-date: June, 2000
+:rel34-current-date: December, 1999
+:rel33-current-date: September, 1999
+:rel32-current-date: May, 1999
+:rel31-current-date: February, 1999
+:rel30-current-date: October, 1998
+
+:rel22-8-current-date: December, 1998
+:rel22-7-current-date: July, 1998
+:rel22-6-current-date: March, 1998
+:rel22-5-current-date: October, 1997
+:rel22-2-current-date: May, 1997
+:rel22-1-current-date: April, 1997
+:rel22-current-date: March, 1997
+:rel21-7-current-date: February, 1997
+:rel21-6-current-date: December, 1996
+:rel21-5-current-date: July, 1996
+:rel21-current-date: November, 1995
+:rel20-5-current-date: June, 1995
+:rel20-current-date: November, 1994
+
+:rel11-5-1-current-date: July, 1994
+:rel11-5-current-date: July, 1994
+:rel11-current-date: May, 1994
+:rel10-current-date: November, 1993
+
+:gnomeoldver: 2.30
+:gnomever: 2.32
+:gnomedevelver: 3.6

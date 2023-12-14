@@ -1,0 +1,3030 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content=""/>
+  <meta name="keywords" content=""/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/" />
+
+  <title>第 17 章 强制访问控制 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 17 章 强制访问控制" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://127.0.0.1:5500favicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn" />
+    <meta property="og:url" content="http://127.0.0.1:5500/zh-cn/books/handbook/mac/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "http:\/\/127.0.0.1:5500\/zh-cn\/books\/handbook\/mac\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="http://127.0.0.1:5500" class="logo">
+        <img src="/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-audience">预期的读者</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-changes-from3">相对于第三版的改动</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-changes-from2">相对于第二版的改动 (2004)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-changes">相对于第一版的改变 (2001)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-overview">本手册的组织</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-conv">本书中使用的一些约定</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/parti/">
+              部分 I. 起步
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/introduction/">
+              第 1 章 介绍
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/introduction/#introduction-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/introduction/#nutshell">2. 欢迎来到 FreeBSD 的世界!</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/introduction/#history">3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6655173739803bf0920b92a7fe8a363d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6655173739803bf0920b92a7fe8a363d"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/">
+              第 2 章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-hardware">2. 硬件需求</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-pre">3. 安装前的准备工作</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-start">4. 开始安装</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#using-sysinstall">5. 介绍 Sysinstall</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-steps">6. 分配磁盘空间</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-choosing">7. 选择要安装的软件包</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-media">8. 选择您要使用的安装介质</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-final-warning">9. 安装确认</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-post">10. 安装后的配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-trouble">11. 常见问题</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-advanced">12. 高级安装指南</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-diff-media">13. 准备您自己的安装介质</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/">
+              第 3 章 安装 FreeBSD（适用于 9.x 及以后版本）
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-hardware">2. 硬件需求</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-pre">3. 安装前的准备工作</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-start">4. 开始安装</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#using-bsdinstall">5. 介绍 bsdinstall</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-netinstall">6. 通过网络安装</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-partitioning">7. 分配磁盘空间</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-final-warning">8. 安装确认</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-post">9. 安装后的配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-install-trouble">10. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/">
+              第 4 章 UNIX 基础
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#consoles">2. 虚拟控制台和终端</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#permissions">3. 权限</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#dirstructure">4. 目录架构</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#disk-organization">5. 磁盘组织</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#mount-unmount">6. 文件系统的挂接和卸下</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-processes">7. 进程</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-daemons">8. 守护进程，信号和杀死进程</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#shells">9. Shells</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#editors">10. 文本编辑器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-devices">11. 设备和设备节点</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#binary-formats">12. 二进制文件格式</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-more-information">13. 取得更多的资讯</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/">
+              第 5 章 安装应用程序: Packages 和 Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-overview">2. 软件安装预览</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-finding-applications">3. 寻找您要的应用程序</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#packages-using">4. 使用 Package 系统</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-using">5. 使用Ports Collection</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-nextsteps">6. 安装之后还要做点什么？</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-broken">7. 如何处理坏掉的 Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/">
+              第 6 章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x11-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-understanding">2. 理解 X</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-install">3. 安装 X11</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-config">4. 配置 X11</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-fonts">5. 在 X11 中使用字体</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-xdm">6. X 显示管理器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x11-wm">7. 桌面环境</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/partii/">
+              部分 II. 常见的任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/">
+              第 7 章 桌面应用
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-browsers">2. 浏览器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-productivity">3. 办公、图象处理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-viewers">4. 文档查看器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-finance">5. 财务</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-summary">6. 总结</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/">
+              第 8 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#multimedia-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#sound-setup">2. 安装声卡</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#sound-mp3">3. MP3音频</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#video-playback">4. 视频回放</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#tvcard">5. 安装电视卡</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#scanners">6. 图象扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/">
+              第 9 章 配置FreeBSD的内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-custom-kernel">2. 为什么需要建立定制的内核?</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-devices">3. 发现系统硬件</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-modules">4. 内核驱动，子系统和模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-building">5. 建立并安装一个定制的内核</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-config">6. 配置文件</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-trouble">7. 如果出现问题怎么办</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/">
+              第 10 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-intro-spooler">2. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-intro-setup">3. 基本设置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-advanced">4. 高级设置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-using">5. 使用打印机</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-lpd-alternatives">6. 替换标准后台打印</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-troubleshooting">7. 疑难问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/linuxemu/">
+              第 11 章 Linux® 二进制兼容模式
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/linuxemu/#linuxemu-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/linuxemu/#linuxemu-lbc-install">2. 配置 Linux® 二进制兼容模式</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/linuxemu/#linuxemu-advanced">3. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/partiii/">
+              部分 III. 系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/">
+              第 12 章 设置和调整
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#config-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-initial">2. 初步配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-core-configuration">3. 核心配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-appconfig">4. 应用程序配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-starting-services">5. 启动服务</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-cron">6. 配置 <code>cron</code></a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-rcd">7. 在 FreeBSD 中使用 rc</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#config-network-setup">8. 设置网卡</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-virtual-hosts">9. 虚拟主机</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-configfiles">10. 配置文件</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-sysctl">11. 用 sysctl 进行调整</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-disk">12. 调整磁盘</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-kernel-limits">13. 调整内核限制</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#adding-swap-space">14. 添加交换空间</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#acpi-overview">15. 电源和资源管理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#ACPI-debug">16. 使用和调试 FreeBSD ACPI</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/">
+              第 13 章 FreeBSD 引导过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-introduction">2. 引导问题</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-blocks">3. 引导管理器和各引导阶段</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-kernel">4. 内核在引导时的交互</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#device-hints">5. Device Hints</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-init">6. Init：进程控制及初始化</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-shutdown">7. 关机 (shutdown) 过程</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-17a53b356b407d9ed656b7babd2efa34" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-17a53b356b407d9ed656b7babd2efa34"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/">
+              第 14 章 用户和基本的帐户管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-introduction">2. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-superuser">3. 超级用户帐户</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-system">4. 系统帐户</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-user">5. 用户帐户</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-modifying">6. 修改帐户</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-limiting">7. 限制用户使用系统资源</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-groups">8. 组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/">
+              第 15 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-intro">2. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#securing-freebsd">3. 确保 FreeBSD 的安全</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#crypt">4. DES、 Blowfish、 MD5， 以及 Crypt</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#one-time-passwords">5. 一次性口令</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#tcpwrappers">6. TCP Wrappers</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#kerberos5">7. Kerberos5</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#openssl">8. OpenSSL</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#ipsec">9. IPsec 上的 VPN</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#openssh">10. OpenSSH</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#fs-acl">11. 文件系统访问控制表</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-portaudit">12. 监视第三方安全问题</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-advisories">13. FreeBSD 安全公告</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-accounting">14. 进程记帐</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/">
+              第 16 章 Jails
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-terms">2. 与 Jail 相关的一些术语</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-intro">3. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-build">4. 建立和控制 jail</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-tuning">5. 微调和管理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-application">6. Jail 的应用</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/">
+              第 17 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-synopsis">1. 概要</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-inline-glossary">2. 本章出现的重要术语</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-initial">3. 关于 MAC 的说明</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-understandlabel">4. 理解 MAC 标签</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-planning">5. 规划安全配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-modules">6. 模块配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-seeotheruids">7. MAC seeotheruids 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-bsdextended">8. MAC bsdextended 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-ifoff">9. MAC ifoff 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-portacl">10. MAC portacl 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-partition">11. MAC partition (分区) 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-mls">12. MAC 多级 (Multi-Level) 安全模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-biba">13. MAC Biba 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-lomac">14. MAC LOMAC 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-implementing">15. MAC Jail 中的 Nagios</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-userlocked">16. User Lock Down</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-troubleshoot">17. MAC 框架的故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/">
+              第 18 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-inline-glossary">2. 本章中的一些关键术语</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-install">3. 安装审计支持</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-config">4. 对审计进行配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-administration">5. 管理审计子系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/">
+              第 19 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-naming">2. 设备命名</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-adding">3. 添加磁盘</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#raid">4. RAID</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#usb-disks">5. USB 存储设备</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#creating-cds">6. 创建和使用光学介质(CD)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#creating-dvds">7. 创建和使用光学介质(DVD)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#floppies">8. 创建和使用软盘</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#backups-tapebackups">9. 用磁带机备份</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#backups-floppybackups">10. 用软盘备份</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#backup-strategies">11. 备份策略</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#backup-basics">12. 备份程序</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-virtual">13. 网络、内存和 和以及映像文件为介质的虚拟文件系统</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#snapshots">14. 文件系统快照</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#quotas">15. 文件系统配额</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-encrypting">16. 加密磁盘分区</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#swap-encrypting">17. 对交换区进行加密</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-hast">18. 高可用性存储 (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/">
+              第 20 章 GEOM: 模块化磁盘变换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-intro">2. GEOM 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-striping">3. RAID0 - 条带</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-mirror">4. RAID1 - 镜像</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-raid3">5. RAID3 - 使用专用校验设备的字节级条带</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#geom-ggate">6. GEOM Gate 网络设备</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#geom-glabel">7. 为磁盘设备添加卷标</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#geom-gjournal">8. 通过 GEOM 实现 UFS 日志</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/filesystems/">
+              第 21 章 文件系统 Support
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/filesystems/#filesystems-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/filesystems/#filesystems-zfs">2. Z 文件系统 (ZFS)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-11d260f2685c0b17137e64887e1b1989" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-11d260f2685c0b17137e64887e1b1989"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/">
+              第 22 章 Vinum 卷管理程序
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-intro">2. 磁盘容量太小</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-access-bottlenecks">3. 访问瓶颈</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-data-integrity">4. 数据的完整性</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-objects">5. Vinum 目标</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-examples">6. 一些例子</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-object-naming">7. 对象命名</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-config">8. 配置 Vinum</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-root">9. 使用 Vinum 作为根文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/virtualization/">
+              第 23 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/virtualization/#virtualization-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/virtualization/#virtualization-guest">2. 作为客户 OS 的 FreeBSD</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/virtualization/#virtualization-host">3. 作为宿主 OS 的 FreeBSD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/">
+              第 24 章 本地化－I18N/L10N使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#l10n-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#l10n-basics">2. 基础知识</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#using-localization">3. 使用本地化语言</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#l10n-compiling">4. 编译I18N程序</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#lang-setup">5. 本地化FreeBSD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/">
+              第 25 章 更新与升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#updating-upgrading-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">2. FreeBSD 更新</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#updating-upgrading-portsnap">3. Portsnap： 一个 Ports Collection 更新工具</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#updating-upgrading-documentation">4. 更新系统附带的文档</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#current-stable">5. 追踪开发分支</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#synching">6. 同步您的源码</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#makeworld">7. 重新编译 "world"</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#make-delete-old">8. 删除过时的文件、 目录和函数库</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#small-lan">9. 跟踪多台机器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/">
+              第 26 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-implementation">2. 实现上的差异</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-enable">3. 启用 DTrace 支持</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-using">4. 使用 DTrace</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-language">5. D 语言</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/partiv/">
+              部分 IV. 网络通讯
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/">
+              第 27 章 串口通讯
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#serial-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#serial">2. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#term">3. 终端</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#dialup">4. 拨入服务</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#dialout">5. 拨出设备</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#serialconsole-setup">6. 设置串口控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/">
+              第 28 章 PPP 和 SLIP
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#userppp">2. 使用用户级 PPP</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#ppp">3. 使用内核级PPP</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#ppp-troubleshoot">4. PPP 连接故障排除</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#pppoe">5. 使用基于以太网的PPP(PPPoE)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#pppoa">6. 使用 ATM 上的 PPP (PPPoA)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#slip">7. 使用SLIP</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/">
+              第 29 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-using">2. 使用电子邮件</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#sendmail">3. sendmail 配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-changingmta">4. 改变您的邮件传输代理程序</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-trouble">5. 疑难解答</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-advanced">6. 高级主题</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#SMTP-UUCP">7. SMTP 与 UUCP</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#outgoing-only">8. 只发送邮件的配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#SMTP-dialup">9. 拨号连接时使用邮件传送</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#SMTP-Auth">10. SMTP 验证</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-agents">11. 邮件用户代理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-fetchmail">12. 使用 fetchmail</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-procmail">13. 使用 procmail</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/">
+              第 30 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-servers-synopsis">1. 概要</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-inetd">2. inetd"超级服务器"</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-nfs">3. 网络文件系统（NFS）</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-nis">4. 网络信息服务 (NIS/YP)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-dhcp">5. 网络自动配置 (DHCP)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-dns">6. 域名系统 (DNS)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-apache">7. Apache HTTP 服务器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-ftp">8. 文件传输协议 (FTP)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-samba">9. 为 Microsoft® Windows® 客户机提供文件和打印服务 (Samba)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-ntp">10. 通过 NTP 进行时钟同步</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-syslogd">11. 使用 <code>syslogd</code> 记录远程主机的日志</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/">
+              第 31 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-intro">1. 入门</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-concepts">2. 防火墙的概念</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-apps">3. 防火墙软件包</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-pf">4. OpenBSD Packet Filter (PF) 和 ALTQ</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-ipf">5. IPFILTER (IPF) 防火墙</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-ipfw">6. IPFW</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/">
+              第 32 章 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#advanced-networking-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-routing">2. 网关和路由</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-wireless">3. 无线网络</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-bluetooth">4. 蓝牙</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-bridging">5. 桥接</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-aggregation">6. 链路聚合与故障转移</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-diskless">7. 无盘操作</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-pxe-nfs">8. 从 PXE 启动一个 NFS 根文件系统</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-isdn">9. ISDN</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-natd">10. 网络地址转换</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-plip">11. 并口电缆 IP (PLIP)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-ipv6">12. IPv6</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-atm">13. 异步传输模式 (ATM)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#carp">14. Common Address Redundancy Protocol (CARP， 共用地址冗余协议)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/partv/">
+              部分 V. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#mirrors-cdrom">1. CDROM 和 DVD 发行商</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#mirrors-ftp">2. FTP 站点</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#anoncvs">3. 匿名 CVS</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#ctm">4. 使用 CTM</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#cvsup">5. 使用 CVSup</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#cvs-tags">6. CVS 标签</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#mirrors-afs">7. AFS 站点</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#mirrors-rsync">8. rsync 站点</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-freebsd">1. 关于 FreeBSD 的专业书籍与杂志</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-userguides">2. 用户指南</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-adminguides">3. 管理员指南</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-programmers">4. 开发指南</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-osinternals">5. 操作系统原理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-security">6. 安全方面的参考文献</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-hardware">7. 硬件参考</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-history">8. UNIX® 历史</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-journals">9. 各种期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/">
+              附录 C. Internet上的资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/#eresources-mail">1. 邮件列表</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/#eresources-news">2. Usenet新闻组</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/#eresources-web">3. World Wide Web服务器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/#eresources-email">4. Email地址</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/pgpkeys/">
+              附录 D. PGP公钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/pgpkeys/#pgpkeys-officers">1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 17 章 强制访问控制</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mac-synopsis">1. 概要</a></li>
+    <li><a href="#mac-inline-glossary">2. 本章出现的重要术语</a></li>
+    <li><a href="#mac-initial">3. 关于 MAC 的说明</a></li>
+    <li><a href="#mac-understandlabel">4. 理解 MAC 标签</a></li>
+    <li><a href="#mac-planning">5. 规划安全配置</a></li>
+    <li><a href="#mac-modules">6. 模块配置</a></li>
+    <li><a href="#mac-seeotheruids">7. MAC seeotheruids 模块</a></li>
+    <li><a href="#mac-bsdextended">8. MAC bsdextended 模块</a></li>
+    <li><a href="#mac-ifoff">9. MAC ifoff 模块</a></li>
+    <li><a href="#mac-portacl">10. MAC portacl 模块</a></li>
+    <li><a href="#mac-partition">11. MAC partition (分区) 模块</a></li>
+    <li><a href="#mac-mls">12. MAC 多级 (Multi-Level) 安全模块</a></li>
+    <li><a href="#mac-biba">13. MAC Biba 模块</a></li>
+    <li><a href="#mac-lomac">14. MAC LOMAC 模块</a></li>
+    <li><a href="#mac-implementing">15. MAC Jail 中的 Nagios</a></li>
+    <li><a href="#mac-userlocked">16. User Lock Down</a></li>
+    <li><a href="#mac-troubleshoot">17. MAC 框架的故障排除</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-synopsis">1. 概要<a class="anchor" href="#mac-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD 5.X 在 POSIX®.1e 草案的基础上引入了 TrustedBSD 项目提供的新的安全性扩展。 新安全机制中最重要的两个， 是文件系统访问控制列表 (ACL) 和强制访问控制 (MAC) 机制。 强制访问控制允许加载新的访问控制模块， 并借此实施新的安全策略， 其中一部分为一个很小的系统子集提供保护并加强特定的服务， 其他的则对所有的主体和客体提供全面的标签式安全保护。 定义中有关强制的部分源于如下事实， 控制的实现由管理员和系统作出， 而不像自主访问控制 (DAC, FreeBSD 中的标准文件以及 System V IPC 权限) 那样是按照用户意愿进行的。</p>
+</div>
+<div class="paragraph">
+<p>本章将集中讲述强制访问控制框架 (MAC 框架) 以及一套用以实施多种安全策略的插件式的安全策略模块。</p>
+</div>
+<div class="paragraph">
+<p>阅读本章之后， 您将了解：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>目前 FreeBSD 中具有哪些 MAC 安全策略模块， 以及与之相关的机制。</p>
+</li>
+<li>
+<p>MAC 安全策略模块将实施何种策略， 以及标签式与非标签式策略之间的差异。</p>
+</li>
+<li>
+<p>如何高效地配置系统令使其使用 MAC 框架。</p>
+</li>
+<li>
+<p>如何配置 MAC 框架所提供的不同的安全策略模块。</p>
+</li>
+<li>
+<p>如何用 MAC 框架构建更为安全的环境， 并举例说明。</p>
+</li>
+<li>
+<p>如何测试 MAC 配置以确保正确构建了框架。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>阅读本章之前， 您应该：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解 UNIX® 和 FreeBSD 的基础 (crossref:basics[basics,UNIX 基础])。</p>
+</li>
+<li>
+<p>熟悉内核配置/编译 (crossref:kernelconfig[kernelconfig,配置FreeBSD的内核]) 的基础。</p>
+</li>
+<li>
+<p>对安全及其如何与 FreeBSD 相配合有些了解； (crossref:security[security,安全])。</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>对本章信息的不当使用可能导致丧失系统访问权， 激怒用户， 或者无法访问 X11 提供的特性。 更重要的是， MAC 不能用于彻底保护一个系统。 MAC 框架仅用于增强现有安全策略； 如果没有健全的安全条例以及定期的安全检查， 系统将永远不会绝对安全。</p>
+</div>
+<div class="paragraph">
+<p>此外还需要注意的是， 本章中所包含的例子仅仅是例子。 我们并不建议在一个生产用系统上进行这些特别的设置。 实施各种安全策略模块需要谨慎的考虑与测试， 因为那些并不完全理解所有机制如何工作的人， 可能会发现需要对整个系统中很多的文件或目录进行重新配置。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="_未涉及的内容">1.1. 未涉及的内容<a class="anchor" href="#_未涉及的内容"></a></h3>
+<div class="paragraph">
+<p>本章涵盖了与 MAC 框架有关的诸多方面的安全问题； 而新的 MAC 安全策略模块的开发成果则不会涉及。 MAC 框架中所包含的一部分安全策略模块， 具有一些用于测试及新模块开发的特定属性， 其中包括 man:mac_test[4]、 man:mac_stub[4] 以及 man:mac_none[4]。 关于这些安全策略模块及其提供的众多机制的详细信息，请参阅联机手册中的内容。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-inline-glossary">2. 本章出现的重要术语<a class="anchor" href="#mac-inline-glossary"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在阅读本章之前， 有些关键术语需要解释， 希望能藉此扫清可能出现的疑惑， 并避免在文中对新术语、 新信息进行生硬的介绍。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>区间</em>(compartment)： (译注： <em>区间</em> 这一术语， 在一些文献中也称做类别 (category)。 此外， 在其它一些翻译文献中， 该术语也翻译为 &#34;象限&#34;。) 指一组被划分或隔离的程序和数据， 其中， 用户被明确地赋予了访问特定系统组件的权限。 同时， 区间也能够表达分组， 例如工作组、 部门、 项目， 或话题。 可以通过使用区间来实施 need-to-know 安全策略。</p>
+</li>
+<li>
+<p><em>高水位线</em>(high water mark)： 高水位线策略是一种允许提高安全级别， 以期访问更高级别的信息的安全策略。 在多数情况下， 当进程结束时， 又会回到原先的安全级别。 目前， FreeBSD MAC 框架尚未提供这样的策略， 在这里介绍其定义主要是希望给您一个完整的概念。</p>
+</li>
+<li>
+<p><em>完整性</em>(integrity)： 作为一个关键概念， 完整性是数据可信性的一种程度。 若数据的完整性提高， 则数据的可信性相应提高。</p>
+</li>
+<li>
+<p><em>标签</em>(label)： 标签是一种可应用于文件、 目录或系统其他客体的安全属性， 它也可以被认为是一种机密性印鉴。 当一个文件被施以标签时， 其标签会描述这一文件的安全参数， 并只允许拥有相似安全性设置的文件、 用户、 资源等访问该文件。 标签值的涵义及解释取决于相应的策略配置： 某些策略会将标签当作对某一客体的完整性和保密性的表述， 而其它一些策略则会用标签保存访问规则。</p>
+</li>
+<li>
+<p><em>程度</em>(level)： 对某种安全属性加强或削弱的设定。 若程度增加， 其安全性也相应增加。</p>
+</li>
+<li>
+<p><em>低水位线</em>(low water mark)： 低水位线策略允许降低安全级别， 以访问安全性较差的信息。 多数情况下， 在进程结束时， 又会回到原先的安全级别。 目前在 FreeBSD 中唯一实现这一安全策略的是 man:mac_lomac[4]。</p>
+</li>
+<li>
+<p><em>多重标签</em>(multilabel)： <code>multilabel</code> 属性是一个文件系统选项。 该选项可在单用户模式下通过 man:tunefs[8] 程序进行设置。 可以在引导时使用的 man:fstab[5] 文件中， 也可在创建新文件系统时进行配置。 该选项将允许管理员对不同客体施以不同的 MAC 标签。 该选项仅适用于支持标签的安全策略模块。</p>
+</li>
+<li>
+<p><em>客体</em>(object)： 客体或系统客体是一种实体， 信息随 <em>主体</em> 的导向在客体内部流动。 客体包括目录、 文件、 区段、 显示器、 键盘、 存储器、 磁存储器、 打印机及其它数据存储/转移设备。 基本上， 客体就是指数据容器或系统资源。 对 <em>客体</em> 的访问实际上意味着对数据的访问。</p>
+</li>
+<li>
+<p><em>策略</em>(policy)： 一套用以规定如何达成目标的规则。 <em>策略</em> 一般用以描述如何对特定客体进行操作。 本章将在<em>安全策略</em>的范畴内讨论<em>策略</em>， 一套用以控制数据和信息流并规定其访问者的规则，就是其中一例。</p>
+</li>
+<li>
+<p><em>敏感性</em>(sensitivity)： 通常在讨论 MLS 时使用。 敏感性程度曾被用来描述数据应该有何等的重要或机密。 若敏感性程度增加， 则保密的重要性或数据的机密性相应增强。</p>
+</li>
+<li>
+<p><em>单一标签</em>(single label)： 整个文件系统使用一个标签对数据流实施访问控制， 叫做单一标签。 当文件系统使用此设置时， 即无论何时当 <code>多重标签</code> 选项未被设定时， 所有文件都将遵守相同标签设定。</p>
+</li>
+<li>
+<p><em>主体</em>(subject)： 主体就是引起信息在两个 <em>客体</em> 间流动的任意活动实体， 比如用户， 用户进程(译注：原文为 processor)， 系统进程等。 在 FreeBSD 中， 主体几乎总是代表用户活跃在某一进程中的一个线程。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-initial">3. 关于 MAC 的说明<a class="anchor" href="#mac-initial"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在掌握了所有新术语之后， 我们从整体上来考虑 MAC 是如何加强系统安全性的。 MAC 框架提供的众多安全策略模块可以用来保护网络及文件系统， 也可以禁止用户访问某些特定的端口、 套接字及其它客体。 将策略模块组合在一起以构建一个拥有多层次安全性的环境， 也许是其最佳的使用方式， 这可以通过一次性加载多个安全策略模块来实现。 在多层次安全环境中， 多重策略模块可以有效地控制安全性， 这一点与强化型 (hardening) 策略， 即那种通常只强化系统中用于特定目的的元素的策略是不同的。 相比之下， 多重策略的唯一不足是需要系统管理员先期设置好参数， 如多重文件系统安全标志、 每一位用户的网络访问权限等等。</p>
+</div>
+<div class="paragraph">
+<p>与采用框架方式实现的长期效果相比， 这些不足之处是微不足道的。 例如， 让系统具有为特定配置挑选必需的策略的能力， 有助于降低性能开销。 而减少对无用策略的支持， 不仅可以提高系统的整体性能， 而且提供了更灵活的选择空间。 好的实施方案中应该考虑到整体的安全性要求， 并有效地利用框架所提供的众多安全策略模块。</p>
+</div>
+<div class="paragraph">
+<p>这样一个使用 MAC 特性的系统， 至少要保证不允许用户任意更改安全属性； 所有的用户实用工具、 程序以及脚本， 必须在所选安全策略模块提供的访问规则的约束下工作； 并且系统管理员应掌握 MAC 访问规则的一切控制权。</p>
+</div>
+<div class="paragraph">
+<p>细心选择正确的安全策略模块是系统管理员专有的职责。 某些环境也许需要限制网络的访问控制权， 在这种情况下， 使用 man:mac_portacl[4]、 man:mac_ifoff[4] 乃至 man:mac_biba[4] 安全策略模块都会是不错的开始； 在其他情况下， 系统客体也许需要严格的机密性， 像 man:mac_bsdextended[4] 和 man:mac_mls[4] 这样的安全策略模块就是为此而设。</p>
+</div>
+<div class="paragraph">
+<p>对安全策略模块的决定可依据网络配置进行， 也许只有特定的用户才应该被允许使用由 man:ssh[1] 提供的程序以访问网络或互联网， man:mac_portacl[4] 安全策略模块应该成为这种情况下的选择。 但对文件系统又该作些什么呢？ 是由特定的用户或群组来确定某些目录的访问权限， 抑或是将特定客体设为保密以限制用户或组件访问特定文件？</p>
+</div>
+<div class="paragraph">
+<p>在文件系统的例子中， 也许访问客体的权限对某些用户是保密的， 但对其他则不是。 比如， 一个庞大的开发团队， 也许会被分成许多由几人组成的小组， A 项目中的开发人员可能不被允许访问 B 项目开发人员创作的客体， 但同时他们还需要访问由 C 项目开发人员创作的客体， 这正符合上述情形。 使用由 MAC 框架提供的不同策略， 用户就可以被分成这种小组， 然后被赋予适当区域的访问权， 由此， 我们就不用担心信息泄漏的问题了。</p>
+</div>
+<div class="paragraph">
+<p>因此， 每一种安全策略模块都有其处理系统整体安全问题的独特方法。 对安全策略模块的选择应在对安全策略深思熟虑的基础之上进行。 很多情况下， 整体安全策略需要重新修正并在系统上实施。 理解 MAC 框架提供的不同安全策略模块会帮助管理员就其面临的情形选择最佳的策略模块。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 的默认内核并不包含 MAC 框架选项， 因此， 在尝试使用本章中的例子或信息之前， 您应该添加以下内核选项：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options	MAC</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>此外， 内核还需要重新编译并且重新安装。</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>尽管有关 MAC 的许多联机手册中都声明它们可以被编译到内核中， 但对这些策略模块的使用仍可能导致锁死系统的网络及其他功能。 使用 MAC 就像使用防火墙一样， 因此必须要小心防止将系统完全锁死。 在使用 MAC 时， 应该考虑是否能够回退到之前的配置， 在远程进行配置更应加倍小心。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-understandlabel">4. 理解 MAC 标签<a class="anchor" href="#mac-understandlabel"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>MAC 标签是一种安全属性， 它可以被应用于整个系统中的主体和客体。</p>
+</div>
+<div class="paragraph">
+<p>配置标签时， 用户必须能够确切理解其所进行的操作。 客体所具有的属性取决于被加载的策略模块， 不同策略模块解释其属性的方式也差别很大。 由于缺乏理解或无法了解其间联系而导致的配置不当， 会引起意想不到的， 也许是不愿看到的系统异常。</p>
+</div>
+<div class="paragraph">
+<p>客体上的安全标签是由安全策略模块决定的安全访问控制的一部分。 在某些策略模块中， 标签本身所包含的所有信息足以使其作出决策， 而在其它一些安全策略模块中， 标签则可能被作为一个庞大规则体系的一部分进行处理。</p>
+</div>
+<div class="paragraph">
+<p>举例来说， 在文件上设定 <code>biba/low</code> 标签， 意味着此标签隶属 Biba 策略模块， 其值为 &#34;low&#34;。</p>
+</div>
+<div class="paragraph">
+<p>某些在 FreeBSD 中支持标签特性的策略会提供三个预定义的标签， 分别是 low、 high 及 equal 标签。 尽管这些标签在不同安全策略模块中会对访问控制采取不同措施， 但有一点是可以肯定的， 那就是 low 标签表示最低限度的设定， equal 标签会将主体或客体设定为被禁用的或不受影响的， high 标签则会应用 Biba 及 MLS 安全策略模块中允许的最高级别的设定。</p>
+</div>
+<div class="paragraph">
+<p>在单一标签文件系统的环境中， 同一客体上只会应用一个标签， 于是， 一套访问权限将被应用于整个系统， 这也是很多环境所全部需要的。 另一些应用场景中， 我们需要将多重标签应用于文件系统的客体或主体， 如此一来， 就需要使用 man:tunefs[8] 的 <code>multilabel</code> 选项。</p>
+</div>
+<div class="paragraph">
+<p>在使用 Biba 和 MLS 时可以配置数值标签， 以标示分级控制中的层级程度。 数值的程度可以用来划分或将信息按组分类， 从而只允许同程度或更高程度的组对其进行访问。</p>
+</div>
+<div class="paragraph">
+<p>多数情况下， 管理员将仅对整个文件系统设定单一标签。</p>
+</div>
+<div class="paragraph">
+<p><em>等一下， 这看起来很像 DAC！ 但我认为 MAC 确实只将控制权赋予了管理员。 </em>此句话依然是正确的。 在某种程度上， <code>root</code> 是实施控制的用户， 他配置安全策略模块以使用户们被分配到适当的类别/访问 levels 中。 唉， 很多安全策略模块同样可以限制 <code>root</code> 用户。 对于客体的基本控制可能会下放给群组， 但 <code>root</code> 用户随时可以废除或更改这些设定。 这就是如 Biba 及 MLS 这样一些安全策略模块所包含的 hierarchal/clearance 模型。</p>
+</div>
+<div class="sect2">
+<h3 id="_配置标签">4.1. 配置标签<a class="anchor" href="#_配置标签"></a></h3>
+<div class="paragraph">
+<p>实际上， 有关标签式安全策略模块配置的各种问题都是用基础系统组件实现的。 这些命令为客体和主体配置以及配置的实施和验证提供了一个简便的接口。</p>
+</div>
+<div class="paragraph">
+<p>所有的配置都应该通过 man:setfmac[8] 及 man:setpmac[8] 组件实施。 <code>setfmac</code> 命令是用来对系统客体设置 MAC 标签的， 而 <code>setpmac</code> 则是用来对系统主体设置标签的。 例如：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># setfmac biba/high test</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>若以上命令不发生错误则会直接返回命令提示符， 只有当发生错误时， 这些命令才会给出提示， 这和 man:chmod[1] 和 man:chown[8] 命令类似。 某些情况下， 以上命令产生的错误可能是 <code>Permission denied</code>， 一般在受限客体上设置或修改设置时会产生此错误。  系统管理员可使用以下命令解决此问题：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># setfmac biba/high test</span>
+Permission denied
+<span class="c"># setpmac biba/low setfmac biba/high test</span>
+<span class="c"># getfmac test</span>
+<span class="nb">test</span>: biba/high</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如上所示， 通过 <code>setpmac</code> 对被调用的进程赋予不同的标签， 以覆盖安全策略模块的设置。 <code>getpmac</code> 组件通常用于当前运行的进程， 如 sendmail： 尽管其使用进程编号来替代命令， 其逻辑是相同的。 如果用户试图对其无法访问的文件进行操作， 根据所加载的安全策略模块的规则， 函数 <code>mac_set_link</code> 将会给出 <code>Operation not permitted</code> 的错误提示。</p>
+</div>
+<div class="sect3">
+<h4 id="_一般标签类型">4.1.1. 一般标签类型<a class="anchor" href="#_一般标签类型"></a></h4>
+<div class="paragraph">
+<p>man:mac_biba[4]、 man:mac_mls[4] 及 man:mac_lomac[4] 策略模块提供了设定简单标签的功能， 其值应该是 high、 equal 及 low 之一。 以下是对这些标签功能的简单描述：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>low</code> 标签被认为是主体或客体所具有的最低层次的标签设定。 对主体或客体采用此设定， 将阻止其访问标签为 high 的客体或主体。</p>
+</li>
+<li>
+<p><code>equal</code> 标签只能被用于不希望受策略控制的客体上。</p>
+</li>
+<li>
+<p><code>high</code> 标签对客体或主体采用可能的最高设定。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>至于每个策略模块， 每种设定都会产生不同的信息流指令。 阅读联机手册中相关的章节将进一步阐明这些一般标签配置的特点。</p>
+</div>
+<div class="sect4">
+<h5 id="_标签高级配置">4.1.1.1. 标签高级配置<a class="anchor" href="#_标签高级配置"></a></h5>
+<div class="paragraph">
+<p>如下所示， 用于 <code>比较方式:区间+区间</code> (<code>comparison:compartment+compartment</code>) 的标签等级数：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>biba/10:2+3+6(5:2+3-20:2+3+4+5+6)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>其含义为：</p>
+</div>
+<div class="paragraph">
+<p>&#34;Biba 策略标签&#34;/&#34;等级 10&#34; ：&#34;区间 2、 3及6&#34;： (&#34;等级5 …​&#34;)</p>
+</div>
+<div class="paragraph">
+<p>本例中， 第一个等级将被认为是 &#34;有效区间&#34; 的 &#34;有效等级&#34;， 第二个等级是低级等级， 最后一个则是高级等级。 大多数配置中并不使用这些设置， 实际上， 它们是为更高级的配置准备的。</p>
+</div>
+<div class="paragraph">
+<p>当把它们应用在系统客体上时， 则只有当前的等级/区间， 因为它们反映可以实施访问控制的系统中可用的范围， 以及网络接口。</p>
+</div>
+<div class="paragraph">
+<p>等级和区间， 可以用来在一对主体和客体之间建立一种称为 &#34;支配 (dominance)&#34; 的关系， 这种关系可能是主体支配客体， 客体支配主体， 互不支配或互相支配。 &#34;互相支配&#34; 这种情况会在两个标签相等时发生。 由于 Biba 的信息流特性， 您可以设置一系列区间， &#34;need to know&#34;， 这可能发生于项目之间， 而客体也由其对应的区间。 用户可以使用 <code>su</code> 和 <code>setpmac</code> 来将他们的权限进一步细分， 以便在没有限制的区间里访问客体。</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_用户和标签设置">4.1.2. 用户和标签设置<a class="anchor" href="#_用户和标签设置"></a></h4>
+<div class="paragraph">
+<p>用户本身也需要设置标签， 以使其文件和进程能够正确地与系统上定义的安全策略互动， 这是通过使用登录分级在文件 <span class="filename">login.conf</span> 中配置的。 每个使用标签的策略模块都会进行用户分级设定。</p>
+</div>
+<div class="paragraph">
+<p>以下是一个使用所有策略模块的例子：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>default:\
+	:copyright=/etc/COPYRIGHT:\
+	:welcome=/etc/motd:\
+	:setenv=MAIL=/var/mail/$,BLOCKSIZE=K:\
+	:path=~/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:\
+	:manpath=/usr/shared/man /usr/local/man:\
+	:nologin=/usr/sbin/nologin:\
+	:cputime=1h30m:\
+	:datasize=8M:\
+	:vmemoryuse=100M:\
+	:stacksize=2M:\
+	:memorylocked=4M:\
+	:memoryuse=8M:\
+	:filesize=8M:\
+	:coredumpsize=8M:\
+	:openfiles=24:\
+	:maxproc=32:\
+	:priority=0:\
+	:requirehome:\
+	:passwordtime=91d:\
+	:umask=022:\
+	:ignoretime@:\
+	:label=partition/13,mls/5,biba/10(5-15),lomac/10[2]:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>label</code> 选项用以设定用户分级默认标签， 该标签将由 MAC 执行。 用户绝不会被允许更改该值， 因此其从用户的观点看不是可选的。 当然， 在真实情况的配置中， 管理员不会希望启用所有策略模块。 我们建议您在实施以上配置之前阅读本章的其余部分。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>用户也许会在首次登录后更改其标签， 尽管如此， 这仅仅是策略的主观局限性。 上面的例子告诉 Biba 策略， 进程的最小完整性是为5， 最大完整性为15， 默认且有效的标签为10。 进程将以10的完整性运行直至其决定更改标签， 这可能是由于用户使用了 setpmac 命令 (该操作将在登录时被 Biba 限制在一定用户范围之内)。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在所有情况下， 修改 <span class="filename">login.conf</span> 之后， 都必须使用 <code>cap_mkdb</code> 重编译登录分级 capability 数据库， 这在接下来的例子和讨论中就会有所体现。</p>
+</div>
+<div class="paragraph">
+<p>很多站点可能拥有数目可观的用户需要不同的用户分级， 注意到这点是大有裨益的。 深入来说就是需要事先做好计划， 因为管理起来可能十分困难。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 以后的版本中， 将包含一种将用户映射到标签的新方式， 尽管如此， 这也要到 FreeBSD 5.3 之后的某个时间才能实现。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_网络接口和标签设定">4.1.3. 网络接口和标签设定<a class="anchor" href="#_网络接口和标签设定"></a></h4>
+<div class="paragraph">
+<p>也可以在网络接口上配置标签， 以控制进出网络的数据流。 在所有情况下， 策略都会以适应客体的方式运作。 例如， 在 <code>biba</code> 中设置为高的用户， 就不能访问标记为低的网络接口。</p>
+</div>
+<div class="paragraph">
+<p><code>maclabel</code> 可以作为 <code>ifconfig</code> 的参数用于设置网络接口的 MAC 标签。 例如：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig bge0 maclabel biba/equal</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将在 man:bge[4] 接口上设置 <code>biba/equal</code> 的 MAC 标签。 当使用类似 <code>biba/high(low-high)</code> 这样的标签时， 整个标签应使用引号括起来； 否则将发生错误。</p>
+</div>
+<div class="paragraph">
+<p>每一个支持标签的策略模块都提供了用于在网络接口上禁用该 MAC 标签的系统控制变量。 将标签设置为 <code>equal</code> 的效果与此类似。 请参见 <code>sysctl</code> 的输出、 策略模块的联机手册， 或本章接下来的内容， 以了解更进一步的详情。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_用单一标签还是多重标签">4.2. 用单一标签还是多重标签？<a class="anchor" href="#_用单一标签还是多重标签"></a></h3>
+<div class="paragraph">
+<p>默认情况下， 系统采用的是 <code>singlelabel</code> 选项。 但这对管理员意味着什么呢？ 两种策略之间存在很多的不同之处， 它们在系统安全模型的灵活性方面， 提供了不同的选择。</p>
+</div>
+<div class="paragraph">
+<p><code>singlelabel</code> 只允许在每个主体或客体上使用一个标签， 如 <code>biba/high</code>。 这降低了管理的开销， 但也同时降低了支持标签的策略的灵活性。 许多管理员可能更希望在安全策略中使用 <code>multilabel</code>。</p>
+</div>
+<div class="paragraph">
+<p><code>multilabel</code> 选项允许每一个主体或客体拥有各自独立的 MAC 标签， 起作用与标准的、 只允许整个分区上使用一个的 <code>singlelabel</code> 选项类似。 <code>multilabel</code> 和 <code>single</code> 标签选项只有对实现了标签功能的那些策略， 如 Biba、 Lomac、 MLS 以及 SEBSD 才有意义。</p>
+</div>
+<div class="paragraph">
+<p>很多情况下是不需要设置 <code>multilabel</code> 的。 考虑下列情形和安全模型：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>使用了 MAC 以及许多混合策略的 FreeBSD web-服务器。</p>
+</li>
+<li>
+<p>这台机器上的整个系统中只需要一个标签， 即 <code>biba/high</code>。 此处的文件系统并不需要 <code>multilabel</code> 选项， 因为有效的 label 只有一个。</p>
+</li>
+<li>
+<p>因为这台机器将作为 Web 服务器使用， 因此应该以 <code>biba/low</code> 运行 Web 服务， 以杜绝向上写。 Biba 策略以及它如何运作将在稍后予以讨论， 因此， 如果您感觉前面的说明难以理解的话， 请继续阅读下面的内容， 再回来阅读这些内容就会有较为清晰的认识了。 服务器可以使用设置为 <code>biba/low</code> 的单独的分区， 用于保持其运行环境的状态。 这个例子中还省略了许多内容， 例如， 如何为数据配置访问限制、 参数配置和用户的设置； 它只是为前述的内容提供一个简单的例子。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>如果打算使用非标签式策略， 就不需要 <code>multilabel</code> 选项了。 这些策略包括 <code>seeotheruids</code>、 <code>portacl</code> 和 <code>partition</code>。</p>
+</div>
+<div class="paragraph">
+<p>另一个需要注意的事情是， 在分区上使用 <code>multilabel</code> 并建立基于 <code>multilabel</code> 可能会提高系统管理的开销， 因为文件系统中的所有客体都需要指定标签。 这包括对目录、文件， 甚至设备节点。</p>
+</div>
+<div class="paragraph">
+<p>接下来的命令将在需要使用多个标签的文件系统上设置 <code>multilabel</code>。 这一操作只能在单用户模式下完成：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tunefs -l enable /</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>交换区不需要如此配置。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>某些用户可能会在根分区上配置 <code>multilabel</code> 标志时遇到困难。 如果发生这样的情况， 请复查本章的 <a href="#mac-troubleshoot">MAC 框架的故障排除</a>。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-planning">5. 规划安全配置<a class="anchor" href="#mac-planning"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在实施新技术时， 首先进行规划都是非常好的习惯。 在这段时间， 管理员一般都应 &#34;进行全面的考察&#34;， 这至少应包括下列因素：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>方案实施的必要条件；</p>
+</li>
+<li>
+<p>方案实施的目标；</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>就实施 MAC 而言， 这包括：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>如何在目标系统上对信息和资源进行分类。</p>
+</li>
+<li>
+<p>需要限制哪类信息或资源的访问， 以及应采用何种限制。</p>
+</li>
+<li>
+<p>需要使用哪些 MAC 模块来完成这些目标。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>尽管重新配置并修改系统资源和安全配置是可行的， 但查找整个系统并修复暨存的文件和用户帐号并不是一件轻而易举的事情。 规划有助于完成无问题且有效的可信系统实施。 <em>事先</em> 对采用 MAC 的可信系统， 以及其配置做试运行十分有益， 因为这对实施的成败至关重要。 草率散漫地配置 MAC 通常是导致失败的祸根。</p>
+</div>
+<div class="paragraph">
+<p>不同的环境可能会有不同的需求。 建立多层次而完备的安全配置， 可以减少系统正式运转之后所需要的微调。 同样地， 接下来的章节将介绍管理员能够使用的各种不同的模块； 描述它们的使用和配置； 除此之外还有一些关于它们最适合的情景的介绍。 例如， web 服务器可能希望使用 man:mac_biba[4] 和 man:mac_bsdextended[4] 策略， 而其他情况下， 例如一台机器上只有少量的本地用户时， man:mac_partition[4] 则是不错的选择。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-modules">6. 模块配置<a class="anchor" href="#mac-modules"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在 MAC 框架中的每个模块， 都可以像前述那样连编入内核， 或作为运行时内核模块加载。 推荐的用法， 是通过在 <span class="filename">/boot/loader.conf</span> 加入适当的设置， 以便在系统启动时的初始化操作过程中加载这些模块。</p>
+</div>
+<div class="paragraph">
+<p>接下来的一些小节， 将讨论许多 MAC 模块， 并简单介绍它们的功能。 此外， 这一章还将介绍一些具体环境中的用例。 某些模块支持一种称为标签 (labeling) 的用法， 它可以通过使用类似 &#34;允许做这个而不允许做那个&#34; 的标签来实现访问控制。 标签配置文件可以控制允许的文件访问方式、 网络通讯， 以及许多其他权限。 在前一节中， 我们已经展示了文件系统中如何通过 <code>multilabel</code> 标志来启用基于文件或分区的访问控制的方法。</p>
+</div>
+<div class="paragraph">
+<p>单标签配置在整个系统中只强制一个标签的限制， 这也是 <code>tunefs</code> 选项为什么是 <code>multilabel</code> 的原因。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-seeotheruids">7. MAC seeotheruids 模块<a class="anchor" href="#mac-seeotheruids"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块名： <span class="filename">mac_seeotheruids.ko</span></p>
+</div>
+<div class="paragraph">
+<p>对应的内核配置： <code>options MAC_SEEOTHERUIDS</code></p>
+</div>
+<div class="paragraph">
+<p>引导选项： <code>mac_seeotheruids_load=&#34;YES&#34;</code></p>
+</div>
+<div class="paragraph">
+<p>man:mac_seeotheruids[4] 模块模仿并扩展了 <code>security.bsd.see_other_uids</code> 和 <code>security.bsd.see_other_gids sysctl</code> 变量。 这一模块并不需要预先配置标签， 它能够透明地与其他模块协同工作。</p>
+</div>
+<div class="paragraph">
+<p>加载模块之后， 下列 <code>sysctl</code> 变量可以用来控制其功能：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>security.mac.seeotheruids.enabled</code> 将启用模块的功能， 并使用默认的配置。 这些默认设置将阻止用户看到其他用户的进程和 socket。</p>
+</li>
+<li>
+<p><code>security.mac.seeotheruids.specificgid_enabled</code> 将允许特定的组从这一策略中和面。 要将某些组排除在这一策略之外， 可以用 <code>security.mac.seeotheruids.specificgid=XXX sysctl</code> 变量。 前述例子中， <em>XXX</em> 应替换为希望不受限的组 ID 的数值形式。</p>
+</li>
+<li>
+<p><code>security.mac.seeotheruids.primarygroup_enabled</code> 可以用来将特定的主要组排除在策略之外。 使用这一变量时， 不能同时设置 <code>security.mac.seeotheruids.specificgid_enabled</code>。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-bsdextended">8. MAC bsdextended 模块<a class="anchor" href="#mac-bsdextended"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块名： <span class="filename">mac_bsdextended.ko</span></p>
+</div>
+<div class="paragraph">
+<p>对应的内核配置： <code>options MAC_BSDEXTENDED</code></p>
+</div>
+<div class="paragraph">
+<p>引导选项： <code>mac_bsdextended_load=&#34;YES&#34;</code></p>
+</div>
+<div class="paragraph">
+<p>man:mac_bsdextended[4] 模块能够强制文件系统防火墙策略。 这一模块的策略提供了标准文件系统权限模型的一种扩展， 使得管理员能够建立一种类似防火墙的规则集， 以文件系统层次结构中的保护文件、 实用程序，以及目录。 在尝试访问文件系统客体时， 会遍历规则表， 直至找到匹配的规则， 或到达表尾。 这一行为可以通过修改 man:sysctl[8] 参数， security.mac.bsdextended.firstmatch_enabled 来进行设置。 与 FreeBSD 中的其他防火墙设置类似， 也可以建一个文件来配置访问控制策略， 并通过 man:rc.conf[5] 变量的配置在系统引导时加载它。</p>
+</div>
+<div class="paragraph">
+<p>规则表可以通过工具 man:ugidfw[8] 工具来输入， 其语法类似 man:ipfw[8]。 此外还可以通过使用 man:libugidfw[3] 库来开发其他的工具。</p>
+</div>
+<div class="paragraph">
+<p>当使用这一模块模块时应极其小心； 不正确的使用将导致文件系统的某些部分无法访问。</p>
+</div>
+<div class="sect2">
+<h3 id="_例子">8.1. 例子<a class="anchor" href="#_例子"></a></h3>
+<div class="paragraph">
+<p>在加载了 man:mac_bsdextended[4] 模块之后， 下列命令可以用来列出当前的规则配置：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ugidfw list</span>
+0 slots, 0 rules</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如希望的那样， 目前还没有定义任何规则。 这意味着一切都还可以访问。 要创建一个阻止所有用户， 而保持 <code>root</code> 不受影响的规则， 只需运行下面的命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ugidfw add subject not uid root new object not uid root mode n</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这本身可能是一个很糟糕的主意， 因为它会阻止所有用户执行哪怕最简单的命令， 例如 <code>ls</code>。 更富于爱心的规则可能是：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ugidfw set 2 subject uid user1 object uid user2 mode n</span>
+<span class="c"># ugidfw set 3 subject uid user1 object gid user2 mode n</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将阻止任何 <code>user1</code> 对 <code><em>user2</em></code> 的主目录的全部访问， 包括目录列表。</p>
+</div>
+<div class="paragraph">
+<p><code>user1</code> 可以用 <code>not uid <em>user2</em></code> 代替。 这将同样的强制访问控制实施在所有用户， 而不是单个用户上。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>root</code> 用户不会受到这些变动的影响。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>我们已经给出了 man:mac_bsdextended[4] 模块如何帮助加强文件系统的大致介绍。 要了解更进一步的信息， 请参见 man:mac_bsdextended[4] 和 man:ugidfw[8] 联机手册。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-ifoff">9. MAC ifoff 模块<a class="anchor" href="#mac-ifoff"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块名： <span class="filename">mac_ifoff.ko</span></p>
+</div>
+<div class="paragraph">
+<p>对应的内核配置： <code>options MAC_IFOFF</code></p>
+</div>
+<div class="paragraph">
+<p>引导选项： <code>mac_ifoff_load=&#34;YES&#34;</code></p>
+</div>
+<div class="paragraph">
+<p>man:mac_ifoff[4] 模块完全是为了立即禁止网络接口， 以及阻止在系统初启时启用网络接口而设计的。 它不需要再系统中配置任何标签， 也不依赖于其他 MAC 模块。</p>
+</div>
+<div class="paragraph">
+<p>绝大多数特性都可以通过调整下面的 <code>sysctl</code> 来加以控制。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>security.mac.ifoff.lo_enabled</code> 表示 启用/禁用 环回接口 (man:lo[4]) 上的全部流量。</p>
+</li>
+<li>
+<p><code>security.mac.ifoff.bpfrecv_enabled</code> 表示 启用/禁用 伯克利包过滤器 (man:bpf[4]) 接口上的全部流量。</p>
+</li>
+<li>
+<p><code>security.mac.ifoff.other_enabled</code> 将在所有其他接口 启用/禁用 网络。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>最为常用的 man:mac_ifoff[4] 用法之一是在不允许引导过程中出现网络流量的环境中监视网络。 另一个建议的用法是撰写一个使用 package:security/aide[] 的脚本， 以便自动地在受保护的目录中发现新的或修改过的文件时切断网络。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-portacl">10. MAC portacl 模块<a class="anchor" href="#mac-portacl"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块名： <span class="filename">mac_portacl.ko</span></p>
+</div>
+<div class="paragraph">
+<p>对应的内核配置： <code>MAC_PORTACL</code></p>
+</div>
+<div class="paragraph">
+<p>引导选项： <code>mac_portacl_load=&#34;YES&#34;</code></p>
+</div>
+<div class="paragraph">
+<p>man:mac_portacl[4] 模块可以用来通过一系列 <code>sysctl</code> 变量来限制绑定本地的 TCP 和 UDP 端口。 本质上 man:mac_portacl[4] 使得 非-<code>root</code> 用户能够绑定到它所指定的特权端口， 也就是那些编号小于 1024 的端口。</p>
+</div>
+<div class="paragraph">
+<p>在加载之后， 这个模块将在所有的 socket 上启用 MAC 策略。 可以调整下列一些配置：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>security.mac.portacl.enabled</code> 将完全 启用/禁用 策略。</p>
+</li>
+<li>
+<p><code>security.mac.portacl.port_high</code> 将设置为 man:mac_portacl[4] 所保护的最高端口号。</p>
+</li>
+<li>
+<p><code>security.mac.portacl.suser_exempt</code> 如果设置为非零值， 表示将 <code>root</code> 用户排除在策略之外。</p>
+</li>
+<li>
+<p><code>security.mac.portacl.rules</code> 将指定实际的 mac_portacl 策略； 请参见下文。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>实际的 <code>mac_portacl</code> 策略， 是在 <code>security.mac.portacl.rules</code> sysctl 所指定的一个下列形式的字符串： <code>rule[,rule,…​]</code> 其中可以给出任意多个规则。 每一个规则的形式都是： <code>idtype:id:protocol:port</code>。 这里的 <span class="parameter">idtype</span> 参数可以是 <code>uid</code> 或 <code>gid</code>， 分别表示将 <span class="parameter">id</span> 参数解释为用户 id 或组 id。 <span class="parameter">protocol</span> 参数可以用来确定希望应用到 TCP 或 UDP 协议上， 方法是把这一参数设置为 <code>tcp</code> 或 <code>udp</code>。 最后的 <span class="parameter">port</span> 参数则给出了所指定的用户或组能够绑定的端口号。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>由于规则集会直接由内核加以解释， 因此只能以数字形式表示用户 ID、 组 ID， 以及端口等参数。 换言之， 您不能使用用户、 组， 或端口服务的名字来指定它们。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>默认情况下， 在 类-UNIX® 系统中， 编号小于 1024 的端口只能为特权进程使用或绑定， 也就是那些以 <code>root</code> 身份运行的进程。 为了让 man:mac_portacl[4] 能够允许非特权进程绑定低于 1024 的端口， 就必须首先禁用标准的 UNIX® 限制。 这可以通过把 man:sysctl[8] 变量 <code>net.inet.ip.portrange.reservedlow</code> 和 <code>net.inet.ip.portrange.reservedhigh</code> 设置为 0 来实现。</p>
+</div>
+<div class="paragraph">
+<p>请参见下面的例子， 或 man:mac_portacl[4] 联机手册中的说明， 以了解进一步的信息。</p>
+</div>
+<div class="sect2">
+<h3 id="_例子_2">10.1. 例子<a class="anchor" href="#_例子_2"></a></h3>
+<div class="paragraph">
+<p>下面的例子更好地展示了前面讨论的内容：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl security.mac.portacl.port_high=1023</span>
+<span class="c"># sysctl net.inet.ip.portrange.reservedlow=0 net.inet.ip.portrange.reservedhigh=0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>首先我们需要设置使 man:mac_portacl[4] 管理标准的特权端口， 并禁用普通的 UNIX® 绑定限制。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl security.mac.portacl.suser_exempt=1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>您的 <code>root</code> 用户不应因此策略而失去特权，　因此请把 <code>security.mac.portacl.suser_exempt</code> 设置为一个非零的值。 现在您已经成功地配置了　man:mac_portacl[4] 模块， 并使其默认与 类-UNIX® 系统一样运行了。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl security.mac.portacl.rules=uid:80:tcp:80</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>允许 UID 为 80 的用户 (正常情况下， 应该是 <code>www</code> 用户) 绑定到 80 端口。 这样 <code>www</code> 用户就能够运行 web 服务器， 而不需要使用 <code>root</code> 权限了。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl security.mac.portacl.rules=uid:1001:tcp:110,uid:1001:tcp:995</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>允许 UID 为 1001 的用户绑定 TCP 端口 110 (&#34;pop3&#34;) 和 995 (&#34;pop3s&#34;)。 这样用户就能够启动接受来发到 110 和 995 的连接请求的服务了。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-partition">11. MAC partition (分区) 模块<a class="anchor" href="#mac-partition"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块名： <span class="filename">mac_partition.ko</span></p>
+</div>
+<div class="paragraph">
+<p>对应的内核配置： <code>options MAC_PARTITION</code></p>
+</div>
+<div class="paragraph">
+<p>引导选项： <code>mac_partition_load=&#34;YES&#34;</code></p>
+</div>
+<div class="paragraph">
+<p>man:mac_partition[4] 策略将把进程基于其 MAC 标签放到特定的 &#34;partitions&#34; (分区) 中。 这是一种特殊类型的 man:jail[8]， 但对两者进行比较意义不大。</p>
+</div>
+<div class="paragraph">
+<p>这个模块应加到 man:loader.conf[5] 文件中， 以便在启动过程中启用这些规则。</p>
+</div>
+<div class="paragraph">
+<p>绝大多数这一策略的配置是通过 man:setpmac[8] 工具来完成的， 它将在后面介绍。 这个策略可以使用下面的 <code>sysctl</code>：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>security.mac.partition.enabled</code> 将启用强制的 MAC 进程 partitions。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>当启用了这个规则时， 用户将只能看到他们自己的， 以及其他与他们同处一个 partition 的进程， 而不能使用能够越过 partition 的工具。 例如， <code>insecure</code> class 中的用户， 就无法使用 <code>top</code> 命令， 以及其他需要产生新进程的工具。</p>
+</div>
+<div class="paragraph">
+<p>要设置或删除 partition 标签中的工具， 需要使用 <code>setpmac</code>：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># setpmac partition/13 top</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将把 <code>top</code> 命令加入到 <code>insecure</code> class 中的用户的标签集。 注意， 所有由 <code>insecure</code> class 中的用户产生的进程， 仍然会留在 <code>partition/13</code> 标签中。</p>
+</div>
+<div class="sect2">
+<h3 id="_例子_3">11.1. 例子<a class="anchor" href="#_例子_3"></a></h3>
+<div class="paragraph">
+<p>下面的命令将显示 partition 标签以及进程列表：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ps Zax</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>接下来的这个命令将允许察看其他用户的进程 partition 标签， 以及那个用户正在运行的进程：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ps -ZU trhodes</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>除非加载了 man:mac_seeotheruids[4] 策略， 否则用户就看不到 <code>root</code> 的标签。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>非常手工化的实现， 可能会在 <span class="filename">/etc/rc.conf</span> 中禁用所有的服务， 并用脚本来按不同的标签来启动它们。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>下面的几个策略支持基于所给出的三种标签的完整性设定。 这些选项， 连同它们的限制， 在模块的联机手册中进行了进一步介绍。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-mls">12. MAC 多级 (Multi-Level) 安全模块<a class="anchor" href="#mac-mls"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块名： <span class="filename">mac_mls.ko</span></p>
+</div>
+<div class="paragraph">
+<p>对应的内核配置： <code>options MAC_MLS</code></p>
+</div>
+<div class="paragraph">
+<p>引导选项： <code>mac_mls_load=&#34;YES&#34;</code></p>
+</div>
+<div class="paragraph">
+<p>man:mac_mls[4] 策略， 通过严格控制信息流向来控制系统中主体和客体的访问。</p>
+</div>
+<div class="paragraph">
+<p>在 MLS 环境中， &#34;许可 (clearance)&#34; 级别会在每一个主体或客体标签上进行设置， 连同对应的区间。 由于这些透明度或敏感度可以有六千多个层次， 因此为每一个主体或客体进行配置将是一件让任何系统管理员都感到头疼的任务。 所幸的是， 这个策略中已经包含了三个 &#34;立即可用的&#34; 标签。</p>
+</div>
+<div class="paragraph">
+<p>这些标签是 <code>mls/low</code>、 <code>mls/equal</code> 以及 <code>mls/high</code>。 由于这些标签已经在联机手册中进行了介绍， 这里只给出简要的说明：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mls/low</code> 标签包含了最低配置， 从而允许其他客体支配它。 任何标记为 <code>mls/low</code> 的客体将是地透明度的， 从而不允许访问更高级别的信息。 此外， 这个标签也阻止拥有较高透明度的客体向其写入或传递信息。</p>
+</li>
+<li>
+<p><code>mls/equal</code> 标签应放到不希望使用这一策略的客体上。</p>
+</li>
+<li>
+<p><code>mls/high</code> 标签是允许的最高级别透明度。 指定了这个标签的客体将支配系统中的其他客体； 但是， 它们将不允许向较低级别的客体泄露信息。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>MLS 提供了：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>提供了一些非层次分类的层次安全模型；</p>
+</li>
+<li>
+<p>固定规则： 不允许向上读， 不允许向下写 (主体可以读取同级或较低级别的客体， 但不能读取高级别的。 类似地， 主体可以向同级或较高级写， 而不能向下写)；</p>
+</li>
+<li>
+<p>保密 (防止不适当的数据透露)；</p>
+</li>
+<li>
+<p>系统设计的基础要点， 是在多个敏感级别之间并行地处理数据 (而不泄露秘密的和机密的信息)。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>下列 <code>sysctl</code> 可以用来配置特殊服务和接口：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>security.mac.mls.enabled</code> 用来启用/禁用 MLS 策略。</p>
+</li>
+<li>
+<p><code>security.mac.mls.ptys_equal</code> 将所有的 man:pty[4] 设备标记为 <code>mls/equal</code>。</p>
+</li>
+<li>
+<p><code>security.mac.mls.revocation_enabled</code> 可以用来在标签转为较低 grade 时撤销客体访问权。</p>
+</li>
+<li>
+<p><code>security.mac.mls.max_compartments</code> 可以用来设置客体的最大区间层次； 基本上， 这也就是系统中所允许的最大区间数。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>要管理 MLS 标签， 可以使用 man:setfmac[8] 命令。 要在客体上指定标签， 需要使用下面的命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># setfmac mls/5 test</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下述命令用于取得文件 <span class="filename">test</span> 上的 MLS 标签：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># getfmac test</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以上是对于 MLS 策略提供功能的概要。 另一种做法是在 <span class="filename">/etc</span> 中建立一个主策略文件， 并在其中指定 MLS 策略信息， 作为 <code>setfmac</code> 命令的输入。 这种方法， 将在其他策略之后进行介绍。</p>
+</div>
+<div class="sect2">
+<h3 id="_规划托管敏感性">12.1. 规划托管敏感性<a class="anchor" href="#_规划托管敏感性"></a></h3>
+<div class="paragraph">
+<p>通过使用多级安全策略模块， 管理员可以规划如何控制敏感信息的流向。 默认情况下， 由于其默认的禁止向上读以及向下写的性质， 系统会默认将所有客体置于较低的状态。 这样， 所有的客体都可以访问， 而管理员则可以在配置阶段慢慢地进行提高信息的敏感度这样的修改。</p>
+</div>
+<div class="paragraph">
+<p>除了前面介绍的三种基本标签选项之外， 管理员还可以根据需要将用户和用户组进行分组， 以阻止它们之间的信息流。 一些人们比较熟悉的信息限界词汇， 如 <code>机密</code>、 <code>秘密</code>， 以及 <code>绝密</code> 可以方便您理解这一概念。 管理员也可以简单地根据项目级别建不同的分组。 无论采用何种分类方法， 在实施限制性的策略之前， 都必须首先想好如何进行规划。</p>
+</div>
+<div class="paragraph">
+<p>这个安全策略模块最典型的用例是电子商务的 web 服务器， 其上的文件服务保存公司的重要信息以及金融机构的情况。 对于只有两三个用户的个人工作站而言， 则可能不甚适用。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-biba">13. MAC Biba 模块<a class="anchor" href="#mac-biba"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块名： <span class="filename">mac_biba.ko</span></p>
+</div>
+<div class="paragraph">
+<p>对应的内核配置： <code>options MAC_BIBA</code></p>
+</div>
+<div class="paragraph">
+<p>引导选项： <code>mac_biba_load=&#34;YES&#34;</code></p>
+</div>
+<div class="paragraph">
+<p>man:mac_biba[4] 模块将加载 MAC Biba 策略。 这个策略与 MLS 策略非常类似， 只是信息流的规则有些相反的地方。 通俗地说， 这就是防止敏感信息向下传播， 而 MLS 策略则是防止敏感信息的向上传播； 因而， 这一节的许多内容都可以同时应用于两种策略。</p>
+</div>
+<div class="paragraph">
+<p>在 Biba 环境中， &#34;integrity&#34; (完整性) 标签， 将设置在每一个主体或客体上。 这些标签是按照层次级别建立的。 如果客体或主体的级别被提升， 其完整性也随之提升。</p>
+</div>
+<div class="paragraph">
+<p>被支持的标签是 <code>biba/low</code>， <code>biba/equal</code> 以及 <code>biba/high</code>； 解释如下：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>biba/low</code> 标签是客体或主体所能拥有的最低完整性级别。 在客体或主体上设置它， 将阻止其在更高级别客体或主体对其进行的写操作， 虽然读仍被允许。</p>
+</li>
+<li>
+<p><code>biba/equal</code> 标签只应在那些希望排除在策略之外的客体上设置。</p>
+</li>
+<li>
+<p><code>biba/high</code> 允许向较低标签的客体上写， 但不允许读那些客体。 推荐在那些可能影响整个系统完整性的客体上设置这个标签。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Biba 提供了：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>层次式的完整性级别， 并提供了一组非层次式的完整性分类；</p>
+</li>
+<li>
+<p>固定规则： 不允许向上写， 不允许向下读 (与 MLS 相反)。 主体可以在它自己和较低的级别写， 但不能向更高级别实施写操作。 类似地， 主体也可以读在其自己的， 或更高级别的客体， 但不能读取较低级别的客体；</p>
+</li>
+<li>
+<p>完整性 (防止对数据进行不正确的修改)；</p>
+</li>
+<li>
+<p>完整性级别 (而不是 MLS 的敏感度级别)。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>下列 <code>sysctl</code> 可以用于维护 Biba 策略。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>security.mac.biba.enabled</code> 可以用来在机器上启用/禁用是否实施 Biba 策略。</p>
+</li>
+<li>
+<p><code>security.mac.biba.ptys_equal</code> 可以用来在 man:pty[4] 设备上禁用 Biba 策略。</p>
+</li>
+<li>
+<p><code>security.mac.biba.revocation_enabled</code> 将在支配主体发生变化时强制撤销对客体的访问权。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>要操作系统客体上的 Biba 策略， 需要使用 <code>setfmac</code> 和 <code>getfmac</code> 命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># setfmac biba/low test</span>
+<span class="c"># getfmac test</span>
+<span class="nb">test</span>: biba/low</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_规划托管完整性">13.1. 规划托管完整性<a class="anchor" href="#_规划托管完整性"></a></h3>
+<div class="paragraph">
+<p>与敏感性不同， 完整性是要确保不受信方不能对信息进行篡改。 这包括了在主体和客体之间传递的信息。 这能够确保用户只能修改甚至访问需要他们的信息。</p>
+</div>
+<div class="paragraph">
+<p>man:mac_biba[4] 安全策略模块允许管理员指定用户能够看到和执行的文件和程序， 并确保这些文件能够为系统及用户或用户组所信任， 而免受其他威胁。</p>
+</div>
+<div class="paragraph">
+<p>在最初的规划阶段， 管理员必须做好将用户分成不同的等级、 级别和区域的准备。 在启动前后， 包括数据以及程序和使用工具在内的客体， 用户都会无法访问。 一旦启用了这个策略模块， 系统将默认使用高级别的标签， 而划分用户级别和等级的工作则交由管理员来进行配置。 与前面介绍的级别限界不同， 好的规划方法可能还包括 topic。 例如， 只允许开发人员修改代码库、 使用源代码编译器， 以及其他开发工具， 而其他用户则分入其他类别， 如测试人员、 设计人员， 以及普通用户， 这些用户可能只拥有读这些资料的权限。</p>
+</div>
+<div class="paragraph">
+<p>通过其自然的安全控制， 完整性级别较低的主体， 就会无法向完整性级别高的主体进行写操作； 而完整性级别较高的主体， 也不能观察或读较低完整性级别的客体。 通过将客体的标签设为最低级， 可以阻止所有主体对其进行的访问操作。 这一安全策略模块预期的应用场合包括受限的 web 服务器、 开发和测试机， 以及源代码库。 而对于个人终端、 作为路由器的计算机， 以及网络防火墙而言， 它的用处就不大了。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-lomac">14. MAC LOMAC 模块<a class="anchor" href="#mac-lomac"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模块名： <span class="filename">mac_lomac.ko</span></p>
+</div>
+<div class="paragraph">
+<p>对应的内核配置： <code>options MAC_LOMAC</code></p>
+</div>
+<div class="paragraph">
+<p>引导选项： <code>mac_lomac_load=&#34;YES&#34;</code></p>
+</div>
+<div class="paragraph">
+<p>和 MAC Biba 策略不同， man:mac_lomac[4] 策略只允许在降低了完整性级别之后， 才允许在不破坏完整性规则的前提下访问较低完整性级别的客体。</p>
+</div>
+<div class="paragraph">
+<p>MAC 版本的 Low-watermark 完整性策略不应与较早的 man:lomac[4] 实现相混淆， 除了使用浮动的标签来支持主体通过辅助级别区间降级之外， 其工作方式与 Biba 大体相似。 这一次要的区间以 <code>[auxgrade]</code> 的形式出现。 当指定包含辅助级别的 lomac 策略时， 其形式应类似于： <code>lomac/10[2]</code> 这里数字二 (2) 就是辅助级别。</p>
+</div>
+<div class="paragraph">
+<p>MAC LOMAC 策略依赖于系统客体上存在普适的标签， 这样就允许主体从较低完整性级别的客体读取， 并对主体的标签降级， 以防止其在之后写高完整性级别的客体。 这就是前面讨论的 <code>[auxgrade]</code> 选项， 因此这个策略能够提供更大的兼容性， 而所需要的初始配置也要比 Biba 少。</p>
+</div>
+<div class="sect2">
+<h3 id="_例子_4">14.1. 例子<a class="anchor" href="#_例子_4"></a></h3>
+<div class="paragraph">
+<p>与 Biba 和 MLS 策略类似； <code>setfmac</code> 和 <code>setpmac</code> 工具可以用来在系统客体上放置标签：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># setfmac /usr/home/trhodes lomac/high[low]</span>
+<span class="c"># getfmac /usr/home/trhodes</span>
+lomac/high[low]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>注意， 这里的辅助级别是 <code>low</code>， 这一特性只由 MAC LOMAC 策略提供。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-implementing">15. MAC Jail 中的 Nagios<a class="anchor" href="#mac-implementing"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>下面给出了通过多种 MAC 模块， 并正确地配置策略来实现安全环境的例子。 这只是一个测试， 因此不应被看作四海一家的解决之道。 仅仅实现一个策略， 而忽略它不能解决任何问题， 并可能在生产环境中产生灾难性的后果。</p>
+</div>
+<div class="paragraph">
+<p>在开始这些操作之前， 必须在每一个文件系统上设置 <code>multilabel</code> 选项， 这些操作在这一章开始的部分进行了介绍。 不完成这些操作， 将导致错误的结果。 首先， 请确认已经安装了 package:net-mngt/nagios-plugins[]、 package:net-mngt/nagios[]， 和 package:www/apache13[] 这些 ports， 并对其进行了配置， 且运转正常。</p>
+</div>
+<div class="sect2">
+<h3 id="_创建一个_insecure_不安全_用户_class">15.1. 创建一个 insecure (不安全) 用户 Class<a class="anchor" href="#_创建一个_insecure_不安全_用户_class"></a></h3>
+<div class="paragraph">
+<p>首先是在 <span class="filename">/etc/login.conf</span> 文件中加入一个新的用户 class：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>insecure:\
+:copyright=/etc/COPYRIGHT:\
+:welcome=/etc/motd:\
+:setenv=MAIL=/var/mail/$,BLOCKSIZE=K:\
+:path=~/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+:manpath=/usr/shared/man /usr/local/man:\
+:nologin=/usr/sbin/nologin:\
+:cputime=1h30m:\
+:datasize=8M:\
+:vmemoryuse=100M:\
+:stacksize=2M:\
+:memorylocked=4M:\
+:memoryuse=8M:\
+:filesize=8M:\
+:coredumpsize=8M:\
+:openfiles=24:\
+:maxproc=32:\
+:priority=0:\
+:requirehome:\
+:passwordtime=91d:\
+:umask=022:\
+:ignoretime@:\
+:label=biba/10(10-10):</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>并在 default 用户 class 中加入：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:label=biba/high:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦完成上述操作， 就需要运行下面的命令来重建数据库：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cap_mkdb /etc/login.conf</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_引导配置">15.2. 引导配置<a class="anchor" href="#_引导配置"></a></h3>
+<div class="paragraph">
+<p>现在暂时还不要重新启动， 我们还需要在 <span class="filename">/boot/loader.conf</span> 中增加下面几行， 以便让模块随系统初始化一同加载：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>mac_biba_load=&#34;YES&#34;
+mac_seeotheruids_load=&#34;YES&#34;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_配置用户">15.3. 配置用户<a class="anchor" href="#_配置用户"></a></h3>
+<div class="paragraph">
+<p>使用下面的命令将 <code>root</code> 设为属于默认的 class：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pw usermod root -L default</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>所有非 <code>root</code> 或系统的用户， 现在需要一个登录 class。 登录 class 是必须的， 否则这些用户将被禁止使用类似 man:vi[1] 这样的命令。 下面的 <code>sh</code> 脚本应能完成这个工作：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># for x in `awk -F: &#39;($3 &gt;= 1001) &amp;&amp; ($3 != 65534) { print $1 }&#39; \</span>
+
+<span class="c"># /etc/passwd`; do pw usermod $x -L default; done;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 <code>nagios</code> 和 <code>www</code> 这两个用户归入不安全 class：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pw usermod nagios -L insecure</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pw usermod www -L insecure</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_创建上下文文件">15.4. 创建上下文文件<a class="anchor" href="#_创建上下文文件"></a></h3>
+<div class="paragraph">
+<p>接下来需要创建一个上下文文件； 您可以把下面的实例放到 <span class="filename">/etc/policy.contexts</span> 中。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># This is the default BIBA policy for this system.
+
+# System:
+/var/run                        biba/equal
+/var/run/*                      biba/equal
+
+/dev                            biba/equal
+/dev/*                          biba/equal
+
+/var				biba/equal
+/var/spool                      biba/equal
+/var/spool/*                    biba/equal
+
+/var/log                        biba/equal
+/var/log/*                      biba/equal
+
+/tmp				biba/equal
+/tmp/*				biba/equal
+/var/tmp			biba/equal
+/var/tmp/*			biba/equal
+
+/var/spool/mqueue		biba/equal
+/var/spool/clientmqueue		biba/equal
+
+# For Nagios:
+/usr/local/etc/nagios
+/usr/local/etc/nagios/*         biba/10
+
+/var/spool/nagios               biba/10
+/var/spool/nagios/*             biba/10
+
+# For apache
+/usr/local/etc/apache           biba/10
+/usr/local/etc/apache/*         biba/10</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这个策略通过在信息流上设置限制来强化安全。 在这个配置中， 包括 <code>root</code> 和其他用户在内的用户， 都不允许访问 Nagios。 作为 Nagios 一部分的配置文件和进程， 都是完全独立的， 也称为 jailed。</p>
+</div>
+<div class="paragraph">
+<p>接下来可以用下面的命令将其读入系统：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># setfsmac -ef /etc/policy.contexts /</span>
+<span class="c"># setfsmac -ef /etc/policy.contexts /</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>随环境不同前述的文件系统布局可能会有所不同； 不过无论如何， 都只能在一个文件系统上运行它。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在 <span class="filename">/etc/mac.conf</span> 文件中的 main 小节需要进行下面的修改：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>default_labels file ?biba
+default_labels ifnet ?biba
+default_labels process ?biba
+default_labels socket ?biba</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_启用网络">15.5. 启用网络<a class="anchor" href="#_启用网络"></a></h3>
+<div class="paragraph">
+<p>在 <span class="filename">/boot/loader.conf</span> 中增加下列内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>security.mac.biba.trust_all_interfaces=1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将下述内容加入 <span class="filename">rc.conf</span> 中的网络接口配置。 如果主 Internet 配置是通过 DHCP 完成的， 则需要在每次系统启动之后手工执行类似的配置：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>maclabel biba/equal</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_测试配置">15.6. 测试配置<a class="anchor" href="#_测试配置"></a></h3>
+<div class="paragraph">
+<p>首先要确认 web 服务以及 Nagios 不会随系统的初始化和重启过程而自动启动。 在此之前， 请在此确认 <code>root</code> 用户不能访问 Nagios 配置目录中的任何文件 如果 <code>root</code> 能够在 <span class="filename">/var/spool/nagios</span> 中运行 man:ls[1]， 则表示配置有误。 如果配置正确的话， 您会收到一条 &#34;permission denied&#34; 错误信息。</p>
+</div>
+<div class="paragraph">
+<p>如果一切正常， Nagios、 Apache， 以及 Sendmail 就可以按照适应安全策略的方式启动了。 下面的命令将完成此工作：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /etc/mail &amp;&amp; make stop &amp;&amp; \</span>
+setpmac biba/equal make start <span class="o">&amp;&amp;</span> setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> apachectl start <span class="o">&amp;&amp;</span> <span class="se">\</span>
+setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/local/etc/rc.d/nagios.sh forcestart</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>再次检查是否一切正常。 如果不是的话， 请检查日志文件和错误信息。 此外， 还可以用 man:sysctl[8] 来临时禁用 man:mac_biba[4] 安全策略模块的强制措施， 并象之前那样进行配置和启动服务。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>root</code> 用户可以放心大胆地修改安全强制措施， 并编辑配置文件。 下面的命令可以对安全策略进行降级， 并启动一个新的 shell：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># setpmac biba/10 csh</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要阻止这种情况发生， 就需要配置 man:login.conf[5] 中许可的命令范围了。 如果 man:setpmac[8] 尝试执行超越许可范围的命令， 则会返回一个错误， 而不是执行命令。 在这个例子中， 可以把 root 设为 <code>biba/high(high-high)</code>。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-userlocked">16. User Lock Down<a class="anchor" href="#mac-userlocked"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>这个例子针对的是一个相对较小的存储系统， 其用户数少于五十。 用户能够在其上登录， 除了存储数据之外， 还可以访问一些其他资源。</p>
+</div>
+<div class="paragraph">
+<p>在这个场景中， man:mac_bsdextended[4] 可以与 man:mac_seeotheruids[4] 并存， 以达到禁止访问非授权资源， 同时隐藏其他用户的进程的目的。</p>
+</div>
+<div class="paragraph">
+<p>首先， 在 <span class="filename">/boot/loader.conf</span> 中加入：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>mac_seeotheruids_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>随后， 可以通过下述 rc.conf 变量来启用 man:mac_bsdextended[4] 安全策略模块：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ugidfw_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>默认规则保存在 <span class="filename">/etc/rc.bsdextended</span> 中， 并在系统初始化时加载； 但是， 其中的默认项可能需要进行一些改动。 因为这台机器只为获得了授权的用户提供服务， 因此除了最后两项之外， 其它内容都应保持注释的状态。 这两项规则将默认强制加载属于用户的系统客体。</p>
+</div>
+<div class="paragraph">
+<p>在这台机器上添加需要的用户并重新启动。 出于测试的目的， 请在两个控制台上分别以不同的用户身份登录。 运行 <code>ps aux</code> 命令来看看是否能看到其他用户的进程。 此外， 在其他用户的主目录中运行 man:ls[1] 命令， 如果配置正确， 则这个命令会失败。</p>
+</div>
+<div class="paragraph">
+<p>不要尝试以 <code>root</code> 用户的身份进行测试， 除非您已经修改了特定的 <code>sysctl</code> 来阻止超级用户的访问。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在添加新用户时， 他们的 man:mac_bsdextended[4] 规则不会自动出现在规则集表中。 要迅速更新规则集， 只需简单地使用 man:kldunload[8] 和 man:kldload[8] 工具来卸载并重新加载安全策略模块。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mac-troubleshoot">17. MAC 框架的故障排除<a class="anchor" href="#mac-troubleshoot"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在开发过程中， 有一些用户报告了正常配置下出现的问题。 其中的一些问题如下所示：</p>
+</div>
+<div class="sect2">
+<h3 id="_无法在_上启用_multilabel_选项">17.1. 无法在 <span class="filename">/</span> 上启用 <code>multilabel</code> 选项<a class="anchor" href="#_无法在_上启用_multilabel_选项"></a></h3>
+<div class="paragraph">
+<p><code>multilabel</code> 标志在根 (<span class="filename">/</span>) 分区上没有保持启用状态！</p>
+</div>
+<div class="paragraph">
+<p>看起来每五十个用户中就有一个遇到这样的问题， 当然， 在我们的初始配置过程中也出现过这样的问题。 更进一步的观察使得我相信这个所谓的 &#34;bug&#34; 是由于文档中不确切的描述， 或对其产生的误解造成的。 无论它是因为什么引发的， 下面的步骤应该能够解决此问题：</p>
+</div>
+<div class="exampleblock procedure">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>编辑 <span class="filename">/etc/fstab</span> 并将根分区设置为 <code>ro</code>， 表示只读。</p>
+</li>
+<li>
+<p>重新启动并进入单用户模式。</p>
+</li>
+<li>
+<p>在 <span class="filename">/</span> 上运行 <code>tunefs -l enable</code></p>
+</li>
+<li>
+<p>重新启动并进入正常的模式。</p>
+</li>
+<li>
+<p>运行 <code>mount -urw</code><span class="filename">/</span> 并把 <span class="filename">/etc/fstab</span> 中的 <code>ro</code> 改回 <code>rw</code>， 然后再次重新启动。</p>
+</li>
+<li>
+<p>再次检查来自 <code>mount</code> 的输出， 已确认根文件系统上正确地设置了 <code>multilabel</code>。</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_在_mac_之后无法启动_x11_了">17.2. 在 MAC 之后无法启动 X11 了<a class="anchor" href="#_在_mac_之后无法启动_x11_了"></a></h3>
+<div class="paragraph">
+<p>在使用 MAC 建立安全的环境之后， 就无法启动 X 了！</p>
+</div>
+<div class="paragraph">
+<p>这可能是由于 MAC <code>partition</code> 策略， 或者对某个 MAC 标签策略进行了错误的配置导致的。 要调试这个问题， 请尝试：</p>
+</div>
+<div class="exampleblock procedure">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>检查错误信息； 如果用户是在 <code>insecure</code> class 中， 则 <code>partition</code> 策略就可能导致问题。 尝试将用户的 class 重新改为 <code>default</code> class， 并使用 <code>cap_mkdb</code> 命令重建数据库。 如果这无法解决问题， 则进入第二步。</p>
+</li>
+<li>
+<p>仔细检查标签策略。 确认针对有问题的用户的策略是正确的， 特别是 X11 应用， 以及 <span class="filename">/dev</span> 项。</p>
+</li>
+<li>
+<p>如果这些都无法解决问题， 将出错消息和对您的环境的描述， 发送到 <a href="http://www.TrustedBSD.org">TrustedBSD</a> 网站上的 TrustedBSD 讨论邮件列表， 或者 <a href="https://lists.FreeBSD.org/subscription/freebsd-questions">FreeBSD 一般问题邮件列表</a> 邮件列表。</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_error_man_secure_path3_cannot_stat_login_conf">17.3. Error: man:_secure_path[3] cannot stat <span class="filename">.login_conf</span><a class="anchor" href="#_error_man_secure_path3_cannot_stat_login_conf"></a></h3>
+<div class="paragraph">
+<p>当我试图从 <code>root</code> 用户切换到其同中的其他用户时， 出现了错误提示 <code>_secure_path: unable to state .login_conf</code>。</p>
+</div>
+<div class="paragraph">
+<p>这个提示通常在用户拥有高于它将要成为的那个用户的 标签设定时出现。 例如， 如果系统上的一个用户 <code>joe</code> 拥有默认的 <code>biba/low</code> 标签， 而 <code>root</code> 用户拥有 <code>biba/high</code>， 它也就不能查看 <code>joe</code> 的主目录， 无论 <code>root</code> 是否使用了 <code>su</code> 来成为 <code>joe</code>。 这种情况下， Biba 完整性模型， 就不会允许 <code>root</code> 查看在较低完整性级别中的客体。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_root_用户名被破坏了">17.4. <code>root</code> 用户名被破坏了！<a class="anchor" href="#_root_用户名被破坏了"></a></h3>
+<div class="paragraph">
+<p>在普通模式， 甚至是单用户模式中， <code>root</code> 不被识别。 <code>whoami</code> 命令返回了 0 (零) 而 <code>su</code> 则提示 <code>who are you?</code>。 到底发生了什么？</p>
+</div>
+<div class="paragraph">
+<p>标签策略被禁用可能会导致这样的问题， 无论是通过 man:sysctl[8] 或是卸载了策略模块。 如果打算禁用策略， 或者临时禁用它， 则登录性能数据库需要重新配置， 在其中删除 <code>label</code> 选项。 仔细检查 <span class="filename">login.conf</span> 以确保所有的 <code>label</code> 选项都已经删除， 然后使用 <code>cap_mkdb</code> 命令来重建数据库。</p>
+</div>
+<div class="paragraph">
+<p>这种情况也可能在通过策略来限制访问 <span class="filename">master.passwd</span> 文件或对应的那个数据库时发生。 这主要是由于管理员修改受某一 label 限制的文件， 而与系统级的通用策略发生了冲突。 这时， 用户信息将由系统直接读取， 而在文件继承了新的 label 之后则会拒绝访问。 此时， 只需使用 man:sysctl[8] 禁用这一策略， 一切就会恢复正常了。</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=http://127.0.0.1:5500/zh-cn/books/handbook/jails class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=http://127.0.0.1:5500/zh-cn/books/handbook/audit  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mac-synopsis">1. 概要</a></li>
+    <li><a href="#mac-inline-glossary">2. 本章出现的重要术语</a></li>
+    <li><a href="#mac-initial">3. 关于 MAC 的说明</a></li>
+    <li><a href="#mac-understandlabel">4. 理解 MAC 标签</a></li>
+    <li><a href="#mac-planning">5. 规划安全配置</a></li>
+    <li><a href="#mac-modules">6. 模块配置</a></li>
+    <li><a href="#mac-seeotheruids">7. MAC seeotheruids 模块</a></li>
+    <li><a href="#mac-bsdextended">8. MAC bsdextended 模块</a></li>
+    <li><a href="#mac-ifoff">9. MAC ifoff 模块</a></li>
+    <li><a href="#mac-portacl">10. MAC portacl 模块</a></li>
+    <li><a href="#mac-partition">11. MAC partition (分区) 模块</a></li>
+    <li><a href="#mac-mls">12. MAC 多级 (Multi-Level) 安全模块</a></li>
+    <li><a href="#mac-biba">13. MAC Biba 模块</a></li>
+    <li><a href="#mac-lomac">14. MAC LOMAC 模块</a></li>
+    <li><a href="#mac-implementing">15. MAC Jail 中的 Nagios</a></li>
+    <li><a href="#mac-userlocked">16. User Lock Down</a></li>
+    <li><a href="#mac-troubleshoot">17. MAC 框架的故障排除</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="http://127.0.0.1:5500/zh-cn/languages">
+                
+                <img src="/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

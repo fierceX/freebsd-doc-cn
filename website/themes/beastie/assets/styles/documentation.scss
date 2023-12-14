@@ -1,0 +1,407 @@
+/*
+ * Copyright (c) 1994-2023, The FreeBSD Documentation Project
+ * Copyright (c) 2021-2023, Sergio Carlavilla <carlavilla@FreeBSD.org>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ */
+
+.documents-list {
+  list-style: none;
+  padding-left: 10px;
+
+  li {
+
+    a {
+      text-decoration: none;
+      font-weight: bolder;
+      color: var(--global-font);
+    }
+
+    p {
+      margin-top: 0px;
+    }
+  }
+
+}
+
+.main-wrapper-article {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--max-width);
+  width: 100%;
+
+  .article {
+    flex-grow: 1;
+    padding: var(--documentation-padding);
+    width: 90vw;
+    width: clamp(16rem, 90vw, 70rem);
+    min-width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    transition: .2s ease-in-out;
+
+    h1 {
+      margin: .8rem 0;
+    }
+  }
+}
+
+.main-wrapper-book {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--max-width);
+  width: 100%;
+
+  .book-menu {
+    flex: 0 0 16rem;
+    font-size: .75rem;
+    background-color: var(--global-background-color);
+
+    .book-menu-content {
+      width: 16rem;
+      position: sticky;
+      top: var(--header-height);
+      bottom: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: var(--global-background-color);
+      transition: .2s ease-in-out;
+
+      h3 {
+        margin: 1rem 0;
+        padding-left: .5rem;
+        border-bottom: none;
+      }
+
+      #search-book {
+        margin-top: 1.5rem;
+        margin-bottom: .75rem;
+        border: 1px solid #CCC;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 3px #DDD;
+        box-sizing: border-box;
+        background-color: #FCFCFD;
+        color: #444;
+        width: 95%;
+        margin-left: .5rem;
+      }
+
+      input.toggle ~ .icon::after {
+        display: inline-block;
+        font: 1rem FontAwesome;
+        text-rendering: auto;
+        content: "\f105";
+      }
+
+      input.toggle:checked ~ .icon::after {
+        display: inline-block;
+        font: 1rem FontAwesome;
+        text-rendering: auto;
+        content: "\f107";
+      }
+
+      input.toggle ~ ul {
+        display:none
+      }
+
+      input.toggle:checked ~ ul {
+        display:block
+      }
+
+      #MenuContents {
+        position: sticky;
+        overflow: auto;
+        max-height: calc(100vh - 8rem);
+        line-height: 2;
+
+        ul {
+          margin: 0;
+          padding: 0;
+          padding-left: .5rem;
+
+          li {
+            list-style: none;
+            margin: 0;
+
+            label {
+              position: absolute;
+              cursor: pointer;
+              font-size: 0.875rem;
+            }
+
+            a {
+              color: var(--global-font-color);
+              display: block;
+              padding-left: 1rem;
+              padding-right: .5rem;
+              font-size: 0.875rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .book {
+    flex-grow: 1;
+    padding: var(--documentation-padding);
+    width: 90vw;
+    min-width: 20rem;
+    max-width: var(--max-width);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    transition-duration: 0.2s;
+    background-color: var(--global-background-color);
+
+    h1 {
+      margin: .8rem 0;
+    }
+
+    .book-menu-mobile {
+      margin-top: 10px;
+
+      .menu-control-button {
+        border-radius: 2px;
+        cursor: pointer;
+        font-weight: 500;
+        padding: 5px;
+        border: 1px solid var(--lines-color);
+
+        i {
+          padding-right: 5px;
+        }
+      }
+    }
+
+    .buttons {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+
+      .prev, .home, .next {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        i {
+          padding: 1rem;
+        }
+      }
+
+      .home {
+        margin-left: auto;
+        margin-right: auto;
+
+        i {
+          padding-left: .2rem;
+          padding-right: .2rem;
+        }
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+
+        .direction {
+          font-weight: bolder;
+        }
+      }
+    }
+
+  }
+}
+
+.toc {
+  flex: 0 0 16rem;
+  font-size: .75rem;
+  background-color: var(--global-background-color);
+
+  .toc-content {
+    width: 16rem;
+    position: sticky;
+    top: var(--header-height);
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: .2s ease-in-out;
+
+    h3 {
+      border-bottom: none;
+      margin: 1rem 0;
+    }
+
+    #TableOfContents {
+      position: sticky;
+      overflow: auto;
+      max-height: 60vh;
+
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          margin: 0;
+          margin-bottom: .5rem;
+          list-style: none;
+
+          a {
+            color: var(--global-font-color);
+            display: inline-block;
+            padding: .25rem .5rem .25rem .5rem;
+            margin-left: .5rem;
+            font-size: 0.875rem;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .resources {
+      h3 {
+        margin: 1rem 0;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          list-style: none;
+          margin: 0;
+
+          a {
+            color: var(--global-font-color);
+            display: inline-block;
+            padding: .25rem .5rem .25rem .5rem;
+            font-size: 0.875rem;
+          }
+
+          i {
+            margin-left: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.toc-mobile {
+  h3 {
+    border-bottom: none;
+  }
+
+  #TableOfContents, .resources {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0;
+
+        a {
+          color: var(--global-font-color);
+          display: inline-block;
+          padding: .25rem 0 .25rem .5rem;
+          text-decoration: none;
+          border-left: 1px solid var(--lines-color);
+
+          &:hover {
+            font-weight: bolder;
+          }
+        }
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+input.toggle {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  position: absolute;
+}
+
+@media (max-width: 55em) {
+  .toc {
+    display: none;
+  }
+
+  #menu-control {
+    display: inline;
+  }
+
+  .book-menu {
+    visibility: hidden;
+    margin-inline-start: -16rem;
+    z-index: 1;
+  }
+
+  #menu-control:checked ~ main {
+    .book-menu {
+      visibility: initial;
+    }
+
+    .book-menu .book-menu-content {
+      transform: translateX(16rem);
+      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+    }
+
+    .book {
+      opacity: 0.25;
+    }
+
+    .book-menu-overlay {
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+}
+
+@media (min-width: 55em) {
+  .toc-mobile, .book-menu-mobile {
+    display: none;
+  }
+}

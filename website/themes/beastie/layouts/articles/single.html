@@ -1,0 +1,56 @@
+{{ define "main" }}
+<main class="main-wrapper-article">
+  <div class="article">
+    <h1 class="title">{{ .Title }}</h1>
+    {{ $siteLanguage := string $.Site.Language }}
+    {{ if ne $siteLanguage "en" }}
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          {{ i18n "stale-warning-message" }} <a href="https://translate-dev.freebsd.org/" target="_blank">{{ i18n "translation-instance" }}</a>.
+        </p>
+      </div>
+    {{ end }}
+    {{ if .Params.subtitle }}
+      <h3 class="subtitle">{{ .Params.subtitle }}</h3>
+    {{ end }}
+    {{ if .Params.copyright }}
+      <div class="copyright">
+        Copyright © {{ .Params.copyright }}
+      </div>
+    {{ end}}
+    {{ if isset .Params "trademarks" }}
+      {{ partial "trademarks" .Params.trademarks }}
+    {{ end }}
+    <div class="toc-mobile">
+      <h3>{{ i18n "toc" }}</h3>
+      {{ .TableOfContents }}
+    </div>
+    {{ .Content }}
+    {{ if .GitInfo }}
+    <hr />
+    <div class="last-modified">
+      <p><strong>{{ i18n "last-modified" }}</strong>: {{ .GitInfo.AuthorDate | time.Format ":date_long" }} {{ i18n "by" }} <a href="https://cgit.freebsd.org/doc/commit/?id={{ .GitInfo.AbbreviatedHash }}" target="_blank">{{ .GitInfo.AuthorName }}</a></p>
+    </div>
+    {{ end }}
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>{{ i18n "toc" }}</h3>
+      {{ .TableOfContents }}
+      <hr />
+      <div class="resources">
+        <h3>{{ i18n "resources" }}</h3>
+        <ul class="contents">
+          {{ $pathSections := split .Page.File "/" }}
+          {{ $path := printf "%s/%s/%s_%s.pdf" (index $pathSections 0) (index $pathSections 1) (index $pathSections 1) $.Site.Home.Language }}
+          {{ $pdfUrl := printf "%s%s/%s" $.Site.Params.downloadBaseUrl $.Site.Home.Language $path }}
+          <li><i class="fa fa-file-pdf-o" aria-hidden="true" title="{{ i18n "download-pdf" }}"></i><a href="{{ $pdfUrl }}">{{ i18n "download-pdf" }}</a></li>
+          {{ $editUrl := printf "%s%s/%s" $.Site.Params.editBaseUrl $.Site.Home.Language .Page.File }}
+          <li><i class="fa fa-pencil-square-o" aria-hidden="true" title="{{ i18n "edit-page" }}"></i><a href="{{ $editUrl }}" target="_blank">{{ i18n "edit-page" }}</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+</main>
+{{ end }}

@@ -1,0 +1,3294 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FreeBSD provides two complementary technologies for installing third-party software: the FreeBSD Ports Collection, for installing from source, and packages, for installing from pre-built binaries"/>
+  <meta name="keywords" content="ports, collection, pkg, poudriere, management"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="http://127.0.0.1:5500/en/books/handbook/ports/" />
+
+  <title>Chapter 4. Installing Applications: Packages and Ports |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="Chapter 4. Installing Applications: Packages and Ports" />
+    <meta property="og:description" content="FreeBSD provides two complementary technologies for installing third-party software: the FreeBSD Ports Collection, for installing from source, and packages, for installing from pre-built binaries" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://127.0.0.1:5500favicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="en" />
+    <meta property="og:url" content="http://127.0.0.1:5500/en/books/handbook/ports/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "http:\/\/127.0.0.1:5500\/en\/books\/handbook\/ports\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="http://127.0.0.1:5500" class="logo">
+        <img src="/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/preface/">
+              Preface
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-audience">Intended Audience</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-changes-from4">Fourth Edition</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-changes-from3">Third Edition</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-changes-from2">Second Edition (2004)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-changes">First Edition (2001)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-overview">Organization of This Book</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-conv">Conventions used in this book</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-acknowledgements">Acknowledgments</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/parti/">
+              Part I. Getting Started
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/introduction/">
+              Chapter 1. Introduction
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/introduction/#introduction-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/introduction/#nutshell">2. Welcome to FreeBSD!</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/introduction/#history">3. About the FreeBSD Project</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/">
+              Chapter 2. Installing FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-hardware">2. Minimum Hardware Requirements</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-pre">3. Pre-Installation Tasks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-start">4. Starting the Installation</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#using-bsdinstall">5. Using bsdinstall</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-partitioning">6. Allocating Disk Space</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">7. Fetching Distribution Files</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-post">8. Network Interfaces, Accounts, Time Zone, Services and Hardening</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-install-trouble">9. Troubleshooting</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#using-live-cd">10. Using the Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/basics/">
+              Chapter 3. FreeBSD Basics
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#basics-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#consoles">2. Virtual Consoles and Terminals</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#users-synopsis">3. Users and Basic Account Management</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#permissions">4. Permissions</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#dirstructure">5. Directory Structure</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#disk-organization">6. Disk Organization</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#mount-unmount">7. Mounting and Unmounting File Systems</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#basics-processes">8. Processes and Daemons</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#shells">9. Shells</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#editors">10. Text Editors</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#basics-devices">11. Devices and Device Nodes</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#basics-more-information">12. Manual Pages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/ports/">
+              Chapter 4. Installing Applications: Packages and Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-overview">2. Overview of Software Installation</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-finding-applications">3. Finding Software</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#pkgng-intro">4. Using pkg for Binary Package Management</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-using">5. Using the Ports Collection</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-poudriere">6. Building Packages with poudriere</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-nextsteps">7. Post-Installation Considerations</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-broken">8. Dealing with Broken Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/x11/">
+              Chapter 5. The X Window System
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x11-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x-install">2. Installing Xorg</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x-graphic-card-drivers">3. Graphic card drivers</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x-config">4. Xorg Configuration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x-fonts">5. Using Fonts in Xorg</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/wayland/">
+              Chapter 6. Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-synopsis">1. Wayland Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-wayfire">2. The Wayfire Compositor</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-hikari">3. The Hikari Compositor</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-sway">4. The Sway Compositor</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-xwayland">5. Using Xwayland</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-remotedesktop">6. Remote Desktop Using VNC</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-ly">7. Wayland Login Manager</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-utilities">8. Useful Utilities</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/network/">
+              Chapter 7. Network
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#network-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#config-network-setup">2. Setting up the Network</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#config-network-connection">3. Wired Networks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#network-wireless">4. Wireless Networks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#hostname">5. Hostname</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#dns">6. DNS</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#troubleshooting">7. Troubleshooting</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/partii/">
+              Part II. Common Tasks
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/desktop/">
+              Chapter 8. Desktop Environments
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-environments">2. Desktop Environments</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-browsers">3. Browsers</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-development">4. Development tools</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-productivity">5. Desktop office productivity</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-viewers">6. Document Viewers</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-finance">7. Finance</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/multimedia/">
+              Chapter 9. Multimedia
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#multimedia-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#sound-setup">2. Setting Up the Sound Card</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#audio-ports">3. Audio players</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#video-ports">4. Video players</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#conferencing-meetings">5. Conferencing and Meetings</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#scanners">6. Image Scanners</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/">
+              Chapter 10. Configuring the FreeBSD Kernel
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-custom-kernel">2. Why Build a Custom Kernel?</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-devices">3. Finding the System Hardware</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-config">4. The Configuration File</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-building">5. Building and Installing a Custom Kernel</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-trouble">6. If Something Goes Wrong</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/printing/">
+              Chapter 11. Printing
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-quick-start">1. Quick Start</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-connections">2. Printer Connections</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-pdls">3. Common Page Description Languages</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-direct">4. Direct Printing</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-lpd">5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-other">6. Other Printing Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/">
+              Chapter 12. Linux Binary Compatibility
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/#linuxemu-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/#linuxemu-lbc-install">2. Configuring Linux Binary Compatibility</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/#linux-userlands">3. Linux userlands</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/#linuxemu-advanced">4. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/wine/">
+              Chapter 13. WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-overview-concepts">2. WINE Overview & Concepts</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#installing-wine-on-freebsd">3. Installing WINE on FreeBSD</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#running-first-wine-program">4. Running a First WINE Program on FreeBSD</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#configuring-wine-installation">5. Configuring WINE Installation</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-management-guis">6. WINE Management GUIs</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-in-multi-user-os-installations">7. WINE in Multi-User FreeBSD Installations</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-on-os-faq">8. WINE on FreeBSD FAQ</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/partiii/">
+              Part III. System Administration
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/config/">
+              Chapter 14. Configuration, Services, Logging and Power Management
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#config-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#configtuning-configfiles">2. Configuration Files</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#configtuning-rcd">3. Managing Services in FreeBSD</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#cron-periodic">4. Cron and Periodic</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#configtuning-syslog">5. Configuring System Logging</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#acpi-overview">6. Power and Resource Management</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#adding-swap-space">7. Adding Swap Space</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/boot/">
+              Chapter 15. The FreeBSD Booting Process
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/boot/#boot-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/boot/#boot-introduction">2. FreeBSD Boot Process</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/boot/#device-hints">3. Device Hints</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/boot/#boot-shutdown">4. Shutdown Sequence</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/security/">
+              Chapter 16. Security
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-intro">2. Introduction</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#sec-accounts">3. Securing Accounts</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-ids">4. Intrusion Detection System (IDS)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-secure-levels">5. Secure levels</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-file-flags">6. File flags</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#openssh">7. OpenSSH</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#openssl">8. OpenSSL</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#kerberos5">9. Kerberos</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#tcpwrappers">10. TCP Wrappers</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#fs-acl">11. Access Control Lists</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#capsicum">12. Capsicum</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-accounting">13. Process Accounting</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-resourcelimits">14. Resource Limits</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-pkg">15. Monitoring Third Party Security Issues</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-advisories">16. FreeBSD Security Advisories</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/jails/">
+              Chapter 17. Jails and Containers
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jails-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-types">2. Jail Types</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#host-configuration">3. Host Configuration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#classic-jail">4. Classic Jail (Thick Jail)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#thin-jail">5. Thin Jails</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-management">6. Jail Management</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-upgrading">7. Jail Upgrading</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-resource-limits">8. Jail Resource Limits</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-managers-and-containers">9. Jail Managers and Containers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/mac/">
+              Chapter 18. Mandatory Access Control
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-inline-glossary">2. Key Terms</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-understandlabel">3. Understanding MAC Labels</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-planning">4. Planning the Security Configuration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-policies">5. Available MAC Policies</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-userlocked">6. User Lock Down</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-implementing">7. Nagios in a MAC Jail</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-troubleshoot">8. Troubleshooting the MAC Framework</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/audit/">
+              Chapter 19. Security Event Auditing
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/audit/#audit-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/audit/#audit-inline-glossary">2. Key Terms</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/audit/#audit-config">3. Audit Configuration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/audit/#audit-administration">4. Working with Audit Trails</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/disks/">
+              Chapter 20. Storage
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-adding">2. Adding Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-growing">3. Resizing and Growing Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#usb-disks">4. USB Storage Devices</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#creating-cds">5. Creating and Using CD Media</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#creating-dvds">6. Creating and Using DVD Media</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#floppies">7. Creating and Using Floppy Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#using-ntfs">8. Using NTFS Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#backup-basics">9. Backup Basics</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-virtual">10. Memory Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#snapshots">11. File System Snapshots</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#quotas">12. Disk Quotas</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-encrypting">13. Encrypting Disk Partitions</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#swap-encrypting">14. Encrypting Swap</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-hast">15. Highly Available Storage (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/geom/">
+              Chapter 21. GEOM: Modular Disk Transformation Framework
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-striping">2. RAID0 - Striping</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-mirror">3. RAID1 - Mirroring</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-raid3">4. RAID3 - Byte-level Striping with Dedicated Parity</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-graid">5. Software RAID Devices</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-ggate">6. GEOM Gate Network</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-glabel">7. Labeling Disk Devices</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-gjournal">8. UFS Journaling Through GEOM</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/zfs/">
+              Chapter 22. The Z File System (ZFS)
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-differences">1. What Makes ZFS Different</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-quickstart">2. Quick Start Guide</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-zpool">3. <code>zpool</code> Administration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-zfs">4. <code>zfs</code> Administration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-zfs-allow">5. Delegated Administration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-advanced">6. Advanced Topics</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-links">7. Further Resources</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-term">8. ZFS Features and Terminology</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/filesystems/">
+              Chapter 23. Other File Systems
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/filesystems/#filesystems-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/filesystems/#filesystems-linux">2. Linux® File Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/virtualization/">
+              Chapter 24. Virtualization
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">2. FreeBSD as a Guest on Parallels Desktop for macOS®</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-guest-vmware">3. FreeBSD as a Guest on VMware Fusion for macOS®</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-guest-virtualbox">4. FreeBSD as a Guest on VirtualBox™</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-host-virtualbox">5. FreeBSD as a Host with VirtualBox™</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-host-bhyve">6. FreeBSD as a Host with bhyve</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-host-xen">7. FreeBSD as a Xen™-Host</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/l10n/">
+              Chapter 25. Localization - i18n/L10n Usage and Setup
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/l10n/#l10n-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/l10n/#using-localization">2. Using Localization</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/l10n/#l10n-compiling">3. Finding i18n Applications</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/l10n/#lang-setup">4. Locale Configuration for Specific Languages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/">
+              Chapter 26. Updating and Upgrading FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#updating-upgrading-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">2. FreeBSD Update</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#updating-bootcode">3. Updating Bootcode</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#updating-upgrading-documentation">4. Updating the Documentation Set</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#current-stable">5. Tracking a Development Branch</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#makeworld">6. Updating FreeBSD from Source</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#small-lan">7. Tracking for Multiple Machines</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">8. Building on non-FreeBSD Hosts</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/dtrace/">
+              Chapter 27. DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/dtrace/#dtrace-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/dtrace/#dtrace-implementation">2. Implementation Differences</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/dtrace/#dtrace-enable">3. Enabling DTrace Support</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/dtrace/#dtrace-using">4. Using DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/">
+              Chapter 28. USB Device Mode / USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/#usb-device-mode-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/#usb-device-mode-terminals">2. USB Virtual Serial Ports</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/#usb-device-mode-network">3. USB Device Mode Network Interfaces</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/#usb-device-mode-storage">4. USB Virtual Storage Device</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/partiv/">
+              Part IV. Network Communication
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/">
+              Chapter 29. Serial Communications
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#serial-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#serial">2. Serial Terminology and Hardware</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#term">3. Terminals</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#dialup">4. Dial-in Service</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#dialout">5. Dial-out Service</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#serialconsole-setup">6. Setting Up the Serial Console</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/">
+              Chapter 30. PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#userppp">2. Configuring PPP</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#ppp-troubleshoot">3. Troubleshooting PPP Connections</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#pppoe">4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#pppoa">5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/mail/">
+              Chapter 31. Electronic Mail
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-using">2. Mail Components</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#dragonFly-mail-agent">3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#sendmail">4. Sendmail</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-changingmta">5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-agents">6. Mail User Agents</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-advanced">7. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/network-servers/">
+              Chapter 32. Network Servers
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-servers-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-inetd">2. The inetd Super-Server</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-nfs">3. Network File System (NFS)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-nis">4. Network Information System (NIS)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-ldap">5. Lightweight Directory Access Protocol (LDAP)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-dhcp">6. Dynamic Host Configuration Protocol (DHCP)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-dns">7. Domain Name System (DNS)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-apache">8. Apache HTTP Server</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-ftp">9. File Transfer Protocol (FTP)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-samba">10. File and Print Services for Microsoft® Windows® Clients (Samba)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-ntp">11. Clock Synchronization with NTP</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-iscsi">12. iSCSI Initiator and Target Configuration</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/firewalls/">
+              Chapter 33. Firewalls
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-intro">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-concepts">2. Firewall Concepts</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-pf">3. PF</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-ipfw">4. IPFW</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-ipf">5. IPFILTER (IPF)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-blacklistd">6. Blacklistd</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/">
+              Chapter 34. Advanced Networking
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#advanced-networking-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-routing">2. Gateways and Routes</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#configtuning-virtual-hosts">3. Virtual Hosts</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-advanced-wireless">4. Wireless Advanced Authentication</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#wireless-ad-hoc-mode">5. Wireless Ad-hoc Mode</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-usb-tethering">6. USB Tethering</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-bluetooth">7. Bluetooth</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-bridging">8. Bridging</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-aggregation">9. Link Aggregation and Failover</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-diskless">10. Diskless Operation with PXE</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#carp">11. Common Address Redundancy Protocol (CARP)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-vlan">12. VLANs</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/partv/">
+              Part V. Appendices
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/mirrors/">
+              Appendix A. Obtaining FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mirrors/#mirrors">1. Mirrors</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mirrors/#git">2. Using Git</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mirrors/#svn">3. Using Subversion</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mirrors/#mirrors-cdrom">4. CD and DVD Sets</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/bibliography/">
+              Appendix B. Bibliography
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bibliography/#bibliography-freebsd">1. FreeBSD Bibliography</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bibliography/#bibliography-security">2. Security Reference</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bibliography/#bibliography-history">3. UNIX® History</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bibliography/#bibliography-journals">4. Periodicals, Journals, and Magazines</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/eresources/">
+              Appendix C. Resources on the Internet
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/eresources/#eresources-www">1. Websites</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/eresources/#eresources-mail">2. Mailing Lists</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/eresources/#eresources-news">3. Usenet Newsgroups</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/pgpkeys/">
+              Appendix D. OpenPGP Keys
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/pgpkeys/#pgpkeys-officers">1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/glossary/">
+              FreeBSD Glossary
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/colophon/">
+              Colophon
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">Chapter 4. Installing Applications: Packages and Ports</h1>
+    
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ports-synopsis">1. Synopsis</a></li>
+    <li><a href="#ports-overview">2. Overview of Software Installation</a></li>
+    <li><a href="#ports-finding-applications">3. Finding Software</a></li>
+    <li><a href="#pkgng-intro">4. Using pkg for Binary Package Management</a></li>
+    <li><a href="#ports-using">5. Using the Ports Collection</a></li>
+    <li><a href="#ports-poudriere">6. Building Packages with poudriere</a></li>
+    <li><a href="#ports-nextsteps">7. Post-Installation Considerations</a></li>
+    <li><a href="#ports-broken">8. Dealing with Broken Ports</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="ports-synopsis">1. Synopsis<a class="anchor" href="#ports-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD is bundled with a rich collection of system tools as part of the base system.
+In addition, FreeBSD provides two complementary technologies for installing third-party software: the FreeBSD Ports Collection,
+for installing from source, and packages, for installing from pre-built binaries.
+Either method may be used to install software from local media or from the network.</p>
+</div>
+<div class="paragraph">
+<p>After reading this chapter, you will know:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The difference between binary packages and ports.</p>
+</li>
+<li>
+<p>How to find third-party software that has been ported to FreeBSD.</p>
+</li>
+<li>
+<p>How to manage binary packages using pkg.</p>
+</li>
+<li>
+<p>How to build third-party software from source using the Ports Collection.</p>
+</li>
+<li>
+<p>How to find the files installed with the application for post-installation configuration.</p>
+</li>
+<li>
+<p>What to do if a software installation fails.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ports-overview">2. Overview of Software Installation<a class="anchor" href="#ports-overview"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A FreeBSD <em>port</em> is a collection of files designed to automate the process of compiling an application from source code.
+The files that comprise a port contain all the necessary information to automatically download, extract, patch, compile, and install the application.</p>
+</div>
+<div class="paragraph">
+<p>If the software has not already been adapted and tested on FreeBSD, the source code might need editing in order for it to install and run properly.</p>
+</div>
+<div class="paragraph">
+<p>However, over <a href="https://www.FreeBSD.org/ports/">36000</a> third-party applications have already been ported to FreeBSD.
+When feasible, these applications are made available for download as pre-compiled <em>packages</em>.</p>
+</div>
+<div class="paragraph">
+<p>Packages can be manipulated with the FreeBSD package management commands.</p>
+</div>
+<div class="paragraph">
+<p>Both packages and ports understand dependencies.
+If a package or port is used to install an application and a dependent library is not already installed, the library will automatically be installed first.</p>
+</div>
+<div class="paragraph">
+<p>A FreeBSD package contains pre-compiled copies of all the commands for an application, as well as any configuration files and documentation.
+A package can be manipulated with the man:pkg[8] commands, such as <code>pkg install</code>.</p>
+</div>
+<div class="paragraph">
+<p>While the two technologies are similar, packages and ports each have their own strengths.
+Select the technology that meets your requirements for installing a particular application.</p>
+</div>
+<div class="ulist">
+<div class="title">Package Benefits</div>
+<ul>
+<li>
+<p>A compressed package tarball is typically smaller than the compressed tarball containing the source code for the application.</p>
+</li>
+<li>
+<p>Packages do not require compilation time. For large applications, such as Firefox, KDE Plasma, or GNOME, this can be important on a slow system.</p>
+</li>
+<li>
+<p>Packages do not require any understanding of the process involved in compiling software on FreeBSD.</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Port Benefits</div>
+<ul>
+<li>
+<p>Packages are normally compiled with conservative options because they have to run on the maximum number of systems. By compiling from the port, one can change the compilation options.</p>
+</li>
+<li>
+<p>Some applications have compile-time options relating to which features are installed. For example, NGINX® can be configured with a wide variety of different built-in options.</p>
+<div class="paragraph">
+<p>In some cases, multiple packages will exist for the same application to specify certain settings. For example, NGINX® is available as a <code>nginx</code> package and a <code>nginx-lite</code> package, depending on whether or not Xorg is installed. Creating multiple packages rapidly becomes impossible if an application has more than one or two different compile-time options.</p>
+</div>
+</li>
+<li>
+<p>The licensing conditions of some software forbid binary distribution. Such software must be distributed as source code which must be compiled by the end-user.</p>
+</li>
+<li>
+<p>Some people do not trust binary distributions or prefer to read through source code in order to look for potential problems.</p>
+</li>
+<li>
+<p>Source code is needed in order to apply custom patches.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To keep track of updated ports, subscribe to the <a href="https://lists.FreeBSD.org/subscription/freebsd-ports">FreeBSD ports mailing list</a> and the <a href="https://lists.FreeBSD.org/subscription/freebsd-ports-bugs">FreeBSD ports bugs mailing list</a>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before installing an application, check <a href="https://vuxml.freebsd.org/" class="bare">https://vuxml.freebsd.org/</a> for related security issues.</p>
+</div>
+<div class="paragraph">
+<p>To audit installed packages against known vulnerabilities, run <code>pkg audit -F</code>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The remainder of this chapter explains how to use packages and ports to install and manage third-party software on FreeBSD.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ports-finding-applications">3. Finding Software<a class="anchor" href="#ports-finding-applications"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD’s list of available applications is growing all the time.
+There are a number of ways to find software to install:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The FreeBSD web site maintains an up-to-date searchable list of all the available applications, at <a href="https://www.FreeBSD.org/ports/">Ports Portal</a>. The ports can be searched by application name or by software category.</p>
+</li>
+<li>
+<p>Dan Langille maintains <a href="https://www.freshports.org/">FreshPorts</a> which provides a comprehensive search utility and also tracks changes to the applications in the Ports Collection. Registered users can create a customized watch list in order to receive an automated email when their watched ports are updated.</p>
+</li>
+<li>
+<p>If finding a particular application becomes challenging, try searching a site like <a href="https://sourceforge.net/">SourceForge</a> or <a href="https://github.com/">GitHub</a> then check back at the <a href="https://www.FreeBSD.org/ports/">Ports Portal</a> to see if the application has been ported.</p>
+</li>
+<li>
+<p>Search the binary package repository for an application using the man:pkg[8] command</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pkgng-intro">4. Using pkg for Binary Package Management<a class="anchor" href="#pkgng-intro"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>man:pkg[8] provides an interface for manipulating	packages: registering, adding, removing and upgrading packages.</p>
+</div>
+<div class="paragraph">
+<p>For sites wishing to only use prebuilt binary packages from the FreeBSD mirrors, managing packages with man:pkg[8] can be sufficient.</p>
+</div>
+<div class="paragraph">
+<p>However, for those sites building from source a separate <a href="#ports-upgrading-tools">port management tool</a> will be needed.</p>
+</div>
+<div class="paragraph">
+<p>Since man:pkg[8] only works with binary packages, it is not a replacement for such tools.
+Those tools can be used to install software from both binary packages and the Ports Collection, while man:pkg[8] installs only binary packages.</p>
+</div>
+<div class="sect2">
+<h3 id="pkgng-initial-setup">4.1. Getting Started with pkg<a class="anchor" href="#pkgng-initial-setup"></a></h3>
+<div class="paragraph">
+<p>All supported versions of FreeBSD now contain <code>/usr/sbin/pkg</code> a.k.a man:pkg[7].
+This is a small placeholder that has just the minimum functionality required to install the real man:pkg[8].</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>An Internet working connection is required for the bootstrap process to succeed.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Run man:pkg[8] command line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>The package management tool is not yet installed on your system.
+Do you want to fetch and install it now? [y/N]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>man:pkg[7] will intercept the command, and if you confirm that is your intention, download the man:pkg[8] tarball, install man:pkg[8] from it, bootstrap the local package database and then proceed to run the command you originally requested.</p>
+</div>
+<div class="paragraph">
+<p>More recent versions of man:pkg[7] understand <code>pkg -N</code> as a test to see if man:pkg[8] is installed without triggering the installation, and conversely, pkg bootstrap[-f] to install man:pkg[8] (or force it to be reinstalled) without performing any other actions.</p>
+</div>
+<div class="paragraph">
+<p>Usage information for pkg is available in the man:pkg[8] manual page or by running <code>pkg</code> without additional arguments.
+Additional pkg configuration options are described in man:pkg.conf[5].</p>
+</div>
+<div class="paragraph">
+<p>Each pkg command argument is documented in a command-specific manual page.</p>
+</div>
+<div class="paragraph">
+<p>To read the manual page for <code>pkg install</code>, for example, run this command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg help install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The rest of this section demonstrates common binary package management tasks which can be performed using man:pkg[8].
+Each demonstrated command provides many switches to customize its use.
+Refer to a command’s help or man page for details and more examples.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="quarterly-latest-branch">4.2. Quarterly and Latest Ports Branches<a class="anchor" href="#quarterly-latest-branch"></a></h3>
+<div class="paragraph">
+<p>The <code>Quarterly</code> branch provides users with a more predictable and stable experience for port and package installation and upgrades.
+This is done essentially by only allowing non-feature updates.
+Quarterly branches aim to receive security fixes (that may be version updates, or backports of commits), bug fixes and ports compliance or framework changes.
+The Quarterly branch is cut from HEAD at the beginning of every (yearly) quarter in January, April, July, and October.
+Branches are named according to the year (YYYY) and quarter (Q1-4) they are created in.
+For example, the quarterly branch created in January 2023, is named 2023Q1.
+And the <code>Latest</code> branch provides the latest versions of the packages to the users.</p>
+</div>
+<div class="paragraph">
+<p>To switch man:pkg[8] from Quarterly to Latest run the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir -p /usr/local/etc/pkg/repos</span>
+<span class="c"># echo &#39;FreeBSD: { url: &#34;pkg+http://pkg.FreeBSD.org/${ABI}/latest&#34; }&#39; &gt; /usr/local/etc/pkg/repos/FreeBSD.conf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then run this command to update the local package repositories catalogues for the Latest branch:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg update -f</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkg-configuration">4.3. Configure pkg<a class="anchor" href="#pkg-configuration"></a></h3>
+<div class="paragraph">
+<p>man:pkg.conf[5] is the system-wide configuration file used by the man:pkg[8] tools.
+The default location of this file is <code>/usr/local/etc/pkg.conf</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>FreeBSD does not need to have a <code>pkg.conf</code> file.
+Many installations will work well with no <code>pkg.conf</code> at all or with an empty <code>pkg.conf</code> (other than comment lines).</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Lines in the file beginning with a &#34;#&#34; are	comments and are ignored.</p>
+</div>
+<div class="paragraph">
+<p>The file is in UCL format.
+For more information on the syntax of man:libucl[3], please visit the <a href="https://github.com/vstakhov/libucl">official UCL website</a>.</p>
+</div>
+<div class="paragraph">
+<p>The following types of options are recognized - boolean, string and list options.</p>
+</div>
+<div class="paragraph">
+<p>A boolean option is marked as enabled if one of the following values is specified in the configuration file - YES, TRUE and ON.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkg-search">4.4. Searching Packages<a class="anchor" href="#pkg-search"></a></h3>
+<div class="paragraph">
+<p>To search a package man:pkg-search[8] can be used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg search nginx</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>modsecurity3-nginx-1.0.3       Instruction detection and prevention engine / nginx Wrapper
+nginx-1.22.1_2,3               Robust and small WWW server
+nginx-devel-1.23.2_4           Robust and small WWW server
+nginx-full-1.22.1_1,3          Robust and small WWW server (full package)
+nginx-lite-1.22.1,3            Robust and small WWW server (lite package)
+nginx-naxsi-1.22.1,3           Robust and small WWW server (plus NAXSI)
+nginx-prometheus-exporter-0.10.0_7 Prometheus exporter for NGINX and NGINX Plus stats
+nginx-ultimate-bad-bot-blocker-4.2020.03.2005_1 Nginx bad bot and other things blocker
+nginx-vts-exporter-0.10.7_7    Server that scraps NGINX vts stats and export them via HTTP
+p5-Nginx-ReadBody-0.07_1       Nginx embeded perl module to read and evaluate a request body
+p5-Nginx-Simple-0.07_1         Perl 5 module for easy to use interface for Nginx Perl Module
+p5-Test-Nginx-0.30             Testing modules for Nginx C module development
+py39-certbot-nginx-2.0.0       NGINX plugin for Certbot
+rubygem-passenger-nginx-6.0.15 Modules for running Ruby on Rails and Rack applications</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkg-installing-fetching">4.5. Installing and Fetching Packages<a class="anchor" href="#pkg-installing-fetching"></a></h3>
+<div class="paragraph">
+<p>To install a binary package man:pkg-install[8] can be used.
+This command uses repository data to determine which version of the software to install and if it has any uninstalled dependencies.
+For example, to install curl:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install curl</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Updating FreeBSD repository catalogue...
+FreeBSD repository is up to date.
+All repositories are up to date.
+The following 9 package(s) will be affected (of 0 checked):
+
+New packages to be INSTALLED:
+        ca_root_nss: 3.83
+        curl: 7.86.0
+        gettext-runtime: 0.21
+        indexinfo: 0.3.1
+        libidn2: 2.3.3
+        libnghttp2: 1.48.0
+        libpsl: 0.21.1_4
+        libssh2: 1.10.0.3
+        libunistring: 1.0
+
+Number of packages to be installed: 9
+
+The process will require 11 MiB more space.
+3 MiB to be downloaded
+
+Proceed with this action? [y/N]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The new package and any additional packages that were installed as dependencies can be seen in the installed packages list:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg info</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ca_root_nss-3.83               Root certificate bundle from the Mozilla Project
+curl-7.86.0                    Command line tool and library for transferring data with URLs
+gettext-runtime-0.21.1         GNU gettext runtime libraries and programs
+indexinfo-0.3.1                Utility to regenerate the GNU info page index
+libidn2-2.3.3                  Implementation of IDNA2008 internationalized domain names
+libnghttp2-1.48.0              HTTP/2.0 C Library
+libpsl-0.21.1_6                C library to handle the Public Suffix List
+libssh2-1.10.0.3               Library implementing the SSH2 protocol
+libunistring-1.0               Unicode string library
+pkg-1.18.4                     Package manager</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To fetch a package and install it later or in another place use man:pkg-fetch[8].
+For example, to download <code>nginx-lite</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg fetch -d -o /usr/home/user/packages/ nginx-lite</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>-d</code>: used to fetch all the dependencies</p>
+</li>
+<li>
+<p><code>-o</code>: used to specify the download directory</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Updating FreeBSD repository catalogue...
+FreeBSD repository is up to date.
+All repositories are up to date.
+The following packages will be fetched:
+
+New packages to be FETCHED:
+        nginx-lite: 1.22.1,3 (342 KiB: 22.20% of the 2 MiB to download)
+        pcre: 8.45_3 (1 MiB: 77.80% of the 2 MiB to download)
+
+Number of packages to be fetched: 2
+
+The process will require 2 MiB more space.
+2 MiB to be downloaded.
+
+Proceed with fetching packages? [y/N]:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To install the downloaded packages man:pkg-install[8] can be used as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/home/user/packages/</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install nginx-lite-1.22.1,3.pkg</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkgng-pkg-info">4.6. Obtaining Information About Installed Packages<a class="anchor" href="#pkgng-pkg-info"></a></h3>
+<div class="paragraph">
+<p>Information about the packages installed on a system can be viewed by running man:pkg-info[8] which, when run without any switches, will list the package version for either all installed packages or the specified package.</p>
+</div>
+<div class="paragraph">
+<p>For example, to see which version of pkg is installed, run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg info pkg</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>pkg-1.19.0
+Name           : pkg
+Version        : 1.19.0
+Installed on   : Sat Dec 17 11:05:28 2022 CET
+Origin         : ports-mgmt/pkg
+Architecture   : FreeBSD:13:amd64
+Prefix         : /usr/local
+Categories     : ports-mgmt
+Licenses       : BSD2CLAUSE
+Maintainer     : pkg@FreeBSD.org
+WWW            : https://github.com/freebsd/pkg
+Comment        : Package manager
+Options        :
+        DOCS           : on
+Shared Libs provided:
+        libpkg.so.4
+Annotations    :
+        FreeBSD_version: 1301000
+        repo_type      : binary
+        repository     : FreeBSD
+Flat size      : 33.2MiB
+Description    :
+Package management tool
+
+WWW: https://github.com/freebsd/pkg</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkgng-upgrading">4.7. Upgrading Installed Packages<a class="anchor" href="#pkgng-upgrading"></a></h3>
+<div class="paragraph">
+<p>Installed packages can be upgraded to their latest versions using man:pkg-upgrade[8]:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg upgrade</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will compare the installed versions with those available in the repository catalogue and upgrade them from the repository.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkgng-auditing">4.8. Auditing Installed Packages<a class="anchor" href="#pkgng-auditing"></a></h3>
+<div class="paragraph">
+<p>Software vulnerabilities are regularly discovered in third-party applications.
+To address this, pkg includes a built-in auditing mechanism.
+To determine if there are any known vulnerabilities for the software installed on the system, use man:pkg-audit[8]:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg audit -F</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Fetching vuln.xml.xz: 100%  976 KiB 499.5kB/s    00:02
+chromium-108.0.5359.98 is vulnerable:
+  chromium -- multiple vulnerabilities
+  CVE: CVE-2022-4440
+  CVE: CVE-2022-4439
+  CVE: CVE-2022-4438
+  CVE: CVE-2022-4437
+  CVE: CVE-2022-4436
+  WWW: https://vuxml.FreeBSD.org/freebsd/83eb9374-7b97-11ed-be8f-3065ec8fd3ec.html</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkg-delete">4.9. Removing Packages<a class="anchor" href="#pkg-delete"></a></h3>
+<div class="paragraph">
+<p>Packages that are no longer needed can be removed with man:pkg-delete[8].</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg delete curl</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Checking integrity... done (0 conflicting)
+Deinstallation has been requested for the following 1 packages (of 0 packages in the universe):
+
+Installed packages to be REMOVED:
+        curl :7.86.0
+
+Number of packages to be removed: 1
+
+The operation will free 4 MiB.
+
+Proceed with deinstallation packages? [y/N]: y
+[1/1] Deinstalling curl-7.86.0...
+[1/1] Deleting files for curl-7.86.0: 100%</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkgng-autoremove">4.10. Automatically Removing Unused Packages<a class="anchor" href="#pkgng-autoremove"></a></h3>
+<div class="paragraph">
+<p>Removing a package may leave behind dependencies which are no longer required.
+Unneeded packages that were installed as dependencies (leaf packages) can be automatically detected and removed using man:pkg-autoremove[8]:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg autoremove</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Checking integrity... done (0 conflicting)
+Deinstallation has been requested for the following 1 packages:
+
+Installed packages to be REMOVED:
+        ca_root_nss-3.83
+
+Number of packages to be removed: 1
+
+The operation will free 723 KiB.
+
+Proceed with deinstalling packages? [y/N]:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Packages installed as dependencies are called <em>automatic</em> packages.
+Non-automatic packages, i.e the packages that were explicity installed not as a dependency to another package, can be listed using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg prime-list</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>nginx
+openvpn
+sudo</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>pkg prime-list</code> is an alias command declared in <code>/usr/local/etc/pkg.conf</code>.
+There are many others that can be used to query the package database of the system.
+For instance, command <code>pkg prime-origins</code> can be used to get the origin port directory of the list mentioned above:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg prime-origins</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>www/nginx
+security/openvpn
+security/sudo</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This list can be used to rebuild all packages installed on a system using build tools such as package:ports-mgmt/poudriere[] or package:ports-mgmt/synth[].</p>
+</div>
+<div class="paragraph">
+<p>Marking an installed package as automatic can be done using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg set -A 1 devel/cmake</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once a package is a leaf package and is marked as automatic, it gets selected by <code>pkg autoremove</code>.</p>
+</div>
+<div class="paragraph">
+<p>Marking an installed package as <em>not</em> automatic can be done using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg set -A 0 devel/cmake</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkgng-clean">4.11. Removing Stale Packages<a class="anchor" href="#pkgng-clean"></a></h3>
+<div class="paragraph">
+<p>By default, pkg stores binary packages in a cache directory defined by <code>PKG_CACHEDIR</code> in man:pkg.conf[5].
+Only copies of the latest installed packages are kept. Older versions of pkg kept all previous packages.
+To remove these outdated binary packages, run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg clean</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The entire cache may be cleared by running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg clean -a</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkg-locking-unlocking">4.12. Locking and Unlocking Packages<a class="anchor" href="#pkg-locking-unlocking"></a></h3>
+<div class="paragraph">
+<p>man:pkg-lock[8] is used to lock packages against reinstallation, modification or deletion.
+man:pkg-unlock[8] unlocks the named packages.
+Either variant only has an effect on currently installed packages.
+Consequently it is impossible to block installation of a new package by using this mechanism, unless such an installation implies updating a locked package.</p>
+</div>
+<div class="paragraph">
+<p>For example, to lock <code>nginx-lite</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg lock nginx-lite</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And to unlock <code>nginx-lite</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg unlock nginx-lite</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pkgng-set">4.13. Modifying Package Metadata<a class="anchor" href="#pkgng-set"></a></h3>
+<div class="paragraph">
+<p>Software within the FreeBSD Ports Collection can undergo major version number changes.
+To address this, pkg has a built-in command to update package origins.
+This can be useful, for example, if package:lang/python3[] is renamed to package:lang/python311[] so that package:lang/python3[] can now represent version <code>3.11</code>.</p>
+</div>
+<div class="paragraph">
+<p>To change the package origin for the above example, run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg set -o lang/python3:lang/python311</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As another example, to update package:lang/ruby31[] to package:lang/ruby32[], run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg set -o lang/ruby31:lang/ruby32</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When changing package origins, it is important to reinstall packages that are dependent on the package with the modified origin.
+To force a reinstallation of dependent packages, run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install -Rf lang/ruby32</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ports-using">5. Using the Ports Collection<a class="anchor" href="#ports-using"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Ports Collection is a set of <code>Makefiles</code>, patches, and description files.
+Each set of these files is used to compile and install an individual application on FreeBSD, and is called a <em>port</em>.</p>
+</div>
+<div class="paragraph">
+<p>By default, the Ports Collection itself is stored as a subdirectory of <code>/usr/ports</code>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before installing and using the Ports Collection, please be aware that it is generally ill-advised to use the Ports Collection in conjunction with the binary packages provided via pkg to install software.
+pkg, by default, tracks quarterly branch-releases of the ports tree and not HEAD.
+Dependencies could be different for a port in HEAD compared to its counterpart in a quarterly branch release and this could result in conflicts between dependencies installed by pkg and those from the Ports Collection.
+If the Ports Collection and pkg must be used in conjunction, then be sure that your Ports Collection and pkg are on the same branch release of the ports tree.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The Ports Collection contains directories for software categories.
+Inside each category are subdirectories for individual applications.
+Each application subdirectory contains a set of files that tells FreeBSD how to compile and install that program, called a <em>ports skeleton</em>.
+Each port skeleton includes these files and directories:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Makefile</strong>: contains statements that specify how the application should be compiled and where its components should be installed.</p>
+</li>
+<li>
+<p><strong>distinfo</strong>: contains the names and checksums of the files that must be downloaded to build the port.</p>
+</li>
+<li>
+<p><strong>files/</strong>: this directory contains any patches needed for the program to compile and install on FreeBSD. This directory may also contain other files used to build the port.</p>
+</li>
+<li>
+<p><strong>pkg-descr</strong>: provides a more detailed description of the program.</p>
+</li>
+<li>
+<p><strong>pkg-plist</strong>: a list of all the files that will be installed by the port. It also tells the ports system which files to remove upon deinstallation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Some ports include <code>pkg-message</code> or other files to handle special situations.
+For more details on these files, and on ports in general, refer to the extref:https://docs.freebsd.org/en/books/porters-handbook/[FreeBSD Porter’s Handbook].</p>
+</div>
+<div class="paragraph">
+<p>The port does not include the actual source code, also known as a <code>distfile</code>.
+The extract portion of building a port will automatically save the downloaded source to <code>/usr/ports/distfiles</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="ports-using-installation-methods">5.1. Installing the Ports Collection<a class="anchor" href="#ports-using-installation-methods"></a></h3>
+<div class="paragraph">
+<p>Before an application can be compiled using a port, the Ports Collection must first be installed.
+If it was not installed during the installation of FreeBSD, use one of the following methods to install it:</p>
+</div>
+<div id="ports-using-git-method" class="sidebarblock procedure">
+<div class="content">
+<div class="paragraph">
+<p><strong>Procedure: Git Method</strong></p>
+</div>
+<div class="paragraph">
+<p>If more control over the ports tree is needed or if local changes need to be maintained, or if running FreeBSD-CURRENT,
+Git can be used to obtain the Ports Collection.
+Refer to extref:https://docs.freebsd.org/en/articles/committers-guide/[the Git Primer, git-primer] for a detailed description of Git.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Git must be installed before it can be used to check out the ports tree. If a copy of the ports tree is already present, install Git like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/devel/git</span>
+<span class="c"># make install clean</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the ports tree is not available, or pkg is being used to manage packages, Git can be installed as a package:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install git</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check out a copy of the HEAD branch of the ports tree:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># git clone https://git.FreeBSD.org/ports.git /usr/ports</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Or, check out a copy of a quarterly branch:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># git clone https://git.FreeBSD.org/ports.git -b 2023Q1 /usr/ports</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>As needed, update <code>/usr/ports</code> after the initial Git checkout:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># git -C /usr/ports pull</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>As needed, switch <code>/usr/ports</code> to a different quarterly branch:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># git -C /usr/ports switch 2023Q1</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installing_ports">5.2. Installing Ports<a class="anchor" href="#_installing_ports"></a></h3>
+<div class="paragraph">
+<p>This section provides basic instructions on using the Ports Collection to install or remove software.
+The detailed description of available <code>make</code> targets and environment variables is available in man:ports[7].</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before compiling any port, be sure to update the Ports Collection as described in the previous section.
+Since the installation of any third-party software can introduce security vulnerabilities, it is recommended to first check <a href="https://vuxml.freebsd.org/" class="bare">https://vuxml.freebsd.org/</a> for known security issues related to the port.
+Alternatively, run <code>pkg audit -F</code> before installing a new port.
+This command can be configured to automatically perform a security audit and an update of the vulnerability database during the daily security system check. For more information, refer to man:pkg-audit[8] and man:periodic[8].</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Using the Ports Collection assumes a working Internet connection.
+It also requires superuser privilege.</p>
+</div>
+<div class="paragraph">
+<p>To compile and install the port, change to the directory of the port to be installed, then type <code>make install</code> at the prompt.
+Messages will indicate the progress:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/sysutils/lsof</span>
+<span class="c"># make install</span>
+<span class="o">&gt;&gt;</span> lsof_4.88D.freebsd.tar.gz doesn<span class="s1">&#39;t seem to exist in /usr/ports/distfiles/.
+&gt;&gt; Attempting to fetch from ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/.
+===&gt;  Extracting for lsof-4.88
+...
+[extraction output snipped]
+...
+&gt;&gt; Checksum OK for lsof_4.88D.freebsd.tar.gz.
+===&gt;  Patching for lsof-4.88.d,8
+===&gt;  Applying FreeBSD patches for lsof-4.88.d,8
+===&gt;  Configuring for lsof-4.88.d,8
+...
+[configure output snipped]
+...
+===&gt;  Building for lsof-4.88.d,8
+...
+[compilation output snipped]
+...
+
+===&gt;  Installing for lsof-4.88.d,8
+...
+[installation output snipped]
+...
+===&gt;   Generating temporary packing list
+===&gt;   Compressing manual pages for lsof-4.88.d,8
+===&gt;   Registering installation for lsof-4.88.d,8
+===&gt;  SECURITY NOTE:
+      This port has installed the following binaries which execute with
+      increased privileges.
+/usr/local/sbin/lsof
+#</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since <code>lsof</code> is a program that runs with increased privileges, a security warning is displayed as it is installed.
+Once the installation is complete, the prompt will be returned.</p>
+</div>
+<div class="paragraph">
+<p>Some shells keep a cache of the commands that are available in the directories listed in the <code>PATH</code> environment variable, to speed up lookup operations for the executable file of these commands.
+Users of the <code>tcsh</code> shell should type <code>rehash</code> so that a newly installed command can be used without specifying its full path.
+Use <code>hash -r</code> instead for the <code>sh</code> shell.
+Refer to the documentation for the shell for more information.</p>
+</div>
+<div class="paragraph">
+<p>During installation, a working subdirectory is created which contains all the temporary files used during compilation.
+Removing this directory saves disk space and minimizes the chance of problems later when upgrading to the newer version of the port:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># make clean</span>
+<span class="o">===&gt;</span>  Cleaning <span class="k">for </span>lsof-88.d,8
+<span class="c">#</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To save this extra step, instead use <code>make install clean</code> when compiling the port.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect3">
+<h4 id="_customizing_ports_installation">5.2.1. Customizing Ports Installation<a class="anchor" href="#_customizing_ports_installation"></a></h4>
+<div class="paragraph">
+<p>Some ports provide build options which can be used to enable or disable application components, provide security options, or allow for other customizations.
+Examples include package:www/firefox[] and package:security/gpgme[].
+If the port depends upon other ports which have configurable options,
+it may pause several times for user interaction as the default behavior is to prompt the user to select options from a menu.
+To avoid this and do all of the configuration in one batch, run <code>make config-recursive</code> within the port skeleton.
+Then, run <code>make install [clean]</code> to compile and install the port.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When using <code>config-recursive</code>, the list of ports to configure are gathered by the <code>all-depends-list</code> target.
+It is recommended to run <code>make config-recursive</code> until all dependent ports options have been defined,
+and ports options screens no longer appear, to be certain that all dependency options have been configured.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>There are several ways to revisit a port’s build options menu in order to add, remove, or change these options after a port has been built.
+One method is to <code>cd</code> into the directory containing the port and type <code>make config</code>.
+Another option is to use <code>make showconfig</code>.
+Another option is to execute <code>make rmconfig</code> which will remove all selected options and allow you to start over.
+All of these options, and others, are explained in great detail in man:ports[7].</p>
+</div>
+<div class="paragraph">
+<p>The ports system uses man:fetch[1] to download the source files, which supports various environment variables.
+The <code>FTP_PASSIVE_MODE</code>, <code>FTP_PROXY</code>, and <code>FTP_PASSWORD</code> variables may need to be set if the FreeBSD system is behind a firewall or FTP/HTTP proxy.
+See man:fetch[3] for the complete list of supported variables.</p>
+</div>
+<div class="paragraph">
+<p>For users who cannot be connected to the Internet all the time, <code>make fetch</code> can be run within <code>/usr/ports</code>,
+to fetch all distfiles, or within a category, such as <code>/usr/ports/net</code>, or within the specific port skeleton.
+Note that if a port has any dependencies, running this command in a category or ports skeleton will <em>not</em> fetch the distfiles of ports from another category.
+Instead, use <code>make fetch-recursive</code> to also fetch the distfiles for all the dependencies of a port.</p>
+</div>
+<div class="paragraph">
+<p>In rare cases, such as when an organization has a local distfiles repository, the <code>MASTER_SITES</code> variable can be used to override the download locations specified in the <code>Makefile</code>.
+When using, specify the alternate location:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/directory</span>
+<span class="c"># make MASTER_SITE_OVERRIDE= \</span>
+ftp://ftp.organization.org/pub/FreeBSD/ports/distfiles/ fetch</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>WRKDIRPREFIX</code> and <code>PREFIX</code> variables can override the default working and target directories. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># make WRKDIRPREFIX=/usr/home/example/ports install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will compile the port in <code>/usr/home/example/ports</code> and install everything under <code>/usr/local</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># make PREFIX=/usr/home/example/local install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will compile the port in <code>/usr/ports</code> and install it in <code>/usr/home/example/local</code>. And:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># make WRKDIRPREFIX=../ports PREFIX=../local install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will combine the two.</p>
+</div>
+<div class="paragraph">
+<p>These can also be set as environmental variables.
+Refer to the manual page for your shell for instructions on how to set an environmental variable.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ports-removing">5.3. Removing Installed Ports<a class="anchor" href="#ports-removing"></a></h3>
+<div class="paragraph">
+<p>Installed ports can be uninstalled using <code>pkg delete</code>.
+Examples for using this command can be found in the man:pkg-delete[8] manual page.</p>
+</div>
+<div class="paragraph">
+<p>Alternately, <code>make deinstall</code> can be run in the port&#39;s directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/sysutils/lsof</span>
+<span class="c"># make deinstall</span>
+<span class="o">===&gt;</span>  Deinstalling <span class="k">for </span>sysutils/lsof
+<span class="o">===&gt;</span>   Deinstalling
+Deinstallation has been requested <span class="k">for </span>the following 1 packages:
+
+	lsof-4.88.d,8
+
+The deinstallation will free 229 kB
+<span class="o">[</span>1/1] Deleting lsof-4.88.d,8... <span class="k">done</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is recommended to read the messages as the port is uninstalled.
+If the port has any applications that depend upon it, this information will be displayed but the uninstallation will proceed.
+In such cases, it may be better to reinstall the application in order to prevent broken dependencies.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ports-upgrading">5.4. Upgrading Ports<a class="anchor" href="#ports-upgrading"></a></h3>
+<div class="paragraph">
+<p>Over time, newer versions of software become available in the Ports Collection.
+This section describes how to determine which software can be upgraded and how to perform the upgrade.</p>
+</div>
+<div class="paragraph">
+<p>To determine if newer versions of installed ports are available, ensure that the latest version of the ports tree is installed,
+using the updating command described in <a href="#ports-using-git-method">&#34;Git Method&#34;</a>.
+The following command will list the installed ports which are out of date:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg version -l &#34;&lt;&#34;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before attempting an upgrade, read <code>/usr/ports/UPDATING</code> from the top of the file to the date closest to the last time ports were upgraded or the system was installed.
+This file describes various issues and additional steps users may encounter and need to perform when updating a port, including such things as file format changes, changes in locations of configuration files, or any incompatibilities with previous versions.
+Make note of any instructions which match any of the ports that need upgrading and follow these instructions when performing the upgrade.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect3">
+<h4 id="ports-upgrading-tools">5.4.1. Tools to Upgrade and Manage Ports<a class="anchor" href="#ports-upgrading-tools"></a></h4>
+<div class="paragraph">
+<p>The Ports Collection contains several utilities to perform the actual upgrade.
+Each has its strengths and weaknesses.</p>
+</div>
+<div class="paragraph">
+<p>Historically, most installations used either Portmaster or Portupgrade.
+Synth is a newer alternative.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The choice of which tool is best for a particular system is up to the system administrator.
+It is recommended practice to back up your data before using any of these tools.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="portmaster">5.4.2. Upgrading Ports Using Portmaster<a class="anchor" href="#portmaster"></a></h4>
+<div class="paragraph">
+<p>package:ports-mgmt/portmaster[] is a very small utility for upgrading installed ports.
+It is designed to use the tools installed with the FreeBSD base system without depending on other ports or databases.
+To install this utility as a port:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/ports-mgmt/portmaster</span>
+<span class="c"># make install clean</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Portmaster defines four categories of ports:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Root port: has no dependencies and is not a dependency of any other ports.</p>
+</li>
+<li>
+<p>Trunk port: has no dependencies, but other ports depend upon it.</p>
+</li>
+<li>
+<p>Branch port: has dependencies and other ports depend upon it.</p>
+</li>
+<li>
+<p>Leaf port: has dependencies but no other ports depend upon it.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To list these categories and search for updates:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portmaster -L</span>
+<span class="o">===&gt;&gt;&gt;</span> Root ports <span class="o">(</span>No dependencies, not depended on<span class="o">)</span>
+<span class="o">===&gt;&gt;&gt;</span> ispell-3.2.06_18
+<span class="o">===&gt;&gt;&gt;</span> screen-4.0.3
+        <span class="o">===&gt;&gt;&gt;</span> New version available: screen-4.0.3_1
+<span class="o">===&gt;&gt;&gt;</span> tcpflow-0.21_1
+<span class="o">===&gt;&gt;&gt;</span> 7 root ports
+...
+<span class="o">===&gt;&gt;&gt;</span> Branch ports <span class="o">(</span>Have dependencies, are depended on<span class="o">)</span>
+<span class="o">===&gt;&gt;&gt;</span> apache22-2.2.3
+        <span class="o">===&gt;&gt;&gt;</span> New version available: apache22-2.2.8
+...
+<span class="o">===&gt;&gt;&gt;</span> Leaf ports <span class="o">(</span>Have dependencies, not depended on<span class="o">)</span>
+<span class="o">===&gt;&gt;&gt;</span> automake-1.9.6_2
+<span class="o">===&gt;&gt;&gt;</span> bash-3.1.17
+        <span class="o">===&gt;&gt;&gt;</span> New version available: bash-3.2.33
+...
+<span class="o">===&gt;&gt;&gt;</span> 32 leaf ports
+
+<span class="o">===&gt;&gt;&gt;</span> 137 total installed ports
+        <span class="o">===&gt;&gt;&gt;</span> 83 have new versions available</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command is used to upgrade all outdated ports:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portmaster -a</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>By default, Portmaster makes a backup package before deleting the existing port.
+If the installation of the new version is successful, Portmaster deletes the backup.
+Using <code>-b</code> instructs Portmaster not to automatically delete the backup.
+Adding <code>-i</code> starts Portmaster in interactive mode, prompting for confirmation before upgrading each port.
+Many other options are available.
+Read through the manual page for man:portmaster[8] for details regarding their usage.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>If errors are encountered during the upgrade process, add <code>-f</code> to upgrade and rebuild all ports:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portmaster -af</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Portmaster can also be used to install new ports on the system, upgrading all dependencies before building and installing the new port.
+To use this function, specify the location of the port in the Ports Collection:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portmaster shells/bash</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More information about package:ports-mgmt/portmaster[] may be found in its <code>pkg-descr</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="portupgrade">5.4.3. Upgrading Ports Using Portupgrade<a class="anchor" href="#portupgrade"></a></h4>
+<div class="paragraph">
+<p>package:ports-mgmt/portupgrade[] is another utility that can be used to upgrade ports.
+It installs a suite of applications which can be used to manage ports.
+However, it is dependent upon Ruby. To install the port:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/ports-mgmt/portupgrade</span>
+<span class="c"># make install clean</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Before performing an upgrade using this utility, it is recommended to scan the list of installed ports using <code>pkgdb -F</code> and to fix all the inconsistencies it reports.</p>
+</div>
+<div class="paragraph">
+<p>To upgrade all the outdated ports installed on the system, use <code>portupgrade -a</code>.
+Alternately, include <code>-i</code> to be asked for confirmation of every individual upgrade:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portupgrade -ai</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To upgrade only a specified application instead of all available ports, use <code>portupgrade <em>pkgname</em></code>.
+It is very important to include <code>-R</code> to first upgrade all the ports required by the given application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portupgrade -R firefox</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If <code>-P</code> is included, Portupgrade searches for available packages in the local directories listed in <code>PKG_PATH</code>.
+If none are available locally, it then fetches packages from a remote site.
+If packages can not be found locally or fetched remotely, Portupgrade will use ports.
+To avoid using ports entirely, specify <code>-PP</code>.
+This last set of options tells Portupgrade to abort if no packages are available:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portupgrade -PP gnome3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To just fetch the port distfiles, or packages, if <code>-P</code> is specified, without building or installing anything, use <code>-F</code>.
+For further information on all of the available switches, refer to the manual page for <code>portupgrade</code>.</p>
+</div>
+<div class="paragraph">
+<p>More information about package:ports-mgmt/portupgrade[] may be found in its <code>pkg-descr</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ports-disk-space">5.5. Ports and Disk Space<a class="anchor" href="#ports-disk-space"></a></h3>
+<div class="paragraph">
+<p>Using the Ports Collection will use up disk space over time.
+After building and installing a port, running <code>make clean</code> within the ports skeleton will clean up the temporary <code>work</code> directory.
+If Portmaster is used to install a port, it will automatically remove this directory unless <code>-K</code> is specified.
+If Portupgrade is installed, this command will remove all <code>work</code> directories found within the local copy of the Ports Collection:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portsclean -C</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition, outdated source distribution files accumulate in <code>/usr/ports/distfiles</code> over time.
+To use Portupgrade to delete all the distfiles that are no longer referenced by any ports:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portsclean -D</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Portupgrade can remove all distfiles not referenced by any port currently installed on the system:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portsclean -DD</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If Portmaster is installed, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># portmaster --clean-distfiles</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, this command is interactive and prompts the user to confirm if a distfile should be deleted.</p>
+</div>
+<div class="paragraph">
+<p>In addition to these commands, package:ports-mgmt/pkg_cutleaves[] automates the task of removing installed ports that are no longer needed.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ports-poudriere">6. Building Packages with poudriere<a class="anchor" href="#ports-poudriere"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>poudriere is a <code>BSD</code>-licensed utility for creating and testing FreeBSD packages.
+It uses FreeBSD jails to set up isolated compilation environments.
+These jails can be used to build packages for versions of FreeBSD that are different from the system on which it is installed, and also to build packages for i386 if the host is an amd64 system.
+Once the packages are built, they are in a layout identical to the official mirrors.
+These packages are usable by man:pkg[8] and other package management tools.</p>
+</div>
+<div class="paragraph">
+<p>poudriere is installed using the package:ports-mgmt/poudriere[] package or port.
+The installation includes a sample configuration file <code>/usr/local/etc/poudriere.conf.sample</code>.
+Copy this file to <code>/usr/local/etc/poudriere.conf</code>.
+Edit the copied file to suit the local configuration.</p>
+</div>
+<div class="paragraph">
+<p>While <code>ZFS</code> is not required on the system running poudriere, it is beneficial.
+When <code>ZFS</code> is used, <code>ZPOOL</code> must be specified in <code>/usr/local/etc/poudriere.conf</code> and <code>FREEBSD_HOST</code> should be set to a nearby mirror.
+Defining <code>CCACHE_DIR</code> enables the use of package:devel/ccache[] to cache compilation and reduce build times for frequently-compiled code.
+It may be convenient to put poudriere datasets in an isolated tree mounted at <code>/poudriere</code>.
+Defaults for the other configuration values are adequate.</p>
+</div>
+<div class="paragraph">
+<p>The number of processor cores detected is used to define how many builds will run in parallel.
+Supply enough virtual memory, either with <code>RAM</code> or swap space.
+If virtual memory runs out, the compilation jails will stop and be torn down, resulting in weird error messages.</p>
+</div>
+<div class="sect2">
+<h3 id="poudriere-initialization">6.1. Initialize Jails and Port Trees<a class="anchor" href="#poudriere-initialization"></a></h3>
+<div class="paragraph">
+<p>After configuration, initialize poudriere so that it installs a jail with the required FreeBSD tree and a ports tree.
+Specify a name for the jail using <code>-j</code> and the FreeBSD version with <code>-v</code>.
+On systems running FreeBSD/amd64, the architecture can be set with <code>-a</code> to either <code>i386</code> or <code>amd64</code>.
+The default is the architecture shown by <code>uname</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># poudriere jail -c -j 13amd64 -v 13.1-RELEASE</span>
+<span class="o">[</span>00:00:00] Creating 13amd64 fs at /poudriere/jails/13amd64... <span class="k">done</span>
+<span class="o">[</span>00:00:00] Using pre-distributed MANIFEST <span class="k">for </span>FreeBSD 13.1-RELEASE amd64
+<span class="o">[</span>00:00:00] Fetching base <span class="k">for </span>FreeBSD 13.1-RELEASE amd64
+/poudriere/jails/13amd64/fromftp/base.txz              125 MB 4110 kBps    31s
+<span class="o">[</span>00:00:33] Extracting base... <span class="k">done</span>
+<span class="o">[</span>00:00:54] Fetching src <span class="k">for </span>FreeBSD 13.1-RELEASE amd64
+/poudriere/jails/13amd64/fromftp/src.txz               154 MB 4178 kBps    38s
+<span class="o">[</span>00:01:33] Extracting src... <span class="k">done</span>
+<span class="o">[</span>00:02:31] Fetching lib32 <span class="k">for </span>FreeBSD 13.1-RELEASE amd64
+/poudriere/jails/13amd64/fromftp/lib32.txz              24 MB 3969 kBps    06s
+<span class="o">[</span>00:02:38] Extracting lib32... <span class="k">done</span>
+<span class="o">[</span>00:02:42] Cleaning up... <span class="k">done</span>
+<span class="o">[</span>00:02:42] Recording filesystem state <span class="k">for </span>clean... <span class="k">done</span>
+<span class="o">[</span>00:02:42] Upgrading using ftp
+/etc/resolv.conf -&gt; /poudriere/jails/13amd64/etc/resolv.conf
+Looking up update.FreeBSD.org mirrors... 3 mirrors found.
+Fetching public key from update4.freebsd.org... <span class="k">done</span><span class="nb">.</span>
+Fetching metadata signature <span class="k">for </span>13.1-RELEASE from update4.freebsd.org... <span class="k">done</span><span class="nb">.</span>
+Fetching metadata index... <span class="k">done</span><span class="nb">.</span>
+Fetching 2 metadata files... <span class="k">done</span><span class="nb">.</span>
+Inspecting system... <span class="k">done</span><span class="nb">.</span>
+Preparing to download files... <span class="k">done</span><span class="nb">.</span>
+Fetching 124 patches.....10....20....30....40....50....60....70....80....90....100....110....120.. <span class="k">done</span><span class="nb">.</span>
+Applying patches... <span class="k">done</span><span class="nb">.</span>
+Fetching 6 files... <span class="k">done</span><span class="nb">.</span>
+The following files will be added as part of updating to
+13.1-RELEASE-p1:
+/usr/src/contrib/unbound/.github
+/usr/src/contrib/unbound/.github/FUNDING.yml
+/usr/src/contrib/unbound/contrib/drop2rpz
+/usr/src/contrib/unbound/contrib/unbound_portable.service.in
+/usr/src/contrib/unbound/services/rpz.c
+/usr/src/contrib/unbound/services/rpz.h
+/usr/src/lib/libc/tests/gen/spawnp_enoexec.sh
+The following files will be updated as part of updating to
+13.1-RELEASE-p1:
+<span class="o">[</span>…]
+Installing updates...Scanning //usr/share/certs/blacklisted <span class="k">for </span>certificates...
+Scanning //usr/share/certs/trusted <span class="k">for </span>certificates...
+ <span class="k">done</span><span class="nb">.</span>
+13.1-RELEASE-p1
+<span class="o">[</span>00:04:06] Recording filesystem state <span class="k">for </span>clean... <span class="k">done</span>
+<span class="o">[</span>00:04:07] Jail 13amd64 13.1-RELEASE-p1 amd64 is ready to be used</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># poudriere ports -c -p local -m git+https</span>
+<span class="o">[</span>00:00:00] Creating <span class="nb">local </span>fs at /poudriere/ports/local... <span class="k">done</span>
+<span class="o">[</span>00:00:00] Checking out the ports tree... <span class="k">done</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On a single computer, poudriere can build ports with multiple configurations, in multiple jails, and from different port trees.
+Custom configurations for these combinations are called <em>sets</em>.
+See the CUSTOMIZATION section of man:poudriere[8] for details after package:ports-mgmt/poudriere[] or package:ports-mgmt/poudriere-devel[] is installed.</p>
+</div>
+<div class="paragraph">
+<p>The basic configuration shown here puts a single jail-, port-, and set-specific <code>make.conf</code> in <code>/usr/local/etc/poudriere.d</code>.
+The filename in this example is created by combining the jail name, port name, and set name: <code>13amd64-local-workstation-make.conf</code>.
+The system <code>make.conf</code> and this new file are combined at build time to create the <code>make.conf</code> used by the build jail.</p>
+</div>
+<div class="paragraph">
+<p>Packages to be built are entered in <code>13amd64-local-workstation-pkglist</code> (ports with extref:https://docs.freebsd.org/en/books/porters-handbook/flavors[FLAVORS] can be defined with @FLAVOR):</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>editors/emacs
+devel/git
+devel/php-composer2@php82
+ports-mgmt/pkg
+...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Options and dependencies for the specified ports are configured:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># poudriere options -j 13amd64 -p local -z workstation -f 13amd64-local-workstation-pkglist</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, packages are built and a package repository is created:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># poudriere bulk -j 13amd64 -p local -z workstation -f 13amd64-local-workstation-pkglist</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While running, pressing <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>t</kbd></span> displays the current state of the build.
+poudriere also builds files in <code>/poudriere/logs/bulk/jailname</code> that can be used with a web server to display build information.</p>
+</div>
+<div class="paragraph">
+<p>After completion, the new packages are now available for installation from the poudriere repository.</p>
+</div>
+<div class="paragraph">
+<p>For more information on using poudriere, see man:poudriere[8] and the main web site, <a href="https://github.com/freebsd/poudriere/wiki" class="bare">https://github.com/freebsd/poudriere/wiki</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_pkg_clients_to_use_a_poudriere_repository">6.2. Configuring pkg Clients to Use a poudriere Repository<a class="anchor" href="#_configuring_pkg_clients_to_use_a_poudriere_repository"></a></h3>
+<div class="paragraph">
+<p>While it is possible to use both a custom repository along side of the official repository, sometimes it is useful to disable the official repository.
+This is done by creating a configuration file that overrides and disables the official configuration file.
+Create <code>/usr/local/etc/pkg/repos/FreeBSD.conf</code> that contains the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>FreeBSD: {
+	enabled: no
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Usually it is easiest to serve a poudriere repository to the client machines via HTTP.
+Set up a webserver to serve up the package directory, for instance: <code>/usr/local/poudriere/data/packages/13amd64</code>, where <code>13amd64</code> is the name of the build.</p>
+</div>
+<div class="paragraph">
+<p>If the URL to the package repository is: <code><a href="http://pkg.example.com/13amd64" class="bare">http://pkg.example.com/13amd64</a></code>,
+then the repository configuration file in <code>/usr/local/etc/pkg/repos/custom.conf</code> would look like:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>custom: {
+	url: &#34;http://pkg.example.com/13amd64&#34;,
+	enabled: yes,
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If exposing the package repository to the internet is not desired, the <code>file://</code> protocol can be used to point to the repository directly:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>custom: {
+	url: &#34;file:///usr/local/poudriere/data/packages/11amd64&#34;,
+	enabled: yes,
+}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ports-nextsteps">7. Post-Installation Considerations<a class="anchor" href="#ports-nextsteps"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Regardless of whether the software was installed from a binary package or port, most third-party applications require some level of configuration after installation.
+The following commands and locations can be used to help determine what was installed with the application.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Most applications install at least one default configuration file in <code>/usr/local/etc</code>. In cases where an application has a large number of configuration files, a subdirectory will be created to hold them. Often, sample configuration files are installed which end with a suffix such as <code>.sample</code>. The configuration files should be reviewed and possibly edited to meet the system’s needs. To edit a sample file, first copy it without the <code>.sample</code> extension.</p>
+</li>
+<li>
+<p>Applications which provide documentation will install it into <code>/usr/local/share/doc</code> and many applications also install manual pages. This documentation should be consulted before continuing.</p>
+</li>
+<li>
+<p>Some applications run services which must be added to <code>/etc/rc.conf</code> before starting the application. These applications usually install a startup script in <code>/usr/local/etc/rc.d</code>. See crossref:config[configtuning-starting-services,Starting Services] for more information.</p>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>By design, applications do not run their startup script upon installation, nor do they run their stop script upon deinstallation or upgrade.
+This decision is left to the individual system administrator.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li>
+<p>Users of man:csh[1] should run <code>rehash</code> to rebuild the known binary list in the shells <code>PATH</code>.</p>
+</li>
+<li>
+<p>Use <code>pkg info</code> to determine which files, man pages, and binaries were installed with the application.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ports-broken">8. Dealing with Broken Ports<a class="anchor" href="#ports-broken"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a port does not build or install, try the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Search to see if there is a fix pending for the port in the <a href="https://www.FreeBSD.org/support/">Problem Report database</a>. If so, implementing the proposed fix may fix the issue.</p>
+</li>
+<li>
+<p>Ask the maintainer of the port for help. Type <code>make maintainer</code> in the ports skeleton or read the port’s <code>Makefile</code> to find the maintainer’s email address. Remember to include the output leading up to the error in the email to the maintainer.</p>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Some ports are not maintained by an individual but instead by a group maintainer represented by a extref:https://docs.freebsd.org/en/articles/mailing-list-faq/[mailing list].
+Many, but not all, of these addresses look like <a href="mailto:freebsd-listname@FreeBSD.org">freebsd-listname@FreeBSD.org</a>.
+Please take this into account when sending an email.</p>
+</div>
+<div class="paragraph">
+<p>In particular, ports maintained by <a href="mailto:ports@FreeBSD.org">ports@FreeBSD.org</a> are not maintained by a specific individual.
+Instead, any fixes and support come from the general community who subscribe to that mailing list. More volunteers are always needed!</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>If there is no response to the email, use Bugzilla to submit a bug report using the instructions in extref:https://docs.freebsd.org/en/articles/problem-reports/[Writing FreeBSD Problem Reports].</p>
+</div>
+</li>
+<li>
+<p>Fix it! The extref:https://docs.freebsd.org/en/books/porters-handbook/[Porter’s Handbook] includes detailed information on the ports infrastructure so that you can fix the occasional broken port or even submit your own!</p>
+</li>
+<li>
+<p>Install the package instead of the port using the instructions in <a href="#pkgng-intro">Using pkg for Binary Package Management</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=http://127.0.0.1:5500/en/books/handbook/basics class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=http://127.0.0.1:5500/en/books/handbook/x11  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ports-synopsis">1. Synopsis</a></li>
+    <li><a href="#ports-overview">2. Overview of Software Installation</a></li>
+    <li><a href="#ports-finding-applications">3. Finding Software</a></li>
+    <li><a href="#pkgng-intro">4. Using pkg for Binary Package Management</a></li>
+    <li><a href="#ports-using">5. Using the Ports Collection</a></li>
+    <li><a href="#ports-poudriere">6. Building Packages with poudriere</a></li>
+    <li><a href="#ports-nextsteps">7. Post-Installation Considerations</a></li>
+    <li><a href="#ports-broken">8. Dealing with Broken Ports</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="http://127.0.0.1:5500/en/languages">
+                
+                <img src="/images/language.png" class="language-image" alt="Choose language">
+                <span>English</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content=""/>
+  <meta name="keywords" content=""/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="http://127.0.0.1:5500/zh-cn/books/handbook/filesystems/" />
+
+  <title>第 21 章 文件系统 Support |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 21 章 文件系统 Support" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://127.0.0.1:5500favicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn" />
+    <meta property="og:url" content="http://127.0.0.1:5500/zh-cn/books/handbook/filesystems/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "http:\/\/127.0.0.1:5500\/zh-cn\/books\/handbook\/filesystems\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="http://127.0.0.1:5500" class="logo">
+        <img src="/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-audience">预期的读者</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-changes-from3">相对于第三版的改动</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-changes-from2">相对于第二版的改动 (2004)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-changes">相对于第一版的改变 (2001)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-overview">本手册的组织</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-conv">本书中使用的一些约定</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/parti/">
+              部分 I. 起步
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/introduction/">
+              第 1 章 介绍
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/introduction/#introduction-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/introduction/#nutshell">2. 欢迎来到 FreeBSD 的世界!</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/introduction/#history">3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6655173739803bf0920b92a7fe8a363d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6655173739803bf0920b92a7fe8a363d"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/">
+              第 2 章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-hardware">2. 硬件需求</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-pre">3. 安装前的准备工作</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-start">4. 开始安装</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#using-sysinstall">5. 介绍 Sysinstall</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-steps">6. 分配磁盘空间</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-choosing">7. 选择要安装的软件包</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-media">8. 选择您要使用的安装介质</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-final-warning">9. 安装确认</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-post">10. 安装后的配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-trouble">11. 常见问题</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-advanced">12. 高级安装指南</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/install/#install-diff-media">13. 准备您自己的安装介质</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/">
+              第 3 章 安装 FreeBSD（适用于 9.x 及以后版本）
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-hardware">2. 硬件需求</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-pre">3. 安装前的准备工作</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-start">4. 开始安装</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#using-bsdinstall">5. 介绍 bsdinstall</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-netinstall">6. 通过网络安装</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-partitioning">7. 分配磁盘空间</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-final-warning">8. 安装确认</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-post">9. 安装后的配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bsdinstall/#bsdinstall-install-trouble">10. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/">
+              第 4 章 UNIX 基础
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#consoles">2. 虚拟控制台和终端</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#permissions">3. 权限</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#dirstructure">4. 目录架构</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#disk-organization">5. 磁盘组织</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#mount-unmount">6. 文件系统的挂接和卸下</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-processes">7. 进程</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-daemons">8. 守护进程，信号和杀死进程</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#shells">9. Shells</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#editors">10. 文本编辑器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-devices">11. 设备和设备节点</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#binary-formats">12. 二进制文件格式</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/basics/#basics-more-information">13. 取得更多的资讯</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/">
+              第 5 章 安装应用程序: Packages 和 Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-overview">2. 软件安装预览</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-finding-applications">3. 寻找您要的应用程序</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#packages-using">4. 使用 Package 系统</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-using">5. 使用Ports Collection</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-nextsteps">6. 安装之后还要做点什么？</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ports/#ports-broken">7. 如何处理坏掉的 Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/">
+              第 6 章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x11-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-understanding">2. 理解 X</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-install">3. 安装 X11</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-config">4. 配置 X11</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-fonts">5. 在 X11 中使用字体</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x-xdm">6. X 显示管理器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/x11/#x11-wm">7. 桌面环境</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/partii/">
+              部分 II. 常见的任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/">
+              第 7 章 桌面应用
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-browsers">2. 浏览器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-productivity">3. 办公、图象处理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-viewers">4. 文档查看器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-finance">5. 财务</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/desktop/#desktop-summary">6. 总结</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/">
+              第 8 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#multimedia-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#sound-setup">2. 安装声卡</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#sound-mp3">3. MP3音频</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#video-playback">4. 视频回放</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#tvcard">5. 安装电视卡</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/multimedia/#scanners">6. 图象扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/">
+              第 9 章 配置FreeBSD的内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-custom-kernel">2. 为什么需要建立定制的内核?</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-devices">3. 发现系统硬件</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-modules">4. 内核驱动，子系统和模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-building">5. 建立并安装一个定制的内核</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-config">6. 配置文件</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/kernelconfig/#kernelconfig-trouble">7. 如果出现问题怎么办</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/">
+              第 10 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-intro-spooler">2. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-intro-setup">3. 基本设置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-advanced">4. 高级设置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-using">5. 使用打印机</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-lpd-alternatives">6. 替换标准后台打印</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/printing/#printing-troubleshooting">7. 疑难问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/linuxemu/">
+              第 11 章 Linux® 二进制兼容模式
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/linuxemu/#linuxemu-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/linuxemu/#linuxemu-lbc-install">2. 配置 Linux® 二进制兼容模式</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/linuxemu/#linuxemu-advanced">3. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/partiii/">
+              部分 III. 系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/">
+              第 12 章 设置和调整
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#config-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-initial">2. 初步配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-core-configuration">3. 核心配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-appconfig">4. 应用程序配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-starting-services">5. 启动服务</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-cron">6. 配置 <code>cron</code></a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-rcd">7. 在 FreeBSD 中使用 rc</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#config-network-setup">8. 设置网卡</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-virtual-hosts">9. 虚拟主机</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-configfiles">10. 配置文件</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-sysctl">11. 用 sysctl 进行调整</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-disk">12. 调整磁盘</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#configtuning-kernel-limits">13. 调整内核限制</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#adding-swap-space">14. 添加交换空间</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#acpi-overview">15. 电源和资源管理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/config/#ACPI-debug">16. 使用和调试 FreeBSD ACPI</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/">
+              第 13 章 FreeBSD 引导过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-introduction">2. 引导问题</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-blocks">3. 引导管理器和各引导阶段</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-kernel">4. 内核在引导时的交互</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#device-hints">5. Device Hints</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-init">6. Init：进程控制及初始化</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/boot/#boot-shutdown">7. 关机 (shutdown) 过程</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-17a53b356b407d9ed656b7babd2efa34" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-17a53b356b407d9ed656b7babd2efa34"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/">
+              第 14 章 用户和基本的帐户管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-introduction">2. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-superuser">3. 超级用户帐户</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-system">4. 系统帐户</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-user">5. 用户帐户</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-modifying">6. 修改帐户</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-limiting">7. 限制用户使用系统资源</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/users/#users-groups">8. 组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/">
+              第 15 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-intro">2. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#securing-freebsd">3. 确保 FreeBSD 的安全</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#crypt">4. DES、 Blowfish、 MD5， 以及 Crypt</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#one-time-passwords">5. 一次性口令</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#tcpwrappers">6. TCP Wrappers</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#kerberos5">7. Kerberos5</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#openssl">8. OpenSSL</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#ipsec">9. IPsec 上的 VPN</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#openssh">10. OpenSSH</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#fs-acl">11. 文件系统访问控制表</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-portaudit">12. 监视第三方安全问题</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-advisories">13. FreeBSD 安全公告</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/security/#security-accounting">14. 进程记帐</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/">
+              第 16 章 Jails
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-terms">2. 与 Jail 相关的一些术语</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-intro">3. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-build">4. 建立和控制 jail</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-tuning">5. 微调和管理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/jails/#jails-application">6. Jail 的应用</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/">
+              第 17 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-synopsis">1. 概要</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-inline-glossary">2. 本章出现的重要术语</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-initial">3. 关于 MAC 的说明</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-understandlabel">4. 理解 MAC 标签</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-planning">5. 规划安全配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-modules">6. 模块配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-seeotheruids">7. MAC seeotheruids 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-bsdextended">8. MAC bsdextended 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-ifoff">9. MAC ifoff 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-portacl">10. MAC portacl 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-partition">11. MAC partition (分区) 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-mls">12. MAC 多级 (Multi-Level) 安全模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-biba">13. MAC Biba 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-lomac">14. MAC LOMAC 模块</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-implementing">15. MAC Jail 中的 Nagios</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-userlocked">16. User Lock Down</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mac/#mac-troubleshoot">17. MAC 框架的故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/">
+              第 18 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-inline-glossary">2. 本章中的一些关键术语</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-install">3. 安装审计支持</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-config">4. 对审计进行配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/audit/#audit-administration">5. 管理审计子系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/">
+              第 19 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-naming">2. 设备命名</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-adding">3. 添加磁盘</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#raid">4. RAID</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#usb-disks">5. USB 存储设备</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#creating-cds">6. 创建和使用光学介质(CD)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#creating-dvds">7. 创建和使用光学介质(DVD)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#floppies">8. 创建和使用软盘</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#backups-tapebackups">9. 用磁带机备份</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#backups-floppybackups">10. 用软盘备份</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#backup-strategies">11. 备份策略</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#backup-basics">12. 备份程序</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-virtual">13. 网络、内存和 和以及映像文件为介质的虚拟文件系统</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#snapshots">14. 文件系统快照</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#quotas">15. 文件系统配额</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-encrypting">16. 加密磁盘分区</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#swap-encrypting">17. 对交换区进行加密</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/disks/#disks-hast">18. 高可用性存储 (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/">
+              第 20 章 GEOM: 模块化磁盘变换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-intro">2. GEOM 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-striping">3. RAID0 - 条带</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-mirror">4. RAID1 - 镜像</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#GEOM-raid3">5. RAID3 - 使用专用校验设备的字节级条带</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#geom-ggate">6. GEOM Gate 网络设备</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#geom-glabel">7. 为磁盘设备添加卷标</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/geom/#geom-gjournal">8. 通过 GEOM 实现 UFS 日志</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/filesystems/">
+              第 21 章 文件系统 Support
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/filesystems/#filesystems-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/filesystems/#filesystems-zfs">2. Z 文件系统 (ZFS)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-11d260f2685c0b17137e64887e1b1989" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-11d260f2685c0b17137e64887e1b1989"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/">
+              第 22 章 Vinum 卷管理程序
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-intro">2. 磁盘容量太小</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-access-bottlenecks">3. 访问瓶颈</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-data-integrity">4. 数据的完整性</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-objects">5. Vinum 目标</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-examples">6. 一些例子</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-object-naming">7. 对象命名</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-config">8. 配置 Vinum</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/vinum/#vinum-root">9. 使用 Vinum 作为根文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/virtualization/">
+              第 23 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/virtualization/#virtualization-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/virtualization/#virtualization-guest">2. 作为客户 OS 的 FreeBSD</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/virtualization/#virtualization-host">3. 作为宿主 OS 的 FreeBSD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/">
+              第 24 章 本地化－I18N/L10N使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#l10n-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#l10n-basics">2. 基础知识</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#using-localization">3. 使用本地化语言</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#l10n-compiling">4. 编译I18N程序</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/l10n/#lang-setup">5. 本地化FreeBSD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/">
+              第 25 章 更新与升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#updating-upgrading-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">2. FreeBSD 更新</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#updating-upgrading-portsnap">3. Portsnap： 一个 Ports Collection 更新工具</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#updating-upgrading-documentation">4. 更新系统附带的文档</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#current-stable">5. 追踪开发分支</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#synching">6. 同步您的源码</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#makeworld">7. 重新编译 "world"</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#make-delete-old">8. 删除过时的文件、 目录和函数库</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/cutting-edge/#small-lan">9. 跟踪多台机器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/">
+              第 26 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-implementation">2. 实现上的差异</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-enable">3. 启用 DTrace 支持</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-using">4. 使用 DTrace</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/dtrace/#dtrace-language">5. D 语言</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/partiv/">
+              部分 IV. 网络通讯
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/">
+              第 27 章 串口通讯
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#serial-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#serial">2. 介绍</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#term">3. 终端</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#dialup">4. 拨入服务</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#dialout">5. 拨出设备</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/serialcomms/#serialconsole-setup">6. 设置串口控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/">
+              第 28 章 PPP 和 SLIP
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#userppp">2. 使用用户级 PPP</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#ppp">3. 使用内核级PPP</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#ppp-troubleshoot">4. PPP 连接故障排除</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#pppoe">5. 使用基于以太网的PPP(PPPoE)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#pppoa">6. 使用 ATM 上的 PPP (PPPoA)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/ppp-and-slip/#slip">7. 使用SLIP</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/">
+              第 29 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-using">2. 使用电子邮件</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#sendmail">3. sendmail 配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-changingmta">4. 改变您的邮件传输代理程序</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-trouble">5. 疑难解答</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-advanced">6. 高级主题</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#SMTP-UUCP">7. SMTP 与 UUCP</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#outgoing-only">8. 只发送邮件的配置</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#SMTP-dialup">9. 拨号连接时使用邮件传送</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#SMTP-Auth">10. SMTP 验证</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-agents">11. 邮件用户代理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-fetchmail">12. 使用 fetchmail</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mail/#mail-procmail">13. 使用 procmail</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/">
+              第 30 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-servers-synopsis">1. 概要</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-inetd">2. inetd"超级服务器"</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-nfs">3. 网络文件系统（NFS）</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-nis">4. 网络信息服务 (NIS/YP)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-dhcp">5. 网络自动配置 (DHCP)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-dns">6. 域名系统 (DNS)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-apache">7. Apache HTTP 服务器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-ftp">8. 文件传输协议 (FTP)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-samba">9. 为 Microsoft® Windows® 客户机提供文件和打印服务 (Samba)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-ntp">10. 通过 NTP 进行时钟同步</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/network-servers/#network-syslogd">11. 使用 <code>syslogd</code> 记录远程主机的日志</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/">
+              第 31 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-intro">1. 入门</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-concepts">2. 防火墙的概念</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-apps">3. 防火墙软件包</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-pf">4. OpenBSD Packet Filter (PF) 和 ALTQ</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-ipf">5. IPFILTER (IPF) 防火墙</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/firewalls/#firewalls-ipfw">6. IPFW</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/">
+              第 32 章 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#advanced-networking-synopsis">1. 概述</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-routing">2. 网关和路由</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-wireless">3. 无线网络</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-bluetooth">4. 蓝牙</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-bridging">5. 桥接</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-aggregation">6. 链路聚合与故障转移</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-diskless">7. 无盘操作</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-pxe-nfs">8. 从 PXE 启动一个 NFS 根文件系统</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-isdn">9. ISDN</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-natd">10. 网络地址转换</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-plip">11. 并口电缆 IP (PLIP)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-ipv6">12. IPv6</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#network-atm">13. 异步传输模式 (ATM)</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/advanced-networking/#carp">14. Common Address Redundancy Protocol (CARP， 共用地址冗余协议)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/partv/">
+              部分 V. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#mirrors-cdrom">1. CDROM 和 DVD 发行商</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#mirrors-ftp">2. FTP 站点</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#anoncvs">3. 匿名 CVS</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#ctm">4. 使用 CTM</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#cvsup">5. 使用 CVSup</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#cvs-tags">6. CVS 标签</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#mirrors-afs">7. AFS 站点</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/mirrors/#mirrors-rsync">8. rsync 站点</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-freebsd">1. 关于 FreeBSD 的专业书籍与杂志</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-userguides">2. 用户指南</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-adminguides">3. 管理员指南</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-programmers">4. 开发指南</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-osinternals">5. 操作系统原理</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-security">6. 安全方面的参考文献</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-hardware">7. 硬件参考</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-history">8. UNIX® 历史</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/bibliography/#bibliography-journals">9. 各种期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/">
+              附录 C. Internet上的资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/#eresources-mail">1. 邮件列表</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/#eresources-news">2. Usenet新闻组</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/#eresources-web">3. World Wide Web服务器</a></li>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/eresources/#eresources-email">4. Email地址</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/zh-cn/books/handbook/pgpkeys/">
+              附录 D. PGP公钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/zh-cn/books/handbook/pgpkeys/#pgpkeys-officers">1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 21 章 文件系统 Support</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#filesystems-synopsis">1. 概述</a></li>
+    <li><a href="#filesystems-zfs">2. Z 文件系统 (ZFS)</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="filesystems-synopsis">1. 概述<a class="anchor" href="#filesystems-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>文件系统对于任何操作系统来说都是一个不可缺的部分。 它们允许用户上载和存储文件，提供对数据的访问，当然， 是使硬盘能具有实际的用途。不同的操作系统通常都有一个共同的主要方面， 那就是它们原生的文件系统。在 FreeBSD 上这个文件系统通常被称为快速文件系统或者 FFS， 这是基于原来的 Unix™ 文件系统，通常也被称为 UFS。 这是 FreeBSD 用于在磁盘上访问数据的原生的文件系统。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 也支持数量繁多的不同的文件系统， 用于提供本地从其他操作系统上访问数据的支持， 那些就是指存放在本地挂载的 USB 存储设备，闪存设备和硬盘上的数据。还支持一些非原生的文件系统。 这些文件系统是在其他的操作系统上开发的，像 Linux® 的扩展文件系统 （EXT），和 Sun™ 的 Z 文件系统 （ZFS）。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 上对于各种文件系统的支持分成不同的层次。 一些要求加载内核模块，另外的可能要求安装一系列的工具。 这一章节旨在帮助 FreeBSD 用户在他们的系统上访问其他的文件系统， 由 Sun™ 的 Z 文件系统开始。</p>
+</div>
+<div class="paragraph">
+<p>在阅读了这一章节之后，你将了解：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>原生与被支持的文件系统之间的区别。</p>
+</li>
+<li>
+<p>FreeBSD 支持哪些文件系统。</p>
+</li>
+<li>
+<p>如何起用，配置，访问和使用非原生的文件系统。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在阅读这章以前，你应该：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解 UNIX® 和 FreeBSD 基本知识 (crossref:basics[basics,UNIX 基础])。</p>
+</li>
+<li>
+<p>熟悉基本的内核配置/编译方法 (crossref:kernelconfig[kernelconfig,配置FreeBSD的内核])。</p>
+</li>
+<li>
+<p>熟悉在 FreeBSD 上安装第三方软件 (crossref:ports[ports,安装应用程序. Packages 和 Ports])。</p>
+</li>
+<li>
+<p>熟悉 FreeBSD 上的磁盘，存储和设备名 (crossref:disks[disks,存储])。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="filesystems-zfs">2. Z 文件系统 (ZFS)<a class="anchor" href="#filesystems-zfs"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Z 文件系统是由 Sun™ 开发使用存储池方法的新技术。 这就是说只有在需要存储数据的时候空间才会被使用。 它也为保护数据最大完整性而设计的，支持数据快照， 多份拷贝和数据校验。增加了被称为 RAID-Z 的新的数据复制类型。RAID-Z 是种类似于 RAID5类型, 但被设计成防止写入漏洞。</p>
+</div>
+<div class="sect2">
+<h3 id="_调整_zfs">2.1. 调整 ZFS<a class="anchor" href="#_调整_zfs"></a></h3>
+<div class="paragraph">
+<p>ZFS 子系统需利用到大量的系统资源， 所以可能需要一些调校来为日常应用提供最大化的效能。 作为 FreeBSD 的一项试验性的特性，这可能在不久的将来有所变化； 无论如何，下面的这些步骤是我们推荐的：</p>
+</div>
+<div class="sect3">
+<h4 id="_内存">2.1.1. 内存<a class="anchor" href="#_内存"></a></h4>
+<div class="paragraph">
+<p>总共的系统内存至少应有 1GB，推荐 2GB 或者更多。 在此处所有的例子中，我们使用了 1GB 内存的系统并配合了一些恰当的调校。</p>
+</div>
+<div class="paragraph">
+<p>有些人在少于 1GB 内存的环境有幸正常使用， 但是在这样有限的物理内存的条件下，当系统的负载很高时， FreeBSD 极有可能因于内存耗尽而崩溃。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_内核配置">2.1.2. 内核配置<a class="anchor" href="#_内核配置"></a></h4>
+<div class="paragraph">
+<p>我们建议把未使用的驱动和选项从内核配置文件中去除。 既然大部份的驱动都有以模块的形式存在，它们就可以很容易的通过 <span class="filename">/boot/loader.conf</span> 加载。</p>
+</div>
+<div class="paragraph">
+<p>i386™ 构架的用户应在内核配置文件中加入以下的选项， 重新编译内核并重启机器：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options 	KVA_PAGES=512</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这个选项将扩展内核的地址空间， 因而允许 <code>vm.kvm_size</code> 能够超越 1 GB 的限制(PAE为 2 GB)。 为了找出这个选项最合适的值， 把以兆(MB)为单位所需的地址空间除以 4 得到。 在这个例子中，<code>512</code> 则为 2 GB。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_loader_可调参数">2.1.3. Loader 可调参数<a class="anchor" href="#_loader_可调参数"></a></h4>
+<div class="paragraph">
+<p>所有构架上 FreeBSD 都应该加大 <span class="filename">kmem</span> 地址空间。在有 1GB 物理内存的测试系统上，在 <span class="filename">/boot/loader.conf</span> 中加入如下的参数并且重启后通过了测试。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vm.kmem_size=&#34;330M&#34;
+vm.kmem_size_max=&#34;330M&#34;
+vfs.zfs.arc_max=&#34;40M&#34;
+vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>更多 ZFS 相关推荐调校的细节请参阅 <a href="http://wiki.freebsd.org/ZFSTuningGuide">http://wiki.freebsd.org/ZFSTuningGuide</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_使用_zfs">2.2. 使用 ZFS<a class="anchor" href="#_使用_zfs"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 有一种启动机制能在系统初始化时挂载 ZFS 存储池。 可以通过以下的命令设置：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;zfs_enable=&#34;YES&#34;&#39; &gt;&gt; /etc/rc.conf</span>
+<span class="c"># /etc/rc.d/zfs start</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这份文档剩余的部分假定系统中有 3 块 SCSI 磁盘可用， 它们的设备名分别为 <span class="filename">da0</span>， <span class="filename">da1</span> 和 <span class="filename">da2</span>。 IDE 硬件的用户可以使用 <span class="filename">ad</span> 代替 SCSI。</p>
+</div>
+<div class="sect3">
+<h4 id="_单个磁盘存储池">2.2.1. 单个磁盘存储池<a class="anchor" href="#_单个磁盘存储池"></a></h4>
+<div class="paragraph">
+<p>在单个磁盘上创建一个简单， 非冗余的 ZFS， 使用 <code>zpool</code> 命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool create example /dev/da0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以通过 <code>df</code> 的输出查看新的存储池：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># df</span>
+Filesystem  1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a   2026030  235230  1628718    13    /
+devfs               1       1        0   100    /dev
+/dev/ad0s1d  54098308 1032846 48737598     2    /usr
+example      17547136       0 17547136     0    /example</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这份输出清楚的表明了 <code>example</code> 存储池不仅创建成功而且被 <em>挂载</em> 了。 我们能像访问普通的文件系统那样访问它， 就像以下例子中演示的那样，用户能够在上面创建文件并浏览：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /example</span>
+<span class="c"># ls</span>
+<span class="c"># touch testfile</span>
+<span class="c"># ls -al</span>
+total 4
+drwxr-xr-x   2 root  wheel    3 Aug 29 23:15 <span class="nb">.</span>
+drwxr-xr-x  21 root  wheel  512 Aug 29 23:12 ..
+<span class="nt">-rw-r--r--</span>   1 root  wheel    0 Aug 29 23:15 testfile</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>遗憾的是这个存储池并没有利用到 ZFS 的任何特性。 在这个存储池上创建一个文件系统，并启用压缩：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create example/compressed</span>
+<span class="c"># zfs set compression=gzip example/compressed</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在 <code>example/compressed</code> 是一个启用了压缩的 ZFS 文件系统了。 可以尝试复制一些大的文件到 <span class="filename">/example/compressed</span>。</p>
+</div>
+<div class="paragraph">
+<p>使用这个命令可以禁用压缩：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs set compression=off example/compressed</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用如下的命令卸载这个文件系统，并用 <code>df</code> 工具确认：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs umount example/compressed</span>
+<span class="c"># df</span>
+Filesystem  1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a   2026030  235232  1628716    13    /
+devfs               1       1        0   100    /dev
+/dev/ad0s1d  54098308 1032864 48737580     2    /usr
+example      17547008       0 17547008     0    /example</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>重新挂在这个文件系统使之能被访问， 并用 <code>df</code> 确认：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs mount example/compressed</span>
+<span class="c"># df</span>
+Filesystem         1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a          2026030  235234  1628714    13    /
+devfs                      1       1        0   100    /dev
+/dev/ad0s1d         54098308 1032864 48737580     2    /usr
+example             17547008       0 17547008     0    /example
+example/compressed  17547008       0 17547008     0    /example/compressed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>存储池与文件系统也可通过 <code>mount</code> 的输出查看：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount</span>
+/dev/ad0s1a on / <span class="o">(</span>ufs, <span class="nb">local</span><span class="o">)</span>
+devfs on /dev <span class="o">(</span>devfs, <span class="nb">local</span><span class="o">)</span>
+/dev/ad0s1d on /usr <span class="o">(</span>ufs, <span class="nb">local</span>, soft-updates<span class="o">)</span>
+example on /example <span class="o">(</span>zfs, <span class="nb">local</span><span class="o">)</span>
+example/data on /example/data <span class="o">(</span>zfs, <span class="nb">local</span><span class="o">)</span>
+example/compressed on /example/compressed <span class="o">(</span>zfs, <span class="nb">local</span><span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>正如前面所提到的，ZFS 文件系统， 在创建之后就能像普通的文件系统那样使用。然而， 还有很多其他的特性是可用的。在下面的例子中， 我们将创建一个新的文件系统，<code>data</code>。 并要在上面存储些重要的文件， 所以文件系统需要被设置成把每一个数据块都保存两份拷贝：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create example/data</span>
+<span class="c"># zfs set copies=2 example/data</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在可以再次使用 <code>df</code> 查看数据和空间的使用状况：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># df</span>
+Filesystem         1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a          2026030  235234  1628714    13    /
+devfs                      1       1        0   100    /dev
+/dev/ad0s1d         54098308 1032864 48737580     2    /usr
+example             17547008       0 17547008     0    /example
+example/compressed  17547008       0 17547008     0    /example/compressed
+example/data        17547008       0 17547008     0    /example/data</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>请注意存储池上的每一个文件系统都有着相同数量的可用空间。 这就是我们在这些例子中使用 <code>df</code> 的原因， 是为了文件系统都是从相同的存储池取得它们所需的空间。 ZFS 去掉了诸如卷和分区此类的概念， 并允许多个文件系统占用同一个存储池。 不再需要文件系统与存储池的时候能像这样销毁它们：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs destroy example/compressed</span>
+<span class="c"># zfs destroy example/data</span>
+<span class="c"># zpool destroy example</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>磁盘无法避免的会坏掉和停止运转。 当这块磁盘坏掉的时候，上面的数据都将丢失。 一个避免因磁盘损坏而丢失数据的方法是使用 RAID。ZFS 在它的存储池设计中支持这样的特性， 这便是下一节将探讨的。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_zfs_raid_z">2.2.2. ZFS RAID-Z<a class="anchor" href="#_zfs_raid_z"></a></h4>
+<div class="paragraph">
+<p>正如前文中所提到的，这一章节将假设存在 3 个 SCSI 设备， <span class="filename">da0</span>， <span class="filename">da1</span> 和 <span class="filename">da2</span> (或者 <span class="filename">ad0</span> 和超出此例使用了 IDE 磁盘)。 使用如下的命令创建一个 RAID-Z 存储池:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool create storage raidz da0 da1 da2</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Sun™ 推荐在一个 RAID-Z 配置中使用的磁盘数量为 3 至 9 块。 如果你要求在单独的一个存储池中使用 10 块或更多的磁盘， 请考虑分拆成更小 RAID-z 组。 如果你只有 2 块磁盘， 并仍然需要冗余， 请考虑使用 ZFS 的 mirror 特性。 更多细节请参考 man:zpool[8] 手册页。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>zpool <code>storage</code> 至此就创建好了。 可以如前文提到的那样使用 man:mount[8] 和 man:df[1] 确认。 如需配给更多的磁盘设备则把它们加这个列表的后面。 在存储池上创建一个叫 <code>home</code> 的文件系统， 用户的文件最终都将被保存在上面：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create storage/home</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>像前文中提到的那样，用户的目录与文件也可启用压缩并保存多份拷贝， 可通过如下的命令完成：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs set copies=2 storage/home</span>
+<span class="c"># zfs set compression=gzip storage/home</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>把用户的数据都拷贝过来并创建一个符号链接， 让他们开始使用这个新的目录：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cp -rp /home/* /storage/home</span>
+<span class="c"># rm -rf /home /usr/home</span>
+<span class="c"># ln -s /storage/home /home</span>
+<span class="c"># ln -s /storage/home /usr/home</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在用户的数据应该都保存在新创建的 <span class="filename">/storage/home</span> 上了。 测试添加一个新用户并以这个身份登录。</p>
+</div>
+<div class="paragraph">
+<p>尝试创建一个可日后用来回退的快照：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs snapshot storage/home@08-30-08</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>请注意快照选项将只会抓取一个真实的文件系统， 而不是某个用户目录或文件。<code>@</code> 字符为文件系统名或卷名的分隔符。 当用户目录被损坏时，可用如下命令恢复：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs rollback storage/home@08-30-08</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>获得所有可用快照的列表，可使用 <code>ls</code> 命令查看文件系统的 <span class="filename">.zfs/snapshot</span> 目录。例如，执行如下命令来查看之前抓取的快照：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ls /storage/home/.zfs/snapshot</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以编写一个脚本来每月定期抓取用户数据的快照，久而久之， 快照可能消耗掉大量的磁盘空间。 之前创建的快照可用以下命令删除：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs destroy storage/home@08-30-08</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在所有这些测试之后，我们没有理由再把 <span class="filename">/store/home</span> 这样放置了。让它称为真正的 <span class="filename">/home</span> 文件系统：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs set mountpoint=/home storage/home</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <code>df</code> 和 <code>mount</code> 命令将显示现在系统把我们的文件系统真正当作了 <span class="filename">/home</span>：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount</span>
+/dev/ad0s1a on / <span class="o">(</span>ufs, <span class="nb">local</span><span class="o">)</span>
+devfs on /dev <span class="o">(</span>devfs, <span class="nb">local</span><span class="o">)</span>
+/dev/ad0s1d on /usr <span class="o">(</span>ufs, <span class="nb">local</span>, soft-updates<span class="o">)</span>
+storage on /storage <span class="o">(</span>zfs, <span class="nb">local</span><span class="o">)</span>
+storage/home on /home <span class="o">(</span>zfs, <span class="nb">local</span><span class="o">)</span>
+
+<span class="c"># df</span>
+Filesystem   1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a    2026030  235240  1628708    13    /
+devfs                1       1        0   100    /dev
+/dev/ad0s1d   54098308 1032826 48737618     2    /usr
+storage       26320512       0 26320512     0    /storage
+storage/home  26320512       0 26320512     0    /home</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这样就基本完成了 RAID-Z 的配置了。使用夜间 man:periodic[8] 获取有关文件系统创建之类的状态更新， 执行如下的命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;daily_status_zfs_enable=&#34;YES&#34;&#39; &gt;&gt; /etc/periodic.conf</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_修复_raid_z">2.2.3. 修复 RAID-Z<a class="anchor" href="#_修复_raid_z"></a></h4>
+<div class="paragraph">
+<p>每一种软 RAID 都有监测它们 <code>状态</code> 的方法。 ZFS 也不例外。 可以使用如下的命令查看 RAID-Z 设备：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool status -x</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果所有的存储池处于健康状态并且一切正常的话， 将返回如下信息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">all pools are healthy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果存在问题，可能是一个磁盘设备下线了， 那么返回的存储池的状态将看上去是类似这个样子的：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">pool: storage
+ state: DEGRADED
+status: One or more devices has been taken offline by the administrator.
+	Sufficient replicas exist <span class="k">for </span>the pool to <span class="k">continue </span>functioning <span class="k">in </span>a
+	degraded state.
+action: Online the device using <span class="s1">&#39;zpool online&#39;</span> or replace the device with
+	<span class="s1">&#39;zpool replace&#39;</span><span class="nb">.</span>
+ scrub: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     DEGRADED     0     0     0
+	  raidz1    DEGRADED     0     0     0
+	    da0     ONLINE       0     0     0
+	    da1     OFFLINE      0     0     0
+	    da2     ONLINE       0     0     0
+
+errors: No known data errors</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这个例子中，这是由管理员把此设备下线后的状态。 可以使用如下的命令将磁盘下线：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool offline storage da1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在切断系统电源之后就可以替换下 <span class="filename">da1</span> 了。 当系统再次上线时，使用如下的命令替换磁盘：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool replace storage da1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>至此可用不带 <code>-x</code> 标志的命令再次检查状态：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool status storage</span>
+pool: storage
+ state: ONLINE
+ scrub: resilver completed with 0 errors on Sat Aug 30 19:44:11 2008
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     ONLINE       0     0     0
+	  raidz1    ONLINE       0     0     0
+	    da0     ONLINE       0     0     0
+	    da1     ONLINE       0     0     0
+	    da2     ONLINE       0     0     0
+
+errors: No known data errors</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这个例子中，一切都显示正常。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_数据校验">2.2.4. 数据校验<a class="anchor" href="#_数据校验"></a></h4>
+<div class="paragraph">
+<p>正如前面所提到的，ZFS 使用 <code>校验和</code>(checksum) 来检查存储数据的完整性。 这时在文件系统创建时自动启用的，可使用以下的命令禁用：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs set checksum=off storage/home</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这不是个明智的选择，因为校验和 不仅非常有用而且只需占用少量的存储空间。 并且启用它们也不会明显的消耗过多资源。 启用后就可以让 ZFS 使用校验和校验来检查数据的完整。 这个过程通常称为 &#34;scrubbing&#34;。 可以使用以下的命令检查 <code>storage</code> 存储池里数据的完整性：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool scrub storage</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这个过程需花费相当长的时间，取决于存储的数据量。 而且 I/O 非常密集， 所以在任何时间只能执行一个这样的操作。 在 scrub 完成之后，状态就会被更新， 可使用如下的命令查看：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool status storage</span>
+pool: storage
+ state: ONLINE
+ scrub: scrub completed with 0 errors on Sat Aug 30 19:57:37 2008
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     ONLINE       0     0     0
+	  raidz1    ONLINE       0     0     0
+	    da0     ONLINE       0     0     0
+	    da1     ONLINE       0     0     0
+	    da2     ONLINE       0     0     0
+
+errors: No known data errors</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这个例子中完成时间非常的清楚。 这个特性可以帮助你在很长的一段时间内确保数据的完整。</p>
+</div>
+<div class="paragraph">
+<p>Z 文件系统有更多的选项，请参阅 man:zfs[8] 和 man:zpool[8] 手册页。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=http://127.0.0.1:5500/zh-cn/books/handbook/geom class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=http://127.0.0.1:5500/zh-cn/books/handbook/vinum  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#filesystems-synopsis">1. 概述</a></li>
+    <li><a href="#filesystems-zfs">2. Z 文件系统 (ZFS)</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="http://127.0.0.1:5500/zh-cn/languages">
+                
+                <img src="/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

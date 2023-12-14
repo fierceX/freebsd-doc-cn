@@ -1,0 +1,15 @@
+<section class="welcome-container">
+  <div class="title-language-container">
+    <h2>{{ i18n "freebsd-documentation" }}</h2>
+    <a href="#languages" title="Choose language">
+      <img src="{{ absLangURL ($.Site.BaseURL ) }}images/language.png" class="language-image" alt="{{ i18n "choose-language" }}">
+    </a>
+  </div>
+  <p>{{ i18n "freebsd-documentation-main-desc" }}</p>
+  {{ $currentLanguage := $.Site.Language }}
+  <form class="search" method="get" id="search-form" action="https://docs.freebsd.org/search" name="search-form">
+    <input type="hidden" name="DB" value="{{ $currentLanguage }}" />
+    <input id="global-search-input" name="P" type="text" size="20" maxlength="255" value="" placeholder="{{ i18n "global-search-placeholder" }}">
+    <span>&nbsp;</span>
+  </form>
+</section>

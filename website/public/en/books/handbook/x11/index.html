@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="This chapter describes how to install and configure Xorg on FreeBSD, which provides the open source X Window System used to provide a graphical environment"/>
+  <meta name="keywords" content="X11, Xorg, TrueType, Intel, AMD, NVIDIA, Anti-Aliased, VESA, SCFB"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="http://127.0.0.1:5500/en/books/handbook/x11/" />
+
+  <title>Chapter 5. The X Window System |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="Chapter 5. The X Window System" />
+    <meta property="og:description" content="This chapter describes how to install and configure Xorg on FreeBSD, which provides the open source X Window System used to provide a graphical environment" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://127.0.0.1:5500favicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="en" />
+    <meta property="og:url" content="http://127.0.0.1:5500/en/books/handbook/x11/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "http:\/\/127.0.0.1:5500\/en\/books\/handbook\/x11\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="http://127.0.0.1:5500" class="logo">
+        <img src="/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/preface/">
+              Preface
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-audience">Intended Audience</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-changes-from4">Fourth Edition</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-changes-from3">Third Edition</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-changes-from2">Second Edition (2004)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-changes">First Edition (2001)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-overview">Organization of This Book</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-conv">Conventions used in this book</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/preface/#preface-acknowledgements">Acknowledgments</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/parti/">
+              Part I. Getting Started
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/introduction/">
+              Chapter 1. Introduction
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/introduction/#introduction-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/introduction/#nutshell">2. Welcome to FreeBSD!</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/introduction/#history">3. About the FreeBSD Project</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/">
+              Chapter 2. Installing FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-hardware">2. Minimum Hardware Requirements</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-pre">3. Pre-Installation Tasks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-start">4. Starting the Installation</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#using-bsdinstall">5. Using bsdinstall</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-partitioning">6. Allocating Disk Space</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">7. Fetching Distribution Files</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-post">8. Network Interfaces, Accounts, Time Zone, Services and Hardening</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#bsdinstall-install-trouble">9. Troubleshooting</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bsdinstall/#using-live-cd">10. Using the Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/basics/">
+              Chapter 3. FreeBSD Basics
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#basics-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#consoles">2. Virtual Consoles and Terminals</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#users-synopsis">3. Users and Basic Account Management</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#permissions">4. Permissions</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#dirstructure">5. Directory Structure</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#disk-organization">6. Disk Organization</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#mount-unmount">7. Mounting and Unmounting File Systems</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#basics-processes">8. Processes and Daemons</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#shells">9. Shells</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#editors">10. Text Editors</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#basics-devices">11. Devices and Device Nodes</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/basics/#basics-more-information">12. Manual Pages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/ports/">
+              Chapter 4. Installing Applications: Packages and Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-overview">2. Overview of Software Installation</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-finding-applications">3. Finding Software</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#pkgng-intro">4. Using pkg for Binary Package Management</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-using">5. Using the Ports Collection</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-poudriere">6. Building Packages with poudriere</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-nextsteps">7. Post-Installation Considerations</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ports/#ports-broken">8. Dealing with Broken Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/x11/">
+              Chapter 5. The X Window System
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x11-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x-install">2. Installing Xorg</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x-graphic-card-drivers">3. Graphic card drivers</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x-config">4. Xorg Configuration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/x11/#x-fonts">5. Using Fonts in Xorg</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/wayland/">
+              Chapter 6. Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-synopsis">1. Wayland Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-wayfire">2. The Wayfire Compositor</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-hikari">3. The Hikari Compositor</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-sway">4. The Sway Compositor</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-xwayland">5. Using Xwayland</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-remotedesktop">6. Remote Desktop Using VNC</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-ly">7. Wayland Login Manager</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wayland/#wayland-utilities">8. Useful Utilities</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/network/">
+              Chapter 7. Network
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#network-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#config-network-setup">2. Setting up the Network</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#config-network-connection">3. Wired Networks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#network-wireless">4. Wireless Networks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#hostname">5. Hostname</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#dns">6. DNS</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network/#troubleshooting">7. Troubleshooting</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/partii/">
+              Part II. Common Tasks
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/desktop/">
+              Chapter 8. Desktop Environments
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-environments">2. Desktop Environments</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-browsers">3. Browsers</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-development">4. Development tools</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-productivity">5. Desktop office productivity</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-viewers">6. Document Viewers</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/desktop/#desktop-finance">7. Finance</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/multimedia/">
+              Chapter 9. Multimedia
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#multimedia-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#sound-setup">2. Setting Up the Sound Card</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#audio-ports">3. Audio players</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#video-ports">4. Video players</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#conferencing-meetings">5. Conferencing and Meetings</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/multimedia/#scanners">6. Image Scanners</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/">
+              Chapter 10. Configuring the FreeBSD Kernel
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-custom-kernel">2. Why Build a Custom Kernel?</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-devices">3. Finding the System Hardware</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-config">4. The Configuration File</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-building">5. Building and Installing a Custom Kernel</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/kernelconfig/#kernelconfig-trouble">6. If Something Goes Wrong</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/printing/">
+              Chapter 11. Printing
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-quick-start">1. Quick Start</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-connections">2. Printer Connections</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-pdls">3. Common Page Description Languages</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-direct">4. Direct Printing</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-lpd">5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/printing/#printing-other">6. Other Printing Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/">
+              Chapter 12. Linux Binary Compatibility
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/#linuxemu-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/#linuxemu-lbc-install">2. Configuring Linux Binary Compatibility</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/#linux-userlands">3. Linux userlands</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/linuxemu/#linuxemu-advanced">4. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/wine/">
+              Chapter 13. WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-overview-concepts">2. WINE Overview & Concepts</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#installing-wine-on-freebsd">3. Installing WINE on FreeBSD</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#running-first-wine-program">4. Running a First WINE Program on FreeBSD</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#configuring-wine-installation">5. Configuring WINE Installation</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-management-guis">6. WINE Management GUIs</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-in-multi-user-os-installations">7. WINE in Multi-User FreeBSD Installations</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/wine/#wine-on-os-faq">8. WINE on FreeBSD FAQ</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/partiii/">
+              Part III. System Administration
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/config/">
+              Chapter 14. Configuration, Services, Logging and Power Management
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#config-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#configtuning-configfiles">2. Configuration Files</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#configtuning-rcd">3. Managing Services in FreeBSD</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#cron-periodic">4. Cron and Periodic</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#configtuning-syslog">5. Configuring System Logging</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#acpi-overview">6. Power and Resource Management</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/config/#adding-swap-space">7. Adding Swap Space</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/boot/">
+              Chapter 15. The FreeBSD Booting Process
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/boot/#boot-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/boot/#boot-introduction">2. FreeBSD Boot Process</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/boot/#device-hints">3. Device Hints</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/boot/#boot-shutdown">4. Shutdown Sequence</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/security/">
+              Chapter 16. Security
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-intro">2. Introduction</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#sec-accounts">3. Securing Accounts</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-ids">4. Intrusion Detection System (IDS)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-secure-levels">5. Secure levels</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-file-flags">6. File flags</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#openssh">7. OpenSSH</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#openssl">8. OpenSSL</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#kerberos5">9. Kerberos</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#tcpwrappers">10. TCP Wrappers</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#fs-acl">11. Access Control Lists</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#capsicum">12. Capsicum</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-accounting">13. Process Accounting</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-resourcelimits">14. Resource Limits</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-pkg">15. Monitoring Third Party Security Issues</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/security/#security-advisories">16. FreeBSD Security Advisories</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/jails/">
+              Chapter 17. Jails and Containers
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jails-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-types">2. Jail Types</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#host-configuration">3. Host Configuration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#classic-jail">4. Classic Jail (Thick Jail)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#thin-jail">5. Thin Jails</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-management">6. Jail Management</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-upgrading">7. Jail Upgrading</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-resource-limits">8. Jail Resource Limits</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/jails/#jail-managers-and-containers">9. Jail Managers and Containers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/mac/">
+              Chapter 18. Mandatory Access Control
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-inline-glossary">2. Key Terms</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-understandlabel">3. Understanding MAC Labels</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-planning">4. Planning the Security Configuration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-policies">5. Available MAC Policies</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-userlocked">6. User Lock Down</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-implementing">7. Nagios in a MAC Jail</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mac/#mac-troubleshoot">8. Troubleshooting the MAC Framework</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/audit/">
+              Chapter 19. Security Event Auditing
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/audit/#audit-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/audit/#audit-inline-glossary">2. Key Terms</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/audit/#audit-config">3. Audit Configuration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/audit/#audit-administration">4. Working with Audit Trails</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/disks/">
+              Chapter 20. Storage
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-adding">2. Adding Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-growing">3. Resizing and Growing Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#usb-disks">4. USB Storage Devices</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#creating-cds">5. Creating and Using CD Media</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#creating-dvds">6. Creating and Using DVD Media</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#floppies">7. Creating and Using Floppy Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#using-ntfs">8. Using NTFS Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#backup-basics">9. Backup Basics</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-virtual">10. Memory Disks</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#snapshots">11. File System Snapshots</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#quotas">12. Disk Quotas</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-encrypting">13. Encrypting Disk Partitions</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#swap-encrypting">14. Encrypting Swap</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/disks/#disks-hast">15. Highly Available Storage (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/geom/">
+              Chapter 21. GEOM: Modular Disk Transformation Framework
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-striping">2. RAID0 - Striping</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-mirror">3. RAID1 - Mirroring</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-raid3">4. RAID3 - Byte-level Striping with Dedicated Parity</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-graid">5. Software RAID Devices</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-ggate">6. GEOM Gate Network</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-glabel">7. Labeling Disk Devices</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/geom/#geom-gjournal">8. UFS Journaling Through GEOM</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/zfs/">
+              Chapter 22. The Z File System (ZFS)
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-differences">1. What Makes ZFS Different</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-quickstart">2. Quick Start Guide</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-zpool">3. <code>zpool</code> Administration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-zfs">4. <code>zfs</code> Administration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-zfs-allow">5. Delegated Administration</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-advanced">6. Advanced Topics</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-links">7. Further Resources</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/zfs/#zfs-term">8. ZFS Features and Terminology</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/filesystems/">
+              Chapter 23. Other File Systems
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/filesystems/#filesystems-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/filesystems/#filesystems-linux">2. Linux® File Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/virtualization/">
+              Chapter 24. Virtualization
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">2. FreeBSD as a Guest on Parallels Desktop for macOS®</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-guest-vmware">3. FreeBSD as a Guest on VMware Fusion for macOS®</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-guest-virtualbox">4. FreeBSD as a Guest on VirtualBox™</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-host-virtualbox">5. FreeBSD as a Host with VirtualBox™</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-host-bhyve">6. FreeBSD as a Host with bhyve</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/virtualization/#virtualization-host-xen">7. FreeBSD as a Xen™-Host</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/l10n/">
+              Chapter 25. Localization - i18n/L10n Usage and Setup
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/l10n/#l10n-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/l10n/#using-localization">2. Using Localization</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/l10n/#l10n-compiling">3. Finding i18n Applications</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/l10n/#lang-setup">4. Locale Configuration for Specific Languages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/">
+              Chapter 26. Updating and Upgrading FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#updating-upgrading-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">2. FreeBSD Update</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#updating-bootcode">3. Updating Bootcode</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#updating-upgrading-documentation">4. Updating the Documentation Set</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#current-stable">5. Tracking a Development Branch</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#makeworld">6. Updating FreeBSD from Source</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#small-lan">7. Tracking for Multiple Machines</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">8. Building on non-FreeBSD Hosts</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/dtrace/">
+              Chapter 27. DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/dtrace/#dtrace-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/dtrace/#dtrace-implementation">2. Implementation Differences</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/dtrace/#dtrace-enable">3. Enabling DTrace Support</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/dtrace/#dtrace-using">4. Using DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/">
+              Chapter 28. USB Device Mode / USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/#usb-device-mode-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/#usb-device-mode-terminals">2. USB Virtual Serial Ports</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/#usb-device-mode-network">3. USB Device Mode Network Interfaces</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/usb-device-mode/#usb-device-mode-storage">4. USB Virtual Storage Device</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/partiv/">
+              Part IV. Network Communication
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/">
+              Chapter 29. Serial Communications
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#serial-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#serial">2. Serial Terminology and Hardware</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#term">3. Terminals</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#dialup">4. Dial-in Service</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#dialout">5. Dial-out Service</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/serialcomms/#serialconsole-setup">6. Setting Up the Serial Console</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/">
+              Chapter 30. PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#userppp">2. Configuring PPP</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#ppp-troubleshoot">3. Troubleshooting PPP Connections</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#pppoe">4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/ppp-and-slip/#pppoa">5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/mail/">
+              Chapter 31. Electronic Mail
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-using">2. Mail Components</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#dragonFly-mail-agent">3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#sendmail">4. Sendmail</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-changingmta">5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-agents">6. Mail User Agents</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mail/#mail-advanced">7. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/network-servers/">
+              Chapter 32. Network Servers
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-servers-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-inetd">2. The inetd Super-Server</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-nfs">3. Network File System (NFS)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-nis">4. Network Information System (NIS)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-ldap">5. Lightweight Directory Access Protocol (LDAP)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-dhcp">6. Dynamic Host Configuration Protocol (DHCP)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-dns">7. Domain Name System (DNS)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-apache">8. Apache HTTP Server</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-ftp">9. File Transfer Protocol (FTP)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-samba">10. File and Print Services for Microsoft® Windows® Clients (Samba)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-ntp">11. Clock Synchronization with NTP</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/network-servers/#network-iscsi">12. iSCSI Initiator and Target Configuration</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/firewalls/">
+              Chapter 33. Firewalls
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-intro">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-concepts">2. Firewall Concepts</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-pf">3. PF</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-ipfw">4. IPFW</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-ipf">5. IPFILTER (IPF)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/firewalls/#firewalls-blacklistd">6. Blacklistd</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/">
+              Chapter 34. Advanced Networking
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#advanced-networking-synopsis">1. Synopsis</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-routing">2. Gateways and Routes</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#configtuning-virtual-hosts">3. Virtual Hosts</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-advanced-wireless">4. Wireless Advanced Authentication</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#wireless-ad-hoc-mode">5. Wireless Ad-hoc Mode</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-usb-tethering">6. USB Tethering</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-bluetooth">7. Bluetooth</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-bridging">8. Bridging</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-aggregation">9. Link Aggregation and Failover</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-diskless">10. Diskless Operation with PXE</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#carp">11. Common Address Redundancy Protocol (CARP)</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/advanced-networking/#network-vlan">12. VLANs</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/partv/">
+              Part V. Appendices
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/mirrors/">
+              Appendix A. Obtaining FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mirrors/#mirrors">1. Mirrors</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mirrors/#git">2. Using Git</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mirrors/#svn">3. Using Subversion</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/mirrors/#mirrors-cdrom">4. CD and DVD Sets</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/bibliography/">
+              Appendix B. Bibliography
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bibliography/#bibliography-freebsd">1. FreeBSD Bibliography</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bibliography/#bibliography-security">2. Security Reference</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bibliography/#bibliography-history">3. UNIX® History</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/bibliography/#bibliography-journals">4. Periodicals, Journals, and Magazines</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/eresources/">
+              Appendix C. Resources on the Internet
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/eresources/#eresources-www">1. Websites</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/eresources/#eresources-mail">2. Mailing Lists</a></li>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/eresources/#eresources-news">3. Usenet Newsgroups</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/pgpkeys/">
+              Appendix D. OpenPGP Keys
+            </a>
+            
+            
+  <ul>
+    <li><a href="http://127.0.0.1:5500/en/books/handbook/pgpkeys/#pgpkeys-officers">1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/glossary/">
+              FreeBSD Glossary
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/colophon/">
+              Colophon
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="http://127.0.0.1:5500/en/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">Chapter 5. The X Window System</h1>
+    
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#x11-synopsis">1. Synopsis</a></li>
+    <li><a href="#x-install">2. Installing Xorg</a></li>
+    <li><a href="#x-graphic-card-drivers">3. Graphic card drivers</a></li>
+    <li><a href="#x-config">4. Xorg Configuration</a></li>
+    <li><a href="#x-fonts">5. Using Fonts in Xorg</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="x11-synopsis">1. Synopsis<a class="anchor" href="#x11-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An installation of FreeBSD using bsdinstall does not automatically install a graphical user interface.
+This chapter describes how to install and configure Xorg, which provides the open source X Window System used to provide a graphical environment.
+It then describes how to find and install a desktop environment or window manager.</p>
+</div>
+<div class="paragraph">
+<p>Before reading this chapter, you should:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Know how to install additional third-party software as described in crossref:ports[ports,Installing Applications: Packages and Ports].</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After reading this chapter, you will know:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The various components of the X Window System, and how they interoperate.</p>
+</li>
+<li>
+<p>How to install and configure Xorg.</p>
+</li>
+<li>
+<p>How to use TrueType® fonts in Xorg.</p>
+</li>
+<li>
+<p>How to set up your system for graphical logins (XDM).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="x-install">2. Installing Xorg<a class="anchor" href="#x-install"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>On FreeBSD, Xorg can be installed as a package or port.</p>
+</div>
+<div class="paragraph">
+<p>The binary meta package can be installed quickly but with fewer options for customization:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install xorg</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Either of these installations results in the complete Xorg system being installed.</p>
+</div>
+<div class="paragraph">
+<p>The current user must be a member of the <code>video</code> group.
+To add a user to <code>video</code> group, execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pw groupmod video -m username</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A smaller version of the X system suitable for experienced users is available in package:x11/xorg-minimal[].
+Most of the documents, libraries, and applications will not be installed.
+Some applications require these additional components to function.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Video cards, monitors, and input devices are automatically detected and do not require any manual configuration.
+Do not create <code>xorg.conf</code> or run a <code>-configure</code> step unless automatic configuration fails.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="x-graphic-card-drivers">3. Graphic card drivers<a class="anchor" href="#x-graphic-card-drivers"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following table shows the different graphics cards supported by FreeBSD, which package should be installed and its corresponding module.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Graphic card packages</caption>
+<colgroup>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Brand</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Package</th>
+<th class="tableblock halign-left valign-top">Module</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Intel®</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">drm-kmod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>i915kms</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AMD®</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">drm-kmod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>amdgpu</code> and <code>radeonkms</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NVIDIA®</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proprietary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nvidia-driver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nvidia</code> or <code>nvidia-modeset</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VESA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xf86-video-vesa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vesa</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCFB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xf86-video-scfb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scfb</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VirtualBox®</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">virtualbox-ose-additions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VirtualBox® OSE additions include the <code>vboxvideo</code> driver.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VMware®</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xf86-video-vmware</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vmwgfx</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following command can be used to identify which graphics card is installed in the system:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">% pciconf <span class="nt">-lv</span>|grep <span class="nt">-B4</span> VGA</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vgapci0@pci0:0:2:0:     class=0x030000 rev=0x07 hdr=0x00 vendor=0x8086 device=0x2a42 subvendor=0x17aa subdevice=0x20e4
+    vendor     = &#39;Intel Corporation&#39;
+    device     = &#39;Mobile 4 Series Chipset Integrated Graphics Controller&#39;
+    class      = display
+    subclass   = VGA</pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the graphics card is not supported by Intel®, AMD® or NVIDIA® drivers, then VESA or SCFB modules should be used.
+VESA module must be used when booting in BIOS mode and SCFB module must be used when booting in UEFI mode.</p>
+</div>
+<div class="paragraph">
+<p>This command can be used to check the booting mode:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">% sysctl machdep.bootmethod</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>machdep.bootmethod: BIOS</pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="x-configuration-intel">3.1. Intel®<a class="anchor" href="#x-configuration-intel"></a></h3>
+<div class="paragraph">
+<p>Intel® Graphics refers to the class of graphics chips that are integrated on the same die as an Intel® CPU.
+Wikipedia offers <a href="https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units">a good overview of the variations and names used for generations of Intel HD Graphics</a>.</p>
+</div>
+<div class="paragraph">
+<p>The package:graphics/drm-kmod[] package indirectly provides a range of kernel modules for use with Intel® Graphics cards.
+The Intel® driver can be installed by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install drm-kmod</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then add the module to <code>/etc/rc.conf</code> file, executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc kld_list+=i915kms</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If a high CPU usage is noticed or excessive tearing with HD video, the installation of package:multimedia/libva-intel-driver[] may help.
+To install the package execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install libva-intel-driver mesa-libs mesa-dri</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="x-configuration-amd">3.2. AMD®<a class="anchor" href="#x-configuration-amd"></a></h3>
+<div class="paragraph">
+<p>The package:graphics/drm-kmod[] package indirectly provides a range of kernel modules for use with AMD® Graphics cards.
+The modules <code>amdgpu</code> and <code>radeonkms</code> can be used depending the generation of the hardware.
+The FreeBSD project maintains an <a href="https://wiki.freebsd.org/Graphics/AMD-GPU-Matrix">AMD graphics support matrix to determine which driver must be used</a>.</p>
+</div>
+<div class="paragraph">
+<p>AMD® driver can be installed by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install drm-kmod</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For post-HD7000 or Tahiti graphic cards add the module to <code>/etc/rc.conf</code> file, executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc kld_list+=amdgpu</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For older graphic cards (pre-HD7000 or pre-Tahiti) add the module to <code>/etc/rc.conf</code> file, executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc kld_list+=radeonkms</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="x-configuration-nvidia">3.3. NVIDIA®<a class="anchor" href="#x-configuration-nvidia"></a></h3>
+<div class="paragraph">
+<p>FreeBSD supports different versions of the proprietary NVIDIA® driver.
+Users of newer graphics cards should install the package:x11/nvidia-driver[] package.
+Those with older cards will have to check below which version supports them.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Supported versions of NVIDIA® drivers</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Package</th>
+<th class="tableblock halign-left valign-top">Supported hardware</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver-304</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/123712/en-us/">supported hardware</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver-340</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/156167/en-us/">supported hardware</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver-390</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/191122/en-us/">supported hardware</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver-470</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/194639/en-us/">supported hardware</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/210651/en-us/">supported hardware</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Version 304 of the NVIDIA® graphics driver (nvidia-driver-304) does not support xorg-server 1.20 or later.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The latest NVIDIA® driver can be installed by running the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install nvidia-driver</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then add the module to <code>/etc/rc.conf</code> file, executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc kld_list+=nvidia-modeset</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>nvidia</code> driver must be used if the packages x11/nvidia-driver-304 or x11/nvidia-driver-340 have been installed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc kld_list+=nvidia</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="x-config">4. Xorg Configuration<a class="anchor" href="#x-config"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Xorg supports most common video cards, keyboards, and pointing devices.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Video cards, monitors, and input devices are automatically detected and do not require any manual configuration.
+Do not create <span class="filename">xorg.conf</span> or run a <code>Xorg -configure</code> step unless automatic configuration fails.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="x-config-files">4.1. Configuration Files<a class="anchor" href="#x-config-files"></a></h3>
+<div class="paragraph">
+<p>Xorg looks in several directories for configuration files.
+<span class="filename">/usr/local/etc/X11/</span> is the <strong>recommended</strong> directory for these files on FreeBSD.
+Using this directory helps keep application files separate from operating system files.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="x-config-files-single-or-multi">4.2. Single or Multiple Files<a class="anchor" href="#x-config-files-single-or-multi"></a></h3>
+<div class="paragraph">
+<p>It is easier to use multiple files that each configure a specific setting than the traditional single <span class="filename">xorg.conf</span>.
+These files are stored in the <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> subdirectory.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The traditional single <span class="filename">xorg.conf</span> still works, but is neither as clear nor as flexible as multiple files in the <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> subdirectory.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="x-config-video-cards">4.3. Video Cards<a class="anchor" href="#x-config-video-cards"></a></h3>
+<div class="paragraph">
+<p>The driver for the graphics card can be specified in the <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> directory.</p>
+</div>
+<div class="paragraph">
+<p>To configure the Intel® driver in a configuration file:</p>
+</div>
+<div id="x-config-video-cards-file-intel" class="exampleblock">
+<div class="title">Example 1. Select Intel® Video Driver in a File</div>
+<div class="content">
+<div class="paragraph">
+<p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-intel.conf</span></p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Device&#34;
+	Identifier &#34;Card0&#34;
+	Driver     &#34;intel&#34;
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To configure the AMD® driver in a configuration file:</p>
+</div>
+<div id="x-config-video-cards-file-amd" class="exampleblock">
+<div class="title">Example 2. Select AMD® Video Driver in a File</div>
+<div class="content">
+<div class="paragraph">
+<p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-radeon.conf</span></p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Device&#34;
+	Identifier &#34;Card0&#34;
+	Driver     &#34;radeon&#34;
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To configure the NVIDIA® driver in a configuration file:</p>
+</div>
+<div id="x-config-video-cards-file-nvidia" class="exampleblock">
+<div class="title">Example 3. Select NVIDIA® Video Driver in a File</div>
+<div class="content">
+<div class="paragraph">
+<p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-nvidia.conf</span></p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Device&#34;
+	Identifier &#34;Card0&#34;
+	Driver     &#34;nvidia&#34;
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>package:x11/nvidia-xconfig[] can also be used to perform basic control over configuration options available in the NVIDIA driver.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>To configure the VESA driver in a configuration file:</p>
+</div>
+<div id="x-config-video-cards-file-vesa" class="exampleblock">
+<div class="title">Example 4. Select VESA Video Driver in a File</div>
+<div class="content">
+<div class="paragraph">
+<p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-vesa.conf</span></p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Device&#34;
+	Identifier &#34;Card0&#34;
+	Driver     &#34;vesa&#34;
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To configure the SCFB driver in a configuration file:</p>
+</div>
+<div id="x-config-video-cards-file-sfcb" class="exampleblock">
+<div class="title">Example 5. Select SCFB Video Driver in a File</div>
+<div class="content">
+<div class="paragraph">
+<p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-scfb.conf</span></p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Device&#34;
+	Identifier &#34;Card0&#34;
+	Driver     &#34;scfb&#34;
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To configure multiple video cards, the <code>BusID</code> can be added.
+A list of video card bus <code>ID</code>s can be displayed by executing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">% pciconf <span class="nt">-lv</span> | <span class="nb">grep</span> <span class="nt">-B3</span> display</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vgapci0@pci0:0:2:0:     class=0x030000 rev=0x07 hdr=0x00 vendor=0x8086 device=0x2a42 subvendor=0x17aa subdevice=0x20e4
+    vendor     = &#39;Intel Corporation&#39;
+    device     = &#39;Mobile 4 Series Chipset Integrated Graphics Controller&#39;
+    class      = display
+--
+vgapci1@pci0:0:2:1:     class=0x038000 rev=0x07 hdr=0x00 vendor=0x8086 device=0x2a43 subvendor=0x17aa subdevice=0x20e4
+    vendor     = &#39;Intel Corporation&#39;
+    device     = &#39;Mobile 4 Series Chipset Integrated Graphics Controller&#39;
+    class      = display</pre>
+</div>
+</div>
+<div id="x-config-video-cards-file-multiple" class="exampleblock">
+<div class="title">Example 6. Select Intel® Video Driver and NVIDIA® Video Driver in a File</div>
+<div class="content">
+<div class="paragraph">
+<p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-drivers.conf</span></p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Device&#34;
+	Identifier &#34;Card0&#34;
+	Driver     &#34;intel&#34;
+	BusID     &#34;pci0:0:2:0&#34;
+EndSection
+
+Section &#34;Device&#34;
+	Identifier &#34;Card0&#34;
+	Driver     &#34;nvidia&#34;
+	BusID     &#34;pci0:0:2:1&#34;
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="x-config-monitors">4.4. Monitors<a class="anchor" href="#x-config-monitors"></a></h3>
+<div class="paragraph">
+<p>Almost all monitors support the Extended Display Identification Data standard (<code>EDID</code>).
+Xorg uses <code>EDID</code> to communicate with the monitor and detect the supported resolutions and refresh rates.
+Then it selects the most appropriate combination of settings to use with that monitor.</p>
+</div>
+<div class="paragraph">
+<p>Other resolutions supported by the monitor can be chosen by setting the desired resolution in configuration files, or after the X server has been started with man:xrandr[1].</p>
+</div>
+<div class="sect3">
+<h4 id="x-config-monitors-xrandr">4.4.1. Using RandR (Resize and Rotate)<a class="anchor" href="#x-config-monitors-xrandr"></a></h4>
+<div class="paragraph">
+<p>Run man:xrandr[1] without any parameters to see a list of video outputs and detected monitor modes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">% xrandr</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Screen 0: minimum 320 x 200, current 2560 x 960, maximum 8192 x 8192
+LVDS-1 connected 1280x800+0+0 (normal left inverted right x axis y axis) 261mm x 163mm
+   1280x800      59.99*+  59.81    59.91    50.00
+   1280x720      59.86    59.74
+   1024x768      60.00
+   1024x576      59.90    59.82
+   960x540       59.63    59.82
+   800x600       60.32    56.25
+   864x486       59.92    59.57
+   640x480       59.94
+   720x405       59.51    58.99
+   640x360       59.84    59.32
+VGA-1 connected primary 1280x960+1280+0 (normal left inverted right x axis y axis) 410mm x 257mm
+   1280x1024     75.02    60.02
+   1440x900      74.98    60.07
+   1280x960      60.00*
+   1280x800      74.93    59.81
+   1152x864      75.00
+   1024x768      75.03    70.07    60.00
+   832x624       74.55
+   800x600       72.19    75.00    60.32    56.25
+   640x480       75.00    72.81    66.67    59.94
+   720x400       70.08
+HDMI-1 disconnected (normal left inverted right x axis y axis)
+DP-1 disconnected (normal left inverted right x axis y axis)
+HDMI-2 disconnected (normal left inverted right x axis y axis)
+DP-2 disconnected (normal left inverted right x axis y axis)
+DP-3 disconnected (normal left inverted right x axis y axis)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This shows that the <code>VGA-1</code> output is being used to display a screen resolution of 1280x960 pixels at a refresh rate of about 60 Hz.
+The <code>LVDS-1</code> is being used as a secondary monitor to display a screen resolution of 1280x800 pixels at a refresh rate of about 60 Hz.
+Monitors are not attached to the <code>HDMI-1</code>, <code>HDMI-2</code>, <code>DP-1</code>, <code>DP-2</code> and <code>DP-3</code> connectors.</p>
+</div>
+<div class="paragraph">
+<p>Any of the other display modes can be selected with man:xrandr[1].
+For example, to switch to 1280x1024 at 60 Hz:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">% xrandr <span class="nt">--output</span> LVDS-1 <span class="nt">--mode</span> 1280x720 <span class="nt">--rate</span> 60</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="x-config-monitors-files">4.4.2. Using the Xorg configuration file<a class="anchor" href="#x-config-monitors-files"></a></h4>
+<div class="paragraph">
+<p>The monitor configuration can also be set in a configuration file.</p>
+</div>
+<div class="paragraph">
+<p>To set a screen resolution of 1024x768 in a configuration file:</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 7. Set Screen Resolution in a File</div>
+<div class="content">
+<div class="paragraph">
+<p><span class="filename">/usr/local/etc/X11/xorg.conf.d/10-monitor.conf</span></p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Screen&#34;
+	Identifier &#34;Screen0&#34;
+	Device     &#34;Card0&#34;
+	SubSection &#34;Display&#34;
+	Modes      &#34;1024x768&#34;
+	EndSubSection
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="x-config-input">4.5. Input Devices<a class="anchor" href="#x-config-input"></a></h3>
+<div class="paragraph">
+<p>Xorg supports the vast majority of input devices via package:x11/libinput[].</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Some desktop environments (such as KDE Plasma) provide a graphical UI for setting these parameters.
+Check if this is the case before resorting to manual configuration editing.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div id="x-config-input-keyboard-layout" class="paragraph">
+<p>For example, to configure the keyboard layout:</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 8. Setting a Keyboard Layout</div>
+<div class="content">
+<div class="paragraph">
+<p><span class="filename">/usr/local/etc/X11/xorg.conf.d/00-keyboard.conf</span></p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;InputClass&#34;
+        Identifier &#34;Keyboard1&#34;
+        MatchIsKeyboard &#34;on&#34;
+        Option &#34;XkbLayout&#34; &#34;es, fr&#34;
+        Option &#34;XkbModel&#34; &#34;pc104&#34;
+        Option &#34;XkbVariant&#34; &#34;,qwerty&#34;
+        Option &#34;XkbOptions&#34; &#34;grp:win_space_toggle&#34;
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="x-fonts">5. Using Fonts in Xorg<a class="anchor" href="#x-fonts"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The default fonts that ship with Xorg are less than ideal for typical desktop publishing applications.
+Large presentation fonts show up jagged and unprofessional looking, and small fonts are almost completely unintelligible.
+However, there are several free, high quality Type1 (PostScript®) fonts available which can be readily used with Xorg.</p>
+</div>
+<div class="sect2">
+<h3 id="type1">5.1. Type1 Fonts<a class="anchor" href="#type1"></a></h3>
+<div class="paragraph">
+<p>The URW font collection (package:x11-fonts/urwfonts[]) includes high quality versions of standard type1 fonts (Times Roman™, Helvetica™, Palatino™ and others).
+The Freefonts collection (package:x11-fonts/freefonts[]) includes many more fonts, but most of them are intended for use in graphics software such as the Gimp, and are not complete enough to serve as screen fonts.
+In addition, Xorg can be configured to use TrueType® fonts with a minimum of effort.
+For more details on this, see the man:X[7] manual page or <a href="#truetype">TrueType® Fonts</a>.</p>
+</div>
+<div class="paragraph">
+<p>To install the above Type1 font collections from binary packages, run the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install urwfonts</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And likewise with the freefont or other collections.
+To have the X server detect these fonts, add an appropriate line to the X server configuration file (<span class="filename">/usr/local/etc/X11/xorg.conf.d/90-fonts.conf</span>), which reads:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Files&#34;
+  FontPath &#34;/usr/local/share/fonts/urwfonts/&#34;
+EndSection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, at the command line in the X session run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">% xset fp+ /usr/local/share/fonts/urwfonts
+% xset fp rehash</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will work but will be lost when the X session is closed, unless it is added to the startup file (<span class="filename">~/.xinitrc</span> for a normal <code>startx</code> session, or <span class="filename">~/.xsession</span> when logging in through a graphical login manager like XDM).
+A third way is to use the new <span class="filename">/usr/local/etc/fonts/local.conf</span> as demonstrated in <a href="#antialias">Anti-Aliased Fonts</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="truetype">5.2. TrueType® Fonts<a class="anchor" href="#truetype"></a></h3>
+<div class="paragraph">
+<p>Xorg has built in support for rendering TrueType® fonts.
+There are two different modules that can enable this functionality.
+The freetype module is used in this example because it is more consistent with the other font rendering back-ends.
+To enable the freetype module just add the following line to the <code>&#34;Module&#34;</code> section of <span class="filename">/usr/local/etc/X11/xorg.conf.d/90-fonts.conf</span>.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Load  &#34;freetype&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now make a directory for the TrueType® fonts (for example, <span class="filename">/usr/local/share/fonts/TrueType</span>) and copy all of the TrueType® fonts into this directory.
+Keep in mind that TrueType® fonts cannot be directly taken from an Apple® Mac®; they must be in UNIX®/MS-DOS®/Windows® format for use by Xorg.
+Once the files have been copied into this directory, use mkfontscale to create a <span class="filename">fonts.dir</span>, so that the X font renderer knows that these new files have been installed.
+<code>mkfontscale</code> can be installed as a package:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install mkfontscale</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then create an index of X font files in a directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/local/share/fonts/TrueType</span>
+<span class="c"># mkfontscale</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now add the TrueType® directory to the font path.
+This is just the same as described in <a href="#type1">Type1 Fonts</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">% xset fp+ /usr/local/share/fonts/TrueType
+% xset fp rehash</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or add a <code>FontPath</code> line to <span class="filename">xorg.conf</span>.</p>
+</div>
+<div class="paragraph">
+<p>Now Gimp, LibreOffice, and all of the other X applications should now recognize the installed TrueType® fonts.
+Extremely small fonts (as with text in a high resolution display on a web page) and extremely large fonts (within LibreOffice) will look much better now.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="antialias">5.3. Anti-Aliased Fonts<a class="anchor" href="#antialias"></a></h3>
+<div class="paragraph">
+<p>All fonts in Xorg that are found in <span class="filename">/usr/local/share/fonts/</span> and <span class="filename">~/.fonts/</span> are automatically made available for anti-aliasing to Xft-aware applications. Most recent applications are Xft-aware, including KDE, GNOME, and Firefox.</p>
+</div>
+<div class="paragraph">
+<p>To control which fonts are anti-aliased, or to configure anti-aliasing properties, create (or edit, if it already exists) the file <span class="filename">/usr/local/etc/fonts/local.conf</span>.
+Several advanced features of the Xft font system can be tuned using this file; this section describes only some simple possibilities.
+For more details, please see man:fonts-conf[5].</p>
+</div>
+<div class="paragraph">
+<p>This file must be in XML format.
+Pay careful attention to case, and make sure all tags are properly closed.
+The file begins with the usual XML header followed by a DOCTYPE definition, and then the <code>&lt;fontconfig&gt;</code> tag:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>&lt;?xml version=&#34;1.0&#34;?&gt;
+      &lt;!DOCTYPE fontconfig SYSTEM &#34;fonts.dtd&#34;&gt;
+      &lt;fontconfig&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As previously stated, all fonts in <span class="filename">/usr/local/share/fonts/</span> as well as <span class="filename">~/.fonts/</span> are already made available to Xft-aware applications.
+To add another directory outside of these two directory trees, add a line like this to <span class="filename">/usr/local/etc/fonts/local.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>&lt;dir&gt;/path/to/my/fonts&lt;/dir&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After adding new fonts, and especially new font directories, rebuild the font caches:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># fc-cache -f</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Anti-aliasing makes borders slightly fuzzy, which makes very small text more readable and removes &#34;staircases&#34; from large text, but can cause eyestrain if applied to normal text.
+To exclude font sizes smaller than 14 point from anti-aliasing, include these lines:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>	&lt;match target=&#34;font&#34;&gt;
+	    &lt;test name=&#34;size&#34; compare=&#34;less&#34;&gt;
+		&lt;double&gt;14&lt;/double&gt;
+	    &lt;/test&gt;
+	    &lt;edit name=&#34;antialias&#34; mode=&#34;assign&#34;&gt;
+		&lt;bool&gt;false&lt;/bool&gt;
+	    &lt;/edit&gt;
+	&lt;/match&gt;
+	&lt;match target=&#34;font&#34;&gt;
+	    &lt;test name=&#34;pixelsize&#34; compare=&#34;less&#34; qual=&#34;any&#34;&gt;
+		&lt;double&gt;14&lt;/double&gt;
+	    &lt;/test&gt;
+	    &lt;edit mode=&#34;assign&#34; name=&#34;antialias&#34;&gt;
+		&lt;bool&gt;false&lt;/bool&gt;
+	    &lt;/edit&gt;
+	&lt;/match&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Spacing for some monospaced fonts might also be inappropriate with anti-aliasing.
+This seems to be an issue with KDE, in particular.
+One possible fix is to force the spacing for such fonts to be 100.
+Add these lines:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>	&lt;match target=&#34;pattern&#34; name=&#34;family&#34;&gt;
+	   &lt;test qual=&#34;any&#34; name=&#34;family&#34;&gt;
+	       &lt;string&gt;fixed&lt;/string&gt;
+	   &lt;/test&gt;
+	   &lt;edit name=&#34;family&#34; mode=&#34;assign&#34;&gt;
+	       &lt;string&gt;mono&lt;/string&gt;
+	   &lt;/edit&gt;
+	&lt;/match&gt;
+	&lt;match target=&#34;pattern&#34; name=&#34;family&#34;&gt;
+	    &lt;test qual=&#34;any&#34; name=&#34;family&#34;&gt;
+		&lt;string&gt;console&lt;/string&gt;
+	    &lt;/test&gt;
+	    &lt;edit name=&#34;family&#34; mode=&#34;assign&#34;&gt;
+		&lt;string&gt;mono&lt;/string&gt;
+	    &lt;/edit&gt;
+	&lt;/match&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(this aliases the other common names for fixed fonts as <code>&#34;mono&#34;</code>), and then add:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>	&lt;match target=&#34;pattern&#34; name=&#34;family&#34;&gt;
+	     &lt;test qual=&#34;any&#34; name=&#34;family&#34;&gt;
+		 &lt;string&gt;mono&lt;/string&gt;
+	     &lt;/test&gt;
+	     &lt;edit name=&#34;spacing&#34; mode=&#34;assign&#34;&gt;
+		 &lt;int&gt;100&lt;/int&gt;
+	     &lt;/edit&gt;
+	 &lt;/match&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Certain fonts, such as Helvetica, may have a problem when anti-aliased.
+Usually this manifests itself as a font that seems cut in half vertically.
+At worst, it may cause applications to crash.
+To avoid this, consider adding the following to <span class="filename">local.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>	&lt;match target=&#34;pattern&#34; name=&#34;family&#34;&gt;
+	     &lt;test qual=&#34;any&#34; name=&#34;family&#34;&gt;
+		 &lt;string&gt;Helvetica&lt;/string&gt;
+	     &lt;/test&gt;
+	     &lt;edit name=&#34;family&#34; mode=&#34;assign&#34;&gt;
+		 &lt;string&gt;sans-serif&lt;/string&gt;
+	     &lt;/edit&gt;
+	 &lt;/match&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After editing <span class="filename">local.conf</span>, make certain to end the file with the <code>&lt;/fontconfig&gt;</code> tag.
+Not doing this will cause changes to be ignored.</p>
+</div>
+<div class="paragraph">
+<p>Users can add personalized settings by creating their own <span class="filename">~/.config/fontconfig/fonts.conf</span>.
+This file uses the same <code>XML</code> format described above.</p>
+</div>
+<div class="paragraph">
+<p>One last point: with an LCD screen, sub-pixel sampling may be desired.
+This basically treats the (horizontally separated) red, green and blue components separately to improve the horizontal resolution; the results can be dramatic.
+To enable this, add the line somewhere in <span class="filename">local.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>	 &lt;match target=&#34;font&#34;&gt;
+	     &lt;test qual=&#34;all&#34; name=&#34;rgba&#34;&gt;
+		 &lt;const&gt;unknown&lt;/const&gt;
+	     &lt;/test&gt;
+	     &lt;edit name=&#34;rgba&#34; mode=&#34;assign&#34;&gt;
+		 &lt;const&gt;rgb&lt;/const&gt;
+	     &lt;/edit&gt;
+	 &lt;/match&gt;</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Depending on the sort of display, <code>rgb</code> may need to be changed to <code>bgr</code>, <code>vrgb</code> or <code>vbgr</code>: experiment and see which works best.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>For more information about how to install and configure fonts on FreeBSD, please read the article <a href="https://docs.freebsd.org/en/articles/fonts/">Fonts and FreeBSD</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=http://127.0.0.1:5500/en/books/handbook/ports class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=http://127.0.0.1:5500/en/books/handbook/wayland  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#x11-synopsis">1. Synopsis</a></li>
+    <li><a href="#x-install">2. Installing Xorg</a></li>
+    <li><a href="#x-graphic-card-drivers">3. Graphic card drivers</a></li>
+    <li><a href="#x-config">4. Xorg Configuration</a></li>
+    <li><a href="#x-fonts">5. Using Fonts in Xorg</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="http://127.0.0.1:5500/en/languages">
+                
+                <img src="/images/language.png" class="language-image" alt="Choose language">
+                <span>English</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>
