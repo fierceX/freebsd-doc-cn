@@ -28,7 +28,7 @@ class ChatGPT:
         ]
         chat_completion = self.client.chat.completions.create(
             messages=message,
-            model="gpt-4-1106-preview",
+            model="gpt-3.5-turbo",
         )
         return chat_completion.choices[0].message.content
 
