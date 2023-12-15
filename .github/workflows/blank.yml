@@ -72,10 +72,12 @@ jobs:
               bash translate.sh Upstream/documentation zh-cn-auto books/handbook
       - name: push auto_translate
         run: |
+              set -e
               git add website
               git commit -m "up"
               git remote -v
               git push
+              set +e
       - name: set build
         run: |
               sudo apt install asciidoctor
