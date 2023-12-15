@@ -2,7 +2,7 @@
 
 ALL_COMPONENTS="Upstream/documentation"
 
-NEW_PATH="zh-cn/handbook"
+NEW_PATH="zh-cn/books/handbook"
 
 COMPONENTS="${1:-$ALL_COMPONENTS}"
 
@@ -28,7 +28,7 @@ for remove_file in $GIT_IGNORE_FILES; do
 done
 
 if [ ! -d " $NEW_PATH" ]; then
-  mkdir  $NEW_PATH
+  mkdir -p $NEW_PATH
 fi
 
 rm -rf $NEW_PATH/*
