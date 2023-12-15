@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NEW_PATH="zh-cn/handbook"
+NEW_PATH="zh-cn/books/handbook"
 
 
 for document in $(find "$NEW_PATH" -name "*.po" ); do
