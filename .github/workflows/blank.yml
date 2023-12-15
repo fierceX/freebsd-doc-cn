@@ -52,10 +52,11 @@ jobs:
               ls
               bash pre_translate.sh
       - name: push
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
               git config --global user.email "fiercex@outlook.com"
               git config --global user.name "github actions"
-              git remote set-url origin "https://$${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
               git add zh-cn
               git commit -m "up"
               git remote -v
