@@ -119,7 +119,7 @@ for adoc_orig in $(find "$COMPONENT/content/en/$SEARCH_RESTRICT" -name "*.adoc")
 		--localized-charset "UTF-8" \
 		--keep "$KEEP"
 
-	fixup_lists "${adoc_lang}"
-	fixup_includes "${adoc_lang}" "${LANGUAGE}"
+	# fixup_lists "${adoc_lang}"
+	# fixup_includes "${adoc_lang}" "${LANGUAGE}"
 done
 

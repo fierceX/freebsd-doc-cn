@@ -65,7 +65,12 @@ jobs:
         run: |
               bash auto_translate.sh
               bash translate.sh Upstream/documentation zh-cn-auto books/handbook
-
+      - name: push auto_translate
+        run: |
+              git add website
+              git commit -m "up"
+              git remote -v
+              git push
 
       
       # - name: mc_translate
