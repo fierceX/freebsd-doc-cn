@@ -35,6 +35,13 @@ fixup_lists()
 	sed -i '' -E -e "s/(tags|trademarks).*'\[(.*)]'/\1: [\2]/g" "${1}"
 }
 
+
+fixup_Meun()
+{
+	echo "${1}"
+	sed -i '' -E -e "s/showBookMenu: 'true'/showBookMenu: true/g" "${1}"
+}
+
 #########################################################
 # Fix includes. In a few cases we want to include the	#
 # master (aka English) version of the includes		#
@@ -99,7 +106,7 @@ for adoc_orig in $(find "$COMPONENT/content/en/$SEARCH_RESTRICT" -name "*.adoc")
 		mkdir -p $(dirname "$adoc_lang")
 	fi
 
-	echo "$pofile" "$adoc_orig" "$adoc_lang" 
+	# echo "$pofile" "$adoc_orig" "$adoc_lang" 
 
 	po4a-translate \
 		--format asciidoc \
@@ -113,7 +120,8 @@ for adoc_orig in $(find "$COMPONENT/content/en/$SEARCH_RESTRICT" -name "*.adoc")
 		--localized-charset "UTF-8" \
 		--keep "$KEEP"
 
-	# fixup_lists "${adoc_lang}"
-	# fixup_includes "${adoc_lang}" "${LANGUAGE}"
+	fixup_lists "${adoc_lang}"
+	fixup_Meun "${adoc_lang}"
+	fixup_includes "${adoc_lang}" "${LANGUAGE}"
 done
 
