@@ -71,6 +71,22 @@ jobs:
               git commit -m "up"
               git remote -v
               git push
+      - name: set build
+        run: |
+              sudo apt install asciidoctor
+              sudo apt install hugo
+      - name: build
+        run: |
+              cd website
+              hugo -d 'https://fiercex.github.io/atest'
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: 'website/public'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
 
       
       # - name: mc_translate
