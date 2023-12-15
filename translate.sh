@@ -89,16 +89,10 @@ for adoc_orig in $(find "$COMPONENT/content/en/$SEARCH_RESTRICT" -name "*.adoc")
 
 	dirbase=$(dirname "$adoc_orig")
 	adoc_lang=$(echo "$adoc_orig" | sed s,$COMPONENT/content/en,$NEW_PATH/content/$LANGUAGE,)
-	
-	
-	echo "....."
-	if [ "$(basename "$dirbase")" = "handbook" ]; then
-		dirbases=$(basename "$adoc_orig" .adoc)
-	else
-		dirbases=$(basename "$dirbase")
-	fi
 
-	pofile=$PO_PATH/$SEARCH_RESTRICT/$dirbases.po
+	pofile_path=$(echo "$dirbase" | sed s,$COMPONENT/content/en,$PO_PATH/,)
+
+	pofile=$pofile_path/$name.po
 	
 
 	if [ ! -d " $(dirname "$adoc_lang")" ]; then

@@ -31,6 +31,14 @@ if [ ! -d " $NEW_PATH" ]; then
   mkdir -p $NEW_PATH
 fi
 
+# ROOT_PATH=$NEW_PATH/root
+
+# echo $ROOT_PATH
+
+# if [ ! -d " $ROOT_PATH" ]; then
+#   mkdir -p "$ROOT_PATH"
+# fi
+
 rm -rf $NEW_PATH/*
 
 for component in $COMPONENTS; do
@@ -59,17 +67,40 @@ for component in $COMPONENTS; do
 
 		dirbase=$(dirname "$document")
 
-		# echo $dirbase/$name.po
+		ddirbase=$(dirname "$dirbase")
+
+
 		if [ "$(basename "$dirbase")" = "handbook" ]; then
-			ddirbase=$name
-			echo $name
+			newname=$(echo "$dirbase" | sed s,$dirbase,$NEW_PATH,)
+			# echo $name
 		else
-			ddirbase=$(basename "$dirbase")
+			newname=$(echo "$dirbase" | sed s,$ddirbase,$NEW_PATH,)
 		fi
 		
+		
 
-		echo $dirbase/$name.po "$NEW_PATH/$ddirbase.po"
-		python3 pre_translate.py --input $dirbase/$name.po --output $NEW_PATH/$ddirbase.po --tmx tmx.msg
+		echo $dirbase $newname
+
+		# echo "aa"
+
+
+		# # echo $dirbase/$name.po
+		# if [ "$(basename "$dirbase")" = "handbook" ]; then
+		# 	ddirbase="root/$name"
+		# 	echo $name
+		# else
+		# 	ddirbase=$(basename "$dirbase")
+		# fi
+
+		
+
+		# echo $dirbase/$name.po "$newname/$name.po"
+
+		if [ ! -d " $newname" ]; then
+			mkdir -p $newname
+		fi
+
+		python3 pre_translate.py --input $dirbase/$name.po --output $newname/$name.po --tmx tmx.msg
 		# cp "$dirbase/$name.po" "$NEW_PATH/$(basename "$dirbase").po"
 
 		# po4a-updatepo \
