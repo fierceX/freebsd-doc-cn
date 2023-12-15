@@ -40,8 +40,9 @@ for component in $COMPONENTS; do
 		exit 1
 	fi
 
-	for document in $(find "$component/content/en/books/handbook" -name "*.adoc" ); do
-		name=$(basename -s .adoc "$document")
+	for document in $(find "$component/content/en/books/handbook" -name "*.po" ); do
+		name=$(basename -s .po "$document")
+		# echo $name
 
 		# Ignore some files
 		if [ "$name" = "chapters-order" ]; then
@@ -58,8 +59,17 @@ for component in $COMPONENTS; do
 
 		dirbase=$(dirname "$document")
 
-		# echo "$NEW_PATH/$(basename "$dirbase").po"
-		python3 pre_translate.py --input $dirbase/$name.po --output $NEW_PATH/$(basename "$dirbase").po --tmx tmx.msg
+		# echo $dirbase/$name.po
+		if [ "$(basename "$dirbase")" = "handbook" ]; then
+			ddirbase=$name
+			echo $name
+		else
+			ddirbase=$(basename "$dirbase")
+		fi
+		
+
+		echo $dirbase/$name.po "$NEW_PATH/$ddirbase.po"
+		python3 pre_translate.py --input $dirbase/$name.po --output $NEW_PATH/$ddirbase.po --tmx tmx.msg
 		# cp "$dirbase/$name.po" "$NEW_PATH/$(basename "$dirbase").po"
 
 		# po4a-updatepo \
