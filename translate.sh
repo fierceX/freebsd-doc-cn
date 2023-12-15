@@ -40,7 +40,7 @@ fixup_Meun()
 {
 	echo "${1}"
 	ls "${1}"
-	sed -i '' -E -e "s/showBookMenu: 'true'/showBookMenu: true/g" "${1}"
+	sed -i "s/showBookMenu: 'true'/showBookMenu: true/g" "${1}"
 }
 
 #########################################################
