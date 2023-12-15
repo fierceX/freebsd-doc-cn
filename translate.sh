@@ -39,6 +39,7 @@ fixup_lists()
 fixup_Meun()
 {
 	echo "${1}"
+	ls "${1}"
 	sed -i '' -E -e "s/showBookMenu: 'true'/showBookMenu: true/g" "${1}"
 }
 
@@ -120,8 +121,8 @@ for adoc_orig in $(find "$COMPONENT/content/en/$SEARCH_RESTRICT" -name "*.adoc")
 		--localized-charset "UTF-8" \
 		--keep "$KEEP"
 
-	fixup_lists "${adoc_lang}"
+	# fixup_lists "${adoc_lang}"
 	fixup_Meun "${adoc_lang}"
-	fixup_includes "${adoc_lang}" "${LANGUAGE}"
+	# fixup_includes "${adoc_lang}" "${LANGUAGE}"
 done
 
