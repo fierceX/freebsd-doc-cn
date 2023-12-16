@@ -1,0 +1,1589 @@
+---
+title: Chapter 14. Configuration, Services, Logging and Power Management
+part: Part III. System Administration
+prev: books/handbook/partiii
+next: books/handbook/boot
+description: This chapter explains much of the FreeBSD configuration files, how to enable or disable a service, how to configure the logging system and the power management area.
+tags: ["configuration", "services", "cron", "periodic", "logging", "configuration files", "sysctl", "swap", "power management"]
+showBookMenu: true
+weight: 18
+path: "/books/handbook/"
+---
+
+[[config-tuning]]
+= Configuration, Services, Logging and Power Management
+:doctype: book
+:toc: macro
+:toclevels: 1
+:icons: font
+:sectnums:
+:sectnumlevels: 6
+:sectnumoffset: 14
+:partnums:
+:source-highlighter: rouge
+:experimental:
+:images-path: books/handbook/config/
+
+ifdef::env-beastie[]
+ifdef::backend-html5[]
+:imagesdir: ../../../../images/{images-path}
+endif::[]
+ifndef::book[]
+include::shared/authors.adoc[]
+include::shared/mirrors.adoc[]
+include::shared/releases.adoc[]
+include::shared/attributes/attributes-{{% lang %}}.adoc[]
+include::shared/{{% lang %}}/teams.adoc[]
+include::shared/{{% lang %}}/mailing-lists.adoc[]
+include::shared/{{% lang %}}/urls.adoc[]
+toc::[]
+endif::[]
+ifdef::backend-pdf,backend-epub3[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+endif::[]
+
+ifndef::env-beastie[]
+toc::[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+
+[[config-synopsis]]
+== Synopsis
+
+One of the important aspects of FreeBSD is proper system configuration.
+This chapter explains much of the FreeBSD configuration process, including some of the parameters which can be set to tune a FreeBSD system.
+
+Before reading this chapter, you should:
+
+* Understand UNIX(R) and FreeBSD basics (crossref:basics[basics,FreeBSD Basics]).
+
+After reading this chapter, you will know:
+
+* How to use the various configuration files in [.filename]#/etc#.
+* The basics of [.filename]#rc.conf# configuration and [.filename]#/usr/local/etc/rc.d# startup scripts.
+* How to tune FreeBSD using man:sysctl[8] variables.
+* How to configure the power management in FreeBSD.
+
+[[configtuning-configfiles]]
+== Configuration Files
+
+FreeBSD maintains a clear separation between the base system and third party applications and therefore this affects where the configuration files of these applications are located.
+
+FreeBSD base system configuration is located at the [.filename]#/etc# directory,
+and the [.filename]#/usr/local/etc# directory contains all the configuration files of the applications installed on the system through the ports collection and packages.
+
+The kernel state configuration is located in [.filename]#/etc/sysctl.conf#.
+In the section <<configtuning-sysctl>>, the operation of man:sysctl[8] will be explained in more detail.
+
+For more information about the FreeBSD file system structure refer to man:hier[7].
+
+As a general rule, configuration files do not use a standard on what syntax they must follow.
+Although it is true that the `#` character is normally used to comment a line and that each line has a configuration variable.
+
+[NOTE]
+====
+Some applications like man:pkg[8] are starting to use the link:https://github.com/vstakhov/libucl[Universal Configuration Language (UCL)].
+====
+
+=== The [.filename]#/etc# directory
+
+The [.filename]#/etc# directory contains all of the FreeBSD base system configuration files that are responsible for configuring FreeBSD.
+
+[CAUTION]
+====
+*Extreme* caution must be taken when modifying files in the [.filename]#/etc# directory; misconfiguration could make FreeBSD unbootable or malfunction.
+====
+
+[.informaltable]
+[cols="1,1", frame="none"]
+|===
+
+|[.filename]#/etc#
+|System configuration files and scripts.
+
+|[.filename]#/etc/defaults#
+|Default system configuration files, see man:rc[8] for more information.
+
+|[.filename]#/etc/fstab#
+|man:fstab[5] contains descriptive information about the various file systems.
+
+|[.filename]#/etc/mail#
+|Extra man:sendmail[8] configuration and other MTA configuration files.
+
+|[.filename]#/etc/mtree#
+|mtree configuration files, see man: mtree[8] for more information.
+
+|[.filename]#/etc/pam.d#
+|Configuration files for the Pluggable Authentication Modules (PAM) library.
+
+|[.filename]#/etc/periodic#
+|Scripts that are run daily, weekly, and monthly, via man:cron[8], see man:periodic[8] for more information.
+
+|[.filename]#/etc/rc.d#
+|System and daemon startup/control scripts, see man:rc[8] for more information.
+
+|[.filename]#/etc/rc.conf#
+|Contains descriptive information about the local host name, configuration details for any potential network interfaces and which services should be started up at system initial boot time. More information in <<configtuning-core-configuration>>
+
+|[.filename]#/etc/security#
+|OpenBSM audit configuration files, see man:audit[8] for more information.
+
+|[.filename]#/etc/ppp#
+|ppp configuration files, see man:ppp[8] for more information.
+
+|[.filename]#/etc/ssh#
+|OpenSSH configuration files, see man:ssh[1] for more information.
+
+|[.filename]#/etc/ssl#
+|OpenSSL configuration files.
+
+|[.filename]#/etc/sysctl.conf#
+|Contains settings for the kernel. More information in <<configtuning-sysctl>>
+
+|===
+
+[[configtuning-sysctl]]
+=== The sysctl utility
+
+The man:sysctl[8] utility is used to make changes to a running FreeBSD system.
+
+The man:sysctl[8] utility retrieves kernel state and allows processes with appropriate privilege to set kernel state.
+The state to be retrieved or set is described using a "Management Information Base" ("MIB") style name, described as a dotted set of components.
+
+.Management Information Base
+[.informaltable]
+[cols="1,1", frame="none"]
+|===
+
+|sysctl
+|"Magic" numbers
+
+|kern
+|Kernel functions and features
+
+|vm
+|virtual memory
+
+|vfs
+|Filesystem
+
+|net
+|Network
+
+|debug
+|Debugging parameters
+
+|hw
+|Hardware
+
+|machdep
+|Machine dependent
+
+|user
+|Userland
+
+|p1003_1b
+|POSIX 1003.1B
+
+|===
+
+At its core, man:sysctl[8] serves two functions: to read and to modify system settings.
+
+To view all readable variables:
+
+[source,shell]
+....
+% sysctl -a
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+kern.ostype: FreeBSD
+...
+vm.swap_enabled: 1
+vm.overcommit: 0
+vm.domain.0.pidctrl.kdd: 8
+vm.domain.0.pidctrl.kid: 4
+vm.domain.0.pidctrl.kpd: 3
+...
+vfs.zfs.sync_pass_rewrite: 2
+vfs.zfs.sync_pass_dont_compress: 8
+vfs.zfs.sync_pass_deferred_free: 2
+....
+
+To read a particular variable, specify its name:
+
+[source,shell]
+....
+% sysctl kern.maxproc
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+kern.maxproc: 1044
+....
+
+The Management Information Base (MIB) is hierarchical and hence, specifying a prefix prints all the nodes hanging from it:
+
+[source,shell]
+....
+% sysctl net
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+net.local.stream.recvspace: 8192
+net.local.stream.sendspace: 8192
+net.local.dgram.recvspace: 16384
+net.local.dgram.maxdgram: 2048
+net.local.seqpacket.recvspace: 8192
+net.local.seqpacket.maxseqpacket: 8192
+net.local.sockcount: 60
+net.local.taskcount: 25
+net.local.recycled: 0
+net.local.deferred: 0
+net.local.inflight: 0
+net.inet.ip.portrange.randomtime: 1
+net.inet.ip.portrange.randomcps: 9999
+[...]
+....
+
+To set a particular variable, use the _variable_=_value_ syntax:
+
+[source,shell]
+....
+# sysctl kern.maxfiles=5000
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+kern.maxfiles: 2088 -> 5000
+....
+
+[NOTE]
+====
+To keep the configuration after a reboot it is necessary to add these variables to the [.filename]#/etc/sysctl.conf# file as explained below.
+====
+
+[[configtuning-sysctlconf]]
+=== The [.filename]#/etc/sysctl.conf# file
+
+The configuration file for man:sysctl[8], [.filename]#/etc/sysctl.conf#, looks much like [.filename]#/etc/rc.conf#.
+
+Values are set using a `variable=value` syntax.
+
+[NOTE]
+====
+The specified values are set after the system goes into multi-user mode.
+Not all variables are settable in this mode.
+====
+
+For example, to turn off logging of fatal signal exits and prevent users from seeing processes started by other users, the following tunables can be set in [.filename]#/etc/sysctl.conf#:
+
+[.programlisting]
+....
+# Do not log fatal signal exits (e.g., sig 11)
+kern.logsigexit=0
+
+# Prevent users from seeing information about processes that
+# are being run under another UID.
+security.bsd.see_other_uids=0
+....
+
+To obtain more information about what function a particular sysctl has, the following command can be executed:
+
+[source,shell]
+....
+% sysctl -d kern.dfldsiz
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+kern.dfldsiz: Initial data size limit
+....
+
+[[configtuning-core-configuration]]
+=== Managing System-Specific Configuration
+
+The principal location for system configuration information is [.filename]#/etc/rc.conf#.
+
+This file contains a wide range of configuration information and it is read at system startup to configure the system.
+It provides the configuration information for the [.filename]#rc*# files.
+
+The entries in [.filename]#/etc/rc.conf# override the default settings in [.filename]#/etc/defaults/rc.conf#.
+
+[TIP]
+====
+The file [.filename]#/etc/defaults/rc.conf# containing the default settings should not be edited.
+Instead, all system-specific changes should be made to [.filename]#/etc/rc.conf#.
+====
+
+A number of strategies may be applied in clustered applications to separate site-wide configuration from system-specific configuration in order to reduce administration overhead.
+
+The recommended approach is to place system-specific configuration into [.filename]#/etc/rc.conf.local#.
+
+For example, these entries in [.filename]#/etc/rc.conf# apply to all systems:
+
+[.programlisting]
+....
+sshd_enable="YES"
+keyrate="fast"
+defaultrouter="10.1.1.254"
+....
+
+Whereas these entries in [.filename]#/etc/rc.conf.local# apply to this system only:
+
+[.programlisting]
+....
+hostname="node1.example.org"
+ifconfig_fxp0="inet 10.1.1.1/8"
+....
+
+Distribute [.filename]#/etc/rc.conf# to every system using an application such as rsync or puppet, while [.filename]#/etc/rc.conf.local# remains unique.
+
+Upgrading the system will not overwrite [.filename]#/etc/rc.conf#, so system configuration information will not be lost.
+
+[TIP]
+====
+Both [.filename]#/etc/rc.conf# and [.filename]#/etc/rc.conf.local# are parsed by man:sh[1].
+This allows system operators to create complex configuration scenarios.
+Refer to man:rc.conf[5] for further information on this topic.
+====
+
+[[configtuning-rcd]]
+== Managing Services in FreeBSD
+
+FreeBSD uses the man:rc[8] system of startup scripts during system initialization and for managing services.
+
+The scripts listed in [.filename]#/etc/rc.d# provide basic services which can be controlled with the `start`, `stop`, and `restart` options to man:service[8].
+
+A basic script may look similar to the following:
+
+[.programlisting]
+....
+#!/bin/sh
+#
+# PROVIDE: utility
+# REQUIRE: DAEMON
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name=utility
+rcvar=utility_enable
+
+command="/usr/local/sbin/utility"
+
+load_rc_config $name
+
+#
+# DO NOT CHANGE THESE DEFAULT VALUES HERE
+# SET THEM IN THE /etc/rc.conf FILE
+#
+utility_enable=${utility_enable-"NO"}
+pidfile=${utility_pidfile-"/var/run/utility.pid"}
+
+run_rc_command "$1"
+....
+
+Refer to extref:{rc-scripting}[this article] for instructions on how to create custom man:rc[8] scripts.
+
+[[configtuning-starting-services]]
+=== Starting Services
+
+Many users install third party software on FreeBSD from the Ports Collection and require the installed services to be started upon system initialization.
+
+Services, such as package:security/openssh-portable[] or package:www/nginx[] are just two of the many software packages which may be started during system initialization.
+This section explains the procedures available for starting services.
+
+Since the man:rc[8] system is primarily intended to start and stop services at system startup and shutdown time, the `start`, `stop` and `restart` options will only perform their action if the appropriate [.filename]#/etc/rc.conf# variable is set.
+
+So the first step to start a service, like for example package:www/nginx[] is to add it to [.filename]#/etc/rc.conf# by executing the following command:
+
+[source,shell]
+....
+# sysrc nginx_enable="YES"
+....
+
+Then nginx can be started executing the following command:
+
+[source,shell]
+....
+# service nginx start
+....
+
+[TIP]
+====
+To `start`, `stop` or `restart` a service regardless of the settings in [.filename]#/etc/rc.conf#, these commands should be prefixed with "one".
+For instance, to start package:www/nginx[] regardless of the current [.filename]#/etc/rc.conf# setting, execute the following command:
+
+[source,shell]
+....
+# service nginx onestart
+....
+====
+
+[[configtuning-status-services]]
+=== Status of a Service
+
+To determine if a service is running, use the `status` subcommand.
+
+For example, to verify that package:www/nginx[] is running:
+
+[source,shell]
+....
+# service nginx status
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+nginx is running as pid 27871.
+....
+
+[[configtuning-reload-services]]
+=== Reload a Service
+
+In some cases, it is also possible to `reload` a service.
+This attempts to send a signal to an individual service, forcing the service to reload its configuration files.
+
+In most cases, this means sending the service a `SIGHUP` signal.
+
+*Not all services support this feature.*
+
+The man:rc[8] system is used for network services and it also contributes to most of the system initialization.
+For instance, when the [.filename]#/etc/rc.d/bgfsck# script is executed, it prints out the following message:
+
+[source,shell]
+....
+Starting background file system checks in 60 seconds.
+....
+
+This script is used for background file system checks, which occur only during system initialization.
+
+Many system services depend on other services to function properly.
+For example, man:yp[8] and other RPC-based services may fail to start until after the man:rpcbind[8] service has started.
+
+Additional information can be found in man:rc[8] and man:rc.subr[8].
+
+=== Using Services to Start Services
+
+Other services can be started using man:inetd[8].
+Working with man:inetd[8] and its configuration is described in depth in crossref:network-servers[network-inetd,“The inetd Super-Server”].
+
+In some cases, it may make more sense to use man:cron[8] to start system services.
+This approach has a number of advantages as man:cron[8] runs these processes as the owner of the man:crontab[5].
+This allows regular users to start and maintain their own applications.
+
+The `@reboot` feature of man:cron[8], may be used in place of the time specification.
+This causes the job to run when man:cron[8] is started, normally during system initialization.
+
+[[cron-periodic]]
+== Cron and Periodic
+
+Scheduling tasks to run at a certain day or time is a very common task on FreeBSD.
+The tool in charge of performing this task is man:cron[8].
+
+In addition to tasks that can be scheduled by the user via man:cron[8], FreeBSD performs routine background tasks managed by man:periodic[8].
+
+[[configtuning-cron]]
+=== Cron
+
+The man:cron[8] utility runs in the background and regularly checks [.filename]#/etc/crontab# for tasks to execute and searches [.filename]#/var/cron/tabs# for custom crontab files.
+
+These files are used to schedule tasks which cron runs at the specified times.
+
+Each entry in a crontab defines a task to run and is known as a _cron job_.
+
+Two different types of configuration files are used: the system crontab, which should not be modified, and user crontabs, which can be created and edited as needed.
+The format used by these files is documented in man:crontab[5].
+The format of the system crontab, [.filename]#/etc/crontab# includes a `who` column which does not exist in user crontabs.
+In the system crontab, cron runs the command as the user specified in this column.
+In a user crontab, all commands run as the user who created the crontab.
+
+User crontabs allow individual users to schedule their own tasks.
+The `root` user can also have a user [.filename]#crontab# which can be used to schedule tasks that do not exist in the system [.filename]#crontab#.
+
+Here is a sample entry from the system crontab, [.filename]#/etc/crontab#:
+
+[.programlisting]
+....
+# /etc/crontab - root's crontab for FreeBSD
+#
+# $FreeBSD$ <.>
+#
+SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin <.>
+#
+#minute hour    mday    month   wday    who     command <.>
+#
+# Save some entropy so that /dev/random can re-seed on boot.
+*/11    *       *       *       *       operator /usr/libexec/save-entropy <.>
+#
+# Rotate log files every hour, if necessary.
+0       *       *       *       *       root    newsyslog
+#
+# Perform daily/weekly/monthly maintenance.
+1       3       *       *       *       root    periodic daily
+15      4       *       *       6       root    periodic weekly
+30      5       1       *       *       root    periodic monthly
+#
+# Adjust the time zone if the CMOS clock keeps local time, as opposed to
+# UTC time.  See adjkerntz(8) for details.
+1,31    0-5     *       *       *       root    adjkerntz -a
+
+....
+
+<.> Lines that begin with the `+#+` character are comments. A comment can be placed in the file as a reminder of what and why a desired action is performed. Comments cannot be on the same line as a command or else they will be interpreted as part of the command; they must be on a new line. Blank lines are ignored.
+
+<.> The equals (`=`) character is used to define any environment settings. In this example, it is used to define the `SHELL` and `PATH`. If the `SHELL` is omitted, cron will use the default Bourne shell. If the `PATH` is omitted, the full path must be given to the command or script to run.
+
+<.> This line defines the seven fields used in a system crontab: `minute`, `hour`, `mday`, `month`, `wday`, `who`, and `command`. The `minute` field is the time in minutes when the specified command will be run, the `hour` is the hour when the specified command will be run, the `mday` is the day of the month, `month` is the month, and `wday` is the day of the week. These fields must be numeric values, representing the twenty-four hour clock, or a `*`, representing all values for that field. The `who` field only exists in the system crontab and specifies which user the command should be run as. The last field is the command to be executed.
+
+<.> This entry defines the values for this cron job. The `\*/11`, followed by several more `*` characters, specifies that `/usr/libexec/save-entropy` is invoked by `operator` every eleven minutes of every hour, of every day and day of the week, of every month. Commands can include any number of switches. However, commands which extend to multiple lines need to be broken with the backslash "\" continuation character.
+
+[[configtuning-installcrontab]]
+=== Creating a User Crontab
+
+To create a user crontab, invoke `crontab` in editor mode:
+
+[source,shell]
+....
+% crontab -e
+....
+
+This will open the user's crontab using the default text editor.
+The first time a user runs this command, it will open an empty file.
+Once a user creates a crontab, this command will open that file for editing.
+
+It is useful to add these lines to the top of the crontab file in order to set the environment variables and to remember the meanings of the fields in the crontab:
+
+[.programlisting]
+....
+SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+# Order of crontab fields
+# minute hour mday month wday command
+....
+
+Then add a line for each command or script to run, specifying the time to run the command.
+This example runs the specified custom Bourne shell script every day at two in the afternoon.
+Since the path to the script is not specified in `PATH`, the full path to the script is given:
+
+[.programlisting]
+....
+0 14 * * * /home/user/bin/mycustomscript.sh
+....
+
+[TIP]
+====
+Before using a custom script, make sure it is executable and test it with the limited set of environment variables set by cron.
+To replicate the environment that would be used to run the above cron entry, use:
+
+[.programlisting]
+....
+env -i SHELL=/bin/sh PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin HOME=/home/user LOGNAME=user /home/user/bin/mycustomscript.sh
+....
+
+The environment set by cron is discussed in man:crontab[5].
+Checking that scripts operate correctly in a cron environment is especially important if they include any commands that delete files using wildcards.
+====
+
+When finished editing the crontab, save the file.
+It will automatically be installed, and cron will read the crontab and run its cron jobs at their specified times.
+To list the cron jobs in a crontab, use this command:
+
+[source,shell]
+....
+% crontab -l
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+0 14 * * * /home/user/bin/mycustomscript.sh
+....
+
+To remove all of the cron jobs in a user crontab:
+
+[source,shell]
+....
+% crontab -r
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+remove crontab for user? y
+....
+
+[[configtuning-periodic]]
+=== Periodic
+
+FreeBSD provides a set of system management scripts to check status of various subsystems, perform security-related checks, rotate log files, etc.
+These scripts are run on a periodic basis: daily. weekly, or monthly.
+The management of these tasks is performed by man:periodic[8] and its configuration resides in man:periodic.conf[5].
+The periodic tasks are initiated by entries in the system crontab, shown above.
+
+Scripts executed by man:periodic[8] are located in [.filename]#/etc/periodic/# for base utilities and in [.filename]#/usr/local/etc/periodic/# for third-party software.
+
+They are organized in 4 subdirectories, daily, weekly, monthly and security.
+
+[[enable-disable-periodic]]
+=== Enable or Disable Periodic Tasks
+
+FreeBSD has some scripts enabled by default to run periodically.
+
+To enable or disable a task, the first step is to edit [.filename]#/etc/periodic.conf# executing the following command:
+
+[source,shell]
+....
+# ee /etc/periodic.conf
+....
+
+And then to enable, for example, `daily_status_zfs_enable` put the following content in the file:
+
+[.programlisting]
+....
+daily_status_zfs_enable="YES"
+....
+
+To disable a task that is active by default, all that needs to be done is to change `YES` to `NO`.
+
+[[configuring-output-periodic-tasks]]
+=== Configuring the Output of Periodic Tasks
+
+In [.filename]#/etc/periodic.conf# the variables `daily_output`, `weekly_output` and `monthly_output` specifies where to send the results of the script execution.
+
+By default the output of the periodic scripts are emailed to root, and therefore it is best to read root's mail or alias root to a mailbox that is monitored.
+
+To send the results to another email or to other emails, add the email addresses separated by spaces to [.filename]#/etc/periodic.conf#:
+
+[.programlisting]
+....
+daily_output="email1@example.com email2@example.com"
+weekly_output="email1@example.com email2@example.com"
+monthly_output="email1@example.com email2@example.com"
+....
+
+To log periodic output instead of receiving it as email, add the following lines to [.filename]#/etc/periodic.conf#. man:newsyslog[8] will rotate these files at the appropriate times:
+
+[.programlisting]
+....
+daily_output=/var/log/daily.log
+weekly_output=/var/log/weekly.log
+monthly_output=/var/log/monthly.log
+....
+
+[[configtuning-syslog]]
+== Configuring System Logging
+
+Generating and reading system logs is an important aspect of system administration.
+The information in system logs can be used to detect hardware and software issues as well as application and system configuration errors.
+This information also plays an important role in security auditing and incident response.
+Most system daemons and applications will generate log entries.
+
+FreeBSD provides a system logger, man:syslogd[8], to manage logging.
+By default, syslogd is enabled and started when the system boots.
+
+This section describes how to configure the FreeBSD system logger for both local and remote logging and how to perform log rotation and log management.
+
+=== Configuring Local Logging
+
+The configuration file, [.filename]#/etc/syslog.conf#, controls what syslogd does with log entries as they are received.
+There are several parameters to control the handling of incoming events.
+The _facility_ describes which subsystem generated the message, such as the kernel or a daemon, and the _level_ describes the severity of the event that occurred.
+This makes it possible to configure if and where a log message is logged, depending on the facility and level.
+It is also possible to take action depending on the application that sent the message, and in the case of remote logging, the hostname of the machine generating the logging event.
+
+This configuration file contains one line per action, where the syntax for each line is a selector field followed by an action field.
+The syntax of the selector field is _facility.level_ which will match log messages from _facility_ at level _level_ or higher.
+It is also possible to add an optional comparison flag before the level to specify more precisely what is logged.
+Multiple selector fields can be used for the same action, and are separated with a semicolon (`;`).
+Using `*` will match everything.
+The action field denotes where to send the log message, such as to a file or remote log host.
+
+As an example, here is the default [.filename]#/etc/syslog.conf# from FreeBSD:
+
+[.programlisting]
+....
+# $FreeBSD$
+#
+#       Spaces ARE valid field separators in this file. However,
+#       other *nix-like systems still insist on using tabs as field
+#       separators. If you are sharing this file between systems, you
+#       may want to use only tabs as field separators here.
+#       Consult the syslog.conf(5) manpage.
+*.err;kern.warning;auth.notice;mail.crit                /dev/console <.>
+*.notice;authpriv.none;kern.debug;lpr.info;mail.crit;news.err   /var/log/messages
+security.*                                      /var/log/security
+auth.info;authpriv.info                         /var/log/auth.log
+mail.info                                       /var/log/maillog <.>
+cron.*                                          /var/log/cron
+!-devd
+*.=debug                                        /var/log/debug.log <.>
+*.emerg                                         *
+daemon.info                                     /var/log/daemon.log
+# uncomment this to log all writes to /dev/console to /var/log/console.log
+# touch /var/log/console.log and chmod it to mode 600 before it will work
+#console.info                                   /var/log/console.log
+# uncomment this to enable logging of all log messages to /var/log/all.log
+# touch /var/log/all.log and chmod it to mode 600 before it will work
+#*.*                                            /var/log/all.log
+# uncomment this to enable logging to a remote loghost named loghost
+#*.*                                            @loghost
+# uncomment these if you're running inn
+# news.crit                                     /var/log/news/news.crit
+# news.err                                      /var/log/news/news.err
+# news.notice                                   /var/log/news/news.notice
+# Uncomment this if you wish to see messages produced by devd
+# !devd
+# *.>=notice                                    /var/log/devd.log <.>
+!*
+include                                         /etc/syslog.d
+include                                         /usr/local/etc/syslog.d
+....
+
+<.> Matches all messages with a level of `err` or higher, as well as `kern.warning`, `auth.notice` and `mail.crit`, and sends these log messages to the console ([.filename]#/dev/console#).
+<.> Matches all messages from the `mail` facility at level `info` or above and logs the messages to [.filename]#/var/log/maillog#.
+<.> Uses a comparison flag (`=`) to only match messages at level `debug` and logs them to [.filename]#/var/log/debug.log#.
+<.> Is an example usage of a program specification. This makes the rules following it only valid for the specified program. In this case, only the messages generated by man:devd[8] are logged to [.filename]#/var/log/devd.log#.
+
+For more information about [.filename]#/etc/syslog.conf#, its syntax, and more advanced usage examples, see man:syslog.conf[5].
+
+[[logging-facilities]]
+=== Logging Facilities
+
+A facility describes the part of the system generating the message.
+Facilities are a way of separating the different messages so that it is easier for the user to consult the logs.
+
+.syslog facilities
+[options="header", cols="1,1"]
+|===
+| Name | Description
+
+| auth
+| The authorization system: man:login[1], man:su[1], man:getty[8], etc.
+
+| authpriv
+| The same as auth, but logged to a file readable only by root.
+
+| console
+| Messages written to [.filename]#/dev/console# by the kernel console output driver.
+
+| cron
+| Messages written by the man:cron[8] daemon.
+
+| daemon
+| System daemons, such as man:routed[8], that are not provided for explicitly by other facilities.
+
+| ftp
+| The file transfer protocol daemons: man:ftpd[8], man:tftpd[8].
+
+| kern
+| Messages generated by the kernel. These cannot be generated by any user processes.
+
+| lpr
+| The line printer spooling system: man:lpr[1], man:lpc[8], man:lpd[8], etc.
+
+| mail
+| The mail system.
+
+| mark
+| This facility adds a record every 20 minutes.
+
+| news
+| The network news system.
+
+| ntp
+| The network time protocol system.
+
+| security
+| Security subsystems, such as man:ipfw[4].
+
+| syslog
+| Messages generated internally by syslogd(8).
+
+| user
+| Messages generated by random user processes. *This is the default facility identifier if none is specified*.
+
+| uucp
+| The Unix-to-Unix Copy system. An ancient protocol. Really weird to see messages from this facility.
+
+| local0 through local7
+| Reserved for local use.
+
+|===
+
+[[logging-levels]]
+=== Logging Levels
+
+The level describes the severity of the message, and is a keyword from the following ordered list (higher to lower):
+
+.syslog levels
+[options="header", cols="1,1"]
+|===
+| Name | Description
+
+| emerg
+| A panic condition. This is normally broadcast to all users.
+
+| alert
+| A condition that should be corrected immediately, such as a corrupted system database.
+
+| crit
+| Critical conditions, e.g., hard device errors.
+
+| err
+| Errors.
+
+| warning
+| Warning messages.
+
+| notice
+| Conditions that are not error conditions, but should possibly be handled specially.
+
+| info
+| Informational messages.
+
+| debug
+| Messages that contain information normally of use only when debugging a program.
+
+| none
+| This special level disables a particular facility.
+
+|===
+
+[[read-log-messages]]
+=== Read Log Messages
+
+By default FreeBSD log files use the format link:https://datatracker.ietf.org/doc/html/rfc3164[rfc3164], also known as The BSD syslog Protocol.
+Learn more about other formats and how to use them at man:syslog[8].
+
+Typically the logs have the following syntax:
+
+[.programlisting]
+....
+date time hostname program[pid]: the message
+....
+
+The output of the [.filename]#/var/log/cron#  file will be used as an example:
+
+[.programlisting]
+....
+[...]
+Jul 16 12:40:00 FreeBSD /usr/sbin/cron[81519]: (root) CMD (/usr/libexec/atrun)
+Jul 16 12:44:00 FreeBSD /usr/sbin/cron[83072]: (operator) CMD (/usr/libexec/save-entropy)
+[...]
+....
+
+Verbose logging, so the facility and the level on each message will be added, can be enabled in man:syslog[8] by running the following command:
+
+[source,shell]
+....
+# sysrc syslogd_flags="-vv"
+....
+
+Once the function is activated, the facility and the level will be displayed in the log as shown in the following example:
+
+[.programlisting]
+....
+[...]
+Jul 16 17:40:00 <cron.info> FreeBSD /usr/sbin/cron[1016]: (root) CMD (/usr/libexec/atrun)
+Jul 16 17:44:00 <cron.info> FreeBSD /usr/sbin/cron[1030]: (operator) CMD (/usr/libexec/save-entropy)
+[...]
+....
+
+=== Log Management and Rotation
+
+Log files can grow quickly, taking up disk space and making it more difficult to locate useful information.
+
+In FreeBSD, man:newsyslog[8] is used to manage log files and attempt to mitigate this.
+
+This built-in program periodically rotates and compresses log files, and optionally creates missing log files and signals programs when log files are moved.
+
+[NOTE]
+====
+Since newsyslog is run from man:cron[8], it cannot rotate files more often than it is scheduled to run from man:cron[8].
+In the default configuration, it runs every hour.
+====
+
+Here is the default configuration in FreeBSD, more information in man:newsyslog.conf[5]:
+
+[.programlisting]
+....
+# configuration file for newsyslog
+# $FreeBSD$
+#
+# Entries which do not specify the '/pid_file' field will cause the
+# syslogd process to be signalled when that log file is rotated.  This
+# action is only appropriate for log files which are written to by the
+# syslogd process (ie, files listed in /etc/syslog.conf).  If there
+# is no process which needs to be signalled when a given log file is
+# rotated, then the entry for that file should include the 'N' flag.
+#
+# Note: some sites will want to select more restrictive protections than the
+# defaults.  In particular, it may be desirable to switch many of the 644
+# entries to 640 or 600.  For example, some sites will consider the
+# contents of maillog, messages, and lpd-errs to be confidential.  In the
+# future, these defaults may change to more conservative ones.
+#
+# logfilename          [owner:group]    mode count size when  flags [/pid_file] [sig_num]
+/var/log/all.log                        600  7     *    @T00  J
+/var/log/auth.log                       600  7     1000 @0101T JC
+/var/log/console.log                    600  5     1000 *     J
+/var/log/cron                           600  3     1000 *     JC
+/var/log/daily.log                      640  7     *    @T00  JN
+/var/log/debug.log                      600  7     1000 *     JC
+/var/log/init.log                       644  3     1000 *     J
+/var/log/kerberos.log                   600  7     1000 *     J
+/var/log/maillog                        640  7     *    @T00  JC
+/var/log/messages                       644  5     1000 @0101T JC
+/var/log/monthly.log                    640  12    *    $M1D0 JN
+/var/log/devd.log                       644  3     1000 *     JC
+/var/log/security                       600  10    1000 *     JC
+/var/log/utx.log                        644  3     *    @01T05 B
+/var/log/weekly.log                     640  5     *    $W6D0 JN
+/var/log/daemon.log                     644  5     1000 @0101T JC
+
+<include> /etc/newsyslog.conf.d/[!.]*.conf
+<include> /usr/local/etc/newsyslog.conf.d/[!.]*.conf
+....
+
+. `logfilename` - Name of the system log file to be archived.
+. `[owner:group]` - This optional field specifies the owner and group for the archive file.
+. `mode` - Specify the file mode of the log file and archives. Valid mode bits are 0666.  (That is, read and write permissions for the rotated log may be specified for the owner, group, and others.)
+. `count` - Specify the maximum number of archive files which may exist.
+. `size` - When the size of the log file reaches size in kilobytes, the log file will be trimmed as described above. If this field contains an asterisk ('*'), the log file will not be trimmed based on size.
+. `when` - Consist of an interval, a specific time, or both. Supported options in man:newsyslog.conf[5].
+. `flags` - Indicates the flags that newsyslog accepts, supported options in man:newsyslog.conf[5].
+. `[/pid_file]` - This optional field specifies the file name containing a daemon's process ID or to find a group process ID.
+. `[sig_num]` - This optional field specifies the signal that will be sent to the daemon process.
+
+[NOTE]
+====
+The last two fields are optional and specify the name of the Process ID (PID) file of a process and a signal number to send to that process when the file is rotated.
+====
+
+[[network-syslogd]]
+=== Configuring Remote Logging
+
+Monitoring the log files of multiple hosts can become unwieldy as the number of systems increases.
+Configuring centralized logging can reduce some of the administrative burden of log file administration.
+
+In FreeBSD, centralized log file aggregation, merging, and rotation can be configured using syslogd and newsyslog.
+
+This section demonstrates an example configuration, where host `A`, named `logserv.example.com`, will collect logging information for the local network. 
+
+Host `B`, named `logclient.example.com`, will be configured to pass logging information to the logging server.
+
+==== Log Server Configuration
+
+A log server is a system that has been configured to accept logging information from other hosts.
+
+Before configuring a log server, check the following:
+
+* If there is a firewall between the logging server and any logging clients, ensure that the firewall ruleset allows UDP port 514 for both the clients and the server.
+* The logging server and all client machines must have forward and reverse entries in the local DNS. If the network does not have a DNS server, create entries in each system's [.filename]#/etc/hosts#. Proper name resolution is required so that log entries are not rejected by the logging server.
+
+On the log server, edit [.filename]#/etc/syslog.conf# to specify the name of the client to receive log entries from, the logging facility to be used, and the name of the log to store the host's log entries.
+This example adds the hostname of `B`, logs all facilities, and stores the log entries in [.filename]#/var/log/logclient.log#.
+
+.Sample Log Server Configuration
+[example]
+====
+
+[.programlisting]
+....
++logclient.example.com
+*.*     /var/log/logclient.log
+....
+
+====
+
+When adding multiple log clients, add a similar two-line entry for each client.
+More information about the available facilities may be found in man:syslog.conf[5].
+
+Next, execute the following commands:
+
+[source,shell]
+....
+# sysrc syslogd_enable="YES"
+# sysrc syslogd_flags="-a logclient.example.com -v -v"
+....
+
+The first entry starts syslogd at system boot.
+The second entry allows log entries from the specified client.
+The `-v -v` increases the verbosity of logged messages.
+This is useful for tweaking facilities as administrators are able to see what type of messages are being logged under each facility.
+
+Multiple `-a` options may be specified to allow logging from multiple clients.
+IP addresses and whole netblocks may also be specified.
+Refer to man:syslogd[8] for a full list of possible options.
+
+Finally, create the log file:
+
+[source,shell]
+....
+# touch /var/log/logclient.log
+....
+
+At this point, syslogd should be restarted and verified:
+
+[source,shell]
+....
+# service syslogd restart
+# pgrep syslog
+....
+
+If a PID is returned, the server restarted successfully, and client configuration can begin.
+If the server did not restart, consult [.filename]#/var/log/messages# for the error.
+
+==== Log Client Configuration
+
+A logging client sends log entries to a logging server on the network.
+The client also keeps a local copy of its own logs.
+
+Once a logging server has been configured, execute the following commands on the logging client:
+
+[source,shell]
+....
+# sysrc syslogd_enable="YES"
+# sysrc syslogd_flags="-s -v -v"
+....
+
+The first entry enables syslogd on boot up.
+The second entry prevents logs from being accepted by this client from other hosts (`-s`) and increases the verbosity of logged messages.
+
+Next, define the logging server in the client's [.filename]#/etc/syslog.conf#.
+In this example, all logged facilities are sent to a remote system, denoted by the `@` symbol, with the specified hostname:
+
+[.programlisting]
+....
+*.*  @logserv.example.com
+....
+
+After saving the edit, restart syslogd for the changes to take effect:
+
+[source,shell]
+....
+# service syslogd restart
+....
+
+To test that log messages are being sent across the network, use man:logger[1] on the client to send a message to syslogd:
+
+[source,shell]
+....
+# logger "Test message from logclient"
+....
+
+This message should now exist both in [.filename]#/var/log/messages# on the client and [.filename]#/var/log/logclient.log# on the log server.
+
+==== Debugging Log Servers
+
+If no messages are being received on the log server, the cause is most likely a network connectivity issue, a hostname resolution issue, or a typo in a configuration file.
+To isolate the cause, ensure that both the logging server and the logging client are able to `ping` each other using the hostname specified in their [.filename]#/etc/rc.conf#.
+If this fails, check the network cabling, the firewall ruleset, and the hostname entries in the DNS server or [.filename]#/etc/hosts# on both the logging server and clients.
+Repeat until the `ping` is successful from both hosts.
+
+If the `ping` succeeds on both hosts but log messages are still not being received, temporarily increase logging verbosity to narrow down the configuration issue.
+In the following example, [.filename]#/var/log/logclient.log# on the logging server is empty and [.filename]#/var/log/messages# on the logging client does not indicate a reason for the failure.
+
+To increase debugging output, edit the `syslogd_flags` entry on the logging server and issue a restart:
+
+[source,shell]
+....
+sysrc syslogd_flags="-d -a logclient.example.com -v -v"
+....
+
+[source,shell]
+....
+# service syslogd restart
+....
+
+Debugging data similar to the following will flash on the console immediately after the restart:
+
+[.programlisting]
+....
+logmsg: pri 56, flags 4, from logserv.example.com, msg syslogd: restart
+syslogd: restarted
+logmsg: pri 6, flags 4, from logserv.example.com, msg syslogd: kernel boot file is /boot/kernel/kernel
+Logging to FILE /var/log/messages
+syslogd: kernel boot file is /boot/kernel/kernel
+cvthname(192.168.1.10)
+validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;
+rejected in rule 0 due to name mismatch.
+....
+
+In this example, the log messages are being rejected due to a typo which results in a hostname mismatch.
+The client's hostname should be `logclient`, not `logclien`.
+Fix the typo, issue a restart, and verify the results:
+
+[source,shell]
+....
+# service syslogd restart
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+logmsg: pri 56, flags 4, from logserv.example.com, msg syslogd: restart
+syslogd: restarted
+logmsg: pri 6, flags 4, from logserv.example.com, msg syslogd: kernel boot file is /boot/kernel/kernel
+syslogd: kernel boot file is /boot/kernel/kernel
+logmsg: pri 166, flags 17, from logserv.example.com,
+msg Dec 10 20:55:02 <syslog.err> logserv.example.com syslogd: exiting on signal 2
+cvthname(192.168.1.10)
+validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;
+accepted in rule 0.
+logmsg: pri 15, flags 0, from logclient.example.com, msg Dec 11 02:01:28 trhodes: Test message 2
+Logging to FILE /var/log/logclient.log
+Logging to FILE /var/log/messages
+....
+
+At this point, the messages are being properly received and placed in the correct file.
+
+==== Security Considerations
+
+As with any network service, security requirements should be considered before implementing a logging server.
+Log files may contain sensitive data about services enabled on the local host, user accounts, and configuration data.
+Network data sent from the client to the server will not be encrypted or password protected.
+If a need for encryption exists, consider using package:security/stunnel[], which will transmit the logging data over an encrypted tunnel.
+
+Local security is also an issue.
+Log files are not encrypted during use or after log rotation.
+Local users may access log files to gain additional insight into system configuration.
+Setting proper permissions on log files is critical.
+The built-in log rotator, newsyslog, supports setting permissions on newly created and rotated log files.
+Setting log files to mode `600` should prevent unwanted access by local users.
+Refer to man:newsyslog.conf[5] for additional information.
+
+[[acpi-overview]]
+== Power and Resource Management
+
+It is important to utilize hardware resources in an efficient manner.
+Power and resource management allows the operating system to monitor system limits and to possibly run some actions triggered by events related to those limits.
+
+[[acpi-config]]
+=== ACPI configuration
+
+On FreeBSD the management of these resources is managed by the man:acpi[4] kernel device.
+
+[NOTE]
+====
+In FreeBSD the man:acpi[4] driver is loaded by default at system boot.
+
+This driver *cannot be unloaded after boot* because the system bus uses it for various hardware interactions.
+====
+
+In addition to man:acpi[4], FreeBSD has several dedicated kernel modules for various ACPI vendor subsystems.
+These modules will add some extra functionality like fan speed, keyboard backlit or screen brightness.
+
+The list can be obtained by running the following command:
+
+[source,shell]
+....
+% ls /boot/kernel | grep acpi
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+acpi_asus.ko
+acpi_asus_wmi.ko
+acpi_dock.ko
+acpi_fujitsu.ko
+acpi_hp.ko
+acpi_ibm.ko
+acpi_panasonic.ko
+acpi_sony.ko
+acpi_toshiba.ko
+acpi_video.ko
+acpi_wmi.ko
+sdhci_acpi.ko
+uacpi.ko
+....
+
+In the event that, for example, an IBM/Lenovo laptop is used, it will be necessary to load the module man:acpi_ibm[4] by executing the following command:
+
+[source,shell]
+....
+# kldload acpi_ibm
+....
+
+And add this line to [.filename]#/boot/loader.conf# to load it at boot:
+
+[.programlisting]
+....
+acpi_ibm_load="YES"
+....
+
+An alternative to the man:acpi_video[4] module is the man:backlight[9] driver.
+It provides a generic way for handling a panel backlight.
+The default GENERIC kernel includes this driver.
+The man:backlight[8] utility can be used to query and adjust the brightness of
+the panel backlight.
+In this example the brightness is decreased by 10%:
+
+[source,shell]
+....
+% backlight decr 10
+....
+
+[[cpu-power-management]]
+=== CPU Power Management
+
+CPU is the most consuming part of the system.
+Knowing how to improve CPU efficiency is a fundamental part of our system in order to save energy.
+
+In order to make proper use of the machine's resources in a correct way, FreeBSD supports technologies such as Intel Turbo Boost, AMD Turbo Core, Intel Speed Shift among others through the use of man:powerd[8] and cpufreq[4].
+
+The first step will be to obtain the CPU information by executing the following command:
+
+[source,shell]
+....
+% sysctl dev.cpu.0 <.>
+....
+
+<.> In this case the `0` digit represents the first core of the CPU.
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+dev.cpu.0.cx_method: C1/mwait/hwc C2/mwait/hwc C3/mwait/hwc/bma
+dev.cpu.0.cx_usage_counters: 3507294 0 0
+dev.cpu.0.cx_usage: 100.00% 0.00% 0.00% last 3804us
+dev.cpu.0.cx_lowest: C3 <1>
+dev.cpu.0.cx_supported: C1/1/1 C2/2/1 C3/3/57 <2>
+dev.cpu.0.freq_levels: 2267/35000 2266/35000 1600/15000 800/12000 <3>
+dev.cpu.0.freq: 1600 <4>
+dev.cpu.0.temperature: 40.0C <5>
+dev.cpu.0.coretemp.throttle_log: 0
+dev.cpu.0.coretemp.tjmax: 105.0C
+dev.cpu.0.coretemp.resolution: 1
+dev.cpu.0.coretemp.delta: 65
+dev.cpu.0.%parent: acpi0
+dev.cpu.0.%pnpinfo: _HID=none _UID=0 _CID=none
+dev.cpu.0.%location: handle=\_PR_.CPU0
+dev.cpu.0.%driver: cpu
+dev.cpu.0.%desc: ACPI CPU
+....
+
+<1> Lowest Cx state to use for idling the CPU.
+<2> CPU supported Cx states.
+<3> Currently available levels for the CPU (frequency/power usage).
+<4> Current active CPU frequency in MHz.
+<5> Current temperature of the CPU.
+
+[NOTE]
+====
+If the temperature information is not displayed, load the man:coretemp[4] module.
+In case of using an AMD CPU, load the man:amdtemp[4] module.
+====
+
+Once the CPU information is available the easiest way to configure power saving is to let man:powerd[8] take over.
+
+Enable man:powerd[8] service in [.filename]#/etc/rc.conf# to start at system boot:
+
+[source,shell]
+....
+# sysrc powerd_enable=YES
+....
+
+It will also be necessary to indicate certain parameters to man:powerd[8] to tell it how to manage the state of the CPU executing the following command:
+
+[source,shell]
+....
+# sysrc powerd_flags="-a hiadaptive -i 25 -r 85 -N"
+....
+
+. `-a`: Selects the mode to use while on AC power.
+. `hiadaptive`: Operation mode. More info at man:powerd[8].
+. `-i`: Specifies the CPU load percent level when adaptive mode should begin to degrade performance to save power.
+. `-r`: Specifies the CPU load percent level where adaptive mode should consider the CPU running and increase performance.
+. `-N`: Treat "nice" time as idle for the purpose of load calculation; i.e., do not increase the CPU frequency if the CPU is only busy with "nice" processes.
+
+And then enable the service executing the following command:
+
+[source,shell]
+....
+# service powerd start
+....
+
+[[cpufreq]]
+=== CPU Frequency Control
+
+FreeBSD includes a generic man:cpufreq[4] driver to allow the administrator, or software such as man:powerd[8] and package:sysutils/powerdxx[], to manage the frequency of the CPU to achieve the desired balance between performance and economy.
+A lower setting will save power while reducing the heat generated by the CPU.
+A higher setting will increase performance at the cost of using additional power and generating more heat.
+
+[[est]]
+=== Intel(R) Enhanced Speed Step(TM)
+
+The Intel(R) Enhanced Speed Step(TM) driver, man:est[4], replaces the generic man:cpufreq[4] driver for CPUs that provide this feature.
+The CPU frequency can be statically adjusted using man:sysctl[8], or with the `/etc/rc.d/power_profile` startup script.
+Additional software, such as man:powerd[8] or package:sysutils/powerdxx[], can be used to automatically adjust the CPU frequency based on processor utilization.
+
+Each supported frequency, along with its expected power consumption, can be listed by examining the man:sysctl[3] tree:
+
+[source,shell]
+....
+# sysctl dev.cpufreq.0.freq_driver dev.cpu.0.freq_levels dev.cpu.0.freq
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+dev.cpufreq.0.freq_driver: est0
+dev.cpu.0.freq_levels: 3001/53000 3000/53000 2900/50301 2700/46082 2600/43525 2400/39557 2300/37137 2100/33398 2000/31112 1800/27610 1700/25455 1500/22171 1400/20144 1200/17084 1100/15181 900/12329 800/10550
+dev.cpu.0.freq: 800
+....
+
+A frequency 1 MHz higher than the maximum frequency of the CPU indicates the Intel(R) Turbo Boost(TM) feature.
+
+[[hwpstate_intel]]
+=== Intel Speed Shift(TM)
+
+Users running newer Intel(R) CPUs may find some differences in dynamic frequency control when upgrading to FreeBSD 13.
+A new driver for the Intel(R) Speed Shift(TM) feature set, available on certain SKUs, exposes the ability for the hardware to dynamically vary the core frequencies, including on a per core basis.
+FreeBSD 13 comes with the man:hwpstate_intel[4] driver to automatically enable Speed Shift(TM) control on equipped CPUs, replacing the older Enhanced Speed Step(TM) man:est[4] driver.
+The man:sysctl[8] `dev.cpufreq.%d.freq_driver` will indicate if the system is using Speed Shift.
+
+To determine which frequency control driver is being used, examining the `dev.cpufreq.0.freq_driver` oid.
+
+[source,shell]
+....
+# sysctl dev.cpufreq.0.freq_driver
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+dev.cpufreq.0.freq_driver: hwpstate_intel0
+....
+
+This indicates that the new man:hwpstate_intel[4] driver is in use.
+On such systems, the oid `dev.cpu.%d.freq_levels` will show only the maximum CPU frequency, and will indicate a power consumption level of `-1`.
+
+The current CPU frequency can be determined by examining the `dev.cpu.%d.freq` oid.
+
+[source,shell]
+....
+# sysctl dev.cpu.0.freq_levels dev.cpu.0.freq
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+dev.cpu.0.freq_levels: 3696/-1
+dev.cpu.0.freq: 898
+....
+
+For more information, including on how to balance performance and energy use, and on how to disable this driver, refer to the man page man:hwpstate_intel[4].
+
+[NOTE]
+====
+Users accustomed to using man:powerd[8] or package:sysutils/powerdxx[] will find these utilities have been superseded by the man:hwpstate_intel[4] driver and no longer work as expected.
+====
+
+[[graphics-card-power-management]]
+=== Graphics Card Power Management
+
+Graphics cards have become a fundamental part of computing in recent years.
+Some graphics cards may have excessive power consumption.
+FreeBSD allows certain configurations to improve power consumption.
+
+In case of using a Intel(R) graphics card with the package:graphics/drm-kmod[] driver these options can be added to [.filename]#/boot/loader.conf#:
+
+[.programlisting]
+....
+compat.linuxkpi.fastboot=1 <.>
+compat.linuxkpi.enable_dc=2 <.>
+compat.linuxkpi.enable_fbc=1 <.>
+....
+
+<.> Try to skip unnecessary mode sets at boot time.
+<.> Enable power-saving display C-states.
+<.> Enable frame buffer compression for power savings
+
+=== Suspend/Resume
+
+The suspend/resume function allows the machine to be kept in a state in which there is no a big energy consumption and allows the system to be resumed without having to lose the state of the running programs.
+
+[NOTE]
+====
+In order for the suspend/resume functionality to work correctly the graphics drivers must be loaded on the system.
+In non-KMS-supported graphics cards man:sc[4] must be used not to break the suspend/resume functionality.
+
+More information about which driver to use and how to configure it can be found at the crossref:x11[x11, The X Window System chapter].
+====
+
+man:acpi[4] supports the next list of sleep states:
+
+.Supported Sleep States
+[options="header", cols="1,1"]
+|===
+
+|S1
+|Quick suspend to RAM. The CPU enters a lower power state, but most peripherals are left running.
+
+|S2
+|Lower power state than S1, but with the same basic characteristics. Not supported by many systems.
+
+|S3 (Sleep mode)
+|Suspend to RAM. Most devices are powered off, and the system stops running except for memory refresh.
+
+|S4 (Hibernation)
+|Suspend to disk. All devices are powered off, and the system stops running. When resuming, the system starts as if from a cold power on. *Not yet supported by FreeBSD*.
+
+|S5
+|System shuts down cleanly and powers off.
+
+|===
+
+[[configure-suspend-resume]]
+==== Configuring Suspend/Resume
+
+The first step will be to know which type of sleep states supports the hardware we are using executing the following command:
+
+[source,shell]
+....
+% sysctl hw.acpi.supported_sleep_state
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+hw.acpi.supported_sleep_state: S3 S4 S5
+....
+
+[WARNING]
+====
+As stated above FreeBSD does *not* yet support the `S4` state.
+====
+
+man:acpiconf[8] can be used to check if the `S3` state works correctly by running the following command, if it succeeds, the screen should go black and the machine will turn off:
+
+[source,shell]
+....
+# acpiconf -s 3
+....
+
+In the vast majority of cases the Suspend/Resume functionality wants to be used on a laptop.
+
+FreeBSD can be configured to enter the `S3` state when closing the lid by adding the following line to the [.filename]#/etc/sysctl.conf# file.
+
+[.programlisting]
+....
+hw.acpi.lid_switch_state=S3
+....
+
+[[troubleshooting-suspend-resume]]
+==== Troubleshooting in Suspend/Resume
+
+A lot of effort has been made to make the Suspend and Resume functions work properly and in the best way on FreeBSD.
+But currently the Suspend and Resume functions only work properly on some specific laptops.
+
+Some checks can be done in case it doesn't work properly.
+
+In some cases it is enough to turn off the bluetooth.
+In others it is enough loading the correct driver for the graphics card, etc.
+
+In case it doesn't work correctly, some tips can be found on the FreeBSD Wiki in the section link:https://wiki.freebsd.org/SuspendResume[Suspend/Resume].
+
+[[adding-swap-space]]
+== Adding Swap Space
+
+Sometimes a FreeBSD system requires more swap space.
+This section describes two methods to increase swap space: adding swap to an existing partition or new hard drive, and creating a swap file on an existing file system.
+
+For information on how to encrypt swap space, which options exist, and why it should be done, refer to crossref:disks[swap-encrypting,“Encrypting Swap”].
+
+[[new-drive-swap]]
+=== Swap on a New Hard Drive or Existing Partition
+
+Adding a new drive for swap gives better performance than using a partition on an existing drive.
+Setting up partitions and drives is explained in crossref:disks[disks-adding,"Adding Disks"] while crossref:bsdinstall[configtuning-initial,"Designing the Partition Layout"] discusses partition layouts and swap partition size considerations.
+
+[WARNING]
+====
+It is possible to use any partition not currently mounted, even if it already contains data.
+Using `swapon` on a partition that contains data will overwrite and destroy that data.
+Make sure that the partition to be added as swap is really the intended partition before running `swapon`.
+====
+
+man:swapon[8] can be used to add a swap partition to the system executing the following command:
+
+[source,shell]
+....
+# swapon /dev/ada1p2
+....
+
+To automatically add this swap partition on boot, add an entry to [.filename]#/etc/fstab#:
+
+[.programlisting]
+....
+/dev/ada1p2 none swap sw 0 0
+....
+
+See man:fstab[5] for an explanation of the entries in [.filename]#/etc/fstab#.
+
+[[create-swapfile]]
+=== Creating a Swap File
+
+[[swapfile-10-and-later]]
+These examples create a 512M swap file called [.filename]#/usr/swap0#.
+
+[WARNING]
+====
+Swap files on ZFS file systems are strongly discouraged, as swapping can lead to system hangs.
+====
+
+The first step is to create the swap file:
+
+[source,shell]
+....
+# dd if=/dev/zero of=/usr/swap0 bs=1m count=512
+....
+
+The second step is to put the proper permissions on the new file:
+
+[source,shell]
+....
+# chmod 0600 /usr/swap0
+....
+
+The third step is to inform the system about the swap file by adding a line to [.filename]#/etc/fstab#:
+
+[.programlisting]
+....
+md none swap sw,file=/usr/swap0,late 0 0
+....
+
+Swap space will be added on system startup. To add swap space immediately, use man:swapon[8]:
+
+[source,shell]
+....
+# swapon -aL
+....
