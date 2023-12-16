@@ -56,6 +56,15 @@ jobs:
         run: |
           rm -rf website/content/en/books/handbook
           cp -r Upstream/documentation/content/en/books/handbook website/content/en/books
+      - name: sync_en
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+              git config --global user.email "fiercex@outlook.com"
+              git config --global user.name "github actions"
+              git add website
+              git commit -m "sync en"
+              git push
       - name: pre_translate
         run: |
               pwd
