@@ -46,11 +46,11 @@ jobs:
           pip install OpenAI msgpack deepl polib
       - name: translate
         run: |
-              bash translate.sh Upstream/documentation zh-cn books/handbook
+              bash translate.sh website zh-cn books/handbook
       - name: auto_translate
         run: |
               bash auto_translate.sh
-              bash translate.sh Upstream/documentation zh-cn-auto books/handbook
+              bash translate.sh website zh-cn-auto books/handbook
       - name: push translate
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
