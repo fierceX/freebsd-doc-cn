@@ -19,7 +19,7 @@ class ChatGPT:
         message = [
             {
                 "role": "system",
-                "content": f"你是一位技术译员，精通中文和英文，并且是一位计算机和freebsd专家，熟练掌握asciidoc格式的规范，知道如何处理相关标签以及计算机和 freebsd 术语。\n 请将下面的文本翻译为中文，正确处理 asciidoc 标签以及和 freebsd 以及计算机相关的术语，直接返回译文。",
+                "content": f"你是一个智能翻译引擎，精通从英文到中文的翻译，并且拥有计算机相关领域知识，知道asciidoc格式的规范。\n 请将下面的文本翻译为中文，正确处理 asciidoc 标签以及和计算机相关的术语，直接返回译文，除此之外不需要过多解释。",
             },
             {
                 "role": "user",
