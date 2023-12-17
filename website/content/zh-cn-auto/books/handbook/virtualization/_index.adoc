@@ -1,17 +1,17 @@
 ---
-description: 'Virtualization software allows multiple operating systems to run simultaneously on the same computer'
+description: 虚拟化软件允许多个操作系统在同一台计算机上同时运行。
 next: books/handbook/l10n
-part: 'Part III. System Administration'
+part: '第三部分. 系统管理'
 path: /books/handbook/
 prev: books/handbook/filesystems
 showBookMenu: true
 tags: '["virtualization", "Parallels", "VMware", "VirtualBox", "bhyve", "XEN"]'
-title: 'Chapter 24. Virtualization'
+title: '第24章 虚拟化'
 weight: 28
 ---
 
 [[virtualization]]
-= Virtualization
+= 虚拟化
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -48,188 +48,188 @@ endif::[]
 [[virtualization-synopsis]]
 == 简介
 
-Virtualization software allows multiple operating systems to run simultaneously on the same computer. Such software systems for PCs often involve a host operating system which runs the virtualization software and supports any number of guest operating systems.
+虚拟化软件允许多个操作系统同时在同一台计算机上运行。这种针对个人电脑的软件系统通常包括一个主机操作系统，它运行虚拟化软件并支持任意数量的客户操作系统。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* The difference between a host operating system and a guest operating system.
-* How to install FreeBSD on the following virtualization platforms:
-** Parallels Desktop(Apple(R) macOS(R))
-** VMware Fusion(Apple(R) macOS(R))
-** VirtualBox(TM)(Microsoft(R) Windows(R), Intel(R)-based Apple(R) macOS(R), Linux)
-** bhyve(FreeBSD)
-* How to tune a FreeBSD system for best performance under virtualization.
+* 主机操作系统和客户操作系统之间的区别。
+* 如何在以下虚拟化平台上安装FreeBSD：
+** Parallels Desktop（苹果（R）macOS（R））
+** VMware Fusion（苹果（R）macOS（R））
+** VirtualBox(TM)（Microsoft(R) Windows(R)、Intel(R)-based Apple(R) macOS(R)、Linux）
+** bhyve（FreeBSD）
+* 如何调整FreeBSD系统以在虚拟化环境下获得最佳性能。
 
-Before reading this chapter, you should:
+在阅读本章之前，你应该：
 
-* Understand the crossref:basics[basics,basics of UNIX(R) and FreeBSD].
-* Know how to crossref:bsdinstall[bsdinstall,install FreeBSD].
-* Know how to crossref:advanced-networking[advanced-networking,set up a network connection].
-* Know how to crossref:ports[ports,install additional third-party software].
+* 了解crossref:basics[basics,UNIX(R)和FreeBSD的基础知识]。
+* 了解如何交叉引用：bsdinstall[bsdinstall，安装FreeBSD]。
+* 了解如何进行交叉引用：高级网络设置[advanced-networking，设置网络连接]。
+* 了解如何交叉引用：ports[ports,安装额外的第三方软件]。
 
 [[virtualization-guest-parallelsdesktop]]
-== FreeBSD as a Guest on Parallels Desktop for macOS(R)
+== 在Parallels Desktop for macOS(R)上作为客户机的FreeBSD
 
-Parallels Desktop for Mac(R) is a commercial software product available for Apple(R) Mac(R) computers running macOS(R) 10.14.6 or higher. FreeBSD is a fully supported guest operating system. Once Parallels has been installed on macOS(R), the user must configure a virtual machine and then install the desired guest operating system.
+Parallels Desktop for Mac（R）是一款商业软件产品，适用于运行macOS（R）10.14.6或更高版本的Apple（R）Mac（R）计算机。FreeBSD是一个完全支持的客户操作系统。一旦在macOS（R）上安装了Parallels，用户必须配置一个虚拟机，然后安装所需的客户操作系统。
 
 [[virtualization-guest-parallelsdesktop-install]]
-=== Installing FreeBSD on Parallels Desktop on Mac(R)
+=== 在Mac上使用Parallels Desktop安装FreeBSD
 
-The first step in installing FreeBSD on Parallels is to create a new virtual machine for installing FreeBSD.
+在Parallels上安装FreeBSD的第一步是创建一个新的虚拟机来安装FreeBSD。
 
-Choose menu:Install Windows or another OS from a DVD or image file[] and proceed.
+选择菜单：从DVD或镜像文件安装Windows或其他操作系统[]，然后继续。
 
-image::parallels-freebsd1.png["Parallels setup wizard showing Install Windows or another OS from a DVD or image file chosen"]
+image::parallels-freebsd1.png["Parallels安装向导显示选择从DVD或镜像文件安装Windows或其他操作系统。"]
 
-Select the FreeBSD image file.
+选择FreeBSD镜像文件。
 
-image::parallels-freebsd2.png["Parallels setup wizard showing FreeBSD image file selected"]
+image::parallels-freebsd2.png["Parallels安装向导显示已选择FreeBSD镜像文件。"]
 
-Choose menu:Other as operating system[].
+选择菜单：其他作为操作系统[]。
 
 [WARNING]
 ====
-Choosing FreeBSD will cause boot error on startup.
+选择FreeBSD会导致启动时出现引导错误。
 ====
 
-image::parallels-freebsd3.png["Parallels setup wizard showing Other selected as operating system"]
+image::parallels-freebsd3.png["Parallels安装向导显示操作系统选择为“其他”。"]
 
-Name the virtual machine and check menu:Customize settings before installation[]
+命名虚拟机并在安装之前检查菜单：自定义设置[]
 
-image::parallels-freebsd4.png["Parallels setup wizard showing the checkbox checked for customizing settings before installation"]
+image::parallels-freebsd4.png["Parallels安装向导显示了在安装之前自定义设置的复选框已被选中。"]
 
-When the configuration window pops up, go to menu:Hardware[] tab, choose menu:Boot order[], and click menu:Advanced[]. Then, choose *EFI 64-bit* as menu:BIOS[].
+当配置窗口弹出时，转到菜单：硬件[]选项卡，选择菜单：启动顺序[]，然后点击菜单：高级[]。然后，选择*EFI 64位*作为菜单：BIOS[]。
 
-image::parallels-freebsd5.png["Parallels setup wizard showing EFI 64-bit chosen as BIOS"]
+image::parallels-freebsd5.png["Parallels安装向导显示选择EFI 64位作为BIOS。"]
 
-Click menu:OK[], close the configuration window, and click menu:Continue[].
+点击菜单：确定[]，关闭配置窗口，然后点击菜单：继续[]。
 
-image::parallels-freebsd6.png["Parallels setup wizard showing the summary of the new virtual machine"]
+image::parallels-freebsd6.png["Parallels安装向导显示新虚拟机的摘要信息。"]
 
-The virtual machine will automatically boot. Install FreeBSD following the general steps.
+虚拟机将自动启动。按照通用步骤安装FreeBSD。
 
-image::parallels-freebsd7.png["FreeBSD booted on Parallels"]
+image::parallels-freebsd7.png["FreeBSD在Parallels上启动成功。"]
 
 [[virtualization-guest-parallels-configure]]
-=== Configuring FreeBSD on Parallels
+=== 在Parallels上配置FreeBSD
 
-After FreeBSD has been successfully installed on macOS(R) X with Parallels, there are a number of configuration steps that can be taken to optimize the system for virtualized operation.
+在使用Parallels在macOS(R) X上成功安装FreeBSD之后，可以采取一些配置步骤来优化系统以进行虚拟化操作。
 
 [.procedure]
-. Set Boot Loader Variables
+. 设置引导加载程序变量
 +
-The most important step is to reduce the `kern.hz` tunable to reduce the CPU utilization of FreeBSD under the Parallels environment. This is accomplished by adding the following line to [.filename]#/boot/loader.conf#:
+最重要的步骤是减少在Parallels环境下FreeBSD的CPU利用率，方法是将`kern.hz`可调参数降低。通过在[.filename]#/boot/loader.conf#文件中添加以下行来实现：
 +
 [.programlisting]
 ....
 kern.hz=100
 ....
 +
-Without this setting, an idle FreeBSD Parallels guest will use roughly 15% of the CPU of a single processor iMac(R). After this change the usage will be closer to 5%.
-. Create a New Kernel Configuration File
+如果没有这个设置，一个空闲的FreeBSD Parallels虚拟机将会占用大约一个处理器iMac(R)的15%的CPU。在进行这个更改后，使用率将会接近5%。
+. 创建一个新的内核配置文件
 +
-All of the SCSI, FireWire, and USB device drivers can be removed from a custom kernel configuration file. Parallels provides a virtual network adapter used by the man:ed[4] driver, so all network devices except for man:ed[4] and man:miibus[4] can be removed from the kernel.
-. Configure Networking
+可以从自定义内核配置文件中删除所有SCSI、FireWire和USB设备驱动程序。Parallels提供了一个虚拟网络适配器，由man:ed[4]驱动程序使用，因此除了man:ed[4]和man:miibus[4]之外，所有网络设备都可以从内核中删除。
+. 配置网络
 +
-The most basic networking setup uses DHCP to connect the virtual machine to the same local area network as the host Mac(R). This can be accomplished by adding `ifconfig_ed0="DHCP"` to [.filename]#/etc/rc.conf#. More advanced networking setups are described in crossref:advanced-networking[advanced-networking,Advanced Networking].
+最基本的网络设置使用DHCP将虚拟机连接到与主机Mac(R)相同的局域网。可以通过在/etc/rc.conf文件中添加`ifconfig_ed0="DHCP"`来实现。更高级的网络设置在crossref:advanced-networking[高级网络设置]中有描述。
 
 [[virtualization-guest-vmware]]
-== FreeBSD as a Guest on VMware Fusion for macOS(R)
+== 在macOS上使用VMware Fusion作为客户机的FreeBSD
 
-VMware Fusion for Mac(R) is a commercial software product available for Apple(R) Mac(R) computers running macOS(R) 12 or higher. FreeBSD is a fully supported guest operating system. Once VMware Fusion has been installed on macOS(R), the user can configure a virtual machine and then install the desired guest operating system.
+VMware Fusion for Mac（R）是一款商业软件产品，适用于运行macOS（R）12或更高版本的Apple（R）Mac（R）计算机。FreeBSD是一个完全支持的客户操作系统。一旦在macOS（R）上安装了VMware Fusion，用户可以配置虚拟机，然后安装所需的客户操作系统。
 
 [[virtualization-guest-vmware-install]]
-=== Installing FreeBSD on VMware Fusion
+=== 在VMware Fusion上安装FreeBSD
 
-The first step is to start VMware Fusion which will load the Virtual Machine Library. Click [.guimenuitem]#+->New# to create the virtual machine:
+第一步是启动VMware Fusion，它将加载虚拟机库。点击【+->新建】来创建虚拟机：
 
 image::vmware-freebsd01.png[]
 
-This will load the New Virtual Machine Assistant. Choose [.guimenuitem]#Create a custom virtual machine# and click [.guimenuitem]#Continue# to proceed:
+这将加载新的虚拟机助手。选择【创建自定义虚拟机】并点击【继续】以继续：
 
 image::vmware-freebsd02.png[]
 
-Select [.guimenuitem]#Other# as the [.guimenuitem]#Operating System# and either [.guimenuitem]#FreeBSD X# or [.guimenuitem]#FreeBSD X 64-bit#, as the menu:Version[] when prompted:
+在提示时，选择 [.guimenuitem]#其他# 作为 [.guimenuitem]#操作系统#，并选择 [.guimenuitem]#FreeBSD X# 或 [.guimenuitem]#FreeBSD X 64位# 作为菜单:版本[]。
 
 image::vmware-freebsd03.png[]
 
-Choose the firmware(UEFI is recommended):
+选择固件（推荐使用UEFI）：
 
 image::vmware-freebsd04.png[]
 
-Choose [.guimenuitem]#Create a new virtual disk# and click [.guimenuitem]#Continue#:
+选择 [.guimenuitem]#创建新的虚拟磁盘# 并点击 [.guimenuitem]#继续#：
 
 image::vmware-freebsd05.png[]
 
-Check the configuration and click [.guimenuitem]#Finish#:
+检查配置并点击 [.guimenuitem]#完成#。
 
 image::vmware-freebsd06.png[]
 
-Choose the name of the virtual machine and the directory where it should be saved:
+选择虚拟机的名称和保存的目录：
 
 image::vmware-freebsd07.png[]
 
-Press command+E to open virtual machine settings and click [.guimenuitem]#CD/DVD#:
+按下Command+E打开虚拟机设置，然后点击[.guimenuitem]#CD/DVD#。
 
 image::vmware-freebsd08.png[]
 
-Choose FreeBSD ISO image or from a CD/DVD:
+选择FreeBSD ISO镜像或者从CD/DVD中选择：
 
 image::vmware-freebsd09.png[]
 
-Start the virtual machine:
+启动虚拟机：
 
 image::vmware-freebsd10.png[]
 
-Install FreeBSD as usual:
+按照通常的方式安装FreeBSD：
 
 image::vmware-freebsd11.png[]
 
-Once the install is complete, the settings of the virtual machine can be modified, such as memory usage and the number of CPUs the virtual machine will have access to:
+安装完成后，可以修改虚拟机的设置，例如内存使用量和虚拟机可以访问的CPU数量。
 
 [NOTE]
 ====
-The System Hardware settings of the virtual machine cannot be modified while the virtual machine is running.
+虚拟机运行时无法修改虚拟机的系统硬件设置。
 ====
 
 image::vmware-freebsd12.png[]
 
-The status of the CD-ROM device. Normally the CD/DVD/ISO is disconnected from the virtual machine when it is no longer needed.
+CD-ROM设备的状态。通常，当虚拟机不再需要CD/DVD/ISO时，它会与之断开连接。
 
 image::vmware-freebsd09.png[]
 
-The last thing to change is how the virtual machine will connect to the network. To allow connections to the virtual machine from other machines besides the host, choose [.guimenuitem]#Connect directly to the physical network (Bridged)#. Otherwise, [.guimenuitem]#Share the host's internet connection (NAT)# is preferred so that the virtual machine can have access to the Internet, but the network cannot access the virtual machine.
+最后需要更改的是虚拟机如何连接到网络。为了允许虚拟机与主机以外的其他机器进行连接，选择 [.guimenuitem]#直接连接物理网络（桥接）#。否则，推荐选择 [.guimenuitem]#共享主机的互联网连接（NAT）#，这样虚拟机可以访问互联网，但网络无法访问虚拟机。
 
 image::vmware-freebsd13.png[]
 
-After modifying the settings, boot the newly installed FreeBSD virtual machine.
+修改设置后，启动新安装的FreeBSD虚拟机。
 
 [[virtualization-guest-vmware-configure]]
-=== Configuring FreeBSD on VMware Fusion
+=== 在VMware Fusion上配置FreeBSD
 
-After FreeBSD has been successfully installed on macOS(R) X with VMware Fusion, there are a number of configuration steps that can be taken to optimize the system for virtualized operation.
+在使用VMware Fusion成功安装FreeBSD到macOS(R) X之后，可以采取一些配置步骤来优化系统以进行虚拟化操作。
 
 [.procedure]
-. Set Boot Loader Variables
+. 设置引导加载程序变量
 +
-The most important step is to reduce the `kern.hz` tunable to reduce the CPU utilization of FreeBSD under the VMware Fusion environment. This is accomplished by adding the following line to [.filename]#/boot/loader.conf#:
+最重要的步骤是在VMware Fusion环境下减少FreeBSD的CPU利用率，方法是将`kern.hz`可调参数降低。通过在[/boot/loader.conf]文件中添加以下行来实现：
 +
 [.programlisting]
 ....
 kern.hz=100
 ....
 +
-Without this setting, an idle FreeBSD VMware Fusion guest will use roughly 15% of the CPU of a single processor iMac(R). After this change, the usage will be closer to 5%.
-. Create a New Kernel Configuration File
+如果没有这个设置，一个空闲的FreeBSD VMware Fusion客户机将使用大约15%的单处理器iMac(R)的CPU。在进行这个更改之后，使用率将接近5%。
+. 创建一个新的内核配置文件
 +
-All of the FireWire, and USB device drivers can be removed from a custom kernel configuration file. VMware Fusion provides a virtual network adapter used by the man:em[4] driver, so all network devices except for man:em[4] can be removed from the kernel.
-. Configure Networking
+可以从自定义内核配置文件中删除所有的FireWire和USB设备驱动程序。VMware Fusion提供了一个虚拟网络适配器，由man:em[4]驱动程序使用，因此除了man:em[4]之外的所有网络设备都可以从内核中删除。
+. 配置网络
 +
-The most basic networking setup uses DHCP to connect the virtual machine to the same local area network as the host Mac(R). This can be accomplished by adding `ifconfig_em0="DHCP"` to [.filename]#/etc/rc.conf#. More advanced networking setups are described in crossref:advanced-networking[advanced-networking,Advanced Networking].
+最基本的网络设置使用DHCP将虚拟机连接到与主机Mac(R)相同的局域网。可以通过在`/etc/rc.conf`文件中添加`ifconfig_em0="DHCP"`来实现。更高级的网络设置在《高级网络设置》中有描述。
 +
-. Install drivers and open-vm-tools
+. 安装驱动程序和open-vm-tools
 +
-To run FreeBSD smoothly on VMWare, drivers should be installed:
+要在VMWare上顺畅运行FreeBSD，需要安装驱动程序：
 +
 [source, shell]
 ....
@@ -237,31 +237,31 @@ To run FreeBSD smoothly on VMWare, drivers should be installed:
 ....
 
 [[virtualization-guest-virtualbox]]
-== FreeBSD as a Guest on VirtualBox(TM)
+== 在VirtualBox(TM)上作为客户机的FreeBSD
 
-FreeBSD works well as a guest in VirtualBox(TM). The virtualization software is available for most common operating systems, including FreeBSD itself.
+FreeBSD在VirtualBox(TM)中作为客户机运行良好。这款虚拟化软件适用于大多数常见操作系统，包括FreeBSD本身。
 
-The VirtualBox(TM) guest additions provide support for:
+VirtualBox(TM)客户机附加组件提供以下支持：
 
-* Clipboard sharing.
-* Mouse pointer integration.
-* Host time synchronization.
-* Window scaling.
-* Seamless mode.
+* 剪贴板共享。
+* 鼠标指针集成。
+* 主机时间同步。
+* 窗口缩放。
+* 无缝模式。
 
 [NOTE]
 ====
-These commands are run in the FreeBSD guest.
+这些命令在FreeBSD虚拟机中运行。
 ====
 
-First, install the package:emulators/virtualbox-ose-additions[] package or port in the FreeBSD guest. This will install the port:
+首先，在FreeBSD客户机中安装包：emulators/virtualbox-ose-additions[]。这将安装端口：
 
 [source, shell]
 ....
 # cd /usr/ports/emulators/virtualbox-ose-additions && make install clean
 ....
 
-Add these lines to [.filename]#/etc/rc.conf#:
+将以下行添加到[/etc/rc.conf]文件中：
 
 [.programlisting]
 ....
@@ -269,14 +269,14 @@ vboxguest_enable="YES"
 vboxservice_enable="YES"
 ....
 
-If man:ntpd[8] or man:ntpdate[8] is used, disable host time synchronization:
+如果使用man:ntpd[8]或man:ntpdate[8]，请禁用主机时间同步：
 
 [.programlisting]
 ....
 vboxservice_flags="--disable-timesync"
 ....
 
-Xorg will automatically recognize the `vboxvideo` driver. It can also be manually entered in [.filename]#/etc/X11/xorg.conf#:
+Xorg会自动识别`vboxvideo`驱动程序。也可以在`/etc/X11/xorg.conf`文件中手动输入。
 
 [.programlisting]
 ....
@@ -288,7 +288,7 @@ Section "Device"
 EndSection
 ....
 
-To use the `vboxmouse` driver, adjust the mouse section in [.filename]#/etc/X11/xorg.conf#:
+要使用`vboxmouse`驱动程序，请在[.filename]#/etc/X11/xorg.conf#中调整鼠标部分。
 
 [.programlisting]
 ....
@@ -298,14 +298,14 @@ Section "InputDevice"
 EndSection
 ....
 
-Shared folders for file transfers between host and VM are accessible by mounting them using `mount_vboxvfs`. A shared folder can be created on the host using the VirtualBox GUI or via `vboxmanage`. For example, to create a shared folder called _myshare_ under [.filename]#/mnt/bsdboxshare# for the VM named _BSDBox_, run:
+通过使用`mount_vboxvfs`挂载，可以访问主机和虚拟机之间的共享文件夹进行文件传输。可以使用VirtualBox GUI或通过`vboxmanage`在主机上创建共享文件夹。例如，要在名为_BSDBox_的虚拟机下创建一个名为_myshare_的共享文件夹，位于[.filename]#/mnt/bsdboxshare#，运行以下命令：
 
 [source, shell]
 ....
 # vboxmanage sharedfolder add 'BSDBox' --name myshare --hostpath /mnt/bsdboxshare
 ....
 
-Note that the shared folder name must not contain spaces. Mount the shared folder from within the guest system like this:
+请注意，共享文件夹的名称不能包含空格。在虚拟机中挂载共享文件夹的方法如下：
 
 [source, shell]
 ....
@@ -313,14 +313,14 @@ Note that the shared folder name must not contain spaces. Mount the shared folde
 ....
 
 [[virtualization-host-virtualbox]]
-== FreeBSD as a Host with VirtualBox(TM)
+== 使用VirtualBox(TM)将FreeBSD作为主机
 
-VirtualBox(TM) is an actively developed, complete virtualization package, that is available for most operating systems including Windows(R), macOS(R), Linux(R) and FreeBSD. It is equally capable of running Windows(R) or UNIX(R)-like guests. It is released as open source software, but with closed-source components available in a separate extension pack. These components include support for USB 2.0 devices. More information may be found on the http://www.virtualbox.org/wiki/Downloads[Downloads page of the VirtualBox(TM) wiki]. Currently, these extensions are not available for FreeBSD.
+VirtualBox(TM)是一个积极开发的完整虚拟化软件包，适用于包括Windows(R)、macOS(R)、Linux(R)和FreeBSD在内的大多数操作系统。它能够同样运行Windows(R)或类UNIX(R)的客户机。它以开源软件的形式发布，但也有一些闭源组件可在单独的扩展包中获取。这些组件包括对USB 2.0设备的支持。有关更多信息，请参阅VirtualBox(TM)维基的http://www.virtualbox.org/wiki/Downloads[下载页面]。目前，这些扩展在FreeBSD上不可用。
 
 [[virtualization-virtualbox-install]]
-=== Installing VirtualBox(TM)
+=== 安装VirtualBox(TM)
 
-VirtualBox(TM) is available as a FreeBSD package or port in package:emulators/virtualbox-ose[]. The port can be installed using these commands:
+VirtualBox(TM) 可以作为 FreeBSD 的一个软件包或端口在 package:emulators/virtualbox-ose[] 中获得。可以使用以下命令安装该端口：
 
 [source, shell]
 ....
@@ -328,37 +328,37 @@ VirtualBox(TM) is available as a FreeBSD package or port in package:emulators/vi
 # make install clean
 ....
 
-One useful option in the port's configuration menu is the `GuestAdditions` suite of programs. These provide a number of useful features in guest operating systems, like mouse pointer integration (allowing the mouse to be shared between host and guest without the need to press a special keyboard shortcut to switch) and faster video rendering, especially in Windows(R) guests. The guest additions are available in the menu:Devices[] menu, after the installation of the guest is finished.
+端口配置菜单中的一个有用选项是“GuestAdditions”程序套件。这些程序在客户操作系统中提供了许多有用的功能，如鼠标指针集成（允许鼠标在主机和客户之间共享，无需按特殊的键盘快捷键切换）和更快的视频渲染，尤其是在Windows(R)客户中。在客户安装完成后，可以在菜单:设备[]菜单中找到客户附加组件。
 
-A few configuration changes are needed before VirtualBox(TM) is started for the first time. The port installs a kernel module in [.filename]#/boot/modules# which must be loaded into the running kernel:
+在首次启动VirtualBox(TM)之前，需要进行一些配置更改。该端口会在[.filename]#/boot/modules#中安装一个内核模块，必须将其加载到正在运行的内核中：
 
 [source, shell]
 ....
 # kldload vboxdrv
 ....
 
-To ensure the module is always loaded after a reboot, add this line to [.filename]#/boot/loader.conf#:
+为了确保模块在重新启动后始终加载，将以下行添加到[/boot/loader.conf]文件中：
 
 [.programlisting]
 ....
 vboxdrv_load="YES"
 ....
 
-To use the kernel modules that allow bridged or host-only networking, add this line to [.filename]#/etc/rc.conf# and reboot the computer:
+要使用允许桥接或仅主机网络的内核模块，请将以下行添加到[/etc/rc.conf]文件中，并重新启动计算机：
 
 [.programlisting]
 ....
 vboxnet_enable="YES"
 ....
 
-The `vboxusers` group is created during installation of VirtualBox(TM). All users that need access to VirtualBox(TM) will have to be added as members of this group. `pw` can be used to add new members:
+在安装VirtualBox(TM)时会创建`vboxusers`组。所有需要访问VirtualBox(TM)的用户都必须添加为该组的成员。可以使用`pw`命令来添加新成员：
 
 [source, shell]
 ....
 # pw groupmod vboxusers -m yourusername
 ....
 
-The default permissions for [.filename]#/dev/vboxnetctl# are restrictive and need to be changed for bridged networking:
+[.filename]#/dev/vboxnetctl#的默认权限很严格，需要更改以支持桥接网络：
 
 [source, shell]
 ....
@@ -366,7 +366,7 @@ The default permissions for [.filename]#/dev/vboxnetctl# are restrictive and nee
 # chmod 0660 /dev/vboxnetctl
 ....
 
-To make this permissions change permanent, add these lines to [.filename]#/etc/devfs.conf#:
+要使此权限更改永久生效，请将以下行添加到[.filename]#/etc/devfs.conf#文件中：
 
 [.programlisting]
 ....
@@ -374,28 +374,28 @@ own     vboxnetctl root:vboxusers
 perm    vboxnetctl 0660
 ....
 
-To launch VirtualBox(TM), type from an Xorg session:
+要启动VirtualBox(TM)，请在Xorg会话中输入以下命令：
 
 [source, shell]
 ....
 % VirtualBox
 ....
 
-For more information on configuring and using VirtualBox(TM), refer to the http://www.virtualbox.org[official website]. For FreeBSD-specific information and troubleshooting instructions, refer to the http://wiki.FreeBSD.org/VirtualBox[relevant page in the FreeBSD wiki].
+有关配置和使用VirtualBox(TM)的更多信息，请参阅http://www.virtualbox.org[官方网站]。有关FreeBSD特定信息和故障排除说明，请参阅http://wiki.FreeBSD.org/VirtualBox[FreeBSD wiki中的相关页面]。
 
 [[virtualization-virtualbox-usb-support]]
-=== VirtualBox(TM) USB Support
+=== VirtualBox(TM) USB支持
 
-VirtualBox(TM) can be configured to pass USB devices through to the guest operating system. The host controller of the OSE version is limited to emulating USB 1.1 devices until the extension pack supporting USB 2.0 and 3.0 devices becomes available on FreeBSD.
+VirtualBox(TM)可以配置为将USB设备传递给客户操作系统。OSE版本的主机控制器仅限于模拟USB 1.1设备，直到支持USB 2.0和3.0设备的扩展包在FreeBSD上可用为止。
 
-For VirtualBox(TM) to be aware of USB devices attached to the machine, the user needs to be a member of the `operator` group.
+要使VirtualBox(TM)能够识别连接到计算机的USB设备，用户需要是`operator`组的成员。
 
 [source, shell]
 ....
 # pw groupmod operator -m yourusername
 ....
 
-Then, add the following to [.filename]#/etc/devfs.rules#, or create this file if it does not exist yet:
+然后，将以下内容添加到[.filename]#/etc/devfs.rules#中，如果该文件尚不存在，则创建该文件：
 
 [.programlisting]
 ....
@@ -403,28 +403,28 @@ Then, add the following to [.filename]#/etc/devfs.rules#, or create this file if
 add path 'usb/*' mode 0660 group operator
 ....
 
-To load these new rules, add the following to [.filename]#/etc/rc.conf#:
+要加载这些新规则，请将以下内容添加到[/etc/rc.conf]文件中：
 
 [.programlisting]
 ....
 devfs_system_ruleset="system"
 ....
 
-Then, restart devfs:
+然后，重新启动devfs：
 
 [source, shell]
 ....
 # service devfs restart
 ....
 
-Restart the login session and VirtualBox(TM) for these changes to take effect, and create USB filters as necessary.
+重新启动登录会话和VirtualBox(TM)以使这些更改生效，并根据需要创建USB过滤器。
 
 [[virtualization-virtualbox-host-dvd-cd-access]]
-=== VirtualBox(TM) Host DVD/CD Access
+=== VirtualBox(TM) 主机 DVD/CD 访问
 
-Access to the host DVD/CD drives from guests is achieved through the sharing of the physical drives. Within VirtualBox(TM), this is set up from the Storage window in the Settings of the virtual machine. If needed, create an empty IDECD/DVD device first. Then choose the Host Drive from the popup menu for the virtual CD/DVD drive selection. A checkbox labeled `Passthrough` will appear. This allows the virtual machine to use the hardware directly. For example, audio CDs or the burner will only function if this option is selected.
+通过共享物理驱动器，可以实现从虚拟机访问主机的DVD/CD驱动器。在VirtualBox(TM)中，可以在虚拟机的设置中的存储窗口中进行设置。如果需要，首先创建一个空的IDECD/DVD设备。然后从弹出菜单中选择主机驱动器作为虚拟CD/DVD驱动器的选择。将会出现一个名为“Passthrough”的复选框。这允许虚拟机直接使用硬件。例如，只有在选择了此选项后，音频CD或刻录机才能正常工作。
 
-In order for users to be able to use VirtualBox(TM)DVD/CD functions, they need access to [.filename]#/dev/xpt0#, [.filename]#/dev/cdN#, and [.filename]#/dev/passN#. This is usually achieved by making the user a member of `operator`. Permissions to these devices have to be corrected by adding these lines to [.filename]#/etc/devfs.conf#:
+为了使用户能够使用VirtualBox(TM)的DVD/CD功能，他们需要访问`/dev/xpt0`、`/dev/cdN`和`/dev/passN`。通常通过将用户添加到`operator`组来实现此目的。需要通过在`/etc/devfs.conf`中添加以下行来更正对这些设备的权限：
 
 [.programlisting]
 ....
@@ -439,23 +439,23 @@ perm pass* 0660
 ....
 
 [[virtualization-host-bhyve]]
-== FreeBSD as a Host with bhyve
+== 使用bhyve作为FreeBSD主机
 
-The bhyve BSD-licensed hypervisor became part of the base system with FreeBSD 10.0-RELEASE. This hypervisor supports a number of guests, including FreeBSD, OpenBSD, and many Linux(R) distributions. By default, bhyve provides access to serial console and does not emulate a graphical console. Virtualization offload features of newer CPUs are used to avoid the legacy methods of translating instructions and manually managing memory mappings.
+bhyve是一个基于BSD许可的虚拟机监控程序，自FreeBSD 10.0-RELEASE版本起成为基础系统的一部分。该虚拟机监控程序支持多种客户操作系统，包括FreeBSD、OpenBSD和许多Linux(R)发行版。默认情况下，bhyve提供串行控制台访问，并不模拟图形控制台。它利用较新的CPU的虚拟化卸载功能，避免了传统的指令转换和手动管理内存映射的方法。
 
-The bhyve design requires a processor that supports Intel(R) Extended Page Tables (EPT) or AMD(R) Rapid Virtualization Indexing (RVI) or Nested Page Tables (NPT). Hosting Linux(R) guests or FreeBSD guests with more than one vCPU requires VMX unrestricted mode support (UG). Most newer processors, specifically the Intel(R) Core(TM) i3/i5/i7 and Intel(R) Xeon(TM) E3/E5/E7, support these features. UG support was introduced with Intel's Westmere micro-architecture. For a complete list of Intel(R) processors that support EPT, refer to https://ark.intel.com/content/www/us/en/ark/search/featurefilter.html?productType=873&0_ExtendedPageTables=True[]. RVI is found on the third generation and later of the AMD Opteron(TM) (Barcelona) processors. The easiest way to tell if a processor supports bhyve is to run `dmesg` or look in [.filename]#/var/run/dmesg.boot# for the `POPCNT` processor feature flag on the `Features2` line for AMD(R) processors or `EPT` and `UG` on the `VT-x` line for Intel(R) processors.
+bhyve设计要求处理器支持Intel(R)扩展页表(EPT)或AMD(R)快速虚拟化索引(RVI)或嵌套页表(NPT)。托管具有多个虚拟CPU的Linux(R)客户机或FreeBSD客户机需要VMX无限制模式支持(UG)。大多数较新的处理器，特别是Intel(R) Core(TM) i3/i5/i7和Intel(R) Xeon(TM) E3/E5/E7，都支持这些功能。UG支持是在Intel的Westmere微架构中引入的。有关支持EPT的Intel(R)处理器的完整列表，请参阅https://ark.intel.com/content/www/us/en/ark/search/featurefilter.html?productType=873&0_ExtendedPageTables=True[]。RVI出现在第三代及以后的AMD Opteron(TM)(Barcelona)处理器上。判断处理器是否支持bhyve的最简单方法是运行`dmesg`命令或在AMD(R)处理器的`Features2`行上查找`POPCNT`处理器特性标志，或在Intel(R)处理器的`VT-x`行上查找`EPT`和`UG`。
 
 [[virtualization-bhyve-prep]]
-=== Preparing the Host
+=== 准备主机
 
-The first step to creating a virtual machine in bhyve is configuring the host system. First, load the bhyve kernel module:
+在bhyve中创建虚拟机的第一步是配置主机系统。首先，加载bhyve内核模块：
 
 [source, shell]
 ....
 # kldload vmm
 ....
 
-Then, create a [.filename]#tap# interface for the network device in the virtual machine to attach to. In order for the network device to participate in the network, also create a bridge interface containing the [.filename]#tap# interface and the physical interface as members. In this example, the physical interface is _igb0_:
+然后，在虚拟机中为网络设备创建一个名为 [.filename]#tap# 的接口，以便连接到该接口。为了使网络设备能够参与网络通信，还需创建一个桥接接口，其中包含 [.filename]#tap# 接口和物理接口作为成员。在这个例子中，物理接口是 _igb0_。
 
 [source, shell]
 ....
@@ -468,16 +468,16 @@ net.link.tap.up_on_open: 0 -> 1
 ....
 
 [[virtualization-bhyve-freebsd]]
-=== Creating a FreeBSD Guest
+=== 创建一个FreeBSD虚拟机
 
-Create a file to use as the virtual disk for the guest machine. Specify the size and name of the virtual disk:
+创建一个文件作为虚拟磁盘用于客户机。指定虚拟磁盘的大小和名称：
 
 [source, shell]
 ....
 # truncate -s 16G guest.img
 ....
 
-Download an installation image of FreeBSD to install:
+下载一个FreeBSD的安装镜像来进行安装：
 
 [source, shell]
 ....
@@ -485,16 +485,16 @@ Download an installation image of FreeBSD to install:
 FreeBSD-13.1-RELEASE-amd64-bootonly.iso                366 MB   16 MBps    22s
 ....
 
-FreeBSD comes with an example script for running a virtual machine in bhyve. The script will start the virtual machine and run it in a loop, so it will automatically restart if it crashes. The script takes a number of options to control the configuration of the machine: `-c` controls the number of virtual CPUs, `-m` limits the amount of memory available to the guest, `-t` defines which [.filename]#tap# device to use, `-d` indicates which disk image to use, `-i` tells bhyve to boot from the CD image instead of the disk, and `-I` defines which CD image to use. The last parameter is the name of the virtual machine, used to track the running machines. This example starts the virtual machine in installation mode:
+FreeBSD附带了一个示例脚本，用于在bhyve中运行虚拟机。该脚本将启动虚拟机并在循环中运行，因此如果虚拟机崩溃，它将自动重新启动。脚本接受多个选项来控制机器的配置：`-c`控制虚拟CPU的数量，`-m`限制可用于客户机的内存量，`-t`定义要使用的[.filename]#tap#设备，`-d`指示要使用的磁盘映像，`-i`告诉bhyve从CD映像而不是磁盘启动，`-I`定义要使用的CD映像。最后一个参数是虚拟机的名称，用于跟踪正在运行的虚拟机。此示例在安装模式下启动虚拟机：
 
 [source, shell]
 ....
 # sh /usr/share/examples/bhyve/vmrun.sh -c 1 -m 1024M -t tap0 -d guest.img -i -I FreeBSD-13.1-RELEASE-amd64-bootonly.iso guestname
 ....
 
-The virtual machine will boot and start the installer. After installing a system in the virtual machine, when the system asks about dropping in to a shell at the end of the installation, choose btn:[Yes].
+虚拟机将启动并开始安装程序。在虚拟机中安装系统后，当系统在安装结束时询问是否进入shell，请选择“是”。
 
-Reboot the virtual machine. While rebooting the virtual machine causes bhyve to exit, the [.filename]#vmrun.sh# script runs `bhyve` in a loop and will automatically restart it. When this happens, choose the reboot option from the boot loader menu in order to escape the loop. Now the guest can be started from the virtual disk:
+重新启动虚拟机。虚拟机重新启动会导致bhyve退出，但是[.filename]#vmrun.sh#脚本会在循环中运行`bhyve`并自动重新启动它。当这种情况发生时，选择从引导加载程序菜单中的重新启动选项以退出循环。现在可以从虚拟磁盘启动客户机。
 
 [source, shell]
 ....
@@ -502,18 +502,18 @@ Reboot the virtual machine. While rebooting the virtual machine causes bhyve to 
 ....
 
 [[virtualization-bhyve-linux]]
-=== Creating a Linux(R) Guest
+=== 创建一个Linux(R)虚拟机
 
-In order to boot operating systems other than FreeBSD, the package:sysutils/grub2-bhyve[] port must be first installed.
+为了引导除FreeBSD之外的操作系统，必须首先安装package:sysutils/grub2-bhyve[]端口。
 
-Next, create a file to use as the virtual disk for the guest machine:
+接下来，创建一个文件作为虚拟磁盘用于客户机。
 
 [source, shell]
 ....
 # truncate -s 16G linux.img
 ....
 
-Starting a virtual machine with bhyve is a two step process. First a kernel must be loaded, then the guest can be started. The Linux(R) kernel is loaded with package:sysutils/grub2-bhyve[]. Create a [.filename]#device.map# that grub will use to map the virtual devices to the files on the host system:
+使用bhyve启动虚拟机是一个两步骤的过程。首先必须加载内核，然后才能启动客户机。使用package:sysutils/grub2-bhyve[]加载Linux(R)内核。创建一个[.filename]#device.map#，供grub使用，将虚拟设备映射到主机系统上的文件。
 
 [.programlisting]
 ....
@@ -521,14 +521,14 @@ Starting a virtual machine with bhyve is a two step process. First a kernel must
 (cd0) ./somelinux.iso
 ....
 
-Use package:sysutils/grub2-bhyve[] to load the Linux(R) kernel from the ISO image:
+使用包：sysutils/grub2-bhyve[]从ISO镜像中加载Linux(R)内核：
 
 [source, shell]
 ....
 # grub-bhyve -m device.map -r cd0 -M 1024M linuxguest
 ....
 
-This will start grub. If the installation CD contains a [.filename]#grub.cfg#, a menu will be displayed. If not, the `vmlinuz` and `initrd` files must be located and loaded manually:
+这将启动grub。如果安装CD包含一个[.filename]#grub.cfg#文件，将显示一个菜单。如果没有，必须手动定位并加载`vmlinuz`和`initrd`文件：
 
 [source, shell]
 ....
@@ -542,7 +542,7 @@ grub> initrd (cd0)/isolinux/initrd.img
 grub> boot
 ....
 
-Now that the Linux(R) kernel is loaded, the guest can be started:
+现在Linux(R)内核已经加载完毕，可以启动虚拟机了：
 
 [source, shell]
 ....
@@ -550,14 +550,14 @@ Now that the Linux(R) kernel is loaded, the guest can be started:
     -s 4:0,ahci-cd,./somelinux.iso -l com1,stdio -c 4 -m 1024M linuxguest
 ....
 
-The system will boot and start the installer. After installing a system in the virtual machine, reboot the virtual machine. This will cause bhyve to exit. The instance of the virtual machine needs to be destroyed before it can be started again:
+系统将启动并启动安装程序。在虚拟机中安装系统后，重新启动虚拟机。这将导致bhyve退出。在可以再次启动之前，需要销毁虚拟机的实例。
 
 [source, shell]
 ....
 # bhyvectl --destroy --vm=linuxguest
 ....
 
-Now the guest can be started directly from the virtual disk. Load the kernel:
+现在可以直接从虚拟磁盘启动客户机。加载内核：
 
 [source, shell]
 ....
@@ -574,7 +574,7 @@ grub> initrd (hd0,msdos1)/initramfs-2.6.32-431.el6.x86_64.img
 grub> boot
 ....
 
-Boot the virtual machine:
+启动虚拟机：
 
 [source, shell]
 ....
@@ -582,7 +582,7 @@ Boot the virtual machine:
     -s 3:0,virtio-blk,./linux.img -l com1,stdio -c 4 -m 1024M linuxguest
 ....
 
-Linux(R) will now boot in the virtual machine and eventually present you with the login prompt. Login and use the virtual machine. When you are finished, reboot the virtual machine to exit bhyve. Destroy the virtual machine instance:
+Linux(R)现在将在虚拟机中启动，并最终呈现给您登录提示符。登录并使用虚拟机。完成后，重新启动虚拟机以退出bhyve。销毁虚拟机实例：
 
 [source, shell]
 ....
@@ -590,13 +590,13 @@ Linux(R) will now boot in the virtual machine and eventually present you with th
 ....
 
 [[virtualization-bhyve-uefi]]
-=== Booting bhyve Virtual Machines with UEFI Firmware
+=== 使用UEFI固件引导bhyve虚拟机
 
-In addition to bhyveload and grub-bhyve, the bhyve hypervisor can also boot virtual machines using the UEFI userspace firmware. This option may support guest operating systems that are not supported by the other loaders.
+除了bhyveload和grub-bhyve之外，bhyve虚拟机监视器还可以使用UEFI用户空间固件引导虚拟机。这个选项可能支持其他加载器不支持的客户操作系统。
 
-In order to make use of the UEFI support in bhyve, first obtain the UEFI firmware images. This can be done by installing package:sysutils/bhyve-firmware[] port or package.
+为了在bhyve中使用UEFI支持，首先需要获取UEFI固件镜像。可以通过安装package:sysutils/bhyve-firmware[]端口或包来完成。
 
-With the firmware in place, add the flags `-l bootrom,_/path/to/firmware_` to your bhyve command line. The actual bhyve command may look like this:
+在固件安装完成后，将标志`-l bootrom,_/path/to/firmware_`添加到您的bhyve命令行中。实际的bhyve命令可能如下所示：
 
 [source, shell]
 ....
@@ -607,7 +607,7 @@ With the firmware in place, add the flags `-l bootrom,_/path/to/firmware_` to yo
 guest
 ....
 
-package:sysutils/bhyve-firmware[] also contains a CSM-enabled firmware, to boot guests with no UEFI support in legacy BIOS mode:
+package:sysutils/bhyve-firmware[] 还包含一个启用了 CSM 的固件，用于以传统 BIOS 模式启动不支持 UEFI 的虚拟机：
 
 [source, shell]
 ....
@@ -619,13 +619,13 @@ guest
 ....
 
 [[virtualization-bhyve-framebuffer]]
-=== Graphical UEFI Framebuffer for bhyve Guests
+=== bhyve客户机的图形UEFI帧缓冲
 
-The UEFI firmware support is particularly useful with predominantly graphical guest operating systems such as Microsoft Windows(R).
+UEFI固件支持对于主要以图形为主的客户操作系统（如Microsoft Windows(R)）特别有用。
 
-Support for the UEFI-GOP framebuffer may also be enabled with the `-s 29,fbuf,tcp=_0.0.0.0:5900_` flags. The framebuffer resolution may be configured with `w=_800_` and `h=_600_`, and bhyve can be instructed to wait for a VNC connection before booting the guest by adding `wait`. The framebuffer may be accessed from the host or over the network via the VNC protocol. Additionally, `-s 30,xhci,tablet` can be added to achieve precise mouse cursor synchronization with the host.
+还可以使用`-s 29,fbuf,tcp=_0.0.0.0:5900_`标志来启用对UEFI-GOP帧缓冲的支持。可以使用`w=_800_`和`h=_600_`来配置帧缓冲的分辨率，并且可以通过添加`wait`来指示bhyve在启动客户机之前等待VNC连接。帧缓冲可以通过主机或通过VNC协议通过网络访问。此外，还可以添加`-s 30,xhci,tablet`以实现与主机的精确鼠标光标同步。
 
-The resulting bhyve command would look like this:
+生成的bhyve命令将如下所示：
 
 [source, shell]
 ....
@@ -638,19 +638,19 @@ The resulting bhyve command would look like this:
 guest
 ....
 
-Note, in BIOS emulation mode, the framebuffer will cease receiving updates once control is passed from firmware to guest operating system.
+注意，在BIOS仿真模式下，一旦控制权从固件转移到客户操作系统，帧缓冲将停止接收更新。
 
 [[virtualization-bhyve-zfs]]
-=== Using ZFS with bhyve Guests
+=== 使用ZFS与bhyve虚拟机
 
-If ZFS is available on the host machine, using ZFS volumes instead of disk image files can provide significant performance benefits for the guest VMs. A ZFS volume can be created by:
+如果主机上可用ZFS，使用ZFS卷而不是磁盘映像文件可以为客户机提供显著的性能优势。可以通过以下方式创建ZFS卷：
 
 [source, shell]
 ....
 # zfs create -V16G -o volmode=dev zroot/linuxdisk0
 ....
 
-When starting the VM, specify the ZFS volume as the disk drive:
+在启动虚拟机时，将ZFS卷指定为磁盘驱动器：
 
 [source, shell]
 ....
@@ -659,9 +659,9 @@ When starting the VM, specify the ZFS volume as the disk drive:
 ....
 
 [[virtualization-bhyve-nmdm]]
-=== Virtual Machine Consoles
+=== 虚拟机控制台
 
-It is advantageous to wrap the bhyve console in a session management tool such as package:sysutils/tmux[] or package:sysutils/screen[] in order to detach and reattach to the console. It is also possible to have the console of bhyve be a null modem device that can be accessed with `cu`. To do this, load the [.filename]#nmdm# kernel module and replace `-l com1,stdio` with `-l com1,/dev/nmdm0A`. The [.filename]#/dev/nmdm# devices are created automatically as needed, where each is a pair, corresponding to the two ends of the null modem cable ([.filename]#/dev/nmdm0A# and [.filename]#/dev/nmdm0B#). See man:nmdm[4] for more information.
+将bhyve控制台包装在会话管理工具（如package:sysutils/tmux[]或package:sysutils/screen[]）中是有优势的，这样可以分离和重新连接到控制台。还可以将bhyve的控制台设置为一个空调制解调器设备，可以使用`cu`访问。为此，加载[.filename]#nmdm#内核模块，并将`-l com1,stdio`替换为`-l com1,/dev/nmdm0A`。[.filename]#/dev/nmdm#设备会根据需要自动创建，每个设备都是一对，对应于空调制解调器电缆的两端（[.filename]#/dev/nmdm0A#和[.filename]#/dev/nmdm0B#）。有关更多信息，请参阅man:nmdm[4]。
 
 [source, shell]
 ....
@@ -677,9 +677,9 @@ handbook login:
 ....
 
 [[virtualization-bhyve-managing]]
-=== Managing Virtual Machines
+=== 管理虚拟机
 
-A device node is created in [.filename]#/dev/vmm# for each virtual machine. This allows the administrator to easily see a list of the running virtual machines:
+每个虚拟机都在`/dev/vmm`目录下创建了一个设备节点。这样管理员就可以轻松地查看正在运行的虚拟机列表。
 
 [source, shell]
 ....
@@ -692,7 +692,7 @@ crw-------   1 root  wheel  0x19f Mar 17 12:19 linuxguest
 crw-------   1 root  wheel  0x1a1 Mar 17 12:19 otherguest
 ....
 
-A specified virtual machine can be destroyed using `bhyvectl`:
+可以使用`bhyvectl`命令销毁指定的虚拟机：
 
 [source, shell]
 ....
@@ -700,9 +700,9 @@ A specified virtual machine can be destroyed using `bhyvectl`:
 ....
 
 [[virtualization-bhyve-onboot]]
-=== Persistent Configuration
+=== 持久化配置
 
-In order to configure the system to start bhyve guests at boot time, the following configurations must be made in the specified files:
+为了在启动时配置系统以启动bhyve虚拟机，必须在指定的文件中进行以下配置：
 
 [.procedure]
 . [.filename]#/etc/sysctl.conf#
@@ -722,37 +722,37 @@ kld_list="nmdm vmm"
 ....
 
 [[virtualization-host-xen]]
-== FreeBSD as a Xen(TM)-Host
+== FreeBSD作为Xen(TM)主机
 
-Xen is a GPLv2-licensed https://en.wikipedia.org/wiki/Hypervisor#Classification[type 1 hypervisor] for Intel(R) and ARM(R) architectures. FreeBSD has included i386(TM) and AMD(R) 64-Bit https://wiki.xenproject.org/wiki/DomU[DomU] and https://en.wikipedia.org/wiki/Amazon_Elastic_Compute_Cloud[Amazon EC2] unprivileged domain (virtual machine) support since FreeBSD 8.0 and includes Dom0 control domain (host) support in FreeBSD 11.0. Support for para-virtualized (PV) domains has been removed from FreeBSD 11 in favor of hardware virtualized (HVM) domains, which provides better performance.
+Xen是一种基于GPLv2许可的https://en.wikipedia.org/wiki/Hypervisor#Classification[1型虚拟化监控程序]，适用于Intel(R)和ARM(R)架构。FreeBSD自8.0版本起包含了i386(TM)和AMD(R) 64位https://wiki.xenproject.org/wiki/DomU[DomU]以及https://en.wikipedia.org/wiki/Amazon_Elastic_Compute_Cloud[Amazon EC2]非特权域（虚拟机）支持，并在FreeBSD 11.0中增加了Dom0控制域（主机）支持。在FreeBSD 11中，对于半虚拟化（PV）域的支持已被移除，取而代之的是硬件虚拟化（HVM）域，这提供了更好的性能。
 
-Xen(TM) is a bare-metal hypervisor, which means that it is the first program loaded after the BIOS. A special privileged guest called the Domain-0 (`Dom0` for short) is then started. The Dom0 uses its special privileges to directly access the underlying physical hardware, making it a high-performance solution. It is able to access the disk controllers and network adapters directly. The Xen(TM) management tools to manage and control the Xen(TM) hypervisor are also used by the Dom0 to create, list, and destroy VMs. Dom0 provides virtual disks and networking for unprivileged domains, often called `DomU`. Xen(TM) Dom0 can be compared to the service console of other hypervisor solutions, while the DomU is where individual guest VMs are run.
+Xen(TM) 是一个裸金属虚拟化监控程序，这意味着它是在BIOS之后加载的第一个程序。然后启动一个特殊的特权客户机，称为Domain-0（简称为Dom0）。Dom0利用其特权直接访问底层物理硬件，使其成为高性能解决方案。它能够直接访问磁盘控制器和网络适配器。Dom0还使用Xen(TM)管理工具来管理和控制Xen(TM)虚拟化监控程序，创建、列出和销毁虚拟机（VMs）。Dom0为非特权域（通常称为DomU）提供虚拟磁盘和网络。Xen(TM) Dom0可以与其他虚拟化监控程序解决方案的服务控制台进行比较，而DomU是运行各个客户机虚拟机的地方。
 
-Xen(TM) can migrate VMs between different Xen(TM) servers. When the two xen hosts share the same underlying storage, the migration can be done without having to shut the VM down first. Instead, the migration is performed live while the DomU is running and there is no need to restart it or plan a downtime. This is useful in maintenance scenarios or upgrade windows to ensure that the services provided by the DomU are still provided. Many more features of Xen(TM) are listed on the https://wiki.xenproject.org/wiki/Category:Overview[Xen Wiki Overview page]. Note that not all features are supported on FreeBSD yet.
+Xen(TM)可以在不同的Xen(TM)服务器之间迁移虚拟机。当两个Xen主机共享相同的底层存储时，迁移可以在不必先关闭虚拟机的情况下进行。相反，迁移是在DomU运行时进行的，无需重新启动或计划停机时间。这在维护场景或升级窗口中非常有用，以确保DomU提供的服务仍然可用。Xen(TM)的许多其他功能列在https://wiki.xenproject.org/wiki/Category:Overview[Xen Wiki概述页面]上。请注意，目前并非所有功能都在FreeBSD上受支持。
 
 [[virtualization-host-xen-requirements]]
-=== Hardware Requirements for Xen(TM) Dom0
+=== Xen(TM) Dom0的硬件要求
 
-To run the Xen(TM) hypervisor on a host, certain hardware functionality is required. Hardware virtualized domains require Extended Page Table (http://en.wikipedia.org/wiki/Extended_Page_Table[EPT]) and Input/Output Memory Management Unit (http://en.wikipedia.org/wiki/List_of_IOMMU-supporting_hardware[IOMMU]) support in the host processor.
+要在主机上运行Xen(TM)虚拟机监视器，需要一定的硬件功能。硬件虚拟化域需要主机处理器支持扩展页表（EPT）和输入/输出内存管理单元（IOMMU）。
 
 [NOTE]
 ====
-In order to run a FreeBSD Xen(TM) Dom0 the box must be booted using legacy boot (BIOS).
+为了运行FreeBSD Xen(TM) Dom0，必须使用传统引导（BIOS）启动该设备。
 ====
 
 [[virtualization-host-xen-dom0-setup]]
-=== Xen(TM) Dom0 Control Domain Setup
+=== Xen(TM) Dom0控制域设置
 
-Users of FreeBSD 11 should install the package:emulators/xen-kernel47[] and package:sysutils/xen-tools47[] packages that are based on Xen version 4.7. Systems running on FreeBSD-12.0 or newer can use Xen 4.11 provided by package:emulators/xen-kernel411[] and package:sysutils/xen-tools411[], respectively.
+FreeBSD 11的用户应安装基于Xen 4.7版本的包：emulators/xen-kernel47[]和包：sysutils/xen-tools47[]。运行在FreeBSD-12.0或更新版本上的系统可以分别使用基于Xen 4.11的包：emulators/xen-kernel411[]和包：sysutils/xen-tools411[]。
 
-Configuration files must be edited to prepare the host for the Dom0 integration after the Xen packages are installed. An entry to [.filename]#/etc/sysctl.conf# disables the limit on how many pages of memory are allowed to be wired. Otherwise, DomU VMs with higher memory requirements will not run.
+在安装Xen软件包后，必须编辑配置文件以准备主机进行Dom0集成。在[/etc/sysctl.conf]中添加条目可以禁用内存页面的限制。否则，具有较高内存需求的DomU虚拟机将无法运行。
 
 [source, shell]
 ....
 # echo 'vm.max_wired=-1' >> /etc/sysctl.conf
 ....
 
-Another memory-related setting involves changing [.filename]#/etc/login.conf#, setting the `memorylocked` option to `unlimited`. Otherwise, creating DomU domains may fail with `Cannot allocate memory` errors. After making the change to [.filename]#/etc/login.conf#, run `cap_mkdb` to update the capability database. See crossref:security[security-resourcelimits,"Resource Limits"] for details.
+另一个与内存相关的设置涉及更改 [.filename]#/etc/login.conf#，将`memorylocked`选项设置为`unlimited`。否则，创建DomU域可能会失败，并显示`Cannot allocate memory`错误。在对 [.filename]#/etc/login.conf# 进行更改后，运行`cap_mkdb`以更新能力数据库。有关详细信息，请参阅crossref:security[security-resourcelimits,"资源限制"]。
 
 [source, shell]
 ....
@@ -760,16 +760,16 @@ Another memory-related setting involves changing [.filename]#/etc/login.conf#, s
 # cap_mkdb /etc/login.conf
 ....
 
-Add an entry for the Xen(TM) console to [.filename]#/etc/ttys#:
+在[.filename]#/etc/ttys#中添加一个Xen(TM)控制台的条目：
 
 [source, shell]
 ....
 # echo 'xc0     "/usr/libexec/getty Pc"         xterm   onifconsole  secure' >> /etc/ttys
 ....
 
-Selecting a Xen(TM) kernel in [.filename]#/boot/loader.conf# activates the Dom0. Xen(TM) also requires resources like CPU and memory from the host machine for itself and other DomU domains. How much CPU and memory depends on the individual requirements and hardware capabilities. In this example, 8 GB of memory and 4 virtual CPUs are made available for the Dom0. The serial console is also activated and logging options are defined.
+在[.filename]#/boot/loader.conf#中选择一个Xen(TM)内核会激活Dom0。Xen(TM)还需要来自主机机器的CPU和内存资源，用于自身和其他DomU域。CPU和内存的数量取决于个体需求和硬件能力。在这个例子中，为Dom0提供了8 GB的内存和4个虚拟CPU。串行控制台也被激活，并定义了日志选项。
 
-The following command is used for Xen 4.7 packages:
+以下命令用于Xen 4.7软件包：
 
 [source, shell]
 ....
@@ -779,7 +779,7 @@ The following command is used for Xen 4.7 packages:
 # echo 'xen_cmdline="dom0_mem=8192M dom0_max_vcpus=4 dom0pvh=1 console=com1,vga com1=115200,8n1 guest_loglvl=all loglvl=all"' >> /boot/loader.conf
 ....
 
-For Xen versions 4.11 and higher, the following command should be used instead:
+对于Xen版本4.11及更高版本，应使用以下命令：
 
 [source, shell]
 ....
@@ -791,17 +791,17 @@ For Xen versions 4.11 and higher, the following command should be used instead:
 [TIP]
 ====
 
-Log files that Xen(TM) creates for the DomU VMs are stored in [.filename]#/var/log/xen#. Please be sure to check the contents of that directory if experiencing issues.
+Xen(TM)为DomU虚拟机创建的日志文件存储在[/var/log/xen]目录中。如果遇到问题，请务必检查该目录的内容。
 ====
 
-Activate the xencommons service during system startup:
+在系统启动时激活xencommons服务：
 
 [source, shell]
 ....
 # sysrc xencommons_enable=yes
 ....
 
-These settings are enough to start a Dom0-enabled system. However, it lacks network functionality for the DomU machines. To fix that, define a bridged interface with the main NIC of the system which the DomU VMs can use to connect to the network. Replace _em0_ with the host network interface name.
+这些设置足以启动一个启用了Dom0的系统。然而，它缺乏用于DomU虚拟机的网络功能。为了解决这个问题，需要定义一个桥接接口，使用系统的主要网络接口（主机网络接口名称替换为_em0_），以便DomU虚拟机可以连接到网络。
 
 [source, shell]
 ....
@@ -810,14 +810,14 @@ These settings are enough to start a Dom0-enabled system. However, it lacks netw
 # sysrc ifconfig_em0="up"
 ....
 
-Restart the host to load the Xen(TM) kernel and start the Dom0.
+重新启动主机以加载Xen(TM)内核并启动Dom0。
 
 [source, shell]
 ....
 # reboot
 ....
 
-After successfully booting the Xen(TM) kernel and logging into the system again, the Xen(TM) management tool `xl` is used to show information about the domains.
+在成功启动Xen(TM)内核并再次登录系统后，使用Xen(TM)管理工具`xl`来显示有关域的信息。
 
 [source, shell]
 ....
@@ -826,26 +826,26 @@ Name                                        ID   Mem VCPUs      State   Time(s)
 Domain-0                                     0  8192     4     r-----     962.0
 ....
 
-The output confirms that the Dom0 (called `Domain-0`) has the ID `0` and is running. It also has the memory and virtual CPUs that were defined in [.filename]#/boot/loader.conf# earlier. More information can be found in the https://www.xenproject.org/help/documentation.html[Xen(TM) Documentation]. DomU guest VMs can now be created.
+输出确认了Dom0（称为`Domain-0`）的ID为`0`并且正在运行。它还具有之前在[.filename]#/boot/loader.conf#中定义的内存和虚拟CPU。更多信息可以在https://www.xenproject.org/help/documentation.html[Xen(TM)文档]中找到。现在可以创建DomU客户机虚拟机。
 
 [[virtualization-host-xen-domu-setup]]
-=== Xen(TM) DomU Guest VM Configuration
+=== Xen(TM) DomU 客户机虚拟机配置
 
-Unprivileged domains consist of a configuration file and virtual or physical hard disks. Virtual disk storage for the DomU can be files created by man:truncate[1] or ZFS volumes as described in crossref:zfs[zfs-zfs-volume,“Creating and Destroying Volumes”]. In this example, a 20 GB volume is used. A VM is created with the ZFS volume, a FreeBSD ISO image, 1 GB of RAM and two virtual CPUs. The ISO installation file is retrieved with man:fetch[1] and saved locally in a file called [.filename]#freebsd.iso#.
+非特权域由配置文件和虚拟或物理硬盘组成。 DomU的虚拟磁盘存储可以是由man:truncate[1]创建的文件，也可以是crossref:zfs[zfs-zfs-volume，“创建和销毁卷”]中描述的ZFS卷。 在此示例中，使用了一个20 GB的卷。 使用ZFS卷、FreeBSD ISO映像、1 GB的RAM和两个虚拟CPU创建了一个虚拟机。 ISO安装文件使用man:fetch[1]获取，并保存在名为[.filename]#freebsd.iso#的本地文件中。
 
 [source, shell]
 ....
 # fetch https://download.freebsd.org/releases/ISO-IMAGES/13.1/FreeBSD-13.1-RELEASE-amd64-bootonly.iso -o freebsd.iso
 ....
 
-A ZFS volume of 20 GB called [.filename]#xendisk0# is created to serve as the disk space for the VM.
+创建了一个名为 [.filename]#xendisk0# 的20 GB ZFS卷，用作虚拟机的磁盘空间。
 
 [source, shell]
 ....
 # zfs create -V20G -o volmode=dev zroot/xendisk0
 ....
 
-The new DomU guest VM is defined in a file. Some specific definitions like name, keymap, and VNC connection details are also defined. The following [.filename]#freebsd.cfg# contains a minimum DomU configuration for this example:
+新的DomU客户机虚拟机在一个文件中定义。一些特定的定义，如名称、键盘映射和VNC连接详细信息也被定义。以下是一个示例的最小DomU配置的[.filename]#freebsd.cfg#文件内容：
 
 [source, shell]
 ....
@@ -865,11 +865,11 @@ serial = "pty"
 usbdevice = "tablet"
 ....
 
-These lines are explained in more detail:
+这些行将被更详细地解释：
 
-<.> This defines what kind of virtualization to use. `hvm` refers to hardware-assisted virtualization or hardware virtual machine. Guest operating systems can run unmodified on CPUs with virtualization extensions, providing nearly the same performance as running on physical hardware. `generic` is the default value and creates a PV domain. <.> Name of this virtual machine to distinguish it from others running on the same Dom0. Required. <.> Quantity of RAM in megabytes to make available to the VM. This amount is subtracted from the hypervisor's total available memory, not the memory of the Dom0. <.> Number of virtual CPUs available to the guest VM. For best performance, do not create guests with more virtual CPUs than the number of physical CPUs on the host. <.> Virtual network adapter. This is the bridge connected to the network interface of the host. The `mac` parameter is the MAC address set on the virtual network interface. This parameter is optional, if no MAC is provided Xen(TM) will generate a random one. <.> Full path to the disk, file, or ZFS volume of the disk storage for this VM. Options and multiple disk definitions are separated by commas. <.> Defines the Boot medium from which the initial operating system is installed. In this example, it is the ISO image downloaded earlier. Consult the Xen(TM) documentation for other kinds of devices and options to set. <.> Options controlling VNC connectivity to the serial console of the DomU. In order, these are: active VNC support, define IP address on which to listen, device node for the serial console, and the input method for precise positioning of the mouse and other input methods. `keymap` defines which keymap to use, and is `english` by default.
+<.> 这定义了要使用的虚拟化类型。`hvm` 指的是硬件辅助虚拟化或硬件虚拟机。客户操作系统可以在具有虚拟化扩展的 CPU 上无需修改即可运行，提供与在物理硬件上运行几乎相同的性能。`generic` 是默认值，创建一个 PV 域。 <.> 虚拟机的名称，用于区分在同一 Dom0 上运行的其他虚拟机。必填项。 <.> 分配给虚拟机的内存数量，以兆字节为单位。此数量从超级监视程序的总可用内存中减去，而不是从 Dom0 的内存中减去。 <.> 客户虚拟机可用的虚拟 CPU 数量。为了获得最佳性能，请不要创建具有超过主机上物理 CPU 数量的虚拟 CPU 的客户。 <.> 虚拟网络适配器。这是连接到主机网络接口的桥接器。`mac` 参数是设置在虚拟网络接口上的 MAC 地址。如果未提供 MAC，则此参数是可选的，Xen(TM) 将生成一个随机的 MAC 地址。 <.> 磁盘、文件或 ZFS 磁盘存储的完整路径，用于此虚拟机。选项和多个磁盘定义由逗号分隔。 <.> 定义安装初始操作系统的启动介质。在此示例中，它是之前下载的 ISO 镜像。请参阅 Xen(TM) 文档以了解其他类型的设备和设置选项。 <.> 控制 VNC 连接到 DomU 的串行控制台的选项。按顺序，它们是：激活 VNC 支持，定义要监听的 IP 地址，串行控制台的设备节点，以及精确定位鼠标和其他输入方法的输入方法。`keymap` 定义要使用的键盘映射，默认为 `english`。
 
-After the file has been created with all the necessary options, the DomU is created by passing it to `xl create` as a parameter.
+在使用所有必要选项创建文件之后，通过将其作为参数传递给 `xl create` 来创建 DomU。
 
 [source, shell]
 ....
@@ -878,10 +878,10 @@ After the file has been created with all the necessary options, the DomU is crea
 
 [NOTE]
 ====
-Each time the Dom0 is restarted, the configuration file must be passed to `xl create` again to re-create the DomU. By default, only the Dom0 is created after a reboot, not the individual VMs. The VMs can continue where they left off as they stored the operating system on the virtual disk. The virtual machine configuration can change over time (for example, when adding more memory). The virtual machine configuration files must be properly backed up and kept available to be able to re-create the guest VM when needed.
+每次重新启动Dom0时，必须再次将配置文件传递给`xl create`以重新创建DomU。默认情况下，在重新启动后只会创建Dom0，而不会创建各个虚拟机。虚拟机可以从它们上次停止的地方继续运行，因为它们将操作系统存储在虚拟磁盘上。虚拟机的配置可以随时间而变化（例如，添加更多内存）。虚拟机的配置文件必须被正确备份并保持可用，以便在需要时重新创建客户虚拟机。
 ====
 
-The output of `xl list` confirms that the DomU has been created.
+`xl list`的输出确认了DomU已经被创建。
 
 [source, shell]
 ....
@@ -891,7 +891,7 @@ Domain-0                                     0  8192     4     r-----  1653.4
 freebsd                                      1  1024     1     -b----   663.9
 ....
 
-To begin the installation of the base operating system, start the VNC client, directing it to the main network address of the host or to the IP address defined on the `vnclisten` line of [.filename]#freebsd.cfg#. After the operating system has been installed, shut down the DomU and disconnect the VNC viewer. Edit [.filename]#freebsd.cfg#, removing the line with the `cdrom` definition or commenting it out by inserting a `+#+` character at the beginning of the line. To load this new configuration, it is necessary to remove the old DomU with `xl destroy`, passing either the name or the id as the parameter. Afterwards, recreate it using the modified [.filename]*freebsd.cfg*.
+要开始安装基本操作系统，请启动VNC客户端，并将其指向主机的主网络地址或在[.filename]#freebsd.cfg#文件的`vnclisten`行中定义的IP地址。操作系统安装完成后，关闭DomU并断开VNC查看器的连接。编辑[.filename]#freebsd.cfg#文件，删除包含`cdrom`定义的行，或在行的开头插入一个`+#+`字符进行注释。要加载这个新的配置，需要使用`xl destroy`命令删除旧的DomU，参数可以是名称或ID。然后，使用修改后的[.filename]*freebsd.cfg*文件重新创建DomU。
 
 [source, shell]
 ....
@@ -899,39 +899,39 @@ To begin the installation of the base operating system, start the VNC client, di
 # xl create freebsd.cfg
 ....
 
-The machine can then be accessed again using the VNC viewer. This time, it will boot from the virtual disk where the operating system has been installed and can be used as a virtual machine.
+然后可以使用VNC查看器再次访问该机器。这次，它将从已安装操作系统的虚拟磁盘启动，并可用作虚拟机。
 
 [[virtualization-host-xen-troubleshooting]]
-=== Troubleshooting
+=== 故障排除
 
-This section contains basic information in order to help troubleshoot issues found when using FreeBSD as a Xen(TM) host or guest.
+本节包含基本信息，以帮助解决在使用FreeBSD作为Xen(TM)主机或客户机时遇到的问题。
 
 [[virtualization-host-xen-troubleshooting-host]]
-==== Host Boot Troubleshooting
+==== 主机启动故障排除
 
-Please note that the following troubleshooting tips are intended for Xen(TM) 4.11 or newer. If you are still using Xen(TM) 4.7 and having issues consider migrating to a newer version of Xen(TM).
+请注意，以下故障排除提示适用于 Xen(TM) 4.11 或更新版本。如果您仍在使用 Xen(TM) 4.7 并且遇到问题，请考虑迁移到更新版本的 Xen(TM)。
 
-In order to troubleshoot host boot issues you will likely need a serial cable, or a debug USB cable. Verbose Xen(TM) boot output can be obtained by adding options to the `xen_cmdline` option found in [.filename]#loader.conf#. A couple of relevant debug options are:
+为了解决主机启动问题，您可能需要使用串行电缆或调试USB电缆。可以通过向[.filename]#loader.conf#中的`xen_cmdline`选项添加选项来获取详细的Xen(TM)引导输出。一些相关的调试选项包括：
 
-* `iommu=debug`: can be used to print additional diagnostic information about the iommu.
-* `dom0=verbose`: can be used to print additional diagnostic information about the dom0 build process.
-* `sync_console`: flag to force synchronous console output. Useful for debugging to avoid losing messages due to rate limiting. Never use this option in production environments since it can allow malicious guests to perform DoS attacks against Xen(TM) using the console.
+* `iommu=debug`：可用于打印有关IOMMU的额外诊断信息。
+* `dom0=verbose`：可用于打印有关dom0构建过程的额外诊断信息。
+* `sync_console`：用于强制同步控制台输出的标志。在调试过程中非常有用，可以避免由于速率限制而丢失消息。在生产环境中永远不要使用此选项，因为它可能允许恶意虚拟机通过控制台对Xen(TM)进行拒绝服务（DoS）攻击。
 
-FreeBSD should also be booted in verbose mode in order to identify any issues. To activate verbose booting, run this command:
+为了识别任何问题，FreeBSD也应该以详细模式启动。要激活详细启动，请运行以下命令：
 
 [source, shell]
 ....
 # echo 'boot_verbose="YES"' >> /boot/loader.conf
 ....
 
-If none of these options help solving the problem, please send the serial boot log to mailto:freebsd-xen@FreeBSD.org[freebsd-xen@FreeBSD.org] and mailto:xen-devel@lists.xenproject.org[xen-devel@lists.xenproject.org] for further analysis.
+如果这些选项都无法解决问题，请将串行引导日志发送至mailto:freebsd-xen@FreeBSD.org[freebsd-xen@FreeBSD.org]和mailto:xen-devel@lists.xenproject.org[xen-devel@lists.xenproject.org]以进行进一步分析。
 
 [[virtualization-host-xen-troubleshooting-guest]]
-==== Guest Creation Troubleshooting
+==== 访客创建故障排除
 
-Issues can also arise when creating guests, the following attempts to provide some help for those trying to diagnose guest creation issues.
+在创建虚拟机时也可能出现问题，下面尝试为那些试图诊断虚拟机创建问题的人提供一些帮助。
 
-The most common cause of guest creation failures is the `xl` command spitting some error and exiting with a return code different than 0. If the error provided is not enough to help identify the issue, more verbose output can also be obtained from `xl` by using the `v` option repeatedly.
+创建虚拟机失败最常见的原因是`xl`命令输出错误并以非0的返回码退出。如果提供的错误信息不足以帮助确定问题，还可以通过多次使用`xl`命令的`v`选项来获取更详细的输出。
 
 [source, shell]
 ....
@@ -950,4 +950,4 @@ libxl: debug: libxl_dom.c:988:libxl__load_hvm_firmware_module: Loading BIOS: /us
 ...
 ....
 
-If the verbose output does not help diagnose the issue there are also QEMU and Xen(TM) toolstack logs in [.filename]#/var/log/xen#. Note that the name of the domain is appended to the log name, so if the domain is named `freebsd` you should find a [.filename]#/var/log/xen/xl-freebsd.log# and likely a [.filename]#/var/log/xen/qemu-dm-freebsd.log#. Both log files can contain useful information for debugging. If none of this helps solve the issue, please send the description of the issue you are facing and as much information as possible to mailto:freebsd-xen@FreeBSD.org[freebsd-xen@FreeBSD.org] and mailto:xen-devel@lists.xenproject.org[xen-devel@lists.xenproject.org] in order to get help.
+如果详细输出无法帮助诊断问题，还可以在[.filename]#/var/log/xen#中找到QEMU和Xen(TM)工具栈的日志。请注意，日志名称后面附加了域的名称，因此如果域的名称为`freebsd`，您应该能找到一个[.filename]#/var/log/xen/xl-freebsd.log#和可能还有一个[.filename]#/var/log/xen/qemu-dm-freebsd.log#。这两个日志文件都可能包含有用的调试信息。如果以上方法都无法解决问题，请将您面临的问题的描述和尽可能多的信息发送到mailto:freebsd-xen@FreeBSD.org[freebsd-xen@FreeBSD.org]和mailto:xen-devel@lists.xenproject.org[xen-devel@lists.xenproject.org]以获取帮助。
