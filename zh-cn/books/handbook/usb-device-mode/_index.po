@@ -18,54 +18,62 @@ msgstr ""
 
 #. type: YAML Front Matter: description
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:1
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "This chapter covers the use of USB Device Mode and USB On The Go (USB OTG) "
 "in FreeBSD"
-msgstr ""
+msgstr "本章介绍了在FreeBSD中使用USB设备模式和USB On The Go（USB OTG）的方法。"
 
 #. type: YAML Front Matter: part
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:1
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Part III. System Administration"
-msgstr ""
+msgstr "第三部分：系统管理"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:1
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Chapter 28. USB Device Mode / USB OTG"
-msgstr ""
+msgstr "第28章 USB设备模式/USB OTG"
 
 #. type: Title =
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:14
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "USB Device Mode / USB OTG"
-msgstr ""
+msgstr "USB设备模式/USB OTG"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:39
+#, fuzzy
 msgid ""
 "include::shared/attributes/attributes-{{% lang %}}.adoc[] "
 "include::shared/{{% lang %}}/teams.adoc[] include::shared/{{% lang "
 "%}}/mailing-lists.adoc[] include::shared/{{% lang %}}/urls.adoc[]"
 msgstr ""
+"include::shared/attributes/attributes-{{% lang %}}.adoc[] "
+"include::shared/{{% lang %}}/teams.adoc[] include::shared/{{% lang "
+"%}}/mailing-lists.adoc[] include::shared/{{% lang %}}/urls.adoc[]"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:52
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:56
+#, fuzzy
 msgid ""
 "This chapter covers the use of USB Device Mode and USB On The Go (USB OTG) "
 "in FreeBSD.  This includes virtual serial consoles, virtual network "
 "interfaces, and virtual USB drives."
 msgstr ""
+"本章介绍了在FreeBSD中使用USB设备模式和USB On The Go（USB "
+"OTG）。这包括虚拟串行控制台、虚拟网络接口和虚拟USB驱动器的使用。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:61
+#, fuzzy
 msgid ""
 "When running on hardware that supports USB device mode or USB OTG, like that"
 " built into many embedded boards, the FreeBSD USB stack can run in _device "
@@ -75,9 +83,12 @@ msgid ""
 "laptop or desktop computer is able to access them just like physical USB "
 "devices.  Device mode is sometimes called the \"USB gadget mode\"."
 msgstr ""
+"当在支持USB设备模式或USB OTG的硬件上运行时，例如许多嵌入式板上内置的硬件，FreeBSD "
+"USB堆栈可以运行在“设备模式”下。设备模式使得计算机能够以不同种类的USB设备类别呈现自身，包括串口、网络适配器、大容量存储设备，或者它们的组合。像笔记本电脑或台式电脑这样的USB主机可以像访问物理USB设备一样访问它们。设备模式有时也被称为“USB小工具模式”。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:67
+#, fuzzy
 msgid ""
 "There are two basic ways the hardware can provide the device mode "
 "functionality: with a separate \"client port\", which only supports the "
@@ -89,9 +100,13 @@ msgid ""
 "to switch to device mode.  Single purpose \"client ports\" always work in "
 "device mode."
 msgstr ""
+"硬件可以通过两种基本方式提供设备模式功能：一种是使用单独的“客户端端口”，该端口仅支持设备模式；另一种是使用USB OTG（On-The-"
+"Go）端口，该端口可以同时提供设备模式和主机模式。对于USB "
+"OTG端口，USB堆栈会根据连接到端口的设备自动切换主机端和设备端。将USB设备（如存储设备）连接到端口会导致FreeBSD切换到主机模式。将USB主机（如计算机）连接到端口会导致FreeBSD切换到设备模式。而单用途的“客户端端口”始终以设备模式工作。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:72
+#, fuzzy
 msgid ""
 "What FreeBSD presents to the USB host depends on the `hw.usb.template` "
 "sysctl.  Some templates provide a single device, such as a serial terminal; "
@@ -100,9 +115,12 @@ msgid ""
 "console, and a network interface.  See man:usb_template[4] for the list of "
 "available values."
 msgstr ""
+"FreeBSD向USB主机呈现的内容取决于`hw.usb.template` "
+"sysctl。一些模板提供单个设备，例如串行终端；其他模板提供多个设备，可以同时使用。一个例子是模板10，它提供了一个大容量存储设备、一个串行控制台和一个网络接口。请参阅man:usb_template[4]以获取可用值的列表。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:76
+#, fuzzy
 msgid ""
 "Note that in some cases, depending on the hardware and the hosts operating "
 "system, for the host to notice the configuration change, it must be either "
@@ -112,52 +130,61 @@ msgid ""
 "[.filename]#usb_template.ko# if the USB host was already connected to the "
 "USBOTG socket."
 msgstr ""
+"请注意，在某些情况下，根据硬件和主机操作系统的不同，为了使主机注意到配置更改，必须要么物理断开并重新连接，要么以特定于系统的方式强制重新扫描USB总线。当主机上运行FreeBSD时，可以使用man:usbconfig[8]"
+" `reset`命令。如果USB主机已经连接到USBOTG插座，则还必须在加载[.filename]#usb_template.ko#之后执行此操作。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:78
+#, fuzzy
 msgid "After reading this chapter, you will know:"
-msgstr ""
+msgstr "阅读完本章后，您将了解："
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:80
+#, fuzzy
 msgid "How to set up USB Device Mode functionality on FreeBSD."
-msgstr ""
+msgstr "在FreeBSD上如何设置USB设备模式功能。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:81
+#, fuzzy
 msgid "How to configure the virtual serial port on FreeBSD."
-msgstr ""
+msgstr "如何在FreeBSD上配置虚拟串口。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:82
+#, fuzzy
 msgid ""
 "How to connect to the virtual serial port from various operating systems."
-msgstr ""
+msgstr "如何从不同的操作系统连接到虚拟串口。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:83
+#, fuzzy
 msgid "How to configure FreeBSD to provide a virtual USB network interface."
-msgstr ""
+msgstr "如何配置FreeBSD以提供虚拟USB网络接口。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:84
+#, fuzzy
 msgid "How to configure FreeBSD to provide a virtual USB storage device."
-msgstr ""
+msgstr "如何配置FreeBSD以提供虚拟USB存储设备。"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:86
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "USB Virtual Serial Ports"
-msgstr ""
+msgstr "USB虚拟串口"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:88
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Configuring USB Device Mode Serial Ports"
-msgstr ""
+msgstr "配置USB设备模式串口"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:94
+#, fuzzy
 msgid ""
 "Virtual serial port support is provided by templates number 3, 8, and 10.  "
 "Note that template 3 works with Microsoft Windows 10 without the need for "
@@ -165,13 +192,16 @@ msgid ""
 "three templates.  Both man:usb_template[4] and man:umodem[4] kernel modules "
 "must be loaded."
 msgstr ""
+"虚拟串口支持由模板3、8和10提供。请注意，模板3可以在Microsoft Windows "
+"10上使用，无需特殊驱动程序和INF文件。其他主机操作系统可以与这三个模板一起使用。必须加载man:usb_template[4]和man:umodem[4]内核模块。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:96
+#, fuzzy
 msgid ""
 "To enable USB device mode serial ports, add those lines to "
 "[.filename]#/etc/ttys#:"
-msgstr ""
+msgstr "要启用USB设备模式的串口，请将以下行添加到[/etc/ttys]文件中："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:101
@@ -183,8 +213,9 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:104
+#, fuzzy
 msgid "Then add these lines to [.filename]#/etc/devd.conf#:"
-msgstr ""
+msgstr "然后将以下行添加到[/etc/devd.conf]文件中："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:114
@@ -201,8 +232,9 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:117
+#, fuzzy
 msgid "Reload the configuration if man:devd[8] is already running:"
-msgstr ""
+msgstr "如果 man:devd[8] 已经在运行，请重新加载配置。"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:121
@@ -213,11 +245,13 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:124
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:191
+#, fuzzy
 msgid ""
 "Make sure the necessary modules are loaded and the correct template is set "
 "at boot by adding those lines to [.filename]#/boot/loader.conf#, creating it"
 " if it does not already exist:"
 msgstr ""
+"确保所需的模块已加载并在启动时设置正确的模板，通过将这些行添加到[/boot/loader.conf]#文件中，如果该文件不存在，则创建它："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:129
@@ -230,8 +264,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:132
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:199
+#, fuzzy
 msgid "To load the module and set the template without rebooting use:"
-msgstr ""
+msgstr "要在不重新启动的情况下加载模块并设置模板，请使用以下命令："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:137
@@ -243,12 +278,13 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:139
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Connecting to USB Device Mode Serial Ports from FreeBSD"
-msgstr ""
+msgstr "从FreeBSD连接到USB设备模式串口"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:145
+#, fuzzy
 msgid ""
 "To connect to a board configured to provide USB device mode serial ports, "
 "connect the USB host, such as a laptop, to the boards USB OTG or USB client "
@@ -256,6 +292,8 @@ msgid ""
 "of the list you should see a USB serial port, e.g. \"ttyU0\".  To open the "
 "connection, use:"
 msgstr ""
+"要连接到配置为提供USB设备模式串行端口的板子，将USB主机（例如笔记本电脑）连接到板子的USB OTG或USB客户端端口。在主机上使用`pstat "
+"-t`命令列出终端线路。在列表的末尾附近，您应该会看到一个USB串行端口，例如\"ttyU0\"。要打开连接，请使用："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:149
@@ -265,24 +303,27 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:152
+#, fuzzy
 msgid ""
 "After pressing the kbd:[Enter] key a few times you will see a login prompt."
-msgstr ""
+msgstr "按下 kbd:[Enter] 键几次后，您将看到一个登录提示符。"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:153
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Connecting to USB Device Mode Serial Ports from macOS"
-msgstr ""
+msgstr "在 macOS 上连接 USB 设备模式串口"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:157
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:167
+#, fuzzy
 msgid ""
 "To connect to a board configured to provide USB device mode serial ports, "
 "connect the USB host, such as a laptop, to the boards USB OTG or USB client "
 "port.  To open the connection, use:"
 msgstr ""
+"要连接到配置为提供USB设备模式串行端口的板子，将USB主机（例如笔记本电脑）连接到板子的USB OTG或USB客户端端口。要打开连接，请使用："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:161
@@ -292,9 +333,9 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:163
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Connecting to USB Device Mode Serial Ports from Linux"
-msgstr ""
+msgstr "在Linux上连接USB设备模式串口"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:171
@@ -304,12 +345,13 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:173
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Connecting to USB Device Mode Serial Ports from Microsoft Windows 10"
-msgstr ""
+msgstr "在Microsoft Windows 10上连接USB设备模式串口"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:181
+#, fuzzy
 msgid ""
 "To connect to a board configured to provide USB device mode serial ports, "
 "connect the USB host, such as a laptop, to the boards USB OTG or USB client "
@@ -321,21 +363,26 @@ msgid ""
 "COMx obtained from Device Manager in the \"Serial line\" dialog box and "
 "click Open."
 msgstr ""
+"要连接到配置为提供USB设备模式串口的板子，需要将USB主机（例如笔记本电脑）连接到板子的USB "
+"OTG或USB客户端端口。要打开连接，您需要一个串口终端程序，例如PuTTY。要检查Windows使用的COM端口名称，请运行设备管理器，展开“端口（COM和LPT）”。您将看到一个类似于“USB串行设备（COM4）”的名称。运行您选择的串口终端程序，例如PuTTY。在PuTTY对话框中将“连接类型”设置为“串行”，在“串行线路”对话框中输入从设备管理器获取的COMx，并点击打开。"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:183
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "USB Device Mode Network Interfaces"
-msgstr ""
+msgstr "USB设备模式网络接口"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:189
+#, fuzzy
 msgid ""
 "Virtual network interfaces support is provided by templates number 1, 8, and"
 " 10.  Note that none of them works with Microsoft Windows.  Other host "
 "operating systems work with all three templates.  Both man:usb_template[4] "
 "and man:if_cdce[4] kernel modules must be loaded."
 msgstr ""
+"虚拟网络接口的支持由模板1、8和10提供。请注意，它们都不适用于Microsoft "
+"Windows。其他主机操作系统都适用于这三个模板。必须加载man:usb_template[4]和man:if_cdce[4]内核模块。"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:196
@@ -355,19 +402,21 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:207
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "USB Virtual Storage Device"
-msgstr ""
+msgstr "USB虚拟存储设备"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:212
+#, fuzzy
 msgid ""
 "The man:cfumass[4] driver is a USB device mode driver first available in "
 "FreeBSD 12.0."
-msgstr ""
+msgstr "man:cfumass[4]驱动程序是一个USB设备模式驱动程序，首次在FreeBSD 12.0中可用。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:218
+#, fuzzy
 msgid ""
 "Mass Storage target is provided by templates 0 and 10.  Both "
 "man:usb_template[4] and man:cfumass[4] kernel modules must be loaded.  "
@@ -375,21 +424,26 @@ msgid ""
 "for iSCSI or Fibre Channel targets.  On the host side, USB Mass Storage "
 "initiators can only access a single LUN, LUN 0."
 msgstr ""
+"模板0和10提供了大容量存储目标。必须加载man:usb_template[4]和man:cfumass[4]内核模块。man:cfumass[4]与CTL子系统进行接口交互，该子系统也用于iSCSI或光纤通道目标。在主机端，USB大容量存储发起器只能访问一个逻辑单元（LUN），即LUN"
+" 0。"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:219
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Configuring USB Mass Storage Target Using the cfumass Startup Script"
-msgstr ""
+msgstr "使用cfumass启动脚本配置USB大容量存储目标"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:223
+#, fuzzy
 msgid ""
 "The simplest way to set up a read-only USB storage target is to use the "
 "[.filename]#cfumass# rc script.  To configure it this way, copy the files to"
 " be presented to the USB host machine into the `/var/cfumass` directory, and"
 " add this line to [.filename]#/etc/rc.conf#:"
 msgstr ""
+"设置只读USB存储目标的最简单方法是使用[.filename]#cfumass# "
+"rc脚本。要以这种方式配置它，将要呈现给USB主机机器的文件复制到`/var/cfumass`目录，并将以下行添加到[.filename]#/etc/rc.conf#文件中："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:227
@@ -399,8 +453,9 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:230
+#, fuzzy
 msgid "To configure the target without restarting, run this command:"
-msgstr ""
+msgstr "要在不重新启动的情况下配置目标，请运行以下命令："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:234
@@ -410,29 +465,33 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:239
+#, fuzzy
 msgid ""
 "Differently from serial and network functionality, the template should not "
 "be set to 0 or 10 in [.filename]#/boot/loader.conf#.  This is because the "
 "LUN must be set up before setting the template.  The cfumass startup script "
 "sets the correct template number automatically when started."
 msgstr ""
+"与串行和网络功能不同，模板不应在[.filename]#/boot/loader.conf#中设置为0或10。这是因为在设置模板之前必须设置LUN。当启动时，cfumass启动脚本会自动设置正确的模板编号。"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:240
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Configuring USB Mass Storage Using Other Means"
-msgstr ""
+msgstr "使用其他方法配置USB大容量存储设备"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:244
+#, fuzzy
 msgid ""
 "The rest of this chapter provides detailed description of setting the target"
 " without using the cfumass rc file.  This is necessary if e.g. one wants to "
 "provide a writeable LUN."
-msgstr ""
+msgstr "本章的其余部分提供了在不使用cfumass rc文件的情况下设置目标的详细描述。如果想要提供可写的逻辑单元（LUN），这是必要的。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:250
+#, fuzzy
 msgid ""
 "USB Mass Storage does not require the man:ctld[8] daemon to be running, "
 "although it can be used if desired.  This is different from iSCSI.  Thus, "
@@ -440,6 +499,8 @@ msgid ""
 "Both require the [.filename]#cfumass.ko# kernel module to be loaded.  The "
 "module can be loaded manually:"
 msgstr ""
+"USB Mass "
+"Storage不需要运行man:ctld[8]守护进程，尽管如果需要可以使用它。这与iSCSI不同。因此，有两种配置目标的方式：man:ctladm[8]或man:ctld[8]。两者都需要加载[.filename]#cfumass.ko#内核模块。可以手动加载该模块："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:254
@@ -449,10 +510,13 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:257
+#, fuzzy
 msgid ""
 "If [.filename]#cfumass.ko# has not been built into the kernel, "
 "[.filename]#/boot/loader.conf# can be set to load the module at boot:"
 msgstr ""
+"如果 [.filename]#cfumass.ko# 没有被编译进内核中，可以在 [.filename]#/boot/loader.conf# "
+"中设置在启动时加载该模块："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:261
@@ -462,8 +526,9 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:264
+#, fuzzy
 msgid "A LUN can be created without the man:ctld[8] daemon:"
-msgstr ""
+msgstr "可以在没有man:ctld[8]守护进程的情况下创建一个LUN。"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:268
@@ -473,29 +538,36 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:273
+#, fuzzy
 msgid ""
 "This presents the contents of the image file [.filename]#/data/target0# as a"
 " LUN to the USB host.  The file must exist before executing the command.  To"
 " configure the LUN at system startup, add the command to "
 "[.filename]#/etc/rc.local#."
 msgstr ""
+"这将把图像文件[.filename]#/data/target0#的内容作为LUN提供给USB主机。在执行命令之前，文件必须存在。要在系统启动时配置LUN，请将该命令添加到[.filename]#/etc/rc.local#中。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:276
+#, fuzzy
 msgid ""
 "man:ctld[8] can also be used to manage LUNs.  Create "
 "[.filename]#/etc/ctl.conf#, add a line to [.filename]#/etc/rc.conf# to make "
 "sure man:ctld[8] is automatically started at boot, and then start the "
 "daemon."
 msgstr ""
+"man:ctld[8]也可以用来管理逻辑单元（LUNs）。创建 [.filename]#/etc/ctl.conf# 文件，添加一行到 "
+"[.filename]#/etc/rc.conf# 文件中，以确保在启动时自动启动 man:ctld[8]，然后启动守护进程。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:279
+#, fuzzy
 msgid ""
 "This is an example of a simple [.filename]#/etc/ctl.conf# configuration "
 "file.  Refer to man:ctl.conf[5] for a more complete description of the "
 "options."
 msgstr ""
+"这是一个简单的 [.filename]#/etc/ctl.conf# 配置文件的示例。有关选项的更完整描述，请参考 man:ctl.conf[5]。"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:288
@@ -511,6 +583,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:295
+#, fuzzy
 msgid ""
 "The example creates a single target with a single LUN.  The "
 "`naa.50015178f369f092` is a device identifier composed of 32 random "
@@ -518,13 +591,15 @@ msgid ""
 " backing the LUN.  That file must exist before starting man:ctld[8].  The "
 "second line is optional and specifies the size of the LUN."
 msgstr ""
+"该示例创建了一个具有单个LUN的单个目标。`naa.50015178f369f092`是由32个随机十六进制数字组成的设备标识符。`path`行定义了指向支持LUN的文件或zvol的完整路径。在启动man:ctld[8]之前，该文件必须存在。第二行是可选的，用于指定LUN的大小。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:297
+#, fuzzy
 msgid ""
 "To make sure the man:ctld[8] daemon is started at boot, add this line to "
 "[.filename]#/etc/rc.conf#:"
-msgstr ""
+msgstr "为了确保man:ctld[8]守护进程在启动时自动启动，请将以下行添加到.filename#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:301
@@ -534,8 +609,9 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:304
+#, fuzzy
 msgid "To start man:ctld[8] now, run this command:"
-msgstr ""
+msgstr "要启动man:ctld[8]，请运行以下命令："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:308
@@ -545,11 +621,13 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:312
+#, fuzzy
 msgid ""
 "As the man:ctld[8] daemon is started, it reads [.filename]#/etc/ctl.conf#.  "
 "If this file is edited after the daemon starts, reload the changes so they "
 "take effect immediately:"
 msgstr ""
+"当启动man:ctld[8]守护进程时，它会读取.filename#/etc/ctl.conf#文件。如果在守护进程启动后编辑了此文件，则重新加载更改以立即生效："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/usb-device-mode/_index.adoc:316
