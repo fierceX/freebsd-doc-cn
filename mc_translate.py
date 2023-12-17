@@ -19,7 +19,7 @@ class ChatGPT:
         message = [
             {
                 "role": "system",
-                "content": f"你是一个智能翻译引擎，精通从英文到中文的翻译，并且拥有计算机相关领域知识，知道asciidoc格式的规范。\n 请将下面的文本翻译为中文，正确处理 asciidoc 标签以及和计算机相关的术语，直接返回译文，除此之外不需要过多解释。",
+                "content": f"你是一个翻译引擎，精通从英文到中文的翻译，并且拥有计算机相关领域知识，知道asciidoc格式的规范。\n 请将下面的文本翻译为中文，不需要解释，请直接返回译文。",
             },
             {
                 "role": "user",
@@ -28,6 +28,7 @@ class ChatGPT:
         ]
         chat_completion = self.client.chat.completions.create(
             messages=message,
+            temperature=0.2,
             model="gpt-3.5-turbo",
         )
         return chat_completion.choices[0].message.content
