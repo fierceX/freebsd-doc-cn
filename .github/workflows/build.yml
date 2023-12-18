@@ -44,6 +44,20 @@ jobs:
       - name: install python pkg
         run:
           pip install OpenAI msgpack deepl polib
+      - name: up tmx
+        run: bash up_tmx.sh
+       name: push tmx
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+              git config --global user.email "fiercex@outlook.com"
+              git config --global user.name "github actions"
+              set +e
+              git add tmx.msg
+              git commit -m "up tmx"
+              git remote -v
+              git push
+              set -e
       - name: translate
         run: |
               bash translate.sh website zh-cn books/handbook
