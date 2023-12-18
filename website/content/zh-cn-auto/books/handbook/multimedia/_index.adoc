@@ -1,17 +1,17 @@
 ---
-description: 'The multimedia chapter provides an overview of multimedia support on FreeBSD'
+description: 多媒体章节提供了关于FreeBSD上多媒体支持的概述。
 next: books/handbook/kernelconfig
-part: 'Part II. Common Tasks'
+part: 第二部分：常见任务
 path: /books/handbook/
 prev: books/handbook/desktop
 showBookMenu: true
 tags: '["multimedia", "sound card", "Audio players", "scanner", "SANE", "Video players", "Conferencing and Meetings", "Setting Up the Webcam"]'
-title: 'Chapter 9. Multimedia'
+title: '第9章 多媒体'
 weight: 12
 ---
 
 [[multimedia]]
-= Multimedia
+= 多媒体
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,28 +46,28 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[multimedia-synopsis]]
-== Synopsis
+== 概要
 
-The multimedia chapter provides an overview of multimedia support on FreeBSD. Multimedia applications and technologies have become an integral part of modern computing, and FreeBSD provides robust and reliable support for a wide range of multimedia hardware and software. This chapter covers various multimedia components such as audio, video, and image processing. It also discusses various media formats and codecs, as well as tools and applications for multimedia creation and playback. Additionally, the chapter covers multimedia system configuration, troubleshooting, and optimization. Whether you are a multimedia enthusiast or a professional content creator, FreeBSD offers a robust platform for multimedia work. This chapter aims to help get the most out of FreeBSD's multimedia capabilities, providing useful information and practical examples to help get started.
+多媒体章节提供了关于FreeBSD上多媒体支持的概述。多媒体应用和技术已成为现代计算的重要组成部分，FreeBSD为各种多媒体硬件和软件提供了强大可靠的支持。本章介绍了各种多媒体组件，如音频、视频和图像处理。还讨论了各种媒体格式和编解码器，以及用于多媒体创建和播放的工具和应用程序。此外，本章还涵盖了多媒体系统配置、故障排除和优化。无论您是多媒体爱好者还是专业内容创作者，FreeBSD都为多媒体工作提供了强大的平台。本章旨在帮助充分利用FreeBSD的多媒体功能，提供有用的信息和实际示例，以帮助入门。
 
 [[sound-setup]]
-== Setting Up the Sound Card
+== 设置声卡
 
-By default, FreeBSD will automatically detect the sound card used by the system. FreeBSD supports a wide variety of sound cards. The list of supported sound cards can be consulted in man:sound[4].
+默认情况下，FreeBSD会自动检测系统使用的声卡。FreeBSD支持各种各样的声卡。可以在man:sound[4]中查看支持的声卡列表。
 
 [NOTE]
 ====
-It is only necessary to load the sound card module if FreeBSD has not detected it correctly.
+只有在FreeBSD没有正确检测到声卡时才需要加载声卡模块。
 ====
 
-Where it is not known which sound card the system has, or which module to use, the `snd_driver` metadriver can be loaded by executing the following command:
+当不知道系统使用哪个声卡或者使用哪个模块时，可以通过执行以下命令加载`snd_driver`元驱动程序：
 
 [source, shell]
 ....
 # kldload snd_driver
 ....
 
-Alternatively, to load the driver as a module at boot time, place the following line in [.filename]#/boot/loader.conf#:
+或者，要在启动时将驱动程序作为模块加载，将以下行放置在[.filename]#/boot/loader.conf#中：
 
 [.programlisting]
 ....
@@ -75,16 +75,16 @@ snd_driver_load="YES"
 ....
 
 [[sound-testing]]
-=== Testing Sound
+=== 测试声音
 
-To confirm the sound card is detected the following command can be executed:
+要确认声卡是否被检测到，可以执行以下命令：
 
 [source, shell]
 ....
 % dmesg | grep pcm
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -92,14 +92,14 @@ pcm0: <Conexant CX20561 (Hermosa) (Analog 2.0+HP/2.0)> at nid 26,22 and 24 on hd
 pcm1: <Conexant CX20561 (Hermosa) (Internal Analog Mic)> at nid 29 on hdaa0
 ....
 
-The status of the sound card may also be checked using this command:
+可以使用以下命令来检查声卡的状态：
 
 [source, shell]
 ....
 # cat /dev/sndstat
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -108,9 +108,9 @@ pcm0: <Conexant CX20561 (Hermosa) (Analog 2.0+HP/2.0)> (play/rec) default
 pcm1: <Conexant CX20561 (Hermosa) (Internal Analog Mic)> (rec)
 ....
 
-If no `pcm` devices are listed, double-check that the correct device driver was loaded. If all goes well, the sound card should now work in FreeBSD.
+如果没有列出任何`pcm`设备，请再次检查是否加载了正确的设备驱动程序。如果一切顺利，声卡现在应该可以在FreeBSD中正常工作了。
 
-man:beep[1] can be used to produce some noise, confirming that the sound card is working:
+man:beep[1]可以用来产生一些声音，确认声卡是否正常工作：
 
 [source, shell]
 ....
@@ -118,48 +118,48 @@ man:beep[1] can be used to produce some noise, confirming that the sound card is
 ....
 
 [[sound-mixer]]
-=== Mixer
+=== 搅拌器
 
-FreeBSD has different utilities to set and display sound card mixer values built on the FreeBSD Sound System:
+FreeBSD在FreeBSD声音系统上构建了不同的实用工具来设置和显示声卡混音值：
 
-.Supported mixer packages
+.支持的混音器软件包
 [options="header", cols="1,1,1,1"]
 |===
-| Name | License | Package | Toolkit
+| 名称 | 许可证 | 包 | 工具包
 
-| man:mixer[8]
-| BSD-2
-| Included in base system
-| CLI
+| 手册：mixer[8]
+| BSD-2是指BSD许可证的第二个版本。
+| 包含在基本系统中
+| 命令行界面（CLI）
 
-| dsbmixer
-| BSD-2
-| package:audio/dsbmixer[]
-| Qt
+| dsbmixer是一个用于混合和处理音频的开源软件。它提供了一系列功能，包括音频输入和输出设备的管理、音频信号的混合和处理、音频效果的应用等。dsbmixer可以通过命令行界面或图形界面进行操作，使用户能够方便地控制和调整音频的各个参数。它支持多种音频格式，并且具有高度可定制性，用户可以根据自己的需求进行配置和扩展。dsbmixer是一个功能强大且易于使用的音频处理工具，适用于各种音频应用场景。
+| BSD-2是指BSD许可证的第二个版本。
+| 包：audio/dsbmixer[]
+| Qt是一个跨平台的应用程序开发框架，用于开发图形用户界面、网络应用、数据库连接和其他各种应用程序。它提供了丰富的类库和工具，使开发者能够快速构建高质量的应用程序。Qt使用C++编写，具有良好的可扩展性和可移植性。它被广泛应用于各种领域，包括桌面应用、移动应用和嵌入式系统。
 
-| KDE Plasma audio widget
-| GPL 2.0
-| package:audio/plasma5-plasma-pa[]
-| Qt
+| KDE Plasma音频小部件
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 包：audio/plasma5-plasma-pa[]
+| Qt是一个跨平台的应用程序开发框架，用于开发图形用户界面、网络应用、数据库连接和其他各种应用程序。它提供了丰富的类库和工具，使开发者能够快速构建高质量的应用程序。Qt使用C++编写，具有良好的可扩展性和可移植性。它被广泛应用于各种领域，包括桌面应用、移动应用和嵌入式系统。
 
-| mixertui
-| BSD-2
-| package:audio/mixertui[]
-| TUI
+| mixertui是一个用于创建和管理混音器的命令行工具。它提供了一种简单的方式来配置和控制混音器的各种参数，包括音频输入和输出、音量控制、效果器和信号路由等。使用mixertui，用户可以方便地调整和优化音频混合的设置，以满足个人或专业需求。
+| BSD-2是指BSD许可证的第二个版本。
+| 包：音频/混音器界面[]
+| TUI是文本用户界面（Text User Interface）的缩写，是一种基于文本的用户界面，通常用于计算机终端或控制台应用程序。TUI提供了一种通过文本命令或菜单进行交互的方式，相比于图形用户界面（GUI），TUI更加轻量级和资源节约。TUI常用于命令行界面（CLI）工具、文本编辑器和终端模拟器等应用程序中。
 
 |===
 
 [[graphics-card-sound]]
-=== Graphics Card Sound
+=== 显卡声音
 
-Graphics cards often come with their own integrated sound devices, and it may be unclear which is being used as the default device. To confirm, run dmesg and look for the pcm entries to identify how the system is enumerating the outputs. Execute the following command:
+图形卡通常配备自己的集成声音设备，可能不清楚哪个设备被用作默认设备。要确认，请运行dmesg命令并查找pcm条目以确定系统如何枚举输出。执行以下命令：
 
 [source, shell]
 ....
 % dmesg | grep pcm
 ....
 
-The output looks something like this:
+输出的结果看起来像这样：
 
 [.programlisting]
 ....
@@ -174,14 +174,14 @@ pcm6: <HDA Realtek ALC889 PCM #2 Digital> at cad 2 nid 1 on hdac1
 pcm7: <HDA Realtek ALC889 PCM #3 Digital> at cad 2 nid 1 on hdac1
 ....
 
-The graphics card (NVIDIA(R)) has been enumerated before the sound card (Realtek(R)), with the sound card appearing as `pcm4`. The system can be configured to use the sound card as the default device by executing the following command:
+在图形卡（NVIDIA(R)）之前，声卡（Realtek(R)）已被枚举，声卡显示为`pcm4`。可以通过执行以下命令将声卡配置为默认设备：
 
 [source, shell]
 ....
 # sysctl hw.snd.default_unit=4
 ....
 
-To make this change permanent add the next line to [.filename]#/etc/sysctl.conf#:
+要使此更改永久生效，请将下一行添加到 [.filename]#/etc/sysctl.conf# 文件中：
 
 [.programlisting]
 ....
@@ -189,18 +189,18 @@ hw.snd.default_unit=4
 ....
 
 [[automatically-switching-headphones]]
-=== Automatically Switching to Headphones
+=== 自动切换到耳机
 
-Some systems may struggle with switching between audio outputs, but fortunately FreeBSD allows automatic switchover to be configured in [.filename]#device.hints#.
+有些系统在切换音频输出时可能会遇到困难，但幸运的是，FreeBSD允许在.device.hints中配置自动切换。
 
-Identify how the system is enumerating the audio outputs by executing the following command:
+通过执行以下命令来确定系统是如何枚举音频输出设备：
 
 [source, shell]
 ....
 % dmesg | grep pcm
 ....
 
-The output looks something like this:
+输出的结果看起来像这样：
 
 [.programlisting]
 ....
@@ -208,7 +208,7 @@ pcm0: <Realtek ALC892 Analog> at nid 23 and 26 on hdaa0
 pcm1: <Realtek ALC892 Right Analog Headphones> at nid 22 on hdaa0
 ....
 
-Add the following lines to [.filename]#/boot/device.hints#:
+将以下行添加到[.filename]#/boot/device.hints#文件中：
 
 [.programlisting]
 ....
@@ -218,26 +218,37 @@ hint.hdac.0.cad0.nid26.config="as=2 seq=0 device=speakers"
 
 [NOTE]
 ====
-Keep in mind that these values are for the example indicated above. They may vary depending on the system.
+请记住，这些值是针对上述示例而言的。它们可能会因系统而异。
 ====
 
 [[troubleshooting-sound]]
-=== Troubleshooting Sound
+=== 音频故障排除
 
-Some common error messages and their solutions:
+一些常见的错误消息及其解决方案：
 
 [[multimedia-sound-common-error-messages]]
-.Common Error Messages
+.常见错误消息
+
+1. "File not found" - 文件未找到
+2. "Access denied" - 拒绝访问
+3. "Invalid username or password" - 用户名或密码无效
+4. "Connection timed out" - 连接超时
+5. "Invalid input" - 输入无效
+6. "Out of memory" - 内存不足
+7. "Permission denied" - 拒绝权限
+8. "Invalid file format" - 文件格式无效
+9. "Page not found" - 页面未找到
+10. "Server error" - 服务器错误
 [cols="1,1", frame="none", options="header"]
 |===
-| Error
-| Solution
+| 错误
+| 解决方案
 
-|`xxx: can't open /dev/dsp!`
-|Type `fstat \| grep dsp` to check if another application is holding the device open. Noteworthy troublemakers are esound and KDE's sound support.
+|`xxx: 无法打开 /dev/dsp！`
+|输入 `fstat` 命令| 使用 `grep dsp` 命令来检查是否有其他应用程序正在占用该设备。值得注意的麻烦制造者是 esound 和 KDE 的声音支持。
 |===
 
-Programs using package:audio/pulseaudio[] might need to restart the package:audio/pulseaudio[] daemon for the changes in `hw.snd.default_unit` to take effect. Alternatively, package:audio/pulseaudio[] settings can be changed on the fly. man:pacmd[1] opens a command line connection to the package:audio/pulseaudio[] daemon:
+使用package:audio/pulseaudio[]的程序可能需要重新启动package:audio/pulseaudio[]守护进程，以使`hw.snd.default_unit`的更改生效。或者，可以实时更改package:audio/pulseaudio[]的设置。man:pacmd[1]打开与package:audio/pulseaudio[]守护进程的命令行连接。
 
 [source, shell]
 ....
@@ -246,7 +257,7 @@ Welcome to PulseAudio 14.2! Use "help" for usage information.
 >>>
 ....
 
-The following command changes the default sink to card number 4 as in the previous example:
+以下命令将默认的音频输出设备更改为卡号为4，与之前的示例相同：
 
 [.programlisting]
 ....
@@ -255,47 +266,47 @@ set-default-sink 4
 
 [WARNING]
 ====
-Do not use the `exit` command to exit the command line interface. That will kill the package:audio/pulseaudio[] daemon. Use kbd:[Ctrl+D] instead.
+不要使用`exit`命令来退出命令行界面。这会终止`package:audio/pulseaudio[]`守护进程。请使用`kbd:[Ctrl+D]`代替。
 ====
 
 [[audio-ports]]
-== Audio players
+== 音频播放器
 
-This section introduces some of the software available from the FreeBSD Ports Collection which can be used for audio playback.
+本节介绍了一些可以用于音频播放的软件，这些软件可以从FreeBSD Ports Collection中获取。
 
-.Audio players packages
+.音频播放器软件包
 [options="header", cols="1,1,1,1"]
 |===
-| Name | License | Package | Toolkit
+| 名称 | 许可证 | 包 | 工具包
 
 | Elisa
-| LGPL 3.0
-| package:audio/elisa[]
-| Qt
+| LGPL 3.0是GNU Lesser General Public License（GNU宽松通用公共许可证）的第3.0版。
+| 包：音频/Elisa[]
+| Qt是一个跨平台的应用程序开发框架，用于开发图形用户界面、网络应用、数据库连接和其他各种应用程序。它提供了丰富的类库和工具，使开发者能够快速构建高质量的应用程序。Qt使用C++编写，具有良好的可扩展性和可移植性。它被广泛应用于各种领域，包括桌面应用、移动应用和嵌入式系统。
 
-| GNOME Music
-| GPL 2.0
-| package:audio/gnome-music[]
-| GTK+
+| GNOME音乐
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 包：audio/gnome-music[]
+| GTK+是一个用于创建图形用户界面的开源工具包。它最初是为GNU计划开发的，现在已经成为许多Linux发行版的标准工具包。GTK+提供了一套丰富的控件和功能，使开发者能够轻松地创建各种应用程序，包括桌面应用程序、移动应用程序和嵌入式系统应用程序。它使用C语言编写，并提供了多种编程语言的绑定，如Python、C++和Java。GTK+还具有跨平台的特性，可以在不同的操作系统上运行，如Linux、Windows和macOS。
 
-| Audacious
-| BSD-2
-| package:multimedia/audacious[]
-| Qt
+| Audacious是一个免费的音频播放器，可在多个平台上使用。它具有简洁的界面和丰富的功能，可以播放各种音频格式。Audacious还支持插件扩展，用户可以根据自己的需求添加额外的功能和特性。无论是在个人使用还是在专业环境中，Audacious都是一个强大而可靠的音频播放器选择。
+| BSD-2是指BSD许可证的第二个版本。
+| 包：多媒体/audacious[]
+| Qt是一个跨平台的应用程序开发框架，用于开发图形用户界面、网络应用、数据库连接和其他各种应用程序。它提供了丰富的类库和工具，使开发者能够快速构建高质量的应用程序。Qt使用C++编写，具有良好的可扩展性和可移植性。它被广泛应用于各种领域，包括桌面应用、移动应用和嵌入式系统。
 
-| MOC (music on console)
-| GPL 2.0
-| package:audio/moc[]
-| TUI
+| MOC（音乐控制台）
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 包：音频/moc[]
+| TUI是文本用户界面（Text User Interface）的缩写，是一种基于文本的用户界面，通常用于计算机终端或控制台应用程序。TUI提供了一种通过文本命令或菜单进行交互的方式，相比于图形用户界面（GUI），TUI更加轻量级和资源节约。TUI常用于命令行界面（CLI）工具、文本编辑器和终端模拟器等应用程序中。
 
 |===
 
 [[elisa]]
 === Elisa
 
-Elisa is a music player developed by the KDE community that strives to be simple and nice to use.
+Elisa是由KDE社区开发的音乐播放器，致力于简单易用且美观。
 
-To install Elisa, execute:
+要安装Elisa，请执行以下操作：
 
 [source, shell]
 ....
@@ -303,11 +314,11 @@ To install Elisa, execute:
 ....
 
 [[gnome-music]]
-=== GNOME Music
+=== GNOME音乐
 
-GNOME Music is the new GNOME music playing application. It aims to combine an elegant and immersive browsing experience with simple and straightforward controls.
+GNOME Music是新的GNOME音乐播放应用程序。它旨在将优雅和沉浸式的浏览体验与简单直观的控制相结合。
 
-To install GNOME Music, execute:
+要安装GNOME音乐，请执行以下操作：
 
 [source, shell]
 ....
@@ -315,11 +326,11 @@ To install GNOME Music, execute:
 ....
 
 [[audacious]]
-=== Audacious
+=== Audacious是一个免费的音频播放器，可在多个平台上使用。它具有简洁的界面和丰富的功能，可以播放各种音频格式。Audacious还支持插件扩展，用户可以根据自己的需求添加额外的功能和特性。无论是在个人使用还是在专业环境中，Audacious都是一个强大而可靠的音频播放器选择。
 
-Audacious is an open source audio player. A descendant of XMMS, it plays your music how you want it, without stealing away your computer's resources from other tasks.
+Audacious是一个开源音频播放器。它是XMMS的后代，可以按照您的要求播放音乐，而不会占用计算机的资源进行其他任务。
 
-To install Audacious, execute:
+要安装Audacious，请执行以下操作：
 
 [source, shell]
 ....
@@ -328,17 +339,17 @@ To install Audacious, execute:
 
 [NOTE]
 ====
-Audacious supports OSS natively, but must be configured in the settings on the Audio tab.
+Audacious原生支持OSS，但必须在设置中的音频选项卡中进行配置。
 ====
 
 [[moc-music-on-console]]
-=== MOC (music on console)
+=== MOC（音乐控制台）
 
-MOC (music on console) is a console audio player designed to be powerful and easy to use.
+MOC（音乐控制台）是一个旨在强大且易于使用的控制台音频播放器。
 
-MOC plays smoothly, regardless of system or I/O load, because it handles the output buffer in a separate thread. It does not cause gaps between files, because the next file to be played is pre-cached while playing the current file.
+MOC可以在任何系统或I/O负载下平稳播放，因为它在单独的线程中处理输出缓冲区。它不会在文件之间产生间隙，因为在播放当前文件时，下一个文件已经被预先缓存。
 
-To install MOC (music on console), execute:
+要安装MOC（音乐控制台），执行以下命令：
 
 [source, shell]
 ....
@@ -346,57 +357,57 @@ To install MOC (music on console), execute:
 ....
 
 [[video-ports]]
-== Video players
+== 视频播放器
 
-This section introduces some of the software available from the FreeBSD Ports Collection which can be used for video playback.
+本节介绍了一些可以用于视频播放的软件，这些软件可以从FreeBSD Ports Collection中获取。
 
-.Video players packages
+.视频播放器软件包
 [options="header", cols="1,1,1,1"]
 |===
-| Name | License | Package | Toolkit
+| 名称 | 许可证 | 包 | 工具包
 
-| MPlayer
-| GPL 2.0
-| package:multimedia/mplayer[]
-| CLI
+| MPlayer是一个开源的多媒体播放器，可以在多个平台上运行。它支持各种音频和视频格式，并具有强大的功能和灵活的配置选项。MPlayer是一个非常流行的播放器，被广泛用于电影、音乐和其他媒体的播放。它具有简单易用的界面和高质量的播放效果，是许多用户的首选播放器之一。
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 包：多媒体/mplayer[]
+| 命令行界面（CLI）
 
-| SMPlayer
-| GPL 2.0
-| package:multimedia/smplayer[]
-| Qt
+| SMPlayer是一个免费的多媒体播放器，可在Windows和Linux操作系统上使用。它支持各种音频和视频格式，并具有许多有用的功能，如字幕支持、音频和视频过滤器、播放列表和快捷键。SMPlayer还具有用户友好的界面和可自定义的外观。它是一个功能强大且易于使用的播放器，适用于各种媒体播放需求。
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 包：多媒体/SMPlayer[]
+| Qt是一个跨平台的应用程序开发框架，用于开发图形用户界面、网络应用、数据库连接和其他各种应用程序。它提供了丰富的类库和工具，使开发者能够快速构建高质量的应用程序。Qt使用C++编写，具有良好的可扩展性和可移植性。它被广泛应用于各种领域，包括桌面应用、移动应用和嵌入式系统。
 
-| VLC media player
-| GPL 2.0
-| package:multimedia/vlc[]
-| Qt
+| VLC媒体播放器
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 包：多媒体/vlc[]
+| Qt是一个跨平台的应用程序开发框架，用于开发图形用户界面、网络应用、数据库连接和其他各种应用程序。它提供了丰富的类库和工具，使开发者能够快速构建高质量的应用程序。Qt使用C++编写，具有良好的可扩展性和可移植性。它被广泛应用于各种领域，包括桌面应用、移动应用和嵌入式系统。
 
-| Kodi (XBMC) 
-| GPL 2.0
-| package:multimedia/kodi[]
-| X11
+| Kodi（XBMC） 
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 包：多媒体/kodi[]
+| X11是一个用于图形用户界面的网络协议。它允许在远程计算机上运行的应用程序通过网络连接到显示设备，并在本地显示。X11是UNIX和类UNIX系统中最常用的图形系统。它提供了窗口管理、图形绘制和用户输入处理等功能。X11还支持客户端-服务器模型，允许多个应用程序同时连接到同一个显示设备。
 
 |===
 
 [[mplayer]]
-=== MPlayer
+=== MPlayer是一个开源的多媒体播放器，可以在多个平台上运行。它支持各种音频和视频格式，并具有强大的功能和灵活的配置选项。MPlayer是一个非常流行的播放器，被广泛用于电影、音乐和其他媒体的播放。它具有简单易用的界面和高质量的播放效果，是许多用户的首选播放器之一。
 
-MPlayer is a multimedia player and encoder suite which runs on many platforms and works on the command line. It plays a terrific number of different file formats and codecs including popular DivX, XviD, H.264 streams as well as DVD and SVCDs along with many popular audio codecs.
+MPlayer是一个多媒体播放器和编码套件，可以在许多平台上运行，并且可以通过命令行操作。它可以播放大量不同的文件格式和编解码器，包括流行的DivX、XviD、H.264流以及DVD和SVCD，还支持许多流行的音频编解码器。
 
-To install MPlayer, execute:
+要安装MPlayer，请执行以下操作：
 
 [source, shell]
 ....
 # pkg install mplayer
 ....
 
-For examples of how MPlayer works see man:mplayer[1].
+有关MPlayer如何工作的示例，请参阅man:mplayer[1]。
 
 [[smplayer]]
-=== SMPlayer
+=== SMPlayer是一个免费的多媒体播放器，可在Windows和Linux操作系统上使用。它支持各种音频和视频格式，并具有许多有用的功能，如字幕支持、音频和视频过滤器、播放列表和快捷键。SMPlayer还具有用户友好的界面和可自定义的外观。它是一个功能强大且易于使用的播放器，适用于各种媒体播放需求。
 
-SMPlayer intends to be a complete front-end for MPlayer, from basic features like playing videos, DVDs, and VCDs to more advanced features like support for MPlayer filters and more.
+SMPlayer旨在成为MPlayer的完整前端，从播放视频、DVD和VCD等基本功能到支持MPlayer滤镜等更高级功能。
 
-To install SMPlayer, execute:
+要安装SMPlayer，请执行以下操作：
 
 [source, shell]
 ....
@@ -404,11 +415,11 @@ To install SMPlayer, execute:
 ....
 
 [[vlc]]
-=== VLC media player
+=== VLC媒体播放器
 
-VLC media player is a highly portable multimedia player for various audio and video formats (MPEG-1, MPEG-2, MPEG-4, DivX, mp3, ogg, and more) as well as DVD's, VCD's, and various streaming protocols. It can also be used as a server to stream in unicast or multicast in IPv4 or IPv6 on a high-bandwidth network. VLC also has the ability to transcode media on-the-fly for streaming or saving to disk.
+VLC媒体播放器是一款高度便携的多媒体播放器，支持多种音频和视频格式（如MPEG-1、MPEG-2、MPEG-4、DivX、mp3、ogg等），还可以播放DVD、VCD和各种流媒体协议。它还可以作为服务器，在高带宽网络上进行单播或组播的流媒体传输。VLC还具有实时转码媒体的能力，用于流媒体传输或保存到磁盘。
 
-To install VLC, execute:
+要安装VLC，请执行以下操作：
 
 [source, shell]
 ....
@@ -416,11 +427,11 @@ To install VLC, execute:
 ....
 
 [[kodi]]
-=== Kodi (XBMC)
+=== Kodi（XBMC）
 
-Kodi (formerly known as XBMC) is a free and open source cross-platform media-player and entertainment hub. It allows users to play and view most videos, music, podcasts, and other digital media files from local and network storage media and the internet.
+Kodi（以前称为XBMC）是一个免费开源的跨平台媒体播放器和娱乐中心。它允许用户从本地和网络存储介质以及互联网上播放和查看大多数视频、音乐、播客和其他数字媒体文件。
 
-To install Kodi, execute:
+要安装Kodi，请执行以下操作：
 
 [source, shell]
 ....
@@ -428,70 +439,70 @@ To install Kodi, execute:
 ....
 
 [[conferencing-meetings]]
-== Conferencing and Meetings
+== 会议和会议
 
-A FreeBSD desktop environment can be used to join video conferences. This section will explain how to configure the webcam and which videoconferencing applications are supported on FreeBSD.
+FreeBSD桌面环境可以用于参加视频会议。本节将介绍如何配置摄像头以及在FreeBSD上支持哪些视频会议应用程序。
 
 [[webcam-setup]]
-=== Setting Up the Webcam
+=== 设置网络摄像头
 
-To allow FreeBSD access to the webcam and perform its configuration it is necessary to install certain utilities:
+为了让FreeBSD能够访问并配置摄像头，需要安装一些特定的工具：
 
-* package:multimedia/webcamd[] is a daemon that enables the use of hundreds of different USB based webcam and DVB USB devices.
-* package:multimedia/pwcview[] is an application that can be used to view the video stream of the webcam.
+* package:multimedia/webcamd[] 是一个守护进程，可以使用数百种不同的基于USB的网络摄像头和DVB USB设备。
+* package:multimedia/pwcview[] 是一个可以用来查看网络摄像头视频流的应用程序。
 
-To install the required utilities, execute:
+要安装所需的工具，请执行以下操作：
 
 [source, shell]
 ....
 # pkg install webcamd pwcview
 ....
 
-Enable the man:webcamd[8] service in `/etc/rc.conf` to start it at system boot:
+在`/etc/rc.conf`中启用man:webcamd[8]服务，以便在系统启动时启动它：
 
 [source, shell]
 ....
 # sysrc webcamd_enable="YES"
 ....
 
-The user must belong to the `webcamd` group. To add the user to `webcamd` group execute the following command:
+用户必须属于`webcamd`组。要将用户添加到`webcamd`组，请执行以下命令：
 
 [source, shell]
 ....
 # pw groupmod webcamd -m username
 ....
 
-Since package:multimedia/webcamd[] needs the man:cuse[3] module this module must be loaded by executing the following command:
+由于package:multimedia/webcamd[]需要man:cuse[3]模块，因此必须通过执行以下命令来加载该模块：
 
 [source, shell]
 ....
 # kldload cuse
 ....
 
-To load man:cuse[3] at system boot, execute the command:
+要在系统启动时加载man:cuse[3]，执行以下命令：
 
 [source, shell]
 ....
 # sysrc kld_list += "cuse"
 ....
 
-Once the utilities have been installed the list of available webcams can be shown with man:webcamd[8]:
+一旦安装了实用程序，可以使用man:webcamd[8]命令显示可用的网络摄像头列表。
 
 [source, shell]
 ....
 # webcamd -l
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
 webcamd [-d ugen0.2] -N SunplusIT-Inc-HP-TrueVision-HD-Camera -S unknown -M 0 <.>
 webcamd [-d ugen1.3] -N Realtek-802-11n-WLAN-Adapter -S 00e04c000001 -M 0
 ....
-<.> Available webcam
+<.> 可用的网络摄像头
 
-Configure the available webcam executing the following command:
+执行以下命令配置可用的网络摄像头：
 
 [source, shell]
 ....
@@ -500,17 +511,17 @@ Configure the available webcam executing the following command:
 
 [NOTE]
 ====
-Note here that if this is a plug-and-play USB webcam, changing the USB port to which it is connected will change the output from `webcamd -l`, and the entry in rc.conf might need to be updated. For laptops that use USB integrated webcams, this should not be an issue.
+请注意，如果这是一个即插即用的USB摄像头，更改连接的USB端口将会改变`webcamd -l`的输出，并且rc.conf中的条目可能需要更新。对于使用USB集成摄像头的笔记本电脑，这不应该是一个问题。
 ====
 
-The man:webcamd[8] service must be started by executing the following command:
+启动webcamd[8]服务，需要执行以下命令：
 
 [source, shell]
 ....
 # service webcamd start
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -518,72 +529,72 @@ Starting webcamd.
 webcamd 1616 - - Attached to ugen0.2[0]
 ....
 
-package:multimedia/pwcview[] can be used to check the proper functioning of the webcam. The following command can be used to execute package:multimedia/pwcview[]:
+可以使用package:multimedia/pwcview[]来检查摄像头的正常工作。可以使用以下命令来执行package:multimedia/pwcview[]：
 
 [source, shell]
 ....
 % pwcview -f 30 -s vga
 ....
 
-Then package:multimedia/pwcview[] will display the webcam:
+然后，安装包multimedia/pwcview[]将显示网络摄像头：
 
-image::pwcview.png["pwcview showing Absolute FreeBSD 3rd edition as an example"]
+image::pwcview.png["pwcview以《绝对FreeBSD第三版》为例进行展示。"]
 
 [[meetings-software-status]]
-=== Meetings software status
+=== 会议软件状态
 
-FreeBSD currently supports the following tools used to carry out videoconferences.
+FreeBSD目前支持以下用于进行视频会议的工具。
 
-.Meeting software
+.会议软件
 [options="header", cols="1,1,1,1"]
 |===
-| Name | Firefox status | Chromium status | Website
+| 名称 | Firefox状态 | Chromium状态 | 网站
 
-| Microsoft Teams
-| Does not work
-| Works
-| link:https://teams.live.com[]
+| 微软团队
+| 不起作用
+| 工作
+| 链接：https://teams.live.com[]
 
-| Google Meet
-| Does not work
-| Works
-| link:https://meet.google.com/[]
+| Google Meet是一款由Google开发的在线视频会议工具。它允许用户通过互联网进行高清视频通话和实时屏幕共享。Google Meet可以用于个人和商业用途，支持多种设备和操作系统，包括计算机、手机和平板电脑。用户可以通过邀请链接或会议代码邀请他人参加会议，并可以在会议中进行文字聊天和文件共享。Google Meet还提供了一些高级功能，如会议录制和直播。
+| 不起作用
+| 工作
+| 链接：https://meet.google.com/[]
 
-| Zoom
-| Works
-| Works
-| link:https://zoom.us[]
+| Zoom是一种视频会议和在线沟通平台。它允许用户通过互联网进行高清视频和音频通话，以及实时屏幕共享和文件传输。Zoom在商业、教育和个人领域都得到了广泛应用，特别是在远程办公和远程学习方面。它提供了许多功能，如多人视频会议、聊天、虚拟背景等，使用户能够方便地进行远程协作和沟通。
+| 工作
+| 工作
+| 链接：https://zoom.us[]
 
-| Jitsi
-| Does not work
-| Works
-| link:https://meet.jit.si/[]
+| Jitsi是一个开源的视频会议和即时通讯平台。它提供了高质量的音视频通话、屏幕共享、文件传输等功能。Jitsi可以在多个平台上运行，包括Windows、Mac、Linux和移动设备。它还支持端到端加密，保护用户的通信安全。Jitsi易于使用和部署，可以用于个人使用、企业会议、在线教育等各种场景。
+| 不起作用
+| 工作
+| 链接：https://meet.jit.si/[]
 
-| BigBlueButton
-| Does not work
-| Works
-| link:https://bigbluebutton.org/[]
+| BigBlueButton是一个开源的在线会议和协作平台。它提供了视频会议、音频通话、屏幕共享、聊天和白板等功能，适用于远程教育、在线培训和团队协作等场景。BigBlueButton支持多种操作系统和浏览器，并且可以与其他应用程序集成，如学习管理系统和视频流媒体服务器。它的设计目标是提供稳定、可靠和安全的在线会议体验。
+| 不起作用
+| 工作
+| 链接：https://bigbluebutton.org/[]
 
 |===
 
 [[scanners]]
-== Image Scanners
+== 图像扫描仪
 
-In FreeBSD, access to image scanners is provided by link:http://www.sane-project.org[SANE (Scanner Access Now Easy)], which is available in the FreeBSD Ports Collection.
+在FreeBSD中，可以通过link:http://www.sane-project.org[SANE (Scanner Access Now Easy)]来访问图像扫描仪，该软件可在FreeBSD Ports Collection中获取。
 
 [[scanners-kernel-usb]]
-=== Checking the Scanner
+=== 检查扫描仪
 
-Before attempting any configuration it is important to check the scanner is supported by SANE.
+在尝试任何配置之前，重要的是要检查扫描仪是否受到SANE的支持。
 
-With the scanner connected, run the following command to get all connected USB devices:
+连接上扫描仪后，运行以下命令以获取所有连接的USB设备：
 
 [source, shell]
 ....
 # usbconfig list
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -592,7 +603,7 @@ ugen4.3: <Logitech USB Optical Mouse> at usbus4, cfg=0 md=HOST spd=LOW (1.5Mbps)
 ugen3.2: <HP Deskjet 1050 J410 series> at usbus3, cfg=0 md=HOST spd=HIGH (480Mbps) pwr=ON (2mA)
 ....
 
-Run the following command to obtain the `idVendor` and the `idProduct`:
+运行以下命令以获取`idVendor`和`idProduct`：
 
 [source, shell]
 ....
@@ -601,10 +612,10 @@ Run the following command to obtain the `idVendor` and the `idProduct`:
 
 [NOTE]
 ====
-Note here that the scanner is a plug-and-play device, and changing the USB port to which it is connected will change the output from `usbconfig list`.
+请注意，扫描仪是一种即插即用设备，更改连接的USB端口将会改变`usbconfig list`的输出结果。
 ====
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -625,12 +636,12 @@ iProduct = 0x0002  <Deskjet 1050 J410 series>
 bNumConfigurations = 0x0001
 ....
 
-Once the `idVendor` and the `idProduct` have been obtained, it is necessary to check in the link:http://www.sane-project.org/lists/sane-mfgs-cvs.html[list of supported devices of SANE] if the scanner is supported by filtering by the idProduct.
+一旦获得了`idVendor`和`idProduct`，就需要在链接：http://www.sane-project.org/lists/sane-mfgs-cvs.html[SANE支持设备列表]中检查扫描仪是否受支持，通过按照`idProduct`进行过滤。
 
 [[_sane_configuration]]
-=== SANE Configuration
+=== SANE配置
 
-SANE provides the access to the scanner via backends. To be able to scan with FreeBSD the package:graphics/sane-backends[] package must be installed by running the following command:
+SANE通过后端提供对扫描仪的访问。要在FreeBSD上进行扫描，必须通过运行以下命令安装graphics/sane-backends[]软件包：
 
 [source, shell]
 ....
@@ -639,12 +650,12 @@ SANE provides the access to the scanner via backends. To be able to scan with Fr
 
 [TIP]
 ====
-Some USB scanners require firmware to be loaded. Like the HP scanner used in the example above, which needs the package package:print/hplip[] installed.
+一些USB扫描仪需要加载固件。就像上面示例中使用的HP扫描仪一样，它需要安装package:print/hplip[]软件包。
 ====
 
-After installing the necessary packages man:devd[8] must be configured to allow FreeBSD access to the scanner.
+安装必要的软件包后，必须配置man:devd[8]以允许FreeBSD访问扫描仪。
 
-Add the `saned.conf` file to [.filename]#/usr/local/etc/devd/saned.conf# with the following content:
+将`saned.conf`文件添加到[.filename]#/usr/local/etc/devd/saned.conf#，内容如下：
 
 [.programlisting]
 ....
@@ -659,32 +670,32 @@ notify 100 {
 };
 ....
 
-<.> `vendor`: Is the idVendor obtained previously by running the `usbconfig -d 3.2 dump_device_desc` command. <.> `product`: Is the idProduct obtained previously by running the `usbconfig -d 3.2 dump_device_desc` command.
+<.> `vendor`: 是之前通过运行 `usbconfig -d 3.2 dump_device_desc` 命令获取的 idVendor。 <.> `product`: 是之前通过运行 `usbconfig -d 3.2 dump_device_desc` 命令获取的 idProduct。
 
-After that man:devd[8] must be restarted by running the following command:
+在那之后，必须通过运行以下命令来重新启动man:devd[8]：
 
 [source, shell]
 ....
 # service devd restart
 ....
 
-The SANE backends include man:scanimage[1] which can be used to list the devices and perform an image acquisition.
+SANE后端包括man:scanimage[1]，可用于列出设备并执行图像获取。
 
-Execute man:scanimage[1] with `-L` argument to list the scanner devices:
+使用`-L`参数执行man:scanimage[1]命令以列出扫描设备：
 
 [source, shell]
 ....
 # scanimage -L
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
 device `hpaio:/usb/Deskjet_1050_J410_series?serial=XXXXXXXXXXXXXX' is a Hewlett-Packard Deskjet_1050_J410_series all-in-one
 ....
 
-If man:scanimage[1] is not able to identify the scanner, this message will appear:
+如果man:scanimage[1]无法识别扫描仪，将显示以下消息：
 
 [.programlisting]
 ....
@@ -694,32 +705,32 @@ sane-find-scanner tool (if appropriate). Please read the documentation
 which came with this software (README, FAQ, manpages).
 ....
 
-Once man:scanimage[1] sees the scanner, the configuration is complete and the scanner is now ready to use.
+一旦man:scanimage[1]检测到扫描仪，配置就完成了，扫描仪现在可以使用了。
 
-To activate the service and have it run at boot execute the following command:
+要激活该服务并使其在启动时运行，请执行以下命令：
 
 [source, shell]
 ....
 # sysrc saned_enable="YES"
 ....
 
-While man:scanimage[1] can be used to perform an image acquisition from the command line, it is often preferable to use a graphical interface to perform image scanning.
+虽然可以使用man:scanimage[1]命令行工具来进行图像采集，但通常更倾向于使用图形界面来进行图像扫描。
 
-.Graphical scanner programs
+.图形扫描程序
 [options="header", cols="1,1,1"]
 |===
-| Name | License | Package
+| 名称 | 许可证 | 包
 
 | skanlite
-| GPL 2.0
-| graphics/skanlite
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 图形/扫描仪
 
-| GNOME Simple Scan
-| GPL 3.0
-| graphics/simple-scan
+| GNOME简易扫描
+| GPL 3.0是GNU通用公共许可证的第3.0版。
+| 图形/简单扫描
 
-| XSANE
-| GPL 2.0
-| graphics/xsane
+| XSANE是一个用于扫描仪的开源图像扫描软件。它允许用户通过计算机控制扫描仪，从而将纸质文档转换为数字图像。XSANE提供了丰富的功能，包括调整扫描设置、图像预览、图像编辑和保存等。它支持多种图像格式，并且可以与其他图像处理软件集成使用。XSANE是一个功能强大且易于使用的工具，适用于个人用户和专业用户。
+| GPL 2.0是GNU通用公共许可证的第2.0版。
+| 图形/xsane
 
 |===

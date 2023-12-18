@@ -1,17 +1,17 @@
 ---
-description: 'This chapter focuses on the MAC framework and the set of pluggable security policy modules FreeBSD provides for enabling various security mechanisms'
+description: 本章重点介绍MAC框架以及FreeBSD提供的一组可插拔安全策略模块，用于启用各种安全机制。
 next: books/handbook/audit
-part: 'Part III. System Administration'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/jails
 showBookMenu: true
 tags: '["MAC", "labels", "security", "configuration", "nagios"]'
-title: 'Chapter 18. Mandatory Access Control'
+title: '第18章 强制访问控制'
 weight: 22
 ---
 
 [[mac]]
-= Mandatory Access Control
+= 强制访问控制
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,71 +46,71 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[mac-synopsis]]
-== Synopsis
+== 概要
 
-FreeBSD supports security extensions based on the POSIX(R).1e draft. These security mechanisms include file system Access Control Lists (crossref:security[fs-acl,“Access Control Lists”]) and Mandatory Access Control (MAC). MAC allows access control modules to be loaded in order to implement security policies. Some modules provide protections for a narrow subset of the system, hardening a particular service. Others provide comprehensive labeled security across all subjects and objects. The mandatory part of the definition indicates that enforcement of controls is performed by administrators and the operating system. This is in contrast to the default security mechanism of Discretionary Access Control (DAC) where enforcement is left to the discretion of users.
+FreeBSD支持基于POSIX(R).1e草案的安全扩展。这些安全机制包括文件系统访问控制列表（参见：security[fs-acl，“访问控制列表”]）和强制访问控制（MAC）。MAC允许加载访问控制模块以实施安全策略。一些模块为系统的一小部分提供保护，加固特定服务。其他模块提供全面的标记安全性，涵盖所有主体和对象。定义中的强制部分表示控制的执行由管理员和操作系统执行。这与默认的自主访问控制（DAC）安全机制形成对比，后者将执行权留给用户自行决定。
 
-This chapter focuses on the MAC framework and the set of pluggable security policy modules FreeBSD provides for enabling various security mechanisms.
+本章重点介绍MAC框架以及FreeBSD提供的一组可插拔安全策略模块，用于启用各种安全机制。
 
-After reading this chapter, you will know:
+阅读完本章后，你将会了解：
 
-* The terminology associated with the MAC framework.
-* The capabilities of MAC security policy modules as well as the difference between a labeled and non-labeled policy.
-* The considerations to take into account before configuring a system to use the MAC framework.
-* Which MAC security policy modules are included in FreeBSD and how to configure them.
-* How to implement a more secure environment using the MAC framework.
-* How to test the MAC configuration to ensure the framework has been properly implemented.
+* 与MAC框架相关的术语。
+* MAC安全策略模块的功能以及标记和非标记策略之间的区别。
+* 在配置系统使用MAC框架之前需要考虑的因素。
+* FreeBSD中包含哪些MAC安全策略模块以及如何配置它们。
+* 如何使用MAC框架实现更安全的环境。
+* 如何测试MAC配置以确保框架已经正确实施。
 
-Before reading this chapter, you should:
+在阅读本章之前，你应该：
 
-* Understand UNIX(R) and FreeBSD basics (crossref:basics[basics,FreeBSD Basics]).
-* Have some familiarity with security and how it pertains to FreeBSD (crossref:security[security,Security]).
+* 了解UNIX(R)和FreeBSD基础知识（参考：basics[basics，FreeBSD基础知识]）。
+* 对于安全性以及它与FreeBSD的相关性有一定的了解（参考：security[security,安全性]）。
 
 [WARNING]
 ====
-Improper MAC configuration may cause loss of system access, aggravation of users, or inability to access the features provided by Xorg. More importantly, MAC should not be relied upon to completely secure a system. The MAC framework only augments an existing security policy. Without sound security practices and regular security checks, the system will never be completely secure.
+不正确的MAC配置可能导致系统访问丢失，用户受到困扰，或无法访问Xorg提供的功能。更重要的是，不能仅依赖MAC来完全保护系统。MAC框架只是增强现有安全策略。如果没有健全的安全实践和定期的安全检查，系统将永远无法完全安全。
 
-The examples contained within this chapter are for demonstration purposes and the example settings should _not_ be implemented on a production system. Implementing any security policy takes a good deal of understanding, proper design, and thorough testing.
+本章中包含的示例仅用于演示目的，示例设置**不应**在生产系统上实施。实施任何安全策略都需要充分理解、正确设计和彻底测试。
 ====
 
-While this chapter covers a broad range of security issues relating to the MAC framework, the development of new MAC security policy modules will not be covered. A number of security policy modules included with the MAC framework have specific characteristics which are provided for both testing and new module development. Refer to man:mac_test[4], man:mac_stub[4] and man:mac_none[4] for more information on these security policy modules and the various mechanisms they provide.
+尽管本章涵盖了与MAC框架相关的广泛安全问题，但不包括开发新的MAC安全策略模块。MAC框架附带的一些安全策略模块具有特定特性，既用于测试，也用于新模块的开发。有关这些安全策略模块及其提供的各种机制的更多信息，请参阅man:mac_test[4]，man:mac_stub[4]和man:mac_none[4]。
 
 [[mac-inline-glossary]]
-== Key Terms
+== 关键术语
 
-The following key terms are used when referring to the MAC framework:
+在提到MAC框架时，使用以下关键术语：
 
-* _compartment_: a set of programs and data to be partitioned or separated, where users are given explicit access to specific component of a system. A compartment represents a grouping, such as a work group, department, project, or topic. Compartments make it possible to implement a need-to-know-basis security policy.
-* _integrity_: the level of trust which can be placed on data. As the integrity of the data is elevated, so does the ability to trust that data.
-* _level_: the increased or decreased setting of a security attribute. As the level increases, its security is considered to elevate as well.
-* _label_: a security attribute which can be applied to files, directories, or other items in the system. It could be considered a confidentiality stamp. When a label is placed on a file, it describes the security properties of that file and will only permit access by files, users, and resources with a similar security setting. The meaning and interpretation of label values depends on the policy configuration. Some policies treat a label as representing the integrity or secrecy of an object while other policies might use labels to hold rules for access.
-* _multilabel_: this property is a file system option which can be set in single-user mode using man:tunefs[8], during boot using man:fstab[5], or during the creation of a new file system. This option permits an administrator to apply different MAC labels on different objects. This option only applies to security policy modules which support labeling.
-* _single label_: a policy where the entire file system uses one label to enforce access control over the flow of data. Whenever `multilabel` is not set, all files will conform to the same label setting.
-* _object_: an entity through which information flows under the direction of a _subject_. This includes directories, files, fields, screens, keyboards, memory, magnetic storage, printers or any other data storage or moving device. An object is a data container or a system resource. Access to an object effectively means access to its data.
-* _subject_: any active entity that causes information to flow between _objects_ such as a user, user process, or system process. On FreeBSD, this is almost always a thread acting in a process on behalf of a user.
-* _policy_: a collection of rules which defines how objectives are to be achieved. A policy usually documents how certain items are to be handled. This chapter considers a policy to be a collection of rules which controls the flow of data and information and defines who has access to that data and information.
-* _high-watermark_: this type of policy permits the raising of security levels for the purpose of accessing higher level information. In most cases, the original level is restored after the process is complete. Currently, the FreeBSD MAC framework does not include this type of policy.
-* _low-watermark_: this type of policy permits lowering security levels for the purpose of accessing information which is less secure. In most cases, the original security level of the user is restored after the process is complete. The only security policy module in FreeBSD to use this is man:mac_lomac[4].
-* _sensitivity_: usually used when discussing Multilevel Security (MLS). A sensitivity level describes how important or secret the data should be. As the sensitivity level increases, so does the importance of the secrecy, or confidentiality, of the data.
+* _隔离区_：一组要进行分区或分离的程序和数据，用户被授予对系统特定组件的明确访问权限。隔离区表示一种分组，例如工作组、部门、项目或主题。隔离区使得实施需要知道的安全策略成为可能。
+* 完整性：可以对数据放置的信任级别。随着数据的完整性提高，对该数据的信任能力也随之增强。
+* _level_: 安全属性的增加或减少设置。随着级别的提高，其安全性也被认为提升。
+* _label_：一个可以应用于系统中的文件、目录或其他项目的安全属性。它可以被视为一个机密性标记。当一个标签被放置在一个文件上时，它描述了该文件的安全属性，并且只允许具有相似安全设置的文件、用户和资源访问。标签值的含义和解释取决于策略配置。一些策略将标签视为表示对象的完整性或保密性，而其他策略可能使用标签来保存访问规则。
+* _multilabel_：这个属性是一个文件系统选项，可以在单用户模式下使用 man:tunefs[8] 设置，在启动时使用 man:fstab[5] 设置，或在创建新文件系统时设置。此选项允许管理员在不同的对象上应用不同的 MAC 标签。此选项仅适用于支持标签的安全策略模块。
+* 单标签：一种策略，整个文件系统使用一个标签来强制对数据流进行访问控制。只要未设置“多标签”，所有文件都将符合相同的标签设置。
+* _object_：在_subject_的指导下，信息流经过的实体。这包括目录、文件、字段、屏幕、键盘、内存、磁存储、打印机或任何其他数据存储或移动设备。对象是一个数据容器或系统资源。访问对象实际上意味着访问其数据。
+* _subject_: 任何能够在对象之间传递信息的活动实体，例如用户、用户进程或系统进程。在FreeBSD上，这几乎总是一个代表用户的进程中的线程。
+* _政策_：一系列规则的集合，定义了如何实现目标。政策通常记录了如何处理特定事项。本章将政策视为一系列控制数据和信息流动并定义谁可以访问这些数据和信息的规则。
+* 高水位线：这种策略允许提高安全级别以访问更高级别的信息。在大多数情况下，完成进程后会恢复原始级别。目前，FreeBSD MAC框架不包括这种类型的策略。
+* _low-watermark_：这种类型的策略允许降低安全级别以访问较不安全的信息。在大多数情况下，完成过程后，用户的原始安全级别将恢复。在FreeBSD中，唯一使用此策略的安全策略模块是man:mac_lomac[4]。
+* 敏感性：通常在讨论多级安全性（MLS）时使用。敏感性级别描述了数据的重要性或机密性。随着敏感性级别的提高，数据的保密性或机密性的重要性也增加。
 
 [[mac-understandlabel]]
-== Understanding MAC Labels
+== 理解MAC标签
 
-A MAC label is a security attribute which may be applied to subjects and objects throughout the system. When setting a label, the administrator must understand its implications in order to prevent unexpected or undesired behavior of the system. The attributes available on an object depend on the loaded policy module, as policy modules interpret their attributes in different ways.
+MAC标签是一种安全属性，可以应用于系统中的主体和对象。在设置标签时，管理员必须理解其影响，以防止系统出现意外或不希望的行为。对象上可用的属性取决于加载的策略模块，因为策略模块以不同的方式解释其属性。
 
-The security label on an object is used as a part of a security access control decision by a policy. With some policies, the label contains all of the information necessary to make a decision. In other policies, the labels may be processed as part of a larger rule set.
+对象上的安全标签是安全访问控制决策中的一部分。在某些策略中，标签包含了做出决策所需的所有信息。在其他策略中，标签可能作为一个更大的规则集的一部分进行处理。
 
-There are two types of label policies: single label and multi label. By default, the system will use single label. The administrator should be aware of the pros and cons of each in order to implement policies which meet the requirements of the system's security model.
+有两种类型的标签策略：单标签和多标签。默认情况下，系统将使用单标签。管理员应该了解每种类型的优缺点，以便实施符合系统安全模型要求的策略。
 
-A single label security policy only permits one label to be used for every subject or object. Since a single label policy enforces one set of access permissions across the entire system, it provides lower administration overhead, but decreases the flexibility of policies which support labeling. However, in many environments, a single label policy may be all that is required.
+单标签安全策略只允许每个主体或对象使用一个标签。由于单标签策略在整个系统上强制执行一组访问权限，因此它提供了较低的管理开销，但降低了支持标记的策略的灵活性。然而，在许多环境中，单标签策略可能就是所需的全部。
 
-A single label policy is somewhat similar to DAC as `root` configures the policies so that users are placed in the appropriate categories and access levels. A notable difference is that many policy modules can also restrict `root`. Basic control over objects will then be released to the group, but `root` may revoke or modify the settings at any time.
+单标签策略在某种程度上类似于DAC，因为“root”配置策略以便将用户放置在适当的类别和访问级别中。一个显著的区别是许多策略模块也可以限制“root”。然后，对对象的基本控制将释放给组，但“root”可以随时撤销或修改设置。
 
-When appropriate, a multi label policy can be set on a UFS file system by passing `multilabel` to man:tunefs[8]. A multi label policy permits each subject or object to have its own independent MAC label. The decision to use a multi label or single label policy is only required for policies which implement the labeling feature, such as `biba`, `lomac`, and `mls`. Some policies, such as `seeotheruids`, `portacl` and `partition`, do not use labels at all.
+在适当的情况下，可以通过将 `multilabel` 传递给 `tunefs[8]` 在 UFS 文件系统上设置多标签策略。多标签策略允许每个主体或对象拥有自己独立的 MAC 标签。对于实现标签功能的策略（如 `biba`、`lomac` 和 `mls`），只有在使用多标签或单标签策略时才需要做出决策。一些策略，如 `seeotheruids`、`portacl` 和 `partition`，根本不使用标签。
 
-Using a multi label policy on a partition and establishing a multi label security model can increase administrative overhead as everything in that file system has a label. This includes directories, files, and even device nodes.
+在分区上使用多标签策略并建立多标签安全模型可能会增加管理开销，因为文件系统中的所有内容都有标签，包括目录、文件甚至设备节点。
 
-The following command will set `multilabel` on the specified UFS file system. This may only be done in single-user mode and is not a requirement for the swap file system:
+以下命令将在指定的UFS文件系统上设置`multilabel`。这只能在单用户模式下执行，并且对于交换文件系统来说并不是必需的。
 
 [source, shell]
 ....
@@ -119,25 +119,25 @@ The following command will set `multilabel` on the specified UFS file system. Th
 
 [NOTE]
 ====
-Some users have experienced problems with setting the `multilabel` flag on the root partition. If this is the case, please review <<mac-troubleshoot>>.
+一些用户在设置根分区的`multilabel`标志时遇到了问题。如果是这种情况，请参考<<mac-troubleshoot>>进行排查。
 ====
 
-Since the multi label policy is set on a per-file system basis, a multi label policy may not be needed if the file system layout is well designed. Consider an example security MAC model for a FreeBSD web server. This machine uses the single label, `biba/high`, for everything in the default file systems. If the web server needs to run at `biba/low` to prevent write up capabilities, it could be installed to a separate UFS [.filename]#/usr/local# file system set at `biba/low`.
+由于多标签策略是基于每个文件系统的设置，如果文件系统布局设计良好，则可能不需要多标签策略。以FreeBSD Web服务器为例，考虑一个安全的MAC模型。该机器在默认文件系统中使用单个标签`biba/high`。如果Web服务器需要以`biba/low`运行以防止写入权限，可以将其安装到一个单独的UFS [/usr/local]文件系统，设置为`biba/low`。
 
-=== Label Configuration
+=== 标签配置
 
-Virtually all aspects of label policy module configuration will be performed using the base system utilities. These commands provide a simple interface for object or subject configuration or the manipulation and verification of the configuration.
+几乎所有标签策略模块配置的方面都可以使用基本系统工具来完成。这些命令提供了一个简单的界面，用于对象或主体的配置，或者用于配置的操作和验证。
 
-All configuration may be done using `setfmac`, which is used to set MAC labels on system objects, and `setpmac`, which is used to set the labels on system subjects. For example, to set the `biba` MAC label to `high` on [.filename]#test#:
+所有的配置都可以使用`setfmac`来完成，`setfmac`用于在系统对象上设置MAC标签，而`setpmac`用于在系统主体上设置标签。例如，要在`test`上将`biba` MAC标签设置为`high`，可以使用以下命令：
 
 [source, shell]
 ....
 # setfmac biba/high test
 ....
 
-If the configuration is successful, the prompt will be returned without error. A common error is `Permission denied` which usually occurs when the label is being set or modified on a restricted object. Other conditions may produce different failures. For instance, the file may not be owned by the user attempting to relabel the object, the object may not exist, or the object may be read-only. A mandatory policy will not allow the process to relabel the file, maybe because of a property of the file, a property of the process, or a property of the proposed new label value. For example, if a user running at low integrity tries to change the label of a high integrity file, or a user running at low integrity tries to change the label of a low integrity file to a high integrity label, these operations will fail.
+如果配置成功，将返回无错误的提示。常见的错误是`Permission denied`，通常发生在对受限对象设置或修改标签时。其他情况可能导致不同的失败。例如，文件可能不是尝试重新标记对象的用户拥有的，对象可能不存在，或者对象可能是只读的。强制策略将不允许进程重新标记文件，可能是因为文件的属性、进程的属性或建议的新标签值的属性。例如，如果以低完整性运行的用户尝试更改高完整性文件的标签，或者以低完整性运行的用户尝试将低完整性文件的标签更改为高完整性标签，这些操作将失败。
 
-The system administrator may use `setpmac` to override the policy module's settings by assigning a different label to the invoked process:
+系统管理员可以使用`setpmac`命令通过为调用的进程分配不同的标签来覆盖策略模块的设置：
 
 [source, shell]
 ....
@@ -148,40 +148,40 @@ Permission denied
 test: biba/high
 ....
 
-For currently running processes, such as sendmail, `getpmac` is usually used instead. This command takes a process ID (PID) in place of a command name. If users attempt to manipulate a file not in their access, subject to the rules of the loaded policy modules, the `Operation not permitted` error will be displayed.
+对于当前正在运行的进程，例如sendmail，通常使用`getpmac`命令。该命令使用进程ID（PID）代替命令名称。如果用户尝试操作不在其访问权限范围内的文件，根据加载的策略模块的规则，将显示“操作不允许”的错误。
 
-=== Predefined Labels
+=== 预定义标签
 
-A few FreeBSD policy modules which support the labeling feature offer three predefined labels: `low`, `equal`, and `high`, where:
+一些支持标签功能的FreeBSD策略模块提供了三个预定义标签：`low`、`equal`和`high`，其中：
 
-* `low` is considered the lowest label setting an object or subject may have. Setting this on objects or subjects blocks their access to objects or subjects marked high.
-* `equal` sets the subject or object to be disabled or unaffected and should only be placed on objects considered to be exempt from the policy.
-* `high` grants an object or subject the highest setting available in the Biba and MLS policy modules.
+* `low`被认为是对象或主体可能具有的最低标签设置。将其设置在对象或主体上会阻止它们访问被标记为高的对象或主体。
+* `equal`将主题或对象设置为禁用或不受影响，并且只应放置在被视为豁免政策的对象上。
+* `high`在Biba和MLS策略模块中为对象或主体授予最高的设置。
 
-Such policy modules include man:mac_biba[4], man:mac_mls[4] and man:mac_lomac[4]. Each of the predefined labels establishes a different information flow directive. Refer to the manual page of the module to determine the traits of the generic label configurations.
+这些策略模块包括 man:mac_biba[4]、man:mac_mls[4] 和 man:mac_lomac[4]。每个预定义标签都建立了不同的信息流指令。请参考模块的手册页面以确定通用标签配置的特性。
 
-=== Numeric Labels
+=== 数字标签
 
-The Biba and MLS policy modules support a numeric label which may be set to indicate the precise level of hierarchical control. This numeric level is used to partition or sort information into different groups of classification, only permitting access to that group or a higher group level. For example:
+Biba和MLS策略模块支持一个数字标签，可以设置为指示精确的层次控制级别。这个数字级别用于将信息分区或分类到不同的分类组中，只允许访问该组或更高级别的组。例如：
 
 [.programlisting]
 ....
 biba/10:2+3+6(5:2+3-20:2+3+4+5+6)
 ....
 
-may be interpreted as "Biba Policy Label/Grade 10:Compartments 2, 3 and 6: (grade 5 ...")
+可以解释为“Biba政策标签/等级10：隔间2、3和6：（等级5 ...”
 
-In this example, the first grade would be considered the effective grade with effective compartments, the second grade is the low grade, and the last one is the high grade. In most configurations, such fine-grained settings are not needed as they are considered to be advanced configurations.
+在这个例子中，第一等级被认为是具有有效隔间的有效等级，第二等级是低等级，最后一个是高等级。在大多数配置中，这样细粒度的设置是不需要的，因为它们被认为是高级配置。
 
-System objects only have a current grade and compartment. System subjects reflect the range of available rights in the system, and network interfaces, where they are used for access control.
+系统对象只有当前等级和隔间。系统主体反映了系统中可用权限的范围，以及网络接口，它们用于访问控制。
 
-The grade and compartments in a subject and object pair are used to construct a relationship known as _dominance_, in which a subject dominates an object, the object dominates the subject, neither dominates the other, or both dominate each other. The "both dominate" case occurs when the two labels are equal. Due to the information flow nature of Biba, a user has rights to a set of compartments that might correspond to projects, but objects also have a set of compartments. Users may have to subset their rights using `su` or `setpmac` in order to access objects in a compartment from which they are not restricted.
+在一个主体和客体对中，等级和隔间被用来构建一种被称为“优势”的关系，其中主体优势于客体，客体优势于主体，两者互不优势，或者两者互相优势。当两个标签相等时，会出现“两者互相优势”的情况。由于Biba的信息流特性，用户对一组可能对应于项目的隔间拥有权限，但对象也有一组隔间。用户可能需要使用`su`或`setpmac`来对其权限进行子集化，以便从受限制的隔间中访问对象。
 
-=== User Labels
+=== 用户标签
 
-Users are required to have labels so that their files and processes properly interact with the security policy defined on the system. This is configured in [.filename]#/etc/login.conf# using login classes. Every policy module that uses labels will implement the user class setting.
+用户需要具有标签，以便他们的文件和进程能够与系统上定义的安全策略正确交互。这是通过在 [.filename]#/etc/login.conf# 中使用登录类进行配置的。每个使用标签的策略模块都会实现用户类设置。
 
-To set the user class default label which will be enforced by MAC, add a `label` entry. An example `label` entry containing every policy module is displayed below. Note that in a real configuration, the administrator would never enable every policy module. It is recommended that the rest of this chapter be reviewed before any configuration is implemented.
+要设置用户类的默认标签，该标签将由MAC强制执行，请添加一个`label`条目。下面显示了一个包含每个策略模块的示例`label`条目。请注意，在实际配置中，管理员永远不会启用每个策略模块。建议在实施任何配置之前先阅读本章的其余部分。
 
 [.programlisting]
 ....
@@ -210,95 +210,95 @@ default:\
 	:label=partition/13,mls/5,biba/10(5-15),lomac/10[2]:
 ....
 
-While users can not modify the default value, they may change their label after they login, subject to the constraints of the policy. The example above tells the Biba policy that a process's minimum integrity is `5`, its maximum is `15`, and the default effective label is `10`. The process will run at `10` until it chooses to change label, perhaps due to the user using `setpmac`, which will be constrained by Biba to the configured range.
+用户无法修改默认值，但他们可以在登录后更改标签，但必须符合策略的限制。上面的示例告诉Biba策略，进程的最小完整性为`5`，最大完整性为`15`，默认有效标签为`10`。进程将在`10`上运行，直到它选择更改标签，可能是由于用户使用`setpmac`，该操作将受到Biba配置范围的限制。
 
-After any change to [.filename]#login.conf#, the login class capability database must be rebuilt using `cap_mkdb`.
+对于 [.filename]#login.conf# 的任何更改，必须使用 `cap_mkdb` 重新构建登录类能力数据库。
 
-Many sites have a large number of users requiring several different user classes. In depth planning is required as this can become difficult to manage.
+许多网站拥有大量用户，需要多个不同的用户类别。这需要进行深入的规划，因为这可能变得难以管理。
 
-=== Network Interface Labels
+=== 网络接口标签
 
-Labels may be set on network interfaces to help control the flow of data across the network. Policies using network interface labels function in the same way that policies function with respect to objects. Users at high settings in Biba, for example, will not be permitted to access network interfaces with a label of `low`.
+可以在网络接口上设置标签来帮助控制数据在网络中的流动。使用网络接口标签的策略与对象相关的策略的功能相同。例如，在Biba中设置为高级别的用户将不被允许访问标签为“低”的网络接口。
 
-When setting the MAC label on network interfaces, `maclabel` may be passed to `ifconfig`:
+在设置网络接口的MAC标签时，可以通过`ifconfig`传递`maclabel`参数：
 
 [source, shell]
 ....
 # ifconfig bge0 maclabel biba/equal
 ....
 
-This example will set the MAC label of `biba/equal` on the `bge0` interface. When using a setting similar to `biba/high(low-high)`, the entire label should be quoted to prevent an error from being returned.
+这个示例将在`bge0`接口上设置`biba/equal`的MAC标签。当使用类似于`biba/high(low-high)`的设置时，应该将整个标签用引号括起来，以防止返回错误。
 
-Each policy module which supports labeling has a tunable which may be used to disable the MAC label on network interfaces. Setting the label to `equal` will have a similar effect. Review the output of `sysctl`, the policy manual pages, and the information in the rest of this chapter for more information on those tunables.
+每个支持标签的策略模块都有一个可调节项，可以用来禁用网络接口上的MAC标签。将标签设置为`equal`将产生类似的效果。请查看`sysctl`的输出、策略手册页面以及本章节中的其他信息，以获取有关这些可调节项的更多信息。
 
 [[mac-planning]]
-== Planning the Security Configuration
+== 规划安全配置
 
-Before implementing any MAC policies, a planning phase is recommended. During the planning stages, an administrator should consider the implementation requirements and goals, such as:
+在实施任何MAC策略之前，建议进行规划阶段。在规划阶段，管理员应考虑实施要求和目标，例如：
 
-* How to classify information and resources available on the target systems.
-* Which information or resources to restrict access to along with the type of restrictions that should be applied.
-* Which MAC modules will be required to achieve this goal.
+* 如何对目标系统上的信息和资源进行分类。
+* 应限制访问的信息或资源以及应该应用的限制类型。
+* 为实现这个目标，将需要哪些MAC模块？
 
-A trial run of the trusted system and its configuration should occur _before_ a MAC implementation is used on production systems. Since different environments have different needs and requirements, establishing a complete security profile will decrease the need of changes once the system goes live.
+在将MAC实施到生产系统之前，应进行可信系统及其配置的试运行。由于不同的环境具有不同的需求和要求，建立完整的安全配置文件将减少系统投入使用后的更改需求。
 
-Consider how the MAC framework augments the security of the system as a whole. The various security policy modules provided by the MAC framework could be used to protect the network and file systems or to block users from accessing certain ports and sockets. Perhaps the best use of the policy modules is to load several security policy modules at a time in order to provide a MLS environment. This approach differs from a hardening policy, which typically hardens elements of a system which are used only for specific purposes. The downside to MLS is increased administrative overhead.
+考虑MAC框架如何增强整个系统的安全性。MAC框架提供的各种安全策略模块可以用于保护网络和文件系统，或者阻止用户访问特定的端口和套接字。也许最好的使用策略模块的方式是同时加载多个安全策略模块，以提供MLS环境。这种方法与硬化策略不同，硬化策略通常只针对系统中仅用于特定目的的元素进行硬化。MLS的缺点是增加了管理开销。
 
-The overhead is minimal when compared to the lasting effect of a framework which provides the ability to pick and choose which policies are required for a specific configuration and which keeps performance overhead down. The reduction of support for unneeded policies can increase the overall performance of the system as well as offer flexibility of choice. A good implementation would consider the overall security requirements and effectively implement the various security policy modules offered by the framework.
+与提供选择特定配置所需的策略并降低性能开销的框架相比，开销是最小的。减少对不需要的策略的支持可以提高系统的整体性能，并提供选择的灵活性。一个良好的实现应该考虑整体安全要求，并有效地实施框架提供的各种安全策略模块。
 
-A system utilizing MAC guarantees that a user will not be permitted to change security attributes at will. All user utilities, programs, and scripts must work within the constraints of the access rules provided by the selected security policy modules and control of the MAC access rules is in the hands of the system administrator.
+使用MAC的系统可以确保用户不能随意更改安全属性。所有用户工具、程序和脚本必须在所选安全策略模块提供的访问规则约束下运行，而MAC访问规则的控制则由系统管理员负责。
 
-It is the duty of the system administrator to carefully select the correct security policy modules. For an environment that needs to limit access control over the network, the man:mac_portacl[4], man:mac_ifoff[4], and man:mac_biba[4] policy modules make good starting points. For an environment where strict confidentiality of file system objects is required, consider the man:mac_bsdextended[4] and man:mac_mls[4] policy modules.
+系统管理员有责任仔细选择正确的安全策略模块。对于需要限制网络访问控制的环境，man:mac_portacl[4]、man:mac_ifoff[4]和man:mac_biba[4]策略模块是很好的起点。对于需要严格保密文件系统对象的环境，可以考虑使用man:mac_bsdextended[4]和man:mac_mls[4]策略模块。
 
-Policy decisions could be made based on network configuration. If only certain users should be permitted access to man:ssh[1], the man:mac_portacl[4] policy module is a good choice. In the case of file systems, access to objects might be considered confidential to some users, but not to others. As an example, a large development team might be broken off into smaller projects where developers in project A might not be permitted to access objects written by developers in project B. Yet both projects might need to access objects created by developers in project C. Using the different security policy modules provided by the MAC framework, users could be divided into these groups and then given access to the appropriate objects.
+基于网络配置可以做出政策决策。如果只允许特定用户访问man:ssh[1]，那么man:mac_portacl[4]策略模块是一个不错的选择。在文件系统的情况下，对于某些用户来说，对对象的访问可能被视为机密，而对其他用户来说则不是。例如，一个大型开发团队可能会被分成较小的项目，项目A的开发人员可能不被允许访问项目B的开发人员编写的对象。然而，这两个项目可能需要访问项目C的开发人员创建的对象。使用MAC框架提供的不同安全策略模块，可以将用户分成这些组，并为其提供对应对象的访问权限。
 
-Each security policy module has a unique way of dealing with the overall security of a system. Module selection should be based on a well thought out security policy which may require revision and reimplementation. Understanding the different security policy modules offered by the MAC framework will help administrators choose the best policies for their situations.
+每个安全策略模块都有一种独特的处理系统整体安全的方式。模块的选择应该基于经过深思熟虑的安全策略，可能需要进行修订和重新实施。了解MAC框架提供的不同安全策略模块将帮助管理员为他们的情况选择最佳策略。
 
-The rest of this chapter covers the available modules, describes their use and configuration, and in some cases, provides insight on applicable situations.
+本章的其余部分介绍了可用的模块，描述了它们的使用和配置，并在某些情况下提供了适用情况的见解。
 
 [CAUTION]
 ====
-Implementing MAC is much like implementing a firewall since care must be taken to prevent being completely locked out of the system. The ability to revert back to a previous configuration should be considered and the implementation of MAC over a remote connection should be done with extreme caution.
+实施MAC（强制访问控制）与实施防火墙非常相似，因为必须小心防止完全被系统锁定。应考虑能够恢复到先前的配置，并且在远程连接上实施MAC时应极度谨慎。
 ====
 
 [[mac-policies]]
-== Available MAC Policies
+== 可用的MAC策略
 
-The default FreeBSD kernel includes `options MAC`. This means that every module included with the MAC framework can be loaded with `kldload` as a run-time kernel module. After testing the module, add the module name to [.filename]#/boot/loader.conf# so that it will load during boot. Each module also provides a kernel option for those administrators who choose to compile their own custom kernel.
+默认的FreeBSD内核包含`options MAC`。这意味着MAC框架中包含的每个模块都可以作为运行时内核模块使用`kldload`加载。在测试完模块后，将模块名称添加到[.filename]#/boot/loader.conf#，以便在启动时加载。对于那些选择编译自定义内核的管理员，每个模块还提供了一个内核选项。
 
-FreeBSD includes a group of policies that will cover most security requirements. Each policy is summarized below. The last three policies support integer settings in place of the three default labels.
+FreeBSD包含一组策略，可以满足大多数安全需求。下面对每个策略进行了总结。最后三个策略支持使用整数设置替代三个默认标签。
 
 [[mac-seeotheruids]]
-=== The MAC See Other UIDs Policy
+=== MAC查看其他UID策略
 
-Module name: [.filename]#mac_seeotheruids.ko#
+模块名称：[.filename]#mac_seeotheruids.ko#
 
-Kernel configuration line: `options MAC_SEEOTHERUIDS`
+内核配置行：`options MAC_SEEOTHERUIDS`
 
-Boot option: `mac_seeotheruids_load="YES"`
+启动选项：`mac_seeotheruids_load="YES"`
 
-The man:mac_seeotheruids[4] module extends the `security.bsd.see_other_uids` and `security.bsd.see_other_gids sysctl` tunables. This option does not require any labels to be set before configuration and can operate transparently with other modules.
+man:mac_seeotheruids[4]模块扩展了`security.bsd.see_other_uids`和`security.bsd.see_other_gids sysctl`可调整参数。该选项在配置之前不需要设置任何标签，并且可以与其他模块透明地协同工作。
 
-After loading the module, the following `sysctl` tunables may be used to control its features:
+加载模块后，可以使用以下 `sysctl` 可调整项来控制其功能：
 
-* `security.mac.seeotheruids.enabled` enables the module and implements the default settings which deny users the ability to view processes and sockets owned by other users.
-* `security.mac.seeotheruids.specificgid_enabled` allows specified groups to be exempt from this policy. To exempt specific groups, use the `security.mac.seeotheruids.specificgid=_XXX_ sysctl` tunable, replacing _XXX_ with the numeric group ID to be exempted.
-* `security.mac.seeotheruids.primarygroup_enabled` is used to exempt specific primary groups from this policy. When using this tunable, `security.mac.seeotheruids.specificgid_enabled` may not be set.
+* `security.mac.seeotheruids.enabled` 启用该模块并实现默认设置，禁止用户查看其他用户拥有的进程和套接字。
+* `security.mac.seeotheruids.specificgid_enabled`允许指定的组免除此策略。要免除特定的组，请使用`security.mac.seeotheruids.specificgid=_XXX_ sysctl`可调节参数，将_XXX_替换为要免除的数字组ID。
+* `security.mac.seeotheruids.primarygroup_enabled`用于免除特定的主要组免受此策略的影响。当使用此可调整项时，不得设置`security.mac.seeotheruids.specificgid_enabled`。
 
 [[mac-bsdextended]]
-=== The MAC BSD Extended Policy
+=== MAC BSD扩展策略
 
-Module name: [.filename]#mac_bsdextended.ko#
+模块名称：[.filename]#mac_bsdextended.ko#
 
-Kernel configuration line: `options MAC_BSDEXTENDED`
+内核配置行：`options MAC_BSDEXTENDED`
 
-Boot option: `mac_bsdextended_load="YES"`
+启动选项：`mac_bsdextended_load="YES"`
 
-The man:mac_bsdextended[4] module enforces a file system firewall. It provides an extension to the standard file system permissions model, permitting an administrator to create a firewall-like ruleset to protect files, utilities, and directories in the file system hierarchy. When access to a file system object is attempted, the list of rules is iterated until either a matching rule is located or the end is reached. This behavior may be changed using `security.mac.bsdextended.firstmatch_enabled`. Similar to other firewall modules in FreeBSD, a file containing the access control rules can be created and read by the system at boot time using an man:rc.conf[5] variable.
+man:mac_bsdextended[4]模块实施了一个文件系统防火墙。它为标准文件系统权限模型提供了扩展，允许管理员创建类似防火墙的规则集来保护文件系统层次结构中的文件、实用程序和目录。当尝试访问文件系统对象时，将迭代规则列表，直到找到匹配的规则或到达末尾为止。可以使用`security.mac.bsdextended.firstmatch_enabled`来更改此行为。与FreeBSD中的其他防火墙模块类似，可以使用man:rc.conf[5]变量在系统启动时创建和读取包含访问控制规则的文件。
 
-The rule list may be entered using man:ugidfw[8] which has a syntax similar to man:ipfw[8]. More tools can be written by using the functions in the man:libugidfw[3] library.
+规则列表可以使用man:ugidfw[8]输入，其语法类似于man:ipfw[8]。通过使用man:libugidfw[3]库中的函数，可以编写更多的工具。
 
-After the man:mac_bsdextended[4] module has been loaded, the following command may be used to list the current rule configuration:
+在加载了man:mac_bsdextended[4]模块之后，可以使用以下命令列出当前的规则配置：
 
 [source, shell]
 ....
@@ -306,14 +306,14 @@ After the man:mac_bsdextended[4] module has been loaded, the following command m
 0 slots, 0 rules
 ....
 
-By default, no rules are defined and everything is completely accessible. To create a rule which blocks all access by users but leaves `root` unaffected:
+默认情况下，没有定义任何规则，所有内容都是完全可访问的。要创建一个规则，阻止用户的所有访问，但不影响`root`用户：
 
 [source, shell]
 ....
 # ugidfw add subject not uid root new object not uid root mode n
 ....
 
-While this rule is simple to implement, it is a very bad idea as it blocks all users from issuing any commands. A more realistic example blocks `user1` all access, including directory listings, to ``_user2_``'s home directory:
+虽然这个规则很容易实现，但它是一个非常糟糕的想法，因为它会阻止所有用户发出任何命令。一个更现实的例子是阻止`user1`访问`_user2_`的主目录，包括目录列表。
 
 [source, shell]
 ....
@@ -321,51 +321,51 @@ While this rule is simple to implement, it is a very bad idea as it blocks all u
 # ugidfw set 3 subject uid user1 object gid user2 mode n
 ....
 
-Instead of `user1`, `not uid _user2_` could be used in order to enforce the same access restrictions for all users. However, the `root` user is unaffected by these rules.
+可以使用`not uid _user2_`来代替`user1`，以便为所有用户强制相同的访问限制。然而，这些规则对`root`用户无效。
 
 [NOTE]
 ====
-Extreme caution should be taken when working with this module as incorrect use could block access to certain parts of the file system.
+在使用该模块时应极度谨慎，因为错误的使用可能会阻止对文件系统的某些部分的访问。
 ====
 
 [[mac-ifoff]]
-=== The MAC Interface Silencing Policy
+=== MAC接口静音策略
 
-Module name: [.filename]#mac_ifoff.ko#
+模块名称：[.filename]#mac_ifoff.ko#
 
-Kernel configuration line: `options MAC_IFOFF`
+内核配置行：`options MAC_IFOFF`
 
-Boot option: `mac_ifoff_load="YES"`
+启动选项：`mac_ifoff_load="YES"`
 
-The man:mac_ifoff[4] module is used to disable network interfaces on the fly and to keep network interfaces from being brought up during system boot. It does not use labels and does not depend on any other MAC modules.
+man:mac_ifoff[4]模块用于动态禁用网络接口，并防止在系统启动期间启用网络接口。它不使用标签，也不依赖于任何其他MAC模块。
 
-Most of this module's control is performed through these `sysctl` tunables:
+大部分该模块的控制是通过这些`sysctl`可调参数进行的：
 
-* `security.mac.ifoff.lo_enabled` enables or disables all traffic on the loopback, man:lo[4], interface.
-* `security.mac.ifoff.bpfrecv_enabled` enables or disables all traffic on the Berkeley Packet Filter interface, man:bpf[4].
-* `security.mac.ifoff.other_enabled` enables or disables traffic on all other interfaces.
+* `security.mac.ifoff.lo_enabled` 用于启用或禁用回环（loopback）接口上的所有流量，参考：man:lo[4]。
+* `security.mac.ifoff.bpfrecv_enabled` 用于启用或禁用 Berkeley Packet Filter 接口上的所有流量，参见 man:bpf[4]。
+* `security.mac.ifoff.other_enabled` 用于启用或禁用所有其他接口上的流量。
 
-One of the most common uses of man:mac_ifoff[4] is network monitoring in an environment where network traffic should not be permitted during the boot sequence. Another use would be to write a script which uses an application such as package:security/aide[] to automatically block network traffic if it finds new or altered files in protected directories.
+man:mac_ifoff[4]的最常见用途之一是在启动序列期间不允许网络流量的环境中进行网络监控。另一个用途是编写一个脚本，使用类似package:security/aide[]的应用程序，在受保护的目录中发现新文件或更改文件时自动阻止网络流量。
 
 [[mac-portacl]]
-=== The MAC Port Access Control List Policy
+=== MAC端口访问控制列表策略
 
-Module name: [.filename]#mac_portacl.ko#
+模块名称：[.filename]#mac_portacl.ko#
 
-Kernel configuration line: `MAC_PORTACL`
+内核配置行：`MAC_PORTACL`
 
-Boot option: `mac_portacl_load="YES"`
+引导选项：`mac_portacl_load="YES"`
 
-The man:mac_portacl[4] module is used to limit binding to local TCP and UDP ports, making it possible to allow non-`root` users to bind to specified privileged ports below 1024.
+man:mac_portacl[4]模块用于限制绑定到本地TCP和UDP端口，使非“root”用户能够绑定到指定的特权端口（低于1024）。
 
-Once loaded, this module enables the MAC policy on all sockets. The following tunables are available:
+一旦加载，该模块将在所有套接字上启用MAC策略。以下可调整项可用：
 
-* `security.mac.portacl.enabled` enables or disables the policy completely.
-* `security.mac.portacl.port_high` sets the highest port number that man:mac_portacl[4] protects.
-* `security.mac.portacl.suser_exempt`, when set to a non-zero value, exempts the `root` user from this policy.
-* `security.mac.portacl.rules` specifies the policy as a text string of the form `rule[,rule,...]`, with as many rules as needed, and where each rule is of the form `idtype:id:protocol:port`. The `idtype` is either `uid` or `gid`. The `protocol` parameter can be `tcp` or `udp`. The `port` parameter is the port number to allow the specified user or group to bind to. Only numeric values can be used for the user ID, group ID, and port parameters.
+* `security.mac.portacl.enabled` 用于启用或禁用该策略。
+* `security.mac.portacl.port_high` 设置了 man:mac_portacl[4] 保护的最高端口号。
+* 当`security.mac.portacl.suser_exempt`设置为非零值时，免除`root`用户遵守此策略。
+* `security.mac.portacl.rules`指定了策略，其格式为`rule[,rule,...]`的文本字符串，可以包含多个规则，每个规则的格式为`idtype:id:protocol:port`。`idtype`可以是`uid`或`gid`。`protocol`参数可以是`tcp`或`udp`。`port`参数是允许指定的用户或组绑定的端口号。用户ID、组ID和端口参数只能使用数字值。
 
-By default, ports below 1024 can only be used by privileged processes which run as `root`. For man:mac_portacl[4] to allow non-privileged processes to bind to ports below 1024, set the following tunables as follows:
+默认情况下，只有以`root`身份运行的特权进程才能使用小于1024的端口。要允许非特权进程绑定到小于1024的端口，可以按照以下方式设置man:mac_portacl[4]中的可调整参数：
 
 [source, shell]
 ....
@@ -374,21 +374,21 @@ By default, ports below 1024 can only be used by privileged processes which run 
 # sysctl net.inet.ip.portrange.reservedhigh=0
 ....
 
-To prevent the `root` user from being affected by this policy, set `security.mac.portacl.suser_exempt` to a non-zero value.
+为了防止`root`用户受到此策略的影响，请将`security.mac.portacl.suser_exempt`设置为非零值。
 
 [source, shell]
 ....
 # sysctl security.mac.portacl.suser_exempt=1
 ....
 
-To allow the `www` user with UID 80 to bind to port 80 without ever needing `root` privilege:
+为了允许UID为80的`www`用户在不需要`root`权限的情况下绑定到端口80：
 
 [source, shell]
 ....
 # sysctl security.mac.portacl.rules=uid:80:tcp:80
 ....
 
-This next example permits the user with the UID of 1001 to bind to TCP ports 110 (POP3) and 995 (POP3s):
+下面的示例允许具有UID为1001的用户绑定到TCP端口110（POP3）和995（POP3s）：
 
 [source, shell]
 ....
@@ -396,35 +396,35 @@ This next example permits the user with the UID of 1001 to bind to TCP ports 110
 ....
 
 [[mac-partition]]
-=== The MAC Partition Policy
+=== MAC分区策略
 
-Module name: [.filename]#mac_partition.ko#
+模块名称：[.filename]#mac_partition.ko#
 
-Kernel configuration line: `options MAC_PARTITION`
+内核配置行：`options MAC_PARTITION`
 
-Boot option: `mac_partition_load="YES"`
+启动选项：`mac_partition_load="YES"`
 
-The man:mac_partition[4] policy drops processes into specific "partitions" based on their MAC label. Most configuration for this policy is done using man:setpmac[8]. One `sysctl` tunable is available for this policy:
+man:mac_partition[4]策略根据进程的MAC标签将其分配到特定的“分区”中。大部分该策略的配置都是使用man:setpmac[8]完成的。该策略有一个可调整的`sysctl`参数。
 
-* `security.mac.partition.enabled` enables the enforcement of MAC process partitions.
+* `security.mac.partition.enabled` 启用了 MAC 进程分区的强制执行。
 
-When this policy is enabled, users will only be permitted to see their processes, and any others within their partition, but will not be permitted to work with utilities outside the scope of this partition. For instance, a user in the `insecure` class will not be permitted to access `top` as well as many other commands that must spawn a process.
+当启用此策略时，用户只能查看他们自己的进程以及其所在分区的其他进程，但不允许使用超出该分区范围的实用工具。例如，属于“不安全”类别的用户将无法访问“top”以及许多其他需要生成进程的命令。
 
-This example adds `top` to the label set on users in the `insecure` class. All processes spawned by users in the `insecure` class will stay in the `partition/13` label.
+这个例子将`top`添加到`insecure`类别中的用户标签集合中。所有由`insecure`类别中的用户生成的进程都将保持在`partition/13`标签中。
 
 [source, shell]
 ....
 # setpmac partition/13 top
 ....
 
-This command displays the partition label and the process list:
+该命令显示分区标签和进程列表：
 
 [source, shell]
 ....
 # ps Zax
 ....
 
-This command displays another user's process partition label and that user's currently running processes:
+该命令显示另一个用户的进程分区标签以及该用户当前正在运行的进程：
 
 [source, shell]
 ....
@@ -433,95 +433,95 @@ This command displays another user's process partition label and that user's cur
 
 [NOTE]
 ====
-Users can see processes in ``root``'s label unless the man:mac_seeotheruids[4] policy is loaded.
+除非加载了man:mac_seeotheruids[4]策略，否则用户可以看到“root”标签下的进程。
 ====
 
 [[mac-mls]]
-=== The MAC Multi-Level Security Module
+=== MAC多级安全模块
 
-Module name: [.filename]#mac_mls.ko#
+模块名称：[.filename]#mac_mls.ko#
 
-Kernel configuration line: `options MAC_MLS`
+内核配置行：`options MAC_MLS`
 
-Boot option: `mac_mls_load="YES"`
+启动选项：`mac_mls_load="YES"`
 
-The man:mac_mls[4] policy controls access between subjects and objects in the system by enforcing a strict information flow policy.
+man:mac_mls[4]策略通过执行严格的信息流策略来控制系统中主体和客体之间的访问。
 
-In MLS environments, a "clearance" level is set in the label of each subject or object, along with compartments. Since these clearance levels can reach numbers greater than several thousand, it would be a daunting task to thoroughly configure every subject or object. To ease this administrative overhead, three labels are included in this policy: `mls/low`, `mls/equal`, and `mls/high`, where:
+在MLS环境中，每个主体或对象的标签中都设置了一个“许可”级别，以及隔间。由于这些许可级别可以达到几千以上的数字，彻底配置每个主体或对象将是一项艰巨的任务。为了减轻这种管理负担，该策略中包括了三个标签：`mls/low`，`mls/equal`和`mls/high`，其中：
 
-* Anything labeled with `mls/low` will have a low clearance level and not be permitted to access information of a higher level. This label also prevents objects of a higher clearance level from writing or passing information to a lower level.
-* `mls/equal` should be placed on objects which should be exempt from the policy.
-* `mls/high` is the highest level of clearance possible. Objects assigned this label will hold dominance over all other objects in the system; however, they will not permit the leaking of information to objects of a lower class.
+* 任何标记为`mls/low`的内容都具有低许可级别，不允许访问更高级别的信息。该标签还阻止高许可级别的对象向低级别写入或传递信息。
+* `mls/equal` 应该被放置在应该被豁免政策的对象上。
+* `mls/high`是最高级别的许可级别。被分配此标签的对象将在系统中具有最高权限；然而，它们不会允许信息泄漏给较低级别的对象。
 
-MLS provides:
+MLS提供以下功能：
 
-* A hierarchical security level with a set of non-hierarchical categories.
-* Fixed rules of `no read up, no write down`. This means that a subject can have read access to objects on its own level or below, but not above. Similarly, a subject can have write access to objects on its own level or above, but not beneath.
-* Secrecy, or the prevention of inappropriate disclosure of data.
-* A basis for the design of systems that concurrently handle data at multiple sensitivity levels without leaking information between secret and confidential.
+* 一个具有一组非层次化类别的分层安全级别。
+* 固定的规则是“不可向上读取，不可向下写入”。这意味着一个主体可以对其自身级别或以下级别的对象具有读取访问权限，但不能对以上级别的对象具有读取访问权限。同样地，一个主体可以对其自身级别或以上级别的对象具有写入访问权限，但不能对以下级别的对象具有写入访问权限。
+* 保密性，或者说是防止数据不适当披露的措施。
+* 设计能够同时处理多个敏感级别数据的系统基础，而不会在秘密和机密之间泄露信息。
 
-The following `sysctl` tunables are available:
+以下是可用的 `sysctl` 可调整参数：
 
-* `security.mac.mls.enabled` is used to enable or disable the MLS policy.
-* `security.mac.mls.ptys_equal` labels all man:pty[4] devices as `mls/equal` during creation.
-* `security.mac.mls.revocation_enabled` revokes access to objects after their label changes to a label of a lower grade.
-* `security.mac.mls.max_compartments` sets the maximum number of compartment levels allowed on a system.
+* `security.mac.mls.enabled`用于启用或禁用MLS策略。
+* `security.mac.mls.ptys_equal` 在创建过程中将所有 `man:pty[4]` 设备标记为 `mls/equal`。
+* `security.mac.mls.revocation_enabled` 在对象的标签变为较低等级的标签后，撤销对该对象的访问权限。
+* `security.mac.mls.max_compartments` 设置系统允许的最大隔离级别数量。
 
-To manipulate MLS labels, use man:setfmac[8]. To assign a label to an object:
+要操作MLS标签，请使用man:setfmac[8]。要为对象分配一个标签：
 
 [source, shell]
 ....
 # setfmac mls/5 test
 ....
 
-To get the MLS label for the file [.filename]#test#:
+获取文件[.filename]#test#的MLS标签：
 
 [source, shell]
 ....
 # getfmac test
 ....
 
-Another approach is to create a master policy file in [.filename]#/etc/# which specifies the MLS policy information and to feed that file to `setfmac`.
+另一种方法是在[/etc/]目录下创建一个主策略文件，该文件指定了MLS策略信息，并将该文件提供给`setfmac`命令。
 
-When using the MLS policy module, an administrator plans to control the flow of sensitive information. The default `block read up block write down` sets everything to a low state. Everything is accessible and an administrator slowly augments the confidentiality of the information.
+当使用MLS策略模块时，管理员计划控制敏感信息的流动。默认的`block read up block write down`将所有内容设置为低状态。所有内容都是可访问的，管理员会逐渐增加信息的机密性。
 
-Beyond the three basic label options, an administrator may group users and groups as required to block the information flow between them. It might be easier to look at the information in clearance levels using descriptive words, such as classifications of `Confidential`, `Secret`, and `Top Secret`. Some administrators instead create different groups based on project levels. Regardless of the classification method, a well thought out plan must exist before implementing a restrictive policy.
+除了三种基本的标签选项之外，管理员还可以根据需要将用户和组进行分组，以阻止它们之间的信息流动。使用描述性词语，如“机密”、“秘密”和“绝密”来查看清除级别的信息可能更容易。一些管理员根据项目级别创建不同的组。无论分类方法如何，都必须在实施限制性政策之前制定一个经过深思熟虑的计划。
 
-Some example situations for the MLS policy module include an e-commerce web server, a file server holding critical company information, and financial institution environments.
+MLS策略模块的一些示例情况包括电子商务网站服务器、存储关键公司信息的文件服务器和金融机构环境。
 
 [[mac-biba]]
-=== The MAC Biba Module
+=== MAC Biba模块
 
-Module name: [.filename]#mac_biba.ko#
+模块名称：mac_biba.ko
 
-Kernel configuration line: `options MAC_BIBA`
+内核配置行：`options MAC_BIBA`
 
-Boot option: `mac_biba_load="YES"`
+启动选项：`mac_biba_load="YES"`
 
-The man:mac_biba[4] module loads the MAC Biba policy. This policy is similar to the MLS policy with the exception that the rules for information flow are slightly reversed. This is to prevent the downward flow of sensitive information whereas the MLS policy prevents the upward flow of sensitive information.
+man:mac_biba[4]模块加载了MAC Biba策略。该策略与MLS策略类似，但信息流动规则略有不同。这是为了防止敏感信息的向下流动，而MLS策略则防止敏感信息的向上流动。
 
-In Biba environments, an "integrity" label is set on each subject or object. These labels are made up of hierarchical grades and non-hierarchical components. As a grade ascends, so does its integrity.
+在Biba环境中，每个主体或对象都会设置一个"完整性"标签。这些标签由层次等级和非层次组成。随着等级的提升，完整性也会提高。
 
-Supported labels are `biba/low`, `biba/equal`, and `biba/high`, where:
+支持的标签有 `biba/low`、`biba/equal` 和 `biba/high`，其中：
 
-* `biba/low` is considered the lowest integrity an object or subject may have. Setting this on objects or subjects blocks their write access to objects or subjects marked as `biba/high`, but will not prevent read access.
-* `biba/equal` should only be placed on objects considered to be exempt from the policy.
-* `biba/high` permits writing to objects set at a lower label, but does not permit reading that object. It is recommended that this label be placed on objects that affect the integrity of the entire system.
+* `biba/low`被认为是对象或主体可能具有的最低完整性。将其设置在对象或主体上会阻止它们对标记为`biba/high`的对象或主体的写访问，但不会阻止读访问。
+* `biba/equal` 应该只被应用于被认为符合政策的对象上。
+* `biba/high`允许对设置在较低标签的对象进行写操作，但不允许读取该对象。建议将此标签放置在影响整个系统完整性的对象上。
 
-Biba provides:
+Biba提供：
 
-* Hierarchical integrity levels with a set of non-hierarchical integrity categories.
-* Fixed rules are `no write up, no read down`, the opposite of MLS. A subject can have write access to objects on its own level or below, but not above. Similarly, a subject can have read access to objects on its own level or above, but not below.
-* Integrity by preventing inappropriate modification of data.
-* Integrity levels instead of MLS sensitivity levels.
+* 具有一组非层次化完整性类别的层次完整性级别。
+* 固定规则是“不可向上写入，不可向下读取”，与MLS相反。主体可以对其自身级别或以下的对象具有写入访问权限，但不能对其以上的对象具有写入访问权限。同样地，主体可以对其自身级别或以上的对象具有读取访问权限，但不能对其以下的对象具有读取访问权限。
+* 通过防止数据的不适当修改来保持完整性。
+* 完整性级别而不是MLS敏感级别。
 
-The following tunables can be used to manipulate the Biba policy:
+以下可调整项可用于操作Biba策略：
 
-* `security.mac.biba.enabled` is used to enable or disable enforcement of the Biba policy on the target machine.
-* `security.mac.biba.ptys_equal` is used to disable the Biba policy on man:pty[4] devices.
-* `security.mac.biba.revocation_enabled` forces the revocation of access to objects if the label is changed to dominate the subject.
+* `security.mac.biba.enabled`用于在目标机器上启用或禁用Biba策略的执行。
+* `security.mac.biba.ptys_equal`用于禁用Biba策略对man:pty[4]设备的应用。
+* 如果标签被更改为支配主体，则`security.mac.biba.revocation_enabled`强制撤销对对象的访问权限。
 
-To access the Biba policy setting on system objects, use `setfmac` and `getfmac`:
+要访问系统对象上的Biba策略设置，请使用`setfmac`和`getfmac`命令：
 
 [source, shell]
 ....
@@ -530,28 +530,28 @@ To access the Biba policy setting on system objects, use `setfmac` and `getfmac`
 test: biba/low
 ....
 
-Integrity, which is different from sensitivity, is used to guarantee that information is not manipulated by untrusted parties. This includes information passed between subjects and objects. It ensures that users will only be able to modify or access information they have been given explicit access to. The man:mac_biba[4] security policy module permits an administrator to configure which files and programs a user may see and invoke while assuring that the programs and files are trusted by the system for that user.
+完整性与敏感性不同，用于确保信息不被不受信任的方进行篡改。这包括主体和客体之间传递的信息。它确保用户只能修改或访问他们被明确授权的信息。man:mac_biba[4]安全策略模块允许管理员配置用户可以查看和调用哪些文件和程序，同时确保这些程序和文件对该用户是可信的。
 
-During the initial planning phase, an administrator must be prepared to partition users into grades, levels, and areas. The system will default to a high label once this policy module is enabled, and it is up to the administrator to configure the different grades and levels for users. Instead of using clearance levels, a good planning method could include topics. For instance, only allow developers modification access to the source code repository, source code compiler, and other development utilities. Other users would be grouped into other categories such as testers, designers, or end users and would only be permitted read access.
+在初始规划阶段，管理员必须准备好将用户分成等级、级别和领域。一旦启用了该策略模块，系统将默认为高级别，并由管理员配置用户的不同等级和级别。与使用许可级别不同，一个好的规划方法可以包括主题。例如，只允许开发人员对源代码仓库、源代码编译器和其他开发工具进行修改访问。其他用户将被分组到其他类别，如测试人员、设计师或最终用户，并且只允许读取访问权限。
 
-A lower integrity subject is unable to write to a higher integrity subject and a higher integrity subject cannot list or read a lower integrity object. Setting a label at the lowest possible grade could make it inaccessible to subjects. Some prospective environments for this security policy module would include a constrained web server, a development and test machine, and a source code repository. A less useful implementation would be a personal workstation, a machine used as a router, or a network firewall.
+较低完整性的主体无法向较高完整性的主体写入，而较高完整性的主体无法列出或读取较低完整性的对象。将标签设置为最低等级可能会使主体无法访问。此安全策略模块的一些潜在环境包括受限的Web服务器、开发和测试机器以及源代码存储库。较少有用的实现可能是个人工作站、用作路由器的机器或网络防火墙。
 
 [[mac-lomac]]
-=== The MAC Low-watermark Module
+=== MAC低水位标记模块
 
-Module name: [.filename]#mac_lomac.ko#
+模块名称：[.filename]#mac_lomac.ko#
 
-Kernel configuration line: `options MAC_LOMAC`
+内核配置行：`options MAC_LOMAC`
 
-Boot option: `mac_lomac_load="YES"`
+启动选项：`mac_lomac_load="YES"`
 
-Unlike the MAC Biba policy, the man:mac_lomac[4] policy permits access to lower integrity objects only after decreasing the integrity level to not disrupt any integrity rules.
+与MAC Biba策略不同，man:mac_lomac[4]策略允许在降低完整性级别以不破坏任何完整性规则的情况下访问较低完整性对象。
 
-The Low-watermark integrity policy works almost identically to Biba, with the exception of using floating labels to support subject demotion via an auxiliary grade compartment. This secondary compartment takes the form `[auxgrade]`. When assigning a policy with an auxiliary grade, use the syntax `lomac/10[2]`, where `2` is the auxiliary grade.
+低水位完整性策略与Biba几乎完全相同，唯一的区别是使用浮动标签来支持通过辅助等级隔离主体。这个辅助等级隔离采用`[auxgrade]`的形式。当分配一个带有辅助等级的策略时，使用语法`lomac/10[2]`，其中`2`是辅助等级。
 
-This policy relies on the ubiquitous labeling of all system objects with integrity labels, permitting subjects to read from low integrity objects and then downgrading the label on the subject to prevent future writes to high integrity objects using `[auxgrade]`. The policy may provide greater compatibility and require less initial configuration than Biba.
+该策略依赖于对所有系统对象进行普遍标记的完整性标签，允许主体从低完整性对象读取，并通过`[auxgrade]`将主体的标签降级，以防止将来对高完整性对象进行写入。与Biba相比，该策略可能提供更高的兼容性，并且需要较少的初始配置。
 
-Like the Biba and MLS policies, `setfmac` and `setpmac` are used to place labels on system objects:
+与Biba和MLS策略类似，`setfmac`和`setpmac`用于给系统对象打上标签：
 
 [source, shell]
 ....
@@ -559,50 +559,50 @@ Like the Biba and MLS policies, `setfmac` and `setpmac` are used to place labels
 # getfmac /usr/home/trhodes lomac/high[low]
 ....
 
-The auxiliary grade `low` is a feature provided only by the MACLOMAC policy.
+辅助等级 `low` 是仅由 MACLOMAC 策略提供的一个特性。
 
 [[mac-userlocked]]
-== User Lock Down
+== 用户锁定
 
-This example considers a relatively small storage system with fewer than fifty users. Users will have login capabilities and are permitted to store data and access resources.
+这个例子考虑了一个相对较小的存储系统，用户数量少于50人。用户将具有登录功能，并被允许存储数据和访问资源。
 
-For this scenario, the man:mac_bsdextended[4] and man:mac_seeotheruids[4] policy modules could co-exist and block access to system objects while hiding user processes.
+对于这种情况，man:mac_bsdextended[4]和man:mac_seeotheruids[4]策略模块可以共存，并且可以阻止对系统对象的访问，同时隐藏用户进程。
 
-Begin by adding the following line to [.filename]#/boot/loader.conf#:
+首先，在[.filename]#/boot/loader.conf#文件中添加以下行：
 
 [.programlisting]
 ....
 mac_seeotheruids_load="YES"
 ....
 
-The man:mac_bsdextended[4] security policy module may be activated by adding this line to [.filename]#/etc/rc.conf#:
+通过将以下行添加到[/etc/rc.conf]，可以激活man:mac_bsdextended[4]安全策略模块：
 
 [.programlisting]
 ....
 ugidfw_enable="YES"
 ....
 
-Default rules stored in [.filename]#/etc/rc.bsdextended# will be loaded at system initialization. However, the default entries may need modification. Since this machine is expected only to service users, everything may be left commented out except the last two lines in order to force the loading of user owned system objects by default.
+系统初始化时将加载存储在[/etc/rc.bsdextended]文件中的默认规则。然而，默认条目可能需要修改。由于此机器预计只为用户提供服务，因此除了最后两行外，可以将所有内容都注释掉，以便默认情况下强制加载用户拥有的系统对象。
 
-Add the required users to this machine and reboot. For testing purposes, try logging in as a different user across two consoles. Run `ps aux` to see if processes of other users are visible. Verify that running man:ls[1] on another user's home directory fails.
+将所需的用户添加到该机器并重新启动。为了测试目的，尝试在两个控制台上使用不同的用户登录。运行 `ps aux` 命令查看其他用户的进程是否可见。验证在另一个用户的主目录上运行 man:ls[1] 命令是否失败。
 
-Do not try to test with the `root` user unless the specific ``sysctl``s have been modified to block super user access.
+除非特定的`sysctl`已被修改以阻止超级用户访问，否则不要尝试使用`root`用户进行测试。
 
 [NOTE]
 ====
-When a new user is added, their man:mac_bsdextended[4] rule will not be in the ruleset list. To update the ruleset quickly, unload the security policy module and reload it again using man:kldunload[8] and man:kldload[8].
+当添加一个新用户时，他们的man:mac_bsdextended[4]规则将不会出现在规则集列表中。为了快速更新规则集，可以使用man:kldunload[8]和man:kldload[8]命令卸载和重新加载安全策略模块。
 ====
 
 [[mac-implementing]]
-== Nagios in a MAC Jail
+== 在MAC监狱中的Nagios
 
-This section demonstrates the steps that are needed to implement the Nagios network monitoring system in a MAC environment. This is meant as an example which still requires the administrator to test that the implemented policy meets the security requirements of the network before using in a production environment.
+本节演示了在MAC环境中实施Nagios网络监控系统所需的步骤。这仅作为一个示例，管理员在将该策略应用于生产环境之前需要测试其是否符合网络的安全要求。
 
-This example requires `multilabel` to be set on each file system. It also assumes that package:net-mgmt/nagios-plugins[], package:net-mgmt/nagios[], and package:www/apache22[] are all installed, configured, and working correctly before attempting the integration into the MAC framework.
+在进行此示例之前，需要在每个文件系统上设置`multilabel`。同时，还假设在将其集成到MAC框架之前，已经安装、配置并正确运行了`package:net-mgmt/nagios-plugins[]`、`package:net-mgmt/nagios[]`和`package:www/apache22[]`。
 
-=== Create an Insecure User Class
+=== 创建一个不安全的用户类
 
-Begin the procedure by adding the following user class to [.filename]#/etc/login.conf#:
+在[.filename]#/etc/login.conf#中添加以下用户类别，开始该过程：
 
 [.programlisting]
 ....
@@ -631,30 +631,30 @@ insecure:\
 :label=biba/10(10-10):
 ....
 
-Then, add the following line to the default user class section:
+然后，在默认用户类部分添加以下行：
 
 [.programlisting]
 ....
 :label=biba/high:
 ....
 
-Save the edits and issue the following command to rebuild the database:
+保存修改并执行以下命令以重建数据库：
 
 [source, shell]
 ....
 # cap_mkdb /etc/login.conf
 ....
 
-=== Configure Users
+=== 配置用户
 
-Set the `root` user to the default class using:
+使用以下命令将`root`用户设置为默认类：
 
 [source, shell]
 ....
 # pw usermod root -L default
 ....
 
-All user accounts that are not `root` will now require a login class. The login class is required, otherwise users will be refused access to common commands. The following `sh` script should do the trick:
+所有不是 `root` 的用户帐户现在都需要一个登录类。否则，用户将被拒绝访问常用命令。下面的 `sh` 脚本应该能解决问题：
 
 [source, shell]
 ....
@@ -662,7 +662,7 @@ All user accounts that are not `root` will now require a login class. The login 
 	/etc/passwd`; do pw usermod $x -L default; done;
 ....
 
-Next, drop the `nagios` and `www` accounts into the insecure class:
+接下来，将`nagios`和`www`账户添加到不安全类别中：
 
 [source, shell]
 ....
@@ -670,9 +670,9 @@ Next, drop the `nagios` and `www` accounts into the insecure class:
 # pw usermod www -L insecure
 ....
 
-=== Create the Contexts File
+=== 创建上下文文件
 
-A contexts file should now be created as [.filename]#/etc/policy.contexts#:
+现在应该创建一个上下文文件，路径为`/etc/policy.contexts`。
 
 [.programlisting]
 ....
@@ -703,16 +703,16 @@ A contexts file should now be created as [.filename]#/etc/policy.contexts#:
 /usr/local/etc/apache(/.*)?	biba/10
 ....
 
-This policy enforces security by setting restrictions on the flow of information. In this specific configuration, users, including `root`, should never be allowed to access Nagios. Configuration files and processes that are a part of Nagios will be completely self contained or jailed.
+该策略通过对信息流动设置限制来强制执行安全性。在这个特定的配置中，包括`root`在内的用户不应该被允许访问Nagios。Nagios的配置文件和进程将完全自包含或被隔离。
 
-This file will be read after running `setfsmac` on every file system. This example sets the policy on the root file system:
+在对每个文件系统运行`setfsmac`之后，将读取此文件。此示例设置了根文件系统的策略：
 
 [source, shell]
 ....
 # setfsmac -ef /etc/policy.contexts /
 ....
 
-Next, add these edits to the main section of [.filename]#/etc/mac.conf#:
+接下来，将这些编辑添加到主要部分的[.filename]#/etc/mac.conf#中：
 
 [.programlisting]
 ....
@@ -722,9 +722,9 @@ default_labels process ?biba
 default_labels socket ?biba
 ....
 
-=== Loader Configuration
+=== 加载器配置
 
-To finish the configuration, add the following lines to [.filename]#/boot/loader.conf#:
+要完成配置，请将以下行添加到[.filename]#/boot/loader.conf#中：
 
 [.programlisting]
 ....
@@ -733,18 +733,18 @@ mac_seeotheruids_load="YES"
 security.mac.biba.trust_all_interfaces=1
 ....
 
-And the following line to the network card configuration stored in [.filename]#/etc/rc.conf#. If the primary network configuration is done via DHCP, this may need to be configured manually after every system boot:
+将以下行添加到存储在 [.filename]#/etc/rc.conf# 中的网络卡配置中。如果主要网络配置是通过DHCP完成的，则可能需要在每次系统启动后手动配置此项：
 
 [.programlisting]
 ....
 maclabel biba/equal
 ....
 
-=== Testing the Configuration
+=== 测试配置
 
-First, ensure that the web server and Nagios will not be started on system initialization and reboot. Ensure that `root` cannot access any of the files in the Nagios configuration directory. If `root` can list the contents of [.filename]#/var/spool/nagios#, something is wrong. Instead, a "permission denied" error should be returned.
+首先，确保在系统初始化和重启时不会启动Web服务器和Nagios。确保`root`无法访问Nagios配置目录中的任何文件。如果`root`可以列出`.filename`#/var/spool/nagios#的内容，则表示出现了问题。相反，应返回"权限被拒绝"错误。
 
-If all seems well, Nagios, Apache, and Sendmail can now be started:
+如果一切正常，现在可以启动Nagios、Apache和Sendmail：
 
 [source, shell]
 ....
@@ -753,54 +753,54 @@ setpmac biba/equal make start && setpmac biba/10\(10-10\) apachectl start && \
 setpmac biba/10\(10-10\) /usr/local/etc/rc.d/nagios.sh forcestart
 ....
 
-Double check to ensure that everything is working properly. If not, check the log files for error messages. If needed, use man:sysctl[8] to disable the man:mac_biba[4] security policy module and try starting everything again as usual.
+请仔细检查以确保一切正常运行。如果不正常，请检查日志文件以查找错误信息。如果需要，使用 man:sysctl[8] 命令禁用 man:mac_biba[4] 安全策略模块，然后尝试按照通常的方式重新启动所有内容。
 
 [NOTE]
 ====
-The `root` user can still change the security enforcement and edit its configuration files. The following command will permit the degradation of the security policy to a lower grade for a newly spawned shell:
+`root`用户仍然可以更改安全执行和编辑其配置文件。以下命令将允许将安全策略降级为新生成的shell的较低级别：
 
 [source, shell]
 ....
 # setpmac biba/10 csh
 ....
 
-To block this from happening, force the user into a range using man:login.conf[5]. If man:setpmac[8] attempts to run a command outside of the compartment's range, an error will be returned and the command will not be executed. In this case, set root to `biba/high(high-high)`.
+为了阻止这种情况发生，可以使用 man:login.conf[5] 强制用户进入一个范围。如果 man:setpmac[8] 尝试在隔离区域范围之外运行命令，将返回错误并且不执行该命令。在这种情况下，将 root 设置为 `biba/high(high-high)`。
 ====
 
 [[mac-troubleshoot]]
-== Troubleshooting the MAC Framework
+== 解决MAC框架的问题
 
-This section discusses common configuration errors and how to resolve them.
+本节讨论常见的配置错误以及如何解决它们。
 
-The `multilabel` flag does not stay enabled on the root ([.filename]#/#) partition:::
-The following steps may resolve this transient error:
-
-[.procedure]
-====
-. Edit [.filename]#/etc/fstab# and set the root partition to `ro` for read-only.
-. Reboot into single user mode.
-. Run `tunefs -l enable` on [.filename]#/#.
-. Reboot the system.
-. Run `mount -urw`[.filename]#/# and change the `ro` back to `rw` in [.filename]#/etc/fstab# and reboot the system again.
-. Double-check the output from `mount` to ensure that `multilabel` has been properly set on the root file system.
-====
-
-After establishing a secure environment with MAC, Xorg no longer starts:::
-This could be caused by the MAC `partition` policy or by a mislabeling in one of the MAC labeling policies. To debug, try the following:
+`multilabel`标志在根（[.filename]#/#）分区上无法保持启用状态。:::
+以下步骤可能解决此临时错误：
 
 [.procedure]
 ====
-. Check the error message. If the user is in the `insecure` class, the `partition` policy may be the culprit. Try setting the user's class back to the `default` class and rebuild the database with `cap_mkdb`. If this does not alleviate the problem, go to step two.
-. Double-check that the label policies are set correctly for the user, Xorg, and the [.filename]#/dev# entries.
-. If neither of these resolve the problem, send the error message and a description of the environment to the {freebsd-questions}.
+. 编辑 [.filename]#/etc/fstab# 文件，并将根分区设置为 `ro`，以实现只读模式。
+. 重新启动进入单用户模式。
+. 在 [.filename]#/# 上运行 `tunefs -l enable`。
+. 重启系统。
+. 运行 `mount -urw` 命令，并在 `/etc/fstab` 文件中将 `ro` 改回 `rw`，然后再次重启系统。
+. 请仔细检查`mount`命令的输出，确保根文件系统上的`multilabel`已正确设置。
 ====
 
-The `_secure_path: unable to stat .login_conf` error appears:::
-This error can appear when a user attempts to switch from the `root` user to another user in the system. This message usually occurs when the user has a higher label setting than that of the user they are attempting to become. For instance, if `joe` has a default label of `biba/low` and `root` has a label of `biba/high`, `root` cannot view ``joe``'s home directory. This will happen whether or not `root` has used `su` to become `joe` as the Biba integrity model will not permit `root` to view objects set at a lower integrity level.
+在使用MAC建立了安全环境之后，Xorg不再启动。:::
+这可能是由MAC“分区”策略或MAC标签策略中的一个标签错误引起的。为了调试，请尝试以下操作：
 
-The system no longer recognizes `root`:::
-When this occurs, `whoami` returns `0` and `su` returns `who are you?`.
+[.procedure]
+====
+. 检查错误消息。如果用户在`insecure`类中，`partition`策略可能是问题的原因。尝试将用户的类设置回`default`类，并使用`cap_mkdb`重新构建数据库。如果这不能解决问题，请进行第二步。
+. 请仔细检查用户、Xorg和[/dev](filename)条目的标签策略是否设置正确。
+. 如果以上两种方法都不能解决问题，请将错误信息和环境描述发送到 {freebsd-questions}。
+====
+
+出现了“_secure_path: 无法统计 .login_conf”错误。:::
+当用户尝试从“root”用户切换到系统中的另一个用户时，可能会出现此错误。当用户的标签设置比他们尝试成为的用户的标签设置更高时，通常会出现此消息。例如，如果“joe”的默认标签是“biba/low”，而“root”的标签是“biba/high”，则“root”无法查看“joe”的主目录。无论“root”是否使用“su”成为“joe”，都会发生这种情况，因为Biba完整性模型不允许“root”查看设置在较低完整性级别的对象。
+
+系统不再识别 `root`。:::
+当发生这种情况时，`whoami` 返回 `0`，而 `su` 返回 `who are you?`。
 +
-This can happen if a labeling policy has been disabled by man:sysctl[8] or the policy module was unloaded. If the policy is disabled, the login capabilities database needs to be reconfigured. Double check [.filename]#/etc/login.conf# to ensure that all `label` options have been removed and rebuild the database with `cap_mkdb`.
+如果一个标签策略被man:sysctl[8]禁用或者策略模块被卸载，就会发生这种情况。如果策略被禁用，登录能力数据库需要重新配置。请仔细检查[.filename]#/etc/login.conf#，确保所有的`label`选项都已经被移除，并使用`cap_mkdb`重新构建数据库。
 +
-This may also happen if a policy restricts access to [.filename]#master.passwd#. This is usually caused by an administrator altering the file under a label which conflicts with the general policy being used by the system. In these cases, the user information would be read by the system and access would be blocked as the file has inherited the new label. Disable the policy using man:sysctl[8] and everything should return to normal.
+如果策略限制对 [.filename]#master.passwd# 的访问，也可能发生这种情况。这通常是由于管理员在与系统使用的通用策略冲突的标签下更改了文件而引起的。在这些情况下，系统会读取用户信息，并且由于文件继承了新的标签，访问将被阻止。使用 man:sysctl[8] 禁用该策略，一切应该恢复正常。

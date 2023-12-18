@@ -1,17 +1,17 @@
 ---
-description: 'In FreeBSD, the GEOM framework permits access and control to classes, such as Master Boot Records and BSD labels, through the use of providers, or the disk devices in /dev.'
+description: 在FreeBSD中，GEOM框架通过使用提供者（或者在/dev中的磁盘设备）允许访问和控制类别，例如主引导记录和BSD标签。
 next: books/handbook/zfs
-part: 'Part III. System Administration'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/disks
 showBookMenu: true
 tags: '["GEOM", "RAID", "RAID0", "RAID1", "RAID3", "Striping", "bsdlabel", "newfs", "labelling", "UFS", "journaling"]'
-title: 'Chapter 21. GEOM: Modular Disk Transformation Framework'
+title: '第21章 GEOM：模块化磁盘转换框架'
 weight: 25
 ---
 
 [[geom]]
-= GEOM: Modular Disk Transformation Framework
+= GEOM：模块化磁盘转换框架
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,55 +46,56 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[geom-synopsis]]
-== Synopsis
+== 简介
 
-In FreeBSD, the GEOM framework permits access and control to classes, such as Master Boot Records and BSD labels, through the use of providers, or the disk devices in [.filename]#/dev#. By supporting various software RAID configurations, GEOM transparently provides access to the operating system and operating system utilities.
+在FreeBSD中，GEOM框架通过使用提供者（或者说是位于`/dev`目录下的磁盘设备）允许访问和控制类别，例如主引导记录和BSD标签。通过支持各种软件RAID配置，GEOM可以透明地提供对操作系统和操作系统工具的访问。
 
-This chapter covers the use of disks under the GEOM framework in FreeBSD. This includes the major RAID control utilities which use the framework for configuration. This chapter is not a definitive guide to RAID configurations and only GEOM-supported RAID classifications are discussed.
+本章介绍了在FreeBSD中使用GEOM框架下的磁盘。这包括使用该框架进行配置的主要RAID控制工具。本章不是关于RAID配置的权威指南，只讨论了GEOM支持的RAID分类。
 
-After reading this chapter, you will know:
+阅读完本章后，您将会了解：
 
-* What type of RAID support is available through GEOM.
-* How to use the base utilities to configure, maintain, and manipulate the various RAID levels.
-* How to mirror, stripe, encrypt, and remotely connect disk devices through GEOM.
-* How to troubleshoot disks attached to the GEOM framework.
+* GEOM提供哪种类型的RAID支持？
+* 如何使用基本工具来配置、维护和操作各种RAID级别。
+* 如何通过GEOM镜像、条带化、加密和远程连接磁盘设备。
+* 如何排除与GEOM框架连接的磁盘问题。
 
-Before reading this chapter, you should:
+在阅读本章之前，您应该：
 
-* Understand how FreeBSD treats disk devices (crossref:disks[disks,Storage]).
-* Know how to configure and install a new kernel (crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel]).
+* 了解FreeBSD如何处理磁盘设备（参考：disks[disks,存储]）。
+* 了解如何配置和安装新的内核（参考：kernelconfig[kernelconfig，配置FreeBSD内核]）。
 
 [[geom-striping]]
-== RAID0 - Striping
+== RAID0 - 条带化
 
-Striping combines several disk drives into a single volume. Striping can be performed through the use of hardware RAID controllers. The GEOM disk subsystem provides software support for disk striping, also known as RAID0, without the need for a RAID disk controller.
+条带化将多个磁盘驱动器合并为一个卷。可以通过使用硬件RAID控制器来执行条带化。GEOM磁盘子系统提供了对磁盘条带化的软件支持，也称为RAID0，无需RAID磁盘控制器。
 
-In RAID0, data is split into blocks that are written across all the drives in the array. As seen in the following illustration, instead of having to wait on the system to write 256k to one disk, RAID0 can simultaneously write 64k to each of the four disks in the array, offering superior I/O performance. This performance can be enhanced further by using multiple disk controllers.
+在RAID0中，数据被分割成块，并写入阵列中的所有驱动器。如下图所示，RAID0可以同时将64k写入阵列中的四个驱动器，而不是等待系统将256k写入一个磁盘，从而提供更优异的I/O性能。通过使用多个磁盘控制器，可以进一步提升性能。
 
-image::striping.png["Disk Striping Illustration"]
+image::striping.png["磁盘条带化示意图"]
 
-Each disk in a RAID0 stripe must be of the same size, since I/O requests are interleaved to read or write to multiple disks in parallel.
+RAID0条带中的每个磁盘必须具有相同的大小，因为I/O请求会交错地并行读取或写入多个磁盘。
 
 [NOTE]
 ====
-RAID0 does _not_ provide any redundancy. This means that if one disk in the array fails, all of the data on the disks is lost. If the data is important, implement a backup strategy that regularly saves backups to a remote system or device.
+RAID0不提供任何冗余功能。这意味着如果阵列中的一个磁盘故障，所有磁盘上的数据都会丢失。如果数据很重要，请实施定期将备份保存到远程系统或设备的备份策略。
 ====
 
-The process for creating a software, GEOM-based RAID0 on a FreeBSD system using commodity disks is as follows. Once the stripe is created, refer to man:gstripe[8] for more information on how to control an existing stripe.
+使用普通磁盘在FreeBSD系统上创建基于GEOM的RAID0软件的过程如下。创建条带后，可以参考man:gstripe[8]了解如何控制现有的条带的更多信息。
 
 [.procedure]
 ****
-*Procedure: Creating a Stripe of Unformatted ATA Disks*
+*过程：创建一个未格式化的ATA磁盘条带*
 
-. Load the [.filename]#geom_stripe.ko# module:
+
+. 加载 [.filename]#geom_stripe.ko# 模块：
 +
 [source, shell]
 ....
 # kldload geom_stripe
 ....
 
-. Ensure that a suitable mount point exists. If this volume will become a root partition, then temporarily use another mount point such as [.filename]#/mnt#.
-. Determine the device names for the disks which will be striped, and create the new stripe device. For example, to stripe two unused and unpartitioned ATA disks with device names of [.filename]#/dev/ad2# and [.filename]#/dev/ad3#:
+. 确保存在一个合适的挂载点。如果该卷将成为根分区，则暂时使用另一个挂载点，例如 [.filename]#/mnt#。
+. 确定将要进行条带化的磁盘的设备名称，并创建新的条带设备。例如，要对两个未使用和未分区的ATA磁盘进行条带化，设备名称分别为`/dev/ad2`和`/dev/ad3`：
 +
 [source, shell]
 ....
@@ -104,29 +105,29 @@ Metadata value stored on /dev/ad3.
 Done.
 ....
 
-. Write a standard label, also known as a partition table, on the new volume and install the default bootstrap code:
+. 在新卷上编写一个标准标签，也称为分区表，并安装默认的引导代码：
 +
 [source, shell]
 ....
 # bsdlabel -wB /dev/stripe/st0
 ....
 
-. This process should create two other devices in [.filename]#/dev/stripe# in addition to [.filename]#st0#. Those include [.filename]#st0a# and [.filename]#st0c#. At this point, a UFS file system can be created on [.filename]#st0a# using `newfs`:
+. 在[.filename]#/dev/stripe#中，除了[.filename]#st0#之外，此过程应该创建另外两个设备。它们分别是[.filename]#st0a#和[.filename]#st0c#。此时，可以使用`newfs`在[.filename]#st0a#上创建一个UFS文件系统：
 +
 [source, shell]
 ....
 # newfs -U /dev/stripe/st0a
 ....
 +
-Many numbers will glide across the screen, and after a few seconds, the process will be complete. The volume has been created and is ready to be mounted.
-. To manually mount the created disk stripe:
+许多数字将在屏幕上滑动，几秒钟后，过程将完成。卷已创建并准备好挂载。
+. 手动挂载创建的磁盘条带：
 +
 [source, shell]
 ....
 # mount /dev/stripe/st0a /mnt
 ....
 
-. To mount this striped file system automatically during the boot process, place the volume information in [.filename]#/etc/fstab#. In this example, a permanent mount point, named [.filename]#stripe#, is created:
+. 要在引导过程中自动挂载此条带文件系统，请将卷信息放置在[/etc/fstab]中。在此示例中，创建了一个永久挂载点，命名为[stripe]。
 +
 [source, shell]
 ....
@@ -135,7 +136,7 @@ Many numbers will glide across the screen, and after a few seconds, the process 
 >> /etc/fstab
 ....
 
-. The [.filename]#geom_stripe.ko# module must also be automatically loaded during system initialization, by adding a line to [.filename]#/boot/loader.conf#:
+. 在系统初始化期间，还必须自动加载[.filename]#geom_stripe.ko#模块，方法是在[.filename]#/boot/loader.conf#文件中添加一行。
 +
 [source, shell]
 ....
@@ -144,76 +145,76 @@ Many numbers will glide across the screen, and after a few seconds, the process 
 ****
 
 [[geom-mirror]]
-== RAID1 - Mirroring
+== RAID1 - 镜像
 
-RAID1, or _mirroring_, is the technique of writing the same data to more than one disk drive. Mirrors are usually used to guard against data loss due to drive failure. Each drive in a mirror contains an identical copy of the data. When an individual drive fails, the mirror continues to work, providing data from the drives that are still functioning. The computer keeps running, and the administrator has time to replace the failed drive without user interruption.
+RAID1，或者称为镜像，是一种将相同数据写入多个磁盘驱动器的技术。镜像通常用于防止由于驱动器故障而导致的数据丢失。镜像中的每个驱动器都包含数据的完全相同副本。当一个驱动器故障时，镜像仍然可以工作，从仍在运行的驱动器提供数据。计算机继续运行，管理员有时间替换故障的驱动器而不会中断用户。
 
-Two common situations are illustrated in these examples. The first creates a mirror out of two new drives and uses it as a replacement for an existing single drive. The second example creates a mirror on a single new drive, copies the old drive's data to it, then inserts the old drive into the mirror. While this procedure is slightly more complicated, it only requires one new drive.
+这些示例中展示了两种常见情况。第一种情况是使用两个新的驱动器创建一个镜像，并将其作为现有单个驱动器的替代品。第二个示例是在一个新的驱动器上创建一个镜像，将旧驱动器的数据复制到其中，然后将旧驱动器插入到镜像中。虽然这个过程稍微复杂一些，但只需要一个新的驱动器。
 
-Traditionally, the two drives in a mirror are identical in model and capacity, but man:gmirror[8] does not require that. Mirrors created with dissimilar drives will have a capacity equal to that of the smallest drive in the mirror. Extra space on larger drives will be unused. Drives inserted into the mirror later must have at least as much capacity as the smallest drive already in the mirror.
-
-[WARNING]
-====
-The mirroring procedures shown here are non-destructive, but as with any major disk operation, make a full backup first.
-====
+传统上，镜像中的两个驱动器在型号和容量上是相同的，但是man:gmirror[8]并不要求如此。使用不同驱动器创建的镜像的容量将等于镜像中最小驱动器的容量。较大驱动器上的额外空间将不会被使用。后来插入镜像的驱动器必须至少具有与镜像中已有的最小驱动器相同的容量。
 
 [WARNING]
 ====
-While man:dump[8] is used in these procedures to copy file systems, it does not work on file systems with soft updates journaling. See man:tunefs[8] for information on detecting and disabling soft updates journaling.
+这里展示的镜像过程是非破坏性的，但是像任何重要的磁盘操作一样，请先进行完整备份。
+====
+
+[WARNING]
+====
+在这些过程中，使用man:dump[8]来复制文件系统，但它无法在使用软更新日志的文件系统上工作。请参阅man:tunefs[8]以了解有关检测和禁用软更新日志的信息。
 ====
 
 [[geom-mirror-metadata]]
-=== Metadata Issues
+=== 元数据问题
 
-Many disk systems store metadata at the end of each disk. Old metadata should be erased before reusing the disk for a mirror. Most problems are caused by two particular types of leftover metadata: GPT partition tables and old metadata from a previous mirror.
+许多磁盘系统将元数据存储在每个磁盘的末尾。在将磁盘重新用于镜像之前，应该擦除旧的元数据。大多数问题是由两种特定类型的残留元数据引起的：GPT分区表和来自先前镜像的旧元数据。
 
-GPT metadata can be erased with man:gpart[8]. This example erases both primary and backup GPT partition tables from disk [.filename]#ada8#:
+可以使用man:gpart[8]命令来擦除GPT元数据。这个例子会从磁盘ada8上擦除主GPT分区表和备份GPT分区表。
 
 [source, shell]
 ....
 # gpart destroy -F ada8
 ....
 
-A disk can be removed from an active mirror and the metadata erased in one step using man:gmirror[8]. Here, the example disk [.filename]#ada8# is removed from the active mirror [.filename]#gm4#:
+可以使用man:gmirror[8]命令一步完成从活动镜像中移除磁盘并擦除元数据。在这个例子中，磁盘ada8从活动镜像gm4中被移除。
 
 [source, shell]
 ....
 # gmirror remove gm4 ada8
 ....
 
-If the mirror is not running, but old mirror metadata is still on the disk, use `gmirror clear` to remove it:
+如果镜像没有运行，但旧的镜像元数据仍然存在于磁盘上，请使用`gmirror clear`命令将其删除：
 
 [source, shell]
 ....
 # gmirror clear ada8
 ....
 
-man:gmirror[8] stores one block of metadata at the end of the disk. As GPT partition schemes also store metadata at the end of the disk, mirroring entire GPT disks with man:gmirror[8] is not recommended. MBR partitioning is used here because it only stores a partition table at the start of the disk and does not conflict with the mirror metadata.
+man:gmirror[8]在磁盘的末尾存储一个块的元数据。由于GPT分区方案也在磁盘末尾存储元数据，因此不建议使用man:gmirror[8]来镜像整个GPT磁盘。这里使用MBR分区，因为它只在磁盘的开头存储分区表，不会与镜像的元数据冲突。
 
 [[geom-mirror-two-new-disks]]
-=== Creating a Mirror with Two New Disks
+=== 使用两个新硬盘创建镜像
 
-In this example, FreeBSD has already been installed on a single disk, [.filename]#ada0#. Two new disks, [.filename]#ada1# and [.filename]#ada2#, have been connected to the system. A new mirror will be created on these two disks and used to replace the old single disk.
+在这个例子中，FreeBSD已经安装在一个单独的磁盘上，[.filename]#ada0#。系统已经连接了两个新的磁盘，[.filename]#ada1#和[.filename]#ada2#。将在这两个磁盘上创建一个新的镜像，并用它来替换旧的单个磁盘。
 
-The [.filename]#geom_mirror.ko# kernel module must either be built into the kernel or loaded at boot- or run-time. Manually load the kernel module now:
+内核模块[.filename]#geom_mirror.ko#必须在内核中构建或在启动或运行时加载。现在手动加载内核模块：
 
 [source, shell]
 ....
 # gmirror load
 ....
 
-Create the mirror with the two new drives:
+使用两个新的硬盘创建镜像：
 
 [source, shell]
 ....
 # gmirror label -v gm0 /dev/ada1 /dev/ada2
 ....
 
-[.filename]#gm0# is a user-chosen device name assigned to the new mirror. After the mirror has been started, this device name appears in [.filename]#/dev/mirror/#.
+[.filename]#gm0# 是用户选择的设备名称，用于指定新镜像。在镜像启动后，该设备名称将出现在 [.filename]#/dev/mirror/# 中。
 
-MBR and bsdlabel partition tables can now be created on the mirror with man:gpart[8]. This example uses a traditional file system layout, with partitions for [.filename]#/#, swap, [.filename]#/var#, [.filename]#/tmp#, and [.filename]#/usr#. A single [.filename]#/# and a swap partition will also work.
+现在可以使用man:gpart[8]在镜像上创建MBR和bsdlabel分区表。这个例子使用传统的文件系统布局，包括用于[/]、交换空间、[/var]、[/tmp]和[/usr]的分区。也可以只使用一个[/]和一个交换空间分区。
 
-Partitions on the mirror do not have to be the same size as those on the existing disk, but they must be large enough to hold all the data already present on [.filename]#ada0#.
+镜像上的分区不必与现有磁盘上的分区大小相同，但必须足够大以容纳已经存在于ada0上的所有数据。
 
 [source, shell]
 ....
@@ -245,7 +246,7 @@ Partitions on the mirror do not have to be the same size as those on the existin
   156301298          1                      - free -  (512B)
 ....
 
-Make the mirror bootable by installing bootcode in the MBR and bsdlabel and setting the active slice:
+通过在MBR中安装引导代码和bsdlabel，并设置活动分区，使镜像可引导：
 
 [source, shell]
 ....
@@ -254,7 +255,7 @@ Make the mirror bootable by installing bootcode in the MBR and bsdlabel and sett
 # gpart bootcode -b /boot/boot mirror/gm0s1
 ....
 
-Format the file systems on the new mirror, enabling soft-updates.
+在新的镜像上格式化文件系统，并启用软更新。
 
 [source, shell]
 ....
@@ -264,7 +265,7 @@ Format the file systems on the new mirror, enabling soft-updates.
 # newfs -U /dev/mirror/gm0s1f
 ....
 
-File systems from the original [.filename]#ada0# disk can now be copied onto the mirror with man:dump[8] and man:restore[8].
+现在可以使用man:dump[8]和man:restore[8]将原始的[.filename]#ada0#磁盘上的文件系统复制到镜像中。
 
 [source, shell]
 ....
@@ -278,7 +279,7 @@ File systems from the original [.filename]#ada0# disk can now be copied onto the
 # dump -C16 -b64 -0aL -f - /usr | (cd /mnt/usr && restore -rf -)
 ....
 
-Edit [.filename]#/mnt/etc/fstab# to point to the new mirror file systems:
+编辑 [.filename]#/mnt/etc/fstab#，将其指向新的镜像文件系统：
 
 [.programlisting]
 ....
@@ -290,32 +291,32 @@ Edit [.filename]#/mnt/etc/fstab# to point to the new mirror file systems:
 /dev/mirror/gm0s1f	/usr		ufs	rw	2	2
 ....
 
-If the [.filename]#geom_mirror.ko# kernel module has not been built into the kernel, [.filename]#/mnt/boot/loader.conf# is edited to load the module at boot:
+如果内核模块[.filename]#geom_mirror.ko#没有被编译到内核中，需要编辑[.filename]#/mnt/boot/loader.conf#文件，在启动时加载该模块：
 
 [.programlisting]
 ....
 geom_mirror_load="YES"
 ....
 
-Reboot the system to test the new mirror and verify that all data has been copied. The BIOS will see the mirror as two individual drives rather than a mirror. Since the drives are identical, it does not matter which is selected to boot.
+重新启动系统以测试新的镜像，并验证所有数据是否已复制。BIOS将把镜像视为两个独立的驱动器，而不是一个镜像。由于驱动器是相同的，选择哪个来启动并不重要。
 
-See <<gmirror-troubleshooting>> if there are problems booting. Powering down and disconnecting the original [.filename]#ada0# disk will allow it to be kept as an offline backup.
+如果启动时出现问题，请参阅<<gmirror-troubleshooting>>。关闭电源并断开原始的[.filename]#ada0#磁盘，可以将其保留为离线备份。
 
-In use, the mirror will behave just like the original single drive.
+在使用中，镜像将表现得就像原始的单个驱动器一样。
 
 [[geom-mirror-existing-drive]]
-=== Creating a Mirror with an Existing Drive
+=== 使用现有驱动器创建镜像
 
-In this example, FreeBSD has already been installed on a single disk, [.filename]#ada0#. A new disk, [.filename]#ada1#, has been connected to the system. A one-disk mirror will be created on the new disk, the existing system copied onto it, and then the old disk will be inserted into the mirror. This slightly complex procedure is required because `gmirror` needs to put a 512-byte block of metadata at the end of each disk, and the existing [.filename]#ada0# has usually had all of its space already allocated.
+在这个例子中，FreeBSD已经安装在一个单独的磁盘上，[.filename]#ada0#。一个新的磁盘，[.filename]#ada1#，已经连接到系统上。将在新磁盘上创建一个单磁盘镜像，将现有系统复制到其中，然后将旧磁盘插入到镜像中。这个稍微复杂的过程是必需的，因为`gmirror`需要在每个磁盘的末尾放置一个512字节的元数据块，而现有的[.filename]#ada0#通常已经分配了所有的空间。
 
-Load the [.filename]#geom_mirror.ko# kernel module:
+加载 [.filename]#geom_mirror.ko# 内核模块：
 
 [source, shell]
 ....
 # gmirror load
 ....
 
-Check the media size of the original disk with `diskinfo`:
+使用 `diskinfo` 命令检查原始磁盘的媒体大小：
 
 [source, shell]
 ....
@@ -325,7 +326,7 @@ Check the media size of the original disk with `diskinfo`:
         1000204821504   # mediasize in bytes (931G)
 ....
 
-Create a mirror on the new disk. To make certain that the mirror capacity is not any larger than the original [.filename]#ada0# drive, man:gnop[8] is used to create a fake drive of the exact same size. This drive does not store any data, but is used only to limit the size of the mirror. When man:gmirror[8] creates the mirror, it will restrict the capacity to the size of [.filename]#gzero.nop#, even if the new [.filename]#ada1# drive has more space. Note that the _1000204821504_ in the second line is equal to [.filename]#ada0#'s media size as shown by `diskinfo` above.
+在新的磁盘上创建一个镜像。为了确保镜像容量不大于原始的ada0驱动器，使用man:gnop[8]创建一个与原始驱动器大小完全相同的虚拟驱动器。这个驱动器不存储任何数据，只用于限制镜像的大小。当man:gmirror[8]创建镜像时，它将限制容量为gzero.nop的大小，即使新的ada1驱动器有更多的空间。请注意，第二行中的1000204821504等于ada0的媒体大小，如上面的diskinfo所示。
 
 [source, shell]
 ....
@@ -335,11 +336,11 @@ Create a mirror on the new disk. To make certain that the mirror capacity is not
 # gmirror forget gm0
 ....
 
-Since [.filename]#gzero.nop# does not store any data, the mirror does not see it as connected. The mirror is told to "forget" unconnected components, removing references to [.filename]#gzero.nop#. The result is a mirror device containing only a single disk, [.filename]#ada1#.
+由于 [.filename]#gzero.nop# 不存储任何数据，因此镜像设备不会将其视为已连接。镜像设备被告知“忘记”未连接的组件，从而删除对 [.filename]#gzero.nop# 的引用。结果是一个只包含一个磁盘 [.filename]#ada1# 的镜像设备。
 
-After creating [.filename]#gm0#, view the partition table on [.filename]#ada0#. This output is from a 1 TB drive. If there is some unallocated space at the end of the drive, the contents may be copied directly from [.filename]#ada0# to the new mirror.
+创建 [.filename]#gm0# 后，查看 [.filename]#ada0# 上的分区表。这个输出来自一个1TB的硬盘。如果驱动器末尾有一些未分配的空间，可以直接将内容从 [.filename]#ada0# 复制到新的镜像中。
 
-However, if the output shows that all of the space on the disk is allocated, as in the following listing, there is no space available for the 512-byte mirror metadata at the end of the disk.
+然而，如果输出显示磁盘上的所有空间都已分配，就像下面的列表中所示，那么在磁盘末尾没有可用于512字节镜像元数据的空间。
 
 [source, shell]
 ....
@@ -348,9 +349,9 @@ However, if the output shows that all of the space on the disk is allocated, as 
           63  1953525105           1  freebsd  [active]  (931G)
 ....
 
-In this case, the partition table must be edited to reduce the capacity by one sector on [.filename]#mirror/gm0#. The procedure will be explained later.
+在这种情况下，必须编辑分区表，将 [.filename]#mirror/gm0# 的容量减少一个扇区。具体操作将在后面解释。
 
-In either case, partition tables on the primary disk should be first copied using `gpart backup` and `gpart restore`.
+无论哪种情况，都应首先使用`gpart backup`和`gpart restore`命令来复制主硬盘上的分区表。
 
 [source, shell]
 ....
@@ -358,7 +359,7 @@ In either case, partition tables on the primary disk should be first copied usin
 # gpart backup ada0s1 > table.ada0s1
 ....
 
-These commands create two files, [.filename]#table.ada0# and [.filename]#table.ada0s1#. This example is from a 1 TB drive:
+这些命令创建了两个文件，[.filename]#table.ada0# 和 [.filename]#table.ada0s1#。这个例子是来自一个1 TB的硬盘。
 
 [source, shell]
 ....
@@ -379,7 +380,7 @@ BSD 8
 7  freebsd-ufs  968884224  984640881
 ....
 
-If no free space is shown at the end of the disk, the size of both the slice and the last partition must be reduced by one sector. Edit the two files, reducing the size of both the slice and last partition by one. These are the last numbers in each listing.
+如果磁盘末尾没有显示可用空间，则必须将分区和最后一个分区的大小都减小一个扇区。编辑这两个文件，将分区和最后一个分区的大小都减小一个。这些是每个列表中的最后一个数字。
 
 [source, shell]
 ....
@@ -400,9 +401,9 @@ BSD 8
 7  freebsd-ufs  968884224  984640880
 ....
 
-If at least one sector was unallocated at the end of the disk, these two files can be used without modification.
+如果磁盘末尾至少有一个扇区未分配，这两个文件可以直接使用，无需修改。
 
-Now restore the partition table into [.filename]#mirror/gm0#:
+现在将分区表恢复到[mirror/gm0]中：
 
 [source, shell]
 ....
@@ -410,7 +411,7 @@ Now restore the partition table into [.filename]#mirror/gm0#:
 # gpart restore mirror/gm0s1 < table.ada0s1
 ....
 
-Check the partition table with `gpart show`. This example has [.filename]#gm0s1a# for [.filename]#/#, [.filename]#gm0s1d# for [.filename]#/var#, [.filename]#gm0s1e# for [.filename]#/usr#, [.filename]#gm0s1f# for [.filename]#/data1#, and [.filename]#gm0s1g# for [.filename]#/data2#.
+使用`gpart show`命令检查分区表。此示例中，分区表如下： [.filename]#gm0s1a# 用于 [.filename]#/#， [.filename]#gm0s1d# 用于 [.filename]#/var#， [.filename]#gm0s1e# 用于 [.filename]#/usr#， [.filename]#gm0s1f# 用于 [.filename]#/data1#，以及 [.filename]#gm0s1g# 用于 [.filename]#/data2#。
 
 [source, shell]
 ....
@@ -430,9 +431,9 @@ Check the partition table with `gpart show`. This example has [.filename]#gm0s1a
   1953525042          63                - free -  (31k)
 ....
 
-Both the slice and the last partition must have at least one free block at the end of the disk.
+切片和最后一个分区都必须在磁盘末尾至少有一个空闲块。
 
-Create file systems on these new partitions. The number of partitions will vary to match the original disk, [.filename]#ada0#.
+在这些新分区上创建文件系统。分区的数量将根据原始磁盘[.filename]#ada0#而变化。
 
 [source, shell]
 ....
@@ -443,7 +444,7 @@ Create file systems on these new partitions. The number of partitions will vary 
 # newfs -U /dev/mirror/gm0s1g
 ....
 
-Make the mirror bootable by installing bootcode in the MBR and bsdlabel and setting the active slice:
+通过在MBR中安装引导代码和bsdlabel，并设置活动分区，使镜像可引导：
 
 [source, shell]
 ....
@@ -452,14 +453,14 @@ Make the mirror bootable by installing bootcode in the MBR and bsdlabel and sett
 # gpart bootcode -b /boot/boot mirror/gm0s1
 ....
 
-Adjust [.filename]#/etc/fstab# to use the new partitions on the mirror. Back up this file first by copying it to [.filename]#/etc/fstab.orig#.
+将 [.filename]#/etc/fstab# 调整为使用镜像上的新分区。首先通过将其复制到 [.filename]#/etc/fstab.orig# 来备份此文件。
 
 [source, shell]
 ....
 # cp /etc/fstab /etc/fstab.orig
 ....
 
-Edit [.filename]#/etc/fstab#, replacing [.filename]#/dev/ada0# with [.filename]#mirror/gm0#.
+编辑[/etc/fstab]文件，将[/dev/ada0]替换为[mirror/gm0]。
 
 [.programlisting]
 ....
@@ -472,14 +473,14 @@ Edit [.filename]#/etc/fstab#, replacing [.filename]#/dev/ada0# with [.filename]#
 /dev/mirror/gm0s1g	/data2		ufs	rw	2	2
 ....
 
-If the [.filename]#geom_mirror.ko# kernel module has not been built into the kernel, edit [.filename]#/boot/loader.conf# to load it at boot:
+如果内核中没有构建 [.filename]#geom_mirror.ko# 内核模块，请编辑 [.filename]#/boot/loader.conf# 文件，在启动时加载它：
 
 [.programlisting]
 ....
 geom_mirror_load="YES"
 ....
 
-File systems from the original disk can now be copied onto the mirror with man:dump[8] and man:restore[8]. Each file system dumped with `dump -L` will create a snapshot first, which can take some time.
+现在可以使用man:dump[8]和man:restore[8]将原始磁盘上的文件系统复制到镜像上。使用`dump -L`转储的每个文件系统都会首先创建一个快照，这可能需要一些时间。
 
 [source, shell]
 ....
@@ -495,15 +496,15 @@ File systems from the original disk can now be copied onto the mirror with man:d
 # dump -C16 -b64 -0aL -f - /data2 | (cd /mnt/data2 && restore -rf -)
 ....
 
-Restart the system, booting from [.filename]#ada1#. If everything is working, the system will boot from [.filename]#mirror/gm0#, which now contains the same data as [.filename]#ada0# had previously. See <<gmirror-troubleshooting>> if there are problems booting.
+重新启动系统，从 [.filename]#ada1# 引导。如果一切正常，系统将从 [.filename]#mirror/gm0# 引导，该镜像现在包含与 [.filename]#ada0# 之前相同的数据。如果启动时出现问题，请参考 <<gmirror-troubleshooting>>。
 
-At this point, the mirror still consists of only the single [.filename]#ada1# disk.
+此时，镜像仍然只由单个 [.filename]#ada1# 磁盘组成。
 
-After booting from [.filename]#mirror/gm0# successfully, the final step is inserting [.filename]#ada0# into the mirror.
+成功从 [.filename]#mirror/gm0# 启动后，最后一步是将 [.filename]#ada0# 插入到镜像中。
 
 [IMPORTANT]
 ====
-When [.filename]#ada0# is inserted into the mirror, its former contents will be overwritten by data from the mirror. Make certain that [.filename]#mirror/gm0# has the same contents as [.filename]#ada0# before adding [.filename]#ada0# to the mirror. If the contents previously copied by man:dump[8] and man:restore[8] are not identical to what was on [.filename]#ada0#, revert [.filename]#/etc/fstab# to mount the file systems on [.filename]#ada0#, reboot, and start the whole procedure again.
+当 [.filename]#ada0# 被插入到镜像中时，它的原始内容将被来自镜像的数据覆盖。在将 [.filename]#ada0# 添加到镜像之前，请确保 [.filename]#mirror/gm0# 的内容与 [.filename]#ada0# 相同。如果之前使用 man:dump[8] 和 man:restore[8] 复制的内容与 [.filename]#ada0# 上的内容不一致，请将 [.filename]#/etc/fstab# 恢复为挂载 [.filename]#ada0# 上的文件系统，重新启动，并重新开始整个过程。
 ====
 
 [source, shell]
@@ -512,7 +513,7 @@ When [.filename]#ada0# is inserted into the mirror, its former contents will be 
 GEOM_MIRROR: Device gm0: rebuilding provider ada0
 ....
 
-Synchronization between the two disks will start immediately. Use `gmirror status` to view the progress.
+两个磁盘之间的同步将立即开始。使用 `gmirror status` 命令查看进度。
 
 [source, shell]
 ....
@@ -522,7 +523,7 @@ mirror/gm0  DEGRADED  ada1 (ACTIVE)
                       ada0 (SYNCHRONIZING, 64%)
 ....
 
-After a while, synchronization will finish.
+一段时间后，同步将完成。
 
 [source, shell]
 ....
@@ -533,14 +534,14 @@ mirror/gm0  COMPLETE  ada1 (ACTIVE)
                       ada0 (ACTIVE)
 ....
 
-[.filename]#mirror/gm0# now consists of the two disks [.filename]#ada0# and [.filename]#ada1#, and the contents are automatically synchronized with each other. In use, [.filename]#mirror/gm0# will behave just like the original single drive.
+[.filename]#mirror/gm0# 现在由两个磁盘 [.filename]#ada0# 和 [.filename]#ada1# 组成，并且它们的内容会自动同步。在使用中，[.filename]#mirror/gm0# 的行为与原始的单个驱动器相同。
 
 [[gmirror-troubleshooting]]
-=== Troubleshooting
+=== 故障排除
 
-If the system no longer boots, BIOS settings may have to be changed to boot from one of the new mirrored drives. Either mirror drive can be used for booting, as they contain identical data.
+如果系统无法启动，可能需要更改BIOS设置以从新镜像驱动器中启动。可以使用任何一个镜像驱动器进行引导，因为它们包含相同的数据。
 
-If the boot stops with this message, something is wrong with the mirror device:
+如果启动停在这个消息上，说明镜像设备出现了问题：
 
 [source, shell]
 ....
@@ -567,7 +568,7 @@ Manual root filesystem specification:
 mountroot>
 ....
 
-Forgetting to load the [.filename]#geom_mirror.ko# module in [.filename]#/boot/loader.conf# can cause this problem. To fix it, boot from a FreeBSD installation media and choose `Shell` at the first prompt. Then load the mirror module and mount the mirror device:
+忘记在`/boot/loader.conf`中加载`geom_mirror.ko`模块可能会导致这个问题。要修复它，从FreeBSD安装介质启动，并在第一个提示处选择`Shell`。然后加载镜像模块并挂载镜像设备：
 
 [source, shell]
 ....
@@ -575,16 +576,16 @@ Forgetting to load the [.filename]#geom_mirror.ko# module in [.filename]#/boot/l
 # mount /dev/mirror/gm0s1a /mnt
 ....
 
-Edit [.filename]#/mnt/boot/loader.conf#, adding a line to load the mirror module:
+编辑[/mnt/boot/loader.conf]文件，在其中添加一行代码以加载镜像模块：
 
 [.programlisting]
 ....
 geom_mirror_load="YES"
 ....
 
-Save the file and reboot.
+保存文件并重新启动。
 
-Other problems that cause `error 19` require more effort to fix. Although the system should boot from [.filename]#ada0#, another prompt to select a shell will appear if [.filename]#/etc/fstab# is incorrect. Enter `ufs:/dev/ada0s1a` at the boot loader prompt and press kbd:[Enter]. Undo the edits in [.filename]#/etc/fstab# then mount the file systems from the original disk ([.filename]#ada0#) instead of the mirror. Reboot the system and try the procedure again.
+导致“错误19”的其他问题需要更多的努力来修复。虽然系统应该从[.filename]#ada0#启动，但如果[.filename]#/etc/fstab#不正确，将会出现选择shell的另一个提示。在引导加载程序提示符处输入`ufs:/dev/ada0s1a`，然后按下kbd:[Enter]。撤消[.filename]#/etc/fstab#中的编辑，然后将文件系统从原始磁盘([.filename]#ada0#)挂载，而不是从镜像挂载。重新启动系统，然后再次尝试该过程。
 
 [source, shell]
 ....
@@ -593,71 +594,71 @@ Enter full pathname of shell or RETURN for /bin/sh:
 # reboot
 ....
 
-=== Recovering from Disk Failure
+=== 从磁盘故障中恢复
 
-The benefit of disk mirroring is that an individual disk can fail without causing the mirror to lose any data. In the above example, if [.filename]#ada0# fails, the mirror will continue to work, providing data from the remaining working drive, [.filename]#ada1#.
+磁盘镜像的好处是，即使一个磁盘发生故障，镜像也不会丢失任何数据。在上面的例子中，如果 [.filename]#ada0# 失效，镜像将继续工作，并从剩余的工作驱动器 [.filename]#ada1# 提供数据。
 
-To replace the failed drive, shut down the system and physically replace the failed drive with a new drive of equal or greater capacity. Manufacturers use somewhat arbitrary values when rating drives in gigabytes, and the only way to really be sure is to compare the total count of sectors shown by `diskinfo -v`. A drive with larger capacity than the mirror will work, although the extra space on the new drive will not be used.
+要替换故障的驱动器，请关闭系统并将故障的驱动器物理上替换为容量相等或更大的新驱动器。制造商在以千兆字节为单位评估驱动器时使用了一些任意的值，唯一真正确定的方法是比较`diskinfo -v`显示的扇区总数。比镜像容量更大的驱动器也可以工作，尽管新驱动器上的额外空间将不会被使用。
 
-After the computer is powered back up, the mirror will be running in a "degraded" mode with only one drive. The mirror is told to forget drives that are not currently connected:
+在计算机重新启动后，镜像将以“降级”模式运行，只有一个驱动器。镜像被告知忘记当前未连接的驱动器。
 
 [source, shell]
 ....
 # gmirror forget gm0
 ....
 
-Any old metadata should be cleared from the replacement disk using the instructions in <<geom-mirror-metadata>>. Then the replacement disk, [.filename]#ada4# for this example, is inserted into the mirror:
+使用<<geom-mirror-metadata>>中的说明清除替换磁盘上的任何旧元数据。然后将替换磁盘（此示例中为[.filename]#ada4#）插入到镜像中。
 
 [source, shell]
 ....
 # gmirror insert gm0 /dev/ada4
 ....
 
-Resynchronization begins when the new drive is inserted into the mirror. This process of copying mirror data to a new drive can take a while. Performance of the mirror will be greatly reduced during the copy, so inserting new drives is best done when there is low demand on the computer.
+当新驱动器插入到镜像中时，重新同步过程开始。将镜像数据复制到新驱动器可能需要一段时间。在复制过程中，镜像的性能将大大降低，因此最好在计算机需求较低时插入新驱动器。
 
-Progress can be monitored with `gmirror status`, which shows drives that are being synchronized and the percentage of completion. During resynchronization, the status will be `DEGRADED`, changing to `COMPLETE` when the process is finished.
+可以使用`gmirror status`来监视进度，它会显示正在同步的驱动器以及完成的百分比。在重新同步期间，状态将显示为`DEGRADED`，当过程完成时，状态将变为`COMPLETE`。
 
 [[geom-raid3]]
-== RAID3 - Byte-level Striping with Dedicated Parity
+== RAID3 - 以字节为单位的条带化和专用奇偶校验
 
-RAID3 is a method used to combine several disk drives into a single volume with a dedicated parity disk. In a RAID3 system, data is split up into a number of bytes that are written across all the drives in the array except for one disk which acts as a dedicated parity disk. This means that disk reads from a RAID3 implementation access all disks in the array. Performance can be enhanced by using multiple disk controllers. The RAID3 array provides a fault tolerance of 1 drive, while providing a capacity of 1 - 1/n times the total capacity of all drives in the array, where n is the number of hard drives in the array. Such a configuration is mostly suitable for storing data of larger sizes such as multimedia files.
+RAID3是一种将多个磁盘驱动器组合成一个具有专用奇偶校验磁盘的卷的方法。在RAID3系统中，数据被分割成多个字节，这些字节被写入阵列中的所有磁盘，除了一个充当专用奇偶校验磁盘的磁盘。这意味着从RAID3实现中读取磁盘时，会访问阵列中的所有磁盘。通过使用多个磁盘控制器，可以提高性能。RAID3阵列提供了1个驱动器的容错能力，同时提供了总容量为所有磁盘的总容量的1-1/n倍的容量，其中n是阵列中的硬盘数量。这种配置主要适用于存储较大的数据，如多媒体文件。
 
-At least 3 physical hard drives are required to build a RAID3 array. Each disk must be of the same size, since I/O requests are interleaved to read or write to multiple disks in parallel. Also, due to the nature of RAID3, the number of drives must be equal to 3, 5, 9, 17, and so on, or 2^n + 1.
+构建RAID3阵列至少需要3个物理硬盘。每个硬盘的大小必须相同，因为I/O请求会交错地并行读取或写入多个硬盘。此外，由于RAID3的特性，驱动器的数量必须等于3、5、9、17等，即2^n + 1。
 
-This section demonstrates how to create a software RAID3 on a FreeBSD system.
+本节演示了如何在FreeBSD系统上创建一个软件RAID3。
 
 [NOTE]
 ====
-While it is theoretically possible to boot from a RAID3 array on FreeBSD, that configuration is uncommon and is not advised.
+虽然理论上可以在FreeBSD上从RAID3阵列引导，但这种配置并不常见，也不建议使用。
 ====
 
-=== Creating a Dedicated RAID3 Array
+=== 创建一个专用的RAID3阵列
 
-In FreeBSD, support for RAID3 is implemented by the man:graid3[8] GEOM class. Creating a dedicated RAID3 array on FreeBSD requires the following steps.
+在FreeBSD中，对RAID3的支持是通过man:graid3[8] GEOM类实现的。在FreeBSD上创建一个专用的RAID3阵列需要以下步骤。
 
 [.procedure]
-. First, load the [.filename]#geom_raid3.ko# kernel module by issuing one of the following commands:
+. 首先，通过执行以下命令之一加载内核模块[.filename]#geom_raid3.ko#：
 +
 [source, shell]
 ....
 # graid3 load
 ....
 +
-or:
+或者：
 +
 [source, shell]
 ....
 # kldload geom_raid3
 ....
 
-. Ensure that a suitable mount point exists. This command creates a new directory to use as the mount point:
+. 确保存在一个合适的挂载点。此命令将创建一个新的目录作为挂载点使用：
 +
 [source, shell]
 ....
 # mkdir /multimedia
 ....
 
-. Determine the device names for the disks which will be added to the array, and create the new RAID3 device. The final device listed will act as the dedicated parity disk. This example uses three unpartitioned ATA drives: [.filename]#ada1# and [.filename]#ada2# for data, and [.filename]#ada3# for parity.
+. 确定要添加到阵列中的磁盘的设备名称，并创建新的RAID3设备。最后列出的设备将作为专用奇偶校验磁盘。此示例使用三个未分区的ATA驱动器：[.filename]#ada1#和[.filename]#ada2#用于数据，以及[.filename]#ada3#用于奇偶校验。
 +
 [source, shell]
 ....
@@ -668,7 +669,7 @@ Metadata value stored on /dev/ada3.
 Done.
 ....
 
-. Partition the newly created [.filename]#gr0# device and put a UFS file system on it:
+. 将新创建的[.filename]#gr0#设备进行分区，并在其上放置一个UFS文件系统：
 +
 [source, shell]
 ....
@@ -677,26 +678,26 @@ Done.
 # newfs -j /dev/raid3/gr0p1
 ....
 +
-Many numbers will glide across the screen, and after a bit of time, the process will be complete. The volume has been created and is ready to be mounted:
+许多数字将在屏幕上滑动，经过一段时间后，过程将完成。卷已创建并准备好挂载：
 +
 [source, shell]
 ....
 # mount /dev/raid3/gr0p1 /multimedia/
 ....
 +
-The RAID3 array is now ready to use.
+RAID3阵列现在可以使用了。
 
-Additional configuration is needed to retain this setup across system reboots.
+需要进行额外的配置才能在系统重新启动后保留此设置。
 
 [.procedure]
-. The [.filename]#geom_raid3.ko# module must be loaded before the array can be mounted. To automatically load the kernel module during system initialization, add the following line to [.filename]#/boot/loader.conf#:
+. 在挂载阵列之前，必须加载[.filename]#geom_raid3.ko#模块。为了在系统初始化期间自动加载内核模块，请将以下行添加到[.filename]#/boot/loader.conf#文件中：
 +
 [.programlisting]
 ....
 geom_raid3_load="YES"
 ....
 
-. The following volume information must be added to [.filename]#/etc/fstab# in order to automatically mount the array's file system during the system boot process:
+. 在系统启动过程中，必须将以下卷信息添加到[.filename]#/etc/fstab#中，以便自动挂载阵列的文件系统：
 +
 [.programlisting]
 ....
@@ -704,24 +705,24 @@ geom_raid3_load="YES"
 ....
 
 [[geom-graid]]
-== Software RAID Devices
+== 软件RAID设备
 
-Some motherboards and expansion cards add some simple hardware, usually just a ROM, that allows the computer to boot from a RAID array. After booting, access to the RAID array is handled by software running on the computer's main processor. This "hardware-assisted software RAID" gives RAID arrays that are not dependent on any particular operating system, and which are functional even before an operating system is loaded.
+一些主板和扩展卡会添加一些简单的硬件，通常只是一个ROM，使得计算机可以从RAID阵列启动。启动后，对RAID阵列的访问由运行在计算机主处理器上的软件处理。这种“硬件辅助软件RAID”提供了不依赖于任何特定操作系统的RAID阵列，并且在加载操作系统之前就可以正常工作。
 
-Several levels of RAID are supported, depending on the hardware in use. See man:graid[8] for a complete list.
+根据所使用的硬件，支持多个级别的RAID。有关完整列表，请参阅man:graid[8]。
 
-man:graid[8] requires the [.filename]#geom_raid.ko# kernel module, which is included in the [.filename]#GENERIC# kernel starting with FreeBSD 9.1. If needed, it can be loaded manually with `graid load`.
+man:graid[8] 需要 [.filename]#geom_raid.ko# 内核模块，该模块从 FreeBSD 9.1 开始包含在 [.filename]#GENERIC# 内核中。如果需要，可以使用 `graid load` 命令手动加载该模块。
 
 [[geom-graid-creating]]
-=== Creating an Array
+=== 创建一个数组
 
-Software RAID devices often have a menu that can be entered by pressing special keys when the computer is booting. The menu can be used to create and delete RAID arrays. man:graid[8] can also create arrays directly from the command line.
+软件RAID设备通常在计算机启动时按下特殊键进入菜单。该菜单可用于创建和删除RAID阵列。man:graid[8]也可以直接从命令行创建阵列。
 
-`graid label` is used to create a new array. The motherboard used for this example has an Intel software RAID chipset, so the Intel metadata format is specified. The new array is given a label of [.filename]#gm0#, it is a mirror (RAID1), and uses drives [.filename]#ada0# and [.filename]#ada1#.
+`graid label`用于创建一个新的阵列。本例中使用的主板具有Intel软件RAID芯片组，因此指定了Intel元数据格式。新的阵列被赋予了一个标签[.filename]#gm0#，它是一个镜像（RAID1），并使用驱动器[.filename]#ada0#和[.filename]#ada1#。
 
 [CAUTION]
 ====
-Some space on the drives will be overwritten when they are made into a new array. Back up existing data first!
+当将驱动器制作成新的阵列时，一些空间将被覆盖。请先备份现有数据！
 ====
 
 [source, shell]
@@ -738,7 +739,7 @@ Intel-a29ea104 created
 GEOM_RAID: Intel-a29ea104: Provider raid/r0 for volume gm0 created.
 ....
 
-A status check shows the new mirror is ready for use:
+状态检查显示新的镜像已经准备就绪，可以使用了。
 
 [source, shell]
 ....
@@ -748,9 +749,9 @@ raid/r0  OPTIMAL  ada0 (ACTIVE (ACTIVE))
                   ada1 (ACTIVE (ACTIVE))
 ....
 
-The array device appears in [.filename]#/dev/raid/#. The first array is called [.filename]#r0#. Additional arrays, if present, will be [.filename]#r1#, [.filename]#r2#, and so on.
+数组设备出现在[/dev/raid/]#目录中。第一个数组被称为[r0]#。如果存在其他数组，它们将被称为[r1]#、[r2]#等等。
 
-The BIOS menu on some of these devices can create arrays with special characters in their names. To avoid problems with those special characters, arrays are given simple numbered names like [.filename]#r0#. To show the actual labels, like [.filename]#gm0# in the example above, use man:sysctl[8]:
+某些设备上的BIOS菜单可以创建带有特殊字符的数组名称。为了避免这些特殊字符带来的问题，数组被赋予简单的编号名称，例如[.filename]#r0#。要显示实际的标签，例如上面的示例中的[.filename]#gm0#，请使用man:sysctl[8]命令。
 
 [source, shell]
 ....
@@ -758,9 +759,9 @@ The BIOS menu on some of these devices can create arrays with special characters
 ....
 
 [[geom-graid-volumes]]
-=== Multiple Volumes
+=== 多个卷
 
-Some software RAID devices support more than one _volume_ on an array. Volumes work like partitions, allowing space on the physical drives to be split and used in different ways. For example, Intel software RAID devices support two volumes. This example creates a 40 G mirror for safely storing the operating system, followed by a 20 G RAID0 (stripe) volume for fast temporary storage:
+一些软件RAID设备支持在阵列上创建多个卷。卷的工作方式类似于分区，允许将物理驱动器上的空间分割并以不同的方式使用。例如，Intel软件RAID设备支持两个卷。此示例创建一个40G的镜像卷，用于安全存储操作系统，然后是一个20G的RAID0（条带）卷，用于快速临时存储。
 
 [source, shell]
 ....
@@ -768,40 +769,40 @@ Some software RAID devices support more than one _volume_ on an array. Volumes w
 # graid add -S 20G gm0 RAID0
 ....
 
-Volumes appear as additional [.filename]#rX# entries in [.filename]#/dev/raid/#. An array with two volumes will show [.filename]#r0# and [.filename]#r1#.
+卷在`/dev/raid/`目录下以额外的`.filename`#rX#条目显示。一个包含两个卷的阵列将显示`.filename`#r0#和`.filename`#r1#。
 
-See man:graid[8] for the number of volumes supported by different software RAID devices.
+请参阅man:graid[8]，了解不同软件RAID设备支持的卷数。
 
 [[geom-graid-converting]]
-=== Converting a Single Drive to a Mirror
+=== 将单个驱动器转换为镜像
 
-Under certain specific conditions, it is possible to convert an existing single drive to a man:graid[8] array without reformatting. To avoid data loss during the conversion, the existing drive must meet these minimum requirements:
+在特定条件下，可以将现有的单个驱动器转换为man:graid[8]阵列而无需重新格式化。为了在转换过程中避免数据丢失，现有的驱动器必须满足以下最低要求：
 
-* The drive must be partitioned with the MBR partitioning scheme. GPT or other partitioning schemes with metadata at the end of the drive will be overwritten and corrupted by the man:graid[8] metadata.
-* There must be enough unpartitioned and unused space at the end of the drive to hold the man:graid[8] metadata. This metadata varies in size, but the largest occupies 64 M, so at least that much free space is recommended.
+* 驱动器必须使用MBR分区方案进行分区。GPT或其他在驱动器末尾具有元数据的分区方案将被man:graid[8]元数据覆盖和损坏。
+* 驱动器末尾必须有足够的未分区和未使用空间来容纳man:graid[8]元数据。这些元数据的大小各不相同，但最大的占用64 M，因此建议至少有这么多的可用空间。
 
-If the drive meets these requirements, start by making a full backup. Then create a single-drive mirror with that drive:
+如果驱动器符合这些要求，请先进行完整备份。然后使用该驱动器创建一个单驱动器镜像：
 
 [source, shell]
 ....
 # graid label Intel gm0 RAID1 ada0 NONE
 ....
 
-man:graid[8] metadata was written to the end of the drive in the unused space. A second drive can now be inserted into the mirror:
+man:graid[8] 元数据被写入未使用空间的驱动器末尾。现在可以将第二个驱动器插入到镜像中：
 
 [source, shell]
 ....
 # graid insert raid/r0 ada1
 ....
 
-Data from the original drive will immediately begin to be copied to the second drive. The mirror will operate in degraded status until the copy is complete.
+原始驱动器的数据将立即开始复制到第二个驱动器。在复制完成之前，镜像将以降级状态运行。
 
 [[geom-graid-inserting]]
-=== Inserting New Drives into the Array
+=== 将新驱动器插入阵列中
 
-Drives can be inserted into an array as replacements for drives that have failed or are missing. If there are no failed or missing drives, the new drive becomes a spare. For example, inserting a new drive into a working two-drive mirror results in a two-drive mirror with one spare drive, not a three-drive mirror.
+可以将驱动器插入到阵列中，作为替换已经故障或丢失的驱动器。如果没有故障或丢失的驱动器，新的驱动器将成为备用驱动器。例如，将新的驱动器插入到工作中的两个驱动器的镜像中，将得到一个带有一个备用驱动器的两个驱动器的镜像，而不是一个三个驱动器的镜像。
 
-In the example mirror array, data immediately begins to be copied to the newly-inserted drive. Any existing information on the new drive will be overwritten.
+在镜像阵列的示例中，数据立即开始复制到新插入的驱动器上。新驱动器上的任何现有信息都将被覆盖。
 
 [source, shell]
 ....
@@ -813,9 +814,9 @@ GEOM_RAID: Intel-a29ea104: Subdisk gm0:1-ada1 rebuild start at 0.
 ....
 
 [[geom-graid-removing]]
-=== Removing Drives from the Array
+=== 从阵列中移除驱动器
 
-Individual drives can be permanently removed from a from an array and their metadata erased:
+可以永久从阵列中移除单个驱动器，并擦除其元数据：
 
 [source, shell]
 ....
@@ -826,9 +827,9 @@ GEOM_RAID: Intel-a29ea104: Volume gm0 state changed from OPTIMAL to DEGRADED.
 ....
 
 [[geom-graid-stopping]]
-=== Stopping the Array
+=== 停止数组
 
-An array can be stopped without removing metadata from the drives. The array will be restarted when the system is booted.
+可以在不删除驱动器上的元数据的情况下停止数组。当系统启动时，数组将重新启动。
 
 [source, shell]
 ....
@@ -836,9 +837,9 @@ An array can be stopped without removing metadata from the drives. The array wil
 ....
 
 [[geom-graid-status]]
-=== Checking Array Status
+=== 检查数组状态
 
-Array status can be checked at any time. After a drive was added to the mirror in the example above, data is being copied from the original drive to the new drive:
+数组状态可以随时检查。在上面的示例中，当一个驱动器被添加到镜像中后，数据将从原始驱动器复制到新驱动器。
 
 [source, shell]
 ....
@@ -848,7 +849,7 @@ raid/r0  DEGRADED  ada0 (ACTIVE (ACTIVE))
                    ada1 (ACTIVE (REBUILD 28%))
 ....
 
-Some types of arrays, like `RAID0` or `CONCAT`, may not be shown in the status report if disks have failed. To see these partially-failed arrays, add `-ga`:
+某些类型的阵列，例如`RAID0`或`CONCAT`，如果磁盘故障，可能不会在状态报告中显示。要查看这些部分故障的阵列，请添加`-ga`：
 
 [source, shell]
 ....
@@ -858,9 +859,9 @@ Intel-e2d07d9a  BROKEN  ada6 (ACTIVE (ACTIVE))
 ....
 
 [[geom-graid-deleting]]
-=== Deleting Arrays
+=== 删除数组
 
-Arrays are destroyed by deleting all of the volumes from them. When the last volume present is deleted, the array is stopped and metadata is removed from the drives:
+通过删除数组中的所有卷，可以销毁数组。当删除最后一个存在的卷时，数组将停止，并且从驱动器中删除元数据。
 
 [source, shell]
 ....
@@ -868,12 +869,12 @@ Arrays are destroyed by deleting all of the volumes from them. When the last vol
 ....
 
 [[geom-graid-unexpected]]
-=== Deleting Unexpected Arrays
+=== 删除意外的数组
 
-Drives may unexpectedly contain man:graid[8] metadata, either from previous use or manufacturer testing. man:graid[8] will detect these drives and create an array, interfering with access to the individual drive. To remove the unwanted metadata:
+驱动器可能意外地包含man:graid[8]元数据，这可能是由于先前的使用或制造商的测试。man:graid[8]将检测到这些驱动器并创建一个阵列，从而干扰对单个驱动器的访问。要删除不需要的元数据：
 
 [.procedure]
-. Boot the system. At the boot menu, select `2` for the loader prompt. Enter:
+. 启动系统。在启动菜单中，选择`2`进入加载器提示符。输入：
 +
 [source, shell]
 ....
@@ -881,18 +882,18 @@ OK set kern.geom.raid.enable=0
 OK boot
 ....
 +
-The system will boot with man:graid[8] disabled.
-. Back up all data on the affected drive.
-. As a workaround, man:graid[8] array detection can be disabled by adding
+系统将禁用 man:graid[8] 启动。
+. 备份受影响驱动器上的所有数据。
+. 作为一种解决方法，可以通过添加来禁用 man:graid[8] 阵列检测。
 +
 [.programlisting]
 ....
 kern.geom.raid.enable=0
 ....
 +
-to [.filename]#/boot/loader.conf#.
+到[.filename]#/boot/loader.conf#。
 +
-To permanently remove the man:graid[8] metadata from the affected drive, boot a FreeBSD installation CD-ROM or memory stick, and select `Shell`. Use `status` to find the name of the array, typically `raid/r0`:
+要永久删除受影响驱动器上的man:graid[8]元数据，请启动FreeBSD安装CD-ROM或内存棒，并选择`Shell`。使用`status`命令找到阵列的名称，通常为`raid/r0`：
 +
 [source, shell]
 ....
@@ -902,39 +903,39 @@ raid/r0  OPTIMAL  ada0 (ACTIVE (ACTIVE))
                   ada1 (ACTIVE (ACTIVE))
 ....
 +
-Delete the volume by name:
+按名称删除卷：
 +
 [source, shell]
 ....
 # graid delete raid/r0
 ....
 +
-If there is more than one volume shown, repeat the process for each volume. After the last array has been deleted, the volume will be destroyed.
+如果显示了多个卷，请为每个卷重复此过程。在删除最后一个阵列后，卷将被销毁。
 +
-Reboot and verify data, restoring from backup if necessary. After the metadata has been removed, the `kern.geom.raid.enable=0` entry in [.filename]#/boot/loader.conf# can also be removed.
+重新启动并验证数据，如果需要的话，从备份中恢复。在元数据被删除后，还可以删除 [.filename]#/boot/loader.conf# 中的 `kern.geom.raid.enable=0` 条目。
 
 [[geom-ggate]]
-== GEOM Gate Network
+== GEOM Gate Network是一种计算机网络技术。
 
-GEOM provides a simple mechanism for providing remote access to devices such as disks, CDs, and file systems through the use of the GEOM Gate network daemon, ggated. The system with the device runs the server daemon which handles requests made by clients using ggatec. The devices should not contain any sensitive data as the connection between the client and the server is not encrypted.
+GEOM提供了一种简单的机制，通过使用GEOM Gate网络守护进程ggated，可以远程访问诸如磁盘、CD和文件系统等设备。拥有设备的系统运行服务器守护进程，处理客户端使用ggatec发出的请求。设备不应包含任何敏感数据，因为客户端和服务器之间的连接没有加密。
 
-Similar to NFS, which is discussed in crossref:network-servers[network-nfs,"Network File System (NFS)"], ggated is configured using an exports file. This file specifies which systems are permitted to access the exported resources and what level of access they are offered. For example, to give the client `192.168.1.5` read and write access to the fourth slice on the first SCSI disk, create [.filename]#/etc/gg.exports# with this line:
+与NFS类似，ggated也使用exports文件进行配置。该文件指定了哪些系统被允许访问导出的资源以及它们所提供的访问级别。例如，要给客户端`192.168.1.5`对第一个SCSI磁盘的第四个分区进行读写访问权限，可以在`/etc/gg.exports`文件中添加以下行：
 
 [.programlisting]
 ....
 192.168.1.5 RW /dev/da0s4d
 ....
 
-Before exporting the device, ensure it is not currently mounted. Then, start ggated:
+在导出设备之前，请确保它当前没有挂载。然后，启动ggated：
 
 [source, shell]
 ....
 # ggated
 ....
 
-Several options are available for specifying an alternate listening port or changing the default location of the exports file. Refer to man:ggated[8] for details.
+有几个选项可用于指定备用的监听端口或更改exports文件的默认位置。有关详细信息，请参阅man:ggated[8]。
 
-To access the exported device on the client machine, first use `ggatec` to specify the IP address of the server and the device name of the exported device. If successful, this command will display a `ggate` device name to mount. Mount that specified device name on a free mount point. This example connects to the [.filename]#/dev/da0s4d# partition on `192.168.1.1`, then mounts [.filename]#/dev/ggate0# on [.filename]#/mnt#:
+要在客户端机器上访问导出的设备，首先使用`ggatec`指定服务器的IP地址和导出设备的设备名称。如果成功，该命令将显示一个要挂载的`ggate`设备名称。将指定的设备名称挂载到一个空闲的挂载点上。此示例连接到`192.168.1.1`上的`/dev/da0s4d`分区，然后将`/dev/ggate0`挂载到`/mnt`上：
 
 [source, shell]
 ....
@@ -943,43 +944,43 @@ ggate0
 # mount /dev/ggate0 /mnt
 ....
 
-The device on the server may now be accessed through [.filename]#/mnt# on the client. For more details about `ggatec` and a few usage examples, refer to man:ggatec[8].
+现在可以通过客户端上的 [.filename]#/mnt# 访问服务器上的设备。有关 `ggatec` 的更多详细信息和一些使用示例，请参阅 man:ggatec[8]。
 
 [NOTE]
 ====
-The mount will fail if the device is currently mounted on either the server or any other client on the network. If simultaneous access is needed to network resources, use NFS instead.
+如果设备当前已在服务器或网络上的任何其他客户端上挂载，则挂载将失败。如果需要同时访问网络资源，请使用NFS。
 ====
 
-When the device is no longer needed, unmount it with `umount` so that the resource is available to other clients.
+当设备不再需要时，使用`umount`命令卸载它，以便资源可以供其他客户端使用。
 
 [[geom-glabel]]
-== Labeling Disk Devices
+== 标记磁盘设备
 
-During system initialization, the FreeBSD kernel creates device nodes as devices are found. This method of probing for devices raises some issues. For instance, what if a new disk device is added via USB? It is likely that a flash device may be handed the device name of [.filename]#da0# and the original [.filename]#da0# shifted to [.filename]#da1#. This will cause issues mounting file systems if they are listed in [.filename]#/etc/fstab# which may also prevent the system from booting.
+在系统初始化过程中，FreeBSD内核会在发现设备时创建设备节点。这种探测设备的方法会引发一些问题。例如，如果通过USB添加了一个新的磁盘设备，那么很可能会将一个闪存设备分配为 [.filename]#da0# 的设备名称，而原来的 [.filename]#da0# 则会变成 [.filename]#da1#。这将导致挂载文件系统时出现问题，如果这些文件系统在 [.filename]#/etc/fstab# 中列出，可能还会阻止系统启动。
 
-One solution is to chain SCSI devices in order so a new device added to the SCSI card will be issued unused device numbers. But what about USB devices which may replace the primary SCSI disk? This happens because USB devices are usually probed before the SCSI card. One solution is to only insert these devices after the system has been booted. Another method is to use only a single ATA drive and never list the SCSI devices in [.filename]#/etc/fstab#.
+一种解决方案是按顺序连接SCSI设备，这样添加到SCSI卡的新设备将被分配未使用的设备号。但是对于可能替换主要SCSI磁盘的USB设备怎么办？这是因为USB设备通常在SCSI卡之前进行探测。一种解决方案是在系统启动后再插入这些设备。另一种方法是只使用单个ATA驱动器，并且在/etc/fstab中不列出SCSI设备。
 
-A better solution is to use `glabel` to label the disk devices and use the labels in [.filename]#/etc/fstab#. Since `glabel` stores the label in the last sector of a given provider, the label will remain persistent across reboots. By using this label as a device, the file-system may always be mounted regardless of what device node it is accessed through.
+更好的解决方案是使用`glabel`为磁盘设备添加标签，并在`/etc/fstab`中使用这些标签。由于`glabel`将标签存储在给定提供者的最后一个扇区中，因此标签将在重新启动后保持持久。通过将此标签作为设备，文件系统可以始终被挂载，无论通过哪个设备节点进行访问。
 
 [NOTE]
 ====
-`glabel` can create both transient and permanent labels. Only permanent labels are consistent across reboots. Refer to man:glabel[8] for more information on the differences between labels.
+`glabel`可以创建临时标签和永久标签。只有永久标签在重新启动后保持一致。有关标签之间差异的更多信息，请参阅man:glabel[8]。
 ====
 
-=== Label Types and Examples
+=== 标签类型和示例
 
-Permanent labels can be a generic or a file system label. Permanent file system labels can be created with man:tunefs[8] or man:newfs[8]. These types of labels are created in a sub-directory of [.filename]#/dev#, and will be named according to the file system type. For example, UFS2 file system labels will be created in [.filename]#/dev/ufs#. Generic permanent labels can be created with `glabel label`. These are not file system specific and will be created in [.filename]#/dev/label#.
+永久标签可以是通用标签或文件系统标签。可以使用man:tunefs[8]或man:newfs[8]创建永久文件系统标签。这些类型的标签将在[.filename]#/dev#的子目录中创建，并根据文件系统类型进行命名。例如，UFS2文件系统标签将在[.filename]#/dev/ufs#中创建。可以使用`glabel label`创建通用永久标签。这些标签不特定于文件系统，并将在[.filename]#/dev/label#中创建。
 
-Temporary labels are destroyed at the next reboot. These labels are created in [.filename]#/dev/label# and are suited to experimentation. A temporary label can be created using `glabel create`.
+临时标签在下次重启时被销毁。这些标签是在[/dev/label]中创建的，适用于实验。可以使用`glabel create`命令创建临时标签。
 
-To create a permanent label for a UFS2 file system without destroying any data, issue the following command:
+要为UFS2文件系统创建一个永久标签而不破坏任何数据，请执行以下命令：
 
 [source, shell]
 ....
 # tunefs -L home /dev/da3
 ....
 
-A label should now exist in [.filename]#/dev/ufs# which may be added to [.filename]#/etc/fstab#:
+现在应该在[.filename]#/dev/ufs#中存在一个标签，可以将其添加到[.filename]#/etc/fstab#中：
 
 [.programlisting]
 ....
@@ -988,35 +989,35 @@ A label should now exist in [.filename]#/dev/ufs# which may be added to [.filena
 
 [NOTE]
 ====
-The file system must not be mounted while attempting to run `tunefs`.
+在尝试运行 `tunefs` 时，文件系统不能被挂载。
 ====
 
-Now the file system may be mounted:
+现在可以挂载文件系统了：
 
 [source, shell]
 ....
 # mount /home
 ....
 
-From this point on, so long as the [.filename]#geom_label.ko# kernel module is loaded at boot with [.filename]#/boot/loader.conf# or the `GEOM_LABEL` kernel option is present, the device node may change without any ill effect on the system.
+从这一点开始，只要在启动时加载了 [.filename]#geom_label.ko# 内核模块，并且在 [.filename]#/boot/loader.conf# 中或者存在 `GEOM_LABEL` 内核选项，设备节点可以在不对系统产生任何不良影响的情况下发生变化。
 
-File systems may also be created with a default label by using the `-L` flag with `newfs`. Refer to man:newfs[8] for more information.
+使用`newfs`命令和`-L`选项可以创建带有默认标签的文件系统。有关更多信息，请参阅man:newfs[8]。
 
-The following command can be used to destroy the label:
+可以使用以下命令来销毁标签：
 
 [source, shell]
 ....
 # glabel destroy home
 ....
 
-The following example shows how to label the partitions of a boot disk.
+下面的示例展示了如何为引导磁盘的分区添加标签。
 
-.Labeling Partitions on the Boot Disk
+.在引导磁盘上标记分区
 [example]
 ====
-By permanently labeling the partitions on the boot disk, the system should be able to continue to boot normally, even if the disk is moved to another controller or transferred to a different system. For this example, it is assumed that a single ATA disk is used, which is currently recognized by the system as [.filename]#ad0#. It is also assumed that the standard FreeBSD partition scheme is used, with [.filename]#/#, [.filename]#/var#, [.filename]#/usr# and [.filename]#/tmp#, as well as a swap partition.
+通过对引导磁盘上的分区进行永久标记，即使将磁盘移动到另一个控制器或转移到不同的系统，系统也应能够继续正常引导。对于本示例，假设使用单个ATA磁盘，系统当前将其识别为[.filename]#ad0#。还假设使用标准的FreeBSD分区方案，包括[.filename]#/#、[.filename]#/var#、[.filename]#/usr#和[.filename]#/tmp#，以及一个交换分区。
 
-Reboot the system, and at the man:loader[8] prompt, press kbd:[4] to boot into single user mode. Then enter the following commands:
+重新启动系统，在man:loader[8]提示符下，按下kbd:[4]键进入单用户模式。然后输入以下命令：
 
 [source, shell]
 ....
@@ -1033,7 +1034,7 @@ GEOM_LABEL: Label for provider /dev/ad0s1b is label/swap
 # exit
 ....
 
-The system will continue with multi-user boot. After the boot completes, edit [.filename]#/etc/fstab# and replace the conventional device names, with their respective labels. The final [.filename]#/etc/fstab# will look like this:
+系统将继续进行多用户引导。引导完成后，编辑[/etc/fstab]文件，并用相应的标签替换传统设备名称。最终的[/etc/fstab]文件将如下所示：
 
 [.programlisting]
 ....
@@ -1045,7 +1046,7 @@ The system will continue with multi-user boot. After the boot completes, edit [.
 /dev/label/var          /var            ufs     rw              2       2
 ....
 
-The system can now be rebooted. If everything went well, it will come up normally and `mount` will show:
+系统现在可以重新启动。如果一切顺利，它将正常启动，并且`mount`命令将显示：
 
 [source, shell]
 ....
@@ -1059,7 +1060,7 @@ devfs on /dev (devfs, local)
 
 ====
 
-The man:glabel[8] class supports a label type for UFS file systems, based on the unique file system id, `ufsid`. These labels may be found in [.filename]#/dev/ufsid# and are created automatically during system startup. It is possible to use `ufsid` labels to mount partitions using [.filename]#/etc/fstab#. Use `glabel status` to receive a list of file systems and their corresponding `ufsid` labels:
+man:glabel[8]类支持基于唯一文件系统id `ufsid` 的UFS文件系统的标签类型。这些标签可以在[.filename]#/dev/ufsid#中找到，并在系统启动时自动创建。可以使用`ufsid`标签来使用[.filename]#/etc/fstab#挂载分区。使用`glabel status`命令可以获取文件系统及其对应的`ufsid`标签列表。
 
 [source, shell]
 ....
@@ -1069,7 +1070,7 @@ ufsid/486b6fc38d330916     N/A  ad4s1d
 ufsid/486b6fc16926168e     N/A  ad4s1f
 ....
 
-In the above example, [.filename]#ad4s1d# represents [.filename]#/var#, while [.filename]#ad4s1f# represents [.filename]#/usr#. Using the `ufsid` values shown, these partitions may now be mounted with the following entries in [.filename]#/etc/fstab#:
+在上面的示例中，[.filename]#ad4s1d#表示[.filename]#/var#，而[.filename]#ad4s1f#表示[.filename]#/usr#。使用所示的`ufsid`值，可以使用以下条目在[.filename]#/etc/fstab#中挂载这些分区：
 
 [.programlisting]
 ....
@@ -1077,32 +1078,32 @@ In the above example, [.filename]#ad4s1d# represents [.filename]#/var#, while [.
 /dev/ufsid/486b6fc16926168e        /usr        ufs        rw        2      2
 ....
 
-Any partitions with `ufsid` labels can be mounted in this way, eliminating the need to manually create permanent labels, while still enjoying the benefits of device name independent mounting.
+任何带有`ufsid`标签的分区都可以通过这种方式挂载，无需手动创建永久标签，同时仍然可以享受设备名称无关挂载的好处。
 
 [[geom-gjournal]]
-== UFS Journaling Through GEOM
+== 通过GEOM实现的UFS日志记录
 
-Support for journals on UFS file systems is available on FreeBSD. The implementation is provided through the GEOM subsystem and is configured using `gjournal`. Unlike other file system journaling implementations, the `gjournal` method is block based and not implemented as part of the file system. It is a GEOM extension.
+在FreeBSD上，支持UFS文件系统的日志功能。该实现通过GEOM子系统提供，并使用`gjournal`进行配置。与其他文件系统日志实现不同，`gjournal`方法是基于块的，而不是作为文件系统的一部分实现的。它是一个GEOM扩展。
 
-Journaling stores a log of file system transactions, such as changes that make up a complete disk write operation, before meta-data and file writes are committed to the disk. This transaction log can later be replayed to redo file system transactions, preventing file system inconsistencies.
+日志记录存储了文件系统事务的日志，例如在元数据和文件写入到磁盘之前构成完整磁盘写入操作的更改。可以通过重新播放事务日志来重做文件系统事务，以防止文件系统不一致性。
 
-This method provides another mechanism to protect against data loss and inconsistencies of the file system. Unlike Soft Updates, which tracks and enforces meta-data updates, and snapshots, which create an image of the file system, a log is stored in disk space specifically for this task. For better performance, the journal may be stored on another disk. In this configuration, the journal provider or storage device should be listed after the device to enable journaling on.
+这种方法提供了另一种机制来防止文件系统的数据丢失和不一致性。与跟踪和强制执行元数据更新的软更新以及创建文件系统镜像的快照不同，日志是专门用于此任务的磁盘空间中存储的。为了提高性能，日志可以存储在另一个磁盘上。在这种配置中，应该在要启用日志记录的设备之后列出日志提供者或存储设备。
 
-The [.filename]#GENERIC# kernel provides support for `gjournal`. To automatically load the [.filename]#geom_journal.ko# kernel module at boot time, add the following line to [.filename]#/boot/loader.conf#:
+[.filename]#GENERIC#内核提供对`gjournal`的支持。要在启动时自动加载[.filename]#geom_journal.ko#内核模块，请将以下行添加到[.filename]#/boot/loader.conf#文件中：
 
 [.programlisting]
 ....
 geom_journal_load="YES"
 ....
 
-If a custom kernel is used, ensure the following line is in the kernel configuration file:
+如果使用自定义内核，请确保以下行在内核配置文件中：
 
 [.programlisting]
 ....
 options	GEOM_JOURNAL
 ....
 
-Once the module is loaded, a journal can be created on a new file system using the following steps. In this example, [.filename]#da4# is a new SCSI disk:
+一旦模块加载完成，可以按照以下步骤在新的文件系统上创建一个日志。在这个例子中，[.filename]#da4# 是一个新的SCSI磁盘：
 
 [source, shell]
 ....
@@ -1110,9 +1111,9 @@ Once the module is loaded, a journal can be created on a new file system using t
 # gjournal label /dev/da4
 ....
 
-This will load the module and create a [.filename]#/dev/da4.journal# device node on [.filename]#/dev/da4#.
+这将加载模块并在/dev/da4上创建一个设备节点/dev/da4.journal。
 
-A UFS file system may now be created on the journaled device, then mounted on an existing mount point:
+现在可以在日志设备上创建UFS文件系统，然后将其挂载到现有的挂载点上：
 
 [source, shell]
 ....
@@ -1122,9 +1123,9 @@ A UFS file system may now be created on the journaled device, then mounted on an
 
 [NOTE]
 ====
-In the case of several slices, a journal will be created for each individual slice. For instance, if [.filename]#ad4s1# and [.filename]#ad4s2# are both slices, then `gjournal` will create [.filename]#ad4s1.journal# and [.filename]#ad4s2.journal#.
+在多个切片的情况下，将为每个单独的切片创建一个日志。例如，如果 [.filename]#ad4s1# 和 [.filename]#ad4s2# 都是切片，那么 `gjournal` 将创建 [.filename]#ad4s1.journal# 和 [.filename]#ad4s2.journal#。
 ====
 
-Journaling may also be enabled on current file systems by using `tunefs`. However, _always_ make a backup before attempting to alter an existing file system. In most cases, `gjournal` will fail if it is unable to create the journal, but this does not protect against data loss incurred as a result of misusing `tunefs`. Refer to man:gjournal[8] and man:tunefs[8] for more information about these commands.
+可以使用`tunefs`在当前文件系统上启用日志记录。然而，在尝试更改现有文件系统之前，**一定要**先备份数据。在大多数情况下，如果无法创建日志，`gjournal`将失败，但这并不能保护免受错误使用`tunefs`导致的数据丢失。有关这些命令的更多信息，请参阅man:gjournal[8]和man:tunefs[8]。
 
-It is possible to journal the boot disk of a FreeBSD system. Refer to the article extref:{gjournal-desktop}[Implementing UFS Journaling on a Desktop PC] for detailed instructions.
+可以对FreeBSD系统的引导磁盘进行日志记录。有关详细说明，请参阅文章《在桌面PC上实现UFS日志记录》（extref:{gjournal-desktop}）。

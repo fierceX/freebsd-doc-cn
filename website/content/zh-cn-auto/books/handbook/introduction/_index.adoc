@@ -1,17 +1,17 @@
 ---
-description: 'This chapter covers various aspects of the FreeBSD Project, such as its history, goals, development model, and so on'
+description: 本章介绍了FreeBSD项目的各个方面，包括其历史、目标、开发模型等等。
 next: books/handbook/bsdinstall
-part: 'Part I. Getting Started'
+part: 第一部分：入门指南
 path: /books/handbook/
 prev: books/handbook/parti
 showBookMenu: true
 tags: '["introduction", "synopsis", "about", "Who Uses FreeBSD", "goals", "history"]'
-title: 'Chapter 1. Introduction'
+title: '第一章. 引言'
 weight: 3
 ---
 
 [[introduction]]
-= Introduction
+= 介绍
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,157 +46,167 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[introduction-synopsis]]
-== Synopsis
+== 概要
 
-Thank you for your interest in FreeBSD! The following chapter covers various aspects of the FreeBSD Project, such as its history, goals, development model, and so on.
+感谢您对FreeBSD的关注！以下章节涵盖了FreeBSD项目的各个方面，如其历史、目标、开发模型等等。
 
-After reading this chapter you will know:
+阅读本章后，您将了解：
 
-* How FreeBSD relates to other computer operating systems.
-* The history of the FreeBSD Project.
-* The goals of the FreeBSD Project.
-* The basics of the FreeBSD open-source development model.
-* And of course: where the name "FreeBSD" comes from.
+* FreeBSD与其他计算机操作系统的关系。
+* FreeBSD项目的历史。
+* FreeBSD项目的目标。
+* FreeBSD开源开发模型的基础知识。
+* 当然，还有一个问题：FreeBSD这个名字的由来。
 
 [[nutshell]]
-== Welcome to FreeBSD!
+== 欢迎来到FreeBSD！
 
-FreeBSD is an Open Source, standards-compliant Unix-like operating system for x86 (both 32 and 64 bit), ARM, AArch64, RISC-V, POWER, and PowerPC computers. It provides all the features that are nowadays taken for granted, such as preemptive multitasking, memory protection, virtual memory, multi-user facilities, SMP support, all the Open Source development tools for different languages and frameworks, and desktop features centered around X Window System, KDE, or GNOME. Its particular strengths are:
+FreeBSD是一个开源的、符合标准的类Unix操作系统，适用于x86（32位和64位）、ARM、AArch64、RISC-V、POWER和PowerPC计算机。它提供了现在被视为理所当然的所有功能，如抢占式多任务处理、内存保护、虚拟内存、多用户设施、SMP支持、各种语言和框架的开源开发工具，以及以X Window System、KDE或GNOME为中心的桌面功能。它的特点有：
 
-* _Liberal Open Source license_, which grants you rights to freely modify and extend its source code and incorporate it in both Open Source projects and closed products without imposing restrictions typical to copyleft licenses, as well as avoiding potential license incompatibility problems.
-* _Strong TCP/IP networking_ - FreeBSD implements industry standard protocols with ever increasing performance and scalability. This makes it a good match in both server, and routing/firewalling roles - and indeed many companies and vendors use it precisely for that purpose.
-* _Fully integrated OpenZFS support_, including root-on-ZFS, ZFS Boot Environments, fault management, administrative delegation, support for jails, FreeBSD specific documentation, and system installer support.
-* _Extensive security features_, from the Mandatory Access Control framework to Capsicum capability and sandbox mechanisms.
-* _Over 30 thousand prebuilt packages_ for all supported architectures, and the Ports Collection which makes it easy to build your own, customized ones.
-* _Documentation_ - in addition to the Handbook and books from different authors that cover topics ranging from system administration to kernel internals, there are also the man:man[1] pages, not only for userspace daemons, utilities, and configuration files, but also for kernel driver APIs (section 9) and individual drivers (section 4).
-* _Simple and consistent repository structure and build system_ - FreeBSD uses a single repository for all of its components, both kernel and userspace. This, along with a unified and easy to customize build system and a well thought-out development process makes it easy to integrate FreeBSD with build infrastructure for your own product.
-* _Staying true to Unix philosophy_, preferring composability instead of monolithic "all in one" daemons with hardcoded behavior.
-* _Binary compatibility_ with Linux, which makes it possible to run many Linux binaries without the need for virtualisation.
+* 自由开源许可证（Liberal Open Source license）赋予您自由修改和扩展其源代码的权利，并将其纳入开源项目和闭源产品中，而不会施加典型的强制共享许可证所具有的限制，同时避免潜在的许可证不兼容问题。
+* 强大的TCP/IP网络 - FreeBSD采用行业标准协议，具有越来越高的性能和可扩展性。这使得它在服务器和路由/防火墙角色中都能很好地匹配 - 实际上，许多公司和供应商正是出于这个目的使用它。
+* 完全集成的OpenZFS支持，包括root-on-ZFS、ZFS引导环境、故障管理、管理委派、支持jails、FreeBSD特定文档和系统安装程序支持。
+* _广泛的安全功能_，从强制访问控制框架到Capsicum能力和沙盒机制。
+* 支持所有架构的超过30,000个预构建软件包，以及Ports Collection，使得构建自己定制的软件包变得容易。
+* _文档_ - 除了手册和涵盖从系统管理到内核内部的各种主题的不同作者的书籍之外，还有man:man[1]页面，不仅适用于用户空间的守护进程、实用程序和配置文件，还适用于内核驱动程序API（第9节）和单个驱动程序（第4节）。
+* 简单而一致的存储库结构和构建系统 - FreeBSD使用一个存储库来管理所有组件，包括内核和用户空间。这个特点，加上统一且易于定制的构建系统以及经过深思熟虑的开发流程，使得将FreeBSD与自己产品的构建基础设施集成变得容易。
+* 秉承Unix哲学，更倾向于可组合性，而不是硬编码行为的单体化“一体化”守护程序。
+* 与Linux的二进制兼容性，使得在不需要虚拟化的情况下可以运行许多Linux二进制文件。
 
-FreeBSD is based on the 4.4BSD-Lite release from Computer Systems Research Group (CSRG) at the University of California at Berkeley, and carries on the distinguished tradition of BSD systems development. In addition to the fine work provided by CSRG, the FreeBSD Project has put in many thousands of man-hours into extending the functionality and fine-tuning the system for maximum performance and reliability in real-life load situations. FreeBSD offers performance and reliability on par with other Open Source and commercial offerings, combined with cutting-edge features not available anywhere else.
+FreeBSD基于加利福尼亚大学伯克利分校计算机系统研究组（CSRG）的4.4BSD-Lite发布版，并延续了BSD系统开发的卓越传统。除了CSRG提供的出色工作外，FreeBSD项目还投入了数千小时的工作，扩展了功能并对系统进行了精细调整，以在实际负载情况下实现最大性能和可靠性。FreeBSD提供与其他开源和商业产品相当的性能和可靠性，同时结合了其他地方无法获得的尖端功能。
 
 [[os-overview]]
-=== What Can FreeBSD Do?
+=== FreeBSD可以做什么？
 
-The applications to which FreeBSD can be put are truly limited only by your own imagination. From software development to factory automation, inventory control to azimuth correction of remote satellite antenna; if it can be done with a commercial UNIX(R) product then it is more than likely that you can do it with FreeBSD too! FreeBSD also benefits significantly from literally thousands of high quality applications developed by research centers and universities around the world, often available at little to no cost.
+FreeBSD的应用范围几乎只受你的想象力限制。从软件开发到工厂自动化，从库存控制到远程卫星天线的方位校正；如果可以用商业UNIX(R)产品完成，那么很有可能你也可以用FreeBSD来实现！FreeBSD还受益于全球研究中心和大学开发的成千上万个高质量应用程序，通常可以以很低的或者零成本获得。
 
-Because the source code for FreeBSD itself is freely available, the system can also be customized to an almost unheard-of degree for special applications or projects, and in ways not generally possible with operating systems from most major commercial vendors. Here is just a sampling of some of the applications in which people are currently using FreeBSD:
+由于FreeBSD本身的源代码是免费提供的，因此该系统可以根据特定应用或项目的需求进行几乎无与伦比的定制，而这在大多数主要商业供应商的操作系统中通常是不可能的。以下是一些人们目前正在使用FreeBSD的应用程序的示例：
 
-* _Internet Services:_ The robust TCP/IP networking built into FreeBSD makes it an ideal platform for a variety of Internet services such as:
+* 互联网服务：FreeBSD内置的强大的TCP/IP网络使其成为各种互联网服务的理想平台，例如：
 
-** Web servers
-** IPv4 and IPv6 routing
-** Firewalls and NAT ("IP masquerading") gateways
-** FTP servers
-** Email servers
-** Storage servers
-** Virtualization servers
-** And more...
+** Web服务器
+** IPv4和IPv6路由
+** 防火墙和NAT（"IP伪装"）网关
+** FTP服务器
+** 电子邮件服务器
+** 存储服务器
+** 虚拟化服务器
+** 还有更多...
 
-* _Education:_ Are you a student of computer science or a related engineering field? There is no better way of learning about operating systems, computer architecture and networking than the hands-on, under-the-hood experience that FreeBSD can provide. A number of freely available CAD, mathematical and graphic design packages also make it highly useful to those whose primary interest in a computer is to get _other_ work done!
-* _Research:_ With source code for the entire system available, FreeBSD is an excellent platform for research in operating systems as well as other branches of computer science. FreeBSD's freely available nature also makes it possible for remote groups to collaborate on ideas or shared development without having to worry about special licensing agreements or limitations on what may be discussed in open forums.
-* _Networking:_ Need a new router? A name server (DNS)? A firewall to keep people out of your internal network? FreeBSD can easily turn that unused PC sitting in the corner into an advanced router with sophisticated packet-filtering capabilities.
-* _Embedded:_ FreeBSD makes an excellent platform to build embedded systems upon. With support for the ARM, AArch64 and PowerPC platforms, coupled with a robust network stack, cutting edge features, and the permissive extref:{faq}[BSD license, bsd-license-restrictions], FreeBSD makes an excellent foundation for building embedded routers, firewalls, and other devices.
-* _Desktop:_ FreeBSD makes a fine choice for an inexpensive desktop solution using the freely available X11 server and Wayland display server. FreeBSD offers a choice from many open-source desktop environments, including the standard GNOME and KDE graphical user interfaces. FreeBSD can even boot "diskless" from a central server, making individual workstations even cheaper and easier to administer.
-* _Software Development:_ The basic FreeBSD system comes with a full suite of development tools including a full C/C++ compiler and debugger suite. Support for many other languages are also available through the ports and packages collection.
+* _教育：_ 你是计算机科学或相关工程领域的学生吗？没有比FreeBSD提供的亲身实践、深入了解操作系统、计算机架构和网络更好的学习方式了。还有一些免费的CAD、数学和图形设计软件包，对于那些主要关注计算机用于完成其他工作的人来说，它们也非常有用！
+* _研究：_由于整个系统的源代码可用，FreeBSD是操作系统以及计算机科学其他领域研究的优秀平台。FreeBSD的自由可用性也使得远程团队能够在想法或共享开发上进行合作，而无需担心特殊许可协议或在公开论坛上讨论的限制。
+* _网络：_ 需要一个新的路由器吗？一个名称服务器（DNS）？一个防火墙来阻止人们进入您的内部网络？FreeBSD可以轻松地将闲置在角落的个人电脑转变为具有复杂数据包过滤功能的高级路由器。
+* 嵌入式：FreeBSD是构建嵌入式系统的优秀平台。它支持ARM、AArch64和PowerPC平台，配备强大的网络堆栈、尖端功能和宽松的BSD许可证限制，使FreeBSD成为构建嵌入式路由器、防火墙和其他设备的理想基础。
+* _桌面：_ FreeBSD是一个使用免费的X11服务器和Wayland显示服务器的廉价桌面解决方案的不错选择。FreeBSD提供了许多开源桌面环境的选择，包括标准的GNOME和KDE图形用户界面。FreeBSD甚至可以从中央服务器“无盘启动”，使得个人工作站更加便宜和易于管理。
+* 软件开发：基本的FreeBSD系统配备了一套完整的开发工具，包括完整的C/C++编译器和调试器套件。通过端口和软件包集合，还可以支持许多其他编程语言。
 
-FreeBSD is available to download free of charge, or can be obtained on either CD-ROM or DVD. Please see crossref:mirrors[mirrors, Obtaining FreeBSD] for more information about obtaining FreeBSD.
+FreeBSD可以免费下载，也可以通过CD-ROM或DVD获取。有关获取FreeBSD的更多信息，请参阅crossref:mirrors[mirrors, Obtaining FreeBSD]。
 
 [[introduction-nutshell-users]]
-=== Who Uses FreeBSD?
+=== 谁使用FreeBSD？
 
-FreeBSD has been known for its web serving capabilities. A list of link:https://freebsdfoundation.org/about-us/testimonials/[testimonials from companies basing their products and services on FreeBSD] can be found at the FreeBSD Foundation website. Wikipedia also maintains a link:https://en.wikipedia.org/wiki/List_of_products_based_on_FreeBSD[list of products based on FreeBSD].
+FreeBSD以其Web服务器功能而闻名。可以在FreeBSD基金会的网站上找到一份基于FreeBSD的产品和服务的公司的[testimonials列表]。维基百科还维护着一个基于FreeBSD的[产品列表]。
 
 [[history]]
-== About the FreeBSD Project
+== 关于FreeBSD项目
 
-The following section provides some background information on the project, including a brief history, project goals, and the extref:{dev-model}[development model] of the project.
+FreeBSD项目是一个开源的操作系统项目，它基于UNIX操作系统的设计原则和BSD许可证。该项目的目标是提供一个稳定、高性能、可靠的操作系统，适用于各种不同的硬件平台。
+
+FreeBSD项目的发展始于1993年，它由一群志愿者开发和维护。这个项目的核心团队致力于开发和改进FreeBSD操作系统的各个方面，包括内核、驱动程序、网络协议栈、安全性和性能优化等。
+
+FreeBSD操作系统具有许多优点，例如可靠性、稳定性和安全性。它还提供了丰富的软件包管理系统，使用户可以轻松地安装和更新软件。此外，FreeBSD还支持多种架构，包括x86、ARM和PowerPC等。
+
+FreeBSD项目的开发过程是透明和开放的，任何人都可以参与其中。它拥有一个活跃的社区，社区成员之间进行交流和合作，共同推动项目的发展。
+
+总之，FreeBSD项目是一个强大而灵活的操作系统项目，它为用户提供了一个可靠和高性能的平台，适用于各种不同的应用场景。
+
+下面的部分提供了关于项目的一些背景信息，包括简要历史、项目目标以及项目的开发模型。
 
 [[intro-history]]
-=== A Brief History of FreeBSD
+=== FreeBSD的简要历史
 
-The FreeBSD Project had its genesis in the early part of 1993, partially as the brainchild of the Unofficial 386BSDPatchkit's last 3 coordinators: Nate Williams, Rod Grimes and Jordan Hubbard.
+FreeBSD项目诞生于1993年初，部分是由非官方的386BSDPatchkit的最后三位协调员Nate Williams、Rod Grimes和Jordan Hubbard共同构思而成。
 
-The original goal was to produce an intermediate snapshot of 386BSD in order to fix a number of problems that the patchkit mechanism was just not capable of solving. The early working title for the project was 386BSD 0.5 or 386BSD Interim in reference to that fact.
+最初的目标是生成386BSD的中间快照，以解决一些无法通过补丁机制解决的问题。该项目的早期工作标题是386BSD 0.5或386BSD Interim，以此为参考。
 
-386BSD was Bill Jolitz's operating system, which had been up to that point suffering rather severely from almost a year's worth of neglect. As the patchkit swelled ever more uncomfortably with each passing day, they decided to assist Bill by providing this interim "cleanup" snapshot. Those plans came to a rude halt when Bill Jolitz suddenly decided to withdraw his sanction from the project without any clear indication of what would be done instead.
+386BSD是Bill Jolitz的操作系统，到那时为止，它已经遭受了将近一年的严重忽视。随着每一天过去，补丁包变得越来越不舒服，他们决定通过提供这个临时的“清理”快照来帮助Bill。然而，当Bill Jolitz突然决定撤回对该项目的支持，并没有明确表示将采取什么替代措施时，这些计划被粗暴地中止了。
 
-The trio thought that the goal remained worthwhile, even without Bill's support, and so they adopted the name "FreeBSD" coined by David Greenman. The initial objectives were set after consulting with the system's current users and, once it became clear that the project was on the road to perhaps even becoming a reality, Jordan contacted Walnut Creek CDROM with an eye toward improving FreeBSD's distribution channels for those many unfortunates without easy access to the Internet. Walnut Creek CDROM not only supported the idea of distributing FreeBSD on CD but also went so far as to provide the project with a machine to work on and a fast Internet connection. Without Walnut Creek CDROM's almost unprecedented degree of faith in what was, at the time, a completely unknown project, it is quite unlikely that FreeBSD would have gotten as far, as fast, as it has today.
+即使没有Bill的支持，三人组仍然认为目标仍然值得追求，因此他们采用了David Greenman提出的“FreeBSD”这个名字。在与系统当前用户咨询后，确定了最初的目标。一旦清楚该项目可能成为现实，Jordan便联系了Walnut Creek CDROM，以改善FreeBSD的发行渠道，以便那些没有便捷访问互联网的人。Walnut Creek CDROM不仅支持在光盘上分发FreeBSD，还提供了一台用于开发工作的机器和快速的互联网连接。如果没有Walnut Creek CDROM对当时一个完全未知的项目的几乎前所未有的信任，FreeBSD很可能不会像今天这样迅速取得如此大的进展。
 
-The first CD-ROM (and general net-wide) distribution was FreeBSD 1.0, released in December of 1993. This was based on the 4.3BSD-Lite ("Net/2") tape from U.C. Berkeley, with many components also provided by 386BSD and the Free Software Foundation. It was a fairly reasonable success for a first offering, and they followed it with the highly successful FreeBSD 1.1 release in May of 1994.
+第一张CD-ROM（以及整个网络范围内的）发行版是FreeBSD 1.0，于1993年12月发布。它基于来自加州大学伯克利分校的4.3BSD-Lite（“Net/2”）磁带，同时还借鉴了386BSD和自由软件基金会提供的许多组件。作为首次发布，它取得了相当不错的成功，并在1994年5月发布了备受好评的FreeBSD 1.1版本。
 
-Around this time, some rather unexpected storm clouds formed on the horizon as Novell and U.C. Berkeley settled their long-running lawsuit over the legal status of the Berkeley Net/2 tape. A condition of that settlement was U.C. Berkeley's concession that three files of Net/2 were "encumbered" code and had to be removed as they were the property of Novell, who had in turn acquired it from AT&T some time previously. What Berkeley got in return was Novell's "blessing" that the 4.4BSD-Lite release, when it was finally released, would be declared unencumbered and all existing Net/2 users would be strongly encouraged to switch. This included FreeBSD, and the project was given until the end of July 1994 to stop shipping its own Net/2 based product. Under the terms of that agreement, the project was allowed one last release before the deadline, that release being FreeBSD 1.1.5.1.
+在这个时候，诺维尔（Novell）和加州大学伯克利分校（U.C. Berkeley）就有关伯克利Net/2磁带的法律地位的长期诉讼达成了意外的和解。和解的条件是U.C. Berkeley承认Net/2的三个文件是“受限制”的代码，必须予以删除，因为它们是诺维尔的财产，而诺维尔则是之前从AT&T收购的。作为回报，伯克利获得了诺维尔的“祝福”，即当4.4BSD-Lite版本最终发布时，将被宣布为无限制的，并强烈鼓励所有现有的Net/2用户切换过来。这包括FreeBSD，该项目被给予截止到1994年7月底停止发布基于Net/2的产品的时间。根据协议的条款，该项目在最后期限之前被允许发布最后一个版本，即FreeBSD 1.1.5.1。
 
-FreeBSD then set about the arduous task of literally re-inventing itself from a completely new and rather incomplete set of 4.4BSD-Lite bits. Although only three files having to do with System V shared memory and semaphores were removed, many other changes and bug fixes had been made to the BSD distribution, so it was a huge task to merge all the FreeBSD developments into 4.4BSD-Lite. It took the project until November of 1994 to make this transition, and in December it released FreeBSD 2.0 to the world. Despite being still more than a little rough around the edges, the release was a significant success and was followed by the more robust and easier to install FreeBSD 2.0.5 release in June of 1995.
+FreeBSD随后开始了一项艰巨的任务，从一个全新且相当不完整的4.4BSD-Lite代码库中重新塑造自己。虽然只有与System V共享内存和信号量相关的三个文件被删除，但在BSD发行版中进行了许多其他的更改和错误修复，因此将所有FreeBSD的开发工作合并到4.4BSD-Lite中是一项巨大的任务。该项目直到1994年11月才完成了这一过渡，并在12月向世界发布了FreeBSD 2.0版本。尽管在某种程度上仍然存在一些问题，但这个版本取得了重大的成功，并在1995年6月发布了更稳定、更易安装的FreeBSD 2.0.5版本。
 
-Since that time, FreeBSD has made a series of releases each time improving the stability, speed, and feature set of the previous version.
+自那时起，FreeBSD每次发布都会改进之前版本的稳定性、速度和功能集。
 
-For now, long-term development projects continue to take place in the {rel-head}-CURRENT (main) branch, and snapshot releases of {rel-head} are continually made available from link:https://download.freebsd.org/snapshots/[the snapshot server] as work progresses.
+目前，长期发展项目仍在{rel-head}-CURRENT（主要）分支中进行，并且随着工作的进行，{rel-head}的快照版本将持续从link:https://download.freebsd.org/snapshots/[快照服务器]发布。
 
 [[goals]]
-=== FreeBSD Project Goals
+=== FreeBSD项目的目标
 
-The goals of the FreeBSD Project are to provide software that may be used for any purpose and without strings attached. Many of us have a significant investment in the code (and project) and would certainly not mind a little financial compensation now and then, but we are definitely not prepared to insist on it. We believe that our first and foremost "mission" is to provide code to any and all comers, and for whatever purpose, so that the code gets the widest possible use and provides the widest possible benefit. This is, we believe, one of the most fundamental goals of Free Software and one that we enthusiastically support.
+FreeBSD项目的目标是提供可用于任何目的且无附加条件的软件。我们中的许多人在代码（和项目）上投入了大量资源，偶尔获得一些财务补偿并不介意，但我们绝对不会坚持要求。我们相信我们的首要任务是向任何人提供代码，无论出于何种目的，以便代码得到最广泛的使用并提供最广泛的利益。我们认为这是自由软件的最基本目标之一，我们对此表示热情支持。
 
-That code in our source tree which falls under the GNU General Public License (GPL) or Library General Public License (LGPL) comes with slightly more strings attached, though at least on the side of enforced access rather than the usual opposite. Due to the additional complexities that can evolve in the commercial use of GPL software we do, however, prefer software submitted under the more relaxed BSD license when it is a reasonable option to do so.
+我们源代码树中受GNU通用公共许可证（GPL）或库通用公共许可证（LGPL）约束的代码，附带了稍微更多的限制，尽管至少是在强制访问方面，而不是通常的相反情况。由于商业使用GPL软件可能出现的额外复杂性，我们更喜欢在合理的情况下选择以更宽松的BSD许可证提交的软件。
 
 [[development]]
-=== The FreeBSD Development Model
+=== FreeBSD开发模型
 
-The development of FreeBSD is a extref:{dev-model}[very open and flexible process], being literally built from the contributions of thousands of people around the world, as can be seen from our extref:{contributors}[list of contributors]. FreeBSD's development infrastructure allows these thousands of contributors to collaborate over the Internet. We are constantly on the lookout for new volunteers, and those interested in becoming more closely involved should consult the article on extref:{contributing}[Contributing to FreeBSD].
+FreeBSD的开发是一个非常开放和灵活的过程，从世界各地成千上万的人的贡献中构建而成，这一点可以从我们的贡献者列表中看出来。FreeBSD的开发基础设施允许这些成千上万的贡献者在互联网上进行合作。我们一直在寻找新的志愿者，有兴趣更深入参与的人应该参考有关贡献FreeBSD的文章。
 
-Useful things to know about the FreeBSD Project and its development process, whether working independently or in close cooperation:
+无论是独立工作还是密切合作，以下是关于FreeBSD项目及其开发过程的一些有用信息：
 
-The Git repositories[[development-cvs-repository]]::
-For several years, the central source tree for FreeBSD was maintained by link:https://www.nongnu.org/cvs/[CVS] (Concurrent Versions System), a freely available source code control tool. In June 2008, the Project switched to using link:https://subversion.apache.org/[SVN] (Subversion). The switch was deemed necessary, as the technical limitations imposed by CVS were becoming obvious due to the rapid expansion of the source tree and the amount of history already stored. The Documentation Project and Ports Collection repositories also moved from CVS to SVN in May 2012 and July 2012, respectively. In December 2020, the Project link:https://www.freebsd.org/status/report-2020-10-2020-12.html#Git-Migration-Working-Group[migrated Source and Documentation repositories] to link:https://git-scm.com/[Git], with link:https://www.freebsd.org/status/report-2021-04-2021-06/#_git_migration_working_group[Ports following suit] in April 2021. Please refer to the crossref:cutting-edge[synching, Obtaining the Source] section for more information on obtaining the FreeBSD `src/` repository and crossref:ports[ports-using, Using the Ports Collection] for details on obtaining the FreeBSD Ports Collection.
+Git仓库[[development-cvs-repository]]::
+多年来，FreeBSD的中央源代码树由免费可用的源代码控制工具link:https://www.nongnu.org/cvs/[CVS]（Concurrent Versions System）维护。2008年6月，该项目转而使用link:https://subversion.apache.org/[SVN]（Subversion）。由于源代码树的迅速扩展和已存储的历史记录量，CVS所施加的技术限制变得明显，因此这次转换被认为是必要的。文档项目和端口集合存储库也分别于2012年5月和2012年7月从CVS迁移到了SVN。2020年12月，该项目将源代码和文档存储库迁移到了link:https://git-scm.com/[Git]，而端口集合则在2021年4月跟随。有关获取FreeBSD `src/`存储库的更多信息，请参阅crossref:cutting-edge[synching, Obtaining the Source]部分，有关获取FreeBSD端口集合的详细信息，请参阅crossref:ports[ports-using, Using the Ports Collection]。
 
-The committers list[[development-committers]]::
-The _committers_ are the people who have _push_ access to the Git repository, and are authorized to make modifications to the FreeBSD source (the term "committer" comes from `commit`, the source control command which is used to bring new changes into the repository). Anyone can submit a bug to the link:https://bugs.FreeBSD.org/submit/[Bug Database]. Before submitting a bug report, the FreeBSD mailing lists, IRC channels, or forums can be used to help verify that an issue is actually a bug.
+贡献者列表[[development-committers]]::
+_committers_是那些具有对Git仓库的_push_访问权限的人，他们被授权对FreeBSD源代码进行修改（术语“committer”来自于`commit`，这是用于将新更改引入仓库的源代码控制命令）。任何人都可以提交一个bug到link:https://bugs.FreeBSD.org/submit/[Bug Database]。在提交bug报告之前，可以使用FreeBSD邮件列表、IRC频道或论坛来帮助验证一个问题是否真的是一个bug。
 
-The FreeBSD core team[[development-core]]::
-The _FreeBSD core team_ would be equivalent to the board of directors if the FreeBSD Project were a company. The primary task of the core team is to make sure the project, as a whole, is in good shape and is heading in the right directions. Inviting dedicated and responsible developers to join our group of committers is one of the functions of the core team, as is the recruitment of new core team members as others move on. The current core team was elected from a pool of committer candidates in May 2022. Elections are held every 2 years.
+FreeBSD核心团队[[development-core]]::
+如果FreeBSD项目是一家公司，那么_FreeBSD核心团队_将相当于董事会。核心团队的主要任务是确保整个项目处于良好状态并朝着正确的方向发展。邀请专注和负责任的开发人员加入我们的提交者团队是核心团队的职责之一，招募新的核心团队成员也是核心团队的职责之一。当前的核心团队是在2022年5月从提交者候选人中选举产生的。选举每2年举行一次。
 +
 [NOTE]
 ====
-Like most developers, most members of the core team are also volunteers when it comes to FreeBSD development and do not benefit from the project financially, so "commitment" should also not be misconstrued as meaning "guaranteed support." The "board of directors" analogy above is not very accurate, and it may be more suitable to say that these are the people who gave up their lives in favor of FreeBSD against their better judgement!
+和大多数开发者一样，FreeBSD核心团队的大多数成员在FreeBSD开发方面也是志愿者，并且没有从项目中获得经济利益，所以“承诺”也不应被误解为“有保证的支持”。上面提到的“董事会”类比并不十分准确，更适合说这些人是在违背自己更好判断的情况下选择了FreeBSD而放弃了自己的生活！
 ====
 
-The FreeBSD Foundation[[development-foundation]]::
-The link:https://freebsdfoundation.org/[FreeBSD Foundation] is a 501(c)(3), US-based, non-profit organization dedicated to supporting and promoting the FreeBSD Project and community worldwide. The Foundation funds software development via project grants and provides staff to immediately respond to urgent problems and implement new features and functionality. The Foundation purchases hardware to improve and maintain FreeBSD infrastructure, and funds staffing to improve test coverage, continuous integration and automation. The Foundation advocates for FreeBSD by promoting FreeBSD at technical conferences and events around the world. The Foundation also provides workshops, educational material, and presentations to recruit more users and contributors to FreeBSD. The Foundation also represents the FreeBSD Project in executing contracts, license agreements, and other legal arrangements that require a recognized legal entity.
+自由BSD基金会[[开发基金会]]::
+链接：https://freebsdfoundation.org/ [FreeBSD基金会] 是一个位于美国的501(c)(3)非营利组织，致力于支持和推广全球的FreeBSD项目和社区。基金会通过项目拨款资助软件开发，并提供员工立即响应紧急问题并实施新功能和功能。基金会购买硬件以改善和维护FreeBSD基础设施，并资助人员提高测试覆盖率、持续集成和自动化。基金会通过在世界各地的技术会议和活动上推广FreeBSD来支持FreeBSD。基金会还提供研讨会、教育材料和演示，以吸引更多的FreeBSD用户和贡献者。基金会还代表FreeBSD项目执行合同、许可协议和其他需要认可法律实体的法律安排。
 
-Outside contributors::
-Last, but definitely not least, the largest group of developers are the users themselves who provide feedback and bug fixes to us on an almost constant basis. The primary way of keeping in touch with the development of the FreeBSD base system is to subscribe to the {freebsd-hackers} where such things are discussed. For porting third party applications, it would be the {freebsd-ports}. For documentation - {freebsd-doc}. See crossref:eresources[eresources, Resources on the Internet] for more information about the various FreeBSD mailing lists.
+外部贡献者::
+最后，但绝对不是最不重要的，最大的开发者群体是用户自己，他们几乎一直向我们提供反馈和错误修复。与FreeBSD基本系统的开发保持联系的主要方式是订阅{freebsd-hackers}，在这里讨论这些事情。对于移植第三方应用程序，可以使用{freebsd-ports}。对于文档，可以使用{freebsd-doc}。有关各种FreeBSD邮件列表的更多信息，请参见交叉引用：eresources[eresources，互联网资源]。
 +
-extref:{contributors}[The FreeBSD Contributors List] is a long and growing one, so why not join it by extref:{contributing}[contributing something back to FreeBSD] today? Providing code is not the only way!
+extref:{contributors}[The FreeBSD贡献者列表]是一个长期而不断增长的列表，为什么不通过extref:{contributing}[今天为FreeBSD做出贡献]加入其中呢？提供代码并不是唯一的方式！
 
-In summary, our development model is organized as a loose set of concentric circles. The centralized model is designed for the convenience of the _users_ of FreeBSD, who are provided with an easy way of tracking one central code base, not to keep potential contributors out! Our desire is to present a stable operating system with a large set of coherent crossref:ports[ports,application programs] that the users can easily install and use - this model works very well in accomplishing that.
+总之，我们的开发模型是以一组松散的同心圆组织起来的。中心化模型是为了方便FreeBSD的用户，他们可以通过追踪一个中央代码库来获得便利，而不是为了排斥潜在的贡献者！我们的愿望是提供一个稳定的操作系统，配备一套大量的一致的应用程序，用户可以轻松安装和使用 - 这个模型在实现这一目标方面非常成功。
 
-All we ask of those who would join us as FreeBSD developers is some of the same dedication its current people have to its continued success!
+我们对那些希望加入我们成为FreeBSD开发者的人只有一个要求，那就是拥有与现有成员一样对其持续成功的奉献精神！
 
 [[third-party-programs]]
-=== Third Party Programs
+=== 第三方程序
 
-In addition to the base distributions, FreeBSD offers a ported software collection with thousands of commonly sought-after programs. The list of ports ranges from HTTP servers to games, languages, editors, and almost everything in between. There are about {numports} ports; the entire Ports Collection requires approximately {ports-size}. To compile a port, you simply change to the directory of the program you wish to install, type `make install`, and let the system do the rest. The full original distribution for each port you build is retrieved dynamically so you need only enough disk space to build the ports you want.
+除了基本发行版之外，FreeBSD还提供了一个移植软件集合，其中包含数千个常见的程序。端口列表涵盖了从HTTP服务器到游戏、编程语言、编辑器等几乎所有领域的程序。大约有{numports}个端口；整个端口集合需要大约{ports-size}的空间。要编译一个端口，只需切换到您想要安装的程序的目录，输入“make install”，然后让系统完成剩下的工作。每个构建的端口都会动态地检索完整的原始发行版，因此您只需要足够的磁盘空间来构建所需的端口。
 
-Almost every port is also provided as a pre-compiled "package", which can be installed with a simple command (`pkg install`) by those who do not wish to compile their own ports from source. More information on packages and ports can be found in crossref:ports[ports,Installing Applications: Packages and Ports].
+几乎每个端口也都提供了预编译的“软件包”，不希望从源代码编译自己的端口的用户可以使用简单的命令（`pkg install`）进行安装。有关软件包和端口的更多信息，请参阅crossref:ports[ports，安装应用程序：软件包和端口]。
 
-=== Additional Documentation
+=== 附加文档
 
-All supported FreeBSD versions provide an option in the installer to install additional documentation under [.filename]#/usr/local/share/doc/freebsd# during the initial system setup. Documentation may also be installed later using packages:
+所有支持的FreeBSD版本在安装程序中提供了一个选项，在初始系统设置期间可以安装附加文档到[/usr/local/share/doc/freebsd]。文档也可以在之后使用软件包进行安装：
 
 [source, shell]
 ....
 # pkg install en-freebsd-doc
 ....
 
-For localized versions replace the "en" with the language prefix of choice. Be aware that some of the localised versions might be out of date and might contain information that is no longer correct or relevant. You may view the locally installed manuals with a web browser using the following URLs:
+对于本地化版本，请将“en”替换为所选语言的语言前缀。请注意，一些本地化版本可能已过时，可能包含不再正确或相关的信息。您可以使用以下URL在Web浏览器中查看本地安装的手册：
 
-The FreeBSD Handbook::
-`/usr/local/share/doc/freebsd/en/books/handbook/handbook_en.pdf`
+FreeBSD手册::
+`/usr/local/share/doc/freebsd/en/books/handbook/handbook_en.pdf` 是一个路径，指向一个名为 `handbook_en.pdf` 的文件，位于 FreeBSD 操作系统的文档目录中。
 
-The FreeBSD FAQ::
-`/usr/local/share/doc/freebsd/en/books/faq/faq_en.pdf`
+FreeBSD常见问题解答::
+`/usr/local/share/doc/freebsd/en/books/faq/faq_en.pdf` 是一个路径，指向一个名为 `faq_en.pdf` 的文件。
 
-You can always find up to date documentation at link:https://docs.FreeBSD.org/[The Documentation Portal].
+您可以随时在[文档门户](https://docs.FreeBSD.org/)找到最新的文档。
 
-All trademarks are the property of their respective owners.
+所有商标均为其各自所有者的财产。

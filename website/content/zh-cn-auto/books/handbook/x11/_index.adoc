@@ -1,17 +1,17 @@
 ---
-description: 'This chapter describes how to install and configure Xorg on FreeBSD, which provides the open source X Window System used to provide a graphical environment'
+description: '本章介绍了如何在FreeBSD上安装和配置Xorg，它提供了用于提供图形环境的开源X Window System。'
 next: books/handbook/wayland
-part: 'Part I. Getting Started'
+part: 第一部分：入门指南
 path: /books/handbook/
 prev: books/handbook/ports
 showBookMenu: true
 tags: '["X11", "Xorg", "TrueType", "Intel", "AMD", "NVIDIA", "Anti-Aliased", "VESA", "SCFB"]'
-title: 'Chapter 5. The X Window System'
+title: '第五章 X Window系统'
 weight: 7
 ---
 
 [[x11]]
-= The X Window System
+= X Window System（X 窗口系统）
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,36 +46,36 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[x11-synopsis]]
-== Synopsis
+== 概要
 
-An installation of FreeBSD using bsdinstall does not automatically install a graphical user interface. This chapter describes how to install and configure Xorg, which provides the open source X Window System used to provide a graphical environment. It then describes how to find and install a desktop environment or window manager.
+使用bsdinstall安装FreeBSD时，不会自动安装图形用户界面。本章介绍了如何安装和配置Xorg，它提供了用于提供图形环境的开源X Window系统。然后，它描述了如何查找和安装桌面环境或窗口管理器。
 
-Before reading this chapter, you should:
+在阅读本章之前，您应该：
 
-* Know how to install additional third-party software as described in crossref:ports[ports,Installing Applications: Packages and Ports].
+* 根据crossref:ports[ports,安装应用程序：软件包和端口]中描述的方法，了解如何安装额外的第三方软件。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* The various components of the X Window System, and how they interoperate.
-* How to install and configure Xorg.
-* How to use TrueType(R) fonts in Xorg.
-* How to set up your system for graphical logins (XDM).
+* X Window System的各个组件以及它们之间的相互操作。
+* 如何安装和配置Xorg。
+* 如何在Xorg中使用TrueType(R)字体。
+* 如何设置系统以进行图形登录（XDM）。
 
 [[x-install]]
-== Installing Xorg
+== 安装Xorg
 
-On FreeBSD, Xorg can be installed as a package or port.
+在FreeBSD上，Xorg可以作为一个软件包或者端口进行安装。
 
-The binary meta package can be installed quickly but with fewer options for customization:
+二进制元包可以快速安装，但自定义选项较少：
 
 [source, shell]
 ....
 # pkg install xorg
 ....
 
-Either of these installations results in the complete Xorg system being installed.
+任何一种安装方式都会导致完整的Xorg系统被安装。
 
-The current user must be a member of the `video` group. To add a user to `video` group, execute the following command:
+当前用户必须是`video`组的成员。要将用户添加到`video`组中，请执行以下命令：
 
 [source, shell]
 ....
@@ -84,69 +84,69 @@ The current user must be a member of the `video` group. To add a user to `video`
 
 [TIP]
 ====
-A smaller version of the X system suitable for experienced users is available in package:x11/xorg-minimal[]. Most of the documents, libraries, and applications will not be installed. Some applications require these additional components to function.
+适用于有经验的用户的X系统的较小版本可在包：x11/xorg-minimal[]中获得。大多数文档、库和应用程序将不会被安装。某些应用程序需要这些额外的组件才能正常运行。
 ====
 
 [TIP]
 ====
-Video cards, monitors, and input devices are automatically detected and do not require any manual configuration. Do not create `xorg.conf` or run a `-configure` step unless automatic configuration fails.
+视频卡、显示器和输入设备会被自动检测，不需要任何手动配置。除非自动配置失败，否则不要创建`xorg.conf`文件或运行`-configure`步骤。
 ====
 
 [[x-graphic-card-drivers]]
-== Graphic card drivers
+== 显卡驱动程序
 
-The following table shows the different graphics cards supported by FreeBSD, which package should be installed and its corresponding module.
+下表显示了FreeBSD支持的不同图形卡，应安装的软件包及其对应的模块。
 
-.Graphic card packages
+.图形卡套件
 [options="header", cols="1,1,1,1"]
 |===
-| Brand | Type | Package | Module
+| 品牌 | 类型 | 包 | 模块
 
-| Intel(R)
-| Open Source
-| drm-kmod
-| `i915kms`
+| 英特尔(R)
+| 开源
+| drm-kmod是一个用于FreeBSD操作系统的内核模块，它提供了对图形硬件设备的支持。该模块允许用户在FreeBSD系统上使用开源的Direct Rendering Manager（DRM）驱动程序，以实现对图形硬件的加速和渲染。通过drm-kmod，用户可以在FreeBSD系统上运行各种图形应用程序和游戏，并获得更好的性能和稳定性。
+| `i915kms`是一个Linux内核模块，用于支持Intel集成显卡的驱动程序。它提供了与Intel集成显卡硬件交互的功能，包括显示输出和图形加速。通过加载`i915kms`模块，用户可以在Linux系统上获得对Intel集成显卡的完整支持。
 
-| AMD(R)
-| Open Source
-| drm-kmod
-| `amdgpu` and `radeonkms`
+| AMD（R）
+| 开源
+| drm-kmod是一个用于FreeBSD操作系统的内核模块，它提供了对图形硬件设备的支持。该模块允许用户在FreeBSD系统上使用开源的Direct Rendering Manager（DRM）驱动程序，以实现对图形硬件的加速和渲染。通过drm-kmod，用户可以在FreeBSD系统上运行各种图形应用程序和游戏，并获得更好的性能和稳定性。
+| `amdgpu`和`radeonkms`
 
-| NVIDIA(R)
-| Proprietary
-| nvidia-driver
-| `nvidia` or `nvidia-modeset`
+| 英伟达（NVIDIA®）
+| 专有的
+| NVIDIA驱动程序
+| `nvidia` 或 `nvidia-modeset`
 
-| VESA
-| Open Source
-| xf86-video-vesa
-| vesa
+| VESA（Video Electronics Standards Association）是一个致力于制定和推广视频电子标准的国际组织。它的目标是促进计算机和消费电子设备之间的互操作性，以及提高视频和显示技术的质量和性能。VESA制定了许多标准，包括显示接口标准（如VGA、DVI、HDMI和DisplayPort）、显示模式标准（如VESA BIOS扩展）和显示器墙挂标准（如VESA挂架接口）。这些标准被广泛应用于计算机、电视、监视器和其他显示设备中。
+| 开源
+| xf86-video-vesa是一个Xorg服务器的视频驱动程序，它提供了对VESA兼容图形硬件的支持。它是一个通用的驱动程序，适用于大多数VESA兼容的显卡。它提供了基本的图形功能，但不支持硬件加速或高级特性。
+| VESA是视频电子标准协会（Video Electronics Standards Association）的缩写，它是一个致力于制定和推广计算机显示器和图形加速器的标准的组织。VESA标准包括了各种显示器接口和分辨率，以及图形加速器的功能和兼容性要求。VESA标准的应用使得计算机显示器和图形加速器之间的互操作性更加简单和可靠。
 
-| SCFB
-| Open Source
-| xf86-video-scfb
+| SCFB是指"Self-Consistent Field Born"，即自洽场Born方法。
+| 开源
+| xf86-video-scfb是一个Xorg服务器的视频驱动程序，用于支持基于Simple Console Framebuffer（SCFB）的图形显示。它允许在没有硬件加速的情况下，在Linux系统上运行X窗口系统。SCFB是一种简单的帧缓冲设备，它提供了基本的图形显示功能，但没有硬件加速功能。xf86-video-scfb驱动程序通过与Xorg服务器通信，将图形渲染到SCFB设备上，从而实现图形界面的显示。
 | scfb
 
-| VirtualBox(R)
-| Open Source
-| virtualbox-ose-additions
-| VirtualBox(R) OSE additions include the `vboxvideo` driver.
+| VirtualBox（R）
+| 开源
+| VirtualBox OSE Additions是VirtualBox的一个扩展功能，它提供了一些额外的功能和驱动程序，以增强虚拟机的性能和功能。这些附加功能包括鼠标和键盘的集成、共享文件夹、剪贴板共享和增强的图形驱动程序等。通过安装VirtualBox OSE Additions，用户可以更方便地在虚拟机中使用和管理操作系统。
+| VirtualBox(R) OSE增加了`vboxvideo`驱动程序。
 
 | VMware(R)
-| Open Source
-| xf86-video-vmware
-| vmwgfx
+| 开源
+| xf86-video-vmware是一个用于在Linux系统上提供VMware虚拟图形适配器驱动程序的开源项目。它允许用户在虚拟机中使用高性能的图形显示，并提供了与VMware虚拟化平台的集成。该驱动程序支持2D和3D加速功能，可以提供流畅的图形性能和良好的用户体验。
+| vmwgfx是一种用于虚拟机的图形驱动程序。它是为VMware虚拟化平台开发的，用于提供虚拟机中的图形显示功能。vmwgfx驱动程序允许虚拟机通过VMware Tools与宿主机的图形硬件进行通信，从而实现高性能的图形渲染和显示。
 
 |===
 
-The following command can be used to identify which graphics card is installed in the system:
+可以使用以下命令来识别系统中安装的图形卡：
 
 [source, shell]
 ....
 % pciconf -lv|grep -B4 VGA
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -159,16 +159,16 @@ vgapci0@pci0:0:2:0:     class=0x030000 rev=0x07 hdr=0x00 vendor=0x8086 device=0x
 
 [WARNING]
 ====
-If the graphics card is not supported by Intel(R), AMD(R) or NVIDIA(R) drivers, then VESA or SCFB modules should be used. VESA module must be used when booting in BIOS mode and SCFB module must be used when booting in UEFI mode.
+如果显卡不受Intel(R)、AMD(R)或NVIDIA(R)驱动程序支持，则应使用VESA或SCFB模块。在BIOS模式下启动时必须使用VESA模块，在UEFI模式下启动时必须使用SCFB模块。
 
-This command can be used to check the booting mode:
+这个命令可以用来检查启动模式：
 
 [source, shell]
 ....
 % sysctl machdep.bootmethod
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -177,18 +177,18 @@ machdep.bootmethod: BIOS
 ====
 
 [[x-configuration-intel]]
-=== Intel(R)
+=== 英特尔(R)
 
-Intel(R) Graphics refers to the class of graphics chips that are integrated on the same die as an Intel(R) CPU. Wikipedia offers link:https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units[a good overview of the variations and names used for generations of Intel HD Graphics].
+Intel(R) Graphics指的是与Intel(R) CPU集成在同一芯片上的图形芯片类别。维基百科提供了一个关于Intel HD Graphics各个世代的变体和命名的良好概述。链接：https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units
 
-The package:graphics/drm-kmod[] package indirectly provides a range of kernel modules for use with Intel(R) Graphics cards. The Intel(R) driver can be installed by executing the following command:
+graphics/drm-kmod[]包间接提供了一系列用于Intel(R)图形卡的内核模块。可以通过执行以下命令来安装Intel(R)驱动程序：
 
 [source, shell]
 ....
 # pkg install drm-kmod
 ....
 
-Then add the module to `/etc/rc.conf` file, executing the following command:
+然后将该模块添加到`/etc/rc.conf`文件中，执行以下命令：
 
 [source, shell]
 ....
@@ -197,7 +197,7 @@ Then add the module to `/etc/rc.conf` file, executing the following command:
 
 [TIP]
 ====
-If a high CPU usage is noticed or excessive tearing with HD video, the installation of package:multimedia/libva-intel-driver[] may help. To install the package execute the following command:
+如果注意到高CPU使用率或高清视频出现过多的撕裂现象，安装package:multimedia/libva-intel-driver[]可能会有所帮助。要安装该软件包，请执行以下命令：
 
 [source, shell]
 ....
@@ -206,25 +206,25 @@ If a high CPU usage is noticed or excessive tearing with HD video, the installat
 ====
 
 [[x-configuration-amd]]
-=== AMD(R)
+=== AMD（R）
 
-The package:graphics/drm-kmod[] package indirectly provides a range of kernel modules for use with AMD(R) Graphics cards. The modules `amdgpu` and `radeonkms` can be used depending the generation of the hardware. The FreeBSD project maintains an link:https://wiki.freebsd.org/Graphics/AMD-GPU-Matrix[AMD graphics support matrix to determine which driver must be used].
+包：graphics/drm-kmod[]包间接提供了一系列用于AMD(R)图形卡的内核模块。根据硬件的代数，可以使用`amdgpu`和`radeonkms`模块。FreeBSD项目维护了一个link:https://wiki.freebsd.org/Graphics/AMD-GPU-Matrix[AMD图形支持矩阵]，以确定必须使用哪个驱动程序。
 
-AMD(R) driver can be installed by executing the following command:
+可以通过执行以下命令来安装AMD(R)驱动程序：
 
 [source, shell]
 ....
 # pkg install drm-kmod
 ....
 
-For post-HD7000 or Tahiti graphic cards add the module to `/etc/rc.conf` file, executing the following command:
+对于HD7000系列或Tahiti显卡，请将模块添加到`/etc/rc.conf`文件中，执行以下命令：
 
 [source, shell]
 ....
 # sysrc kld_list+=amdgpu
 ....
 
-For older graphic cards (pre-HD7000 or pre-Tahiti) add the module to `/etc/rc.conf` file, executing the following command:
+对于较旧的图形卡（HD7000之前或Tahiti之前），请将模块添加到`/etc/rc.conf`文件中，执行以下命令：
 
 [source, shell]
 ....
@@ -232,45 +232,45 @@ For older graphic cards (pre-HD7000 or pre-Tahiti) add the module to `/etc/rc.co
 ....
 
 [[x-configuration-nvidia]]
-=== NVIDIA(R)
+=== 英伟达（NVIDIA®）
 
-FreeBSD supports different versions of the proprietary NVIDIA(R) driver. Users of newer graphics cards should install the package:x11/nvidia-driver[] package. Those with older cards will have to check below which version supports them.
+FreeBSD支持不同版本的专有NVIDIA(R)驱动程序。使用较新的显卡的用户应安装包：x11/nvidia-driver[]。那些使用较旧显卡的用户需要查看下面支持它们的版本。
 
-.Supported versions of NVIDIA(R) drivers
+.支持的NVIDIA(R)驱动程序版本
 [options="header", cols="1,1"]
 |===
-| Package | Supported hardware
+| 包 | 支持的硬件
 
-| x11/nvidia-driver-304
-| link:https://www.nvidia.com/Download/driverResults.aspx/123712/en-us/[supported hardware]
+| x11/nvidia-driver-304 是一个针对 X11 图形系统的 Nvidia 显卡驱动程序，版本号为 304。
+| 链接：https://www.nvidia.com/Download/driverResults.aspx/123712/zh-cn/[支持的硬件]
 
-| x11/nvidia-driver-340
-| link:https://www.nvidia.com/Download/driverResults.aspx/156167/en-us/[supported hardware]
+| x11/nvidia-driver-340是一个针对X11图形系统的NVIDIA驱动程序版本340。
+| 链接：https://www.nvidia.com/Download/driverResults.aspx/156167/zh-cn/[支持的硬件]
 
-| x11/nvidia-driver-390
-| link:https://www.nvidia.com/Download/driverResults.aspx/191122/en-us/[supported hardware]
+| x11/nvidia-driver-390 是一个指向 NVIDIA 390 版本的 X11 驱动程序。
+| 链接：https://www.nvidia.com/Download/driverResults.aspx/191122/zh-cn/[支持的硬件]
 
-| x11/nvidia-driver-470
-| link:https://www.nvidia.com/Download/driverResults.aspx/194639/en-us/[supported hardware]
+| x11/nvidia-driver-470是一个针对X11图形服务器的NVIDIA驱动程序版本。
+| 链接：https://www.nvidia.com/Download/driverResults.aspx/194639/zh-cn/[支持的硬件]
 
 | x11/nvidia-driver
-| link:https://www.nvidia.com/Download/driverResults.aspx/210651/en-us/[supported hardware]
+| 链接：https://www.nvidia.com/Download/driverResults.aspx/210651/zh-cn/[支持的硬件]
 
 |===
 
 [WARNING]
 ====
-Version 304 of the NVIDIA(R) graphics driver (nvidia-driver-304) does not support xorg-server 1.20 or later.
+NVIDIA（R）图形驱动程序的304版本（nvidia-driver-304）不支持xorg-server 1.20或更高版本。
 ====
 
-The latest NVIDIA(R) driver can be installed by running the following command:
+最新的NVIDIA(R)驱动程序可以通过运行以下命令进行安装：
 
 [source, shell]
 ....
 # pkg install nvidia-driver
 ....
 
-Then add the module to `/etc/rc.conf` file, executing the following command:
+然后将该模块添加到`/etc/rc.conf`文件中，执行以下命令：
 
 [source, shell]
 ....
@@ -279,7 +279,7 @@ Then add the module to `/etc/rc.conf` file, executing the following command:
 
 [WARNING]
 ====
-The `nvidia` driver must be used if the packages x11/nvidia-driver-304 or x11/nvidia-driver-340 have been installed.
+如果安装了x11/nvidia-driver-304或x11/nvidia-driver-340软件包，则必须使用`nvidia`驱动程序。
 
 [source, shell]
 ....
@@ -288,39 +288,39 @@ The `nvidia` driver must be used if the packages x11/nvidia-driver-304 or x11/nv
 ====
 
 [[x-config]]
-== Xorg Configuration
+== Xorg配置
 
-Xorg supports most common video cards, keyboards, and pointing devices.
+Xorg支持大多数常见的视频卡、键盘和指针设备。
 
 [WARNING]
 ====
-Video cards, monitors, and input devices are automatically detected and do not require any manual configuration. Do not create [.filename]#xorg.conf# or run a `Xorg -configure` step unless automatic configuration fails.
+视频卡、显示器和输入设备会被自动检测，不需要任何手动配置。除非自动配置失败，否则不要创建 [.filename]#xorg.conf# 文件或运行 `Xorg -configure` 步骤。
 ====
 
 [[x-config-files]]
-=== Configuration Files
+=== 配置文件
 
-Xorg looks in several directories for configuration files. [.filename]#/usr/local/etc/X11/# is the *recommended* directory for these files on FreeBSD. Using this directory helps keep application files separate from operating system files.
+Xorg在多个目录中查找配置文件。在FreeBSD上，推荐使用目录`/usr/local/etc/X11/`来存放这些文件。使用这个目录可以将应用程序文件与操作系统文件分开。
 
 [[x-config-files-single-or-multi]]
-=== Single or Multiple Files
+=== 单个文件或多个文件
 
-It is easier to use multiple files that each configure a specific setting than the traditional single [.filename]#xorg.conf#. These files are stored in the [.filename]#/usr/local/etc/X11/xorg.conf.d/# subdirectory.
+使用多个文件来配置特定设置比传统的单个 [.filename]#xorg.conf# 文件更容易。这些文件存储在 [.filename]#/usr/local/etc/X11/xorg.conf.d/# 子目录中。
 
 [TIP]
 ====
-The traditional single [.filename]#xorg.conf# still works, but is neither as clear nor as flexible as multiple files in the [.filename]#/usr/local/etc/X11/xorg.conf.d/# subdirectory.
+传统的单一 [.filename]#xorg.conf# 仍然有效，但是与位于 [.filename]#/usr/local/etc/X11/xorg.conf.d/# 子目录中的多个文件相比，既不清晰也不灵活。
 ====
 
 [[x-config-video-cards]]
-=== Video Cards
+=== 视频卡
 
-The driver for the graphics card can be specified in the [.filename]#/usr/local/etc/X11/xorg.conf.d/# directory.
+图形卡的驱动程序可以在[.filename]#/usr/local/etc/X11/xorg.conf.d/#目录中指定。
 
-To configure the Intel(R) driver in a configuration file:
+要在配置文件中配置Intel(R)驱动程序：
 
 [[x-config-video-cards-file-intel]]
-.Select Intel(R) Video Driver in a File
+.在文件中选择Intel(R)视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-intel.conf#
@@ -334,10 +334,10 @@ EndSection
 ....
 ====
 
-To configure the AMD(R) driver in a configuration file:
+要在配置文件中配置AMD(R)驱动程序：
 
 [[x-config-video-cards-file-amd]]
-.Select AMD(R) Video Driver in a File
+.在文件中选择AMD(R)视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-radeon.conf#
@@ -351,10 +351,10 @@ EndSection
 ....
 ====
 
-To configure the NVIDIA(R) driver in a configuration file:
+要在配置文件中配置NVIDIA(R)驱动程序：
 
 [[x-config-video-cards-file-nvidia]]
-.Select NVIDIA(R) Video Driver in a File
+.在文件中选择NVIDIA(R)视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-nvidia.conf#
@@ -370,13 +370,13 @@ EndSection
 
 [TIP]
 ====
-package:x11/nvidia-xconfig[] can also be used to perform basic control over configuration options available in the NVIDIA driver.
+package:x11/nvidia-xconfig[]也可以用来对NVIDIA驱动程序中可用的配置选项进行基本控制。
 ====
 
-To configure the VESA driver in a configuration file:
+要在配置文件中配置VESA驱动程序：
 
 [[x-config-video-cards-file-vesa]]
-.Select VESA Video Driver in a File
+.在文件中选择VESA视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-vesa.conf#
@@ -390,10 +390,10 @@ EndSection
 ....
 ====
 
-To configure the SCFB driver in a configuration file:
+要在配置文件中配置SCFB驱动程序：
 
 [[x-config-video-cards-file-sfcb]]
-.Select SCFB Video Driver in a File
+.在文件中选择SCFB视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-scfb.conf#
@@ -407,14 +407,14 @@ EndSection
 ....
 ====
 
-To configure multiple video cards, the `BusID` can be added. A list of video card bus ``ID``s can be displayed by executing:
+要配置多个视频卡，可以添加`BusID`。执行以下命令可以显示视频卡总线`ID`的列表：
 
 [source, shell]
 ....
 % pciconf -lv | grep -B3 display
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -430,7 +430,7 @@ vgapci1@pci0:0:2:1:     class=0x038000 rev=0x07 hdr=0x00 vendor=0x8086 device=0x
 ....
 
 [[x-config-video-cards-file-multiple]]
-.Select Intel(R) Video Driver and NVIDIA(R) Video Driver in a File
+.在一个文件中选择Intel(R)视频驱动程序和NVIDIA(R)视频驱动程序。
 [example]
 ====
 
@@ -453,23 +453,23 @@ EndSection
 ====
 
 [[x-config-monitors]]
-=== Monitors
+=== 监视器
 
-Almost all monitors support the Extended Display Identification Data standard (`EDID`). Xorg uses `EDID` to communicate with the monitor and detect the supported resolutions and refresh rates. Then it selects the most appropriate combination of settings to use with that monitor.
+几乎所有的显示器都支持扩展显示识别数据标准（`EDID`）。Xorg使用`EDID`与显示器进行通信，检测支持的分辨率和刷新率，然后选择最合适的设置组合来与该显示器配合使用。
 
-Other resolutions supported by the monitor can be chosen by setting the desired resolution in configuration files, or after the X server has been started with man:xrandr[1].
+可以通过在配置文件中设置所需的分辨率，或在启动X服务器后使用man:xrandr[1]来选择显示器支持的其他分辨率。
 
 [[x-config-monitors-xrandr]]
-==== Using RandR (Resize and Rotate)
+==== 使用RandR（Resize and Rotate）
 
-Run man:xrandr[1] without any parameters to see a list of video outputs and detected monitor modes:
+运行man:xrandr[1]命令，不带任何参数，可以查看视频输出和检测到的显示器模式列表：
 
 [source, shell]
 ....
 % xrandr
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -503,9 +503,9 @@ DP-2 disconnected (normal left inverted right x axis y axis)
 DP-3 disconnected (normal left inverted right x axis y axis)
 ....
 
-This shows that the `VGA-1` output is being used to display a screen resolution of 1280x960 pixels at a refresh rate of about 60 Hz. The `LVDS-1` is being used as a secondary monitor to display a screen resolution of 1280x800 pixels at a refresh rate of about 60 Hz. Monitors are not attached to the `HDMI-1`, `HDMI-2`, `DP-1`, `DP-2` and `DP-3` connectors.
+这表明`VGA-1`输出正在用于显示分辨率为1280x960像素、刷新率约为60 Hz的屏幕。`LVDS-1`被用作辅助显示器，显示分辨率为1280x800像素、刷新率约为60 Hz的屏幕。`HDMI-1`、`HDMI-2`、`DP-1`、`DP-2`和`DP-3`连接器上没有连接显示器。
 
-Any of the other display modes can be selected with man:xrandr[1]. For example, to switch to 1280x1024 at 60 Hz:
+可以使用man:xrandr[1]选择任何其他的显示模式。例如，要切换到1280x1024分辨率，刷新率为60 Hz：
 
 [source, shell]
 ....
@@ -513,13 +513,13 @@ Any of the other display modes can be selected with man:xrandr[1]. For example, 
 ....
 
 [[x-config-monitors-files]]
-==== Using the Xorg configuration file
+==== 使用Xorg配置文件
 
-The monitor configuration can also be set in a configuration file.
+监视器配置也可以在配置文件中进行设置。
 
-To set a screen resolution of 1024x768 in a configuration file:
+在配置文件中设置屏幕分辨率为1024x768：
 
-.Set Screen Resolution in a File
+.在文件中设置屏幕分辨率
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/10-monitor.conf#
@@ -537,19 +537,19 @@ EndSection
 ====
 
 [[x-config-input]]
-=== Input Devices
+=== 输入设备
 
-Xorg supports the vast majority of input devices via package:x11/libinput[].
+Xorg通过package:x11/libinput[]支持绝大部分输入设备。
 
 [TIP]
 ====
-Some desktop environments (such as KDE Plasma) provide a graphical UI for setting these parameters. Check if this is the case before resorting to manual configuration editing.
+一些桌面环境（如KDE Plasma）提供了用于设置这些参数的图形界面。在尝试手动配置编辑之前，请检查是否有这样的界面。
 ====
 
 [[x-config-input-keyboard-layout]]
-For example, to configure the keyboard layout:
+例如，要配置键盘布局：
 
-.Setting a Keyboard Layout
+.设置键盘布局
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/00-keyboard.conf#
@@ -568,23 +568,23 @@ EndSection
 ====
 
 [[x-fonts]]
-== Using Fonts in Xorg
+== 在Xorg中使用字体
 
-The default fonts that ship with Xorg are less than ideal for typical desktop publishing applications. Large presentation fonts show up jagged and unprofessional looking, and small fonts are almost completely unintelligible. However, there are several free, high quality Type1 (PostScript(R)) fonts available which can be readily used with Xorg.
+Xorg默认提供的字体对于典型的桌面出版应用来说并不理想。大号演示字体显示出来会有锯齿状，不够专业，而小号字体几乎完全无法辨认。然而，有几种免费的高质量Type1（PostScript(R)）字体可供在Xorg中方便地使用。
 
 [[type1]]
-=== Type1 Fonts
+=== Type1字体
 
-The URW font collection (package:x11-fonts/urwfonts[]) includes high quality versions of standard type1 fonts (Times Roman(TM), Helvetica(TM), Palatino(TM) and others). The Freefonts collection (package:x11-fonts/freefonts[]) includes many more fonts, but most of them are intended for use in graphics software such as the Gimp, and are not complete enough to serve as screen fonts. In addition, Xorg can be configured to use TrueType(R) fonts with a minimum of effort. For more details on this, see the man:X[7] manual page or <<truetype>>.
+URW字体集合（包：x11-fonts/urwfonts[]）包括标准Type1字体（Times Roman(TM)，Helvetica(TM)，Palatino(TM)等）的高质量版本。Freefonts集合（包：x11-fonts/freefonts[]）包括更多字体，但大部分是为图形软件（如Gimp）使用的，并不完整，不能用作屏幕字体。此外，Xorg可以配置为轻松使用TrueType(R)字体。有关详细信息，请参阅man:X[7]手册页面或<<truetype>>。
 
-To install the above Type1 font collections from binary packages, run the following commands:
+要安装上述的Type1字体集合，可以运行以下命令来安装二进制包：
 
 [source, shell]
 ....
 # pkg install urwfonts
 ....
 
-And likewise with the freefont or other collections. To have the X server detect these fonts, add an appropriate line to the X server configuration file ([.filename]#/usr/local/etc/X11/xorg.conf.d/90-fonts.conf#), which reads:
+同样，对于freefont或其他字体集合也是如此。要让X服务器检测这些字体，需要在X服务器配置文件（[.filename]#/usr/local/etc/X11/xorg.conf.d/90-fonts.conf#）中添加一行适当的内容，如下所示：
 
 [.programlisting]
 ....
@@ -593,7 +593,7 @@ Section "Files"
 EndSection
 ....
 
-Alternatively, at the command line in the X session run:
+或者，在X会话的命令行中运行：
 
 [source, shell]
 ....
@@ -601,26 +601,26 @@ Alternatively, at the command line in the X session run:
 % xset fp rehash
 ....
 
-This will work but will be lost when the X session is closed, unless it is added to the startup file ([.filename]#~/.xinitrc# for a normal `startx` session, or [.filename]#~/.xsession# when logging in through a graphical login manager like XDM). A third way is to use the new [.filename]#/usr/local/etc/fonts/local.conf# as demonstrated in <<antialias>>.
+这将起作用，但在X会话关闭时将丢失，除非将其添加到启动文件（对于普通的`startx`会话，为[.filename]#~/.xinitrc#，或者对于通过图形登录管理器（如XDM）登录的情况，为[.filename]#~/.xsession#）。第三种方法是使用新的[.filename]#/usr/local/etc/fonts/local.conf#，如<<antialias>>中所示。
 
 [[truetype]]
-=== TrueType(R) Fonts
+=== TrueType(R)字体
 
-Xorg has built in support for rendering TrueType(R) fonts. There are two different modules that can enable this functionality. The freetype module is used in this example because it is more consistent with the other font rendering back-ends. To enable the freetype module just add the following line to the `"Module"` section of [.filename]#/usr/local/etc/X11/xorg.conf.d/90-fonts.conf#.
+Xorg内置了对TrueType(R)字体的渲染支持。有两个不同的模块可以启用这个功能。在这个例子中使用freetype模块，因为它与其他字体渲染后端更加一致。要启用freetype模块，只需将以下行添加到 [.filename]#/usr/local/etc/X11/xorg.conf.d/90-fonts.conf# 文件的“Module”部分。
 
 [.programlisting]
 ....
 Load  "freetype"
 ....
 
-Now make a directory for the TrueType(R) fonts (for example, [.filename]#/usr/local/share/fonts/TrueType#) and copy all of the TrueType(R) fonts into this directory. Keep in mind that TrueType(R) fonts cannot be directly taken from an Apple(R) Mac(R); they must be in UNIX(R)/MS-DOS(R)/Windows(R) format for use by Xorg. Once the files have been copied into this directory, use mkfontscale to create a [.filename]#fonts.dir#, so that the X font renderer knows that these new files have been installed. `mkfontscale` can be installed as a package:
+现在创建一个用于TrueType(R)字体的目录（例如，[.filename]#/usr/local/share/fonts/TrueType#），并将所有的TrueType(R)字体复制到该目录中。请记住，TrueType(R)字体不能直接从Apple(R) Mac(R)中获取；它们必须以UNIX(R)/MS-DOS(R)/Windows(R)格式存在，以供Xorg使用。一旦文件被复制到该目录中，使用mkfontscale创建一个[.filename]#fonts.dir#文件，以便X字体渲染器知道这些新文件已经安装。`mkfontscale`可以作为一个软件包进行安装：
 
 [source, shell]
 ....
 # pkg install mkfontscale
 ....
 
-Then create an index of X font files in a directory:
+然后在一个目录中创建X字体文件的索引：
 
 [source, shell]
 ....
@@ -628,7 +628,7 @@ Then create an index of X font files in a directory:
 # mkfontscale
 ....
 
-Now add the TrueType(R) directory to the font path. This is just the same as described in <<type1>>:
+现在将TrueType(R)目录添加到字体路径中。这与<<type1>>中描述的方式完全相同。
 
 [source, shell]
 ....
@@ -636,18 +636,18 @@ Now add the TrueType(R) directory to the font path. This is just the same as des
 % xset fp rehash
 ....
 
-or add a `FontPath` line to [.filename]#xorg.conf#.
+或者在 [.filename]#xorg.conf# 文件中添加一个 `FontPath` 行。
 
-Now Gimp, LibreOffice, and all of the other X applications should now recognize the installed TrueType(R) fonts. Extremely small fonts (as with text in a high resolution display on a web page) and extremely large fonts (within LibreOffice) will look much better now.
+现在，Gimp、LibreOffice和所有其他X应用程序应该能够识别已安装的TrueType(R)字体。现在，在高分辨率显示器上的网页文本中的极小字体以及LibreOffice中的极大字体将会看起来更好。
 
 [[antialias]]
-=== Anti-Aliased Fonts
+=== 抗锯齿字体
 
-All fonts in Xorg that are found in [.filename]#/usr/local/share/fonts/# and [.filename]#~/.fonts/# are automatically made available for anti-aliasing to Xft-aware applications. Most recent applications are Xft-aware, including KDE, GNOME, and Firefox.
+在Xorg中，所有在[/usr/local/share/fonts/]和[~/.fonts/]目录中找到的字体都会自动提供给支持Xft的应用程序进行反锯齿处理。大多数最新的应用程序都支持Xft，包括KDE、GNOME和Firefox。
 
-To control which fonts are anti-aliased, or to configure anti-aliasing properties, create (or edit, if it already exists) the file [.filename]#/usr/local/etc/fonts/local.conf#. Several advanced features of the Xft font system can be tuned using this file; this section describes only some simple possibilities. For more details, please see man:fonts-conf[5].
+要控制反锯齿的字体或配置反锯齿属性，请创建（或编辑，如果已存在）文件[.filename]#/usr/local/etc/fonts/local.conf#。可以使用此文件调整Xft字体系统的几个高级功能；本节仅描述了一些简单的可能性。有关更多详细信息，请参阅 man:fonts-conf[5]。
 
-This file must be in XML format. Pay careful attention to case, and make sure all tags are properly closed. The file begins with the usual XML header followed by a DOCTYPE definition, and then the `<fontconfig>` tag:
+这个文件必须是XML格式的。请注意大小写，并确保所有标签都正确闭合。文件以通常的XML头部开始，接着是DOCTYPE定义，然后是`<fontconfig>`标签。
 
 [.programlisting]
 ....
@@ -656,21 +656,21 @@ This file must be in XML format. Pay careful attention to case, and make sure al
       <fontconfig>
 ....
 
-As previously stated, all fonts in [.filename]#/usr/local/share/fonts/# as well as [.filename]#~/.fonts/# are already made available to Xft-aware applications. To add another directory outside of these two directory trees, add a line like this to [.filename]#/usr/local/etc/fonts/local.conf#:
+如前所述，位于[/usr/local/share/fonts/]和[~/.fonts/]目录中的所有字体已经可以在支持Xft的应用程序中使用。如果要添加一个位于这两个目录树之外的目录，可以在[/usr/local/etc/fonts/local.conf]文件中添加如下一行：
 
 [.programlisting]
 ....
 <dir>/path/to/my/fonts</dir>
 ....
 
-After adding new fonts, and especially new font directories, rebuild the font caches:
+在添加新字体，尤其是新的字体目录后，重新构建字体缓存：
 
 [source, shell]
 ....
 # fc-cache -f
 ....
 
-Anti-aliasing makes borders slightly fuzzy, which makes very small text more readable and removes "staircases" from large text, but can cause eyestrain if applied to normal text. To exclude font sizes smaller than 14 point from anti-aliasing, include these lines:
+抗锯齿会使边界略微模糊，这使得非常小的文本更易读，并消除了大文本上的“阶梯状”效果，但如果应用于普通文本，可能会导致眼部疲劳。要排除小于14点字号的字体应用抗锯齿，包括以下几行代码：
 
 [.programlisting]
 ....
@@ -692,7 +692,7 @@ Anti-aliasing makes borders slightly fuzzy, which makes very small text more rea
 	</match>
 ....
 
-Spacing for some monospaced fonts might also be inappropriate with anti-aliasing. This seems to be an issue with KDE, in particular. One possible fix is to force the spacing for such fonts to be 100. Add these lines:
+对于某些等宽字体，使用反锯齿可能会导致间距不合适。这似乎是KDE特别存在的问题。一个可能的解决方法是强制将这些字体的间距设置为100。添加以下行：
 
 [.programlisting]
 ....
@@ -714,7 +714,7 @@ Spacing for some monospaced fonts might also be inappropriate with anti-aliasing
 	</match>
 ....
 
-(this aliases the other common names for fixed fonts as `"mono"`), and then add:
+（这将其他常见的固定字体名称别名为“mono”），然后添加：
 
 [.programlisting]
 ....
@@ -728,7 +728,7 @@ Spacing for some monospaced fonts might also be inappropriate with anti-aliasing
 	 </match>
 ....
 
-Certain fonts, such as Helvetica, may have a problem when anti-aliased. Usually this manifests itself as a font that seems cut in half vertically. At worst, it may cause applications to crash. To avoid this, consider adding the following to [.filename]#local.conf#:
+某些字体，比如Helvetica，在反锯齿处理时可能会出现问题。通常表现为字体在垂直方向上被切割了一半。最糟糕的情况下，可能会导致应用程序崩溃。为了避免这种情况，考虑将以下内容添加到.local.conf文件中：
 
 [.programlisting]
 ....
@@ -742,11 +742,11 @@ Certain fonts, such as Helvetica, may have a problem when anti-aliased. Usually 
 	 </match>
 ....
 
-After editing [.filename]#local.conf#, make certain to end the file with the `</fontconfig>` tag. Not doing this will cause changes to be ignored.
+在编辑 [.filename]#local.conf# 后，确保用 `</fontconfig>` 标签结束文件。如果不这样做，将会忽略所做的更改。
 
-Users can add personalized settings by creating their own [.filename]#~/.config/fontconfig/fonts.conf#. This file uses the same `XML` format described above.
+用户可以通过创建自己的[.filename]#~/.config/fontconfig/fonts.conf#文件来添加个性化设置。该文件使用上述描述的相同的`XML`格式。
 
-One last point: with an LCD screen, sub-pixel sampling may be desired. This basically treats the (horizontally separated) red, green and blue components separately to improve the horizontal resolution; the results can be dramatic. To enable this, add the line somewhere in [.filename]#local.conf#:
+最后一个要点：对于LCD屏幕，可能需要进行亚像素采样。这基本上是将（水平分离的）红色、绿色和蓝色分量分别处理，以提高水平分辨率；结果可能非常显著。要启用此功能，请在[.filename]#local.conf#中的某个位置添加以下行：
 
 [.programlisting]
 ....
@@ -762,7 +762,7 @@ One last point: with an LCD screen, sub-pixel sampling may be desired. This basi
 
 [NOTE]
 ====
-Depending on the sort of display, `rgb` may need to be changed to `bgr`, `vrgb` or `vbgr`: experiment and see which works best.
+根据显示器的类型，可能需要将 `rgb` 更改为 `bgr`、`vrgb` 或 `vbgr`：进行实验并查看哪种效果最好。
 ====
 
-For more information about how to install and configure fonts on FreeBSD, please read the article link:{fonts}[Fonts and FreeBSD].
+有关在FreeBSD上安装和配置字体的更多信息，请阅读文章链接：[字体和FreeBSD](fonts)。

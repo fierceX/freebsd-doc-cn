@@ -1,17 +1,17 @@
 ---
-description: 'This chapter covers the use of USB Device Mode and USB On The Go (USB OTG) in FreeBSD'
+description: '本章介绍了在FreeBSD中使用USB设备模式和USB On The Go（USB OTG）的方法。'
 next: books/handbook/partiv
-part: 'Part III. System Administration'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/dtrace
 showBookMenu: true
 tags: '["OTG", "USB"]'
-title: 'Chapter 28. USB Device Mode / USB OTG'
+title: '第28章 USB设备模式/USB OTG'
 weight: 32
 ---
 
 [[usb-device-mode]]
-= USB Device Mode / USB OTG
+= USB设备模式/USB OTG
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,34 +46,34 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[usb-device-mode-synopsis]]
-== Synopsis
+== 概要
 
-This chapter covers the use of USB Device Mode and USB On The Go (USB OTG) in FreeBSD. This includes virtual serial consoles, virtual network interfaces, and virtual USB drives.
+本章介绍了在FreeBSD中使用USB设备模式和USB On The Go（USB OTG）。这包括虚拟串行控制台、虚拟网络接口和虚拟USB驱动器的使用。
 
-When running on hardware that supports USB device mode or USB OTG, like that built into many embedded boards, the FreeBSD USB stack can run in _device mode_. Device mode makes it possible for the computer to present itself as different kinds of USB device classes, including serial ports, network adapters, and mass storage, or a combination thereof. A USB host like a laptop or desktop computer is able to access them just like physical USB devices. Device mode is sometimes called the "USB gadget mode".
+当在支持USB设备模式或USB OTG的硬件上运行时，例如许多嵌入式板上内置的硬件，FreeBSD USB堆栈可以运行在“设备模式”下。设备模式使得计算机能够以不同种类的USB设备类别呈现自身，包括串口、网络适配器、大容量存储设备，或者它们的组合。像笔记本电脑或台式电脑这样的USB主机可以像访问物理USB设备一样访问它们。设备模式有时也被称为“USB小工具模式”。
 
-There are two basic ways the hardware can provide the device mode functionality: with a separate "client port", which only supports the device mode, and with a USB OTG port, which can provide both device and host mode. For USB OTG ports, the USB stack switches between host-side and device-side automatically, depending on what is connected to the port. Connecting a USB device like a memory stick to the port causes FreeBSD to switch to host mode. Connecting a USB host like a computer causes FreeBSD to switch to device mode. Single purpose "client ports" always work in device mode.
+硬件可以通过两种基本方式提供设备模式功能：一种是使用单独的“客户端端口”，该端口仅支持设备模式；另一种是使用USB OTG（On-The-Go）端口，该端口可以同时提供设备模式和主机模式。对于USB OTG端口，USB堆栈会根据连接到端口的设备自动切换主机端和设备端。将USB设备（如存储设备）连接到端口会导致FreeBSD切换到主机模式。将USB主机（如计算机）连接到端口会导致FreeBSD切换到设备模式。而单用途的“客户端端口”始终以设备模式工作。
 
-What FreeBSD presents to the USB host depends on the `hw.usb.template` sysctl. Some templates provide a single device, such as a serial terminal; others provide multiple ones, which can all be used at the same time. An example is the template 10, which provides a mass storage device, a serial console, and a network interface. See man:usb_template[4] for the list of available values.
+FreeBSD向USB主机呈现的内容取决于`hw.usb.template` sysctl。一些模板提供单个设备，例如串行终端；其他模板提供多个设备，可以同时使用。一个例子是模板10，它提供了一个大容量存储设备、一个串行控制台和一个网络接口。请参阅man:usb_template[4]以获取可用值的列表。
 
-Note that in some cases, depending on the hardware and the hosts operating system, for the host to notice the configuration change, it must be either physically disconnected and reconnected, or forced to rescan the USB bus in a system-specific way. When FreeBSD is running on the host, man:usbconfig[8] `reset` can be used. This also must be done after loading [.filename]#usb_template.ko# if the USB host was already connected to the USBOTG socket.
+请注意，在某些情况下，根据硬件和主机操作系统的不同，为了使主机注意到配置更改，必须要么物理断开并重新连接，要么以特定于系统的方式强制重新扫描USB总线。当主机上运行FreeBSD时，可以使用man:usbconfig[8] `reset`命令。如果USB主机已经连接到USBOTG插座，则还必须在加载[.filename]#usb_template.ko#之后执行此操作。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* How to set up USB Device Mode functionality on FreeBSD.
-* How to configure the virtual serial port on FreeBSD.
-* How to connect to the virtual serial port from various operating systems.
-* How to configure FreeBSD to provide a virtual USB network interface.
-* How to configure FreeBSD to provide a virtual USB storage device.
+* 在FreeBSD上如何设置USB设备模式功能。
+* 如何在FreeBSD上配置虚拟串口。
+* 如何从不同的操作系统连接到虚拟串口。
+* 如何配置FreeBSD以提供虚拟USB网络接口。
+* 如何配置FreeBSD以提供虚拟USB存储设备。
 
 [[usb-device-mode-terminals]]
-== USB Virtual Serial Ports
+== USB虚拟串口
 
-=== Configuring USB Device Mode Serial Ports
+=== 配置USB设备模式串口
 
-Virtual serial port support is provided by templates number 3, 8, and 10. Note that template 3 works with Microsoft Windows 10 without the need for special drivers and INF files. Other host operating systems work with all three templates. Both man:usb_template[4] and man:umodem[4] kernel modules must be loaded.
+虚拟串口支持由模板3、8和10提供。请注意，模板3可以在Microsoft Windows 10上使用，无需特殊驱动程序和INF文件。其他主机操作系统可以与这三个模板一起使用。必须加载man:usb_template[4]和man:umodem[4]内核模块。
 
-To enable USB device mode serial ports, add those lines to [.filename]#/etc/ttys#:
+要启用USB设备模式的串口，请将以下行添加到[/etc/ttys]文件中：
 
 [.programlisting]
 ....
@@ -81,7 +81,7 @@ ttyU0	"/usr/libexec/getty 3wire"	vt100	onifconsole secure
 ttyU1	"/usr/libexec/getty 3wire"	vt100	onifconsole secure
 ....
 
-Then add these lines to [.filename]#/etc/devd.conf#:
+然后将以下行添加到[/etc/devd.conf]文件中：
 
 [.programlisting]
 ....
@@ -94,14 +94,14 @@ notify 100 {
 };
 ....
 
-Reload the configuration if man:devd[8] is already running:
+如果 man:devd[8] 已经在运行，请重新加载配置。
 
 [source, shell]
 ....
 # service devd restart
 ....
 
-Make sure the necessary modules are loaded and the correct template is set at boot by adding those lines to [.filename]#/boot/loader.conf#, creating it if it does not already exist:
+确保所需的模块已加载并在启动时设置正确的模板，通过将这些行添加到[/boot/loader.conf]#文件中，如果该文件不存在，则创建它：
 
 [source, shell]
 ....
@@ -109,7 +109,7 @@ umodem_load="YES"
 hw.usb.template=3
 ....
 
-To load the module and set the template without rebooting use:
+要在不重新启动的情况下加载模块并设置模板，请使用以下命令：
 
 [source, shell]
 ....
@@ -117,45 +117,45 @@ To load the module and set the template without rebooting use:
 # sysctl hw.usb.template=3
 ....
 
-=== Connecting to USB Device Mode Serial Ports from FreeBSD
+=== 从FreeBSD连接到USB设备模式串口
 
-To connect to a board configured to provide USB device mode serial ports, connect the USB host, such as a laptop, to the boards USB OTG or USB client port. Use `pstat -t` on the host to list the terminal lines. Near the end of the list you should see a USB serial port, e.g. "ttyU0". To open the connection, use:
+要连接到配置为提供USB设备模式串行端口的板子，将USB主机（例如笔记本电脑）连接到板子的USB OTG或USB客户端端口。在主机上使用`pstat -t`命令列出终端线路。在列表的末尾附近，您应该会看到一个USB串行端口，例如"ttyU0"。要打开连接，请使用：
 
 [source, shell]
 ....
 # cu -l /dev/ttyU0
 ....
 
-After pressing the kbd:[Enter] key a few times you will see a login prompt.
+按下 kbd:[Enter] 键几次后，您将看到一个登录提示符。
 
-=== Connecting to USB Device Mode Serial Ports from macOS
+=== 在 macOS 上连接 USB 设备模式串口
 
-To connect to a board configured to provide USB device mode serial ports, connect the USB host, such as a laptop, to the boards USB OTG or USB client port. To open the connection, use:
+要连接到配置为提供USB设备模式串行端口的板子，将USB主机（例如笔记本电脑）连接到板子的USB OTG或USB客户端端口。要打开连接，请使用：
 
 [source, shell]
 ....
 # cu -l /dev/cu.usbmodemFreeBSD1
 ....
 
-=== Connecting to USB Device Mode Serial Ports from Linux
+=== 在Linux上连接USB设备模式串口
 
-To connect to a board configured to provide USB device mode serial ports, connect the USB host, such as a laptop, to the boards USB OTG or USB client port. To open the connection, use:
+要连接到配置为提供USB设备模式串行端口的板子，将USB主机（例如笔记本电脑）连接到板子的USB OTG或USB客户端端口。要打开连接，请使用：
 
 [source, shell]
 ....
 # minicom -D /dev/ttyACM0
 ....
 
-=== Connecting to USB Device Mode Serial Ports from Microsoft Windows 10
+=== 在Microsoft Windows 10上连接USB设备模式串口
 
-To connect to a board configured to provide USB device mode serial ports, connect the USB host, such as a laptop, to the boards USB OTG or USB client port. To open a connection you will need a serial terminal program, such as PuTTY. To check the COM port name used by Windows, run Device Manager, expand "Ports (COM & LPT)". You will see a name similar to "USB Serial Device (COM4)". Run serial terminal program of your choice, for example PuTTY. In the PuTTY dialog set "Connection type" to "Serial", type the COMx obtained from Device Manager in the "Serial line" dialog box and click Open.
+要连接到配置为提供USB设备模式串口的板子，需要将USB主机（例如笔记本电脑）连接到板子的USB OTG或USB客户端端口。要打开连接，您需要一个串口终端程序，例如PuTTY。要检查Windows使用的COM端口名称，请运行设备管理器，展开“端口（COM和LPT）”。您将看到一个类似于“USB串行设备（COM4）”的名称。运行您选择的串口终端程序，例如PuTTY。在PuTTY对话框中将“连接类型”设置为“串行”，在“串行线路”对话框中输入从设备管理器获取的COMx，并点击打开。
 
 [[usb-device-mode-network]]
-== USB Device Mode Network Interfaces
+== USB设备模式网络接口
 
-Virtual network interfaces support is provided by templates number 1, 8, and 10. Note that none of them works with Microsoft Windows. Other host operating systems work with all three templates. Both man:usb_template[4] and man:if_cdce[4] kernel modules must be loaded.
+虚拟网络接口的支持由模板1、8和10提供。请注意，它们都不适用于Microsoft Windows。其他主机操作系统都适用于这三个模板。必须加载man:usb_template[4]和man:if_cdce[4]内核模块。
 
-Make sure the necessary modules are loaded and the correct template is set at boot by adding those lines to [.filename]#/boot/loader.conf#, creating it if it does not already exist:
+确保所需的模块已加载并在启动时设置正确的模板，通过将这些行添加到[/boot/loader.conf]#文件中，如果该文件不存在，则创建它：
 
 [.programlisting]
 ....
@@ -163,7 +163,7 @@ if_cdce_load="YES"
 hw.usb.template=1
 ....
 
-To load the module and set the template without rebooting use:
+要在不重新启动的情况下加载模块并设置模板，请使用以下命令：
 
 [source, shell]
 ....
@@ -172,63 +172,63 @@ To load the module and set the template without rebooting use:
 ....
 
 [[usb-device-mode-storage]]
-== USB Virtual Storage Device
+== USB虚拟存储设备
 
 [NOTE]
 ====
-The man:cfumass[4] driver is a USB device mode driver first available in FreeBSD 12.0.
+man:cfumass[4]驱动程序是一个USB设备模式驱动程序，首次在FreeBSD 12.0中可用。
 ====
 
-Mass Storage target is provided by templates 0 and 10. Both man:usb_template[4] and man:cfumass[4] kernel modules must be loaded. man:cfumass[4] interfaces to the CTL subsystem, the same one that is used for iSCSI or Fibre Channel targets. On the host side, USB Mass Storage initiators can only access a single LUN, LUN 0.
+模板0和10提供了大容量存储目标。必须加载man:usb_template[4]和man:cfumass[4]内核模块。man:cfumass[4]与CTL子系统进行接口交互，该子系统也用于iSCSI或光纤通道目标。在主机端，USB大容量存储发起器只能访问一个逻辑单元（LUN），即LUN 0。
 
-=== Configuring USB Mass Storage Target Using the cfumass Startup Script
+=== 使用cfumass启动脚本配置USB大容量存储目标
 
-The simplest way to set up a read-only USB storage target is to use the [.filename]#cfumass# rc script. To configure it this way, copy the files to be presented to the USB host machine into the `/var/cfumass` directory, and add this line to [.filename]#/etc/rc.conf#:
+设置只读USB存储目标的最简单方法是使用[.filename]#cfumass# rc脚本。要以这种方式配置它，将要呈现给USB主机机器的文件复制到`/var/cfumass`目录，并将以下行添加到[.filename]#/etc/rc.conf#文件中：
 
 [.programlisting]
 ....
 cfumass_enable="YES"
 ....
 
-To configure the target without restarting, run this command:
+要在不重新启动的情况下配置目标，请运行以下命令：
 
 [source, shell]
 ....
 # service cfumass start
 ....
 
-Differently from serial and network functionality, the template should not be set to 0 or 10 in [.filename]#/boot/loader.conf#. This is because the LUN must be set up before setting the template. The cfumass startup script sets the correct template number automatically when started.
+与串行和网络功能不同，模板不应在[.filename]#/boot/loader.conf#中设置为0或10。这是因为在设置模板之前必须设置LUN。当启动时，cfumass启动脚本会自动设置正确的模板编号。
 
-=== Configuring USB Mass Storage Using Other Means
+=== 使用其他方法配置USB大容量存储设备
 
-The rest of this chapter provides detailed description of setting the target without using the cfumass rc file. This is necessary if e.g. one wants to provide a writeable LUN.
+本章的其余部分提供了在不使用cfumass rc文件的情况下设置目标的详细描述。如果想要提供可写的逻辑单元（LUN），这是必要的。
 
-USB Mass Storage does not require the man:ctld[8] daemon to be running, although it can be used if desired. This is different from iSCSI. Thus, there are two ways to configure the target: man:ctladm[8], or man:ctld[8]. Both require the [.filename]#cfumass.ko# kernel module to be loaded. The module can be loaded manually:
+USB Mass Storage不需要运行man:ctld[8]守护进程，尽管如果需要可以使用它。这与iSCSI不同。因此，有两种配置目标的方式：man:ctladm[8]或man:ctld[8]。两者都需要加载[.filename]#cfumass.ko#内核模块。可以手动加载该模块：
 
 [source, shell]
 ....
 # kldload cfumass
 ....
 
-If [.filename]#cfumass.ko# has not been built into the kernel, [.filename]#/boot/loader.conf# can be set to load the module at boot:
+如果 [.filename]#cfumass.ko# 没有被编译进内核中，可以在 [.filename]#/boot/loader.conf# 中设置在启动时加载该模块：
 
 [.programlisting]
 ....
 cfumass_load="YES"
 ....
 
-A LUN can be created without the man:ctld[8] daemon:
+可以在没有man:ctld[8]守护进程的情况下创建一个LUN。
 
 [source, shell]
 ....
 # ctladm create -b block -o file=/data/target0
 ....
 
-This presents the contents of the image file [.filename]#/data/target0# as a LUN to the USB host. The file must exist before executing the command. To configure the LUN at system startup, add the command to [.filename]#/etc/rc.local#.
+这将把图像文件[.filename]#/data/target0#的内容作为LUN提供给USB主机。在执行命令之前，文件必须存在。要在系统启动时配置LUN，请将该命令添加到[.filename]#/etc/rc.local#中。
 
-man:ctld[8] can also be used to manage LUNs. Create [.filename]#/etc/ctl.conf#, add a line to [.filename]#/etc/rc.conf# to make sure man:ctld[8] is automatically started at boot, and then start the daemon.
+man:ctld[8]也可以用来管理逻辑单元（LUNs）。创建 [.filename]#/etc/ctl.conf# 文件，添加一行到 [.filename]#/etc/rc.conf# 文件中，以确保在启动时自动启动 man:ctld[8]，然后启动守护进程。
 
-This is an example of a simple [.filename]#/etc/ctl.conf# configuration file. Refer to man:ctl.conf[5] for a more complete description of the options.
+这是一个简单的 [.filename]#/etc/ctl.conf# 配置文件的示例。有关选项的更完整描述，请参考 man:ctl.conf[5]。
 
 [.programlisting]
 ....
@@ -240,23 +240,23 @@ target naa.50015178f369f092 {
 }
 ....
 
-The example creates a single target with a single LUN. The `naa.50015178f369f092` is a device identifier composed of 32 random hexadecimal digits. The `path` line defines the full path to a file or zvol backing the LUN. That file must exist before starting man:ctld[8]. The second line is optional and specifies the size of the LUN.
+该示例创建了一个具有单个LUN的单个目标。`naa.50015178f369f092`是由32个随机十六进制数字组成的设备标识符。`path`行定义了指向支持LUN的文件或zvol的完整路径。在启动man:ctld[8]之前，该文件必须存在。第二行是可选的，用于指定LUN的大小。
 
-To make sure the man:ctld[8] daemon is started at boot, add this line to [.filename]#/etc/rc.conf#:
+为了确保man:ctld[8]守护进程在启动时自动启动，请将以下行添加到.filename#/etc/rc.conf#:
 
 [.programlisting]
 ....
 ctld_enable="YES"
 ....
 
-To start man:ctld[8] now, run this command:
+要启动man:ctld[8]，请运行以下命令：
 
 [source, shell]
 ....
 # service ctld start
 ....
 
-As the man:ctld[8] daemon is started, it reads [.filename]#/etc/ctl.conf#. If this file is edited after the daemon starts, reload the changes so they take effect immediately:
+当启动man:ctld[8]守护进程时，它会读取.filename#/etc/ctl.conf#文件。如果在守护进程启动后编辑了此文件，则重新加载更改以立即生效：
 
 [source, shell]
 ....
