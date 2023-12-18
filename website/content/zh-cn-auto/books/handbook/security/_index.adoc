@@ -1,12 +1,12 @@
 ---
-description: 已经有数百种关于如何保护系统和网络的标准实践被撰写出来，作为FreeBSD的用户，了解如何防御攻击和入侵者是必须的。
+description: '已经有数百种关于如何保护系统和网络的标准实践被撰写出来，作为 FreeBSD 的用户，了解如何防御攻击和入侵者是必须的。'
 next: books/handbook/jails
 part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/boot
 showBookMenu: true
 tags: '["security", "TCP Wrappers", "Kerberos", "OpenSSL", "OpenSSH", "ACL", "NFSv4 ACLs", "advisories", "sudo", "doas", "capsicum", "monitoring"]'
-title: '第16章 安全'
+title: '第 16 章 安全'
 weight: 20
 ---
 
@@ -48,46 +48,46 @@ endif::[]
 [[security-synopsis]]
 == 简介
 
-已经有数百种关于如何保护系统和网络的标准实践被撰写出来，作为FreeBSD的用户，了解如何防御攻击和入侵是必不可少的。
+已经有数百种关于如何保护系统和网络的标准实践被撰写出来，作为 FreeBSD 的用户，了解如何防御攻击和入侵是必不可少的。
 
-在本章中，将讨论几个基本原理和技术。FreeBSD系统具有多层安全性，并且可以添加许多第三方工具来增强安全性。
+在本章中，将讨论几个基本原理和技术。 FreeBSD 系统具有多层安全性，并且可以添加许多第三方工具来增强安全性。
 
 本章内容包括：
 
-* 基本的FreeBSD系统安全概念。
-* 在FreeBSD中可用的各种加密机制。
-* 如何配置TCP Wrappers以与man:inetd[8]一起使用。
-* 在FreeBSD上设置Kerberos的方法。
-* 如何在FreeBSD上配置和使用OpenSSH。
-* 在FreeBSD上如何使用OpenSSL。
-* 如何使用文件系统ACL。
-* 如何使用pkg来审计从Ports集合安装的第三方软件包。
-* 如何利用FreeBSD安全公告。
-* 进程账户是什么以及如何在FreeBSD上启用它。
+* 基本的 FreeBSD 系统安全概念。
+* 在 FreeBSD 中可用的各种加密机制。
+* 如何配置 TCP Wrappers 以与 man:inetd[8] 一起使用。
+* 在 FreeBSD 上设置 Kerberos 的方法。
+* 如何在 FreeBSD 上配置和使用 OpenSSH 。
+* 在 FreeBSD 上如何使用 OpenSSL 。
+* 如何使用文件系统 ACL 。
+* 如何使用 pkg 来审计从 Ports 集合安装的第三方软件包。
+* 如何利用 FreeBSD 安全公告。
+* 进程账户是什么以及如何在 FreeBSD 上启用它。
 * 如何使用登录类或资源限制数据库来控制用户资源。
-* Capsicum是一个安全增强的操作系统框架，用于保护操作系统和应用程序免受恶意软件和攻击的影响。它提供了一种将应用程序功能分割成多个独立的沙盒环境的方法，以限制恶意软件的影响范围。Capsicum还提供了一组API，使开发人员能够在沙盒环境中安全地运行应用程序。 以下是一个基本示例，展示了如何使用Capsicum来保护一个应用程序： ``` #include <sys/capsicum.h> #include <stdio.h> int main() { // 创建一个沙盒 cap_enter(); // 打开一个文件 FILE* file = fopen("example.txt", "r"); if (file == NULL) { printf("无法打开文件\n"); return 1; } // 读取文件内容 char buffer[100]; fgets(buffer, sizeof(buffer), file); printf("文件内容：%s\n", buffer); // 关闭文件 fclose(file); return 0; } ``` 在这个示例中，我们首先调用`cap_enter()`函数来创建一个沙盒环境。然后，我们打开一个名为"example.txt"的文件，并读取其内容。由于我们在沙盒环境中运行，即使恶意软件试图访问其他文件或系统资源，也会受到限制。最后，我们关闭文件并结束程序的执行。 通过使用Capsicum，我们可以提高应用程序的安全性，减少恶意软件和攻击的影响。
+* Capsicum 是一个安全增强的操作系统框架，用于保护操作系统和应用程序免受恶意软件和攻击的影响。它提供了一种将应用程序功能分割成多个独立的沙盒环境的方法，以限制恶意软件的影响范围。 Capsicum 还提供了一组 API ，使开发人员能够在沙盒环境中安全地运行应用程序。 以下是一个基本示例，展示了如何使用 Capsicum 来保护一个应用程序： ``` #include <sys/capsicum.h> #include <stdio.h> int main() { // 创建一个沙盒 cap_enter() ; // 打开一个文件 FILE* file = fopen("example.txt", "r") ; if (file == NULL) { printf("无法打开文件\ n") ; return 1 ; } // 读取文件内容 char buffer[100] ; fgets(buffer , sizeof(buffer) , file) ; printf("文件内容： %s \ n", buffer) ; // 关闭文件 fclose(file) ; return 0 ; } ``` 在这个示例中，我们首先调用 `cap_enter()` 函数来创建一个沙盒环境。然后，我们打开一个名为"example.txt"的文件，并读取其内容。由于我们在沙盒环境中运行，即使恶意软件试图访问其他文件或系统资源，也会受到限制。最后，我们关闭文件并结束程序的执行。 通过使用 Capsicum ，我们可以提高应用程序的安全性，减少恶意软件和攻击的影响。
 
-由于其复杂性，某些主题在专门的章节中进行讨论，例如crossref:firewalls[firewalls,防火墙]，crossref:mac[mac,强制访问控制]以及像extref:{vpn-ipsec}[VPN over IPsec]这样的文章。
+由于其复杂性，某些主题在专门的章节中进行讨论，例如 crossref:firewalls[firewalls ,防火墙] ， crossref:mac[mac ,强制访问控制] 以及像 extref:{vpn-ipsec}[VPN over IPsec] 这样的文章。
 
 [[security-intro]]
 == 介绍
 
-安全是每个人的责任。任何系统中的弱入口都可能使入侵者获得对关键信息的访问权限，并对整个网络造成混乱。信息安全的核心原则之一是CIA三元组，即信息系统的机密性、完整性和可用性。
+安全是每个人的责任。任何系统中的弱入口都可能使入侵者获得对关键信息的访问权限，并对整个网络造成混乱。信息安全的核心原则之一是 CIA 三元组，即信息系统的机密性、完整性和可用性。
 
-CIA三元组是计算机安全的基本概念，因为客户和用户期望他们的数据得到保护。例如，客户期望他们的信用卡信息被安全地存储（保密性），他们的订单在幕后不被更改（完整性），并且他们可以随时访问他们的订单信息（可用性）。
+CIA 三元组是计算机安全的基本概念，因为客户和用户期望他们的数据得到保护。例如，客户期望他们的信用卡信息被安全地存储（保密性），他们的订单在幕后不被更改（完整性），并且他们可以随时访问他们的订单信息（可用性）。
 
-为了提供CIA（机密性、完整性和可用性），安全专业人员采用了深度防御策略。深度防御的理念是在安全系统中添加多层安全措施，以防止单个层面的失败导致整个安全系统崩溃。例如，系统管理员不能仅仅打开防火墙就认为网络或系统是安全的。还必须审计账户、检查二进制文件的完整性，并确保没有安装恶意工具。要实施有效的安全策略，必须了解威胁及其防御方法。
+为了提供 CIA （机密性、完整性和可用性），安全专业人员采用了深度防御策略。深度防御的理念是在安全系统中添加多层安全措施，以防止单个层面的失败导致整个安全系统崩溃。例如，系统管理员不能仅仅打开防火墙就认为网络或系统是安全的。还必须审计账户、检查二进制文件的完整性，并确保没有安装恶意工具。要实施有效的安全策略，必须了解威胁及其防御方法。
 
 在计算机安全领域，威胁是指不仅限于试图从远程位置未经许可访问系统的远程攻击者。威胁还包括员工、恶意软件、未经授权的网络设备、自然灾害、安全漏洞，甚至竞争对手。
 
 系统和网络有时会在没有许可的情况下被访问，有时是出于意外，或者是被远程攻击者访问，而在某些情况下，可能是通过企业间谍活动或前员工的方式进行访问。作为用户，重要的是要为可能导致安全漏洞的错误做好准备，并向安全团队报告可能存在的问题。作为管理员，了解威胁并做好准备以减轻其影响是非常重要的。
 
-在应用安全措施到系统时，建议首先保护基本账户和系统配置，然后保护网络层，使其符合系统策略和组织的安全程序。许多组织已经有了涵盖技术设备配置的安全策略。该策略应包括工作站、桌面电脑、移动设备、电话、生产服务器和开发服务器的安全配置。在许多情况下，标准操作规程（SOP）已经存在。如果有疑问，请咨询安全团队。
+在应用安全措施到系统时，建议首先保护基本账户和系统配置，然后保护网络层，使其符合系统策略和组织的安全程序。许多组织已经有了涵盖技术设备配置的安全策略。该策略应包括工作站、桌面电脑、移动设备、电话、生产服务器和开发服务器的安全配置。在许多情况下，标准操作规程（ SOP ）已经存在。如果有疑问，请咨询安全团队。
 
 [[sec-accounts]]
 == 保护账户安全
 
-在FreeBSD中维护安全账户对于数据保密性、系统完整性和权限分离至关重要，它可以防止未经授权的访问、恶意软件和数据泄露，同时确保合规性并保护组织的声誉。
+在 FreeBSD 中维护安全账户对于数据保密性、系统完整性和权限分离至关重要，它可以防止未经授权的访问、恶意软件和数据泄露，同时确保合规性并保护组织的声誉。
 
 [[security-accounts]]
 === 防止登录
@@ -96,21 +96,21 @@ CIA三元组是计算机安全的基本概念，因为客户和用户期望他�
 
 [TIP]
 ====
-确保`root`拥有一个强密码，并且不要共享该密码。
+确保 `root` 拥有一个强密码，并且不要共享该密码。
 ====
 
 拒绝登录账户有两种方法。
 
-第一步是锁定账户，这个例子展示了如何锁定`imani`账户：
+第一步是锁定账户，这个例子展示了如何锁定 `imani` 账户：
 
 [source, shell]
 ....
 # pw lock imani
 ....
 
-第二种方法是通过将shell更改为[.filename]#/usr/sbin/nologin#来阻止登录访问。man:nologin[8] shell在用户尝试登录时阻止系统为其分配shell。
+第二种方法是通过将 shell 更改为 [.filename]#/usr/sbin/nologin# 来阻止登录访问。 man:nologin[8] shell 在用户尝试登录时阻止系统为其分配 shell 。
 
-只有超级用户才能更改其他用户的Shell。
+只有超级用户才能更改其他用户的 Shell 。
 
 [source, shell]
 ....
@@ -120,18 +120,18 @@ CIA三元组是计算机安全的基本概念，因为客户和用户期望他�
 [[security-passwords]]
 === 密码哈希值
 
-密码是技术中不可或缺的恶魔。当必须使用密码时，它们应该是复杂的，并且应该使用强大的哈希机制来加密存储在密码数据库中的版本。FreeBSD支持多种算法，包括SHA256、SHA512和Blowfish哈希算法在其`crypt()`库中，详细信息请参阅man:crypt[3]。
+密码是技术中不可或缺的恶魔。当必须使用密码时，它们应该是复杂的，并且应该使用强大的哈希机制来加密存储在密码数据库中的版本。 FreeBSD 支持多种算法，包括 SHA256 、 SHA512 和 Blowfish 哈希算法在其 `crypt()` 库中，详细信息请参阅 man:crypt[3] 。
 
-不应将SHA512的默认值更改为较不安全的哈希算法，但可以更改为更安全的Blowfish算法。
+不应将 SHA512 的默认值更改为较不安全的哈希算法，但可以更改为更安全的 Blowfish 算法。
 
 [NOTE]
 ====
-Blowfish不是AES的一部分，也不被认为符合任何联邦信息处理标准（FIPS）。在某些环境中可能不允许使用。
+Blowfish 不是 AES 的一部分，也不被认为符合任何联邦信息处理标准（ FIPS ）。在某些环境中可能不允许使用。
 ====
 
-为了确定用于加密用户密码的哈希算法，超级用户可以查看FreeBSD密码数据库中用户的哈希值。每个哈希值都以一个符号开头，该符号指示用于加密密码的哈希机制的类型。
+为了确定用于加密用户密码的哈希算法，超级用户可以查看 FreeBSD 密码数据库中用户的哈希值。每个哈希值都以一个符号开头，该符号指示用于加密密码的哈希机制的类型。
 
-如果使用DES加密算法，没有起始符号。对于MD5算法，起始符号是`$`。对于SHA256和SHA512算法，起始符号是`$6$`。对于Blowfish算法，起始符号是`$2a$`。在这个例子中，用户`imani`的密码使用默认的SHA512算法进行哈希处理，因为哈希值以`$6$`开头。请注意，存储在密码数据库中的是加密后的哈希值，而不是密码本身。
+如果使用 DES 加密算法，没有起始符号。对于 MD5 算法，起始符号是 ` $ ` 。对于 SHA256 和 SHA512 算法，起始符号是 ` $ 6 $ ` 。对于 Blowfish 算法，起始符号是 ` $ 2a $ ` 。在这个例子中，用户 `imani` 的密码使用默认的 SHA512 算法进行哈希处理，因为哈希值以 ` $ 6 $ ` 开头。请注意，存储在密码数据库中的是加密后的哈希值，而不是密码本身。
 
 [source, shell]
 ....
@@ -161,30 +161,30 @@ imani:$6$pzIjSvCAn.PBYQBA$PXpSeWPx3g5kscj3IMiM7tUEUSPmGexxta.8Lt9TGSi2lNQqYGKszs
 :passwd_format=sha512:\
 ....
 
-例如，要将算法更改为Blowfish，将该行修改为以下内容：
+例如，要将算法更改为 Blowfish ，将该行修改为以下内容：
 
 [.programlisting]
 ....
 :passwd_format=blf:\
 ....
 
-然后，必须执行man:cap_mkdb[1]命令来升级login.conf数据库：
+然后，必须执行 man:cap_mkdb[1] 命令来升级 login.conf 数据库：
 
 [source, shell]
 ....
 # cap_mkdb /etc/login.conf
 ....
 
-请注意，此更改不会影响任何现有的密码哈希值。这意味着所有密码都应通过要求用户运行`passwd`来重新哈希，以更改他们的密码。
+请注意，此更改不会影响任何现有的密码哈希值。这意味着所有密码都应通过要求用户运行 `passwd` 来重新哈希，以更改他们的密码。
 
 [[security-pwpolicy]]
 === 密码策略强制执行
 
-对本地账户强制执行强密码策略是系统安全的基本方面。在FreeBSD中，可以使用内置的可插拔认证模块（PAM）来实现密码长度、密码强度和密码复杂性。
+对本地账户强制执行强密码策略是系统安全的基本方面。在 FreeBSD 中，可以使用内置的可插拔认证模块（ PAM ）来实现密码长度、密码强度和密码复杂性。
 
-本节演示了如何使用man:pam_passwdqc[8]模块配置最小和最大密码长度以及强制使用混合字符。当用户更改密码时，将强制执行此模块。
+本节演示了如何使用 man:pam_passwdqc[8] 模块配置最小和最大密码长度以及强制使用混合字符。当用户更改密码时，将强制执行此模块。
 
-要配置此模块，请成为超级用户，并取消注释包含`pam_passwdqc.so`的行，位于[.filename]#/etc/pam.d/passwd#文件中。
+要配置此模块，请成为超级用户，并取消注释包含 `pam_passwdqc.so` 的行，位于 [.filename]#/etc/pam.d/passwd# 文件中。
 
 然后，编辑该行以符合密码策略：
 
@@ -223,16 +223,16 @@ Enter new password:
 
 如果输入的密码不符合策略要求，系统将拒绝并发出警告，用户将有机会再次尝试，最多可以重试配置的次数。
 
-如果您的组织政策要求密码过期，FreeBSD支持在用户的登录类中使用`passwordtime`选项，该选项可以在[/etc/login.conf](/etc/login.conf)文件中设置。
+如果您的组织政策要求密码过期， FreeBSD 支持在用户的登录类中使用 `passwordtime` 选项，该选项可以在 [/etc/login.conf](/etc/login.conf) 文件中设置。
 
-`default`登录类包含一个示例：
+`default` 登录类包含一个示例：
 
 [.programlisting]
 ....
 #       :passwordtime=90d:\
 ....
 
-因此，要为此登录类设置90天的到期时间，删除注释符号（＃），保存编辑，并执行以下命令：
+因此，要为此登录类设置 90 天的到期时间，删除注释符号（＃），保存编辑，并执行以下命令：
 
 [source, shell]
 ....
@@ -246,21 +246,21 @@ Enter new password:
 # pw usermod -p 30-apr-2025 -n user
 ....
 
-如图所示，过期日期以日、月和年的形式设置。有关更多信息，请参阅man:pw[8]。
+如图所示，过期日期以日、月和年的形式设置。有关更多信息，请参阅 man:pw[8] 。
 
 [[security-sudo]]
-=== 使用sudo进行共享管理
+=== 使用 sudo 进行共享管理
 
-系统管理员经常需要能够授予用户增强的权限，以便他们可以执行特权任务。团队成员被授予访问FreeBSD系统以执行他们的特定任务的想法，给每个管理员带来了独特的挑战。这些团队成员只需要超出普通用户级别的一部分访问权限；然而，他们几乎总是告诉管理层，如果没有超级用户访问权限，他们无法执行任务。幸运的是，没有必要为终端用户提供这样的访问权限，因为存在可以管理这个确切需求的工具。
+系统管理员经常需要能够授予用户增强的权限，以便他们可以执行特权任务。团队成员被授予访问 FreeBSD 系统以执行他们的特定任务的想法，给每个管理员带来了独特的挑战。这些团队成员只需要超出普通用户级别的一部分访问权限；然而，他们几乎总是告诉管理层，如果没有超级用户访问权限，他们无法执行任务。幸运的是，没有必要为终端用户提供这样的访问权限，因为存在可以管理这个确切需求的工具。
 
 [TIP]
 ====
 即使是管理员，在不需要时也应该限制他们的权限。
 ====
 
-到目前为止，安全章节已经涵盖了允许授权用户访问和防止未经授权访问的内容。一旦授权用户获得系统资源的访问权限，另一个问题就出现了。在许多情况下，一些用户可能需要访问应用程序启动脚本，或者一个管理员团队需要维护系统。传统上，标准用户和组、文件权限，甚至man:su[1]命令都可以管理这种访问权限。随着应用程序需要更多的访问权限，越来越多的用户需要使用系统资源，需要一个更好的解决方案。目前最常用的应用程序是Sudo。
+到目前为止，安全章节已经涵盖了允许授权用户访问和防止未经授权访问的内容。一旦授权用户获得系统资源的访问权限，另一个问题就出现了。在许多情况下，一些用户可能需要访问应用程序启动脚本，或者一个管理员团队需要维护系统。传统上，标准用户和组、文件权限，甚至 man:su[1] 命令都可以管理这种访问权限。随着应用程序需要更多的访问权限，越来越多的用户需要使用系统资源，需要一个更好的解决方案。目前最常用的应用程序是 Sudo 。
 
-Sudo允许管理员对系统命令进行更严格的访问配置，并提供一些高级日志记录功能。作为一个工具，可以通过Ports Collection中的package:security/sudo[]包或使用man:pkg[8]实用程序来获取。
+Sudo 允许管理员对系统命令进行更严格的访问配置，并提供一些高级日志记录功能。作为一个工具，可以通过 Ports Collection 中的 package:security/sudo[] 包或使用 man:pkg[8] 实用程序来获取。
 
 执行以下命令进行安装：
 
@@ -269,9 +269,9 @@ Sudo允许管理员对系统命令进行更严格的访问配置，并提供一�
 # pkg install sudo
 ....
 
-安装完成后，安装的 `visudo` 将使用文本编辑器打开配置文件。强烈建议使用 `visudo`，因为它内置了语法检查器，可以在保存文件之前验证是否存在错误。
+安装完成后，安装的 `visudo` 将使用文本编辑器打开配置文件。强烈建议使用 `visudo` ，因为它内置了语法检查器，可以在保存文件之前验证是否存在错误。
 
-配置文件由几个小节组成，允许进行广泛的配置。在下面的示例中，Web应用程序维护者user1需要启动、停止和重新启动名为_webservice_的Web应用程序。为了授予该用户执行这些任务的权限，请将以下行添加到[.filename]#/usr/local/etc/sudoers#文件的末尾：
+配置文件由几个小节组成，允许进行广泛的配置。在下面的示例中， Web 应用程序维护者 user1 需要启动、停止和重新启动名为_webservice_的 Web 应用程序。为了授予该用户执行这些任务的权限，请将以下行添加到 [.filename]#/usr/local/etc/sudoers# 文件的末尾：
 
 [.programlisting]
 ....
@@ -285,36 +285,36 @@ user1   ALL=(ALL)       /usr/sbin/service webservice *
 % sudo /usr/sbin/service webservice start
 ....
 
-虽然这个配置允许单个用户访问webservice服务；然而，在大多数组织中，有一个完整的网络团队负责管理该服务。一条单独的命令也可以给整个组提供访问权限。以下步骤将创建一个网络组，将用户添加到该组，并允许该组的所有成员管理该服务：
+虽然这个配置允许单个用户访问 webservice 服务；然而，在大多数组织中，有一个完整的网络团队负责管理该服务。一条单独的命令也可以给整个组提供访问权限。以下步骤将创建一个网络组，将用户添加到该组，并允许该组的所有成员管理该服务：
 
 [source, shell]
 ....
 # pw groupadd -g 6001 -n webteam
 ....
 
-使用相同的man:pw[8]命令，将用户添加到webteam组中：
+使用相同的 man:pw[8] 命令，将用户添加到 webteam 组中：
 
 [source, shell]
 ....
 # pw groupmod -m user1 -n webteam
 ....
 
-最后，这行代码在文件[/usr/local/etc/sudoers]中允许webteam组的任何成员管理_webservice_。
+最后，这行代码在文件 [/usr/local/etc/sudoers] 中允许 webteam 组的任何成员管理_webservice_。
 
 [.programlisting]
 ....
 %webteam   ALL=(ALL)       /usr/sbin/service webservice *
 ....
 
-与man:su[1]不同，man:sudo[8]只需要最终用户的密码。这样可以避免共享密码，这是一种不好的做法。
+与 man:su[1] 不同， man:sudo[8] 只需要最终用户的密码。这样可以避免共享密码，这是一种不好的做法。
 
-只有被允许使用man:sudo[8]运行应用程序的用户需要输入自己的密码。这比使用man:su[1]更安全，并且提供了更好的控制，因为在man:su[1]中需要输入`root`密码，用户将获得所有`root`权限。
+只有被允许使用 man:sudo[8] 运行应用程序的用户需要输入自己的密码。这比使用 man:su[1] 更安全，并且提供了更好的控制，因为在 man:su[1] 中需要输入 `root` 密码，用户将获得所有 `root` 权限。
 
 [TIP]
 ====
 大多数组织正在转向或已经采用了双因素认证模型。在这些情况下，用户可能没有密码可输入。
 
-man:sudo[8]可以通过使用`NOPASSWD`变量来配置允许双因素认证模型。将其添加到上述配置中将允许_webteam_组的所有成员在不需要密码的情况下管理该服务。
+man:sudo[8] 可以通过使用 `NOPASSWD` 变量来配置允许双因素认证模型。将其添加到上述配置中将允许_webteam_组的所有成员在不需要密码的情况下管理该服务。
 
 [.programlisting]
 ....
@@ -323,19 +323,19 @@ man:sudo[8]可以通过使用`NOPASSWD`变量来配置允许双因素认证模�
 ====
 
 [[security-doas]]
-=== 使用Doas进行共享管理
+=== 使用 Doas 进行共享管理
 
-在计算机系统中，共享管理是一种允许多个用户共同管理系统的方法。Doas是一种用于Unix-like操作系统的工具，它提供了一种简单而安全的方式来实现共享管理。
+在计算机系统中，共享管理是一种允许多个用户共同管理系统的方法。 Doas 是一种用于 Unix-like 操作系统的工具，它提供了一种简单而安全的方式来实现共享管理。
 
-使用Doas，管理员可以授予其他用户执行特定任务的权限，而无需将完整的管理员权限授予他们。这种方式可以有效地限制用户的权限，从而减少潜在的安全风险。
+使用 Doas ，管理员可以授予其他用户执行特定任务的权限，而无需将完整的管理员权限授予他们。这种方式可以有效地限制用户的权限，从而减少潜在的安全风险。
 
-Doas的配置非常灵活，管理员可以根据需要定义不同的规则。这些规则可以指定允许执行的命令、允许执行命令的用户以及其他限制条件。通过这种方式，管理员可以精确地控制用户的权限，确保系统的安全性。
+ Doas 的配置非常灵活，管理员可以根据需要定义不同的规则。这些规则可以指定允许执行的命令、允许执行命令的用户以及其他限制条件。通过这种方式，管理员可以精确地控制用户的权限，确保系统的安全性。
 
-总之，使用Doas进行共享管理可以提供一种简单而有效的方式来管理计算机系统。它可以帮助管理员限制用户的权限，减少潜在的安全风险，并提高系统的安全性。
+总之，使用 Doas 进行共享管理可以提供一种简单而有效的方式来管理计算机系统。它可以帮助管理员限制用户的权限，减少潜在的安全风险，并提高系统的安全性。
 
-man:doas[1]是一个从OpenBSD移植过来的命令行实用程序。它作为Unix-like系统中广泛使用的man:sudo[8]命令的替代品。
+man:doas[1] 是一个从 OpenBSD 移植过来的命令行实用程序。它作为 Unix-like 系统中广泛使用的 man:sudo[8] 命令的替代品。
 
-使用doas，用户可以以提升的权限执行命令，通常是作为root用户，同时保持简化和注重安全的方法。与man:sudo[8]不同，doas强调简单和极简主义，专注于简化的权限委派，而不是提供过多的配置选项。
+使用 doas ，用户可以以提升的权限执行命令，通常是作为 root 用户，同时保持简化和注重安全的方法。与 man:sudo[8] 不同， doas 强调简单和极简主义，专注于简化的权限委派，而不是提供过多的配置选项。
 
 执行以下命令进行安装：
 
@@ -344,44 +344,44 @@ man:doas[1]是一个从OpenBSD移植过来的命令行实用程序。它作为Un
 # pkg install doas
 ....
 
-安装完成后，必须配置 [.filename]#/usr/local/etc/doas.conf#，以授予用户对特定命令或角色的访问权限。
+安装完成后，必须配置 [.filename]#/usr/local/etc/doas.conf# ，以授予用户对特定命令或角色的访问权限。
 
-最简单的条目可以是以下内容，它在执行doas命令时授予用户`local_user`以`root`权限，而无需输入密码。
+最简单的条目可以是以下内容，它在执行 doas 命令时授予用户 `local_user` 以 `root` 权限，而无需输入密码。
 
 [.programlisting]
 ....
 permit nopass local_user as root
 ....
 
-在安装和配置`doas`实用程序之后，现在可以使用增强的权限执行命令，例如：
+在安装和配置 `doas` 实用程序之后，现在可以使用增强的权限执行命令，例如：
 
 [source, shell]
 ....
 $ doas vi /etc/rc.conf
 ....
 
-要获取更多的配置示例，请阅读man:doas.conf[5]。
+要获取更多的配置示例，请阅读 man:doas.conf[5] 。
 
 [[security-ids]]
-== 入侵检测系统（IDS）
+== 入侵检测系统（ IDS ）
 
-验证系统文件和二进制文件的重要性在于为系统管理和安全团队提供有关系统变化的信息。监控系统变化的软件应用程序称为入侵检测系统（IDS）。
+验证系统文件和二进制文件的重要性在于为系统管理和安全团队提供有关系统变化的信息。监控系统变化的软件应用程序称为入侵检测系统（ IDS ）。
 
-FreeBSD提供了对一种名为man:mtree[8]的基本IDS系统的本地支持。虽然每晚的安全电子邮件会通知管理员有关系统变更的信息，但这些信息是存储在本地的，恶意用户有可能修改这些信息以隐藏对系统的更改。因此，建议创建一个单独的二进制签名集，并将其存储在只读、属于root的目录上，或者更好地，存储在可移动的USB磁盘或远程服务器上。
+FreeBSD 提供了对一种名为 man:mtree[8] 的基本 IDS 系统的本地支持。虽然每晚的安全电子邮件会通知管理员有关系统变更的信息，但这些信息是存储在本地的，恶意用户有可能修改这些信息以隐藏对系统的更改。因此，建议创建一个单独的二进制签名集，并将其存储在只读、属于 root 的目录上，或者更好地，存储在可移动的 USB 磁盘或远程服务器上。
 
-每次更新后，建议运行`freebsd-update IDS`。
+每次更新后，建议运行 `freebsd-update IDS` 。
 
 [[security-ids-generate-spec-file]]
 === 生成规范文件
 
-内置的man:mtree[8]实用程序可用于生成目录内容的规范。使用种子或数字常量生成规范，并且需要使用种子来检查规范是否发生了变化。这使得可以确定文件或二进制文件是否已被修改。由于攻击者不知道种子值，因此伪造或检查文件的校验和值将变得困难或几乎不可能。
+内置的 man:mtree[8] 实用程序可用于生成目录内容的规范。使用种子或数字常量生成规范，并且需要使用种子来检查规范是否发生了变化。这使得可以确定文件或二进制文件是否已被修改。由于攻击者不知道种子值，因此伪造或检查文件的校验和值将变得困难或几乎不可能。
 
 [TIP]
 ====
-建议为包含二进制文件和配置文件的目录以及包含敏感数据的目录创建规范。通常，会为/bin、/sbin、/usr/bin、/usr/sbin、/usr/local/bin、/etc和/usr/local/etc创建规范。
+建议为包含二进制文件和配置文件的目录以及包含敏感数据的目录创建规范。通常，会为 /bin 、 /sbin 、 /usr/bin 、 /usr/sbin 、 /usr/local/bin 、 /etc 和 /usr/local/etc 创建规范。
 ====
 
-以下示例生成一组`sha512`哈希值，每个哈希值对应于[.filename]#/bin#目录中的系统二进制文件，并将这些值保存到用户主目录下的隐藏文件[.filename]#/home/user/.bin_chksum_mtree#中。
+以下示例生成一组 `sha512` 哈希值，每个哈希值对应于 [.filename]#/bin# 目录中的系统二进制文件，并将这些值保存到用户主目录下的隐藏文件 [.filename]#/home/user/.bin_chksum_mtree# 中。
 
 [source, shell]
 ....
@@ -397,7 +397,7 @@ mtree: /bin checksum: 3427012225
 
 [WARNING]
 ====
-`123456789` 值代表种子，应该随机选择。这个值应该被记住，*但不要分享*。
+`123456789` 值代表种子，应该随机选择。这个值应该被记住， * 但不要分享 * 。
 
 将种子值和校验和输出对恶意用户保密是很重要的。
 ====
@@ -405,9 +405,9 @@ mtree: /bin checksum: 3427012225
 [[security-ids-spec-file-structure]]
 === 规范文件结构
 
-mtree格式是一种描述文件系统对象集合的文本格式。这种文件通常用于创建或验证目录层次结构。
+mtree 格式是一种描述文件系统对象集合的文本格式。这种文件通常用于创建或验证目录层次结构。
 
-一个mtree文件由一系列行组成，每行提供有关单个文件系统对象的信息。前导空格始终被忽略。
+一个 mtree 文件由一系列行组成，每行提供有关单个文件系统对象的信息。前导空格始终被忽略。
 
 上面创建的规范文件将用于解释格式和内容：
 
@@ -434,7 +434,7 @@ mtree格式是一种描述文件系统对象集合的文本格式。这种文件
                 sha512=1769313ce08cba84ecdc2b9c07ef86d2b70a4206420dd71343867be7ab59659956f6f5a458c64e2531a1c736277a8e419c633a31a8d3c7ccc43e99dd4d71d630
 ....
 
-<.> 创建规范的用户。 <.> 机器的主机名。 <.> 目录路径。 <.> 规范创建的日期和时间。 <.> `/set` 特殊命令，定义从分析的文件中获取的一些设置。 <.> 指的是解析的目录，并指示其类型、模式、硬链接数量和自修改以来的UNIX格式时间。 <.> 指的是文件，显示大小、时间和一系列哈希值以验证完整性。
+<.> 创建规范的用户。 <.> 机器的主机名。 <.> 目录路径。 <.> 规范创建的日期和时间。 <.> `/set` 特殊命令，定义从分析的文件中获取的一些设置。 <.> 指的是解析的目录，并指示其类型、模式、硬链接数量和自修改以来的 UNIX 格式时间。 <.> 指的是文件，显示大小、时间和一系列哈希值以验证完整性。
 
 [[security-ids-verify-specification-file]]
 === 验证规范文件
@@ -448,9 +448,9 @@ mtree格式是一种描述文件系统对象集合的文本格式。这种文件
 # mtree -s 123456789 -p /bin < /home/user/.bin_chksum_mtree >> /home/user/.bin_chksum_output
 ....
 
-这应该会为[.filename]#/bin#生成与创建规范时相同的校验和。如果在此目录中的二进制文件没有发生任何更改，[.filename]#/home/user/.bin_chksum_output#输出文件将为空。
+这应该会为 [.filename]#/bin# 生成与创建规范时相同的校验和。如果在此目录中的二进制文件没有发生任何更改， [.filename]#/home/user/.bin_chksum_output# 输出文件将为空。
 
-为了模拟一个变化，使用man:touch[1]命令更改[.filename]#/bin/cat#的日期，然后再次运行验证命令：
+为了模拟一个变化，使用 man:touch[1] 命令更改 [.filename]#/bin/cat# 的日期，然后再次运行验证命令：
 
 [source, shell]
 ....
@@ -486,11 +486,11 @@ cat:    modification time (Fri Aug 25 13:30:17 2023, Fri Aug 25 13:34:20 2023)
 [[security-secure-levels]]
 == 安全级别
 
-securelevel是内核中实现的一种安全机制。当securelevel为正数时，内核会限制某些任务的执行；即使是超级用户（root）也不被允许执行这些任务。
+securelevel 是内核中实现的一种安全机制。当 securelevel 为正数时，内核会限制某些任务的执行；即使是超级用户（ root ）也不被允许执行这些任务。
 
-securelevel机制限制了以下能力：
+securelevel 机制限制了以下能力：
 
-* 取消特定文件标志，例如 `schg`（系统不可变标志）。
+* 取消特定文件标志，例如 `schg` （系统不可变标志）。
 * 通过 [.filename]#/dev/mem# 和 [.filename]#/dev/kmem# 来写入内核内存。
 * 加载内核模块。
 * 修改防火墙规则。
@@ -503,44 +503,44 @@ securelevel机制限制了以下能力：
 安全定义如下：
 
 -1::
-*永久不安全模式* - 始终以不安全模式运行系统。
+* 永久不安全模式 * - 始终以不安全模式运行系统。
 这是默认的初始值。
 
 0::
-*不安全模式* - 可以关闭不可变和仅追加标志。
+* 不安全模式 * - 可以关闭不可变和仅追加标志。
 所有设备都可以根据其权限进行读取或写入。
 
 1::
-*安全模式* - 系统的不可变和系统的只追加标志不能被关闭；
-挂载的文件系统的磁盘、[/dev/mem](/dev/mem)和[/dev/kmem](/dev/kmem)不能被打开以进行写操作；
-[/dev/io](/dev/io)（如果您的平台有的话）不能被打开；
-内核模块（参见man:kld[4]）不能被加载或卸载。
-不能使用debug.kdb.enter sysctl进入内核调试器。
-不能使用debug.kdb.panic、debug.kdb.panic_str和其他sysctl来强制发生恐慌或陷阱。
+* 安全模式 * - 系统的不可变和系统的只追加标志不能被关闭；
+挂载的文件系统的磁盘、 [/dev/mem](/dev/mem) 和 [/dev/kmem](/dev/kmem) 不能被打开以进行写操作；
+ [/dev/io](/dev/io) （如果您的平台有的话）不能被打开；
+内核模块（参见 man:kld[4] ）不能被加载或卸载。
+不能使用 debug.kdb.enter sysctl 进入内核调试器。
+不能使用 debug.kdb.panic 、 debug.kdb.panic_str 和其他 sysctl 来强制发生恐慌或陷阱。
 
 2::
-*高度安全模式* - 与安全模式相同，但是除了man:mount[2]之外，不允许打开磁盘进行写入操作，无论是否已挂载。
-这个级别防止通过卸载文件系统来篡改它们，但同时也阻止在系统处于多用户状态下运行man:newfs[8]。
+* 高度安全模式 * - 与安全模式相同，但是除了 man:mount[2] 之外，不允许打开磁盘进行写入操作，无论是否已挂载。
+这个级别防止通过卸载文件系统来篡改它们，但同时也阻止在系统处于多用户状态下运行 man:newfs[8] 。
 
 3::
-*网络安全模式* - 与高度安全模式相同，还包括无法更改IP数据包过滤规则（参见man:ipfw[8]，man:ipfirewall[4]和man:pfctl[8]），以及无法调整man:dummynet[4]或man:pf[4]配置。
+* 网络安全模式 * - 与高度安全模式相同，还包括无法更改 IP 数据包过滤规则（参见 man:ipfw[8] ， man:ipfirewall[4] 和 man:pfctl[8] ），以及无法调整 man:dummynet[4] 或 man:pf[4] 配置。
 
 [TIP]
 ====
-总结一下，在FreeBSD安全级别中，“永久不安全模式”和“不安全模式”的关键区别在于它们提供的安全程度。“永久不安全模式”完全解除了所有安全限制，而“不安全模式”放宽了一些限制，但仍保持一定的控制和安全性。
+总结一下，在 FreeBSD 安全级别中，“永久不安全模式”和“不安全模式”的关键区别在于它们提供的安全程度。“永久不安全模式”完全解除了所有安全限制，而“不安全模式”放宽了一些限制，但仍保持一定的控制和安全性。
 ====
 
 [[security-modify-secure-levels]]
 === 修改安全级别
 
-为了改变系统的安全级别，需要通过执行以下命令来激活`kern_securelevel_enable`：
+为了改变系统的安全级别，需要通过执行以下命令来激活 `kern_securelevel_enable` ：
 
 [source, shell]
 ....
 # sysrc kern_securelevel_enable="YES"
 ....
 
-将`kern_securelevel`的值设置为所需的安全级别：
+将 `kern_securelevel` 的值设置为所需的安全级别：
 
 [source, shell]
 ....
@@ -554,7 +554,7 @@ securelevel机制限制了以下能力：
 # sysctl -n kern.securelevel
 ....
 
-输出包含了当前安全级别的值。如果该值大于0，则表示安全级别的一些保护功能已经启用。
+输出包含了当前安全级别的值。如果该值大于 0 ，则表示安全级别的一些保护功能已经启用。
 
 [.programlisting]
 ....
@@ -566,23 +566,23 @@ securelevel机制限制了以下能力：
 
 文件标志允许用户在基本权限和所有权之外，为文件和目录附加额外的元数据或属性。这些标志提供了一种控制文件的各种行为和属性的方式，而无需创建特殊目录或使用扩展属性。
 
-文件标志可以用于实现不同的目标，比如防止文件被删除，使文件只能追加，同步文件更新等等。在FreeBSD中，一些常用的文件标志包括"immutable"标志，它防止文件被修改或删除，以及"append-only"标志，它只允许在文件末尾添加数据，而不能修改或删除数据。
+文件标志可以用于实现不同的目标，比如防止文件被删除，使文件只能追加，同步文件更新等等。在 FreeBSD 中，一些常用的文件标志包括"immutable"标志，它防止文件被修改或删除，以及"append-only"标志，它只允许在文件末尾添加数据，而不能修改或删除数据。
 
-在FreeBSD中，可以使用man:chflags[1]命令来管理这些标志，为管理员和用户提供对其文件和目录的行为和特性具有更大的控制权。需要注意的是，文件标志通常由root用户或具有适当权限的用户管理，因为它们可以影响文件的访问和操作方式。一些标志可供文件所有者使用，详见man:chflags[1]。
+在 FreeBSD 中，可以使用 man:chflags[1] 命令来管理这些标志，为管理员和用户提供对其文件和目录的行为和特性具有更大的控制权。需要注意的是，文件标志通常由 root 用户或具有适当权限的用户管理，因为它们可以影响文件的访问和操作方式。一些标志可供文件所有者使用，详见 man:chflags[1] 。
 
 [[security-work-file-flag]]
 === 处理文件标志
 
-在这个例子中，用户的主目录中有一个名为`~/important.txt`的文件，希望对其进行防删除保护。
+在这个例子中，用户的主目录中有一个名为 ` ~ /important.txt` 的文件，希望对其进行防删除保护。
 
-执行以下命令来设置`schg`文件标志：
+执行以下命令来设置 `schg` 文件标志：
 
 [source, shell]
 ....
 # chflags schg ~/important.txt
 ....
 
-当任何用户，包括`root`用户，尝试删除该文件时，系统将显示以下消息：
+当任何用户，包括 `root` 用户，尝试删除该文件时，系统将显示以下消息：
 
 [.programlisting]
 ....
@@ -596,29 +596,29 @@ rm: important.txt: Operation not permitted
 # chflags noschg ~/important.txt
 ....
 
-可以在man:chflags[1]中找到支持的文件标志及其功能的列表。
+可以在 man:chflags[1] 中找到支持的文件标志及其功能的列表。
 
 [[openssh]]
-== OpenSSH是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。OpenSSH支持SSH协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。
+== OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。
 
-OpenSSH是一组网络连接工具，用于提供对远程机器的安全访问。此外，可以通过SSH连接安全地隧道或转发TCP/IP连接。OpenSSH对所有流量进行加密，以消除窃听、连接劫持和其他网络级攻击。
+OpenSSH 是一组网络连接工具，用于提供对远程机器的安全访问。此外，可以通过 SSH 连接安全地隧道或转发 TCP/IP 连接。 OpenSSH 对所有流量进行加密，以消除窃听、连接劫持和其他网络级攻击。
 
-OpenSSH由OpenBSD项目维护，并且在FreeBSD中默认安装。
+OpenSSH 由 OpenBSD 项目维护，并且在 FreeBSD 中默认安装。
 
-当数据以未加密的形式通过网络发送时，位于客户端和服务器之间的网络嗅探器可以窃取用户/密码信息或在会话期间传输的数据。OpenSSH提供了各种身份验证和加密方法，以防止这种情况发生。
+当数据以未加密的形式通过网络发送时，位于客户端和服务器之间的网络嗅探器可以窃取用户 / 密码信息或在会话期间传输的数据。 OpenSSH 提供了各种身份验证和加密方法，以防止这种情况发生。
 
-有关OpenSSH的更多信息，请访问链接：https://www.openssh.com/[网页]。
+有关 OpenSSH 的更多信息，请访问链接： https://www.openssh.com/[网页] 。
 
-本节提供了内置的客户端工具的概述，用于安全地访问其他系统并从FreeBSD系统安全地传输文件。然后，它描述了如何在FreeBSD系统上配置SSH服务器。
+本节提供了内置的客户端工具的概述，用于安全地访问其他系统并从 FreeBSD 系统安全地传输文件。然后，它描述了如何在 FreeBSD 系统上配置 SSH 服务器。
 
 [TIP]
 ====
-如上所述，本章将介绍OpenSSH的基本系统版本。OpenSSH的一个版本也可以在包security/openssh-portable[]中找到，该版本提供了额外的配置选项，并且定期更新。
+如上所述，本章将介绍 OpenSSH 的基本系统版本。 OpenSSH 的一个版本也可以在包 security/openssh-portable[] 中找到，该版本提供了额外的配置选项，并且定期更新。
 ====
 
-=== 使用SSH客户端工具
+=== 使用 SSH 客户端工具
 
-要登录到SSH服务器，使用man:ssh[1]命令，并指定存在于该服务器上的用户名以及服务器的IP地址或主机名。如果这是第一次连接到指定的服务器，用户将被提示首先验证服务器的指纹：
+要登录到 SSH 服务器，使用 man:ssh[1] 命令，并指定存在于该服务器上的用户名以及服务器的 IP 地址或主机名。如果这是第一次连接到指定的服务器，用户将被提示首先验证服务器的指纹：
 
 [source, shell]
 ....
@@ -636,7 +636,7 @@ Permanently added 'example.com' (ECDSA) to the list of known hosts.
 Password for user@example.com: user_password
 ....
 
-SSH利用密钥指纹系统来验证客户端连接时服务器的真实性。当用户在首次连接时通过输入`yes`接受密钥的指纹时，密钥的副本将保存在用户的主目录下的[.filename]#~/.ssh/known_hosts#文件中。将来的登录尝试将根据保存的密钥进行验证，如果服务器的密钥与保存的密钥不匹配，man:ssh[1]将显示警告。如果发生这种情况，用户应该首先验证密钥为何发生变化，然后再继续连接。
+SSH 利用密钥指纹系统来验证客户端连接时服务器的真实性。当用户在首次连接时通过输入 `yes` 接受密钥的指纹时，密钥的副本将保存在用户的主目录下的 [.filename]# ~ /.ssh/known_hosts# 文件中。将来的登录尝试将根据保存的密钥进行验证，如果服务器的密钥与保存的密钥不匹配， man:ssh[1] 将显示警告。如果发生这种情况，用户应该首先验证密钥为何发生变化，然后再继续连接。
 
 [NOTE]
 ====
@@ -645,7 +645,7 @@ SSH利用密钥指纹系统来验证客户端连接时服务器的真实性。�
 
 使用 man:scp[1] 命令可以安全地将文件从本地复制到远程机器，或者从远程机器复制到本地。
 
-这个例子将远程系统上的`COPYRIGHT`文件复制到本地系统当前目录下同名的文件中：
+这个例子将远程系统上的 `COPYRIGHT` 文件复制到本地系统当前目录下同名的文件中：
 
 [source, shell]
 ....
@@ -662,9 +662,9 @@ COPYRIGHT            100% |*****************************|  4735
 
 由于该主机的指纹已经验证过，因此在提示用户输入密码之前，服务器的密钥会自动进行检查。
 
-传递给 man:scp[1] 的参数与 man:cp[1] 类似。要复制的文件或文件是第一个参数，要复制到的目标是第二个参数。由于文件是通过网络获取的，因此一个或多个文件参数采用 `user@host:<path_to_remote_file>` 的形式。在递归复制目录时，请注意 man:scp[1] 使用 `-r`，而 man:cp[1] 使用 `-R`。
+传递给 man:scp[1] 的参数与 man:cp[1] 类似。要复制的文件或文件是第一个参数，要复制到的目标是第二个参数。由于文件是通过网络获取的，因此一个或多个文件参数采用 `user @ host:<path_to_remote_file>` 的形式。在递归复制目录时，请注意 man:scp[1] 使用 `-r` ，而 man:cp[1] 使用 `-R` 。
 
-要打开一个用于复制文件的交互式会话，请使用 man:sftp[1]。
+要打开一个用于复制文件的交互式会话，请使用 man:sftp[1] 。
 
 在 man:sftp[1] 会话中，可以参考 man:sftp[1] 获取可用命令的列表。
 
@@ -673,7 +673,7 @@ COPYRIGHT            100% |*****************************|  4735
 
 客户端可以配置为使用密钥连接到远程机器，而不是使用密码。出于安全原因，这是首选的方法。
 
-man:ssh-keygen[1]可以用来生成身份验证密钥。要生成公钥和私钥对，请指定密钥类型并按照提示操作。建议使用易于记住但难以猜测的密码来保护密钥。
+man:ssh-keygen[1] 可以用来生成身份验证密钥。要生成公钥和私钥对，请指定密钥类型并按照提示操作。建议使用易于记住但难以猜测的密码来保护密钥。
 
 [source, shell]
 ....
@@ -707,21 +707,21 @@ The key's randomart image is:
 +----[SHA256]-----+
 ....
 
-私钥存储在[.filename]#~/.ssh/id_rsa#中，公钥存储在[.filename]#~/.ssh/id_rsa.pub#中。为了使基于密钥的身份验证工作，必须将公钥复制到远程机器上的[.filename]#~/.ssh/authorized_keys#。
+私钥存储在 [.filename]# ~ /.ssh/id_rsa# 中，公钥存储在 [.filename]# ~ /.ssh/id_rsa.pub# 中。为了使基于密钥的身份验证工作，必须将公钥复制到远程机器上的 [.filename]# ~ /.ssh/authorized_keys# 。
 
 [WARNING]
 ====
-为OpenSSH密钥使用密码短语是一种关键的安全实践，可以提供额外的保护层，防止未经授权的访问，并增强整体网络安全性。
+为 OpenSSH 密钥使用密码短语是一种关键的安全实践，可以提供额外的保护层，防止未经授权的访问，并增强整体网络安全性。
 
 在遗失或被盗的情况下，这增加了另一层安全保障。
 ====
 
 [[security-ssh-tunneling]]
-=== SSH隧道
+=== SSH 隧道
 
-OpenSSH具有创建隧道的能力，可以在加密会话中封装另一种协议。
+OpenSSH 具有创建隧道的能力，可以在加密会话中封装另一种协议。
 
-以下命令告诉man:ssh[1]创建一个隧道：
+以下命令告诉 man:ssh[1] 创建一个隧道：
 
 [source, shell]
 ....
@@ -730,26 +730,26 @@ OpenSSH具有创建隧道的能力，可以在加密会话中封装另一种协�
 
 这个例子使用了以下选项：
 
--D是一个命令行选项，通常用于指定程序的调试模式。在计算机编程中，调试模式允许程序员在程序运行时跟踪和调试代码，以便找到和修复错误。使用-D选项可以启用调试模式，并提供额外的调试信息和功能。::
+-D 是一个命令行选项，通常用于指定程序的调试模式。在计算机编程中，调试模式允许程序员在程序运行时跟踪和调试代码，以便找到和修复错误。使用 -D 选项可以启用调试模式，并提供额外的调试信息和功能。::
 指定了一个本地的“动态”应用层端口转发。
 
-用户@foo.example.com::
-在指定的远程SSH服务器上使用的登录名。
+用户@ foo.example.com::
+在指定的远程 SSH 服务器上使用的登录名。
 
-SSH隧道通过在指定的`localport`上在`localhost`上创建一个监听套接字来工作。
+SSH 隧道通过在指定的 `localport` 上在 `localhost` 上创建一个监听套接字来工作。
 
-这种方法可以用来包装任意数量的不安全的TCP协议，如SMTP、POP3和FTP。
+这种方法可以用来包装任意数量的不安全的 TCP 协议，如 SMTP 、 POP3 和 FTP 。
 
-=== 启用SSH服务器
+=== 启用 SSH 服务器
 
-除了提供内置的SSH客户端工具外，FreeBSD系统还可以配置为SSH服务器，接受来自其他SSH客户端的连接。
+除了提供内置的 SSH 客户端工具外， FreeBSD 系统还可以配置为 SSH 服务器，接受来自其他 SSH 客户端的连接。
 
 [TIP]
 ====
-正如所述，本章将涵盖OpenSSH的基本系统版本。请*不要*与package:security/openssh-portable[]混淆，后者是随FreeBSD ports一起提供的OpenSSH版本。
+正如所述，本章将涵盖 OpenSSH 的基本系统版本。请 * 不要 * 与 package:security/openssh-portable[] 混淆，后者是随 FreeBSD ports 一起提供的 OpenSSH 版本。
 ====
 
-为了在重新启动后启用SSH服务器，请执行以下命令：
+为了在重新启动后启用 SSH 服务器，请执行以下命令：
 
 [source, shell]
 ....
@@ -763,18 +763,18 @@ SSH隧道通过在指定的`localport`上在`localhost`上创建一个监听套�
 # service sshd start
 ....
 
-在FreeBSD系统上首次启动sshd时，系统的主机密钥将会自动创建，并且指纹将会显示在控制台上。提供用户指纹，以便他们在首次连接服务器时进行验证。
+在 FreeBSD 系统上首次启动 sshd 时，系统的主机密钥将会自动创建，并且指纹将会显示在控制台上。提供用户指纹，以便他们在首次连接服务器时进行验证。
 
-请参考man:sshd[8]以获取在启动sshd时可用的选项列表，以及有关身份验证、登录过程和各种配置文件的更完整的讨论。
+请参考 man:sshd[8] 以获取在启动 sshd 时可用的选项列表，以及有关身份验证、登录过程和各种配置文件的更完整的讨论。
 
-在这一点上，sshd应该对系统上所有具有用户名和密码的用户可用。
+在这一点上， sshd 应该对系统上所有具有用户名和密码的用户可用。
 
 [[config-publickey-auth]]
 === 配置公钥身份验证方法
 
-通过配置OpenSSH使用公钥身份验证，可以通过利用非对称加密进行身份验证来增强安全性。这种方法消除了与密码相关的风险，例如弱密码或在传输过程中的拦截，同时阻止了各种基于密码的攻击。然而，确保私钥受到良好保护以防止未经授权的访问非常重要。
+通过配置 OpenSSH 使用公钥身份验证，可以通过利用非对称加密进行身份验证来增强安全性。这种方法消除了与密码相关的风险，例如弱密码或在传输过程中的拦截，同时阻止了各种基于密码的攻击。然而，确保私钥受到良好保护以防止未经授权的访问非常重要。
 
-第一步是配置man:sshd[8]以使用所需的身份验证方法。
+第一步是配置 man:sshd[8] 以使用所需的身份验证方法。
 
 编辑 [.filename]#/etc/ssh/sshd_config# 文件，并取消以下配置的注释：
 
@@ -783,7 +783,7 @@ SSH隧道通过在指定的`localport`上在`localhost`上创建一个监听套�
 PubkeyAuthentication yes
 ....
 
-一旦配置完成，用户将需要将他们的*公钥*发送给系统管理员，这些密钥将被添加到[.filename]#.ssh/authorized_keys#文件中。生成密钥的过程在<<基于密钥的身份验证>>中描述。
+一旦配置完成，用户将需要将他们的 * 公钥 * 发送给系统管理员，这些密钥将被添加到 [.filename]#.ssh/authorized_keys# 文件中。生成密钥的过程在 << 基于密钥的身份验证 >> 中描述。
 
 然后执行以下命令重新启动服务器：
 
@@ -792,18 +792,18 @@ PubkeyAuthentication yes
 # service sshd reload
 ....
 
-强烈建议按照<<security-sshd-security-options>>中指示的安全改进措施进行操作。
+强烈建议按照 <<security-sshd-security-options>> 中指示的安全改进措施进行操作。
 
 [[security-sshd-security-options]]
-=== SSH服务器安全选项
+=== SSH 服务器安全选项
 
-尽管sshd是FreeBSD最广泛使用的远程管理工具，但暴力破解和驱动攻击对于任何暴露在公共网络中的系统来说都是常见的。
+尽管 sshd 是 FreeBSD 最广泛使用的远程管理工具，但暴力破解和驱动攻击对于任何暴露在公共网络中的系统来说都是常见的。
 
-本节将介绍几个可用的额外参数，以防止这些攻击的成功。所有配置都将在[/etc/ssh/sshd_config]文件中完成。
+本节将介绍几个可用的额外参数，以防止这些攻击的成功。所有配置都将在 [/etc/ssh/sshd_config] 文件中完成。
 
 [TIP]
 ====
-不要将[.filename]#/etc/ssh/sshd_config#与[.filename]#/etc/ssh/ssh_config#混淆（注意第一个文件名中多了一个`d`）。第一个文件配置服务器，第二个文件配置客户端。请参考man:ssh_config[5]以获取可用客户端设置的列表。
+不要将 [.filename]#/etc/ssh/sshd_config# 与 [.filename]#/etc/ssh/ssh_config# 混淆（注意第一个文件名中多了一个 `d` ）。第一个文件配置服务器，第二个文件配置客户端。请参考 man:ssh_config[5] 以获取可用客户端设置的列表。
 ====
 
 默认情况下，可以使用公钥和密码进行身份验证。为了仅允许公钥身份验证（强烈推荐），请更改变量：
@@ -813,14 +813,14 @@ PubkeyAuthentication yes
 PasswordAuthentication no
 ....
 
-在OpenSSH服务器配置文件中使用`AllowUsers`关键字限制哪些用户可以登录SSH服务器以及从哪里登录是一个好主意。例如，要仅允许`user`从`192.168.1.32`登录，将以下行添加到`/etc/ssh/sshd_config`文件中：
+在 OpenSSH 服务器配置文件中使用 `AllowUsers` 关键字限制哪些用户可以登录 SSH 服务器以及从哪里登录是一个好主意。例如，要仅允许 `user` 从 `192.168.1.32` 登录，将以下行添加到 `/etc/ssh/sshd_config` 文件中：
 
 [.programlisting]
 ....
 AllowUsers user@192.168.1.32
 ....
 
-为了允许`user`从任何地方登录，列出该用户而不指定IP地址：
+为了允许 `user` 从任何地方登录，列出该用户而不指定 IP 地址：
 
 [.programlisting]
 ....
@@ -849,7 +849,7 @@ AllowUsers root@192.168.1.32 user
 /etc/ssh/sshd_config: terminating, 1 bad configuration options
 ....
 
-在进行更改并确认配置文件正确后，通过运行以下命令告诉sshd重新加载其配置文件：
+在进行更改并确认配置文件正确后，通过运行以下命令告诉 sshd 重新加载其配置文件：
 
 [source, shell]
 ....
@@ -857,30 +857,30 @@ AllowUsers root@192.168.1.32 user
 ....
 
 [[openssl]]
-== OpenSSL是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括SSL和TLS。OpenSSL广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。
+== OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。
 
-OpenSSL是一个实现安全套接字层（SSL）和传输层安全（TLS）网络协议以及许多密码学例程的密码学工具包。
+OpenSSL 是一个实现安全套接字层（ SSL ）和传输层安全（ TLS ）网络协议以及许多密码学例程的密码学工具包。
 
-openssl程序是一个命令行工具，用于在shell中使用OpenSSL的加密库的各种加密功能。它可以用于
+openssl 程序是一个命令行工具，用于在 shell 中使用 OpenSSL 的加密库的各种加密功能。它可以用于
 
 * 私钥、公钥和参数的创建和管理
 * 公钥加密操作
-* 创建X.509证书、证书签名请求（CSR）和证书撤销列表（CRL）
+* 创建 X.509 证书、证书签名请求（ CSR ）和证书撤销列表（ CRL ）
 * 消息摘要的计算
 * 使用密码进行加密和解密
-* SSL/TLS客户端和服务器测试
-* 处理S/MIME签名或加密邮件
+* SSL/TLS 客户端和服务器测试
+* 处理 S/MIME 签名或加密邮件
 * 时间戳请求、生成和验证
 * 对加密算法进行基准测试
 
-有关OpenSSL的更多信息，请阅读免费的《OpenSSL Cookbook》（https://www.feistyduck.com/books/openssl-cookbook/）。
+有关 OpenSSL 的更多信息，请阅读免费的《 OpenSSL Cookbook 》（ https://www.feistyduck.com/books/openssl-cookbook/ ）。
 
 [[generating-certificates]]
 === 生成证书
 
-OpenSSL支持生成证书，既可以由证书颁发机构（CA）验证，也可以供自己使用。
+OpenSSL 支持生成证书，既可以由证书颁发机构（ CA ）验证，也可以供自己使用。
 
-运行命令 man:openssl[1] 以使用以下参数生成一个有效的证书，用于一个名为 link:https://en.wikipedia.org/wiki/Certificate_authority[CA] 的证书颁发机构。该命令将在当前目录中创建两个文件。证书请求文件 [.filename]#req.pem# 可以发送给 link:https://en.wikipedia.org/wiki/Certificate_authority[CA]，该机构将验证输入的凭据，签署请求并返回签署后的证书。第二个文件 [.filename]#cert.key# 是证书的私钥，应存放在安全的位置。如果该私钥落入他人之手，可能被用来冒充用户或服务器。
+运行命令 man:openssl[1] 以使用以下参数生成一个有效的证书，用于一个名为 link:https://en.wikipedia.org/wiki/Certificate_authority[CA] 的证书颁发机构。该命令将在当前目录中创建两个文件。证书请求文件 [.filename]#req.pem# 可以发送给 link:https://en.wikipedia.org/wiki/Certificate_authority[CA] ，该机构将验证输入的凭据，签署请求并返回签署后的证书。第二个文件 [.filename]#cert.key# 是证书的私钥，应存放在安全的位置。如果该私钥落入他人之手，可能被用来冒充用户或服务器。
 
 执行以下命令以生成证书：
 
@@ -919,7 +919,7 @@ A challenge password []:123456789
 An optional company name []:Another name
 ....
 
-或者，如果不需要来自[CA](https://en.wikipedia.org/wiki/Certificate_authority)的签名，可以创建自签名证书。这将在当前目录中创建两个新文件：私钥文件`cert.key`和证书本身`cert.crt`。这些文件应该放在一个目录中，最好是在`/etc/ssl/`下，该目录只能由`root`用户读取。对于这些文件，适当的权限是`0700`，可以使用`chmod`命令设置。
+或者，如果不需要来自 [CA](https://en.wikipedia.org/wiki/Certificate_authority) 的签名，可以创建自签名证书。这将在当前目录中创建两个新文件：私钥文件 `cert.key` 和证书本身 `cert.crt` 。这些文件应该放在一个目录中，最好是在 `/etc/ssl/` 下，该目录只能由 `root` 用户读取。对于这些文件，适当的权限是 `0700` ，可以使用 `chmod` 命令设置。
 
 执行以下命令以生成证书：
 
@@ -956,11 +956,11 @@ Email Address []:user@FreeBSD.org
 ....
 
 [[fips-provider]]
-=== 配置FIPS提供程序
+=== 配置 FIPS 提供程序
 
-随着OpenSSL 3进入基础系统（在FreeBSD 14及更高版本中），系统引入了其新的提供者模块概念。除了库中内置的默认提供者模块外，_legacy_模块实现了现在可选的已弃用的密码算法，而_fips_模块将OpenSSL实现限制为链接中存在的密码算法：link:https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards[FIPS]标准集。OpenSSL的这部分接受特别关注，包括一份相关安全问题的链接：link:https://www.openssl.org/news/fips-cve.html[列表]，并定期进行link:https://github.com/openssl/openssl/blob/master/README-FIPS.md[FIPS 140验证过程]。还提供了link:https://www.openssl.org/source/[经FIPS验证的版本列表]。这使得用户可以确保在使用OpenSSL时符合FIPS标准。
+随着 OpenSSL 3 进入基础系统（在 FreeBSD 14 及更高版本中），系统引入了其新的提供者模块概念。除了库中内置的默认提供者模块外，_legacy_模块实现了现在可选的已弃用的密码算法，而_fips_模块将 OpenSSL 实现限制为链接中存在的密码算法： link:https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards[FIPS] 标准集。 OpenSSL 的这部分接受特别关注，包括一份相关安全问题的链接： link:https://www.openssl.org/news/fips-cve.html[列表] ，并定期进行 link:https://github.com/openssl/openssl/blob/master/README-FIPS.md[FIPS 140 验证过程] 。还提供了 link:https://www.openssl.org/source/[经 FIPS 验证的版本列表] 。这使得用户可以确保在使用 OpenSSL 时符合 FIPS 标准。
 
-重要的是，man:fips_module[7]受到额外的安全措施保护，防止在未通过完整性检查的情况下使用。这个检查可以由本地系统管理员设置，允许OpenSSL 3的每个用户加载这个模块。当配置不正确时，预计FIPS模块将失败，如下所示：
+重要的是， man:fips_module[7] 受到额外的安全措施保护，防止在未通过完整性检查的情况下使用。这个检查可以由本地系统管理员设置，允许 OpenSSL 3 的每个用户加载这个模块。当配置不正确时，预计 FIPS 模块将失败，如下所示：
 
 [source, shell]
 ....
@@ -979,7 +979,7 @@ Hint: use -provider-path option or OPENSSL_MODULES environment variable.
 00206124D94D0000:error:078C0105:common libcrypto routines:provider_init:init fail:crypto/openssl/crypto/provider_core.c:932:name=fips
 ....
 
-可以通过在 [.filename]#/etc/ssl/fipsmodule.cnf# 中创建一个文件来配置检查，然后在 OpenSSL 的主配置文件 [.filename]#/etc/ssl/openssl.cnf# 中引用该文件。OpenSSL 提供了 man:openssl-fipsinstall[1] 实用程序来帮助完成此过程，可以按照以下方式使用：
+可以通过在 [.filename]#/etc/ssl/fipsmodule.cnf# 中创建一个文件来配置检查，然后在 OpenSSL 的主配置文件 [.filename]#/etc/ssl/openssl.cnf# 中引用该文件。 OpenSSL 提供了 man:openssl-fipsinstall[1] 实用程序来帮助完成此过程，可以按照以下方式使用：
 
 [source, shell]
 ....
@@ -993,10 +993,10 @@ Hint: use -provider-path option or OPENSSL_MODULES environment variable.
 INSTALL PASSED
 ....
 
-然后应该修改[.filename]#/etc/ssl/openssl.cnf#文件，以便：
+然后应该修改 [.filename]#/etc/ssl/openssl.cnf# 文件，以便：
 
 * 包含上面生成的 [.filename]#/etc/ssl/fipsmodule.cnf# 文件，
-* 将FIPS模块暴露出来，以便可能的使用。
+* 将 FIPS 模块暴露出来，以便可能的使用。
 * 并显式激活默认模块。
 
 [.programlisting]
@@ -1031,7 +1031,7 @@ fips = fips_sect
 activate = 1
 ....
 
-完成这一步骤后，应该可以确认FIPS模块已经有效地可用并且正常工作：
+完成这一步骤后，应该可以确认 FIPS 模块已经有效地可用并且正常工作：
 
 [source, shell]
 ....
@@ -1047,45 +1047,45 @@ Verifying - enter AES-128-CBC encryption password:
 U2FsdGVkX18idooW6e3LqWeeiKP76kufcOUClh57j8U=
 ....
 
-每次修改FIPS模块时都必须重复执行此过程，例如在执行系统更新后或在应用影响基本系统中的OpenSSL的安全修复程序后。
+每次修改 FIPS 模块时都必须重复执行此过程，例如在执行系统更新后或在应用影响基本系统中的 OpenSSL 的安全修复程序后。
 
 [[kerberos5]]
-== Kerberos是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。Kerberos还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。
+== Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。
 
-Kerberos是一种网络认证协议，最初由麻省理工学院（MIT）创建，用于在可能存在敌对网络的情况下提供安全认证。Kerberos协议使用强加密技术，使得客户端和服务器可以在不发送任何未加密的秘密信息的情况下证明其身份。Kerberos可以被描述为一个身份验证代理系统和一个可信第三方认证系统。用户在使用Kerberos进行身份验证后，他们的通信可以被加密以确保隐私和数据完整性。
+Kerberos 是一种网络认证协议，最初由麻省理工学院（ MIT ）创建，用于在可能存在敌对网络的情况下提供安全认证。 Kerberos 协议使用强加密技术，使得客户端和服务器可以在不发送任何未加密的秘密信息的情况下证明其身份。 Kerberos 可以被描述为一个身份验证代理系统和一个可信第三方认证系统。用户在使用 Kerberos 进行身份验证后，他们的通信可以被加密以确保隐私和数据完整性。
 
-Kerberos的唯一功能是在网络上提供用户和服务器的安全认证。它不提供授权或审计功能。建议将Kerberos与其他提供授权和审计服务的安全方法一起使用。
+Kerberos 的唯一功能是在网络上提供用户和服务器的安全认证。它不提供授权或审计功能。建议将 Kerberos 与其他提供授权和审计服务的安全方法一起使用。
 
-协议的当前版本是版本5，详细描述在RFC 4120中。有几个免费的实现该协议的软件可供选择，覆盖了广泛的操作系统。麻省理工学院（MIT）继续开发他们的Kerberos软件包。它在美国常被用作密码学产品，并且历史上受到美国出口管制的限制。在FreeBSD中，MITKerberos可作为package:security/krb5[]软件包或端口使用。Heimdal Kerberos实现是专门在美国以外开发的，以避免出口管制。Heimdal Kerberos发行版已包含在基本的FreeBSD安装中，还有另一个具有更多可配置选项的发行版可在Ports Collection中使用，即package:security/heimdal[]。
+协议的当前版本是版本 5 ，详细描述在 RFC 4120 中。有几个免费的实现该协议的软件可供选择，覆盖了广泛的操作系统。麻省理工学院（ MIT ）继续开发他们的 Kerberos 软件包。它在美国常被用作密码学产品，并且历史上受到美国出口管制的限制。在 FreeBSD 中， MITKerberos 可作为 package:security/krb5[] 软件包或端口使用。 Heimdal Kerberos 实现是专门在美国以外开发的，以避免出口管制。 Heimdal Kerberos 发行版已包含在基本的 FreeBSD 安装中，还有另一个具有更多可配置选项的发行版可在 Ports Collection 中使用，即 package:security/heimdal[] 。
 
-在Kerberos中，用户和服务被称为“主体”，并包含在一个管理组中，称为“领域”。一个典型的用户主体的形式为`_user_@_REALM_`（领域通常是大写）。
+在 Kerberos 中，用户和服务被称为“主体”，并包含在一个管理组中，称为“领域”。一个典型的用户主体的形式为 `_user_@_REALM_` （领域通常是大写）。
 
-本节提供了使用FreeBSD中包含的Heimdal发行版设置Kerberos的指南。
+本节提供了使用 FreeBSD 中包含的 Heimdal 发行版设置 Kerberos 的指南。
 
-为了展示Kerberos安装的目的，命名空间将如下所示：
+为了展示 Kerberos 安装的目的，命名空间将如下所示：
 
-* DNS域（区域）将是`example.org`。
-* Kerberos领域将是`EXAMPLE.ORG`。
+* DNS 域（区域）将是 `example.org` 。
+* Kerberos 领域将是 `EXAMPLE.ORG` 。
 
 [NOTE]
 ====
-在设置Kerberos时，请使用真实的域名，即使它将在内部运行。这样可以避免DNS问题，并确保与其他Kerberos领域的互操作性。
+在设置 Kerberos 时，请使用真实的域名，即使它将在内部运行。这样可以避免 DNS 问题，并确保与其他 Kerberos 领域的互操作性。
 ====
 
-=== 设置Heimdal KDC
+=== 设置 Heimdal KDC
 
-密钥分发中心（KDC）是Kerberos提供的集中式认证服务，也是系统的“可信第三方”。它是发放Kerberos票据的计算机，用于客户端对服务器进行身份验证。由于KDC被Kerberos领域中的所有其他计算机视为可信任的，因此它具有更高的安全性要求。应该限制对KDC的直接访问。
+密钥分发中心（ KDC ）是 Kerberos 提供的集中式认证服务，也是系统的“可信第三方”。它是发放 Kerberos 票据的计算机，用于客户端对服务器进行身份验证。由于 KDC 被 Kerberos 领域中的所有其他计算机视为可信任的，因此它具有更高的安全性要求。应该限制对 KDC 的直接访问。
 
-运行KDC所需的计算资源很少，但出于安全原因，建议使用专用机器作为KDC。
+运行 KDC 所需的计算资源很少，但出于安全原因，建议使用专用机器作为 KDC 。
 
-首先，按照以下方式安装`security/heimdal[]`软件包：
+首先，按照以下方式安装 `security/heimdal[]` 软件包：
 
 [source, shell]
 ....
 # pkg install heimdal
 ....
 
-接下来，使用`sysrc`按照以下方式更新`/etc/rc.conf`文件：
+接下来，使用 `sysrc` 按照以下方式更新 `/etc/rc.conf` 文件：
 
 [source, shell]
 ....
@@ -1093,7 +1093,7 @@ Kerberos的唯一功能是在网络上提供用户和服务器的安全认证。
 # sysrc kadmind_enable=yes
 ....
 
-接下来，按照以下方式编辑`/etc/krb5.conf`文件：
+接下来，按照以下方式编辑 `/etc/krb5.conf` 文件：
 
 [.programlisting]
 ....
@@ -1108,9 +1108,9 @@ Kerberos的唯一功能是在网络上提供用户和服务器的安全认证。
     .example.org = EXAMPLE.ORG
 ....
 
-在这个例子中，KDC将使用完全限定的主机名`kerberos.example.org`。KDC的主机名必须能够在DNS中解析。
+在这个例子中， KDC 将使用完全限定的主机名 `kerberos.example.org` 。 KDC 的主机名必须能够在 DNS 中解析。
 
-Kerberos也可以使用DNS来定位KDC（Key Distribution Center），而不是在`/etc/krb5.conf`文件的`[realms]`部分中。对于拥有自己DNS服务器的大型组织，上述示例可以简化为：
+Kerberos 也可以使用 DNS 来定位 KDC （ Key Distribution Center ），而不是在 `/etc/krb5.conf` 文件的 `[realms]` 部分中。对于拥有自己 DNS 服务器的大型组织，上述示例可以简化为：
 
 [.programlisting]
 ....
@@ -1120,7 +1120,7 @@ Kerberos也可以使用DNS来定位KDC（Key Distribution Center），而不是�
     .example.org = EXAMPLE.ORG
 ....
 
-在`example.org`区域文件中包含以下行：
+在 `example.org` 区域文件中包含以下行：
 
 [.programlisting]
 ....
@@ -1133,10 +1133,10 @@ _kerberos           IN  TXT     EXAMPLE.ORG
 
 [NOTE]
 ====
-为了使客户端能够找到Kerberos服务，它们必须具有完全配置的/etc/krb5.conf文件或最小配置的/etc/krb5.conf文件和正确配置的DNS服务器。
+为了使客户端能够找到 Kerberos 服务，它们必须具有完全配置的 /etc/krb5.conf 文件或最小配置的 /etc/krb5.conf 文件和正确配置的 DNS 服务器。
 ====
 
-接下来，创建Kerberos数据库，其中包含使用主密码加密的所有主体（用户和主机）的密钥。不需要记住此密码，因为它将存储在[/var/heimdal/m-key]#中；为此目的使用一个45个字符的随机密码是合理的。要创建主密钥，请运行`kstash`并输入密码：
+接下来，创建 Kerberos 数据库，其中包含使用主密码加密的所有主体（用户和主机）的密钥。不需要记住此密码，因为它将存储在 [/var/heimdal/m-key]# 中；为此目的使用一个 45 个字符的随机密码是合理的。要创建主密钥，请运行 `kstash` 并输入密码：
 
 [source, shell]
 ....
@@ -1151,7 +1151,7 @@ Master key: xxxxxxxxxxxxxxxxxxxxxxx
 Verifying password - Master key: xxxxxxxxxxxxxxxxxxxxxxx
 ....
 
-一旦主密钥被创建，就应该初始化数据库。可以在KDC上使用Kerberos管理工具man:kadmin[8]以`kadmin -l`的模式直接操作数据库，而不使用man:kadmind[8]网络服务。这解决了在创建数据库之前尝试连接数据库的鸡生蛋问题。在`kadmin`提示符下，使用`init`命令创建领域的初始数据库：
+一旦主密钥被创建，就应该初始化数据库。可以在 KDC 上使用 Kerberos 管理工具 man:kadmin[8] 以 `kadmin -l` 的模式直接操作数据库，而不使用 man:kadmind[8] 网络服务。这解决了在创建数据库之前尝试连接数据库的鸡生蛋问题。在 `kadmin` 提示符下，使用 `init` 命令创建领域的初始数据库：
 
 [source, shell]
 ....
@@ -1160,7 +1160,7 @@ kadmin> init EXAMPLE.ORG
 Realm max ticket life [unlimited]:
 ....
 
-最后，在`kadmin`中使用`add`命令创建第一个主体。暂时使用默认选项，因为这些选项可以在以后使用`modify`命令进行更改。在提示符处输入`?`以查看可用选项。
+最后，在 `kadmin` 中使用 `add` 命令创建第一个主体。暂时使用默认选项，因为这些选项可以在以后使用 `modify` 命令进行更改。在提示符处输入 ` ? ` 以查看可用选项。
 
 [source, shell]
 ....
@@ -1180,7 +1180,7 @@ Password: xxxxxxxx
 Verifying password - Password: xxxxxxxx
 ....
 
-接下来，通过运行以下命令启动KDC服务：
+接下来，通过运行以下命令启动 KDC 服务：
 
 [source, shell]
 ....
@@ -1188,7 +1188,7 @@ Verifying password - Password: xxxxxxxx
 # service kadmind start
 ....
 
-在这一点上，不会有任何运行的Kerberized守护程序，但可以通过获取刚刚创建的主体的票证来确认KDC是否正常运行：
+在这一点上，不会有任何运行的 Kerberized 守护程序，但可以通过获取刚刚创建的主体的票证来确认 KDC 是否正常运行：
 
 [source, shell]
 ....
@@ -1202,7 +1202,7 @@ Verifying password - Password: xxxxxxxx
 tillman@EXAMPLE.ORG's Password:
 ....
 
-使用`klist`确认成功获取了一张票据。
+使用 `klist` 确认成功获取了一张票据。
 
 [source, shell]
 ....
@@ -1227,13 +1227,13 @@ Aug 27 15:37:58 2013  Aug 28 01:37:58 2013  krbtgt/EXAMPLE.ORG@EXAMPLE.ORG
 % kdestroy
 ....
 
-=== 配置服务器使用Kerberos
+=== 配置服务器使用 Kerberos
 
-配置服务器以使用Kerberos身份验证的第一步是确保它在/etc/krb5.conf中具有正确的配置。可以直接使用KDC提供的版本，或者可以在新系统上重新生成该文件。
+配置服务器以使用 Kerberos 身份验证的第一步是确保它在 /etc/krb5.conf 中具有正确的配置。可以直接使用 KDC 提供的版本，或者可以在新系统上重新生成该文件。
 
-接下来，在服务器上创建`/etc/krb5.keytab`文件。这是“Kerberizing”服务的主要部分 - 它对应于在服务和KDC之间生成一个共享密钥。这个密钥是一个加密密钥，存储在一个“keytab”文件中。keytab文件包含了服务器的主机密钥，它允许服务器和KDC验证彼此的身份。必须以安全的方式将它传输到服务器上，因为如果密钥被公开，服务器的安全性可能会被破坏。通常，keytab文件是在管理员信任的机器上使用`kadmin`生成的，然后通过安全传输方式传输到服务器上，例如使用`scp`命令；如果符合所需的安全策略，也可以直接在服务器上创建。非常重要的是，必须以安全的方式将keytab文件传输到服务器上：如果密钥被其他方知晓，该方可以冒充任何用户访问服务器！在服务器上直接使用`kadmin`非常方便，因为在KDC数据库中为主机主体创建条目也是使用`kadmin`完成的。
+接下来，在服务器上创建 `/etc/krb5.keytab` 文件。这是“ Kerberizing ”服务的主要部分 - 它对应于在服务和 KDC 之间生成一个共享密钥。这个密钥是一个加密密钥，存储在一个“ keytab ”文件中。 keytab 文件包含了服务器的主机密钥，它允许服务器和 KDC 验证彼此的身份。必须以安全的方式将它传输到服务器上，因为如果密钥被公开，服务器的安全性可能会被破坏。通常， keytab 文件是在管理员信任的机器上使用 `kadmin` 生成的，然后通过安全传输方式传输到服务器上，例如使用 `scp` 命令；如果符合所需的安全策略，也可以直接在服务器上创建。非常重要的是，必须以安全的方式将 keytab 文件传输到服务器上：如果密钥被其他方知晓，该方可以冒充任何用户访问服务器！在服务器上直接使用 `kadmin` 非常方便，因为在 KDC 数据库中为主机主体创建条目也是使用 `kadmin` 完成的。
 
-当然，`kadmin`是一个使用Kerberos进行身份验证的服务；需要一个Kerberos票证来认证到网络服务，但为了确保运行`kadmin`的用户实际上存在（并且他们的会话没有被劫持），`kadmin`会提示输入密码以获取一个新的票证。认证到kadmin服务的主体必须被允许使用`kadmin`接口，如[.filename]#/var/heimdal/kadmind.acl#中所指定的。有关设计访问控制列表的详细信息，请参阅`info heimdal`中标题为“远程管理”的部分。管理员可以通过本地控制台或man:ssh[1]安全地连接到KDC，并使用`kadmin -l`在本地进行管理，而不是启用远程`kadmin`访问。
+当然， `kadmin` 是一个使用 Kerberos 进行身份验证的服务；需要一个 Kerberos 票证来认证到网络服务，但为了确保运行 `kadmin` 的用户实际上存在（并且他们的会话没有被劫持）， `kadmin` 会提示输入密码以获取一个新的票证。认证到 kadmin 服务的主体必须被允许使用 `kadmin` 接口，如 [.filename]#/var/heimdal/kadmind.acl# 中所指定的。有关设计访问控制列表的详细信息，请参阅 `info heimdal` 中标题为“远程管理”的部分。管理员可以通过本地控制台或 man:ssh[1] 安全地连接到 KDC ，并使用 `kadmin -l` 在本地进行管理，而不是启用远程 `kadmin` 访问。
 
 在安装完 [.filename]#/etc/krb5.conf# 后，在 `kadmin` 中使用 `add --random-key` 命令。这将向数据库中添加服务器的主机主体，但不会将主机主体密钥提取到密钥表中。要生成密钥表，请使用 `ext` 命令将服务器的主机主体密钥提取到其自己的密钥表中：
 
@@ -1256,7 +1256,7 @@ kadmin> ext_keytab host/myserver.example.org
 kadmin> exit
 ....
 
-请注意，默认情况下，`ext_keytab` 将提取的密钥存储在 [/etc/krb5.keytab](/etc/krb5.keytab) 中。当在进行 Kerberos 认证的服务器上运行时，这是很好的选择。但是，当密钥表在其他地方提取时，应使用 `--keytab _path/to/file_` 参数。
+请注意，默认情况下， `ext_keytab` 将提取的密钥存储在 [/etc/krb5.keytab](/etc/krb5.keytab) 中。当在进行 Kerberos 认证的服务器上运行时，这是很好的选择。但是，当密钥表在其他地方提取时，应使用 `--keytab _path/to/file_` 参数。
 
 [source, shell]
 ....
@@ -1271,30 +1271,30 @@ kadmin> ext_keytab --keytab=/tmp/example.keytab host/myserver.example.org
 kadmin> exit
 ....
 
-然后，可以使用man:scp[1]或可移动介质将keytab安全地复制到服务器。请确保指定一个非默认的keytab名称，以避免将不必要的密钥插入系统的keytab中。
+然后，可以使用 man:scp[1] 或可移动介质将 keytab 安全地复制到服务器。请确保指定一个非默认的 keytab 名称，以避免将不必要的密钥插入系统的 keytab 中。
 
-在这一点上，服务器可以使用存储在 [.filename]#krb5.keytab# 中的共享密钥从KDC读取加密消息。现在可以启用使用Kerberos的服务了。其中最常见的服务之一是 man:sshd[8]，它通过GSS-API支持Kerberos。在 [.filename]#/etc/ssh/sshd_config# 中添加以下行：
+在这一点上，服务器可以使用存储在 [.filename]#krb5.keytab# 中的共享密钥从 KDC 读取加密消息。现在可以启用使用 Kerberos 的服务了。其中最常见的服务之一是 man:sshd[8] ，它通过 GSS-API 支持 Kerberos 。在 [.filename]#/etc/ssh/sshd_config# 中添加以下行：
 
 [.programlisting]
 ....
 GSSAPIAuthentication yes
 ....
 
-在进行此更改后，必须重新启动man:sshd[8]以使新的配置生效：`service sshd restart`。
+在进行此更改后，必须重新启动 man:sshd[8] 以使新的配置生效： `service sshd restart` 。
 
-=== 配置客户端使用Kerberos
+=== 配置客户端使用 Kerberos
 
-与服务器一样，客户端需要在[/etc/krb5.conf]中进行配置。将文件复制到指定位置（安全地）或根据需要重新输入。
+与服务器一样，客户端需要在 [/etc/krb5.conf] 中进行配置。将文件复制到指定位置（安全地）或根据需要重新输入。
 
-通过在客户端使用`kinit`、`klist`和`kdestroy`命令来获取、显示和删除现有主体的票证，来测试客户端。Kerberos应用程序也应该能够连接到启用了Kerberos的服务器。如果连接不起作用，但是获取票证可以，那么问题很可能是服务器而不是客户端或KDC的问题。在使用kerberized man:ssh[1]的情况下，默认情况下禁用了GSS-API，因此请使用`ssh -o GSSAPIAuthentication=yes _hostname_`命令进行测试。
+通过在客户端使用 `kinit` 、 `klist` 和 `kdestroy` 命令来获取、显示和删除现有主体的票证，来测试客户端。 Kerberos 应用程序也应该能够连接到启用了 Kerberos 的服务器。如果连接不起作用，但是获取票证可以，那么问题很可能是服务器而不是客户端或 KDC 的问题。在使用 kerberized man:ssh[1] 的情况下，默认情况下禁用了 GSS-API ，因此请使用 `ssh -o GSSAPIAuthentication = yes _hostname_` 命令进行测试。
 
-在测试Kerberized应用程序时，尝试使用诸如`tcpdump`之类的数据包嗅探器来确认没有明文发送敏感信息。
+在测试 Kerberized 应用程序时，尝试使用诸如 `tcpdump` 之类的数据包嗅探器来确认没有明文发送敏感信息。
 
-有各种不同的Kerberos客户端应用程序可供选择。随着桥接的出现，使用SASL进行身份验证的应用程序也可以使用GSS-API机制，因此大部分客户端应用程序都可以使用Kerberos进行身份验证，包括Jabber客户端和IMAP客户端。
+有各种不同的 Kerberos 客户端应用程序可供选择。随着桥接的出现，使用 SASL 进行身份验证的应用程序也可以使用 GSS-API 机制，因此大部分客户端应用程序都可以使用 Kerberos 进行身份验证，包括 Jabber 客户端和 IMAP 客户端。
 
-在一个领域中，通常会将用户的Kerberos主体映射到本地用户账户。偶尔，需要将本地用户账户的访问权限授予没有匹配的Kerberos主体的人。例如，`tillman@EXAMPLE.ORG`可能需要访问本地用户账户`webdevelopers`。其他主体也可能需要访问该本地账户。
+在一个领域中，通常会将用户的 Kerberos 主体映射到本地用户账户。偶尔，需要将本地用户账户的访问权限授予没有匹配的 Kerberos 主体的人。例如， `tillman @ EXAMPLE.ORG` 可能需要访问本地用户账户 `webdevelopers` 。其他主体也可能需要访问该本地账户。
 
-放置在用户的主目录中的[.filename]#.k5login#和[.filename]#.k5users#文件可以用来解决这个问题。例如，如果将以下[.filename]#.k5login#文件放置在`webdevelopers`的主目录中，列出的两个主体都可以访问该帐户，而无需共享密码：
+放置在用户的主目录中的 [.filename]#.k5login# 和 [.filename]#.k5users# 文件可以用来解决这个问题。例如，如果将以下 [.filename]#.k5login# 文件放置在 `webdevelopers` 的主目录中，列出的两个主体都可以访问该帐户，而无需共享密码：
 
 [.programlisting]
 ....
@@ -1302,15 +1302,15 @@ tillman@example.org
 jdoe@example.org
 ....
 
-请参考man:ksu[1]获取有关.k5users的更多信息。
+请参考 man:ksu[1] 获取有关 .k5users 的更多信息。
 
-=== MIT的差异
+=== MIT 的差异
 
-MIT和Heimdal实现之间的主要区别是`kadmin`具有不同但等效的命令集，并且使用不同的协议。如果KDC是MIT版本，则无法使用Heimdal版本的`kadmin`远程管理KDC，反之亦然。
+MIT 和 Heimdal 实现之间的主要区别是 `kadmin` 具有不同但等效的命令集，并且使用不同的协议。如果 KDC 是 MIT 版本，则无法使用 Heimdal 版本的 `kadmin` 远程管理 KDC ，反之亦然。
 
-客户端应用程序也可以使用稍微不同的命令行选项来完成相同的任务。建议按照http://web.mit.edu/Kerberos/www/[http://web.mit.edu/Kerberos/www/]上的说明进行操作。请注意路径问题：MIT端口默认安装在[.filename]#/usr/local/#中，如果`PATH`列表中首先列出系统目录，则FreeBSD系统应用程序将代替MIT版本运行。
+客户端应用程序也可以使用稍微不同的命令行选项来完成相同的任务。建议按照 http://web.mit.edu/Kerberos/www/[http://web.mit.edu/Kerberos/www/] 上的说明进行操作。请注意路径问题： MIT 端口默认安装在 [.filename]#/usr/local/# 中，如果 `PATH` 列表中首先列出系统目录，则 FreeBSD 系统应用程序将代替 MIT 版本运行。
 
-在FreeBSD上使用MIT Kerberos作为KDC时，执行以下命令将所需的配置添加到/etc/rc.conf文件中：
+在 FreeBSD 上使用 MIT Kerberos 作为 KDC 时，执行以下命令将所需的配置添加到 /etc/rc.conf 文件中：
 
 [source, shell]
 ....
@@ -1321,51 +1321,51 @@ MIT和Heimdal实现之间的主要区别是`kadmin`具有不同但等效的命�
 # sysrc kadmind_enable="YES"
 ....
 
-=== Kerberos技巧、技巧和故障排除
+=== Kerberos 技巧、技巧和故障排除
 
-在配置和故障排除Kerberos时，请记住以下几点：
+在配置和故障排除 Kerberos 时，请记住以下几点：
 
-* 在使用来自ports的Heimdal或MITKerberos时，请确保`PATH`中列出的是端口版本的客户端应用程序，而不是系统版本。
-* 如果领域中的所有计算机没有同步的时间设置，认证可能会失败。crossref:network-servers[network-ntp,“使用NTP进行时钟同步”]描述了如何使用NTP同步时钟。
-* 如果主机名发生变化，则必须更改`host/`主体并更新keytab。这也适用于特殊的keytab条目，比如用于Apache的`HTTP/`主体，例如package:www/mod_auth_kerb[]。
-* 领域中的所有主机必须在DNS中具有正向和反向解析的能力，或者至少存在于/etc/hosts文件中。CNAME记录可以使用，但A记录和PTR记录必须正确并且存在。对于无法解析的主机，错误消息并不直观：“Kerberos5拒绝进行身份验证，因为读取请求失败：找不到密钥表条目”。
-* 一些作为KDC客户端的操作系统没有设置`ksu`的权限为setuid `root`。这意味着`ksu`无法工作。这是一个权限问题，而不是KDC错误。
-* 使用MITKerberos，如果要允许一个主体拥有比默认的十小时更长的票据生命周期，可以在man:kadmin[8]提示符下使用`modify_principal`命令来更改相关主体和`krbtgt`主体的`maxlife`属性。然后，该主体可以使用`kinit -l`命令来请求一个具有更长生命周期的票据。
-* 在从工作站运行`kinit`时，在KDC上运行数据包嗅探器以帮助故障排除时，票据授予票证（TGT）会立即发送，甚至在输入密码之前。这是因为Kerberos服务器会自由地向任何未经授权的请求传输TGT。然而，每个TGT都是使用用户密码派生的密钥进行加密的。当用户输入密码时，它不会被发送到KDC，而是用于解密`kinit`已经获取的TGT。如果解密过程产生一个带有有效时间戳的有效票证，用户就拥有有效的Kerberos凭证。这些凭证包括用于与Kerberos服务器建立安全通信的会话密钥，以及使用Kerberos服务器自己的密钥加密的实际TGT。这第二层加密允许Kerberos服务器验证每个TGT的真实性。
+* 在使用来自 ports 的 Heimdal 或 MITKerberos 时，请确保 `PATH` 中列出的是端口版本的客户端应用程序，而不是系统版本。
+* 如果领域中的所有计算机没有同步的时间设置，认证可能会失败。 crossref:network-servers[network-ntp ,“使用 NTP 进行时钟同步”] 描述了如何使用 NTP 同步时钟。
+* 如果主机名发生变化，则必须更改 `host/` 主体并更新 keytab 。这也适用于特殊的 keytab 条目，比如用于 Apache 的 `HTTP/` 主体，例如 package:www/mod_auth_kerb[] 。
+* 领域中的所有主机必须在 DNS 中具有正向和反向解析的能力，或者至少存在于 /etc/hosts 文件中。 CNAME 记录可以使用，但 A 记录和 PTR 记录必须正确并且存在。对于无法解析的主机，错误消息并不直观：“ Kerberos5 拒绝进行身份验证，因为读取请求失败：找不到密钥表条目”。
+* 一些作为 KDC 客户端的操作系统没有设置 `ksu` 的权限为 setuid `root` 。这意味着 `ksu` 无法工作。这是一个权限问题，而不是 KDC 错误。
+* 使用 MITKerberos ，如果要允许一个主体拥有比默认的十小时更长的票据生命周期，可以在 man:kadmin[8] 提示符下使用 `modify_principal` 命令来更改相关主体和 `krbtgt` 主体的 `maxlife` 属性。然后，该主体可以使用 `kinit -l` 命令来请求一个具有更长生命周期的票据。
+* 在从工作站运行 `kinit` 时，在 KDC 上运行数据包嗅探器以帮助故障排除时，票据授予票证（ TGT ）会立即发送，甚至在输入密码之前。这是因为 Kerberos 服务器会自由地向任何未经授权的请求传输 TGT 。然而，每个 TGT 都是使用用户密码派生的密钥进行加密的。当用户输入密码时，它不会被发送到 KDC ，而是用于解密 `kinit` 已经获取的 TGT 。如果解密过程产生一个带有有效时间戳的有效票证，用户就拥有有效的 Kerberos 凭证。这些凭证包括用于与 Kerberos 服务器建立安全通信的会话密钥，以及使用 Kerberos 服务器自己的密钥加密的实际 TGT 。这第二层加密允许 Kerberos 服务器验证每个 TGT 的真实性。
 * 主机主体可以拥有更长的票据生命周期。如果用户主体的生命周期为一周，但连接的主机的生命周期为九小时，用户缓存将会有一个过期的主机主体，票据缓存将无法按预期工作。
 * 在设置 [.filename]#krb5.dict# 以防止特定的弱密码被使用，如 man:kadmind[8] 中所描述的那样，请记住它仅适用于已分配密码策略的主体。 [.filename]#krb5.dict# 中使用的格式是每行一个字符串。创建一个符号链接到 [.filename]#/usr/share/dict/words# 可能会很有用。
 
-=== 缓解Kerberos的限制
+=== 缓解 Kerberos 的限制
 
-由于Kerberos是一种全面的方法，网络上的每个启用的服务都必须要么被修改以与Kerberos一起工作，要么以其他方式进行网络攻击防护。这是为了防止用户凭据被窃取和重复使用。一个例子是当Kerberos在所有远程shell上启用时，非Kerberos化的POP3邮件服务器会以明文发送密码。
+由于 Kerberos 是一种全面的方法，网络上的每个启用的服务都必须要么被修改以与 Kerberos 一起工作，要么以其他方式进行网络攻击防护。这是为了防止用户凭据被窃取和重复使用。一个例子是当 Kerberos 在所有远程 shell 上启用时，非 Kerberos 化的 POP3 邮件服务器会以明文发送密码。
 
-KDC是一个单点故障。按设计，KDC必须与其主密码数据库一样安全。KDC上不应该运行任何其他服务，并且应该具有物理安全性。危险性很高，因为Kerberos将所有密码都使用相同的主密钥进行加密，该密钥存储在KDC上的文件中。
+KDC 是一个单点故障。按设计， KDC 必须与其主密码数据库一样安全。 KDC 上不应该运行任何其他服务，并且应该具有物理安全性。危险性很高，因为 Kerberos 将所有密码都使用相同的主密钥进行加密，该密钥存储在 KDC 上的文件中。
 
-一个被破坏的主密钥并不像人们可能担心的那样糟糕。主密钥仅用于加密Kerberos数据库和作为随机数生成器的种子。只要KDC的访问是安全的，攻击者无法对主密钥做太多事情。
+一个被破坏的主密钥并不像人们可能担心的那样糟糕。主密钥仅用于加密 Kerberos 数据库和作为随机数生成器的种子。只要 KDC 的访问是安全的，攻击者无法对主密钥做太多事情。
 
-如果KDC不可用，网络服务将无法使用，因为无法进行身份验证。可以通过一个主KDC和一个或多个从KDC以及对PAM进行细致实施的次要或备用身份验证来缓解这个问题。
+如果 KDC 不可用，网络服务将无法使用，因为无法进行身份验证。可以通过一个主 KDC 和一个或多个从 KDC 以及对 PAM 进行细致实施的次要或备用身份验证来缓解这个问题。
 
-Kerberos允许用户、主机和服务之间进行身份验证。它没有机制来对用户、主机或服务进行身份验证。这意味着一个被木马程序感染的`kinit`可以记录所有的用户名和密码。文件系统完整性检查工具，如package:security/tripwire[]可以缓解这个问题。
+Kerberos 允许用户、主机和服务之间进行身份验证。它没有机制来对用户、主机或服务进行身份验证。这意味着一个被木马程序感染的 `kinit` 可以记录所有的用户名和密码。文件系统完整性检查工具，如 package:security/tripwire[] 可以缓解这个问题。
 
 === 资源和进一步信息
 
-* [Kerberos FAQ]（Kerberos常见问题解答）：http://www.faqs.org/faqs/Kerberos-faq/general/preamble.html
+* [Kerberos FAQ] （ Kerberos 常见问题解答）： http://www.faqs.org/faqs/Kerberos-faq/general/preamble.html
 * http://web.mit.edu/Kerberos/www/dialogue.html[设计一个认证系统：四个场景的对话]
-* [RFC 4120, Kerberos网络身份验证服务（V5）]是一项关于Kerberos网络身份验证服务的规范，可以在https://www.ietf.org/rfc/rfc4120.txt上找到。
-* [MIT Kerberos主页](http://web.mit.edu/Kerberos/www/)
-* [Heimdal Kerberos项目维基页面](https://github.com/heimdal/heimdal/wiki)
+* [RFC 4120 , Kerberos 网络身份验证服务（ V5 ）] 是一项关于 Kerberos 网络身份验证服务的规范，可以在 https://www.ietf.org/rfc/rfc4120.txt 上找到。
+* [MIT Kerberos 主页](http://web.mit.edu/Kerberos/www/)
+* [Heimdal Kerberos 项目维基页面](https://github.com/heimdal/heimdal/wiki)
 
 [[tcpwrappers]]
-== TCP包装器（TCP Wrappers）是一种网络访问控制工具，用于在TCP/IP网络上限制对特定服务的访问。它通过检查远程主机的IP地址和主机名来决定是否允许连接到受保护的服务。TCP包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如SSH、FTP和Telnet）一起使用，以提供对这些服务的访问控制。
+== TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。
 
-TCP Wrappers是一种基于主机的网络访问控制系统。通过在实际网络服务之前拦截传入的网络请求，TCP Wrappers根据配置文件中预定义的规则评估源IP地址是否被允许或拒绝访问。
+TCP Wrappers 是一种基于主机的网络访问控制系统。通过在实际网络服务之前拦截传入的网络请求， TCP Wrappers 根据配置文件中预定义的规则评估源 IP 地址是否被允许或拒绝访问。
 
-然而，尽管TCP包装器提供了基本的访问控制，但它们不应被视为更强大的安全措施的替代品。为了全面保护，建议使用像防火墙这样的先进技术，以及适当的用户身份验证实践和入侵检测系统。
+然而，尽管 TCP 包装器提供了基本的访问控制，但它们不应被视为更强大的安全措施的替代品。为了全面保护，建议使用像防火墙这样的先进技术，以及适当的用户身份验证实践和入侵检测系统。
 
 [[tcpwrappers-initial-configuration]]
 === 初始配置
 
-TCP包装器默认在man:inetd[8]中启用。因此，第一步是启用man:inetd[8]，执行以下命令：
+TCP 包装器默认在 man:inetd[8] 中启用。因此，第一步是启用 man:inetd[8] ，执行以下命令：
 
 [source, shell]
 ....
@@ -1373,18 +1373,18 @@ TCP包装器默认在man:inetd[8]中启用。因此，第一步是启用man:inet
 # service inetd start
 ....
 
-然后，正确配置[/etc/hosts.allow]文件。
+然后，正确配置 [/etc/hosts.allow] 文件。
 
 [WARNING]
 ====
-与其他TCP Wrappers的实现不同，在FreeBSD中使用[.filename]#hosts.deny#已被弃用。所有配置选项应放置在[.filename]#/etc/hosts.allow#中。
+与其他 TCP Wrappers 的实现不同，在 FreeBSD 中使用 [.filename]#hosts.deny# 已被弃用。所有配置选项应放置在 [.filename]#/etc/hosts.allow# 中。
 ====
 
-在最简单的配置中，守护进程连接策略根据[.filename]#/etc/hosts.allow#中的选项设置为允许或阻止。在FreeBSD中，默认配置是允许所有与inetd启动的守护进程的连接。
+在最简单的配置中，守护进程连接策略根据 [.filename]#/etc/hosts.allow# 中的选项设置为允许或阻止。在 FreeBSD 中，默认配置是允许所有与 inetd 启动的守护进程的连接。
 
-基本配置通常采用`daemon : address : action`的形式，其中`daemon`是由inetd启动的守护进程，`address`是有效的主机名、IP地址或用方括号（[ ]）括起来的IPv6地址，`action`可以是`allow`或`deny`。TCP Wrappers使用首次匹配规则的语义，意味着配置文件从头开始扫描以寻找匹配的规则。当找到匹配时，规则被应用并且搜索过程停止。
+基本配置通常采用 `daemon : address : action` 的形式，其中 `daemon` 是由 inetd 启动的守护进程， `address` 是有效的主机名、 IP 地址或用方括号（ [ ] ）括起来的 IPv6 地址， `action` 可以是 `allow` 或 `deny` 。 TCP Wrappers 使用首次匹配规则的语义，意味着配置文件从头开始扫描以寻找匹配的规则。当找到匹配时，规则被应用并且搜索过程停止。
 
-例如，要允许通过package:mail/qpopper[]守护程序进行POP3连接，应将以下行追加到[.filename]#/etc/hosts.allow#文件中：
+例如，要允许通过 package:mail/qpopper[] 守护程序进行 POP3 连接，应将以下行追加到 [.filename]#/etc/hosts.allow# 文件中：
 
 [.programlisting]
 ....
@@ -1392,7 +1392,7 @@ TCP包装器默认在man:inetd[8]中启用。因此，第一步是启用man:inet
 qpopper : ALL : allow
 ....
 
-每当编辑此文件时，重新启动inetd：
+每当编辑此文件时，重新启动 inetd ：
 
 [source, shell]
 ....
@@ -1402,24 +1402,24 @@ qpopper : ALL : allow
 [[tcpwrappers-advanced-config]]
 === 高级配置
 
-TCP Wrappers提供了高级选项，可以更好地控制连接的处理方式。在某些情况下，向特定的主机或守护进程连接返回注释可能是合适的。在其他情况下，应记录日志条目或向管理员发送电子邮件。其他情况可能需要仅用于本地连接的服务。通过使用通配符、扩展字符和外部命令执行的配置选项，所有这些都是可能的。要了解有关通配符及其相关功能的更多信息，请参阅man:hosts_access[5]。
+TCP Wrappers 提供了高级选项，可以更好地控制连接的处理方式。在某些情况下，向特定的主机或守护进程连接返回注释可能是合适的。在其他情况下，应记录日志条目或向管理员发送电子邮件。其他情况可能需要仅用于本地连接的服务。通过使用通配符、扩展字符和外部命令执行的配置选项，所有这些都是可能的。要了解有关通配符及其相关功能的更多信息，请参阅 man:hosts_access[5] 。
 
 [[fs-acl]]
 == 访问控制列表
 
-访问控制列表（ACL）通过允许用户和组在每个文件或目录的基础上进行细粒度的访问控制，扩展了传统的UNIX(R)文件权限。每个ACL条目定义了一个用户或组以及相关的权限，如读取、写入和执行。FreeBSD提供了像man:getfacl[1]和man:setfacl[1]这样的命令来管理ACL。
+访问控制列表（ ACL ）通过允许用户和组在每个文件或目录的基础上进行细粒度的访问控制，扩展了传统的 UNIX(R) 文件权限。每个 ACL 条目定义了一个用户或组以及相关的权限，如读取、写入和执行。 FreeBSD 提供了像 man:getfacl[1] 和 man:setfacl[1] 这样的命令来管理 ACL 。
 
-访问控制列表（ACL）在需要比标准权限更具体的访问控制的场景中非常有用，通常在多用户环境或共享托管中使用。然而，复杂性可能是不可避免的，但需要仔细规划，以确保提供所需的安全性质。
+访问控制列表（ ACL ）在需要比标准权限更具体的访问控制的场景中非常有用，通常在多用户环境或共享托管中使用。然而，复杂性可能是不可避免的，但需要仔细规划，以确保提供所需的安全性质。
 
 [NOTE]
 ====
-FreeBSD支持在UFS和OpenZFS中实现NFSv4 ACLs。请注意，man:setfacl[1]命令的一些参数仅适用于POSIX ACLs，而其他参数适用于NFSv4 ACLs。
+FreeBSD 支持在 UFS 和 OpenZFS 中实现 NFSv4 ACLs 。请注意， man:setfacl[1] 命令的一些参数仅适用于 POSIX ACLs ，而其他参数适用于 NFSv4 ACLs 。
 ====
 
 [[acl-enabling-support-ufs]]
-=== 在UFS中启用ACL支持
+=== 在 UFS 中启用 ACL 支持
 
-ACL（访问控制列表）是通过挂载时的管理标志`acls`启用的，可以将其添加到`/etc/fstab`文件中。
+ACL （访问控制列表）是通过挂载时的管理标志 `acls` 启用的，可以将其添加到 `/etc/fstab` 文件中。
 
 因此，需要访问 [.filename]#/etc/fstab# 并在选项部分添加 `acls` 标志，如下所示：
 
@@ -1430,18 +1430,18 @@ ACL（访问控制列表）是通过挂载时的管理标志`acls`启用的，�
 ....
 
 [[security-acl-info]]
-=== 获取ACL信息
+=== 获取 ACL 信息
 
-可以使用man:getfacl[1]命令来检查文件或目录的ACL。
+可以使用 man:getfacl[1] 命令来检查文件或目录的 ACL 。
 
-例如，要查看[.filename]#~/test#文件的ACL设置，请执行以下命令：
+例如，要查看 [.filename]# ~ /test# 文件的 ACL 设置，请执行以下命令：
 
 [source, shell]
 ....
 % getfacl test
 ....
 
-如果使用NFSv4 ACLs，输出应该类似于以下内容：
+如果使用 NFSv4 ACLs ，输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1453,7 +1453,7 @@ ACL（访问控制列表）是通过挂载时的管理标志`acls`启用的，�
          everyone@:r-----a-R-c--s:-------:allow
 ....
 
-如果使用POSIX.1e ACLs，输出应该类似于以下内容：
+如果使用 POSIX.1e ACLs ，输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1466,55 +1466,55 @@ other::r--
 ....
 
 [[security-working-acls]]
-=== 使用ACLs进行工作
+=== 使用 ACLs 进行工作
 
-man:setfacl[1] 可以用于向文件或目录添加、修改或删除 ACL。
+man:setfacl[1] 可以用于向文件或目录添加、修改或删除 ACL 。
 
-如上所述，man:setfacl[1]的一些参数与NFSv4 ACLs不兼容，反之亦然。本节介绍如何执行POSIX ACLs和NFSv4 ACLs的命令，并提供了两者的示例。
+如上所述， man:setfacl[1] 的一些参数与 NFSv4 ACLs 不兼容，反之亦然。本节介绍如何执行 POSIX ACLs 和 NFSv4 ACLs 的命令，并提供了两者的示例。
 
-例如，要设置POSIX.1e默认ACL的强制元素：
+例如，要设置 POSIX.1e 默认 ACL 的强制元素：
 
 [source, shell]
 ....
 % setfacl -d -m u::rwx,g::rx,o::rx,mask::rwx directory
 ....
 
-这个示例设置了文件所有者的POSIX.1e ACL条目的读取、写入和执行权限，并为文件上的邮件组设置了读取和写入权限。
+这个示例设置了文件所有者的 POSIX.1e ACL 条目的读取、写入和执行权限，并为文件上的邮件组设置了读取和写入权限。
 
 [source, shell]
 ....
 % setfacl -m u::rwx,g:mail:rw file
 ....
 
-为了在NFSv4 ACL中执行与前一个示例相同的操作：
+为了在 NFSv4 ACL 中执行与前一个示例相同的操作：
 
 [source, shell]
 ....
 % setfacl -m owner@:rwxp::allow,g:mail:rwp::allow file
 ....
 
-从POSIX.1e ACL文件中删除除了三个必需的ACL条目之外的所有ACL条目。
+从 POSIX.1e ACL 文件中删除除了三个必需的 ACL 条目之外的所有 ACL 条目。
 
 [source, shell]
 ....
 % setfacl -bn file
 ....
 
-要删除NFSv4 ACL中的所有ACL条目：
+要删除 NFSv4 ACL 中的所有 ACL 条目：
 
 [source, shell]
 ....
 % setfacl -b file
 ....
 
-有关这些命令可用选项的更多信息，请参考man:getfacl[1]和man:setfacl[1]。
+有关这些命令可用选项的更多信息，请参考 man:getfacl[1] 和 man:setfacl[1] 。
 
 [[capsicum]]
-== Capsicum是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。Capsicum也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素C和维生素A，对于保持健康非常重要。Capsicum在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。
+== Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。
 
-Capsicum是一个轻量级的操作系统能力和沙箱框架，实现了混合能力系统模型。能力是不可伪造的授权令牌，可以委派并必须在执行操作时呈现。Capsicum将文件描述符转换为能力。
+Capsicum 是一个轻量级的操作系统能力和沙箱框架，实现了混合能力系统模型。能力是不可伪造的授权令牌，可以委派并必须在执行操作时呈现。 Capsicum 将文件描述符转换为能力。
 
-Capsicum可以用于应用程序和库的分隔，将较大的软件体分解为隔离（沙盒化）的组件，以实施安全策略并限制软件漏洞的影响。
+Capsicum 可以用于应用程序和库的分隔，将较大的软件体分解为隔离（沙盒化）的组件，以实施安全策略并限制软件漏洞的影响。
 
 [[security-accounting]]
 == 进程账户
@@ -1525,7 +1525,7 @@ Capsicum可以用于应用程序和库的分隔，将较大的软件体分解为
 
 [NOTE]
 ====
-如果需要更细粒度的会计记录，请参考crossref:audit[audit,安全事件审计]。
+如果需要更细粒度的会计记录，请参考 crossref:audit[audit ,安全事件审计] 。
 ====
 
 === 启用和利用进程账户
@@ -1538,46 +1538,46 @@ Capsicum可以用于应用程序和库的分隔，将较大的软件体分解为
 # service accounting start
 ....
 
-会计信息存储在位于 [.filename]#/var/account# 的文件中，如果需要，会计服务首次启动时会自动创建该文件。这些文件包含敏感信息，包括所有用户发出的所有命令。对文件的写访问权限仅限于 `root`，读访问权限仅限于 `root` 和 `wheel` 组的成员。为了防止 `wheel` 组的成员也能读取这些文件，将 [.filename]#/var/account# 目录的模式更改为仅允许 `root` 访问。
+会计信息存储在位于 [.filename]#/var/account# 的文件中，如果需要，会计服务首次启动时会自动创建该文件。这些文件包含敏感信息，包括所有用户发出的所有命令。对文件的写访问权限仅限于 `root` ，读访问权限仅限于 `root` 和 `wheel` 组的成员。为了防止 `wheel` 组的成员也能读取这些文件，将 [.filename]#/var/account# 目录的模式更改为仅允许 `root` 访问。
 
-启用后，会计将开始跟踪诸如CPU统计和执行的命令等信息。所有的会计日志都以非人类可读的格式存储，可以使用man:sa[8]命令查看。如果不带任何选项使用man:sa[8]命令，将打印与每个用户调用次数、总经过时间（以分钟为单位）、总CPU和用户时间（以分钟为单位）以及平均I/O操作次数相关的信息。有关控制输出的可用选项列表，请参考man:sa[8]命令。
+启用后，会计将开始跟踪诸如 CPU 统计和执行的命令等信息。所有的会计日志都以非人类可读的格式存储，可以使用 man:sa[8] 命令查看。如果不带任何选项使用 man:sa[8] 命令，将打印与每个用户调用次数、总经过时间（以分钟为单位）、总 CPU 和用户时间（以分钟为单位）以及平均 I/O 操作次数相关的信息。有关控制输出的可用选项列表，请参考 man:sa[8] 命令。
 
-要显示用户发出的命令，请使用`lastcomm`命令。
+要显示用户发出的命令，请使用 `lastcomm` 命令。
 
-例如，这个命令会打印出在`ttyp1`终端上由`trhodes`使用的`ls`的所有用法：
+例如，这个命令会打印出在 `ttyp1` 终端上由 `trhodes` 使用的 `ls` 的所有用法：
 
 [source, shell]
 ....
 # lastcomm ls trhodes ttyp1
 ....
 
-还有许多其他有用的选项，可以在man:lastcomm[1]、man:acct[5]和man:sa[8]中找到解释。
+还有许多其他有用的选项，可以在 man:lastcomm[1] 、 man:acct[5] 和 man:sa[8] 中找到解释。
 
 [[security-resourcelimits]]
 == 资源限制
 
-在FreeBSD中，资源限制是指控制和管理将各种系统资源分配给进程和用户的机制。这些限制旨在防止单个进程或用户消耗过多的资源，从而可能导致性能下降或系统不稳定。资源限制有助于确保系统上所有活动进程和用户之间公平分配资源。
+在 FreeBSD 中，资源限制是指控制和管理将各种系统资源分配给进程和用户的机制。这些限制旨在防止单个进程或用户消耗过多的资源，从而可能导致性能下降或系统不稳定。资源限制有助于确保系统上所有活动进程和用户之间公平分配资源。
 
-FreeBSD提供了几种方法，供管理员限制个人使用系统资源的数量。
+FreeBSD 提供了几种方法，供管理员限制个人使用系统资源的数量。
 
-传统的方法是通过编辑[/etc/login.conf]来定义登录类。虽然这种方法仍然受支持，但任何更改都需要多个步骤：编辑该文件、重建资源数据库、对[/etc/master.passwd]进行必要的更改，并重新构建密码数据库。这可能会耗费时间，具体取决于要配置的用户数量。
+传统的方法是通过编辑 [/etc/login.conf] 来定义登录类。虽然这种方法仍然受支持，但任何更改都需要多个步骤：编辑该文件、重建资源数据库、对 [/etc/master.passwd] 进行必要的更改，并重新构建密码数据库。这可能会耗费时间，具体取决于要配置的用户数量。
 
-man:rctl[8]可以用于提供一种更精细的方法来控制资源限制。该命令不仅支持用户限制，还可以用于在进程和jails上设置资源约束。
+man:rctl[8] 可以用于提供一种更精细的方法来控制资源限制。该命令不仅支持用户限制，还可以用于在进程和 jails 上设置资源约束。
 
 本节展示了控制资源的两种方法，首先是传统方法。
 
 [[security-resource-limits-types]]
 === 资源的类型
 
-FreeBSD提供了各种类型资源的限制，包括：
+FreeBSD 提供了各种类型资源的限制，包括：
 
 .资源类型
 [options="header", cols="1,1"]
 |===
 | 类型 | 描述
 
-| CPU时间
-| 限制进程可以消耗的CPU时间量
+| CPU 时间
+| 限制进程可以消耗的 CPU 时间量
 
 | 内存
 | 控制进程可使用的物理内存量
@@ -1599,21 +1599,21 @@ FreeBSD提供了各种类型资源的限制，包括：
 
 |===
 
-有关类型的完整列表，请参阅man:login.conf[5]和man:rctl[8]。
+有关类型的完整列表，请参阅 man:login.conf[5] 和 man:rctl[8] 。
 
 [[users-limiting]]
 === 配置登录类
 
-在传统的方法中，登录类和适用于登录类的资源限制在`/etc/login.conf`文件中定义。每个用户账户可以分配给一个登录类，其中`default`是默认的登录类。每个登录类都有一组与之关联的登录能力。登录能力是一个`_name_=_value_`对，其中_name_是一个众所周知的标识符，_value_是一个任意字符串，根据_name_的不同进行相应的处理。
+在传统的方法中，登录类和适用于登录类的资源限制在 `/etc/login.conf` 文件中定义。每个用户账户可以分配给一个登录类，其中 `default` 是默认的登录类。每个登录类都有一组与之关联的登录能力。登录能力是一个 `_name_=_value_` 对，其中_name_是一个众所周知的标识符，_value_是一个任意字符串，根据_name_的不同进行相应的处理。
 
-配置资源限制的第一步是通过执行以下命令打开`/etc/login.conf`文件：
+配置资源限制的第一步是通过执行以下命令打开 `/etc/login.conf` 文件：
 
 [source, shell]
 ....
 # ee /etc/login.conf
 ....
 
-然后找到要修改的用户类的部分。在这个例子中，假设用户类的名称是`limited`，如果不存在，则创建它。
+然后找到要修改的用户类的部分。在这个例子中，假设用户类的名称是 `limited` ，如果不存在，则创建它。
 
 [.programlisting]
 ....
@@ -1622,7 +1622,7 @@ limited:\ <.>
         :tc=default: <.>
 ....
 
-<.> 用户类的名称。 <.> 将`limited`类中的用户的最大进程数（maxproc）设置为50。 <.> 表示该用户类继承了“default”类的默认设置。
+<.> 用户类的名称。 <.> 将 `limited` 类中的用户的最大进程数（ maxproc ）设置为 50 。 <.> 表示该用户类继承了“ default ”类的默认设置。
 
 在修改 [.filename]#/etc/login.conf# 文件后，运行 man:cap_mkdb[1] 命令生成 FreeBSD 使用的数据库，以应用这些设置：
 
@@ -1631,7 +1631,7 @@ limited:\ <.>
 # cap_mkdb /etc/login.conf
 ....
 
-man:chpass[1]可以用于更改用户的类别，执行以下命令：
+man:chpass[1] 可以用于更改用户的类别，执行以下命令：
 
 [source, shell]
 ....
@@ -1660,16 +1660,16 @@ Home Phone:
 Other information:
 ....
 
-现在，分配给`limited`类的用户将具有最大进程限制为50。请记住，这只是使用[.filename]#/etc/login.conf#文件设置资源限制的一个示例。
+现在，分配给 `limited` 类的用户将具有最大进程限制为 50 。请记住，这只是使用 [.filename]#/etc/login.conf# 文件设置资源限制的一个示例。
 
 请记住，在对 [.filename]#/etc/login.conf# 文件进行更改后，用户需要注销并重新登录以使更改生效。此外，在编辑系统配置文件时，特别是在使用特权访问时，始终要谨慎行事。
 
 [[security-rctl]]
 === 启用和配置资源限制
 
-man:rctl[8]系统提供了一种更精细的方式来设置和管理单个进程和用户的资源限制。它允许您动态地为特定的进程或用户分配资源限制，而不考虑他们的用户类别。
+man:rctl[8] 系统提供了一种更精细的方式来设置和管理单个进程和用户的资源限制。它允许您动态地为特定的进程或用户分配资源限制，而不考虑他们的用户类别。
 
-使用man:rctl[8]的第一步是将以下行添加到[/boot/loader.conf]并重新启动系统，以启用它：
+使用 man:rctl[8] 的第一步是将以下行添加到 [/boot/loader.conf] 并重新启动系统，以启用它：
 
 [.programlisting]
 ....
@@ -1684,23 +1684,23 @@ kern.racct.enable=1
 # service rctl start
 ....
 
-然后可以使用man:rctl[8]来为系统设置规则。
+然后可以使用 man:rctl[8] 来为系统设置规则。
 
-规则语法（man:rctl.conf[5]）通过使用主题、主题ID、资源和操作来进行控制，如下面的示例规则所示：
+规则语法（ man:rctl.conf[5] ）通过使用主题、主题 ID 、资源和操作来进行控制，如下面的示例规则所示：
 
 [.programlisting]
 ....
 subject:subject-id:resource:action=amount/per
 ....
 
-例如，要限制用户添加的进程数量不超过10个，请执行以下命令：
+例如，要限制用户添加的进程数量不超过 10 个，请执行以下命令：
 
 [source, shell]
 ....
 # rctl -a user:username:maxproc:deny=10/user
 ....
 
-要检查应用的资源限制，可以执行man:rctl[8]命令。
+要检查应用的资源限制，可以执行 man:rctl[8] 命令。
 
 [source, shell]
 ....
@@ -1714,7 +1714,7 @@ subject:subject-id:resource:action=amount/per
 user:username:maxproc:deny=10
 ....
 
-如果将规则添加到[/etc/rctl.conf]文件中，规则将在重新启动后保持不变。格式是一个规则，没有前导命令。例如，可以将上述规则添加为：
+如果将规则添加到 [/etc/rctl.conf] 文件中，规则将在重新启动后保持不变。格式是一个规则，没有前导命令。例如，可以将上述规则添加为：
 
 [.programlisting]
 ....
@@ -1726,13 +1726,13 @@ user:username:maxproc:deny=10
 
 近年来，安全领域在漏洞评估的处理方面取得了许多改进。随着第三方工具在几乎所有现有操作系统上的安装和配置，系统入侵的威胁也在增加。
 
-漏洞评估是安全性的关键因素。虽然FreeBSD为基本系统发布了安全公告，但对于每个第三方实用程序都这样做超出了FreeBSD项目的能力范围。有一种方法可以减轻第三方漏洞并警告管理员已知的安全问题。一个名为pkg的FreeBSD附加实用程序专门包含了这个目的的选项。
+漏洞评估是安全性的关键因素。虽然 FreeBSD 为基本系统发布了安全公告，但对于每个第三方实用程序都这样做超出了 FreeBSD 项目的能力范围。有一种方法可以减轻第三方漏洞并警告管理员已知的安全问题。一个名为 pkg 的 FreeBSD 附加实用程序专门包含了这个目的的选项。
 
-pkg轮询数据库以查找安全问题。该数据库由FreeBSD安全团队和端口开发人员更新和维护。
+pkg 轮询数据库以查找安全问题。该数据库由 FreeBSD 安全团队和端口开发人员更新和维护。
 
-安装提供了用于维护pkg audit数据库的man:periodic[8]配置文件，并提供了一种程序化的方法来保持其更新。
+安装提供了用于维护 pkg audit 数据库的 man:periodic[8] 配置文件，并提供了一种程序化的方法来保持其更新。
 
-安装完成后，管理员可以选择更新数据库并查看已安装软件包的已知漏洞，以便随时审核第三方工具作为Ports Collection的一部分。
+安装完成后，管理员可以选择更新数据库并查看已安装软件包的已知漏洞，以便随时审核第三方工具作为 Ports Collection 的一部分。
 
 [source, shell]
 ....
@@ -1765,20 +1765,20 @@ samba413-4.13.17_5 is vulnerable:
 2 problem(s) in 2 installed package(s) found.
 ....
 
-通过将Web浏览器指向显示的URL，管理员可以获取有关漏洞的更多信息。
+通过将 Web 浏览器指向显示的 URL ，管理员可以获取有关漏洞的更多信息。
 
-这将包括受影响的版本，按照FreeBSD端口版本列出，以及可能包含安全公告的其他网站。
+这将包括受影响的版本，按照 FreeBSD 端口版本列出，以及可能包含安全公告的其他网站。
 
 [[security-advisories]]
-== FreeBSD安全公告
+== FreeBSD 安全公告
 
-像许多优质操作系统的生产者一样，FreeBSD项目有一个安全团队，负责确定每个FreeBSD发布版本的生命周期结束（EoL）日期，并为尚未达到其EoL的受支持版本提供安全更新。有关FreeBSD安全团队和受支持版本的更多信息，请访问链接：https://www.FreeBSD.org/security[FreeBSD安全页面]。
+像许多优质操作系统的生产者一样， FreeBSD 项目有一个安全团队，负责确定每个 FreeBSD 发布版本的生命周期结束（ EoL ）日期，并为尚未达到其 EoL 的受支持版本提供安全更新。有关 FreeBSD 安全团队和受支持版本的更多信息，请访问链接： https://www.FreeBSD.org/security[FreeBSD 安全页面] 。
 
-安全团队的一个任务是响应FreeBSD操作系统中报告的安全漏洞。一旦确认了漏洞，安全团队会验证修复漏洞所需的步骤，并更新源代码进行修复。然后，它将详细信息发布为“安全公告”。安全公告会发布在[FreeBSD网站](https://www.FreeBSD.org/security/advisories/)上，并发送给{freebsd-security-notifications}、{freebsd-security}和{freebsd-announce}。
+安全团队的一个任务是响应 FreeBSD 操作系统中报告的安全漏洞。一旦确认了漏洞，安全团队会验证修复漏洞所需的步骤，并更新源代码进行修复。然后，它将详细信息发布为“安全公告”。安全公告会发布在 [FreeBSD 网站](https://www.FreeBSD.org/security/advisories/) 上，并发送给 {freebsd-security-notifications} 、 {freebsd-security} 和 {freebsd-announce} 。
 
 === 安全公告的格式
 
-这是一个FreeBSD安全公告的示例：
+这是一个 FreeBSD 安全公告的示例：
 
 [.programlisting]
 ....
@@ -1934,20 +1934,20 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 
 每个安全公告都使用以下格式：
 
-* 每个安全公告都由安全官员的PGP密钥签名。可以在crossref:pgpkeys[pgpkeys,OpenPGP Keys]上验证安全官员的公钥。
-* 安全公告的名称始终以`FreeBSD-SA-`（FreeBSD安全公告）开头，后跟两位数格式的年份（`23:`），后跟该年份的公告编号（`07.`），后跟受影响的应用程序或子系统的名称（`bhyve`）。
-* `Topic`字段总结了漏洞的内容。
-* `Category`指的是系统中受影响的部分，可以是`core`、`contrib`或`ports`之一。`core`类别表示漏洞影响FreeBSD操作系统的核心组件。`contrib`类别表示漏洞影响FreeBSD中包含的软件，如BIND。`ports`类别表示漏洞影响通过Ports Collection提供的软件。
-* `Module`字段指的是组件的位置。在这个例子中，`bhyve`模块受到影响；因此，这个漏洞会影响安装有操作系统的应用程序。
-* `Announced`字段反映了安全公告发布的日期。这意味着安全团队已经验证了问题的存在，并且已经提交了一个补丁到FreeBSD源代码仓库中。
-* `Credits`字段用于给发现并报告漏洞的个人或组织提供鸣谢。
-* `Affects`字段说明了哪些版本的FreeBSD受到此漏洞的影响。
-* `Corrected`字段表示修正的日期、时间、时间偏移和修正的发布版本。括号中的部分显示了已合并修复的每个分支，以及该分支对应发布的版本号。发布标识符本身包括版本号和（如果适用）补丁级别。补丁级别是字母`p`后跟一个数字，表示补丁的序列号，允许用户跟踪已应用到系统的补丁。
-* `CVE名称`字段列出了公共http://cve.mitre.org[cve.mitre.org]安全漏洞数据库中的咨询编号（如果存在）。
-* `Background`字段提供了受影响模块的描述。
-* `问题描述`字段解释了漏洞的情况。这可能包括有关有缺陷的代码以及如何恶意使用该实用程序的信息。
-* `Impact`字段描述了问题对系统可能产生的影响类型。
-* `Workaround`字段指示系统管理员是否可以立即修补系统，以及是否有可用的解决方法。
-* `Solution`字段提供了修补受影响系统的指令。这是一个经过逐步测试和验证的方法，用于修补系统并确保其安全运行。
-* `修正详情`字段显示了每个受影响的Subversion或Git分支以及包含修正代码的修订版本号。
-* `References`字段提供了有关漏洞的额外信息的来源。
+* 每个安全公告都由安全官员的 PGP 密钥签名。可以在 crossref:pgpkeys[pgpkeys , OpenPGP Keys] 上验证安全官员的公钥。
+* 安全公告的名称始终以 `FreeBSD-SA-` （ FreeBSD 安全公告）开头，后跟两位数格式的年份（ `23:` ），后跟该年份的公告编号（ `07.` ），后跟受影响的应用程序或子系统的名称（ `bhyve` ）。
+* `Topic` 字段总结了漏洞的内容。
+* `Category` 指的是系统中受影响的部分，可以是 `core` 、 `contrib` 或 `ports` 之一。 `core` 类别表示漏洞影响 FreeBSD 操作系统的核心组件。 `contrib` 类别表示漏洞影响 FreeBSD 中包含的软件，如 BIND 。 `ports` 类别表示漏洞影响通过 Ports Collection 提供的软件。
+* `Module` 字段指的是组件的位置。在这个例子中， `bhyve` 模块受到影响；因此，这个漏洞会影响安装有操作系统的应用程序。
+* `Announced` 字段反映了安全公告发布的日期。这意味着安全团队已经验证了问题的存在，并且已经提交了一个补丁到 FreeBSD 源代码仓库中。
+* `Credits` 字段用于给发现并报告漏洞的个人或组织提供鸣谢。
+* `Affects` 字段说明了哪些版本的 FreeBSD 受到此漏洞的影响。
+* `Corrected` 字段表示修正的日期、时间、时间偏移和修正的发布版本。括号中的部分显示了已合并修复的每个分支，以及该分支对应发布的版本号。发布标识符本身包括版本号和（如果适用）补丁级别。补丁级别是字母 `p` 后跟一个数字，表示补丁的序列号，允许用户跟踪已应用到系统的补丁。
+* `CVE 名称 ` 字段列出了公共 http://cve.mitre.org[cve.mitre.org] 安全漏洞数据库中的咨询编号（如果存在）。
+* `Background` 字段提供了受影响模块的描述。
+* ` 问题描述 ` 字段解释了漏洞的情况。这可能包括有关有缺陷的代码以及如何恶意使用该实用程序的信息。
+* `Impact` 字段描述了问题对系统可能产生的影响类型。
+* `Workaround` 字段指示系统管理员是否可以立即修补系统，以及是否有可用的解决方法。
+* `Solution` 字段提供了修补受影响系统的指令。这是一个经过逐步测试和验证的方法，用于修补系统并确保其安全运行。
+* ` 修正详情 ` 字段显示了每个受影响的 Subversion 或 Git 分支以及包含修正代码的修订版本号。
+* `References` 字段提供了有关漏洞的额外信息的来源。

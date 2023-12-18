@@ -1,17 +1,17 @@
 ---
-description: FreeBSD支持多种语言的本地化，允许用户以非英语语言查看、输入或处理数据。
+description: 'FreeBSD 支持多种语言的本地化，允许用户以非英语语言查看、输入或处理数据。'
 next: books/handbook/cutting-edge
-part: '第三部分. 系统管理'
+part: '第三部分 . 系统管理'
 path: /books/handbook/
 prev: books/handbook/virtualization
 showBookMenu: true
 tags: '["i18n", "L10n", "localization", "Locale", "LANG", "MM_CHARSET", "cap_mkdb"]'
-title: '第25章 本地化 - i18n/L10n 的使用和设置'
+title: '第 25 章 本地化 - i18n/L10n 的使用和设置'
 weight: 29
 ---
 
 [[l10n]]
-= 本地化 - i18n/L10n的使用和设置
+= 本地化 - i18n/L10n 的使用和设置
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -48,22 +48,22 @@ endif::[]
 [[l10n-synopsis]]
 == 简介
 
-FreeBSD是一个分布式项目，用户和贡献者遍布全球。因此，FreeBSD支持多种语言的本地化，允许用户以非英语语言查看、输入或处理数据。可以选择大多数主要语言，包括但不限于：中文、德语、日语、韩语、法语、俄语和越南语。
+FreeBSD 是一个分布式项目，用户和贡献者遍布全球。因此， FreeBSD 支持多种语言的本地化，允许用户以非英语语言查看、输入或处理数据。可以选择大多数主要语言，包括但不限于：中文、德语、日语、韩语、法语、俄语和越南语。
 
-国际化一词被缩写为i18n，代表着“internationalization”中第一个字母和最后一个字母之间的字母数量。L10n使用相同的命名方案，但是从“localization”中计算。i18n/L10n的方法、协议和应用程序允许用户使用他们选择的语言。
+国际化一词被缩写为 i18n ，代表着“ internationalization ”中第一个字母和最后一个字母之间的字母数量。 L10n 使用相同的命名方案，但是从“ localization ”中计算。 i18n/L10n 的方法、协议和应用程序允许用户使用他们选择的语言。
 
-本章讨论了FreeBSD的国际化和本地化功能。阅读本章后，您将了解到：
+本章讨论了 FreeBSD 的国际化和本地化功能。阅读本章后，您将了解到：
 
 * 如何构建区域名称。
-* 如何为登录shell设置区域设置。
+* 如何为登录 shell 设置区域设置。
 * 如何配置控制台以支持非英语语言。
-* 如何为不同的语言配置Xorg。
+* 如何为不同的语言配置 Xorg 。
 * 如何找到符合国际化标准的应用程序。
 * 如何找到配置特定语言的更多信息。
 
 在阅读本章之前，您应该：
 
-* 了解如何交叉引用：ports[ports，安装额外的第三方应用程序]。
+* 了解如何交叉引用： ports[ports ，安装额外的第三方应用程序] 。
 
 [[using-localization]]
 == 使用本地化
@@ -75,7 +75,7 @@ FreeBSD是一个分布式项目，用户和贡献者遍布全球。因此，Free
 LanguageCode_CountryCode.Encoding
 ....
 
-_语言代码_和_国家代码_用于确定国家和特定的语言变体。<<locale-lang-country>>提供了一些__语言代码_国家代码__的示例：
+_语言代码_和_国家代码_用于确定国家和特定的语言变体。 <<locale-lang-country>> 提供了一些__语言代码_国家代码__的示例：
 
 [[locale-lang-country]]
 .常见的语言和国家代码
@@ -84,13 +84,13 @@ _语言代码_和_国家代码_用于确定国家和特定的语言变体。<<lo
 | 语言代码_国家代码
 | 描述
 
-|asciidoc是一种轻量级的标记语言，用于编写技术文档和文档生成工具。它使用简单的文本格式来描述文档的结构和样式，并支持各种功能，如标题、列表、链接、代码块和表格。asciidoc还可以与其他工具集成，如Git和Jenkins，以便更好地管理和自动化文档的生成和发布过程。无论是初学者还是专业人士，asciidoc都是一个强大而灵活的工具，可以帮助您创建高质量的技术文档。
+|asciidoc 是一种轻量级的标记语言，用于编写技术文档和文档生成工具。它使用简单的文本格式来描述文档的结构和样式，并支持各种功能，如标题、列表、链接、代码块和表格。 asciidoc 还可以与其他工具集成，如 Git 和 Jenkins ，以便更好地管理和自动化文档的生成和发布过程。无论是初学者还是专业人士， asciidoc 都是一个强大而灵活的工具，可以帮助您创建高质量的技术文档。
 |英语，美国
 
 |ru_RU
 |俄罗斯，俄罗斯
 
-|你是一個翻譯引擎，精通從英文到中文的翻譯，並且擁有計算機相關領域知識，知道asciidoc格式的規範。請將下面的文本翻譯為中文，不需要解釋，請直接返回譯文。
+|你是一個翻譯引擎，精通從英文到中文的翻譯，並且擁有計算機相關領域知識，知道 asciidoc 格式的規範。請將下面的文本翻譯為中文，不需要解釋，請直接返回譯文。
 |繁體中文，台灣
 |===
 
@@ -108,37 +108,37 @@ _语言代码_和_国家代码_用于确定国家和特定的语言变体。<<lo
 % locale
 ....
 
-特定语言的字符集，如ISO8859-1、ISO8859-15、KOI8-R和CP437，在man:multibyte[3]中有描述。字符集的活动列表可以在http://www.iana.org/assignments/character-sets[IANA注册表]中找到。
+特定语言的字符集，如 ISO8859-1 、 ISO8859-15 、 KOI8-R 和 CP437 ，在 man:multibyte[3] 中有描述。字符集的活动列表可以在 http://www.iana.org/assignments/character-sets[IANA 注册表] 中找到。
 
-一些语言，比如中文或日文，不能用ASCII字符表示，需要使用宽字符或多字节字符的扩展语言编码。宽字符或多字节编码的例子包括EUC和Big5。旧的应用程序可能会将这些编码误认为控制字符，而新的应用程序通常能够识别这些字符。根据实现的不同，用户可能需要使用宽字符或多字节字符支持来编译应用程序，或者正确配置它。
+一些语言，比如中文或日文，不能用 ASCII 字符表示，需要使用宽字符或多字节字符的扩展语言编码。宽字符或多字节编码的例子包括 EUC 和 Big5 。旧的应用程序可能会将这些编码误认为控制字符，而新的应用程序通常能够识别这些字符。根据实现的不同，用户可能需要使用宽字符或多字节字符支持来编译应用程序，或者正确配置它。
 
 [NOTE]
 ====
-FreeBSD使用与Xorg兼容的区域编码。
+FreeBSD 使用与 Xorg 兼容的区域编码。
 ====
 
-本节的其余部分描述了在FreeBSD系统上配置区域设置的各种方法。下一节将讨论查找和编译支持国际化（i18n）的应用程序的注意事项。
+本节的其余部分描述了在 FreeBSD 系统上配置区域设置的各种方法。下一节将讨论查找和编译支持国际化（ i18n ）的应用程序的注意事项。
 
 [[setting-locale]]
-=== 设置登录Shell的区域设置
+=== 设置登录 Shell 的区域设置
 
-区域设置可以在用户的[.filename]#~/.login_conf#文件中或者用户的shell启动文件中进行配置：[.filename]#~/.profile#、[.filename]#~/.bashrc#或者[.filename]#~/.cshrc#。
+区域设置可以在用户的 [.filename]# ~ /.login_conf# 文件中或者用户的 shell 启动文件中进行配置： [.filename]# ~ /.profile# 、 [.filename]# ~ /.bashrc# 或者 [.filename]# ~ /.cshrc# 。
 
 应设置两个环境变量：
 
-* `LANG`，用于设置区域设置
-* `MM_CHARSET`是一个设置应用程序使用的MIME字符集的变量。
+* `LANG` ，用于设置区域设置
+* `MM_CHARSET` 是一个设置应用程序使用的 MIME 字符集的变量。
 
-除了用户的shell配置外，这些变量还应该为特定的应用程序配置和Xorg配置设置。
+除了用户的 shell 配置外，这些变量还应该为特定的应用程序配置和 Xorg 配置设置。
 
-有两种方法可以进行所需的变量赋值：<<login-class,登录类>>方法和<<startup-file,启动文件>>方法。推荐使用登录类方法，下面的两个部分将演示如何使用这两种方法。
+有两种方法可以进行所需的变量赋值： <<login-class ,登录类 >> 方法和 <<startup-file ,启动文件 >> 方法。推荐使用登录类方法，下面的两个部分将演示如何使用这两种方法。
 
 [[login-class]]
 ==== 登录类方法
 
-这是推荐的方法，因为它为每个可能的shell分配了所需的区域设置和MIME字符集的环境变量。这个设置可以由每个用户执行，也可以由超级用户为所有用户配置。
+这是推荐的方法，因为它为每个可能的 shell 分配了所需的区域设置和 MIME 字符集的环境变量。这个设置可以由每个用户执行，也可以由超级用户为所有用户配置。
 
-这个最简示例在个人用户的主目录的[.filename]#.login_conf#文件中设置了两个变量，用于Latin-1编码。
+这个最简示例在个人用户的主目录的 [.filename]#.login_conf# 文件中设置了两个变量，用于 Latin-1 编码。
 
 [.programlisting]
 ....
@@ -147,7 +147,7 @@ me:\
 	:lang=de_DE.ISO8859-1:
 ....
 
-这是一个用户的示例[.filename]#~/.login_conf#，它设置了使用BIG-5编码的繁体中文的变量。由于一些应用程序不正确地遵守中文、日文和韩文的区域变量，因此需要更多的变量。
+这是一个用户的示例 [.filename]# ~ /.login_conf# ，它设置了使用 BIG-5 编码的繁体中文的变量。由于一些应用程序不正确地遵守中文、日文和韩文的区域变量，因此需要更多的变量。
 
 [.programlisting]
 ....
@@ -160,7 +160,7 @@ me:\
 	:xmodifiers="@im=gcin": #Set gcin as the XIM Input Server
 ....
 
-超级用户可以选择配置系统中的所有用户进行本地化。在/etc/login.conf文件中，可以使用以下变量来设置区域设置和MIME字符集：
+超级用户可以选择配置系统中的所有用户进行本地化。在 /etc/login.conf 文件中，可以使用以下变量来设置区域设置和 MIME 字符集：
 
 [.programlisting]
 ....
@@ -170,7 +170,7 @@ language_name|Account Type Description:\
 	:tc=default:
 ....
 
-因此，前面的Latin-1示例将如下所示：
+因此，前面的 Latin-1 示例将如下所示：
 
 [.programlisting]
 ....
@@ -180,7 +180,7 @@ german|German Users Accounts:\
 	:tc=default:
 ....
 
-请参阅man:login.conf[5]以获取有关这些变量的更多详细信息。请注意，它已经包含了预定义的_russian_类。
+请参阅 man:login.conf[5] 以获取有关这些变量的更多详细信息。请注意，它已经包含了预定义的_russian_类。
 
 每当编辑 [.filename]#/etc/login.conf# 文件时，请记得执行以下命令来更新能力数据库：
 
@@ -191,12 +191,12 @@ german|German Users Accounts:\
 
 [NOTE]
 ====
-对于最终用户来说，需要在他们的`.login_conf`文件上运行`cap_mkdb`命令，以使任何更改生效。
+对于最终用户来说，需要在他们的 `.login_conf` 文件上运行 `cap_mkdb` 命令，以使任何更改生效。
 ====
 
 ===== 更改登录类别的实用工具
 
-除了手动编辑/etc/login.conf文件外，还有一些工具可用于设置新创建用户的区域设置。
+除了手动编辑 /etc/login.conf 文件外，还有一些工具可用于设置新创建用户的区域设置。
 
 使用 `vipw` 添加新用户时，需要指定 _language_ 来设置区域设置：
 
@@ -205,9 +205,9 @@ german|German Users Accounts:\
 user:password:1111:11:language:0:0:User Name:/home/user:/bin/sh
 ....
 
-当使用`adduser`命令添加新用户时，可以预先配置默认语言适用于所有新用户，或者为单个用户指定语言。
+当使用 `adduser` 命令添加新用户时，可以预先配置默认语言适用于所有新用户，或者为单个用户指定语言。
 
-如果所有新用户使用相同的语言，请在[.filename]#/etc/adduser.conf#中设置`defaultclass=_language_`。
+如果所有新用户使用相同的语言，请在 [.filename]#/etc/adduser.conf# 中设置 `defaultclass =_language_` 。
 
 要在创建用户时覆盖此设置，请在此提示处输入所需的区域设置：
 
@@ -216,21 +216,21 @@ user:password:1111:11:language:0:0:User Name:/home/user:/bin/sh
 Enter login class: default []:
 ....
 
-或者在调用`adduser`时指定要设置的区域设置：
+或者在调用 `adduser` 时指定要设置的区域设置：
 
 [source, shell]
 ....
 # adduser -class language
 ....
 
-如果使用`pw`来添加新用户，请按照以下方式指定区域设置：
+如果使用 `pw` 来添加新用户，请按照以下方式指定区域设置：
 
 [source, shell]
 ....
 # pw useradd user_name -L language
 ....
 
-要更改现有用户的登录类别，可以使用`chpass`命令。以超级用户身份调用该命令，并将要编辑的用户名作为参数提供。
+要更改现有用户的登录类别，可以使用 `chpass` 命令。以超级用户身份调用该命令，并将要编辑的用户名作为参数提供。
 
 [source, shell]
 ....
@@ -239,9 +239,9 @@ Enter login class: default []:
 
 
 [[startup-file]]
-==== Shell启动文件方法
+==== Shell 启动文件方法
 
-不推荐使用第二种方法，因为每个使用的shell都需要手动配置，每个shell都有不同的配置文件和语法。例如，要为`sh` shell设置德语语言，可以将以下行添加到`.filename`文件中的`~/.profile`中，以仅为该用户设置shell。这些行也可以添加到`/etc/profile`或`/usr/share/skel/dot.profile`中，以为所有用户设置该shell。
+不推荐使用第二种方法，因为每个使用的 shell 都需要手动配置，每个 shell 都有不同的配置文件和语法。例如，要为 `sh` shell 设置德语语言，可以将以下行添加到 `.filename` 文件中的 ` ~ /.profile` 中，以仅为该用户设置 shell 。这些行也可以添加到 `/etc/profile` 或 `/usr/share/skel/dot.profile` 中，以为所有用户设置该 shell 。
 
 [.programlisting]
 ....
@@ -249,7 +249,7 @@ LANG=de_DE.ISO8859-1; export LANG
 MM_CHARSET=ISO-8859-1; export MM_CHARSET
 ....
 
-然而，对于`csh` shell，配置文件的名称和使用的语法有所不同。以下是与[.filename]#~/.login#、[.filename]#/etc/csh.login#或[.filename]#/usr/share/skel/dot.login#等效的设置：
+然而，对于 `csh` shell ，配置文件的名称和使用的语法有所不同。以下是与 [.filename]# ~ /.login# 、 [.filename]#/etc/csh.login# 或 [.filename]#/usr/share/skel/dot.login# 等效的设置：
 
 [.programlisting]
 ....
@@ -257,7 +257,7 @@ setenv LANG de_DE.ISO8859-1
 setenv MM_CHARSET ISO-8859-1
 ....
 
-为了使事情变得复杂，配置Xorg所需的语法也取决于shell。第一个示例适用于`sh` shell，第二个示例适用于`csh` shell：
+为了使事情变得复杂，配置 Xorg 所需的语法也取决于 shell 。第一个示例适用于 `sh` shell ，第二个示例适用于 `csh` shell ：
 
 [.programlisting]
 ....
@@ -274,7 +274,7 @@ setenv LANG de_DE.ISO8859-1
 [[setting-console]]
 === 控制台设置
 
-控制台提供了几种本地化字体。要查看可用字体的列表，请键入`ls /usr/share/syscons/fonts`。要配置控制台字体，请在`/etc/rc.conf`中指定字体名称，不包括`.fnt`后缀。
+控制台提供了几种本地化字体。要查看可用字体的列表，请键入 `ls /usr/share/syscons/fonts` 。要配置控制台字体，请在 `/etc/rc.conf` 中指定字体名称，不包括 `.fnt` 后缀。
 
 [.programlisting]
 ....
@@ -283,7 +283,7 @@ font8x14=font_name
 font8x8=font_name
 ....
 
-可以通过将以下内容添加到[/etc/rc.conf]来设置键位映射和屏幕映射：
+可以通过将以下内容添加到 [/etc/rc.conf] 来设置键位映射和屏幕映射：
 
 [.programlisting]
 ....
@@ -292,13 +292,13 @@ keymap=keymap_name
 keychange="fkey_number sequence"
 ....
 
-要查看可用的屏幕映射列表，请键入`ls /usr/share/syscons/scrnmaps`。在指定_screenmap_name_时，请不要包括[.filename]#.scm#后缀。通常需要具有相应映射字体的屏幕映射作为解决方案，以便将位8扩展到VGA适配器的字体字符矩阵的位9，以便在屏幕字体使用位8列时将字母移出伪图形区域。
+要查看可用的屏幕映射列表，请键入 `ls /usr/share/syscons/scrnmaps` 。在指定_screenmap_name_时，请不要包括 [.filename]#.scm# 后缀。通常需要具有相应映射字体的屏幕映射作为解决方案，以便将位 8 扩展到 VGA 适配器的字体字符矩阵的位 9 ，以便在屏幕字体使用位 8 列时将字母移出伪图形区域。
 
-要查看可用的键盘映射列表，请输入 `ls /usr/share/syscons/keymaps`。在指定 _keymap_name_ 时，不要包括 [.filename]#.kbd# 后缀。要在不重新启动的情况下测试键盘映射，请使用 man:kbdmap[1]。
+要查看可用的键盘映射列表，请输入 `ls /usr/share/syscons/keymaps` 。在指定 _keymap_name_ 时，不要包括 [.filename]#.kbd# 后缀。要在不重新启动的情况下测试键盘映射，请使用 man:kbdmap[1] 。
 
-通常需要使用`keychange`条目来将功能键编程为与所选终端类型匹配，因为功能键序列无法在键映射中定义。
+通常需要使用 `keychange` 条目来将功能键编程为与所选终端类型匹配，因为功能键序列无法在键映射中定义。
 
-接下来，在所有虚拟终端条目的[.filename]#/etc/ttys#中设置正确的控制台终端类型。<<locale-charset>>总结了可用的终端类型。
+接下来，在所有虚拟终端条目的 [.filename]#/etc/ttys# 中设置正确的控制台终端类型。 <<locale-charset>> 总结了可用的终端类型。
 
 [[locale-charset]]
 .字符集的终端类型定义
@@ -307,68 +307,68 @@ keychange="fkey_number sequence"
 | 字符集
 | 终端类型
 
-|ISO8859-1或ISO8859-15
-|`cons25l1`是一个计算机术语，指的是Linux内核中的一个选项。它是Linux控制台的一种显示模式，用于支持25行的文本显示，并且只能显示一种颜色。
+|ISO8859-1 或 ISO8859-15
+|`cons25l1` 是一个计算机术语，指的是 Linux 内核中的一个选项。它是 Linux 控制台的一种显示模式，用于支持 25 行的文本显示，并且只能显示一种颜色。
 
-|ISO8859-2是一种字符编码标准，用于表示中欧和东欧语言中的字符。它是ISO/IEC 8859系列的一部分，也被称为Latin-2编码。ISO8859-2支持包括捷克语、斯洛伐克语、波兰语、匈牙利语和罗马尼亚语在内的多种语言。
-|`cons25l2` 是一个计算机术语，指的是一种基于25行的低分辨率控制台显示器。
+|ISO8859-2 是一种字符编码标准，用于表示中欧和东欧语言中的字符。它是 ISO/IEC 8859 系列的一部分，也被称为 Latin-2 编码。 ISO8859-2 支持包括捷克语、斯洛伐克语、波兰语、匈牙利语和罗马尼亚语在内的多种语言。
+|`cons25l2` 是一个计算机术语，指的是一种基于 25 行的低分辨率控制台显示器。
 
-|ISO8859-7是一种字符编码标准，用于表示希腊语字符集。
-|`cons25l7` 是一个计算机术语，它可能指的是一个特定的终端类型或终端模拟器。具体而言，`cons25l7` 可能代表一个具有 25 行和 7 列的字符终端。这种终端通常用于文本界面的显示和输入，例如在命令行界面中使用。
+|ISO8859-7 是一种字符编码标准，用于表示希腊语字符集。
+|`cons25l7` 是一个计算机术语，它可能指的是一个特定的终端类型或终端模拟器。具体而言， `cons25l7` 可能代表一个具有 25 行和 7 列的字符终端。这种终端通常用于文本界面的显示和输入，例如在命令行界面中使用。
 
-|KOI8-R是一种字符编码，用于将俄语文本转换为计算机可读的格式。它是基于KOI8编码的一种变体，主要用于俄罗斯和其他一些国家的计算机系统中。KOI8-R编码包含了俄语字母、标点符号和其他特殊字符，可以在计算机系统中正确显示和处理俄语文本。
-|`cons25r` 是一个计算机术语，指的是一个用于控制终端显示的设备驱动程序。它通常用于支持终端的25行显示模式。
+|KOI8-R 是一种字符编码，用于将俄语文本转换为计算机可读的格式。它是基于 KOI8 编码的一种变体，主要用于俄罗斯和其他一些国家的计算机系统中。 KOI8-R 编码包含了俄语字母、标点符号和其他特殊字符，可以在计算机系统中正确显示和处理俄语文本。
+|`cons25r` 是一个计算机术语，指的是一个用于控制终端显示的设备驱动程序。它通常用于支持终端的 25 行显示模式。
 
-|KOI8-U是一种字符编码，用于表示乌克兰语和白俄罗斯语等斯拉夫语言。它是KOI8编码的一个变种，支持乌克兰语和白俄罗斯语中的特殊字符。KOI8-U编码在计算机领域中广泛使用，特别是在早期的Unix系统和电子邮件中。
-|`cons25u`是一个计算机术语，指的是一种特定的终端类型。
+|KOI8-U 是一种字符编码，用于表示乌克兰语和白俄罗斯语等斯拉夫语言。它是 KOI8 编码的一个变种，支持乌克兰语和白俄罗斯语中的特殊字符。 KOI8-U 编码在计算机领域中广泛使用，特别是在早期的 Unix 系统和电子邮件中。
+|`cons25u` 是一个计算机术语，指的是一种特定的终端类型。
 
-|CP437（VGA默认）
-|`cons25`是一个计算机术语，指的是一种终端类型。它是一种基于文本的终端，具有25行和80列的显示屏。这种终端通常用于命令行界面和文本编辑器等应用程序。
+|CP437 （ VGA 默认）
+|`cons25` 是一个计算机术语，指的是一种终端类型。它是一种基于文本的终端，具有 25 行和 80 列的显示屏。这种终端通常用于命令行界面和文本编辑器等应用程序。
 
-|美国标准信息交换码（US-ASCII）
-|`cons25w` 是一个计算机术语，指的是一个具有25列字符宽度的控制台或终端。
+|美国标准信息交换码（ US-ASCII ）
+|`cons25w` 是一个计算机术语，指的是一个具有 25 列字符宽度的控制台或终端。
 |===
 
-对于具有宽字符或多字节字符的语言，请从FreeBSD Ports Collection中安装适用于该语言的控制台。可用的端口在<<locale-console>>中进行了总结。安装完成后，请参考端口的[.filename]#pkg-message#或man页面以获取配置和使用说明。
+对于具有宽字符或多字节字符的语言，请从 FreeBSD Ports Collection 中安装适用于该语言的控制台。可用的端口在 <<locale-console>> 中进行了总结。安装完成后，请参考端口的 [.filename]#pkg-message# 或 man 页面以获取配置和使用说明。
 
 [[locale-console]]
-.从Ports Collection可用的控制台
+.从 Ports Collection 可用的控制台
 [cols="1,1", frame="none", options="header"]
 |===
 | 语言
 | 端口位置
 
-|繁体中文（BIG-5）
-|包：chinese/big5con[]
+|繁体中文（ BIG-5 ）
+|包： chinese/big5con[]
 
-|中文/日文/韩文
-|包：chinese/cce[]
+|中文 / 日文 / 韩文
+|包： chinese/cce[]
 
-|中文/日文/韩文
-|包：chinese/zhcon[]
-
-|日本人
-|包：chinese/kon2[]
+|中文 / 日文 / 韩文
+|包： chinese/zhcon[]
 
 |日本人
-|包：日语/kon2-14点[]
+|包： chinese/kon2[]
 
 |日本人
-|包：japanese/kon2-16dot[]
+|包：日语 /kon2-14 点 []
+
+|日本人
+|包： japanese/kon2-16dot[]
 |===
 
-如果在[/etc/rc.conf]中启用了鼠标，可能需要进行额外的配置。默认情况下，man:syscons[4]驱动程序的鼠标光标占用字符集中的`0xd0`-`0xd3`范围。如果语言使用此范围，请通过在[/etc/rc.conf]中添加以下行来移动光标的范围：
+如果在 [/etc/rc.conf] 中启用了鼠标，可能需要进行额外的配置。默认情况下， man:syscons[4] 驱动程序的鼠标光标占用字符集中的 `0xd0`-`0xd3` 范围。如果语言使用此范围，请通过在 [/etc/rc.conf] 中添加以下行来移动光标的范围：
 
 [.programlisting]
 ....
 mousechar_start=3
 ....
 
-=== Xorg设置
+=== Xorg 设置
 
-crossref:x11[x11，X Window系统]描述了如何安装和配置Xorg。在配置Xorg进行本地化时，可以从FreeBSD Ports Collection中获取额外的字体和输入法。应用程序特定的国际化设置，如字体和菜单，可以在[.filename]#~/.Xresources#中进行调整，这样用户就可以在图形应用程序菜单中查看他们选择的语言。
+crossref:x11[x11 ， X Window 系统] 描述了如何安装和配置 Xorg 。在配置 Xorg 进行本地化时，可以从 FreeBSD Ports Collection 中获取额外的字体和输入法。应用程序特定的国际化设置，如字体和菜单，可以在 [.filename]# ~ /.Xresources# 中进行调整，这样用户就可以在图形应用程序菜单中查看他们选择的语言。
 
-X输入法（XIM）协议是用于输入非英语字符的Xorg标准。<<locale-xim>>总结了在FreeBSD Ports Collection中可用的输入法应用程序。还有其他Fcitx和Uim应用程序可用。
+X 输入法（ XIM ）协议是用于输入非英语字符的 Xorg 标准。 <<locale-xim>> 总结了在 FreeBSD Ports Collection 中可用的输入法应用程序。还有其他 Fcitx 和 Uim 应用程序可用。
 
 [[locale-xim]]
 .可用的输入方法
@@ -378,34 +378,34 @@ X输入法（XIM）协议是用于输入非英语字符的Xorg标准。<<locale-
 | 输入法
 
 |中文
-|包：chinese/gcin[]
+|包： chinese/gcin[]
 
 |中文
-|包：chinese/ibus-chewing[]
+|包： chinese/ibus-chewing[]
 
 |中文
-|包：chinese/ibus-pinyin[]
+|包： chinese/ibus-pinyin[]
 
 |中文
-|包：chinese/oxim[]
+|包： chinese/oxim[]
 
 |中文
-|包：chinese/scim-fcitx[]
+|包： chinese/scim-fcitx[]
 
 |中文
-|包：chinese/scim-pinyin[]
+|包： chinese/scim-pinyin[]
 
 |中文
-|包：chinese/scim-tables[]
+|包： chinese/scim-tables[]
 
 |日本人
-|包：japanese/ibus-anthy[]
+|包： japanese/ibus-anthy[]
 
 |日本人
-|包：japanese/ibus-mozc[]
+|包： japanese/ibus-mozc[]
 
 |日本人
-|包：日语/ibus-skk[]
+|包：日语 /ibus-skk[]
 
 |日本人
 |package:japanese/im-ja[]
@@ -414,22 +414,22 @@ X输入法（XIM）协议是用于输入非英语字符的Xorg标准。<<locale-
 |package:japanese/kinput2[]
 
 |日本人
-|包：japanese/scim-anthy[]
+|包： japanese/scim-anthy[]
 
 |日本人
-|包：japanese/scim-canna[]
+|包： japanese/scim-canna[]
 
 |日本人
-|包：japanese/scim-honoka[]
+|包： japanese/scim-honoka[]
 
 |日本人
-|包：japanese/scim-honoka-plugin-romkan[]
+|包： japanese/scim-honoka-plugin-romkan[]
 
 |日本人
-|包：japanese/scim-honoka-plugin-wnn[]
+|包： japanese/scim-honoka-plugin-wnn[]
 
 |日本人
-|包：japanese/scim-prime[]
+|包： japanese/scim-prime[]
 
 |日本人
 |package:japanese/scim-skk[]
@@ -438,10 +438,10 @@ X输入法（XIM）协议是用于输入非英语字符的Xorg标准。<<locale-
 |package:japanese/scim-tables[]
 
 |日本人
-|包：japanese/scim-tomoe[]
+|包： japanese/scim-tomoe[]
 
 |日本人
-|包：japanese/scim-uim[]
+|包： japanese/scim-uim[]
 
 |日本人
 |package:japanese/skkinput[]
@@ -450,7 +450,7 @@ X输入法（XIM）协议是用于输入非英语字符的Xorg标准。<<locale-
 |package:japanese/skkinput3[]
 
 |日本人
-|包：japanese/uim-anthy[]
+|包： japanese/uim-anthy[]
 
 |韩国人
 |package:korean/ibus-hangul[]
@@ -459,7 +459,7 @@ X输入法（XIM）协议是用于输入非英语字符的Xorg标准。<<locale-
 |package:korean/imhangul[]
 
 |韩国人
-|包：韩国/纳比[]
+|包：韩国 / 纳比 []
 
 |韩国人
 |package:korean/scim-hangul[]
@@ -477,23 +477,23 @@ X输入法（XIM）协议是用于输入非英语字符的Xorg标准。<<locale-
 [[l10n-compiling]]
 == 寻找国际化应用程序
 
-国际化（i18n）应用程序是使用库中的国际化工具包进行编程的。这些工具包允许开发人员编写一个简单的文件，并将显示的菜单和文本翻译成每种语言。
+国际化（ i18n ）应用程序是使用库中的国际化工具包进行编程的。这些工具包允许开发人员编写一个简单的文件，并将显示的菜单和文本翻译成每种语言。
 
-链接：https://www.FreeBSD.org/ports/[FreeBSD Ports Collection] 包含许多应用程序，这些应用程序内置了对多种语言的宽字符或多字节字符的支持。这些应用程序的名称中包含“i18n”，以便于识别。然而，它们并不总是支持所需的语言。
+链接： https://www.FreeBSD.org/ports/[FreeBSD Ports Collection] 包含许多应用程序，这些应用程序内置了对多种语言的宽字符或多字节字符的支持。这些应用程序的名称中包含“ i18n ”，以便于识别。然而，它们并不总是支持所需的语言。
 
-一些应用程序可以使用特定的字符集进行编译。通常在端口的Makefile文件中完成，或者通过传递一个值给configure来实现。有关如何确定所需的configure值或在构建端口时使用哪些编译选项的更多信息，请参阅相应的FreeBSD端口源代码中的i18n文档。
+一些应用程序可以使用特定的字符集进行编译。通常在端口的 Makefile 文件中完成，或者通过传递一个值给 configure 来实现。有关如何确定所需的 configure 值或在构建端口时使用哪些编译选项的更多信息，请参阅相应的 FreeBSD 端口源代码中的 i18n 文档。
 
 [[lang-setup]]
 == 特定语言的区域配置
 
-本节提供了将FreeBSD系统本地化为俄语的配置示例。然后，它还提供了一些本地化其他语言的附加资源。
+本节提供了将 FreeBSD 系统本地化为俄语的配置示例。然后，它还提供了一些本地化其他语言的附加资源。
 
 [[ru-localize]]
-=== 俄语（KOI8-R 编码）
+=== 俄语（ KOI8-R 编码）
 
-本节展示了将FreeBSD系统本地化为俄语所需的具体设置。有关每种类型设置的更详细描述，请参阅<<using-localization,使用本地化>>。
+本节展示了将 FreeBSD 系统本地化为俄语所需的具体设置。有关每种类型设置的更详细描述，请参阅 <<using-localization ,使用本地化 >> 。
 
-要为登录shell设置此区域设置，请将以下行添加到每个用户的[.filename]#~/.login_conf#文件中：
+要为登录 shell 设置此区域设置，请将以下行添加到每个用户的 [.filename]# ~ /.login_conf# 文件中：
 
 [.programlisting]
 ....
@@ -502,7 +502,7 @@ me:My Account:\
 	:lang=ru_RU.KOI8-R:
 ....
 
-要配置控制台，请将以下行添加到[/etc/rc.conf]文件中：
+要配置控制台，请将以下行添加到 [/etc/rc.conf] 文件中：
 
 [.programlisting]
 ....
@@ -514,9 +514,9 @@ font8x8="cp866-8x8"
 mousechar_start=3
 ....
 
-对于[/etc/ttys]中的每个`ttyv`条目，请使用`cons25r`作为终端类型。
+对于 [/etc/ttys] 中的每个 `ttyv` 条目，请使用 `cons25r` 作为终端类型。
 
-要配置打印，需要一个特殊的输出过滤器，将KOI8-R转换为CP866，因为大多数带有俄语字符的打印机都配备了硬件代码页CP866。FreeBSD包含了一个默认的过滤器，位于[/usr/libexec/lpr/ru/koi2alt]。要使用这个过滤器，将以下条目添加到[/etc/printcap]中：
+要配置打印，需要一个特殊的输出过滤器，将 KOI8-R 转换为 CP866 ，因为大多数带有俄语字符的打印机都配备了硬件代码页 CP866 。 FreeBSD 包含了一个默认的过滤器，位于 [/usr/libexec/lpr/ru/koi2alt] 。要使用这个过滤器，将以下条目添加到 [/etc/printcap] 中：
 
 [.programlisting]
 ....
@@ -525,25 +525,25 @@ lp|Russian local line printer:\
 	:lp=/dev/lpt0:sd=/var/spool/output/lpd:lf=/var/log/lpd-errs:
 ....
 
-请参考man:printcap[5]以获取更详细的解释。
+请参考 man:printcap[5] 以获取更详细的解释。
 
-要在挂载的MS-DOS(R)文件系统中配置对俄语文件名的支持，请在向[/etc/fstab]添加条目时包括`-L`和区域设置名称：
+要在挂载的 MS-DOS(R) 文件系统中配置对俄语文件名的支持，请在向 [/etc/fstab] 添加条目时包括 `-L` 和区域设置名称：
 
 [.programlisting]
 ....
 /dev/ad0s2      /dos/c  msdos   rw,-Lru_RU.KOI8-R 0 0
 ....
 
-请参考man:mount_msdosfs[8]获取更多详细信息。
+请参考 man:mount_msdosfs[8] 获取更多详细信息。
 
-要为Xorg配置俄文字体，请安装包：x11-fonts/xorg-fonts-cyrillic[]。然后，在[.filename]#/etc/X11/xorg.conf#中检查`"Files"`部分。以下行必须在任何其他`FontPath`条目之前添加：
+要为 Xorg 配置俄文字体，请安装包： x11-fonts/xorg-fonts-cyrillic[] 。然后，在 [.filename]#/etc/X11/xorg.conf# 中检查 `"Files"` 部分。以下行必须在任何其他 `FontPath` 条目之前添加：
 
 [.programlisting]
 ....
 FontPath   "/usr/local/lib/X11/fonts/cyrillic"
 ....
 
-在Ports Collection中提供了额外的西里尔字体。
+在 Ports Collection 中提供了额外的西里尔字体。
 
 要激活俄语键盘，请将以下内容添加到 [.filename]#/etc/xorg.conf# 文件的 `"Keyboard"` 部分：
 
@@ -553,11 +553,11 @@ Option "XkbLayout"   "us,ru"
 Option "XkbOptions"  "grp:toggle"
 ....
 
-确保在该文件中将`XkbDisable`注释掉。
+确保在该文件中将 `XkbDisable` 注释掉。
 
-对于 `grp:toggle`，使用 kbd:[右Alt]；对于 `grp:ctrl_shift_toggle`，使用 kbd:[Ctrl+Shift]；对于 `grp:caps_toggle`，使用 kbd:[CapsLock]。在LAT模式下，仍然可以使用旧的 kbd:[CapsLock] 功能，使用 kbd:[Shift+CapsLock]。由于某种未知的原因，`grp:caps_toggle` 在Xorg中无法正常工作。
+对于 `grp:toggle` ，使用 kbd:[右 Alt] ；对于 `grp:ctrl_shift_toggle` ，使用 kbd:[Ctrl + Shift] ；对于 `grp:caps_toggle` ，使用 kbd:[CapsLock] 。在 LAT 模式下，仍然可以使用旧的 kbd:[CapsLock] 功能，使用 kbd:[Shift + CapsLock] 。由于某种未知的原因， `grp:caps_toggle` 在 Xorg 中无法正常工作。
 
-如果键盘上有"Windows(R)"键，并且一些非字母键映射不正确，请将以下行添加到[.filename]#/etc/xorg.conf#文件中：
+如果键盘上有"Windows(R)"键，并且一些非字母键映射不正确，请将以下行添加到 [.filename]#/etc/xorg.conf# 文件中：
 
 [.programlisting]
 ....
@@ -566,23 +566,23 @@ Option "XkbVariant" ",winkeys"
 
 [NOTE]
 ====
-俄罗斯的XKB键盘可能无法与非本地化的应用程序配合使用。最低程度的本地化应用程序应在程序早期调用`XtSetLanguageProc(NULL, NULL, NULL);`函数。
+俄罗斯的 XKB 键盘可能无法与非本地化的应用程序配合使用。最低程度的本地化应用程序应在程序早期调用 `XtSetLanguageProc(NULL , NULL , NULL) ; ` 函数。
 ====
 
-请参考http://koi8.pp.ru/xwin.html[http://koi8.pp.ru/xwin.html]获取有关本地化Xorg应用程序的更多说明。有关KOI8-R编码的更一般信息，请参考http://koi8.pp.ru/[http://koi8.pp.ru/]。
+请参考 http://koi8.pp.ru/xwin.html[http://koi8.pp.ru/xwin.html] 获取有关本地化 Xorg 应用程序的更多说明。有关 KOI8-R 编码的更一般信息，请参考 http://koi8.pp.ru/[http://koi8.pp.ru/] 。
 
 === 其他语言特定资源
 
 本节列出了一些配置其他区域设置的附加资源。
 
 繁體中文（台灣）::
-FreeBSD-Taiwan项目在http://netlab.cse.yzu.edu.tw/\~statue/freebsd/zh-tut/上提供了一份关于FreeBSD的中文HOWTO文档。
+FreeBSD-Taiwan 项目在 http://netlab.cse.yzu.edu.tw/ \~ statue/freebsd/zh-tut/ 上提供了一份关于 FreeBSD 的中文 HOWTO 文档。
 
 希腊语本地化::
-有关FreeBSD中希腊语支持的完整文章可以在此处找到：https://www.FreeBSD.org/doc/gr/articles/greek-language-support/，该文章仅以希腊语提供，并作为官方FreeBSD希腊文档的一部分。
+有关 FreeBSD 中希腊语支持的完整文章可以在此处找到： https://www.FreeBSD.org/doc/gr/articles/greek-language-support/ ，该文章仅以希腊语提供，并作为官方 FreeBSD 希腊文档的一部分。
 
 日本语和韩国语本地化::
-对于日语，请参考http://www.jp.FreeBSD.org/[http://www.jp.FreeBSD.org/]，对于韩语，请参考http://www.kr.FreeBSD.org/[http://www.kr.FreeBSD.org/]。
+对于日语，请参考 http://www.jp.FreeBSD.org/[http://www.jp.FreeBSD.org/] ，对于韩语，请参考 http://www.kr.FreeBSD.org/[http://www.kr.FreeBSD.org/] 。
 
-非英语的FreeBSD文档::
-一些FreeBSD的贡献者已经将FreeBSD文档的部分内容翻译成其他语言。这些翻译可以通过[FreeBSD网站](https://www.FreeBSD.org/)上的链接或者在`/usr/share/doc`目录中找到。
+非英语的 FreeBSD 文档::
+一些 FreeBSD 的贡献者已经将 FreeBSD 文档的部分内容翻译成其他语言。这些翻译可以通过 [FreeBSD 网站](https://www.FreeBSD.org/) 上的链接或者在 `/usr/share/doc` 目录中找到。

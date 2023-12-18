@@ -1,12 +1,12 @@
 ---
-description: 本章介绍了在FreeBSD中使用磁盘和存储介质的方法。这包括SCSI和IDE磁盘、CD和DVD介质、内存支持的磁盘以及USB存储设备。
+description: '本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、 CD 和 DVD 介质、内存支持的磁盘以及 USB 存储设备。'
 next: books/handbook/geom
-part: '第三部分. 系统管理'
+part: '第三部分 . 系统管理'
 path: /books/handbook/
 prev: books/handbook/audit
 showBookMenu: true
 tags: '["storage", "disks", "gpart", "mount", "quotas", "encrypt", "GPT", "cdrecord", "NTFS", "quotas", "swap", "HAST", "CD", "DVD", "resizing", "growing"]'
-title: '第20章 存储'
+title: '第 20 章 存储'
 weight: 24
 ---
 
@@ -48,15 +48,15 @@ endif::[]
 [[disks-synopsis]]
 == 概要
 
-本章介绍了在FreeBSD中使用磁盘和存储介质的方法。这包括SCSI和IDE磁盘、CD和DVD媒体、内存支持的磁盘以及USB存储设备。
+本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、 CD 和 DVD 媒体、内存支持的磁盘以及 USB 存储设备。
 
 阅读完本章后，您将了解：
 
-* 如何向FreeBSD系统添加额外的硬盘。
-* 如何在FreeBSD上扩大磁盘分区的大小。
-* 如何配置FreeBSD以使用USB存储设备。
-* 如何在FreeBSD系统上使用CD和DVD媒体。
-* 如何使用FreeBSD下可用的备份程序。
+* 如何向 FreeBSD 系统添加额外的硬盘。
+* 如何在 FreeBSD 上扩大磁盘分区的大小。
+* 如何配置 FreeBSD 以使用 USB 存储设备。
+* 如何在 FreeBSD 系统上使用 CD 和 DVD 媒体。
+* 如何使用 FreeBSD 下可用的备份程序。
 * 如何设置内存磁盘。
 * 文件系统快照是什么以及如何高效使用它们。
 * 如何使用配额限制磁盘空间使用。
@@ -65,20 +65,20 @@ endif::[]
 
 在阅读本章之前，您应该：
 
-* 了解如何交叉引用：kernelconfig[kernelconfig，配置和安装新的FreeBSD内核]。
+* 了解如何交叉引用： kernelconfig[kernelconfig ，配置和安装新的 FreeBSD 内核] 。
 
 [[disks-adding]]
 == 添加磁盘
 
-本节描述了如何将一个新的SATA硬盘添加到目前只有一个驱动器的计算机中。首先，关闭计算机，并按照计算机、控制器和硬盘制造商的说明将硬盘安装到计算机中。重新启动系统并成为“root”用户。
+本节描述了如何将一个新的 SATA 硬盘添加到目前只有一个驱动器的计算机中。首先，关闭计算机，并按照计算机、控制器和硬盘制造商的说明将硬盘安装到计算机中。重新启动系统并成为“ root ”用户。
 
-检查 [.filename]#/var/run/dmesg.boot# 确保新的磁盘被找到。在这个例子中，新添加的SATA驱动器将会显示为 [.filename]#ada1#。
+检查 [.filename]#/var/run/dmesg.boot# 确保新的磁盘被找到。在这个例子中，新添加的 SATA 驱动器将会显示为 [.filename]#ada1# 。
 
-对于这个示例，将在新磁盘上创建一个单独的大分区。优先使用http://en.wikipedia.org/wiki/GUID_Partition_Table[GPT]分区方案，而不是较旧且功能较少的MBR方案。
+对于这个示例，将在新磁盘上创建一个单独的大分区。优先使用 http://en.wikipedia.org/wiki/GUID_Partition_Table[GPT] 分区方案，而不是较旧且功能较少的 MBR 方案。
 
 [NOTE]
 ====
-如果要添加的磁盘不是空白的，则可以使用`gpart delete`命令删除旧的分区信息。有关详细信息，请参阅man:gpart[8]。
+如果要添加的磁盘不是空白的，则可以使用 `gpart delete` 命令删除旧的分区信息。有关详细信息，请参阅 man:gpart[8] 。
 ====
 
 创建了分区方案，然后添加了一个单独的分区。为了提高在具有更大硬件块大小的新磁盘上的性能，该分区被对齐到每个一兆字节边界。
@@ -89,9 +89,9 @@ endif::[]
 # gpart add -t freebsd-ufs -a 1M ada1
 ....
 
-根据使用情况，可能需要创建几个较小的分区。有关创建小于整个磁盘的分区的选项，请参阅man:gpart[8]。
+根据使用情况，可能需要创建几个较小的分区。有关创建小于整个磁盘的分区的选项，请参阅 man:gpart[8] 。
 
-可以使用`gpart show`命令查看磁盘分区信息：
+可以使用 `gpart show` 命令查看磁盘分区信息：
 
 [source, shell]
 ....
@@ -116,7 +116,7 @@ endif::[]
 # mkdir /newdisk
 ....
 
-最后，将一个条目添加到[/etc/fstab]文件中，以便新的磁盘在启动时自动挂载：
+最后，将一个条目添加到 [/etc/fstab] 文件中，以便新的磁盘在启动时自动挂载：
 
 [.programlisting]
 ....
@@ -133,9 +133,9 @@ endif::[]
 [[disks-growing]]
 == 调整和扩展磁盘大小
 
-磁盘的容量可以增加而不影响已有的数据。这在虚拟机中经常发生，当虚拟磁盘太小而需要扩大时。有时候，磁盘镜像被写入到USB存储设备中，但没有使用完整的容量。在这里，我们将描述如何调整或“增加”磁盘内容以利用增加的容量。
+磁盘的容量可以增加而不影响已有的数据。这在虚拟机中经常发生，当虚拟磁盘太小而需要扩大时。有时候，磁盘镜像被写入到 USB 存储设备中，但没有使用完整的容量。在这里，我们将描述如何调整或“增加”磁盘内容以利用增加的容量。
 
-通过检查[/var/run/dmesg.boot]来确定要调整大小的磁盘的设备名称。在这个例子中，系统中只有一个SATA磁盘，所以该驱动器将显示为ada0。
+通过检查 [/var/run/dmesg.boot] 来确定要调整大小的磁盘的设备名称。在这个例子中，系统中只有一个 SATA 磁盘，所以该驱动器将显示为 ada0 。
 
 列出磁盘上的分区以查看当前配置：
 
@@ -151,7 +151,7 @@ endif::[]
 
 [NOTE]
 ====
-如果磁盘使用http://en.wikipedia.org/wiki/GUID_Partition_Table[GPT]分区方案进行格式化，可能会显示为“损坏”，因为GPT备份分区表不再位于驱动器的末尾。使用`gpart`修复备份分区表。
+如果磁盘使用 http://en.wikipedia.org/wiki/GUID_Partition_Table[GPT] 分区方案进行格式化，可能会显示为“损坏”，因为 GPT 备份分区表不再位于驱动器的末尾。使用 `gpart` 修复备份分区表。
 
 [source, shell]
 ....
@@ -182,7 +182,7 @@ ada0 recovered
 # swapoff /dev/ada0p3
 ....
 
-从磁盘_ada0_中删除由`-i`标志指定的第三个分区。
+从磁盘_ada0_中删除由 `-i` 标志指定的第三个分区。
 
 [source, shell]
 ....
@@ -198,7 +198,7 @@ ada0p3 deleted
 [WARNING]
 ====
 
-在修改挂载文件系统的分区表时存在数据丢失的风险。最好在从Live CD-ROM或USB设备运行时，对未挂载的文件系统执行以下步骤。然而，如果绝对必要，可以在禁用GEOM安全功能后调整挂载的文件系统的大小：
+在修改挂载文件系统的分区表时存在数据丢失的风险。最好在从 Live CD-ROM 或 USB 设备运行时，对未挂载的文件系统执行以下步骤。然而，如果绝对必要，可以在禁用 GEOM 安全功能后调整挂载的文件系统的大小：
 
 [source, shell]
 ....
@@ -207,7 +207,7 @@ ada0p3 deleted
 
 ====
 
-调整分区大小，留出空间以重新创建所需大小的交换分区。使用`-i`指定要调整大小的分区，使用`-s`指定新的所需大小。可选地，使用`-a`控制分区的对齐方式。这仅修改分区的大小。分区中的文件系统将在单独的步骤中扩展。
+调整分区大小，留出空间以重新创建所需大小的交换分区。使用 `-i` 指定要调整大小的分区，使用 `-s` 指定新的所需大小。可选地，使用 `-a` 控制分区的对齐方式。这仅修改分区的大小。分区中的文件系统将在单独的步骤中扩展。
 
 [source, shell]
 ....
@@ -220,7 +220,7 @@ ada0p2 resized
    98566306    3833661        - free -  (1.8G)
 ....
 
-重新创建交换分区并激活它。如果没有使用`-s`指定大小，则使用所有剩余空间。
+重新创建交换分区并激活它。如果没有使用 `-s` 指定大小，则使用所有剩余空间。
 
 [source, shell]
 ....
@@ -234,7 +234,7 @@ ada0p3 added
 # swapon /dev/ada0p3
 ....
 
-将UFS文件系统扩展到重新调整大小的分区的新容量。
+将 UFS 文件系统扩展到重新调整大小的分区的新容量。
 
 [source, shell]
 ....
@@ -247,7 +247,7 @@ super-block backups (for fsck -b #) at:
  89756992, 91039232, 92321472, 93603712, 94885952, 96168192, 97450432
 ....
 
-如果文件系统是ZFS，则通过运行带有`-e`选项的`online`子命令来触发调整大小：
+如果文件系统是 ZFS ，则通过运行带有 `-e` 选项的 `online` 子命令来触发调整大小：
 
 [source, shell]
 ....
@@ -257,16 +257,16 @@ super-block backups (for fsck -b #) at:
 分区和其上的文件系统现在已经调整大小，以利用新可用的磁盘空间。
 
 [[usb-disks]]
-== USB存储设备
+== USB 存储设备
 
-许多外部存储解决方案，如硬盘、USB闪存驱动器以及CD和DVD刻录机，使用通用串行总线（USB）。FreeBSD支持USB 1.x、2.0和3.0设备。
+许多外部存储解决方案，如硬盘、 USB 闪存驱动器以及 CD 和 DVD 刻录机，使用通用串行总线（ USB ）。 FreeBSD 支持 USB 1.x 、 2.0 和 3.0 设备。
 
 [NOTE]
 ====
-USB 3.0支持不兼容一些硬件，包括Haswell（Lynx Point）芯片组。如果FreeBSD启动时出现“失败，错误代码19”的消息，请在系统BIOS中禁用xHCI/USB3。
+USB 3.0 支持不兼容一些硬件，包括 Haswell （ Lynx Point ）芯片组。如果 FreeBSD 启动时出现“失败，错误代码 19 ”的消息，请在系统 BIOS 中禁用 xHCI/USB3 。
 ====
 
-对USB存储设备的支持已经集成到[.filename]#GENERIC#内核中。对于自定义内核，请确保以下行在内核配置文件中存在：
+对 USB 存储设备的支持已经集成到 [.filename]#GENERIC# 内核中。对于自定义内核，请确保以下行在内核配置文件中存在：
 
 [.programlisting]
 ....
@@ -282,13 +282,13 @@ device umass	# Disks/Mass storage - Requires scbus and da
 device cd	# needed for CD and DVD burners
 ....
 
-FreeBSD使用man:umass[4]驱动程序，该驱动程序使用SCSI子系统来访问USB存储设备。由于系统将任何USB设备视为SCSI设备，如果USB设备是CD或DVD刻录机，请在自定义内核配置文件中 _不要_ 包含`device atapicam`。
+FreeBSD 使用 man:umass[4] 驱动程序，该驱动程序使用 SCSI 子系统来访问 USB 存储设备。由于系统将任何 USB 设备视为 SCSI 设备，如果 USB 设备是 CD 或 DVD 刻录机，请在自定义内核配置文件中 _不要_ 包含 `device atapicam` 。
 
-本节的其余部分演示了如何验证FreeBSD是否识别USB存储设备以及如何配置设备以便使用。
+本节的其余部分演示了如何验证 FreeBSD 是否识别 USB 存储设备以及如何配置设备以便使用。
 
 === 设备配置
 
-为了测试USB配置，请插入USB设备。使用`dmesg`命令确认驱动器是否出现在系统消息缓冲区中。它应该看起来像这样：
+为了测试 USB 配置，请插入 USB 设备。使用 `dmesg` 命令确认驱动器是否出现在系统消息缓冲区中。它应该看起来像这样：
 
 [source, shell]
 ....
@@ -303,9 +303,9 @@ da0: 152627MB (312581808 512 byte sectors: 255H 63S/T 19457C)
 da0: quirks=0x2<NO_6_BYTE>
 ....
 
-品牌、设备节点（[.filename]#da0#）、速度和大小将根据设备而异。
+品牌、设备节点（ [.filename]#da0# ）、速度和大小将根据设备而异。
 
-由于USB设备被视为SCSI设备，可以使用`camcontrol`命令列出连接到系统的USB存储设备：
+由于 USB 设备被视为 SCSI 设备，可以使用 `camcontrol` 命令列出连接到系统的 USB 存储设备：
 
 [source, shell]
 ....
@@ -313,7 +313,7 @@ da0: quirks=0x2<NO_6_BYTE>
 <STECH Simple Drive 1.04>          at scbus4 target 0 lun 0 (pass3,da0)
 ....
 
-另外，可以使用`usbconfig`命令列出设备。有关该命令的更多信息，请参阅man:usbconfig[8]。
+另外，可以使用 `usbconfig` 命令列出设备。有关该命令的更多信息，请参阅 man:usbconfig[8] 。
 
 [source, shell]
 ....
@@ -321,14 +321,14 @@ da0: quirks=0x2<NO_6_BYTE>
 ugen0.3: <Simple Drive STECH> at usbus0, cfg=0 md=HOST spd=HIGH (480Mbps) pwr=ON (2mA)
 ....
 
-如果设备尚未格式化，请参考<<disks-adding>>中的说明，了解如何对USB驱动器进行格式化和创建分区的操作。如果驱动器已经带有文件系统，可以使用crossref:basics[mount-unmount,“挂载和卸载文件系统”]中的指示，由`root`用户进行挂载。
+如果设备尚未格式化，请参考 <<disks-adding>> 中的说明，了解如何对 USB 驱动器进行格式化和创建分区的操作。如果驱动器已经带有文件系统，可以使用 crossref:basics[mount-unmount ,“挂载和卸载文件系统”] 中的指示，由 `root` 用户进行挂载。
 
 [WARNING]
 ====
-从安全角度来看，不应该认为通过启用`vfs.usermount`来允许不受信任的用户挂载任意媒体是安全的。大多数文件系统并不具备防范恶意设备的能力。
+从安全角度来看，不应该认为通过启用 `vfs.usermount` 来允许不受信任的用户挂载任意媒体是安全的。大多数文件系统并不具备防范恶意设备的能力。
 ====
 
-为了使设备能够以普通用户的身份挂载，一种解决方案是使用man:pw[8]将设备的所有用户都添加到`operator`组中。接下来，通过将以下行添加到[.filename]#/etc/devfs.rules#来确保`operator`能够读写设备：
+为了使设备能够以普通用户的身份挂载，一种解决方案是使用 man:pw[8] 将设备的所有用户都添加到 `operator` 组中。接下来，通过将以下行添加到 [.filename]#/etc/devfs.rules# 来确保 `operator` 能够读写设备：
 
 [.programlisting]
 ....
@@ -338,31 +338,31 @@ add path 'da*' mode 0660 group operator
 
 [NOTE]
 ====
-如果系统中还安装了内部SCSI硬盘，请将第二行更改如下：
+如果系统中还安装了内部 SCSI 硬盘，请将第二行更改如下：
 
 [.programlisting]
 ....
 add path 'da[3-9]*' mode 0660 group operator
 ....
 
-这将排除前三个SCSI磁盘（[.filename]#da0#到[.filename]#da2#）不属于`operator`组。将_3_替换为内部SCSI磁盘的数量。有关此文件的更多信息，请参阅man:devfs.rules[5]。
+这将排除前三个 SCSI 磁盘（ [.filename]#da0# 到 [.filename]#da2# ）不属于 `operator` 组。将_3_替换为内部 SCSI 磁盘的数量。有关此文件的更多信息，请参阅 man:devfs.rules[5] 。
 ====
 
-接下来，在[/etc/rc.conf]文件中启用规则集：
+接下来，在 [/etc/rc.conf] 文件中启用规则集：
 
 [.programlisting]
 ....
 devfs_system_ruleset="localrules"
 ....
 
-然后，通过将以下行添加到[.filename]#/etc/sysctl.conf#，指示系统允许普通用户挂载文件系统：
+然后，通过将以下行添加到 [.filename]#/etc/sysctl.conf# ，指示系统允许普通用户挂载文件系统：
 
 [.programlisting]
 ....
 vfs.usermount=1
 ....
 
-由于此设置仅在下次重新启动后生效，请使用`sysctl`立即设置此变量：
+由于此设置仅在下次重新启动后生效，请使用 `sysctl` 立即设置此变量：
 
 [source, shell]
 ....
@@ -370,7 +370,7 @@ vfs.usermount=1
 vfs.usermount: 0 -> 1
 ....
 
-最后一步是创建一个目录，用于挂载文件系统。这个目录需要由将要挂载文件系统的用户拥有。一种方法是让`root`用户创建一个由该用户拥有的子目录，例如[.filename]#/mnt/username#。在下面的示例中，将_username_替换为用户的登录名，将_usergroup_替换为用户的主要组名：
+最后一步是创建一个目录，用于挂载文件系统。这个目录需要由将要挂载文件系统的用户拥有。一种方法是让 `root` 用户创建一个由该用户拥有的子目录，例如 [.filename]#/mnt/username# 。在下面的示例中，将_username_替换为用户的登录名，将_usergroup_替换为用户的主要组名：
 
 [source, shell]
 ....
@@ -378,7 +378,7 @@ vfs.usermount: 0 -> 1
 # chown username:usergroup /mnt/username
 ....
 
-假设插入了一个USB闪存驱动器，并出现了一个设备[.filename]#/dev/da0s1#。如果该设备使用FAT文件系统格式化，用户可以使用以下命令挂载它：
+假设插入了一个 USB 闪存驱动器，并出现了一个设备 [.filename]#/dev/da0s1# 。如果该设备使用 FAT 文件系统格式化，用户可以使用以下命令挂载它：
 
 [source, shell]
 ....
@@ -404,14 +404,14 @@ da0: <STECH Simple Drive 1.04> s/n WD-WXE508CAN263          detached
 
 === 自动挂载可移动介质
 
-取消注释[/etc/auto_master]中的这行代码可以自动挂载USB设备：
+取消注释 [/etc/auto_master] 中的这行代码可以自动挂载 USB 设备：
 
 [source, shell]
 ....
 /media		-media		-nosuid
 ....
 
-然后将以下行添加到[/etc/devd.conf]文件中：
+然后将以下行添加到 [/etc/devd.conf] 文件中：
 
 [source, shell]
 ....
@@ -422,7 +422,7 @@ notify 100 {
 };
 ....
 
-如果man:autofs[5]和man:devd[8]已经在运行，请重新加载配置。
+如果 man:autofs[5] 和 man:devd[8] 已经在运行，请重新加载配置。
 
 [source, shell]
 ....
@@ -430,14 +430,14 @@ notify 100 {
 # service devd restart
 ....
 
-man:autofs[5]可以通过将以下行添加到[/etc/rc.conf]来设置在启动时启动：
+man:autofs[5] 可以通过将以下行添加到 [/etc/rc.conf] 来设置在启动时启动：
 
 [.programlisting]
 ....
 autofs_enable="YES"
 ....
 
-man:autofs[5]要求启用man:devd[8]，默认情况下它是启用的。
+man:autofs[5] 要求启用 man:devd[8] ，默认情况下它是启用的。
 
 立即启动服务：
 
@@ -458,21 +458,21 @@ man:autofs[5]要求启用man:devd[8]，默认情况下它是启用的。
 # automount -fu
 ....
 
-这种机制通常用于存储卡和USB存储设备。它可以与任何块设备一起使用，包括光驱或iSCSI逻辑单元。
+这种机制通常用于存储卡和 USB 存储设备。它可以与任何块设备一起使用，包括光驱或 iSCSI 逻辑单元。
 
 [[creating-cds]]
-== 创建和使用CD媒体
+== 创建和使用 CD 媒体
 
-紧凑型光盘（CD）介质具有一些与传统磁盘不同的特点。它们被设计成可以连续读取，无需在轨道之间移动磁头造成延迟。虽然CD介质确实有轨道，但这些轨道指的是要连续读取的数据部分，而不是磁盘的物理属性。ISO 9660文件系统是为处理这些差异而设计的。
+紧凑型光盘（ CD ）介质具有一些与传统磁盘不同的特点。它们被设计成可以连续读取，无需在轨道之间移动磁头造成延迟。虽然 CD 介质确实有轨道，但这些轨道指的是要连续读取的数据部分，而不是磁盘的物理属性。 ISO 9660 文件系统是为处理这些差异而设计的。
 
-FreeBSD Ports Collection提供了几个用于刻录和复制音频和数据CD的实用工具。本章演示了几个命令行实用程序的使用方法。如果需要带有图形界面的CD刻录软件，请考虑安装软件包：sysutils/xcdroast[]或软件包：sysutils/k3b[]。
+FreeBSD Ports Collection 提供了几个用于刻录和复制音频和数据 CD 的实用工具。本章演示了几个命令行实用程序的使用方法。如果需要带有图形界面的 CD 刻录软件，请考虑安装软件包： sysutils/xcdroast[] 或软件包： sysutils/k3b[] 。
 
 [[atapicam]]
 === 支持的设备
 
-[.filename]#GENERIC#内核提供了对SCSI、USB和ATAPICD读写器的支持。如果使用自定义内核，则需要在内核配置文件中根据设备类型添加相应的选项。
+[.filename]#GENERIC# 内核提供了对 SCSI 、 USB 和 ATAPICD 读写器的支持。如果使用自定义内核，则需要在内核配置文件中根据设备类型添加相应的选项。
 
-对于SCSI刻录机，请确保以下选项存在：
+对于 SCSI 刻录机，请确保以下选项存在：
 
 [.programlisting]
 ....
@@ -482,7 +482,7 @@ device pass	# Passthrough device (direct ATA/SCSI access)
 device cd	# needed for CD and DVD burners
 ....
 
-对于一个USB刻录机，确保以下选项存在：
+对于一个 USB 刻录机，确保以下选项存在：
 
 [.programlisting]
 ....
@@ -498,7 +498,7 @@ device usb	# USB Bus (required)
 device umass	# Disks/Mass storage - Requires scbus and da
 ....
 
-对于一个ATAPI刻录机，请确保以下选项存在：
+对于一个 ATAPI 刻录机，请确保以下选项存在：
 
 [.programlisting]
 ....
@@ -510,14 +510,14 @@ device cd	# needed for CD and DVD burners
 
 [NOTE]
 ====
-在FreeBSD 10.x之前的版本中，如果刻录机是ATAPI设备，则还需要在内核配置文件中添加此行：
+在 FreeBSD 10.x 之前的版本中，如果刻录机是 ATAPI 设备，则还需要在内核配置文件中添加此行：
 
 [.programlisting]
 ....
 device atapicam
 ....
 
-或者，可以通过在[.filename]#/boot/loader.conf#中添加以下行来在启动时加载此驱动程序：
+或者，可以通过在 [.filename]#/boot/loader.conf# 中添加以下行来在启动时加载此驱动程序：
 
 [.programlisting]
 ....
@@ -527,7 +527,7 @@ atapicam_load="YES"
 这将需要系统重新启动，因为这个驱动程序只能在启动时加载。
 ====
 
-要验证FreeBSD是否识别设备，请运行`dmesg`命令并查找设备的条目。在10.x之前的系统中，输出的第一行中设备名称将是[.filename]#acd0#，而不是[.filename]#cd0#。
+要验证 FreeBSD 是否识别设备，请运行 `dmesg` 命令并查找设备的条目。在 10.x 之前的系统中，输出的第一行中设备名称将是 [.filename]#acd0# ，而不是 [.filename]#cd0# 。
 
 [source, shell]
 ....
@@ -542,16 +542,16 @@ cd0: Attempt to query device size failed: NOT READY, Medium not present - tray c
 [[cdrecord]]
 === 刻录光盘
 
-在FreeBSD中，可以使用`cdrecord`来刻录光盘。这个命令是通过`sysutils/cdrtools`包或端口安装的。
+在 FreeBSD 中，可以使用 `cdrecord` 来刻录光盘。这个命令是通过 `sysutils/cdrtools` 包或端口安装的。
 
-虽然`cdrecord`有很多选项，但基本用法很简单。只需指定要刻录的ISO文件的名称，如果系统有多个刻录设备，则还需指定要使用的设备的名称：
+虽然 `cdrecord` 有很多选项，但基本用法很简单。只需指定要刻录的 ISO 文件的名称，如果系统有多个刻录设备，则还需指定要使用的设备的名称：
 
 [source, shell]
 ....
 # cdrecord dev=device imagefile.iso
 ....
 
-要确定刻录机的设备名称，请使用`-scanbus`命令，可能会产生如下结果：
+要确定刻录机的设备名称，请使用 `-scanbus` 命令，可能会产生如下结果：
 
 [source, shell]
 ....
@@ -578,7 +578,7 @@ scsibus1:
         1,7,0   107) *
 ....
 
-找到CD刻录机的条目，并使用逗号分隔的三个数字作为`dev`的值。在这种情况下，Yamaha刻录机设备是`1,5,0`，因此指定该设备的适当输入是`dev=1,5,0`。请参考`cdrecord`的手册页面，了解其他指定该值的方法以及有关写入音轨和控制写入速度的信息。
+找到 CD 刻录机的条目，并使用逗号分隔的三个数字作为 `dev` 的值。在这种情况下， Yamaha 刻录机设备是 `1 , 5 , 0` ，因此指定该设备的适当输入是 `dev = 1 , 5 , 0` 。请参考 `cdrecord` 的手册页面，了解其他指定该值的方法以及有关写入音轨和控制写入速度的信息。
 
 或者，运行以下命令以获取刻录机的设备地址：
 
@@ -588,32 +588,32 @@ scsibus1:
 <MATSHITA CDRW/DVD UJDA740 1.00>   at scbus1 target 0 lun 0 (cd0,pass0)
 ....
 
-使用`scbus`、`target`和`lun`的数值。对于这个例子，`1,0,0`是要使用的设备名称。
+使用 `scbus` 、 `target` 和 `lun` 的数值。对于这个例子， `1 , 0 , 0` 是要使用的设备名称。
 
 [[mkisofs]]
-=== 将数据写入ISO文件系统
+=== 将数据写入 ISO 文件系统
 
-为了制作数据光盘，必须在将数据文件刻录到光盘之前对其进行准备。在FreeBSD中，安装了`mkisofs`的`package:sysutils/cdrtools[]`可以用来生成一个ISO 9660文件系统，该文件系统是UNIX(R)文件系统中目录树的镜像。最简单的用法是指定要创建的ISO文件的名称和要放入ISO 9660文件系统的文件路径：
+为了制作数据光盘，必须在将数据文件刻录到光盘之前对其进行准备。在 FreeBSD 中，安装了 `mkisofs` 的 `package:sysutils/cdrtools[]` 可以用来生成一个 ISO 9660 文件系统，该文件系统是 UNIX(R) 文件系统中目录树的镜像。最简单的用法是指定要创建的 ISO 文件的名称和要放入 ISO 9660 文件系统的文件路径：
 
 [source, shell]
 ....
 # mkisofs -o imagefile.iso /path/to/tree
 ....
 
-该命令将指定路径中的文件名映射为符合标准ISO 9660文件系统限制的名称，并且将排除不符合ISO文件系统标准的文件。
+该命令将指定路径中的文件名映射为符合标准 ISO 9660 文件系统限制的名称，并且将排除不符合 ISO 文件系统标准的文件。
 
-有多种选项可用于克服标准所施加的限制。特别地，`-R` 启用了在UNIX(R)系统中常见的Rock Ridge扩展，而`-J` 启用了Microsoft(R)系统中使用的Joliet扩展。
+有多种选项可用于克服标准所施加的限制。特别地， `-R` 启用了在 UNIX(R) 系统中常见的 Rock Ridge 扩展，而 `-J` 启用了 Microsoft(R) 系统中使用的 Joliet 扩展。
 
-对于仅在FreeBSD系统上使用的CD，可以使用`-U`来禁用所有文件名限制。当与`-R`一起使用时，它会生成一个文件系统镜像，即使违反ISO 9660标准，也与指定的FreeBSD树完全相同。
+对于仅在 FreeBSD 系统上使用的 CD ，可以使用 `-U` 来禁用所有文件名限制。当与 `-R` 一起使用时，它会生成一个文件系统镜像，即使违反 ISO 9660 标准，也与指定的 FreeBSD 树完全相同。
 
-通用用途的最后一个选项是`-b`。它用于指定用于生成“El Torito”可引导CD的引导映像的位置。此选项接受一个参数，即从要写入CD的树的顶部到引导映像的路径。默认情况下，`mkisofs`以“软盘仿真”模式创建ISO映像，因此期望引导映像的大小为1200、1440或2880 KB。某些引导加载程序（如FreeBSD发行版媒体使用的加载程序）不使用仿真模式。在这种情况下，应使用`-no-emul-boot`选项。因此，如果`.filename`#/tmp/myboot#中包含一个可引导的FreeBSD系统，并且引导映像位于`.filename`#/tmp/myboot/boot/cdboot#中，此命令将生成`.filename`#/tmp/bootable.iso#：
+通用用途的最后一个选项是 `-b` 。它用于指定用于生成“ El Torito ”可引导 CD 的引导映像的位置。此选项接受一个参数，即从要写入 CD 的树的顶部到引导映像的路径。默认情况下， `mkisofs` 以“软盘仿真”模式创建 ISO 映像，因此期望引导映像的大小为 1200 、 1440 或 2880 KB 。某些引导加载程序（如 FreeBSD 发行版媒体使用的加载程序）不使用仿真模式。在这种情况下，应使用 `-no-emul-boot` 选项。因此，如果 `.filename`#/tmp/myboot# 中包含一个可引导的 FreeBSD 系统，并且引导映像位于 `.filename`#/tmp/myboot/boot/cdboot# 中，此命令将生成 `.filename`#/tmp/bootable.iso# ：
 
 [source, shell]
 ....
 # mkisofs -R -no-emul-boot -b boot/cdboot -o /tmp/bootable.iso /tmp/myboot
 ....
 
-生成的ISO镜像可以通过以下方式挂载为内存磁盘：
+生成的 ISO 镜像可以通过以下方式挂载为内存磁盘：
 
 [source, shell]
 ....
@@ -623,152 +623,152 @@ scsibus1:
 
 然后可以验证 [.filename]#/mnt# 和 [.filename]#/tmp/myboot# 是相同的。
 
-有许多其他选项可用于细调`mkisofs`的行为。有关详细信息，请参阅man:mkisofs[8]。
+有许多其他选项可用于细调 `mkisofs` 的行为。有关详细信息，请参阅 man:mkisofs[8] 。
 
 [NOTE]
 ====
-可以将数据光盘复制到一个与使用`mkisofs`创建的镜像文件在功能上等效的镜像文件中。要做到这一点，使用`dd`命令，将设备名称作为输入文件，将要创建的ISO文件的名称作为输出文件：
+可以将数据光盘复制到一个与使用 `mkisofs` 创建的镜像文件在功能上等效的镜像文件中。要做到这一点，使用 `dd` 命令，将设备名称作为输入文件，将要创建的 ISO 文件的名称作为输出文件：
 
 [source, shell]
 ....
 # dd if=/dev/cd0 of=file.iso bs=2048
 ....
 
-生成的图像文件可以按照<<cdrecord>>中描述的方式刻录到CD上。
+生成的图像文件可以按照 <<cdrecord>> 中描述的方式刻录到 CD 上。
 ====
 
 [[mounting-cd]]
 === 使用数据光盘
 
-一旦ISO文件被刻录到光盘上，可以通过指定文件系统类型、包含光盘的设备名称和已存在的挂载点来挂载。
+一旦 ISO 文件被刻录到光盘上，可以通过指定文件系统类型、包含光盘的设备名称和已存在的挂载点来挂载。
 
 [source, shell]
 ....
 # mount -t cd9660 /dev/cd0 /mnt
 ....
 
-由于`mount`假设文件系统的类型是`ufs`，如果在挂载数据光盘时没有包含`-t cd9660`，将会出现`Incorrect super block`错误。
+由于 `mount` 假设文件系统的类型是 `ufs` ，如果在挂载数据光盘时没有包含 `-t cd9660` ，将会出现 `Incorrect super block` 错误。
 
-虽然任何数据CD都可以通过这种方式挂载，但带有特定ISO 9660扩展的光盘可能会表现出奇怪的行为。例如，Joliet光盘将所有文件名存储为两个字节的Unicode字符。如果一些非英文字符显示为问号，请使用“-C”参数指定本地字符集。有关更多信息，请参考man:mount_cd9660[8]。
+虽然任何数据 CD 都可以通过这种方式挂载，但带有特定 ISO 9660 扩展的光盘可能会表现出奇怪的行为。例如， Joliet 光盘将所有文件名存储为两个字节的 Unicode 字符。如果一些非英文字符显示为问号，请使用“ -C ”参数指定本地字符集。有关更多信息，请参考 man:mount_cd9660[8] 。
 
 [NOTE]
 ====
-为了使用`-C`选项进行字符转换，内核需要加载`.filename#cd9660_iconv.ko#`模块。可以通过将以下行添加到`.filename#loader.conf#`来实现：
+为了使用 `-C` 选项进行字符转换，内核需要加载 `.filename#cd9660_iconv.ko#` 模块。可以通过将以下行添加到 `.filename#loader.conf#` 来实现：
 
 [.programlisting]
 ....
 cd9660_iconv_load="YES"
 ....
 
-然后重新启动机器，或通过使用`kldload`命令直接加载模块。
+然后重新启动机器，或通过使用 `kldload` 命令直接加载模块。
 ====
 
 在尝试挂载数据光盘时，有时会显示“设备未配置”。这通常意味着光驱没有检测到托盘中的光盘，或者该驱动器在总线上不可见。光驱可能需要几秒钟的时间来检测媒体，请耐心等待。
 
-有时候，SCSICD驱动器可能会被忽略，因为它没有足够的时间来回应总线复位。为了解决这个问题，可以创建一个自定义内核，增加默认的SCSI延迟。将以下选项添加到自定义内核配置文件中，并按照crossref:kernelconfig[kernelconfig-building,"构建和安装自定义内核"]中的说明重新构建内核。
+有时候， SCSICD 驱动器可能会被忽略，因为它没有足够的时间来回应总线复位。为了解决这个问题，可以创建一个自定义内核，增加默认的 SCSI 延迟。将以下选项添加到自定义内核配置文件中，并按照 crossref:kernelconfig[kernelconfig-building ,"构建和安装自定义内核"] 中的说明重新构建内核。
 
 [.programlisting]
 ....
 options SCSI_DELAY=15000
 ....
 
-这将在启动过程中告诉SCSI总线暂停15秒，以便给CD驱动器尽可能多的机会来响应总线复位。
+这将在启动过程中告诉 SCSI 总线暂停 15 秒，以便给 CD 驱动器尽可能多的机会来响应总线复位。
 
 [NOTE]
 ====
-可以直接将文件刻录到光盘上，而无需创建ISO 9660文件系统。这被称为刻录原始数据光盘，有些人出于备份目的这样做。
+可以直接将文件刻录到光盘上，而无需创建 ISO 9660 文件系统。这被称为刻录原始数据光盘，有些人出于备份目的这样做。
 
-这种类型的光盘不能像普通数据光盘一样挂载。为了获取烧录到这种光盘上的数据，必须从原始设备节点读取数据。例如，以下命令将从第二个光盘设备中提取一个压缩的tar文件到当前工作目录：
+这种类型的光盘不能像普通数据光盘一样挂载。为了获取烧录到这种光盘上的数据，必须从原始设备节点读取数据。例如，以下命令将从第二个光盘设备中提取一个压缩的 tar 文件到当前工作目录：
 
 [source, shell]
 ....
 # tar xzvf /dev/cd1
 ....
 
-为了挂载数据光盘，数据必须使用`mkisofs`进行写入。
+为了挂载数据光盘，数据必须使用 `mkisofs` 进行写入。
 ====
 
 [[duplicating-audiocds]]
-=== 复制音频CDs
+=== 复制音频 CDs
 
-要复制音频CD，需要从CD中提取音频数据到一系列文件中，然后将这些文件写入空白CD。
+要复制音频 CD ，需要从 CD 中提取音频数据到一系列文件中，然后将这些文件写入空白 CD 。
 
-<<using-cdrecord>>描述了如何复制和刻录音频CD。如果FreeBSD版本小于10.0且设备为ATAPI，必须首先使用<<atapicam>>中的说明加载`atapicam`模块。
+<<using-cdrecord>> 描述了如何复制和刻录音频 CD 。如果 FreeBSD 版本小于 10.0 且设备为 ATAPI ，必须首先使用 <<atapicam>> 中的说明加载 `atapicam` 模块。
 
 [[using-cdrecord]]
 [.procedure]
-.过程：复制音频CD
-. 包：sysutils/cdrtools[]包或端口安装了`cdda2wav`。此命令可用于提取所有音轨，每个音轨都会被写入当前工作目录中的单独的WAV文件中：
+.过程：复制音频 CD
+. 包： sysutils/cdrtools[] 包或端口安装了 `cdda2wav` 。此命令可用于提取所有音轨，每个音轨都会被写入当前工作目录中的单独的 WAV 文件中：
 +
 [source, shell]
 ....
 % cdda2wav -vall -B -Owav
 ....
 +
-如果系统上只有一个CD设备，则不需要指定设备名称。请参考`cdda2wav`手册页面，了解如何指定设备以及了解此命令的其他可用选项。
-. 使用`cdrecord`命令来写入[.filename]#.wav#文件：
+如果系统上只有一个 CD 设备，则不需要指定设备名称。请参考 `cdda2wav` 手册页面，了解如何指定设备以及了解此命令的其他可用选项。
+. 使用 `cdrecord` 命令来写入 [.filename]#.wav# 文件：
 +
 [source, shell]
 ....
 % cdrecord -v dev=2,0 -dao -useinfo  *.wav
 ....
 +
-请确保按照<<cdrecord>>中描述的方式适当设置 _2,0_。
+请确保按照 <<cdrecord>> 中描述的方式适当设置 _2 , 0_。
 
 [[creating-dvds]]
-== 创建和使用DVD媒体
+== 创建和使用 DVD 媒体
 
-与CD相比，DVD是下一代光学媒体存储技术。DVD可以容纳比任何CD更多的数据，并且是视频出版的标准。
+与 CD 相比， DVD 是下一代光学媒体存储技术。 DVD 可以容纳比任何 CD 更多的数据，并且是视频出版的标准。
 
-可为可记录的DVD定义五种物理可记录格式：
+可为可记录的 DVD 定义五种物理可记录格式：
 
-* DVD-R：这是第一个可用的DVD可记录格式。DVD-R标准由DVD论坛定义。这种格式只能写入一次。
-* DVD-RW：这是DVD-R标准的可重写版本。一个DVD-RW可以重写约1000次。
-* DVD-RAM：这是一种可重写的格式，可以看作是可移动硬盘。然而，这种介质与大多数DVD-ROM驱动器和DVD视频播放器不兼容，因为只有少数DVD刻录机支持DVD-RAM格式。有关DVD-RAM使用的更多信息，请参阅<<creating-dvd-ram>>。
-* DVD+RW：这是由DVD+RW联盟定义的可重写格式。DVD+RW可以重写约1000次。
-* DVD+R：这种格式是DVD+RW格式的一次写入变体。
+* DVD-R ：这是第一个可用的 DVD 可记录格式。 DVD-R 标准由 DVD 论坛定义。这种格式只能写入一次。
+* DVD-RW ：这是 DVD-R 标准的可重写版本。一个 DVD-RW 可以重写约 1000 次。
+* DVD-RAM ：这是一种可重写的格式，可以看作是可移动硬盘。然而，这种介质与大多数 DVD-ROM 驱动器和 DVD 视频播放器不兼容，因为只有少数 DVD 刻录机支持 DVD-RAM 格式。有关 DVD-RAM 使用的更多信息，请参阅 <<creating-dvd-ram>> 。
+* DVD + RW ：这是由 DVD + RW 联盟定义的可重写格式。 DVD + RW 可以重写约 1000 次。
+* DVD + R ：这种格式是 DVD + RW 格式的一次写入变体。
 
-一张单层可记录的DVD可以容纳高达4,700,000,000字节，实际上相当于4.38 GB或4485 MB，因为1千字节等于1024字节。
+一张单层可记录的 DVD 可以容纳高达 4 , 700 , 000 , 000 字节，实际上相当于 4.38 GB 或 4485 MB ，因为 1 千字节等于 1024 字节。
 
 [NOTE]
 ====
-必须区分物理介质和应用程序。例如，DVD-Video是一种特定的文件布局，可以写入任何可记录的DVD物理介质，如DVD-R、DVD+R或DVD-RW。在选择介质之前，请确保刻录机和DVD-Video播放器与所考虑的介质兼容。
+必须区分物理介质和应用程序。例如， DVD-Video 是一种特定的文件布局，可以写入任何可记录的 DVD 物理介质，如 DVD-R 、 DVD + R 或 DVD-RW 。在选择介质之前，请确保刻录机和 DVD-Video 播放器与所考虑的介质兼容。
 ====
 
 === 配置
 
-要进行DVD录制，请使用man:growisofs[1]命令。该命令是package:sysutils/dvd+rw-tools[]工具包的一部分，支持所有DVD媒体类型。
+要进行 DVD 录制，请使用 man:growisofs[1] 命令。该命令是 package:sysutils/dvd + rw-tools[] 工具包的一部分，支持所有 DVD 媒体类型。
 
-这些工具使用SCSI子系统来访问设备，因此必须加载或静态编译<<atapicam,ATAPI/CAM支持>>到内核中。如果刻录机使用USB接口，则不需要此支持。有关USB设备配置的更多详细信息，请参阅<<usb-disks>>。
+这些工具使用 SCSI 子系统来访问设备，因此必须加载或静态编译 <<atapicam , ATAPI/CAM 支持 >> 到内核中。如果刻录机使用 USB 接口，则不需要此支持。有关 USB 设备配置的更多详细信息，请参阅 <<usb-disks>> 。
 
-还必须为ATAPI设备启用DMA访问，方法是在[/boot/loader.conf]中添加以下行：
+还必须为 ATAPI 设备启用 DMA 访问，方法是在 [/boot/loader.conf] 中添加以下行：
 
 [.programlisting]
 ....
 hw.ata.atapi_dma="1"
 ....
 
-在尝试使用dvd+rw-tools之前，请参考http://fy.chalmers.se/~appro/linux/DVD+RW/hcn.html[硬件兼容性说明]。
+在尝试使用 dvd + rw-tools 之前，请参考 http://fy.chalmers.se/ ~ appro/linux/DVD + RW/hcn.html[硬件兼容性说明] 。
 
 [NOTE]
 ====
-对于图形用户界面，请考虑使用package:sysutils/k3b[]，它提供了一个用户友好的界面来使用man:growisofs[1]和许多其他刻录工具。
+对于图形用户界面，请考虑使用 package:sysutils/k3b[] ，它提供了一个用户友好的界面来使用 man:growisofs[1] 和许多其他刻录工具。
 ====
 
-=== 刻录数据DVD
+=== 刻录数据 DVD
 
-由于man:growisofs[1]是<<mkisofs,mkisofs>>的前端，它将调用man:mkisofs[8]来创建文件系统布局并在DVD上执行写入操作。这意味着在刻录过程之前不需要创建数据的镜像。
+由于 man:growisofs[1] 是 <<mkisofs , mkisofs>> 的前端，它将调用 man:mkisofs[8] 来创建文件系统布局并在 DVD 上执行写入操作。这意味着在刻录过程之前不需要创建数据的镜像。
 
-要将位于[.filename]#/path/to/data#的数据刻录到DVD+R或DVD-R上，请使用以下命令：
+要将位于 [.filename]#/path/to/data# 的数据刻录到 DVD + R 或 DVD-R 上，请使用以下命令：
 
 [source, shell]
 ....
 # growisofs -dvd-compat -Z /dev/cd0 -J -R /path/to/data
 ....
 
-在这个例子中，`-J -R` 被传递给 man:mkisofs[8] 以创建一个带有 Joliet 和 Rock Ridge 扩展的 ISO 9660 文件系统。更多详细信息请参考 man:mkisofs[8]。
+在这个例子中， `-J -R` 被传递给 man:mkisofs[8] 以创建一个带有 Joliet 和 Rock Ridge 扩展的 ISO 9660 文件系统。更多详细信息请参考 man:mkisofs[8] 。
 
-对于初始会话录制，`-Z` 用于单个和多个会话。将 _/dev/cd0_ 替换为 DVD 设备的名称。使用 `-dvd-compat` 表示光盘将被关闭，并且录制将无法追加。这还应该提供更好的与 DVD-ROM 驱动器的媒体兼容性。
+对于初始会话录制， `-Z` 用于单个和多个会话。将 _/dev/cd0_ 替换为 DVD 设备的名称。使用 `-dvd-compat` 表示光盘将被关闭，并且录制将无法追加。这还应该提供更好的与 DVD-ROM 驱动器的媒体兼容性。
 
 要烧录预制的镜像，比如_imagefile.iso_，请使用以下命令：
 
@@ -777,13 +777,13 @@ hw.ata.atapi_dma="1"
 # growisofs -dvd-compat -Z /dev/cd0=imagefile.iso
 ....
 
-应该检测并根据使用的媒体和驱动器自动设置写入速度。要强制设置写入速度，请使用`-speed=`。有关示例用法，请参考man:growisofs[1]。
+应该检测并根据使用的媒体和驱动器自动设置写入速度。要强制设置写入速度，请使用 `-speed = ` 。有关示例用法，请参考 man:growisofs[1] 。
 
 [NOTE]
 ====
-为了支持大于4.38GB的工作文件，必须通过在man:mkisofs[8]和所有相关程序（如man:growisofs[1]）中传递"-udf -iso-level 3"来创建一个UDF/ISO-9660混合文件系统。只有在创建ISO映像文件或直接将文件写入磁盘时才需要这样做。由于以这种方式创建的磁盘必须以man:mount_udf[8]的UDF文件系统方式挂载，因此它只能在支持UDF的操作系统上使用。否则，它将看起来像包含损坏文件。
+为了支持大于 4.38GB 的工作文件，必须通过在 man:mkisofs[8] 和所有相关程序（如 man:growisofs[1] ）中传递"-udf -iso-level 3"来创建一个 UDF/ISO-9660 混合文件系统。只有在创建 ISO 映像文件或直接将文件写入磁盘时才需要这样做。由于以这种方式创建的磁盘必须以 man:mount_udf[8] 的 UDF 文件系统方式挂载，因此它只能在支持 UDF 的操作系统上使用。否则，它将看起来像包含损坏文件。
 
-要创建这种类型的ISO文件：
+要创建这种类型的 ISO 文件：
 
 [source, shell]
 ....
@@ -797,56 +797,56 @@ hw.ata.atapi_dma="1"
 # growisofs -dvd-compat -udf -iso-level 3 -Z /dev/cd0 -J -R /path/to/data
 ....
 
-当ISO镜像已经包含大文件时，man:growisofs[1]在将该镜像刻录到光盘上时不需要额外的选项。
+当 ISO 镜像已经包含大文件时， man:growisofs[1] 在将该镜像刻录到光盘上时不需要额外的选项。
 
-请确保使用最新版本的package:sysutils/cdrtools[]，其中包含man:mkisofs[8]，因为旧版本可能不支持大文件。如果最新版本无法工作，请安装package:sysutils/cdrtools-devel[]并阅读其man:mkisofs[8]。
+请确保使用最新版本的 package:sysutils/cdrtools[] ，其中包含 man:mkisofs[8] ，因为旧版本可能不支持大文件。如果最新版本无法工作，请安装 package:sysutils/cdrtools-devel[] 并阅读其 man:mkisofs[8] 。
 ====
 
-=== 刻录DVD视频
+=== 刻录 DVD 视频
 
-DVD-Video是基于ISO 9660和微型UDF（M-UDF）规范的特定文件布局。由于DVD-Video呈现了特定的数据结构层次，因此需要使用特定的程序，如package:multimedia/dvdauthor[]来制作DVD。
+DVD-Video 是基于 ISO 9660 和微型 UDF （ M-UDF ）规范的特定文件布局。由于 DVD-Video 呈现了特定的数据结构层次，因此需要使用特定的程序，如 package:multimedia/dvdauthor[] 来制作 DVD 。
 
-如果已经存在DVD-Video文件系统的镜像，可以像其他镜像一样进行刻录。如果使用了`dvdauthor`制作了DVD，并且结果保存在[.filename]#/path/to/video#中，应使用以下命令来刻录DVD-Video：
+如果已经存在 DVD-Video 文件系统的镜像，可以像其他镜像一样进行刻录。如果使用了 `dvdauthor` 制作了 DVD ，并且结果保存在 [.filename]#/path/to/video# 中，应使用以下命令来刻录 DVD-Video ：
 
 [source, shell]
 ....
 # growisofs -Z /dev/cd0 -dvd-video /path/to/video
 ....
 
-`-dvd-video`被传递给man:mkisofs[8]，用于指示它创建一个DVD-Video文件系统布局。此选项隐含了`-dvd-compat` man:growisofs[1]选项。
+`-dvd-video` 被传递给 man:mkisofs[8] ，用于指示它创建一个 DVD-Video 文件系统布局。此选项隐含了 `-dvd-compat` man:growisofs[1] 选项。
 
-=== 使用DVD+RW
+=== 使用 DVD + RW
 
-与CD-RW不同，未使用过的DVD+RW需要在首次使用前进行格式化。强烈建议使用man:growisofs[1]在适当时自动处理此操作。然而，也可以使用`dvd+rw-format`来格式化DVD+RW。
+与 CD-RW 不同，未使用过的 DVD + RW 需要在首次使用前进行格式化。强烈建议使用 man:growisofs[1] 在适当时自动处理此操作。然而，也可以使用 `dvd + rw-format` 来格式化 DVD + RW 。
 
 [source, shell]
 ....
 # dvd+rw-format /dev/cd0
 ....
 
-只需执行此操作一次，并记住只有全新的DVD+RW光盘需要进行格式化。一旦格式化完成，DVD+RW光盘可以像往常一样进行刻录。
+只需执行此操作一次，并记住只有全新的 DVD + RW 光盘需要进行格式化。一旦格式化完成， DVD + RW 光盘可以像往常一样进行刻录。
 
-要烧录一个全新的文件系统，而不仅仅是将一些数据追加到DVD+RW上，媒体不需要先进行擦除。相反，可以像这样覆盖之前的记录：
+要烧录一个全新的文件系统，而不仅仅是将一些数据追加到 DVD + RW 上，媒体不需要先进行擦除。相反，可以像这样覆盖之前的记录：
 
 [source, shell]
 ....
 # growisofs -Z /dev/cd0 -J -R /path/to/newdata
 ....
 
-DVD+RW格式支持在之前的记录上追加数据。这个操作包括将新的会话合并到现有的会话中，因为它不被视为多会话写入。man:growisofs[1]将会“增长”媒体上存在的ISO 9660文件系统。
+DVD + RW 格式支持在之前的记录上追加数据。这个操作包括将新的会话合并到现有的会话中，因为它不被视为多会话写入。 man:growisofs[1] 将会“增长”媒体上存在的 ISO 9660 文件系统。
 
-例如，要将数据追加到DVD+RW上，请使用以下方法：
+例如，要将数据追加到 DVD + RW 上，请使用以下方法：
 
 [source, shell]
 ....
 # growisofs -M /dev/cd0 -J -R /path/to/nextdata
 ....
 
-在进行下一次写入时，应使用与烧录初始会话时相同的mkisofs[8]选项。
+在进行下一次写入时，应使用与烧录初始会话时相同的 mkisofs[8] 选项。
 
 [NOTE]
 ====
-使用`-dvd-compat`选项可以提高与DVD-ROM驱动器的媒体兼容性。当使用DVD+RW时，此选项不会阻止添加数据。
+使用 `-dvd-compat` 选项可以提高与 DVD-ROM 驱动器的媒体兼容性。当使用 DVD + RW 时，此选项不会阻止添加数据。
 ====
 
 要清空媒体，请使用以下方法：
@@ -856,13 +856,13 @@ DVD+RW格式支持在之前的记录上追加数据。这个操作包括将新�
 # growisofs -Z /dev/cd0=/dev/zero
 ....
 
-=== 使用DVD-RW
+=== 使用 DVD-RW
 
-DVD-RW支持两种光盘格式：增量顺序和受限覆写。默认情况下，DVD-RW光盘采用顺序格式。
+DVD-RW 支持两种光盘格式：增量顺序和受限覆写。默认情况下， DVD-RW 光盘采用顺序格式。
 
-一个全新的DVD-RW可以直接写入而无需进行格式化。然而，一个已经使用过的顺序格式的DVD-RW在写入新的初始会话之前需要进行擦除。
+一个全新的 DVD-RW 可以直接写入而无需进行格式化。然而，一个已经使用过的顺序格式的 DVD-RW 在写入新的初始会话之前需要进行擦除。
 
-要以顺序模式擦除DVD-RW：
+要以顺序模式擦除 DVD-RW ：
 
 [source, shell]
 ....
@@ -871,30 +871,30 @@ DVD-RW支持两种光盘格式：增量顺序和受限覆写。默认情况下�
 
 [NOTE]
 ====
-使用`-blank=full`进行完全擦除在1倍速的媒体上大约需要一个小时。如果要在Disk-At-Once（DAO）模式下记录DVD-RW，则可以使用`-blank`进行快速擦除。要以DAO模式刻录DVD-RW，请使用以下命令：
+使用 `-blank = full` 进行完全擦除在 1 倍速的媒体上大约需要一个小时。如果要在 Disk-At-Once （ DAO ）模式下记录 DVD-RW ，则可以使用 `-blank` 进行快速擦除。要以 DAO 模式刻录 DVD-RW ，请使用以下命令：
 
 [source, shell]
 ....
 # growisofs -use-the-force-luke=dao -Z /dev/cd0=imagefile.iso
 ....
 
-由于man:growisofs[1]会自动尝试检测快速擦除的介质并启用DAO写入，因此不需要使用`-use-the-force-luke=dao`参数。
+由于 man:growisofs[1] 会自动尝试检测快速擦除的介质并启用 DAO 写入，因此不需要使用 `-use-the-force-luke = dao` 参数。
 
-对于任何DVD-RW，应该使用受限覆盖模式，而不是默认的增量顺序模式，因为受限覆盖模式更加灵活。
+对于任何 DVD-RW ，应该使用受限覆盖模式，而不是默认的增量顺序模式，因为受限覆盖模式更加灵活。
 ====
 
-要在顺序DVD-RW上写入数据，使用与其他DVD格式相同的指令：
+要在顺序 DVD-RW 上写入数据，使用与其他 DVD 格式相同的指令：
 
 [source, shell]
 ....
 # growisofs -Z /dev/cd0 -J -R /path/to/data
 ....
 
-要将一些数据追加到先前的录制中，请使用`-M`参数和`man:growisofs[1]`命令。然而，如果在增量顺序模式下在DVD-RW上追加数据，将会在光盘上创建一个新的会话，结果将是一个多会话光盘。
+要将一些数据追加到先前的录制中，请使用 `-M` 参数和 `man:growisofs[1]` 命令。然而，如果在增量顺序模式下在 DVD-RW 上追加数据，将会在光盘上创建一个新的会话，结果将是一个多会话光盘。
 
-在受限覆写格式的DVD-RW上，不需要在开始新的初始会话之前将其擦除。相反，可以使用`-Z`来覆盖光盘。还可以使用`-M`来扩展已写入光盘上的现有ISO 9660文件系统。结果将是一个单会话的DVD。
+在受限覆写格式的 DVD-RW 上，不需要在开始新的初始会话之前将其擦除。相反，可以使用 `-Z` 来覆盖光盘。还可以使用 `-M` 来扩展已写入光盘上的现有 ISO 9660 文件系统。结果将是一个单会话的 DVD 。
 
-要将DVD-RW格式化为受限覆写格式，必须使用以下命令：
+要将 DVD-RW 格式化为受限覆写格式，必须使用以下命令：
 
 [source, shell]
 ....
@@ -910,44 +910,44 @@ DVD-RW支持两种光盘格式：增量顺序和受限覆写。默认情况下�
 
 === 多会话
 
-很少有DVD-ROM驱动器支持多会话DVD，并且大多数情况下只能读取第一个会话。 DVD+R、DVD-R和DVD-RW以顺序格式可以接受多个会话。对于DVD+RW和DVD-RW受限覆写格式，不存在多个会话的概念。
+很少有 DVD-ROM 驱动器支持多会话 DVD ，并且大多数情况下只能读取第一个会话。 DVD + R 、 DVD-R 和 DVD-RW 以顺序格式可以接受多个会话。对于 DVD + RW 和 DVD-RW 受限覆写格式，不存在多个会话的概念。
 
-在使用DVD+R、DVD-R或DVD-RW顺序格式的初始非关闭会话后，使用以下命令将在光盘上添加一个新的会话：
+在使用 DVD + R 、 DVD-R 或 DVD-RW 顺序格式的初始非关闭会话后，使用以下命令将在光盘上添加一个新的会话：
 
 [source, shell]
 ....
 # growisofs -M /dev/cd0 -J -R /path/to/nextdata
 ....
 
-在使用此命令时，如果使用DVD+RW或DVD-RW处于受限覆写模式，将会在将新会话合并到现有会话时追加数据。结果将是一个单会话光盘。使用此方法在这些类型的介质上进行初始写入后添加数据。
+在使用此命令时，如果使用 DVD + RW 或 DVD-RW 处于受限覆写模式，将会在将新会话合并到现有会话时追加数据。结果将是一个单会话光盘。使用此方法在这些类型的介质上进行初始写入后添加数据。
 
 [NOTE]
 ====
-由于在每个会话之间使用了一些空间来标记会话的结束和开始，因此应该添加大量数据的会话以优化媒体空间。 DVD+R的会话数量限制为154个，DVD-R约为2000个，DVD+R双层为127个。
+由于在每个会话之间使用了一些空间来标记会话的结束和开始，因此应该添加大量数据的会话以优化媒体空间。 DVD + R 的会话数量限制为 154 个， DVD-R 约为 2000 个， DVD + R 双层为 127 个。
 ====
 
 === 更多信息请参考
 
-要获取有关DVD的更多信息，请在指定的驱动器中使用 `dvd+rw-mediainfo _/dev/cd0_` 命令，同时光盘在其中。
+要获取有关 DVD 的更多信息，请在指定的驱动器中使用 `dvd + rw-mediainfo _/dev/cd0_` 命令，同时光盘在其中。
 
-有关dvd+rw-tools的更多信息可以在man:growisofs[1]中找到，在http://fy.chalmers.se/~appro/linux/DVD+RW/[dvd+rw-tools网站]上找到，并且在http://lists.debian.org/cdwrite/[cdwrite邮件列表]的存档中也可以找到。
+有关 dvd + rw-tools 的更多信息可以在 man:growisofs[1] 中找到，在 http://fy.chalmers.se/ ~ appro/linux/DVD + RW/[dvd + rw-tools 网站] 上找到，并且在 http://lists.debian.org/cdwrite/[cdwrite 邮件列表] 的存档中也可以找到。
 
 [NOTE]
 ====
-创建与使用dvd+rw-tools相关的问题报告时，始终包括`dvd+rw-mediainfo`的输出。
+创建与使用 dvd + rw-tools 相关的问题报告时，始终包括 `dvd + rw-mediainfo` 的输出。
 ====
 
 [[creating-dvd-ram]]
-=== 使用DVD-RAM
+=== 使用 DVD-RAM
 
-DVD-RAM写入器可以使用SCSI或ATAPI接口。对于ATAPI设备，必须通过在[/boot/loader.conf]中添加以下行来启用DMA访问：
+DVD-RAM 写入器可以使用 SCSI 或 ATAPI 接口。对于 ATAPI 设备，必须通过在 [/boot/loader.conf] 中添加以下行来启用 DMA 访问：
 
 [.programlisting]
 ....
 hw.ata.atapi_dma="1"
 ....
 
-DVD-RAM可以被视为可移动硬盘。与任何其他硬盘一样，DVD-RAM在使用之前必须进行格式化。在这个例子中，整个磁盘空间将使用标准的UFS2文件系统进行格式化：
+DVD-RAM 可以被视为可移动硬盘。与任何其他硬盘一样， DVD-RAM 在使用之前必须进行格式化。在这个例子中，整个磁盘空间将使用标准的 UFS2 文件系统进行格式化：
 
 [source, shell]
 ....
@@ -956,47 +956,47 @@ DVD-RAM可以被视为可移动硬盘。与任何其他硬盘一样，DVD-RAM在
 # newfs /dev/acd0
 ....
 
-DVD设备[.filename]#acd0#必须根据配置进行更改。
+DVD 设备 [.filename]#acd0# 必须根据配置进行更改。
 
-一旦DVD-RAM被格式化，它可以被挂载为普通硬盘：
+一旦 DVD-RAM 被格式化，它可以被挂载为普通硬盘：
 
 [source, shell]
 ....
 # mount /dev/acd0 /mnt
 ....
 
-一旦挂载，DVD-RAM将可读可写。
+一旦挂载， DVD-RAM 将可读可写。
 
 [[floppies]]
 == 创建和使用软盘
 
-本节介绍了如何在FreeBSD中格式化3.5英寸软盘。
+本节介绍了如何在 FreeBSD 中格式化 3.5 英寸软盘。
 
 [.procedure]
 ====
-*过程：格式化软盘的步骤*
+* 过程：格式化软盘的步骤 * 
 
-在使用软盘之前，需要进行低级格式化。通常由供应商完成，但格式化是检查介质完整性的好方法。在FreeBSD上进行软盘的低级格式化，可以使用man:fdformat[1]命令。在使用此实用程序时，请注意任何错误消息，因为它们可以帮助确定软盘是好的还是坏的。
+在使用软盘之前，需要进行低级格式化。通常由供应商完成，但格式化是检查介质完整性的好方法。在 FreeBSD 上进行软盘的低级格式化，可以使用 man:fdformat[1] 命令。在使用此实用程序时，请注意任何错误消息，因为它们可以帮助确定软盘是好的还是坏的。
 
-. 要格式化软盘，请将一个新的3.5英寸软盘插入第一个软盘驱动器，并输入以下命令：
+. 要格式化软盘，请将一个新的 3.5 英寸软盘插入第一个软盘驱动器，并输入以下命令：
 +
 [source, shell]
 ....
 # /usr/sbin/fdformat -f 1440 /dev/fd0
 ....
 +
-. 在低级格式化磁盘之后，根据系统需要创建磁盘标签，以确定磁盘的大小和几何结构。支持的几何结构值在[/etc/disktab]中列出。
+. 在低级格式化磁盘之后，根据系统需要创建磁盘标签，以确定磁盘的大小和几何结构。支持的几何结构值在 [/etc/disktab] 中列出。
 +
-要编写磁盘标签，请使用 man:bsdlabel[8]。
+要编写磁盘标签，请使用 man:bsdlabel[8] 。
 +
 [source, shell]
 ....
 # /sbin/bsdlabel -B -w /dev/fd0 fd1440
 ....
 +
-. 软盘现在可以进行高级格式化，并选择文件系统。软盘的文件系统可以是UFS或FAT，其中FAT通常是软盘的更好选择。
+. 软盘现在可以进行高级格式化，并选择文件系统。软盘的文件系统可以是 UFS 或 FAT ，其中 FAT 通常是软盘的更好选择。
 +
-要使用FAT格式化软盘，请执行以下操作：
+要使用 FAT 格式化软盘，请执行以下操作：
 +
 [source, shell]
 ....
@@ -1004,20 +1004,20 @@ DVD设备[.filename]#acd0#必须根据配置进行更改。
 ....
 ====
 
-磁盘现在已经准备好供使用。要使用软盘，请使用man:mount_msdosfs[8]命令进行挂载。也可以从Ports Collection安装和使用package:emulators/mtools[]。
+磁盘现在已经准备好供使用。要使用软盘，请使用 man:mount_msdosfs[8] 命令进行挂载。也可以从 Ports Collection 安装和使用 package:emulators/mtools[] 。
 
 [[using-ntfs]]
-== 使用NTFS磁盘
+== 使用 NTFS 磁盘
 
-本节介绍了如何在FreeBSD中挂载NTFS磁盘。
+本节介绍了如何在 FreeBSD 中挂载 NTFS 磁盘。
 
-NTFS（新技术文件系统）是由微软开发的专有日志文件系统。多年来，它一直是微软Windows操作系统的默认文件系统。FreeBSD可以使用FUSE文件系统挂载NTFS卷。这些文件系统是作为用户空间程序实现的，它们通过一个明确定义的接口与man:fusefs[5]内核模块进行交互。
+NTFS （新技术文件系统）是由微软开发的专有日志文件系统。多年来，它一直是微软 Windows 操作系统的默认文件系统。 FreeBSD 可以使用 FUSE 文件系统挂载 NTFS 卷。这些文件系统是作为用户空间程序实现的，它们通过一个明确定义的接口与 man:fusefs[5] 内核模块进行交互。
 
 [.procedure]
 ====
-*过程：挂载NTFS磁盘的步骤*
+* 过程：挂载 NTFS 磁盘的步骤 * 
 
-. 在使用FUSE文件系统之前，我们需要加载man:fusefs[5]内核模块：
+. 在使用 FUSE 文件系统之前，我们需要加载 man:fusefs[5] 内核模块：
 +
 [source, shell]
 ....
@@ -1031,7 +1031,7 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 # sysrc kld_list+=fusefs
 ....
 
-. 按照示例中的方式（参见crossref:ports[pkgng-intro,使用pkg进行二进制包管理]）或者从ports（参见crossref:ports[ports-using,使用Ports Collection]）安装实际的NTFS文件系统。
+. 按照示例中的方式（参见 crossref:ports[pkgng-intro ,使用 pkg 进行二进制包管理] ）或者从 ports （参见 crossref:ports[ports-using ,使用 Ports Collection] ）安装实际的 NTFS 文件系统。
 +
 [source, shell]
 ....
@@ -1045,7 +1045,7 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 # mkdir /mnt/usb
 ....
 
-. 假设插入了一个USB磁盘。可以使用man:gpart[8]命令查看磁盘分区信息。
+. 假设插入了一个 USB 磁盘。可以使用 man:gpart[8] 命令查看磁盘分区信息。
 +
 [source, shell]
 ....
@@ -1062,7 +1062,7 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 ....
 磁盘现已准备就绪，可以使用。
 +
-. 此外，还可以将条目添加到/etc/fstab文件中：
+. 此外，还可以将条目添加到 /etc/fstab 文件中：
 +
 [.programlisting]
 ....
@@ -1093,31 +1093,31 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 
 * 整个系统的归档备份存储在永久的、离线的介质上。这种方式可以提供对上述所有问题的保护，但是恢复速度慢且不方便，特别是对于非特权用户来说。
 * 文件系统快照，用于恢复已删除的文件或文件的先前版本。
-* 使用预定的包：net/rsync[]，将整个文件系统或磁盘的副本与网络上的另一个系统进行同步。
-* 硬件或软件RAID，可以在磁盘故障时最小化或避免停机时间。
+* 使用预定的包： net/rsync[] ，将整个文件系统或磁盘的副本与网络上的另一个系统进行同步。
+* 硬件或软件 RAID ，可以在磁盘故障时最小化或避免停机时间。
 
-通常，会使用多种备份技术的组合。例如，可以创建一个定期计划，自动进行每周一次的完整系统备份，并将其存储在离线位置，并通过每小时的ZFS快照来补充此备份。此外，在进行文件编辑或删除之前，还可以对单个目录或文件进行手动备份。
+通常，会使用多种备份技术的组合。例如，可以创建一个定期计划，自动进行每周一次的完整系统备份，并将其存储在离线位置，并通过每小时的 ZFS 快照来补充此备份。此外，在进行文件编辑或删除之前，还可以对单个目录或文件进行手动备份。
 
-本节介绍了一些可用于在FreeBSD系统上创建和管理备份的实用工具。
+本节介绍了一些可用于在 FreeBSD 系统上创建和管理备份的实用工具。
 
 === 文件系统备份
 
-传统的UNIX(R)文件系统备份程序是man:dump[8]，用于创建备份，和man:restore[8]，用于恢复备份。这些工具在文件系统创建的文件、链接和目录的抽象层之下的磁盘块级别上工作。与其他备份软件不同，`dump`备份整个文件系统，无法备份部分文件系统或跨多个文件系统的目录树的一部分。`dump`不是写入文件和目录，而是写入组成文件和目录的原始数据块。
+传统的 UNIX(R) 文件系统备份程序是 man:dump[8] ，用于创建备份，和 man:restore[8] ，用于恢复备份。这些工具在文件系统创建的文件、链接和目录的抽象层之下的磁盘块级别上工作。与其他备份软件不同， `dump` 备份整个文件系统，无法备份部分文件系统或跨多个文件系统的目录树的一部分。 `dump` 不是写入文件和目录，而是写入组成文件和目录的原始数据块。
 
 [NOTE]
 ====
-如果在根目录上使用`dump`命令，它将不会备份/home、/usr或许多其他目录，因为这些通常是其他文件系统的挂载点或指向这些文件系统的符号链接。
+如果在根目录上使用 `dump` 命令，它将不会备份 /home 、 /usr 或许多其他目录，因为这些通常是其他文件系统的挂载点或指向这些文件系统的符号链接。
 ====
 
-当用于恢复数据时，默认情况下，`restore` 将临时文件存储在 [.filename]#/tmp/# 中。如果使用具有较小 [.filename]#/tmp# 的恢复磁盘，请将 `TMPDIR` 设置为具有更多可用空间的目录，以确保恢复成功。
+当用于恢复数据时，默认情况下， `restore` 将临时文件存储在 [.filename]#/tmp/# 中。如果使用具有较小 [.filename]#/tmp# 的恢复磁盘，请将 `TMPDIR` 设置为具有更多可用空间的目录，以确保恢复成功。
 
-在使用`dump`命令时，请注意一些来自AT&T UNIX(R) 6版本（约1975年）早期的怪异行为。默认参数假设备份是备份到9轨磁带，而不是备份到其他类型的介质或者今天可用的高密度磁带。这些默认值必须在命令行上进行覆盖。
+在使用 `dump` 命令时，请注意一些来自 AT & T UNIX(R) 6 版本（约 1975 年）早期的怪异行为。默认参数假设备份是备份到 9 轨磁带，而不是备份到其他类型的介质或者今天可用的高密度磁带。这些默认值必须在命令行上进行覆盖。
 
-可以通过网络将文件系统备份到另一个系统或连接到另一台计算机的磁带驱动器上。虽然可以使用rdump[8]和rrestore[8]工具来实现此目的，但它们被认为不安全。
+可以通过网络将文件系统备份到另一个系统或连接到另一台计算机的磁带驱动器上。虽然可以使用 rdump[8] 和 rrestore[8] 工具来实现此目的，但它们被认为不安全。
 
-相反，可以使用`dump`和`restore`以更安全的方式通过SSH连接进行操作。此示例创建了一个对`/usr`目录进行完整压缩备份的文件，并通过SSH连接将备份文件发送到指定的主机。
+相反，可以使用 `dump` 和 `restore` 以更安全的方式通过 SSH 连接进行操作。此示例创建了一个对 `/usr` 目录进行完整压缩备份的文件，并通过 SSH 连接将备份文件发送到指定的主机。
 
-.通过ssh使用`dump`命令
+.通过 ssh 使用 `dump` 命令
 [example]
 ====
 [source, shell]
@@ -1127,9 +1127,9 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 ....
 ====
 
-这个示例设置`RSH`，以便通过SSH连接将备份写入远程系统上的磁带驱动器：
+这个示例设置 `RSH` ，以便通过 SSH 连接将备份写入远程系统上的磁带驱动器：
 
-.使用`RSH`设置通过ssh使用`dump`命令
+.使用 `RSH` 设置通过 ssh 使用 `dump` 命令
 [example]
 ====
 [source, shell]
@@ -1142,11 +1142,11 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 
 可以根据需要使用几个内置实用程序来备份和恢复指定的文件和目录。
 
-备份目录中所有文件的一个好选择是man:tar[1]。这个实用程序可以追溯到AT&T UNIX(R)的第6版，并且默认情况下假定对本地磁带设备进行递归备份。可以使用开关来指定备份文件的名称。
+备份目录中所有文件的一个好选择是 man:tar[1] 。这个实用程序可以追溯到 AT & T UNIX(R) 的第 6 版，并且默认情况下假定对本地磁带设备进行递归备份。可以使用开关来指定备份文件的名称。
 
-这个例子创建了一个压缩的备份文件，将当前目录的内容保存到[/tmp/mybackup.tgz]文件中。在创建备份文件时，请确保备份文件不要保存在被备份的目录中。
+这个例子创建了一个压缩的备份文件，将当前目录的内容保存到 [/tmp/mybackup.tgz] 文件中。在创建备份文件时，请确保备份文件不要保存在被备份的目录中。
 
-.使用`tar`备份当前目录
+.使用 `tar` 备份当前目录
 [example]
 ====
 [source, shell]
@@ -1157,7 +1157,7 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 
 要恢复整个备份，请进入要恢复的目录并指定备份的名称。请注意，这将覆盖恢复目录中的任何更新版本的文件。如果不确定，请恢复到一个临时目录或指定要恢复的备份中的文件名称。
 
-.使用`tar`命令恢复当前目录
+.使用 `tar` 命令恢复当前目录
 [example]
 ====
 [source, shell]
@@ -1166,11 +1166,11 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 ....
 ====
 
-有数十个可用的开关，这些开关在man:tar[1]中有描述。该实用程序还支持使用排除模式来指定在备份指定目录或从备份中恢复文件时不应包括哪些文件。
+有数十个可用的开关，这些开关在 man:tar[1] 中有描述。该实用程序还支持使用排除模式来指定在备份指定目录或从备份中恢复文件时不应包括哪些文件。
 
-要使用指定的文件和目录列表创建备份，man:cpio[1]是一个不错的选择。与`tar`不同，`cpio`不知道如何遍历目录树，必须提供备份文件的列表。
+要使用指定的文件和目录列表创建备份， man:cpio[1] 是一个不错的选择。与 `tar` 不同， `cpio` 不知道如何遍历目录树，必须提供备份文件的列表。
 
-例如，可以使用`ls`或`find`创建文件列表。此示例创建了当前目录的递归列表，然后将其通过管道传输给`cpio`，以创建一个名为`/tmp/mybackup.cpio`的输出备份文件。
+例如，可以使用 `ls` 或 `find` 创建文件列表。此示例创建了当前目录的递归列表，然后将其通过管道传输给 `cpio` ，以创建一个名为 `/tmp/mybackup.cpio` 的输出备份文件。
 
 .使用 `ls` 和 `cpio` 来对当前目录进行递归备份
 [example]
@@ -1181,11 +1181,11 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 ....
 ====
 
-一种备份工具，试图结合`tar`和`cpio`提供的功能是`pax`。多年来，各个版本的`tar`和`cpio`变得稍微不兼容。POSIX(R)创建了`pax`，它尝试读取和写入许多不同的`cpio`和`tar`格式，以及自己的新格式。
+一种备份工具，试图结合 `tar` 和 `cpio` 提供的功能是 `pax` 。多年来，各个版本的 `tar` 和 `cpio` 变得稍微不兼容。 POSIX(R) 创建了 `pax` ，它尝试读取和写入许多不同的 `cpio` 和 `tar` 格式，以及自己的新格式。
 
-前面示例的`pax`等效方式如下：
+前面示例的 `pax` 等效方式如下：
 
-.使用`pax`备份当前目录
+.使用 `pax` 备份当前目录
 [example]
 ====
 [source, shell]
@@ -1197,18 +1197,18 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 [[backups-tapebackups]]
 === 使用数据磁带进行备份
 
-尽管磁带技术不断发展，但现代备份系统往往将离线备份与本地可移动介质相结合。FreeBSD支持使用SCSI的任何磁带驱动器，如LTO或DAT。对于SATA和USB磁带驱动器的支持有限。
+尽管磁带技术不断发展，但现代备份系统往往将离线备份与本地可移动介质相结合。 FreeBSD 支持使用 SCSI 的任何磁带驱动器，如 LTO 或 DAT 。对于 SATA 和 USB 磁带驱动器的支持有限。
 
-对于SCSI磁带设备，FreeBSD使用man:sa[4]驱动程序和.dev/sa0、.dev/nsa0和.dev/esa0设备。物理设备名称是.dev/sa0。当使用.dev/nsa0时，备份应用程序在写入文件后不会倒回磁带，这允许将多个文件写入磁带。使用.dev/esa0在设备关闭后弹出磁带。
+对于 SCSI 磁带设备， FreeBSD 使用 man:sa[4] 驱动程序和 .dev/sa0 、 .dev/nsa0 和 .dev/esa0 设备。物理设备名称是 .dev/sa0 。当使用 .dev/nsa0 时，备份应用程序在写入文件后不会倒回磁带，这允许将多个文件写入磁带。使用 .dev/esa0 在设备关闭后弹出磁带。
 
-在FreeBSD中，`mt`用于控制磁带驱动器的操作，例如在磁带上寻找文件或向磁带写入磁带控制标记。例如，在写入新文件之前，可以通过跳过前三个文件来保留磁带上的文件。
+在 FreeBSD 中， `mt` 用于控制磁带驱动器的操作，例如在磁带上寻找文件或向磁带写入磁带控制标记。例如，在写入新文件之前，可以通过跳过前三个文件来保留磁带上的文件。
 
 [source, shell]
 ....
 # mt -f /dev/nsa0 fsf 3
 ....
 
-该实用程序支持许多操作。有关详细信息，请参阅 man:mt[1]。
+该实用程序支持许多操作。有关详细信息，请参阅 man:mt[1] 。
 
 使用 `tar` 将单个文件写入磁带，需要指定磁带设备的名称和要备份的文件：
 
@@ -1217,21 +1217,21 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 # tar cvf /dev/sa0 file
 ....
 
-将文件从磁带上的`tar`归档恢复到当前目录：
+将文件从磁带上的 `tar` 归档恢复到当前目录：
 
 [source, shell]
 ....
 # tar xvf /dev/sa0
 ....
 
-要备份UFS文件系统，请使用`dump`命令。以下示例备份了`/usr`目录，备份完成后不会倒回磁带：
+要备份 UFS 文件系统，请使用 `dump` 命令。以下示例备份了 `/usr` 目录，备份完成后不会倒回磁带：
 
 [source, shell]
 ....
 # dump -0aL -b64 -f /dev/nsa0 /usr
 ....
 
-要从磁带上的`dump`文件交互式地恢复文件到当前目录：
+要从磁带上的 `dump` 文件交互式地恢复文件到当前目录：
 
 [source, shell]
 ....
@@ -1241,9 +1241,9 @@ NTFS（新技术文件系统）是由微软开发的专有日志文件系统。�
 [[backups-programs-amanda]]
 === 第三方备份工具
 
-FreeBSD Ports Collection提供了许多第三方工具，可以用于安排备份的创建、简化磁带备份，并使备份更加方便。其中许多应用程序是基于客户端/服务器的，可以用于自动化单个系统或网络中所有计算机的备份。
+FreeBSD Ports Collection 提供了许多第三方工具，可以用于安排备份的创建、简化磁带备份，并使备份更加方便。其中许多应用程序是基于客户端 / 服务器的，可以用于自动化单个系统或网络中所有计算机的备份。
 
-常用的工具包括Amanda、Bacula、rsync和duplicity。
+常用的工具包括 Amanda 、 Bacula 、 rsync 和 duplicity 。
 
 === 紧急恢复
 
@@ -1251,11 +1251,11 @@ FreeBSD Ports Collection提供了许多第三方工具，可以用于安排备�
 
 创建以下命令的输出的打印副本：
 
-* `gpart show`命令用于显示磁盘分区表的信息。
-* `more /etc/fstab`命令用于在终端中显示`/etc/fstab`文件的内容。
-* `dmesg`是一个Linux命令，用于显示内核环缓冲区的内容。它可以显示系统启动时的内核消息，包括硬件检测、设备驱动程序加载和其他内核相关的信息。
+* `gpart show` 命令用于显示磁盘分区表的信息。
+* `more /etc/fstab` 命令用于在终端中显示 `/etc/fstab` 文件的内容。
+* `dmesg` 是一个 Linux 命令，用于显示内核环缓冲区的内容。它可以显示系统启动时的内核消息，包括硬件检测、设备驱动程序加载和其他内核相关的信息。
 
-将这份打印件和安装介质的副本存放在安全的地方。如果需要进行紧急恢复操作，启动安装介质并选择“Live CD”以访问救援Shell。这个救援模式可以用来查看系统的当前状态，如果需要的话，还可以重新格式化磁盘并从备份中恢复数据。
+将这份打印件和安装介质的副本存放在安全的地方。如果需要进行紧急恢复操作，启动安装介质并选择“ Live CD ”以访问救援 Shell 。这个救援模式可以用来查看系统的当前状态，如果需要的话，还可以重新格式化磁盘并从备份中恢复数据。
 
 接下来，测试救援 shell 和备份。记录下操作步骤，并将这些记录与介质、打印件和备份一起存储。这些记录可以防止在紧急恢复过程中因压力而意外破坏备份。
 
@@ -1264,9 +1264,9 @@ FreeBSD Ports Collection提供了许多第三方工具，可以用于安排备�
 [[disks-virtual]]
 == 内存磁盘
 
-除了物理磁盘外，FreeBSD还支持创建和使用内存磁盘。内存磁盘的一个可能用途是在不先将其刻录到CD或DVD上，然后挂载CD/DVD媒体的情况下访问ISO文件系统的内容。
+除了物理磁盘外， FreeBSD 还支持创建和使用内存磁盘。内存磁盘的一个可能用途是在不先将其刻录到 CD 或 DVD 上，然后挂载 CD/DVD 媒体的情况下访问 ISO 文件系统的内容。
 
-在FreeBSD中，man:md[4]驱动程序用于提供对内存磁盘的支持。[.filename]#GENERIC#内核包含了这个驱动程序。当使用自定义内核配置文件时，请确保包含以下行：
+在 FreeBSD 中， man:md[4] 驱动程序用于提供对内存磁盘的支持。 [.filename]#GENERIC# 内核包含了这个驱动程序。当使用自定义内核配置文件时，请确保包含以下行：
 
 [.programlisting]
 ....
@@ -1276,7 +1276,7 @@ device md
 [[disks-mdconfig]]
 === 附加和分离现有图片
 
-要挂载现有的文件系统镜像，使用`mdconfig`命令指定ISO文件的名称和一个空闲的单元号。然后，使用该单元号将其挂载到现有的挂载点上。一旦挂载成功，ISO中的文件将会出现在挂载点上。以下示例将_diskimage.iso_附加到内存设备[.filename]#/dev/md0#，然后将该内存设备挂载到[.filename]#/mnt#：
+要挂载现有的文件系统镜像，使用 `mdconfig` 命令指定 ISO 文件的名称和一个空闲的单元号。然后，使用该单元号将其挂载到现有的挂载点上。一旦挂载成功， ISO 中的文件将会出现在挂载点上。以下示例将_diskimage.iso_附加到内存设备 [.filename]#/dev/md0# ，然后将该内存设备挂载到 [.filename]#/mnt# ：
 
 [source, shell]
 ....
@@ -1284,9 +1284,9 @@ device md
 # mount -t cd9660 /dev/md0 /mnt
 ....
 
-请注意，使用`-t cd9660`来挂载ISO格式的文件。如果没有使用`-u`指定单元号，`mdconfig`将自动分配一个未使用的内存设备，并输出分配的单元号的名称，例如[.filename]#md4#。有关此命令及其选项的更多详细信息，请参阅man:mdconfig[8]。
+请注意，使用 `-t cd9660` 来挂载 ISO 格式的文件。如果没有使用 `-u` 指定单元号， `mdconfig` 将自动分配一个未使用的内存设备，并输出分配的单元号的名称，例如 [.filename]#md4# 。有关此命令及其选项的更多详细信息，请参阅 man:mdconfig[8] 。
 
-当内存磁盘不再使用时，应该将其资源释放回系统。首先，卸载文件系统，然后使用`mdconfig`将磁盘从系统中分离并释放其资源。继续本示例：
+当内存磁盘不再使用时，应该将其资源释放回系统。首先，卸载文件系统，然后使用 `mdconfig` 将磁盘从系统中分离并释放其资源。继续本示例：
 
 [source, shell]
 ....
@@ -1294,14 +1294,14 @@ device md
 # mdconfig -d -u 0
 ....
 
-要确定系统是否仍连接有任何内存磁盘，请输入`mdconfig -l`。
+要确定系统是否仍连接有任何内存磁盘，请输入 `mdconfig -l` 。
 
 [[disks-md-freebsd5]]
 === 创建一个基于文件或内存的内存磁盘
 
-FreeBSD还支持内存磁盘，其中存储空间可以从硬盘或内存区域分配。第一种方法通常称为基于文件的文件系统，第二种方法称为基于内存的文件系统。可以使用`mdconfig`创建这两种类型的磁盘。
+FreeBSD 还支持内存磁盘，其中存储空间可以从硬盘或内存区域分配。第一种方法通常称为基于文件的文件系统，第二种方法称为基于内存的文件系统。可以使用 `mdconfig` 创建这两种类型的磁盘。
 
-要创建一个新的基于内存的文件系统，需要指定`swap`类型和要创建的内存磁盘的大小。然后，像通常一样，对内存磁盘进行文件系统格式化和挂载。以下示例在单位`1`上创建了一个大小为5M的内存磁盘。然后，在挂载之前，该内存磁盘将被格式化为UFS文件系统：
+要创建一个新的基于内存的文件系统，需要指定 `swap` 类型和要创建的内存磁盘的大小。然后，像通常一样，对内存磁盘进行文件系统格式化和挂载。以下示例在单位 `1` 上创建了一个大小为 5M 的内存磁盘。然后，在挂载之前，该内存磁盘将被格式化为 UFS 文件系统：
 
 [source, shell]
 ....
@@ -1318,7 +1318,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 /dev/md1        4718    4  4338     0%    /mnt
 ....
 
-要创建一个新的基于文件的内存磁盘，首先需要分配一个磁盘区域来使用。以下示例创建一个名为[newimage]的空白5MB文件：
+要创建一个新的基于文件的内存磁盘，首先需要分配一个磁盘区域来使用。以下示例创建一个名为 [newimage] 的空白 5MB 文件：
 
 [source, shell]
 ....
@@ -1327,7 +1327,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 5120+0 records out
 ....
 
-接下来，将该文件附加到一个内存磁盘上，为内存磁盘标记名称并使用UFS文件系统进行格式化，挂载内存磁盘，并验证文件支持的磁盘的大小。
+接下来，将该文件附加到一个内存磁盘上，为内存磁盘标记名称并使用 UFS 文件系统进行格式化，挂载内存磁盘，并验证文件支持的磁盘的大小。
 
 [source, shell]
 ....
@@ -1344,32 +1344,32 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 /dev/md0a       4710    4  4330     0%    /mnt
 ....
 
-使用`mdconfig`命令创建一个基于文件或内存的文件系统需要多个命令。FreeBSD还提供了`mdmfs`命令，它可以自动配置一个内存磁盘，使用UFS文件系统进行格式化，并挂载它。例如，在使用`dd`命令创建了名为_newimage_的文件后，下面这个命令相当于运行上面显示的`bsdlabel`、`newfs`和`mount`命令：
+使用 `mdconfig` 命令创建一个基于文件或内存的文件系统需要多个命令。 FreeBSD 还提供了 `mdmfs` 命令，它可以自动配置一个内存磁盘，使用 UFS 文件系统进行格式化，并挂载它。例如，在使用 `dd` 命令创建了名为_newimage_的文件后，下面这个命令相当于运行上面显示的 `bsdlabel` 、 `newfs` 和 `mount` 命令：
 
 [source, shell]
 ....
 # mdmfs -F newimage -s 5m md0 /mnt
 ....
 
-要使用`mdmfs`创建一个新的基于内存的内存磁盘，只需使用以下命令：
+要使用 `mdmfs` 创建一个新的基于内存的内存磁盘，只需使用以下命令：
 
 [source, shell]
 ....
 # mdmfs -s 5m md1 /mnt
 ....
 
-如果未指定单元号，`mdmfs` 将自动选择一个未使用的内存设备。有关 `mdmfs` 的更多详细信息，请参阅 man:mdmfs[8]。
+如果未指定单元号， `mdmfs` 将自动选择一个未使用的内存设备。有关 `mdmfs` 的更多详细信息，请参阅 man:mdmfs[8] 。
 
 [[snapshots]]
 == 文件系统快照
 
-FreeBSD提供了一个与crossref:config[soft-updates,Soft Updates]配合使用的功能：文件系统快照。
+FreeBSD 提供了一个与 crossref:config[soft-updates , Soft Updates] 配合使用的功能：文件系统快照。
 
-UFS快照允许用户创建指定文件系统的镜像，并将其视为文件。 快照文件必须在执行操作的文件系统中创建，并且用户每个文件系统最多可以创建20个快照。 活动快照在超级块中记录，因此它们在卸载和重新挂载操作以及系统重新启动时是持久的。 当不再需要快照时，可以使用man:rm[1]命令将其删除。 尽管可以以任何顺序删除快照，但可能无法获取所有已释放块的使用空间，因为另一个快照可能会占用一些已释放的块。
+UFS 快照允许用户创建指定文件系统的镜像，并将其视为文件。 快照文件必须在执行操作的文件系统中创建，并且用户每个文件系统最多可以创建 20 个快照。 活动快照在超级块中记录，因此它们在卸载和重新挂载操作以及系统重新启动时是持久的。 当不再需要快照时，可以使用 man:rm[1] 命令将其删除。 尽管可以以任何顺序删除快照，但可能无法获取所有已释放块的使用空间，因为另一个快照可能会占用一些已释放的块。
 
-在创建快照文件后，man:mksnap_ffs[8]会设置不可更改的`snapshot`文件标志。man:unlink[1]对于快照文件有一个例外，因为它允许将其删除。
+在创建快照文件后， man:mksnap_ffs[8] 会设置不可更改的 `snapshot` 文件标志。 man:unlink[1] 对于快照文件有一个例外，因为它允许将其删除。
 
-使用man:mount[8]创建快照。要将/var的快照放置在文件/var/snapshot/snap中，请使用以下命令：
+使用 man:mount[8] 创建快照。要将 /var 的快照放置在文件 /var/snapshot/snap 中，请使用以下命令：
 
 [source, shell]
 ....
@@ -1383,7 +1383,7 @@ UFS快照允许用户创建指定文件系统的镜像，并将其视为文件�
 # mksnap_ffs /var /var/snapshot/snap
 ....
 
-可以使用man:find[1]命令在文件系统上找到快照文件，例如[.filename]#/var#。
+可以使用 man:find[1] 命令在文件系统上找到快照文件，例如 [.filename]#/var# 。
 
 [source, shell]
 ....
@@ -1393,9 +1393,9 @@ UFS快照允许用户创建指定文件系统的镜像，并将其视为文件�
 一旦创建了快照，它可以有多种用途：
 
 * 一些管理员会使用快照文件进行备份，因为快照可以传输到光盘或磁带上。
-* 文件系统完整性检查器man:fsck[8]可以在快照上运行。假设文件系统在挂载时是干净的，这应该始终提供一个干净且不变的结果。
-* 在快照上运行man:dump[8]将生成一个与文件系统和快照的时间戳一致的转储文件。man:dump[8]还可以使用`-L`选项一次性拍摄快照、创建转储镜像并删除快照。
-* 快照可以作为文件系统的冻结镜像进行挂载。要挂载快照，请运行：man:mount[8] [.filename]#/var/snapshot/snap#。
+* 文件系统完整性检查器 man:fsck[8] 可以在快照上运行。假设文件系统在挂载时是干净的，这应该始终提供一个干净且不变的结果。
+* 在快照上运行 man:dump[8] 将生成一个与文件系统和快照的时间戳一致的转储文件。 man:dump[8] 还可以使用 `-L` 选项一次性拍摄快照、创建转储镜像并删除快照。
+* 快照可以作为文件系统的冻结镜像进行挂载。要挂载快照，请运行： man:mount[8] [.filename]#/var/snapshot/snap# 。
 +
 [source, shell]
 ....
@@ -1411,18 +1411,18 @@ UFS快照允许用户创建指定文件系统的镜像，并将其视为文件�
 # mdconfig -d -u 4
 ....
 
-有关`softupdates`和文件系统快照的更多信息，包括技术论文，请访问马歇尔·柯克·麦库西克的网站：http://www.mckusick.com/。
+有关 `softupdates` 和文件系统快照的更多信息，包括技术论文，请访问马歇尔·柯克·麦库西克的网站： http://www.mckusick.com/ 。
 
 [[quotas]]
 == 磁盘配额
 
 磁盘配额可以用于限制用户或用户组在每个文件系统上分配的磁盘空间或文件数量。这可以防止某个用户或用户组占用所有可用的磁盘空间。
 
-本节介绍了如何配置UFS文件系统的磁盘配额。要在ZFS文件系统上配置配额，请参考crossref:zfs[zfs-zfs-quota,"数据集、用户和组配额"]。
+本节介绍了如何配置 UFS 文件系统的磁盘配额。要在 ZFS 文件系统上配置配额，请参考 crossref:zfs[zfs-zfs-quota ,"数据集、用户和组配额"] 。
 
 === 启用磁盘配额
 
-要确定FreeBSD内核是否支持磁盘配额，请执行以下操作：
+要确定 FreeBSD 内核是否支持磁盘配额，请执行以下操作：
 
 [source, shell]
 ....
@@ -1430,46 +1430,46 @@ UFS快照允许用户创建指定文件系统的镜像，并将其视为文件�
 kern.features.ufs_quota: 1
 ....
 
-在这个例子中，`1`表示支持配额。如果值是`0`，请将以下行添加到自定义内核配置文件中，并按照crossref:kernelconfig[kernelconfig,配置FreeBSD内核]中的说明重新构建内核。
+在这个例子中， `1` 表示支持配额。如果值是 `0` ，请将以下行添加到自定义内核配置文件中，并按照 crossref:kernelconfig[kernelconfig ,配置 FreeBSD 内核] 中的说明重新构建内核。
 
 [.programlisting]
 ....
 options QUOTA
 ....
 
-接下来，在[/etc/rc.conf](/etc/rc.conf)中启用磁盘配额：
+接下来，在 [/etc/rc.conf](/etc/rc.conf) 中启用磁盘配额：
 
 [.programlisting]
 ....
 quota_enable="YES"
 ....
 
-通常在启动时，使用man:quotacheck[8]检查每个文件系统的配额完整性。该程序确保配额数据库中的数据正确反映文件系统上的数据。这是一个耗时的过程，会显著影响系统启动所需的时间。要跳过此步骤，请将此变量添加到[.filename]#/etc/rc.conf#中：
+通常在启动时，使用 man:quotacheck[8] 检查每个文件系统的配额完整性。该程序确保配额数据库中的数据正确反映文件系统上的数据。这是一个耗时的过程，会显著影响系统启动所需的时间。要跳过此步骤，请将此变量添加到 [.filename]#/etc/rc.conf# 中：
 
 [.programlisting]
 ....
 check_quotas="NO"
 ....
 
-最后，编辑[/etc/fstab]文件以按文件系统启用磁盘配额。要在文件系统上启用每个用户的配额，请在[/etc/fstab]文件中的文件系统条目的选项字段中添加"userquota"。例如：
+最后，编辑 [/etc/fstab] 文件以按文件系统启用磁盘配额。要在文件系统上启用每个用户的配额，请在 [/etc/fstab] 文件中的文件系统条目的选项字段中添加"userquota"。例如：
 
 [.programlisting]
 ....
 /dev/da1s2g   /home    ufs rw,userquota 1 2
 ....
 
-要启用组配额，请使用`groupquota`。要同时启用用户和组配额，请使用逗号分隔选项：
+要启用组配额，请使用 `groupquota` 。要同时启用用户和组配额，请使用逗号分隔选项：
 
 [.programlisting]
 ....
 /dev/da1s2g    /home    ufs rw,userquota,groupquota 1 2
 ....
 
-默认情况下，配额文件存储在文件系统的根目录中，文件名为quota.user和quota.group。有关更多信息，请参阅man:fstab[5]。不建议指定配额文件的替代位置。
+默认情况下，配额文件存储在文件系统的根目录中，文件名为 quota.user 和 quota.group 。有关更多信息，请参阅 man:fstab[5] 。不建议指定配额文件的替代位置。
 
-配置完成后，重新启动系统，[/etc/rc]将自动运行适当的命令，为[/etc/fstab]中启用的所有配额创建初始配额文件。
+配置完成后，重新启动系统， [/etc/rc] 将自动运行适当的命令，为 [/etc/fstab] 中启用的所有配额创建初始配额文件。
 
-在正常的操作过程中，通常不需要手动运行 man:quotacheck[8]、man:quotaon[8] 或 man:quotaoff[8]。然而，应该阅读这些手册页以熟悉它们的操作。
+在正常的操作过程中，通常不需要手动运行 man:quotacheck[8] 、 man:quotaon[8] 或 man:quotaoff[8] 。然而，应该阅读这些手册页以熟悉它们的操作。
 
 === 设置配额限制
 
@@ -1484,13 +1484,13 @@ check_quotas="NO"
 
 系统现在可以使用 `edquota` 来分配配额限制。
 
-有几种选项可用于限制用户或组分配的磁盘空间量以及他们可以创建的文件数量。分配可以基于磁盘空间（块配额）、文件数量（inode配额）或两者的组合进行限制。每个限制进一步分为两个类别：硬限制和软限制。
+有几种选项可用于限制用户或组分配的磁盘空间量以及他们可以创建的文件数量。分配可以基于磁盘空间（块配额）、文件数量（ inode 配额）或两者的组合进行限制。每个限制进一步分为两个类别：硬限制和软限制。
 
-硬限制不能超过。一旦用户达到硬限制，该用户在该文件系统上将无法再进行进一步的分配。例如，如果用户在文件系统上的硬限制是500 kbytes，并且当前正在使用490 kbytes，那么用户只能再分配额外的10 kbytes。尝试分配额外的11 kbytes将失败。
+硬限制不能超过。一旦用户达到硬限制，该用户在该文件系统上将无法再进行进一步的分配。例如，如果用户在文件系统上的硬限制是 500 kbytes ，并且当前正在使用 490 kbytes ，那么用户只能再分配额外的 10 kbytes 。尝试分配额外的 11 kbytes 将失败。
 
 软限制可以在有限的时间内超过，这被称为宽限期，默认为一周。如果用户超过限制的时间超过宽限期，软限制将变为硬限制，不再允许进一步的分配。当用户再次低于软限制时，宽限期将被重置。
 
-在下面的示例中，正在编辑`test`账户的配额。当调用`edquota`时，会打开由`EDITOR`指定的编辑器，以便编辑配额限制。默认编辑器设置为vi。
+在下面的示例中，正在编辑 `test` 账户的配额。当调用 `edquota` 时，会打开由 `EDITOR` 指定的编辑器，以便编辑配额限制。默认编辑器设置为 vi 。
 
 [source, shell]
 ....
@@ -1502,7 +1502,7 @@ Quotas for user test:
         inodes in use: 0, limits (soft = 50, hard = 60)
 ....
 
-通常，每个启用了配额的文件系统通常有两行。一行表示块限制，另一行表示inode限制。更改值以修改配额限制。例如，要将[.filename]#/usr#的块限制提高到软限制`500`和硬限制`600`，请按照以下方式更改该行中的值：
+通常，每个启用了配额的文件系统通常有两行。一行表示块限制，另一行表示 inode 限制。更改值以修改配额限制。例如，要将 [.filename]#/usr# 的块限制提高到软限制 `500` 和硬限制 `600` ，请按照以下方式更改该行中的值：
 
 [.programlisting]
 ....
@@ -1511,20 +1511,20 @@ Quotas for user test:
 
 新的配额限制在退出编辑器后生效。
 
-有时候，对一系列用户设置配额限制是可取的。首先，将所需的配额限制分配给一个用户。然后，使用`-p`选项将该配额复制到指定范围的用户ID（UID）。以下命令将复制UID为`10,000`到`19,999`的用户的配额限制：
+有时候，对一系列用户设置配额限制是可取的。首先，将所需的配额限制分配给一个用户。然后，使用 `-p` 选项将该配额复制到指定范围的用户 ID （ UID ）。以下命令将复制 UID 为 `10 , 000` 到 `19 , 999` 的用户的配额限制：
 
 [source, shell]
 ....
 # edquota -p test 10000-19999
 ....
 
-有关更多信息，请参考man:edquota[8]。
+有关更多信息，请参考 man:edquota[8] 。
 
 === 检查配额限制和磁盘使用情况
 
-要检查单个用户或组的配额和磁盘使用情况，请使用 man:quota[1]。用户只能查看自己的配额和所属组的配额。只有超级用户才能查看所有用户和组的配额。要获取启用了配额的文件系统的所有配额和磁盘使用情况的摘要，请使用 man:repquota[8]。
+要检查单个用户或组的配额和磁盘使用情况，请使用 man:quota[1] 。用户只能查看自己的配额和所属组的配额。只有超级用户才能查看所有用户和组的配额。要获取启用了配额的文件系统的所有配额和磁盘使用情况的摘要，请使用 man:repquota[8] 。
 
-通常情况下，用户没有使用任何磁盘空间的文件系统在`quota`命令的输出中不会显示，即使用户对该文件系统有配额限制。使用`-v`选项可以显示这些文件系统。以下是一个用户在两个文件系统上设置了配额限制时，使用`quota -v`命令的示例输出。
+通常情况下，用户没有使用任何磁盘空间的文件系统在 `quota` 命令的输出中不会显示，即使用户对该文件系统有配额限制。使用 `-v` 选项可以显示这些文件系统。以下是一个用户在两个文件系统上设置了配额限制时，使用 `quota -v` 命令的示例输出。
 
 [.programlisting]
 ....
@@ -1534,20 +1534,20 @@ Disk quotas for user test (uid 1002):
        /usr/var       0      50      75               0      50      60
 ....
 
-在这个例子中，用户当前超过了在`/usr`目录下的50 kbytes的软限制，超出了15 kbytes，并且还剩下5天的宽限期。星号`*`表示用户当前超过了配额限制。
+在这个例子中，用户当前超过了在 `/usr` 目录下的 50 kbytes 的软限制，超出了 15 kbytes ，并且还剩下 5 天的宽限期。星号 `*` 表示用户当前超过了配额限制。
 
-=== NFS上的配额限制
+=== NFS 上的配额限制
 
-配额由NFS服务器上的配额子系统强制执行。man:rpc.rquotad[8]守护进程将配额信息提供给NFS客户端上的`quota`命令，使得这些机器上的用户可以查看他们的配额统计信息。
+配额由 NFS 服务器上的配额子系统强制执行。 man:rpc.rquotad[8] 守护进程将配额信息提供给 NFS 客户端上的 `quota` 命令，使得这些机器上的用户可以查看他们的配额统计信息。
 
-在NFS服务器上，通过从[.filename]*/etc/inetd.conf*文件中的这一行中删除`+#+`来启用`rpc.rquotad`。
+在 NFS 服务器上，通过从 [.filename]*/etc/inetd.conf* 文件中的这一行中删除 ` + # + ` 来启用 `rpc.rquotad` 。
 
 [.programlisting]
 ....
 rquotad/1      dgram rpc/udp wait root /usr/libexec/rpc.rquotad rpc.rquotad
 ....
 
-然后，重新启动 `inetd`：
+然后，重新启动 `inetd` ：
 
 [source, shell]
 ....
@@ -1557,19 +1557,19 @@ rquotad/1      dgram rpc/udp wait root /usr/libexec/rpc.rquotad rpc.rquotad
 [[disks-encrypting]]
 == 加密磁盘分区
 
-FreeBSD提供了出色的在线保护措施，防止未经授权的数据访问。文件权限和强制访问控制（MAC）可以在操作系统处于活动状态且计算机已经启动时，防止未经授权的用户访问数据。然而，如果攻击者可以物理访问计算机并将计算机的硬盘移动到另一个系统以复制和分析数据，操作系统强制执行的权限就变得无关紧要了。
+FreeBSD 提供了出色的在线保护措施，防止未经授权的数据访问。文件权限和强制访问控制（ MAC ）可以在操作系统处于活动状态且计算机已经启动时，防止未经授权的用户访问数据。然而，如果攻击者可以物理访问计算机并将计算机的硬盘移动到另一个系统以复制和分析数据，操作系统强制执行的权限就变得无关紧要了。
 
-无论攻击者如何获得硬盘或关闭电脑，FreeBSD中内置的基于GEOM的加密子系统能够保护计算机文件系统上的数据，即使是对于拥有大量资源和高度动机的攻击者也是如此。与加密单个文件的加密方法不同，内置的`gbde`和`geli`实用程序可以用于透明地加密整个文件系统。明文永远不会接触到硬盘的盘片。
+无论攻击者如何获得硬盘或关闭电脑， FreeBSD 中内置的基于 GEOM 的加密子系统能够保护计算机文件系统上的数据，即使是对于拥有大量资源和高度动机的攻击者也是如此。与加密单个文件的加密方法不同，内置的 `gbde` 和 `geli` 实用程序可以用于透明地加密整个文件系统。明文永远不会接触到硬盘的盘片。
 
-本章介绍了如何在FreeBSD上创建加密文件系统。首先使用`gbde`演示了该过程，然后使用`geli`演示了相同的示例。
+本章介绍了如何在 FreeBSD 上创建加密文件系统。首先使用 `gbde` 演示了该过程，然后使用 `geli` 演示了相同的示例。
 
-=== 使用gbde进行磁盘加密
+=== 使用 gbde 进行磁盘加密
 
-man:gbde[4]设施的目标是为攻击者提供一个巨大的挑战，以防止其获取冷存储设备的内容。然而，如果计算机在运行时被入侵并且存储设备被主动连接，或者攻击者拥有有效的密码短语，那么它对存储设备的内容提供不了任何保护。因此，在系统运行时提供物理安全性并保护加密机制使用的密码短语非常重要。
+man:gbde[4] 设施的目标是为攻击者提供一个巨大的挑战，以防止其获取冷存储设备的内容。然而，如果计算机在运行时被入侵并且存储设备被主动连接，或者攻击者拥有有效的密码短语，那么它对存储设备的内容提供不了任何保护。因此，在系统运行时提供物理安全性并保护加密机制使用的密码短语非常重要。
 
-该设施提供了几个屏障来保护存储在每个磁盘扇区中的数据。它使用128位AES在CBC模式下对磁盘扇区的内容进行加密。磁盘上的每个扇区都使用不同的AES密钥进行加密。有关加密设计的更多信息，包括如何从用户提供的密码短语派生扇区密钥，请参阅man:gbde[4]。
+该设施提供了几个屏障来保护存储在每个磁盘扇区中的数据。它使用 128 位 AES 在 CBC 模式下对磁盘扇区的内容进行加密。磁盘上的每个扇区都使用不同的 AES 密钥进行加密。有关加密设计的更多信息，包括如何从用户提供的密码短语派生扇区密钥，请参阅 man:gbde[4] 。
 
-FreeBSD提供了一个用于gbde的内核模块，可以使用以下命令加载：
+FreeBSD 提供了一个用于 gbde 的内核模块，可以使用以下命令加载：
 
 [source, shell]
 ....
@@ -1580,35 +1580,35 @@ FreeBSD提供了一个用于gbde的内核模块，可以使用以下命令加载
 
 `options GEOM_BDE` 可选项
 
-下面的示例演示了向系统添加新的硬盘，该硬盘将容纳一个加密分区，并将其挂载为 [.filename]#/private#。
+下面的示例演示了向系统添加新的硬盘，该硬盘将容纳一个加密分区，并将其挂载为 [.filename]#/private# 。
 
 [.procedure]
-.过程：使用gbde加密分区
+.过程：使用 gbde 加密分区
 
-1. 在计算机上安装并配置gbde软件。
-2. 打开终端或命令提示符，并使用管理员权限登录。
-3. 使用以下命令创建一个新的gbde加密容器：
-   ```
-   gbde init /dev/daX
-   ```
-   其中，/dev/daX是要加密的分区设备名称。
-4. 输入一个密码来保护加密容器，并确保密码足够强大和安全。
-5. 使用以下命令打开加密容器：
-   ```
-   gbde attach /dev/daX
-   ```
-6. 输入之前设置的密码来解锁加密容器。
-7. 现在，您可以像使用普通分区一样使用加密分区了。
-8. 当您不再需要使用加密分区时，使用以下命令关闭加密容器：
-   ```
-   gbde detach /dev/daX
-   ```
+ 1. 在计算机上安装并配置 gbde 软件。
+ 2. 打开终端或命令提示符，并使用管理员权限登录。
+ 3. 使用以下命令创建一个新的 gbde 加密容器：
+   ``` 
+   gbde init /dev/daX 
+   ``` 
+   其中， /dev/daX 是要加密的分区设备名称。
+ 4. 输入一个密码来保护加密容器，并确保密码足够强大和安全。
+ 5. 使用以下命令打开加密容器：
+   ``` 
+   gbde attach /dev/daX 
+   ``` 
+ 6. 输入之前设置的密码来解锁加密容器。
+ 7. 现在，您可以像使用普通分区一样使用加密分区了。
+ 8. 当您不再需要使用加密分区时，使用以下命令关闭加密容器：
+   ``` 
+   gbde detach /dev/daX 
+   ``` 
    这将锁定加密容器并保护您的数据。
    
-请注意，使用gbde加密分区时，请确保备份重要数据，并妥善保管加密容器的密码。
+请注意，使用 gbde 加密分区时，请确保备份重要数据，并妥善保管加密容器的密码。
 . 添加新的硬盘
 +
-按照<<disks-adding>>中所述的方法将新驱动器安装到系统中。对于本示例，已添加了一个新的硬盘分区，表示为[.filename]#/dev/ad4s1c#，而[.filename]#/dev/ad0s1*#表示现有的标准FreeBSD分区。
+按照 <<disks-adding>> 中所述的方法将新驱动器安装到系统中。对于本示例，已添加了一个新的硬盘分区，表示为 [.filename]#/dev/ad4s1c# ，而 [.filename]#/dev/ad0s1*# 表示现有的标准 FreeBSD 分区。
 +
 [source, shell]
 ....
@@ -1625,10 +1625,10 @@ FreeBSD提供了一个用于gbde的内核模块，可以使用以下命令加载
 # mkdir /etc/gbde
 ....
 +
-gbde锁定文件包含了gbde访问加密分区所需的信息。如果没有访问锁定文件的权限，gbde将无法解密加密分区中的数据，除非进行大量的手动干预，而该软件不支持此操作。每个加密分区都使用一个单独的锁定文件。
-. 初始化`gbde`分区
+gbde 锁定文件包含了 gbde 访问加密分区所需的信息。如果没有访问锁定文件的权限， gbde 将无法解密加密分区中的数据，除非进行大量的手动干预，而该软件不支持此操作。每个加密分区都使用一个单独的锁定文件。
+. 初始化 `gbde` 分区
 +
-在使用之前，必须初始化gbde分区。这个初始化只需要执行一次。该命令将打开默认编辑器，以便在模板中设置各种配置选项。对于与UFS文件系统一起使用，请将sector_size设置为2048：
+在使用之前，必须初始化 gbde 分区。这个初始化只需要执行一次。该命令将打开默认编辑器，以便在模板中设置各种配置选项。对于与 UFS 文件系统一起使用，请将 sector_size 设置为 2048 ：
 +
 [source, shell]
 ....
@@ -1644,9 +1644,9 @@ sector_size	=	2048
 [...]
 ....
 +
-编辑保存后，用户将被要求两次输入用于保护数据的密码短语。两次输入的密码短语必须相同。Gbde保护数据的能力完全取决于密码短语的质量。有关如何选择既安全又容易记住的密码短语的提示，请参阅http://world.std.com/\~reinhold/diceware.html[http://world.std.com/~reinhold/diceware.htm]。
+编辑保存后，用户将被要求两次输入用于保护数据的密码短语。两次输入的密码短语必须相同。 Gbde 保护数据的能力完全取决于密码短语的质量。有关如何选择既安全又容易记住的密码短语的提示，请参阅 http://world.std.com/ \~ reinhold/diceware.html[http://world.std.com/ ~ reinhold/diceware.htm] 。
 +
-这个初始化操作创建了一个用于 gbde 分区的锁文件。在这个例子中，它被存储为 [.filename]#/etc/gbde/ad4s1c.lock#。锁文件必须以 ".lock" 结尾，以便被 [.filename]#/etc/rc.d/gbde# 启动脚本正确地检测到。
+这个初始化操作创建了一个用于 gbde 分区的锁文件。在这个例子中，它被存储为 [.filename]#/etc/gbde/ad4s1c.lock# 。锁文件必须以 ".lock" 结尾，以便被 [.filename]#/etc/rc.d/gbde# 启动脚本正确地检测到。
 +
 [CAUTION]
 ====
@@ -1660,7 +1660,7 @@ sector_size	=	2048
 # gbde attach /dev/ad4s1c -l /etc/gbde/ad4s1c.lock
 ....
 +
-这个命令会提示输入在加密分区初始化过程中选择的密码。新的加密设备将出现在 [.filename]#/dev# 中，命名为 [.filename]#/dev/device_name.bde#。
+这个命令会提示输入在加密分区初始化过程中选择的密码。新的加密设备将出现在 [.filename]#/dev# 中，命名为 [.filename]#/dev/device_name.bde# 。
 +
 [source, shell]
 ....
@@ -1672,7 +1672,7 @@ sector_size	=	2048
 
 . 在加密设备上创建文件系统
 +
-一旦加密设备已经连接到内核，就可以在设备上创建文件系统。这个示例创建了一个启用了软更新的UFS文件系统。请确保指定具有 [.filename]#*.bde# 扩展名的分区：
+一旦加密设备已经连接到内核，就可以在设备上创建文件系统。这个示例创建了一个启用了软更新的 UFS 文件系统。请确保指定具有 [.filename]#*.bde# 扩展名的分区：
 +
 [source, shell]
 ....
@@ -1705,7 +1705,7 @@ Filesystem        Size   Used  Avail Capacity  Mounted on
 /dev/ad4s1c.bde   150G   4.1K   138G     0%    /private
 ....
 
-每次启动后，必须手动重新连接加密文件系统到内核，检查错误并挂载，然后才能使用这些文件系统。要配置这些步骤，请将以下行添加到`/etc/rc.conf`文件中：
+每次启动后，必须手动重新连接加密文件系统到内核，检查错误并挂载，然后才能使用这些文件系统。要配置这些步骤，请将以下行添加到 `/etc/rc.conf` 文件中：
 
 [.programlisting]
 ....
@@ -1714,11 +1714,11 @@ gbde_devices="ad4s1c"
 gbde_lockdir="/etc/gbde"
 ....
 
-这要求在启动时在控制台输入密码短语。输入正确的密码短语后，加密分区将自动挂载。还有其他可用的gbde启动选项，可以在man:rc.conf[5]中找到并列出。
+这要求在启动时在控制台输入密码短语。输入正确的密码短语后，加密分区将自动挂载。还有其他可用的 gbde 启动选项，可以在 man:rc.conf[5] 中找到并列出。
 
 [NOTE]
 ====
-sysinstall与gbde加密设备不兼容。在启动sysinstall之前，必须将所有的.bde设备从内核中分离，否则在设备的初始探测过程中，sysinstall会崩溃。要分离示例中使用的加密设备，请使用以下命令：
+sysinstall 与 gbde 加密设备不兼容。在启动 sysinstall 之前，必须将所有的 .bde 设备从内核中分离，否则在设备的初始探测过程中， sysinstall 会崩溃。要分离示例中使用的加密设备，请使用以下命令：
 
 [source, shell]
 ....
@@ -1727,48 +1727,48 @@ sysinstall与gbde加密设备不兼容。在启动sysinstall之前，必须将�
 ====
 
 [[disks-encrypting-geli]]
-=== 使用`geli`进行磁盘加密
+=== 使用 `geli` 进行磁盘加密
 
-可以使用`geli`来使用另一种加密GEOM类。这个控制工具添加了一些功能，并使用了不同的加密方案来进行加密工作。它提供以下功能：
+可以使用 `geli` 来使用另一种加密 GEOM 类。这个控制工具添加了一些功能，并使用了不同的加密方案来进行加密工作。它提供以下功能：
 
-* 当可用时，利用man:crypto[9]框架并自动使用加密硬件。
-* 支持多种加密算法，如AES、Blowfish和3DES。
+* 当可用时，利用 man:crypto[9] 框架并自动使用加密硬件。
+* 支持多种加密算法，如 AES 、 Blowfish 和 3DES 。
 * 允许对根分区进行加密。在系统启动期间，将要求输入用于访问加密根分区的密码短语。
 * 允许使用两个独立的键。
 * 它之所以快速，是因为它执行简单的扇区级加密。
 * 允许备份和恢复主密钥。如果用户销毁了他们的密钥，仍然可以通过从备份中恢复密钥来访问数据。
 * 允许磁盘使用随机的一次性密钥进行连接，这对于交换分区和临时文件系统非常有用。
 
-更多功能和使用示例可以在man:geli[8]中找到。
+更多功能和使用示例可以在 man:geli[8] 中找到。
 
-下面的示例描述了如何生成一个密钥文件，该文件将作为加密提供者在`/private`下挂载的主密钥的一部分。密钥文件将提供一些用于加密主密钥的随机数据。主密钥还将受到密码短语的保护。提供者的扇区大小将为4kB。该示例描述了如何连接到`geli`提供者，创建一个文件系统，挂载它，使用它，并最终如何卸载它。
+下面的示例描述了如何生成一个密钥文件，该文件将作为加密提供者在 `/private` 下挂载的主密钥的一部分。密钥文件将提供一些用于加密主密钥的随机数据。主密钥还将受到密码短语的保护。提供者的扇区大小将为 4kB 。该示例描述了如何连接到 `geli` 提供者，创建一个文件系统，挂载它，使用它，并最终如何卸载它。
 
 [.procedure]
-.过程：使用`geli`加密分区
+.过程：使用 `geli` 加密分区
 
-1. 在计算机上安装并配置`geli`工具。
-2. 确保要加密的分区没有被挂载。
-3. 使用以下命令创建一个新的加密设备：
-   ```
-   # geli init -s 4096 /dev/adaXsY
-   ```
-   其中`/dev/adaXsY`是要加密的分区的路径。
-4. 设置加密设备的密码：
-   ```
-   # geli configure -b -k /boot/encryption.key /dev/adaXsY
-   ```
-   这将在`/boot/encryption.key`文件中存储加密设备的密钥。
-5. 使用以下命令将加密设备解锁并挂载到指定的挂载点：
-   ```
-   # geli attach -k /boot/encryption.key /dev/adaXsY
-   ```
+ 1. 在计算机上安装并配置 `geli` 工具。
+ 2. 确保要加密的分区没有被挂载。
+ 3. 使用以下命令创建一个新的加密设备：
+   ``` 
+   # geli init -s 4096 /dev/adaXsY 
+   ``` 
+   其中 `/dev/adaXsY` 是要加密的分区的路径。
+ 4. 设置加密设备的密码：
+   ``` 
+   # geli configure -b -k /boot/encryption.key /dev/adaXsY 
+   ``` 
+   这将在 `/boot/encryption.key` 文件中存储加密设备的密钥。
+ 5. 使用以下命令将加密设备解锁并挂载到指定的挂载点：
+   ``` 
+   # geli attach -k /boot/encryption.key /dev/adaXsY 
+   ``` 
    这将要求您输入之前设置的密码。
-6. 现在，您可以将加密设备作为普通分区来使用，例如格式化它并将文件系统挂载到指定的挂载点。
+ 6. 现在，您可以将加密设备作为普通分区来使用，例如格式化它并将文件系统挂载到指定的挂载点。
 
-请注意，加密分区的解锁只在当前会话中有效。在重新启动计算机之前，您需要重新执行步骤5以重新解锁和挂载加密设备。
+请注意，加密分区的解锁只在当前会话中有效。在重新启动计算机之前，您需要重新执行步骤 5 以重新解锁和挂载加密设备。
 . 加载 `geli` 支持
 +
-支持`geli`的功能作为可加载的内核模块提供。要配置系统在启动时自动加载该模块，请将以下行添加到[.filename]#/boot/loader.conf#文件中：
+支持 `geli` 的功能作为可加载的内核模块提供。要配置系统在启动时自动加载该模块，请将以下行添加到 [.filename]#/boot/loader.conf# 文件中：
 +
 [.programlisting]
 ....
@@ -1792,7 +1792,7 @@ device crypto
 
 . 生成主密钥
 +
-以下命令生成一个主密钥，所有数据都将使用该密钥进行加密。该密钥是不可更改的。与直接使用该密钥不同，它会被一个或多个用户密钥加密。用户密钥由来自文件[.filename]#/root/da2.key#的可选随机字节和/或口令组成。在这种情况下，密钥文件的数据源是[.filename]#/dev/random#。此命令还将提供者([.filename]#/dev/da2.eli#)的扇区大小配置为4kB，以提高性能。
+以下命令生成一个主密钥，所有数据都将使用该密钥进行加密。该密钥是不可更改的。与直接使用该密钥不同，它会被一个或多个用户密钥加密。用户密钥由来自文件 [.filename]#/root/da2.key# 的可选随机字节和 / 或口令组成。在这种情况下，密钥文件的数据源是 [.filename]#/dev/random# 。此命令还将提供者 ([.filename]#/dev/da2.eli#) 的扇区大小配置为 4kB ，以提高性能。
 +
 [source, shell]
 ....
@@ -1831,7 +1831,7 @@ Enter passphrase:
 
 . 创建新的文件系统
 +
-接下来，使用UFS文件系统对设备进行格式化，并将其挂载到现有的挂载点上：
+接下来，使用 UFS 文件系统对设备进行格式化，并将其挂载到现有的挂载点上：
 +
 [source, shell]
 ....
@@ -1862,7 +1862,7 @@ Filesystem     Size   Used  Avail Capacity  Mounted on
 # geli detach da2.eli
 ....
 
-为了简化启动时`geli`加密设备的挂载，提供了一个[.filename]#rc.d#脚本。对于这个示例，请将以下行添加到[.filename]#/etc/rc.conf#文件中：
+为了简化启动时 `geli` 加密设备的挂载，提供了一个 [.filename]#rc.d# 脚本。对于这个示例，请将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
@@ -1870,14 +1870,14 @@ geli_devices="da2"
 geli_da2_flags="-k /root/da2.key"
 ....
 
-这将 [.filename]#/dev/da2# 配置为具有 [.filename]#/root/da2.key# 作为主密钥的 `geli` 提供程序。系统将在关闭系统之前自动从内核中分离该提供程序。在启动过程中，脚本将在连接提供程序之前提示输入密码。在密码提示之前和之后可能会显示其他内核消息。如果启动过程似乎停滞不前，请仔细查找其他消息中的密码提示。一旦输入正确的密码，提供程序将被连接。然后文件系统通常会被挂载，通过 [.filename]#/etc/fstab# 中的条目进行。有关如何配置文件系统在启动时挂载的说明，请参阅交叉引用:basics[mount-unmount,“挂载和卸载文件系统”]。
+这将 [.filename]#/dev/da2# 配置为具有 [.filename]#/root/da2.key# 作为主密钥的 `geli` 提供程序。系统将在关闭系统之前自动从内核中分离该提供程序。在启动过程中，脚本将在连接提供程序之前提示输入密码。在密码提示之前和之后可能会显示其他内核消息。如果启动过程似乎停滞不前，请仔细查找其他消息中的密码提示。一旦输入正确的密码，提供程序将被连接。然后文件系统通常会被挂载，通过 [.filename]#/etc/fstab# 中的条目进行。有关如何配置文件系统在启动时挂载的说明，请参阅交叉引用 :basics[mount-unmount ,“挂载和卸载文件系统”] 。
 
 [[swap-encrypting]]
 == 加密交换分区
 
-像磁盘分区的加密一样，交换空间的加密用于保护敏感信息。考虑一个处理密码的应用程序。只要这些密码保留在物理内存中，它们不会被写入磁盘，并且在重新启动后会被清除。然而，如果FreeBSD开始交换内存页面以释放空间，密码可能会以未加密的形式写入磁盘。对交换空间进行加密可以解决这种情况。
+像磁盘分区的加密一样，交换空间的加密用于保护敏感信息。考虑一个处理密码的应用程序。只要这些密码保留在物理内存中，它们不会被写入磁盘，并且在重新启动后会被清除。然而，如果 FreeBSD 开始交换内存页面以释放空间，密码可能会以未加密的形式写入磁盘。对交换空间进行加密可以解决这种情况。
 
-本节演示如何使用man:gbde[8]或man:geli[8]加密配置交换分区。假设[.filename]#/dev/ada0s1b#是交换分区。
+本节演示如何使用 man:gbde[8] 或 man:geli[8] 加密配置交换分区。假设 [.filename]#/dev/ada0s1b# 是交换分区。
 
 === 配置加密交换空间
 
@@ -1888,7 +1888,7 @@ geli_da2_flags="-k /root/da2.key"
 # dd if=/dev/random of=/dev/ada0s1b bs=1m
 ....
 
-要使用man:gbde[8]加密交换分区，请在[.filename]#/etc/fstab#中的交换行上添加`.bde`后缀。
+要使用 man:gbde[8] 加密交换分区，请在 [.filename]#/etc/fstab# 中的交换行上添加 `.bde` 后缀。
 
 [.programlisting]
 ....
@@ -1896,7 +1896,7 @@ geli_da2_flags="-k /root/da2.key"
 /dev/ada0s1b.bde	none		swap	sw		0	0
 ....
 
-要使用man:geli[8]来加密交换分区，可以使用`.eli`后缀：
+要使用 man:geli[8] 来加密交换分区，可以使用 `.eli` 后缀：
 
 [.programlisting]
 ....
@@ -1904,21 +1904,21 @@ geli_da2_flags="-k /root/da2.key"
 /dev/ada0s1b.eli	none		swap	sw		0	0
 ....
 
-默认情况下，man:geli[8]使用128位密钥长度的AES算法。通常情况下，默认设置就足够了。如果需要的话，可以在[.filename]#/etc/fstab#中的选项字段中更改这些默认值。可能的标志有：
+默认情况下， man:geli[8] 使用 128 位密钥长度的 AES 算法。通常情况下，默认设置就足够了。如果需要的话，可以在 [.filename]#/etc/fstab# 中的选项字段中更改这些默认值。可能的标志有：
 
-aalgo是一个用于算法学习和实践的在线平台。它提供了一个交互式的编程环境，让用户可以在浏览器中编写和运行算法代码。用户可以通过aalgo学习各种常见的算法和数据结构，并通过解决实际问题来提高他们的编程技能。aalgo还提供了一系列的练习题和挑战，帮助用户巩固所学的知识并提升他们的算法解决能力。无论是初学者还是有经验的开发者，都可以通过aalgo来提升他们的算法和编程能力。::
+aalgo 是一个用于算法学习和实践的在线平台。它提供了一个交互式的编程环境，让用户可以在浏览器中编写和运行算法代码。用户可以通过 aalgo 学习各种常见的算法和数据结构，并通过解决实际问题来提高他们的编程技能。 aalgo 还提供了一系列的练习题和挑战，帮助用户巩固所学的知识并提升他们的算法解决能力。无论是初学者还是有经验的开发者，都可以通过 aalgo 来提升他们的算法和编程能力。::
 数据完整性验证算法用于确保加密数据没有被篡改。请参阅 man:geli[8] 以获取支持的算法列表。
 
 ealgo::
-用于保护数据的加密算法。请参阅man:geli[8]以获取支持的算法列表。
+用于保护数据的加密算法。请参阅 man:geli[8] 以获取支持的算法列表。
 
 密钥长度::
-用于加密算法的密钥长度。请参阅man:geli[8]以了解每个加密算法支持的密钥长度。
+用于加密算法的密钥长度。请参阅 man:geli[8] 以了解每个加密算法支持的密钥长度。
 
 扇区大小::
-在加密之前，块数据的大小会被分割。较大的扇区大小可以提高性能，但会增加存储开销。推荐的大小是4096字节。
+在加密之前，块数据的大小会被分割。较大的扇区大小可以提高性能，但会增加存储开销。推荐的大小是 4096 字节。
 
-这个示例配置了一个使用Blowfish算法的加密交换分区，密钥长度为128位，扇区大小为4千字节。
+这个示例配置了一个使用 Blowfish 算法的加密交换分区，密钥长度为 128 位，扇区大小为 4 千字节。
 
 [.programlisting]
 ....
@@ -1928,9 +1928,9 @@ ealgo::
 
 === 加密交换验证
 
-系统重新启动后，可以使用`swapinfo`命令来验证加密交换空间的正常运行。
+系统重新启动后，可以使用 `swapinfo` 命令来验证加密交换空间的正常运行。
 
-如果正在使用man:gbde[8]：
+如果正在使用 man:gbde[8] ：
 
 [source, shell]
 ....
@@ -1939,7 +1939,7 @@ Device          1K-blocks     Used    Avail Capacity
 /dev/ada0s1b.bde   542720        0   542720     0
 ....
 
-如果正在使用 man:geli[8]：
+如果正在使用 man:geli[8] ：
 
 [source, shell]
 ....
@@ -1949,70 +1949,70 @@ Device          1K-blocks     Used    Avail Capacity
 ....
 
 [[disks-hast]]
-== 高可用存储（Highly Available Storage，HAST）
+== 高可用存储（ Highly Available Storage ， HAST ）
 
-高可用性是严肃的商业应用程序的主要要求之一，而高可用性存储是这种环境中的关键组成部分。在FreeBSD中，高可用性存储（HAST）框架允许通过TCP/IP网络在多个物理分离的机器上透明地存储相同的数据。HAST可以理解为基于网络的RAID1（镜像），类似于在GNU/Linux平台上使用的DRBD(R)存储系统。结合FreeBSD的其他高可用性功能（如CARP），HAST使得构建一个抵抗硬件故障的高可用性存储集群成为可能。
+高可用性是严肃的商业应用程序的主要要求之一，而高可用性存储是这种环境中的关键组成部分。在 FreeBSD 中，高可用性存储（ HAST ）框架允许通过 TCP/IP 网络在多个物理分离的机器上透明地存储相同的数据。 HAST 可以理解为基于网络的 RAID1 （镜像），类似于在 GNU/Linux 平台上使用的 DRBD(R) 存储系统。结合 FreeBSD 的其他高可用性功能（如 CARP ）， HAST 使得构建一个抵抗硬件故障的高可用性存储集群成为可能。
 
-以下是HAST的主要特点：
+以下是 HAST 的主要特点：
 
-* 可用于掩盖本地硬盘的I/O错误。
-* 它与FreeBSD支持的任何文件系统兼容，与文件系统无关。
+* 可用于掩盖本地硬盘的 I/O 错误。
+* 它与 FreeBSD 支持的任何文件系统兼容，与文件系统无关。
 * 只有在节点宕机期间被修改的块才会进行同步，从而实现高效快速的重新同步。
 * 可以在已部署的环境中使用，以增加额外的冗余性。
-* 与CARP、Heartbeat或其他工具一起，它可以用于构建强大和耐用的存储系统。
+* 与 CARP 、 Heartbeat 或其他工具一起，它可以用于构建强大和耐用的存储系统。
 
 阅读本节后，您将了解：
 
-* HAST是什么，它是如何工作的，以及它提供了哪些功能。
-* 如何在FreeBSD上设置和使用HAST。
-* 如何集成CARP和man:devd[8]以构建一个强大的存储系统。
+* HAST 是什么，它是如何工作的，以及它提供了哪些功能。
+* 如何在 FreeBSD 上设置和使用 HAST 。
+* 如何集成 CARP 和 man:devd[8] 以构建一个强大的存储系统。
 
 在阅读本节之前，您应该：
 
-* 了解UNIX(R)和FreeBSD基础知识（参见：basics[basics,FreeBSD Basics]）。
-* 了解如何配置网络接口和其他核心的FreeBSD子系统（参见：config[config-tuning,Configuration and Tuning]）。
-* 对FreeBSD网络有很好的理解（参考：partiv[network-communication,"网络通信"]）。
+* 了解 UNIX(R) 和 FreeBSD 基础知识（参见： basics[basics , FreeBSD Basics] ）。
+* 了解如何配置网络接口和其他核心的 FreeBSD 子系统（参见： config[config-tuning , Configuration and Tuning] ）。
+* 对 FreeBSD 网络有很好的理解（参考： partiv[network-communication ,"网络通信"] ）。
 
-HAST项目由FreeBSD基金会赞助，得到了http://www.omc.net/[http://www.omc.net/]和http://www.transip.nl/[http://www.transip.nl/]的支持。
+HAST 项目由 FreeBSD 基金会赞助，得到了 http://www.omc.net/[http://www.omc.net/] 和 http://www.transip.nl/[http://www.transip.nl/] 的支持。
 
-=== HAST操作
+=== HAST 操作
 
-HAST提供了两台物理机之间的同步块级复制：_主节点_和_备节点_。这两台机器一起被称为一个集群。
+HAST 提供了两台物理机之间的同步块级复制：_主节点_和_备节点_。这两台机器一起被称为一个集群。
 
-由于HAST以主-备配置工作，所以在任何给定的时间内只允许集群中的一个节点处于活动状态。主节点，也称为“活动节点”，负责处理所有对HAST管理设备的I/O请求。备节点会自动从主节点同步。
+由于 HAST 以主 - 备配置工作，所以在任何给定的时间内只允许集群中的一个节点处于活动状态。主节点，也称为“活动节点”，负责处理所有对 HAST 管理设备的 I/O 请求。备节点会自动从主节点同步。
 
-HAST系统的物理组件包括主节点上的本地磁盘和远程次节点上的磁盘。
+HAST 系统的物理组件包括主节点上的本地磁盘和远程次节点上的磁盘。
 
-HAST在块级别上同步操作，对文件系统和应用程序透明。HAST在[/dev/hast/]目录下提供常规的GEOM提供程序，供其他工具或应用程序使用。使用HAST提供的设备和原始磁盘或分区之间没有区别。
+HAST 在块级别上同步操作，对文件系统和应用程序透明。 HAST 在 [/dev/hast/] 目录下提供常规的 GEOM 提供程序，供其他工具或应用程序使用。使用 HAST 提供的设备和原始磁盘或分区之间没有区别。
 
-每个写入、删除或刷新操作都会通过TCP/IP同时发送到本地磁盘和远程磁盘。每个读取操作都会从本地磁盘提供，除非本地磁盘不是最新的或发生了I/O错误。在这种情况下，读取操作会被发送到辅助节点。
+每个写入、删除或刷新操作都会通过 TCP/IP 同时发送到本地磁盘和远程磁盘。每个读取操作都会从本地磁盘提供，除非本地磁盘不是最新的或发生了 I/O 错误。在这种情况下，读取操作会被发送到辅助节点。
 
-HAST试图提供快速的故障恢复。因此，在节点故障后减少同步时间非常重要。为了提供快速同步，HAST管理一个磁盘上的脏扩展位图，并且只在定期同步期间同步这些扩展，初始同步除外。
+HAST 试图提供快速的故障恢复。因此，在节点故障后减少同步时间非常重要。为了提供快速同步， HAST 管理一个磁盘上的脏扩展位图，并且只在定期同步期间同步这些扩展，初始同步除外。
 
-处理同步的方法有很多种。HAST实现了几种复制模式来处理不同的同步方法：
+处理同步的方法有很多种。 HAST 实现了几种复制模式来处理不同的同步方法：
 
 * _memsync_模式：当本地写操作完成并且远程节点确认数据到达之后，但在实际存储数据之前，该模式将报告写操作已完成。在发送确认之后，远程节点上的数据将直接存储。该模式旨在减少延迟，但仍提供良好的可靠性。该模式是默认模式。
 * _fullsync_：当本地写操作和远程写操作都完成时，该模式将报告写操作已完成。这是最安全但也是最慢的复制模式。
 * _async_：此模式在本地写操作完成时报告写操作完成。这是最快速和最危险的复制模式。只有在复制到远程节点时延迟过高以至于其他模式无法使用时才应使用此模式。
 
-=== HAST配置
+=== HAST 配置
 
-HAST框架由几个组件组成：
+HAST 框架由几个组件组成：
 
-* 这个人:hastd[8]守护进程提供数据同步功能。当启动这个守护进程时，它会自动加载`geom_gate.ko`模块。
-* 用户空间管理实用程序，man:hastctl[8]。
-* man:hast.conf[5]配置文件。在启动hastd之前，此文件必须存在。
+* 这个人 :hastd[8] 守护进程提供数据同步功能。当启动这个守护进程时，它会自动加载 `geom_gate.ko` 模块。
+* 用户空间管理实用程序， man:hastctl[8] 。
+* man:hast.conf[5] 配置文件。在启动 hastd 之前，此文件必须存在。
 
-喜欢将`GEOM_GATE`支持静态构建到内核中的用户应该将以下行添加到自定义内核配置文件中，然后按照crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel]中的说明重新构建内核。
+喜欢将 `GEOM_GATE` 支持静态构建到内核中的用户应该将以下行添加到自定义内核配置文件中，然后按照 crossref:kernelconfig[kernelconfig , Configuring the FreeBSD Kernel] 中的说明重新构建内核。
 
 [.programlisting]
 ....
 options	GEOM_GATE
 ....
 
-以下示例描述了如何使用HAST在两个节点之间配置主备操作来复制数据。节点将被称为`hasta`，IP地址为`172.16.0.1`，以及`hastb`，IP地址为`172.16.0.2`。两个节点都将有一个专用硬盘[.filename]#/dev/ad6#，大小相同，用于HAST操作。HAST池，有时也称为资源或GEOM提供者，在[.filename]#/dev/hast/#中将被称为`test`。
+以下示例描述了如何使用 HAST 在两个节点之间配置主备操作来复制数据。节点将被称为 `hasta` ， IP 地址为 `172.16.0.1` ，以及 `hastb` ， IP 地址为 `172.16.0.2` 。两个节点都将有一个专用硬盘 [.filename]#/dev/ad6# ，大小相同，用于 HAST 操作。 HAST 池，有时也称为资源或 GEOM 提供者，在 [.filename]#/dev/hast/# 中将被称为 `test` 。
 
-HAST的配置是通过使用[/etc/hast.conf]文件完成的。这个文件在两个节点上应该是相同的。最简单的配置如下：
+HAST 的配置是通过使用 [/etc/hast.conf] 文件完成的。这个文件在两个节点上应该是相同的。最简单的配置如下：
 
 [.programlisting]
 ....
@@ -2028,14 +2028,14 @@ resource test {
 }
 ....
 
-有关更高级的配置，请参考 man:hast.conf[5]。
+有关更高级的配置，请参考 man:hast.conf[5] 。
 
 [TIP]
 ====
-如果主机是可解析的，并且在/etc/hosts或本地DNS中定义了，也可以在`remote`语句中使用主机名。
+如果主机是可解析的，并且在 /etc/hosts 或本地 DNS 中定义了，也可以在 `remote` 语句中使用主机名。
 ====
 
-一旦配置在两个节点上存在，就可以创建HAST池。在两个节点上运行以下命令，将初始元数据放置在本地磁盘上并启动man:hastd[8]：
+一旦配置在两个节点上存在，就可以创建 HAST 池。在两个节点上运行以下命令，将初始元数据放置在本地磁盘上并启动 man:hastd[8] ：
 
 [source, shell]
 ....
@@ -2045,33 +2045,33 @@ resource test {
 
 [NOTE]
 ====
-无法使用GEOM提供程序与现有文件系统一起使用，也无法将现有存储转换为HAST管理的池。此过程需要在提供程序上存储一些元数据，而现有提供程序上没有足够的空间可用。
+无法使用 GEOM 提供程序与现有文件系统一起使用，也无法将现有存储转换为 HAST 管理的池。此过程需要在提供程序上存储一些元数据，而现有提供程序上没有足够的空间可用。
 ====
 
-HAST节点的“primary”或“secondary”角色由管理员或像Heartbeat这样的软件使用man:hastctl[8]选择。在主节点上，执行以下命令：
+HAST 节点的“ primary ”或“ secondary ”角色由管理员或像 Heartbeat 这样的软件使用 man:hastctl[8] 选择。在主节点上，执行以下命令：
 
 [source, shell]
 ....
 # hastctl role primary test
 ....
 
-在辅助节点上运行以下命令，`hastb`：
+在辅助节点上运行以下命令， `hastb` ：
 
 [source, shell]
 ....
 # hastctl role secondary test
 ....
 
-在每个节点上运行`hastctl`来验证结果：
+在每个节点上运行 `hastctl` 来验证结果：
 
 [source, shell]
 ....
 # hastctl status test
 ....
 
-检查输出中的`status`行。如果它显示为`degraded`，则配置文件存在问题。每个节点上应该显示为`complete`，表示节点之间的同步已经开始。当`hastctl status`报告0字节的`dirty` extents时，同步完成。
+检查输出中的 `status` 行。如果它显示为 `degraded` ，则配置文件存在问题。每个节点上应该显示为 `complete` ，表示节点之间的同步已经开始。当 `hastctl status` 报告 0 字节的 `dirty` extents 时，同步完成。
 
-下一步是在GEOM提供程序上创建文件系统并挂载它。这必须在“primary”节点上完成。根据硬盘的大小，创建文件系统可能需要几分钟的时间。此示例在`/dev/hast/test`上创建了一个UFS文件系统。
+下一步是在 GEOM 提供程序上创建文件系统并挂载它。这必须在“ primary ”节点上完成。根据硬盘的大小，创建文件系统可能需要几分钟的时间。此示例在 `/dev/hast/test` 上创建了一个 UFS 文件系统。
 
 [source, shell]
 ....
@@ -2080,7 +2080,7 @@ HAST节点的“primary”或“secondary”角色由管理员或像Heartbeat这
 # mount /dev/hast/test /hast/test
 ....
 
-一旦HAST框架正确配置完成，最后一步是确保在系统启动时自动启动HAST。将以下行添加到`/etc/rc.conf`文件中：
+一旦 HAST 框架正确配置完成，最后一步是确保在系统启动时自动启动 HAST 。将以下行添加到 `/etc/rc.conf` 文件中：
 
 [.programlisting]
 ....
@@ -2091,13 +2091,13 @@ hastd_enable="YES"
 
 这个示例的目标是构建一个强大的存储系统，能够抵抗任何给定节点的故障。如果主节点发生故障，备用节点将无缝接管，检查和挂载文件系统，并继续工作，不会丢失任何一位数据。
 
-为了完成这个任务，使用Common Address Redundancy Protocol (CARP)来提供IP层的自动故障转移。CARP允许同一网络段上的多个主机共享一个IP地址。根据crossref:advanced-networking[carp,“Common Address Redundancy Protocol (CARP)”]中提供的文档，在集群的两个节点上设置CARP。在这个例子中，每个节点都有自己的管理IP地址和一个共享的IP地址为_172.16.0.254_。集群的主要HAST节点必须是主要的CARP节点。
+为了完成这个任务，使用 Common Address Redundancy Protocol (CARP) 来提供 IP 层的自动故障转移。 CARP 允许同一网络段上的多个主机共享一个 IP 地址。根据 crossref:advanced-networking[carp ,“ Common Address Redundancy Protocol (CARP) ”] 中提供的文档，在集群的两个节点上设置 CARP 。在这个例子中，每个节点都有自己的管理 IP 地址和一个共享的 IP 地址为_172.16.0.254_。集群的主要 HAST 节点必须是主要的 CARP 节点。
 
-在前一节中创建的HAST池现在已经准备好导出到网络上的其他主机。可以通过NFS或Samba将其导出，使用共享的IP地址_172.16.0.254_。唯一尚未解决的问题是主节点故障时的自动故障转移。
+在前一节中创建的 HAST 池现在已经准备好导出到网络上的其他主机。可以通过 NFS 或 Samba 将其导出，使用共享的 IP 地址_172.16.0.254_。唯一尚未解决的问题是主节点故障时的自动故障转移。
 
-当CARP接口上下线时，FreeBSD操作系统会生成一个man:devd[8]事件，这样就可以监视CARP接口的状态变化。CARP接口的状态变化表示其中一个节点失败或重新上线。这些状态变化事件使得可以运行一个脚本来自动处理HAST故障切换。
+当 CARP 接口上下线时， FreeBSD 操作系统会生成一个 man:devd[8] 事件，这样就可以监视 CARP 接口的状态变化。 CARP 接口的状态变化表示其中一个节点失败或重新上线。这些状态变化事件使得可以运行一个脚本来自动处理 HAST 故障切换。
 
-要捕获CARP接口上的状态变化，请在每个节点的`/etc/devd.conf`配置文件中添加以下配置：
+要捕获 CARP 接口上的状态变化，请在每个节点的 `/etc/devd.conf` 配置文件中添加以下配置：
 
 [.programlisting]
 ....
@@ -2118,17 +2118,17 @@ notify 30 {
 
 [NOTE]
 ====
-如果系统运行的是FreeBSD 10或更高版本，请将[.filename]#carp0#替换为CARP配置接口的名称。
+如果系统运行的是 FreeBSD 10 或更高版本，请将 [.filename]#carp0# 替换为 CARP 配置接口的名称。
 ====
 
-在两个节点上重新启动man:devd[8]，以使新配置生效：
+在两个节点上重新启动 man:devd[8] ，以使新配置生效：
 
 [source, shell]
 ....
 # service devd restart
 ....
 
-当指定的接口状态发生上升或下降变化时，系统会生成一个通知，允许man:devd[8]子系统运行指定的自动故障转移脚本[.filename]#/usr/local/sbin/carp-hast-switch#。有关此配置的进一步说明，请参考man:devd.conf[5]。
+当指定的接口状态发生上升或下降变化时，系统会生成一个通知，允许 man:devd[8] 子系统运行指定的自动故障转移脚本 [.filename]#/usr/local/sbin/carp-hast-switch# 。有关此配置的进一步说明，请参考 man:devd.conf[5] 。
 
 这是一个自动故障转移脚本的示例：
 
@@ -2220,14 +2220,14 @@ esac
 
 简而言之，当一个节点成为主节点时，脚本会执行以下操作：
 
-* 将HAST池提升为另一节点上的主节点。
-* 检查HAST池下的文件系统。
+* 将 HAST 池提升为另一节点上的主节点。
+* 检查 HAST 池下的文件系统。
 * 挂载存储池。
 
 当一个节点变为次要节点时：
 
-* 卸载HAST池。
-* 将HAST池降级为辅助池。
+* 卸载 HAST 池。
+* 将 HAST 池降级为辅助池。
 
 [CAUTION]
 ====
@@ -2236,23 +2236,23 @@ esac
 
 [TIP]
 ====
-对于这个示例，使用了标准的UFS文件系统。为了减少恢复所需的时间，可以使用启用了日志的UFS或ZFS文件系统。
+对于这个示例，使用了标准的 UFS 文件系统。为了减少恢复所需的时间，可以使用启用了日志的 UFS 或 ZFS 文件系统。
 ====
 
-更详细的信息和额外的示例可以在http://wiki.FreeBSD.org/HAST[http://wiki.FreeBSD.org/HAST]找到。
+更详细的信息和额外的示例可以在 http://wiki.FreeBSD.org/HAST[http://wiki.FreeBSD.org/HAST] 找到。
 
 === 故障排除
 
-HAST通常应该没有问题。然而，与任何其他软件产品一样，有时候它可能无法按照预期工作。问题的根源可能不同，但经验法则是确保集群节点之间的时间同步。
+HAST 通常应该没有问题。然而，与任何其他软件产品一样，有时候它可能无法按照预期工作。问题的根源可能不同，但经验法则是确保集群节点之间的时间同步。
 
-在排除HAST问题时，应通过使用`-d`参数启动`hastd`来增加man:hastd[8]的调试级别。可以多次指定此参数以进一步增加调试级别。还可以考虑使用`-F`，它会在前台启动`hastd`。
+在排除 HAST 问题时，应通过使用 `-d` 参数启动 `hastd` 来增加 man:hastd[8] 的调试级别。可以多次指定此参数以进一步增加调试级别。还可以考虑使用 `-F` ，它会在前台启动 `hastd` 。
 
 [[disks-hast-sb]]
 ==== 从分裂脑状态中恢复
 
 当集群的节点无法相互通信且都配置为主节点时，会发生“分裂脑”现象。这是一种危险的情况，因为它允许两个节点对数据进行不兼容的更改。系统管理员必须手动纠正这个问题。
 
-管理员必须要么决定哪个节点有更重要的更改，要么手动执行合并操作。然后，让HAST对具有损坏数据的节点执行完全同步。为此，请在需要重新同步的节点上执行以下命令：
+管理员必须要么决定哪个节点有更重要的更改，要么手动执行合并操作。然后，让 HAST 对具有损坏数据的节点执行完全同步。为此，请在需要重新同步的节点上执行以下命令：
 
 [source, shell]
 ....

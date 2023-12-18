@@ -1,17 +1,17 @@
 ---
-description: 在FreeBSD中，GEOM框架通过使用提供者（或者在/dev中的磁盘设备）允许访问和控制类别，例如主引导记录和BSD标签。
+description: '在 FreeBSD 中， GEOM 框架通过使用提供者（或者在 /dev 中的磁盘设备）允许访问和控制类别，例如主引导记录和 BSD 标签。'
 next: books/handbook/zfs
 part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/disks
 showBookMenu: true
 tags: '["GEOM", "RAID", "RAID0", "RAID1", "RAID3", "Striping", "bsdlabel", "newfs", "labelling", "UFS", "journaling"]'
-title: '第21章 GEOM：模块化磁盘转换框架'
+title: '第 21 章 GEOM ：模块化磁盘转换框架'
 weight: 25
 ---
 
 [[geom]]
-= GEOM：模块化磁盘转换框架
+= GEOM ：模块化磁盘转换框架
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -48,43 +48,43 @@ endif::[]
 [[geom-synopsis]]
 == 简介
 
-在FreeBSD中，GEOM框架通过使用提供者（或者说是位于`/dev`目录下的磁盘设备）允许访问和控制类别，例如主引导记录和BSD标签。通过支持各种软件RAID配置，GEOM可以透明地提供对操作系统和操作系统工具的访问。
+在 FreeBSD 中， GEOM 框架通过使用提供者（或者说是位于 `/dev` 目录下的磁盘设备）允许访问和控制类别，例如主引导记录和 BSD 标签。通过支持各种软件 RAID 配置， GEOM 可以透明地提供对操作系统和操作系统工具的访问。
 
-本章介绍了在FreeBSD中使用GEOM框架下的磁盘。这包括使用该框架进行配置的主要RAID控制工具。本章不是关于RAID配置的权威指南，只讨论了GEOM支持的RAID分类。
+本章介绍了在 FreeBSD 中使用 GEOM 框架下的磁盘。这包括使用该框架进行配置的主要 RAID 控制工具。本章不是关于 RAID 配置的权威指南，只讨论了 GEOM 支持的 RAID 分类。
 
 阅读完本章后，您将会了解：
 
-* GEOM提供哪种类型的RAID支持？
-* 如何使用基本工具来配置、维护和操作各种RAID级别。
-* 如何通过GEOM镜像、条带化、加密和远程连接磁盘设备。
-* 如何排除与GEOM框架连接的磁盘问题。
+* GEOM 提供哪种类型的 RAID 支持？
+* 如何使用基本工具来配置、维护和操作各种 RAID 级别。
+* 如何通过 GEOM 镜像、条带化、加密和远程连接磁盘设备。
+* 如何排除与 GEOM 框架连接的磁盘问题。
 
 在阅读本章之前，您应该：
 
-* 了解FreeBSD如何处理磁盘设备（参考：disks[disks,存储]）。
-* 了解如何配置和安装新的内核（参考：kernelconfig[kernelconfig，配置FreeBSD内核]）。
+* 了解 FreeBSD 如何处理磁盘设备（参考： disks[disks ,存储] ）。
+* 了解如何配置和安装新的内核（参考： kernelconfig[kernelconfig ，配置 FreeBSD 内核] ）。
 
 [[geom-striping]]
 == RAID0 - 条带化
 
-条带化将多个磁盘驱动器合并为一个卷。可以通过使用硬件RAID控制器来执行条带化。GEOM磁盘子系统提供了对磁盘条带化的软件支持，也称为RAID0，无需RAID磁盘控制器。
+条带化将多个磁盘驱动器合并为一个卷。可以通过使用硬件 RAID 控制器来执行条带化。 GEOM 磁盘子系统提供了对磁盘条带化的软件支持，也称为 RAID0 ，无需 RAID 磁盘控制器。
 
-在RAID0中，数据被分割成块，并写入阵列中的所有驱动器。如下图所示，RAID0可以同时将64k写入阵列中的四个驱动器，而不是等待系统将256k写入一个磁盘，从而提供更优异的I/O性能。通过使用多个磁盘控制器，可以进一步提升性能。
+在 RAID0 中，数据被分割成块，并写入阵列中的所有驱动器。如下图所示， RAID0 可以同时将 64k 写入阵列中的四个驱动器，而不是等待系统将 256k 写入一个磁盘，从而提供更优异的 I/O 性能。通过使用多个磁盘控制器，可以进一步提升性能。
 
 image::striping.png["磁盘条带化示意图"]
 
-RAID0条带中的每个磁盘必须具有相同的大小，因为I/O请求会交错地并行读取或写入多个磁盘。
+RAID0 条带中的每个磁盘必须具有相同的大小，因为 I/O 请求会交错地并行读取或写入多个磁盘。
 
 [NOTE]
 ====
-RAID0不提供任何冗余功能。这意味着如果阵列中的一个磁盘故障，所有磁盘上的数据都会丢失。如果数据很重要，请实施定期将备份保存到远程系统或设备的备份策略。
+RAID0 不提供任何冗余功能。这意味着如果阵列中的一个磁盘故障，所有磁盘上的数据都会丢失。如果数据很重要，请实施定期将备份保存到远程系统或设备的备份策略。
 ====
 
-使用普通磁盘在FreeBSD系统上创建基于GEOM的RAID0软件的过程如下。创建条带后，可以参考man:gstripe[8]了解如何控制现有的条带的更多信息。
+使用普通磁盘在 FreeBSD 系统上创建基于 GEOM 的 RAID0 软件的过程如下。创建条带后，可以参考 man:gstripe[8] 了解如何控制现有的条带的更多信息。
 
 [.procedure]
 ****
-*过程：创建一个未格式化的ATA磁盘条带*
+* 过程：创建一个未格式化的 ATA 磁盘条带 * 
 
 
 . 加载 [.filename]#geom_stripe.ko# 模块：
@@ -94,8 +94,8 @@ RAID0不提供任何冗余功能。这意味着如果阵列中的一个磁盘故
 # kldload geom_stripe
 ....
 
-. 确保存在一个合适的挂载点。如果该卷将成为根分区，则暂时使用另一个挂载点，例如 [.filename]#/mnt#。
-. 确定将要进行条带化的磁盘的设备名称，并创建新的条带设备。例如，要对两个未使用和未分区的ATA磁盘进行条带化，设备名称分别为`/dev/ad2`和`/dev/ad3`：
+. 确保存在一个合适的挂载点。如果该卷将成为根分区，则暂时使用另一个挂载点，例如 [.filename]#/mnt# 。
+. 确定将要进行条带化的磁盘的设备名称，并创建新的条带设备。例如，要对两个未使用和未分区的 ATA 磁盘进行条带化，设备名称分别为 `/dev/ad2` 和 `/dev/ad3` ：
 +
 [source, shell]
 ....
@@ -112,7 +112,7 @@ Done.
 # bsdlabel -wB /dev/stripe/st0
 ....
 
-. 在[.filename]#/dev/stripe#中，除了[.filename]#st0#之外，此过程应该创建另外两个设备。它们分别是[.filename]#st0a#和[.filename]#st0c#。此时，可以使用`newfs`在[.filename]#st0a#上创建一个UFS文件系统：
+. 在 [.filename]#/dev/stripe# 中，除了 [.filename]#st0# 之外，此过程应该创建另外两个设备。它们分别是 [.filename]#st0a# 和 [.filename]#st0c# 。此时，可以使用 `newfs` 在 [.filename]#st0a# 上创建一个 UFS 文件系统：
 +
 [source, shell]
 ....
@@ -127,7 +127,7 @@ Done.
 # mount /dev/stripe/st0a /mnt
 ....
 
-. 要在引导过程中自动挂载此条带文件系统，请将卷信息放置在[/etc/fstab]中。在此示例中，创建了一个永久挂载点，命名为[stripe]。
+. 要在引导过程中自动挂载此条带文件系统，请将卷信息放置在 [/etc/fstab] 中。在此示例中，创建了一个永久挂载点，命名为 [stripe] 。
 +
 [source, shell]
 ....
@@ -136,7 +136,7 @@ Done.
 >> /etc/fstab
 ....
 
-. 在系统初始化期间，还必须自动加载[.filename]#geom_stripe.ko#模块，方法是在[.filename]#/boot/loader.conf#文件中添加一行。
+. 在系统初始化期间，还必须自动加载 [.filename]#geom_stripe.ko# 模块，方法是在 [.filename]#/boot/loader.conf# 文件中添加一行。
 +
 [source, shell]
 ....
@@ -147,11 +147,11 @@ Done.
 [[geom-mirror]]
 == RAID1 - 镜像
 
-RAID1，或者称为镜像，是一种将相同数据写入多个磁盘驱动器的技术。镜像通常用于防止由于驱动器故障而导致的数据丢失。镜像中的每个驱动器都包含数据的完全相同副本。当一个驱动器故障时，镜像仍然可以工作，从仍在运行的驱动器提供数据。计算机继续运行，管理员有时间替换故障的驱动器而不会中断用户。
+RAID1 ，或者称为镜像，是一种将相同数据写入多个磁盘驱动器的技术。镜像通常用于防止由于驱动器故障而导致的数据丢失。镜像中的每个驱动器都包含数据的完全相同副本。当一个驱动器故障时，镜像仍然可以工作，从仍在运行的驱动器提供数据。计算机继续运行，管理员有时间替换故障的驱动器而不会中断用户。
 
 这些示例中展示了两种常见情况。第一种情况是使用两个新的驱动器创建一个镜像，并将其作为现有单个驱动器的替代品。第二个示例是在一个新的驱动器上创建一个镜像，将旧驱动器的数据复制到其中，然后将旧驱动器插入到镜像中。虽然这个过程稍微复杂一些，但只需要一个新的驱动器。
 
-传统上，镜像中的两个驱动器在型号和容量上是相同的，但是man:gmirror[8]并不要求如此。使用不同驱动器创建的镜像的容量将等于镜像中最小驱动器的容量。较大驱动器上的额外空间将不会被使用。后来插入镜像的驱动器必须至少具有与镜像中已有的最小驱动器相同的容量。
+传统上，镜像中的两个驱动器在型号和容量上是相同的，但是 man:gmirror[8] 并不要求如此。使用不同驱动器创建的镜像的容量将等于镜像中最小驱动器的容量。较大驱动器上的额外空间将不会被使用。后来插入镜像的驱动器必须至少具有与镜像中已有的最小驱动器相同的容量。
 
 [WARNING]
 ====
@@ -160,43 +160,43 @@ RAID1，或者称为镜像，是一种将相同数据写入多个磁盘驱动器
 
 [WARNING]
 ====
-在这些过程中，使用man:dump[8]来复制文件系统，但它无法在使用软更新日志的文件系统上工作。请参阅man:tunefs[8]以了解有关检测和禁用软更新日志的信息。
+在这些过程中，使用 man:dump[8] 来复制文件系统，但它无法在使用软更新日志的文件系统上工作。请参阅 man:tunefs[8] 以了解有关检测和禁用软更新日志的信息。
 ====
 
 [[geom-mirror-metadata]]
 === 元数据问题
 
-许多磁盘系统将元数据存储在每个磁盘的末尾。在将磁盘重新用于镜像之前，应该擦除旧的元数据。大多数问题是由两种特定类型的残留元数据引起的：GPT分区表和来自先前镜像的旧元数据。
+许多磁盘系统将元数据存储在每个磁盘的末尾。在将磁盘重新用于镜像之前，应该擦除旧的元数据。大多数问题是由两种特定类型的残留元数据引起的： GPT 分区表和来自先前镜像的旧元数据。
 
-可以使用man:gpart[8]命令来擦除GPT元数据。这个例子会从磁盘ada8上擦除主GPT分区表和备份GPT分区表。
+可以使用 man:gpart[8] 命令来擦除 GPT 元数据。这个例子会从磁盘 ada8 上擦除主 GPT 分区表和备份 GPT 分区表。
 
 [source, shell]
 ....
 # gpart destroy -F ada8
 ....
 
-可以使用man:gmirror[8]命令一步完成从活动镜像中移除磁盘并擦除元数据。在这个例子中，磁盘ada8从活动镜像gm4中被移除。
+可以使用 man:gmirror[8] 命令一步完成从活动镜像中移除磁盘并擦除元数据。在这个例子中，磁盘 ada8 从活动镜像 gm4 中被移除。
 
 [source, shell]
 ....
 # gmirror remove gm4 ada8
 ....
 
-如果镜像没有运行，但旧的镜像元数据仍然存在于磁盘上，请使用`gmirror clear`命令将其删除：
+如果镜像没有运行，但旧的镜像元数据仍然存在于磁盘上，请使用 `gmirror clear` 命令将其删除：
 
 [source, shell]
 ....
 # gmirror clear ada8
 ....
 
-man:gmirror[8]在磁盘的末尾存储一个块的元数据。由于GPT分区方案也在磁盘末尾存储元数据，因此不建议使用man:gmirror[8]来镜像整个GPT磁盘。这里使用MBR分区，因为它只在磁盘的开头存储分区表，不会与镜像的元数据冲突。
+man:gmirror[8] 在磁盘的末尾存储一个块的元数据。由于 GPT 分区方案也在磁盘末尾存储元数据，因此不建议使用 man:gmirror[8] 来镜像整个 GPT 磁盘。这里使用 MBR 分区，因为它只在磁盘的开头存储分区表，不会与镜像的元数据冲突。
 
 [[geom-mirror-two-new-disks]]
 === 使用两个新硬盘创建镜像
 
-在这个例子中，FreeBSD已经安装在一个单独的磁盘上，[.filename]#ada0#。系统已经连接了两个新的磁盘，[.filename]#ada1#和[.filename]#ada2#。将在这两个磁盘上创建一个新的镜像，并用它来替换旧的单个磁盘。
+在这个例子中， FreeBSD 已经安装在一个单独的磁盘上， [.filename]#ada0# 。系统已经连接了两个新的磁盘， [.filename]#ada1# 和 [.filename]#ada2# 。将在这两个磁盘上创建一个新的镜像，并用它来替换旧的单个磁盘。
 
-内核模块[.filename]#geom_mirror.ko#必须在内核中构建或在启动或运行时加载。现在手动加载内核模块：
+内核模块 [.filename]#geom_mirror.ko# 必须在内核中构建或在启动或运行时加载。现在手动加载内核模块：
 
 [source, shell]
 ....
@@ -212,9 +212,9 @@ man:gmirror[8]在磁盘的末尾存储一个块的元数据。由于GPT分区方
 
 [.filename]#gm0# 是用户选择的设备名称，用于指定新镜像。在镜像启动后，该设备名称将出现在 [.filename]#/dev/mirror/# 中。
 
-现在可以使用man:gpart[8]在镜像上创建MBR和bsdlabel分区表。这个例子使用传统的文件系统布局，包括用于[/]、交换空间、[/var]、[/tmp]和[/usr]的分区。也可以只使用一个[/]和一个交换空间分区。
+现在可以使用 man:gpart[8] 在镜像上创建 MBR 和 bsdlabel 分区表。这个例子使用传统的文件系统布局，包括用于 [/] 、交换空间、 [/var] 、 [/tmp] 和 [/usr] 的分区。也可以只使用一个 [/] 和一个交换空间分区。
 
-镜像上的分区不必与现有磁盘上的分区大小相同，但必须足够大以容纳已经存在于ada0上的所有数据。
+镜像上的分区不必与现有磁盘上的分区大小相同，但必须足够大以容纳已经存在于 ada0 上的所有数据。
 
 [source, shell]
 ....
@@ -246,7 +246,7 @@ man:gmirror[8]在磁盘的末尾存储一个块的元数据。由于GPT分区方
   156301298          1                      - free -  (512B)
 ....
 
-通过在MBR中安装引导代码和bsdlabel，并设置活动分区，使镜像可引导：
+通过在 MBR 中安装引导代码和 bsdlabel ，并设置活动分区，使镜像可引导：
 
 [source, shell]
 ....
@@ -265,7 +265,7 @@ man:gmirror[8]在磁盘的末尾存储一个块的元数据。由于GPT分区方
 # newfs -U /dev/mirror/gm0s1f
 ....
 
-现在可以使用man:dump[8]和man:restore[8]将原始的[.filename]#ada0#磁盘上的文件系统复制到镜像中。
+现在可以使用 man:dump[8] 和 man:restore[8] 将原始的 [.filename]#ada0# 磁盘上的文件系统复制到镜像中。
 
 [source, shell]
 ....
@@ -279,7 +279,7 @@ man:gmirror[8]在磁盘的末尾存储一个块的元数据。由于GPT分区方
 # dump -C16 -b64 -0aL -f - /usr | (cd /mnt/usr && restore -rf -)
 ....
 
-编辑 [.filename]#/mnt/etc/fstab#，将其指向新的镜像文件系统：
+编辑 [.filename]#/mnt/etc/fstab# ，将其指向新的镜像文件系统：
 
 [.programlisting]
 ....
@@ -291,23 +291,23 @@ man:gmirror[8]在磁盘的末尾存储一个块的元数据。由于GPT分区方
 /dev/mirror/gm0s1f	/usr		ufs	rw	2	2
 ....
 
-如果内核模块[.filename]#geom_mirror.ko#没有被编译到内核中，需要编辑[.filename]#/mnt/boot/loader.conf#文件，在启动时加载该模块：
+如果内核模块 [.filename]#geom_mirror.ko# 没有被编译到内核中，需要编辑 [.filename]#/mnt/boot/loader.conf# 文件，在启动时加载该模块：
 
 [.programlisting]
 ....
 geom_mirror_load="YES"
 ....
 
-重新启动系统以测试新的镜像，并验证所有数据是否已复制。BIOS将把镜像视为两个独立的驱动器，而不是一个镜像。由于驱动器是相同的，选择哪个来启动并不重要。
+重新启动系统以测试新的镜像，并验证所有数据是否已复制。 BIOS 将把镜像视为两个独立的驱动器，而不是一个镜像。由于驱动器是相同的，选择哪个来启动并不重要。
 
-如果启动时出现问题，请参阅<<gmirror-troubleshooting>>。关闭电源并断开原始的[.filename]#ada0#磁盘，可以将其保留为离线备份。
+如果启动时出现问题，请参阅 <<gmirror-troubleshooting>> 。关闭电源并断开原始的 [.filename]#ada0# 磁盘，可以将其保留为离线备份。
 
 在使用中，镜像将表现得就像原始的单个驱动器一样。
 
 [[geom-mirror-existing-drive]]
 === 使用现有驱动器创建镜像
 
-在这个例子中，FreeBSD已经安装在一个单独的磁盘上，[.filename]#ada0#。一个新的磁盘，[.filename]#ada1#，已经连接到系统上。将在新磁盘上创建一个单磁盘镜像，将现有系统复制到其中，然后将旧磁盘插入到镜像中。这个稍微复杂的过程是必需的，因为`gmirror`需要在每个磁盘的末尾放置一个512字节的元数据块，而现有的[.filename]#ada0#通常已经分配了所有的空间。
+在这个例子中， FreeBSD 已经安装在一个单独的磁盘上， [.filename]#ada0# 。一个新的磁盘， [.filename]#ada1# ，已经连接到系统上。将在新磁盘上创建一个单磁盘镜像，将现有系统复制到其中，然后将旧磁盘插入到镜像中。这个稍微复杂的过程是必需的，因为 `gmirror` 需要在每个磁盘的末尾放置一个 512 字节的元数据块，而现有的 [.filename]#ada0# 通常已经分配了所有的空间。
 
 加载 [.filename]#geom_mirror.ko# 内核模块：
 
@@ -326,7 +326,7 @@ geom_mirror_load="YES"
         1000204821504   # mediasize in bytes (931G)
 ....
 
-在新的磁盘上创建一个镜像。为了确保镜像容量不大于原始的ada0驱动器，使用man:gnop[8]创建一个与原始驱动器大小完全相同的虚拟驱动器。这个驱动器不存储任何数据，只用于限制镜像的大小。当man:gmirror[8]创建镜像时，它将限制容量为gzero.nop的大小，即使新的ada1驱动器有更多的空间。请注意，第二行中的1000204821504等于ada0的媒体大小，如上面的diskinfo所示。
+在新的磁盘上创建一个镜像。为了确保镜像容量不大于原始的 ada0 驱动器，使用 man:gnop[8] 创建一个与原始驱动器大小完全相同的虚拟驱动器。这个驱动器不存储任何数据，只用于限制镜像的大小。当 man:gmirror[8] 创建镜像时，它将限制容量为 gzero.nop 的大小，即使新的 ada1 驱动器有更多的空间。请注意，第二行中的 1000204821504 等于 ada0 的媒体大小，如上面的 diskinfo 所示。
 
 [source, shell]
 ....
@@ -338,9 +338,9 @@ geom_mirror_load="YES"
 
 由于 [.filename]#gzero.nop# 不存储任何数据，因此镜像设备不会将其视为已连接。镜像设备被告知“忘记”未连接的组件，从而删除对 [.filename]#gzero.nop# 的引用。结果是一个只包含一个磁盘 [.filename]#ada1# 的镜像设备。
 
-创建 [.filename]#gm0# 后，查看 [.filename]#ada0# 上的分区表。这个输出来自一个1TB的硬盘。如果驱动器末尾有一些未分配的空间，可以直接将内容从 [.filename]#ada0# 复制到新的镜像中。
+创建 [.filename]#gm0# 后，查看 [.filename]#ada0# 上的分区表。这个输出来自一个 1TB 的硬盘。如果驱动器末尾有一些未分配的空间，可以直接将内容从 [.filename]#ada0# 复制到新的镜像中。
 
-然而，如果输出显示磁盘上的所有空间都已分配，就像下面的列表中所示，那么在磁盘末尾没有可用于512字节镜像元数据的空间。
+然而，如果输出显示磁盘上的所有空间都已分配，就像下面的列表中所示，那么在磁盘末尾没有可用于 512 字节镜像元数据的空间。
 
 [source, shell]
 ....
@@ -351,7 +351,7 @@ geom_mirror_load="YES"
 
 在这种情况下，必须编辑分区表，将 [.filename]#mirror/gm0# 的容量减少一个扇区。具体操作将在后面解释。
 
-无论哪种情况，都应首先使用`gpart backup`和`gpart restore`命令来复制主硬盘上的分区表。
+无论哪种情况，都应首先使用 `gpart backup` 和 `gpart restore` 命令来复制主硬盘上的分区表。
 
 [source, shell]
 ....
@@ -359,7 +359,7 @@ geom_mirror_load="YES"
 # gpart backup ada0s1 > table.ada0s1
 ....
 
-这些命令创建了两个文件，[.filename]#table.ada0# 和 [.filename]#table.ada0s1#。这个例子是来自一个1 TB的硬盘。
+这些命令创建了两个文件， [.filename]#table.ada0# 和 [.filename]#table.ada0s1# 。这个例子是来自一个 1 TB 的硬盘。
 
 [source, shell]
 ....
@@ -403,7 +403,7 @@ BSD 8
 
 如果磁盘末尾至少有一个扇区未分配，这两个文件可以直接使用，无需修改。
 
-现在将分区表恢复到[mirror/gm0]中：
+现在将分区表恢复到 [mirror/gm0] 中：
 
 [source, shell]
 ....
@@ -411,7 +411,7 @@ BSD 8
 # gpart restore mirror/gm0s1 < table.ada0s1
 ....
 
-使用`gpart show`命令检查分区表。此示例中，分区表如下： [.filename]#gm0s1a# 用于 [.filename]#/#， [.filename]#gm0s1d# 用于 [.filename]#/var#， [.filename]#gm0s1e# 用于 [.filename]#/usr#， [.filename]#gm0s1f# 用于 [.filename]#/data1#，以及 [.filename]#gm0s1g# 用于 [.filename]#/data2#。
+使用 `gpart show` 命令检查分区表。此示例中，分区表如下： [.filename]#gm0s1a# 用于 [.filename]#/# ， [.filename]#gm0s1d# 用于 [.filename]#/var# ， [.filename]#gm0s1e# 用于 [.filename]#/usr# ， [.filename]#gm0s1f# 用于 [.filename]#/data1# ，以及 [.filename]#gm0s1g# 用于 [.filename]#/data2# 。
 
 [source, shell]
 ....
@@ -433,7 +433,7 @@ BSD 8
 
 切片和最后一个分区都必须在磁盘末尾至少有一个空闲块。
 
-在这些新分区上创建文件系统。分区的数量将根据原始磁盘[.filename]#ada0#而变化。
+在这些新分区上创建文件系统。分区的数量将根据原始磁盘 [.filename]#ada0# 而变化。
 
 [source, shell]
 ....
@@ -444,7 +444,7 @@ BSD 8
 # newfs -U /dev/mirror/gm0s1g
 ....
 
-通过在MBR中安装引导代码和bsdlabel，并设置活动分区，使镜像可引导：
+通过在 MBR 中安装引导代码和 bsdlabel ，并设置活动分区，使镜像可引导：
 
 [source, shell]
 ....
@@ -460,7 +460,7 @@ BSD 8
 # cp /etc/fstab /etc/fstab.orig
 ....
 
-编辑[/etc/fstab]文件，将[/dev/ada0]替换为[mirror/gm0]。
+编辑 [/etc/fstab] 文件，将 [/dev/ada0] 替换为 [mirror/gm0] 。
 
 [.programlisting]
 ....
@@ -480,7 +480,7 @@ BSD 8
 geom_mirror_load="YES"
 ....
 
-现在可以使用man:dump[8]和man:restore[8]将原始磁盘上的文件系统复制到镜像上。使用`dump -L`转储的每个文件系统都会首先创建一个快照，这可能需要一些时间。
+现在可以使用 man:dump[8] 和 man:restore[8] 将原始磁盘上的文件系统复制到镜像上。使用 `dump -L` 转储的每个文件系统都会首先创建一个快照，这可能需要一些时间。
 
 [source, shell]
 ....
@@ -496,7 +496,7 @@ geom_mirror_load="YES"
 # dump -C16 -b64 -0aL -f - /data2 | (cd /mnt/data2 && restore -rf -)
 ....
 
-重新启动系统，从 [.filename]#ada1# 引导。如果一切正常，系统将从 [.filename]#mirror/gm0# 引导，该镜像现在包含与 [.filename]#ada0# 之前相同的数据。如果启动时出现问题，请参考 <<gmirror-troubleshooting>>。
+重新启动系统，从 [.filename]#ada1# 引导。如果一切正常，系统将从 [.filename]#mirror/gm0# 引导，该镜像现在包含与 [.filename]#ada0# 之前相同的数据。如果启动时出现问题，请参考 <<gmirror-troubleshooting>> 。
 
 此时，镜像仍然只由单个 [.filename]#ada1# 磁盘组成。
 
@@ -534,12 +534,12 @@ mirror/gm0  COMPLETE  ada1 (ACTIVE)
                       ada0 (ACTIVE)
 ....
 
-[.filename]#mirror/gm0# 现在由两个磁盘 [.filename]#ada0# 和 [.filename]#ada1# 组成，并且它们的内容会自动同步。在使用中，[.filename]#mirror/gm0# 的行为与原始的单个驱动器相同。
+[.filename]#mirror/gm0# 现在由两个磁盘 [.filename]#ada0# 和 [.filename]#ada1# 组成，并且它们的内容会自动同步。在使用中， [.filename]#mirror/gm0# 的行为与原始的单个驱动器相同。
 
 [[gmirror-troubleshooting]]
 === 故障排除
 
-如果系统无法启动，可能需要更改BIOS设置以从新镜像驱动器中启动。可以使用任何一个镜像驱动器进行引导，因为它们包含相同的数据。
+如果系统无法启动，可能需要更改 BIOS 设置以从新镜像驱动器中启动。可以使用任何一个镜像驱动器进行引导，因为它们包含相同的数据。
 
 如果启动停在这个消息上，说明镜像设备出现了问题：
 
@@ -568,7 +568,7 @@ Manual root filesystem specification:
 mountroot>
 ....
 
-忘记在`/boot/loader.conf`中加载`geom_mirror.ko`模块可能会导致这个问题。要修复它，从FreeBSD安装介质启动，并在第一个提示处选择`Shell`。然后加载镜像模块并挂载镜像设备：
+忘记在 `/boot/loader.conf` 中加载 `geom_mirror.ko` 模块可能会导致这个问题。要修复它，从 FreeBSD 安装介质启动，并在第一个提示处选择 `Shell` 。然后加载镜像模块并挂载镜像设备：
 
 [source, shell]
 ....
@@ -576,7 +576,7 @@ mountroot>
 # mount /dev/mirror/gm0s1a /mnt
 ....
 
-编辑[/mnt/boot/loader.conf]文件，在其中添加一行代码以加载镜像模块：
+编辑 [/mnt/boot/loader.conf] 文件，在其中添加一行代码以加载镜像模块：
 
 [.programlisting]
 ....
@@ -585,7 +585,7 @@ geom_mirror_load="YES"
 
 保存文件并重新启动。
 
-导致“错误19”的其他问题需要更多的努力来修复。虽然系统应该从[.filename]#ada0#启动，但如果[.filename]#/etc/fstab#不正确，将会出现选择shell的另一个提示。在引导加载程序提示符处输入`ufs:/dev/ada0s1a`，然后按下kbd:[Enter]。撤消[.filename]#/etc/fstab#中的编辑，然后将文件系统从原始磁盘([.filename]#ada0#)挂载，而不是从镜像挂载。重新启动系统，然后再次尝试该过程。
+导致“错误 19 ”的其他问题需要更多的努力来修复。虽然系统应该从 [.filename]#ada0# 启动，但如果 [.filename]#/etc/fstab# 不正确，将会出现选择 shell 的另一个提示。在引导加载程序提示符处输入 `ufs:/dev/ada0s1a` ，然后按下 kbd:[Enter] 。撤消 [.filename]#/etc/fstab# 中的编辑，然后将文件系统从原始磁盘 ([.filename]#ada0#) 挂载，而不是从镜像挂载。重新启动系统，然后再次尝试该过程。
 
 [source, shell]
 ....
@@ -598,7 +598,7 @@ Enter full pathname of shell or RETURN for /bin/sh:
 
 磁盘镜像的好处是，即使一个磁盘发生故障，镜像也不会丢失任何数据。在上面的例子中，如果 [.filename]#ada0# 失效，镜像将继续工作，并从剩余的工作驱动器 [.filename]#ada1# 提供数据。
 
-要替换故障的驱动器，请关闭系统并将故障的驱动器物理上替换为容量相等或更大的新驱动器。制造商在以千兆字节为单位评估驱动器时使用了一些任意的值，唯一真正确定的方法是比较`diskinfo -v`显示的扇区总数。比镜像容量更大的驱动器也可以工作，尽管新驱动器上的额外空间将不会被使用。
+要替换故障的驱动器，请关闭系统并将故障的驱动器物理上替换为容量相等或更大的新驱动器。制造商在以千兆字节为单位评估驱动器时使用了一些任意的值，唯一真正确定的方法是比较 `diskinfo -v` 显示的扇区总数。比镜像容量更大的驱动器也可以工作，尽管新驱动器上的额外空间将不会被使用。
 
 在计算机重新启动后，镜像将以“降级”模式运行，只有一个驱动器。镜像被告知忘记当前未连接的驱动器。
 
@@ -607,7 +607,7 @@ Enter full pathname of shell or RETURN for /bin/sh:
 # gmirror forget gm0
 ....
 
-使用<<geom-mirror-metadata>>中的说明清除替换磁盘上的任何旧元数据。然后将替换磁盘（此示例中为[.filename]#ada4#）插入到镜像中。
+使用 <<geom-mirror-metadata>> 中的说明清除替换磁盘上的任何旧元数据。然后将替换磁盘（此示例中为 [.filename]#ada4# ）插入到镜像中。
 
 [source, shell]
 ....
@@ -616,28 +616,28 @@ Enter full pathname of shell or RETURN for /bin/sh:
 
 当新驱动器插入到镜像中时，重新同步过程开始。将镜像数据复制到新驱动器可能需要一段时间。在复制过程中，镜像的性能将大大降低，因此最好在计算机需求较低时插入新驱动器。
 
-可以使用`gmirror status`来监视进度，它会显示正在同步的驱动器以及完成的百分比。在重新同步期间，状态将显示为`DEGRADED`，当过程完成时，状态将变为`COMPLETE`。
+可以使用 `gmirror status` 来监视进度，它会显示正在同步的驱动器以及完成的百分比。在重新同步期间，状态将显示为 `DEGRADED` ，当过程完成时，状态将变为 `COMPLETE` 。
 
 [[geom-raid3]]
 == RAID3 - 以字节为单位的条带化和专用奇偶校验
 
-RAID3是一种将多个磁盘驱动器组合成一个具有专用奇偶校验磁盘的卷的方法。在RAID3系统中，数据被分割成多个字节，这些字节被写入阵列中的所有磁盘，除了一个充当专用奇偶校验磁盘的磁盘。这意味着从RAID3实现中读取磁盘时，会访问阵列中的所有磁盘。通过使用多个磁盘控制器，可以提高性能。RAID3阵列提供了1个驱动器的容错能力，同时提供了总容量为所有磁盘的总容量的1-1/n倍的容量，其中n是阵列中的硬盘数量。这种配置主要适用于存储较大的数据，如多媒体文件。
+RAID3 是一种将多个磁盘驱动器组合成一个具有专用奇偶校验磁盘的卷的方法。在 RAID3 系统中，数据被分割成多个字节，这些字节被写入阵列中的所有磁盘，除了一个充当专用奇偶校验磁盘的磁盘。这意味着从 RAID3 实现中读取磁盘时，会访问阵列中的所有磁盘。通过使用多个磁盘控制器，可以提高性能。 RAID3 阵列提供了 1 个驱动器的容错能力，同时提供了总容量为所有磁盘的总容量的 1-1/n 倍的容量，其中 n 是阵列中的硬盘数量。这种配置主要适用于存储较大的数据，如多媒体文件。
 
-构建RAID3阵列至少需要3个物理硬盘。每个硬盘的大小必须相同，因为I/O请求会交错地并行读取或写入多个硬盘。此外，由于RAID3的特性，驱动器的数量必须等于3、5、9、17等，即2^n + 1。
+构建 RAID3 阵列至少需要 3 个物理硬盘。每个硬盘的大小必须相同，因为 I/O 请求会交错地并行读取或写入多个硬盘。此外，由于 RAID3 的特性，驱动器的数量必须等于 3 、 5 、 9 、 17 等，即 2 ^ n + 1 。
 
-本节演示了如何在FreeBSD系统上创建一个软件RAID3。
+本节演示了如何在 FreeBSD 系统上创建一个软件 RAID3 。
 
 [NOTE]
 ====
-虽然理论上可以在FreeBSD上从RAID3阵列引导，但这种配置并不常见，也不建议使用。
+虽然理论上可以在 FreeBSD 上从 RAID3 阵列引导，但这种配置并不常见，也不建议使用。
 ====
 
-=== 创建一个专用的RAID3阵列
+=== 创建一个专用的 RAID3 阵列
 
-在FreeBSD中，对RAID3的支持是通过man:graid3[8] GEOM类实现的。在FreeBSD上创建一个专用的RAID3阵列需要以下步骤。
+在 FreeBSD 中，对 RAID3 的支持是通过 man:graid3[8] GEOM 类实现的。在 FreeBSD 上创建一个专用的 RAID3 阵列需要以下步骤。
 
 [.procedure]
-. 首先，通过执行以下命令之一加载内核模块[.filename]#geom_raid3.ko#：
+. 首先，通过执行以下命令之一加载内核模块 [.filename]#geom_raid3.ko# ：
 +
 [source, shell]
 ....
@@ -658,7 +658,7 @@ RAID3是一种将多个磁盘驱动器组合成一个具有专用奇偶校验磁
 # mkdir /multimedia
 ....
 
-. 确定要添加到阵列中的磁盘的设备名称，并创建新的RAID3设备。最后列出的设备将作为专用奇偶校验磁盘。此示例使用三个未分区的ATA驱动器：[.filename]#ada1#和[.filename]#ada2#用于数据，以及[.filename]#ada3#用于奇偶校验。
+. 确定要添加到阵列中的磁盘的设备名称，并创建新的 RAID3 设备。最后列出的设备将作为专用奇偶校验磁盘。此示例使用三个未分区的 ATA 驱动器： [.filename]#ada1# 和 [.filename]#ada2# 用于数据，以及 [.filename]#ada3# 用于奇偶校验。
 +
 [source, shell]
 ....
@@ -669,7 +669,7 @@ Metadata value stored on /dev/ada3.
 Done.
 ....
 
-. 将新创建的[.filename]#gr0#设备进行分区，并在其上放置一个UFS文件系统：
+. 将新创建的 [.filename]#gr0# 设备进行分区，并在其上放置一个 UFS 文件系统：
 +
 [source, shell]
 ....
@@ -685,19 +685,19 @@ Done.
 # mount /dev/raid3/gr0p1 /multimedia/
 ....
 +
-RAID3阵列现在可以使用了。
+RAID3 阵列现在可以使用了。
 
 需要进行额外的配置才能在系统重新启动后保留此设置。
 
 [.procedure]
-. 在挂载阵列之前，必须加载[.filename]#geom_raid3.ko#模块。为了在系统初始化期间自动加载内核模块，请将以下行添加到[.filename]#/boot/loader.conf#文件中：
+. 在挂载阵列之前，必须加载 [.filename]#geom_raid3.ko# 模块。为了在系统初始化期间自动加载内核模块，请将以下行添加到 [.filename]#/boot/loader.conf# 文件中：
 +
 [.programlisting]
 ....
 geom_raid3_load="YES"
 ....
 
-. 在系统启动过程中，必须将以下卷信息添加到[.filename]#/etc/fstab#中，以便自动挂载阵列的文件系统：
+. 在系统启动过程中，必须将以下卷信息添加到 [.filename]#/etc/fstab# 中，以便自动挂载阵列的文件系统：
 +
 [.programlisting]
 ....
@@ -705,20 +705,20 @@ geom_raid3_load="YES"
 ....
 
 [[geom-graid]]
-== 软件RAID设备
+== 软件 RAID 设备
 
-一些主板和扩展卡会添加一些简单的硬件，通常只是一个ROM，使得计算机可以从RAID阵列启动。启动后，对RAID阵列的访问由运行在计算机主处理器上的软件处理。这种“硬件辅助软件RAID”提供了不依赖于任何特定操作系统的RAID阵列，并且在加载操作系统之前就可以正常工作。
+一些主板和扩展卡会添加一些简单的硬件，通常只是一个 ROM ，使得计算机可以从 RAID 阵列启动。启动后，对 RAID 阵列的访问由运行在计算机主处理器上的软件处理。这种“硬件辅助软件 RAID ”提供了不依赖于任何特定操作系统的 RAID 阵列，并且在加载操作系统之前就可以正常工作。
 
-根据所使用的硬件，支持多个级别的RAID。有关完整列表，请参阅man:graid[8]。
+根据所使用的硬件，支持多个级别的 RAID 。有关完整列表，请参阅 man:graid[8] 。
 
 man:graid[8] 需要 [.filename]#geom_raid.ko# 内核模块，该模块从 FreeBSD 9.1 开始包含在 [.filename]#GENERIC# 内核中。如果需要，可以使用 `graid load` 命令手动加载该模块。
 
 [[geom-graid-creating]]
 === 创建一个数组
 
-软件RAID设备通常在计算机启动时按下特殊键进入菜单。该菜单可用于创建和删除RAID阵列。man:graid[8]也可以直接从命令行创建阵列。
+软件 RAID 设备通常在计算机启动时按下特殊键进入菜单。该菜单可用于创建和删除 RAID 阵列。 man:graid[8] 也可以直接从命令行创建阵列。
 
-`graid label`用于创建一个新的阵列。本例中使用的主板具有Intel软件RAID芯片组，因此指定了Intel元数据格式。新的阵列被赋予了一个标签[.filename]#gm0#，它是一个镜像（RAID1），并使用驱动器[.filename]#ada0#和[.filename]#ada1#。
+`graid label` 用于创建一个新的阵列。本例中使用的主板具有 Intel 软件 RAID 芯片组，因此指定了 Intel 元数据格式。新的阵列被赋予了一个标签 [.filename]#gm0# ，它是一个镜像（ RAID1 ），并使用驱动器 [.filename]#ada0# 和 [.filename]#ada1# 。
 
 [CAUTION]
 ====
@@ -749,9 +749,9 @@ raid/r0  OPTIMAL  ada0 (ACTIVE (ACTIVE))
                   ada1 (ACTIVE (ACTIVE))
 ....
 
-数组设备出现在[/dev/raid/]#目录中。第一个数组被称为[r0]#。如果存在其他数组，它们将被称为[r1]#、[r2]#等等。
+数组设备出现在 [/dev/raid/]# 目录中。第一个数组被称为 [r0]# 。如果存在其他数组，它们将被称为 [r1]# 、 [r2]# 等等。
 
-某些设备上的BIOS菜单可以创建带有特殊字符的数组名称。为了避免这些特殊字符带来的问题，数组被赋予简单的编号名称，例如[.filename]#r0#。要显示实际的标签，例如上面的示例中的[.filename]#gm0#，请使用man:sysctl[8]命令。
+某些设备上的 BIOS 菜单可以创建带有特殊字符的数组名称。为了避免这些特殊字符带来的问题，数组被赋予简单的编号名称，例如 [.filename]#r0# 。要显示实际的标签，例如上面的示例中的 [.filename]#gm0# ，请使用 man:sysctl[8] 命令。
 
 [source, shell]
 ....
@@ -761,7 +761,7 @@ raid/r0  OPTIMAL  ada0 (ACTIVE (ACTIVE))
 [[geom-graid-volumes]]
 === 多个卷
 
-一些软件RAID设备支持在阵列上创建多个卷。卷的工作方式类似于分区，允许将物理驱动器上的空间分割并以不同的方式使用。例如，Intel软件RAID设备支持两个卷。此示例创建一个40G的镜像卷，用于安全存储操作系统，然后是一个20G的RAID0（条带）卷，用于快速临时存储。
+一些软件 RAID 设备支持在阵列上创建多个卷。卷的工作方式类似于分区，允许将物理驱动器上的空间分割并以不同的方式使用。例如， Intel 软件 RAID 设备支持两个卷。此示例创建一个 40G 的镜像卷，用于安全存储操作系统，然后是一个 20G 的 RAID0 （条带）卷，用于快速临时存储。
 
 [source, shell]
 ....
@@ -769,17 +769,17 @@ raid/r0  OPTIMAL  ada0 (ACTIVE (ACTIVE))
 # graid add -S 20G gm0 RAID0
 ....
 
-卷在`/dev/raid/`目录下以额外的`.filename`#rX#条目显示。一个包含两个卷的阵列将显示`.filename`#r0#和`.filename`#r1#。
+卷在 `/dev/raid/` 目录下以额外的 `.filename`#rX# 条目显示。一个包含两个卷的阵列将显示 `.filename`#r0# 和 `.filename`#r1# 。
 
-请参阅man:graid[8]，了解不同软件RAID设备支持的卷数。
+请参阅 man:graid[8] ，了解不同软件 RAID 设备支持的卷数。
 
 [[geom-graid-converting]]
 === 将单个驱动器转换为镜像
 
-在特定条件下，可以将现有的单个驱动器转换为man:graid[8]阵列而无需重新格式化。为了在转换过程中避免数据丢失，现有的驱动器必须满足以下最低要求：
+在特定条件下，可以将现有的单个驱动器转换为 man:graid[8] 阵列而无需重新格式化。为了在转换过程中避免数据丢失，现有的驱动器必须满足以下最低要求：
 
-* 驱动器必须使用MBR分区方案进行分区。GPT或其他在驱动器末尾具有元数据的分区方案将被man:graid[8]元数据覆盖和损坏。
-* 驱动器末尾必须有足够的未分区和未使用空间来容纳man:graid[8]元数据。这些元数据的大小各不相同，但最大的占用64 M，因此建议至少有这么多的可用空间。
+* 驱动器必须使用 MBR 分区方案进行分区。 GPT 或其他在驱动器末尾具有元数据的分区方案将被 man:graid[8] 元数据覆盖和损坏。
+* 驱动器末尾必须有足够的未分区和未使用空间来容纳 man:graid[8] 元数据。这些元数据的大小各不相同，但最大的占用 64 M ，因此建议至少有这么多的可用空间。
 
 如果驱动器符合这些要求，请先进行完整备份。然后使用该驱动器创建一个单驱动器镜像：
 
@@ -849,7 +849,7 @@ raid/r0  DEGRADED  ada0 (ACTIVE (ACTIVE))
                    ada1 (ACTIVE (REBUILD 28%))
 ....
 
-某些类型的阵列，例如`RAID0`或`CONCAT`，如果磁盘故障，可能不会在状态报告中显示。要查看这些部分故障的阵列，请添加`-ga`：
+某些类型的阵列，例如 `RAID0` 或 `CONCAT` ，如果磁盘故障，可能不会在状态报告中显示。要查看这些部分故障的阵列，请添加 `-ga` ：
 
 [source, shell]
 ....
@@ -871,10 +871,10 @@ Intel-e2d07d9a  BROKEN  ada6 (ACTIVE (ACTIVE))
 [[geom-graid-unexpected]]
 === 删除意外的数组
 
-驱动器可能意外地包含man:graid[8]元数据，这可能是由于先前的使用或制造商的测试。man:graid[8]将检测到这些驱动器并创建一个阵列，从而干扰对单个驱动器的访问。要删除不需要的元数据：
+驱动器可能意外地包含 man:graid[8] 元数据，这可能是由于先前的使用或制造商的测试。 man:graid[8] 将检测到这些驱动器并创建一个阵列，从而干扰对单个驱动器的访问。要删除不需要的元数据：
 
 [.procedure]
-. 启动系统。在启动菜单中，选择`2`进入加载器提示符。输入：
+. 启动系统。在启动菜单中，选择 `2` 进入加载器提示符。输入：
 +
 [source, shell]
 ....
@@ -891,9 +891,9 @@ OK boot
 kern.geom.raid.enable=0
 ....
 +
-到[.filename]#/boot/loader.conf#。
+到 [.filename]#/boot/loader.conf# 。
 +
-要永久删除受影响驱动器上的man:graid[8]元数据，请启动FreeBSD安装CD-ROM或内存棒，并选择`Shell`。使用`status`命令找到阵列的名称，通常为`raid/r0`：
+要永久删除受影响驱动器上的 man:graid[8] 元数据，请启动 FreeBSD 安装 CD-ROM 或内存棒，并选择 `Shell` 。使用 `status` 命令找到阵列的名称，通常为 `raid/r0` ：
 +
 [source, shell]
 ....
@@ -912,30 +912,30 @@ raid/r0  OPTIMAL  ada0 (ACTIVE (ACTIVE))
 +
 如果显示了多个卷，请为每个卷重复此过程。在删除最后一个阵列后，卷将被销毁。
 +
-重新启动并验证数据，如果需要的话，从备份中恢复。在元数据被删除后，还可以删除 [.filename]#/boot/loader.conf# 中的 `kern.geom.raid.enable=0` 条目。
+重新启动并验证数据，如果需要的话，从备份中恢复。在元数据被删除后，还可以删除 [.filename]#/boot/loader.conf# 中的 `kern.geom.raid.enable = 0` 条目。
 
 [[geom-ggate]]
-== GEOM Gate Network是一种计算机网络技术。
+== GEOM Gate Network 是一种计算机网络技术。
 
-GEOM提供了一种简单的机制，通过使用GEOM Gate网络守护进程ggated，可以远程访问诸如磁盘、CD和文件系统等设备。拥有设备的系统运行服务器守护进程，处理客户端使用ggatec发出的请求。设备不应包含任何敏感数据，因为客户端和服务器之间的连接没有加密。
+GEOM 提供了一种简单的机制，通过使用 GEOM Gate 网络守护进程 ggated ，可以远程访问诸如磁盘、 CD 和文件系统等设备。拥有设备的系统运行服务器守护进程，处理客户端使用 ggatec 发出的请求。设备不应包含任何敏感数据，因为客户端和服务器之间的连接没有加密。
 
-与NFS类似，ggated也使用exports文件进行配置。该文件指定了哪些系统被允许访问导出的资源以及它们所提供的访问级别。例如，要给客户端`192.168.1.5`对第一个SCSI磁盘的第四个分区进行读写访问权限，可以在`/etc/gg.exports`文件中添加以下行：
+与 NFS 类似， ggated 也使用 exports 文件进行配置。该文件指定了哪些系统被允许访问导出的资源以及它们所提供的访问级别。例如，要给客户端 `192.168.1.5` 对第一个 SCSI 磁盘的第四个分区进行读写访问权限，可以在 `/etc/gg.exports` 文件中添加以下行：
 
 [.programlisting]
 ....
 192.168.1.5 RW /dev/da0s4d
 ....
 
-在导出设备之前，请确保它当前没有挂载。然后，启动ggated：
+在导出设备之前，请确保它当前没有挂载。然后，启动 ggated ：
 
 [source, shell]
 ....
 # ggated
 ....
 
-有几个选项可用于指定备用的监听端口或更改exports文件的默认位置。有关详细信息，请参阅man:ggated[8]。
+有几个选项可用于指定备用的监听端口或更改 exports 文件的默认位置。有关详细信息，请参阅 man:ggated[8] 。
 
-要在客户端机器上访问导出的设备，首先使用`ggatec`指定服务器的IP地址和导出设备的设备名称。如果成功，该命令将显示一个要挂载的`ggate`设备名称。将指定的设备名称挂载到一个空闲的挂载点上。此示例连接到`192.168.1.1`上的`/dev/da0s4d`分区，然后将`/dev/ggate0`挂载到`/mnt`上：
+要在客户端机器上访问导出的设备，首先使用 `ggatec` 指定服务器的 IP 地址和导出设备的设备名称。如果成功，该命令将显示一个要挂载的 `ggate` 设备名称。将指定的设备名称挂载到一个空闲的挂载点上。此示例连接到 `192.168.1.1` 上的 `/dev/da0s4d` 分区，然后将 `/dev/ggate0` 挂载到 `/mnt` 上：
 
 [source, shell]
 ....
@@ -944,43 +944,43 @@ ggate0
 # mount /dev/ggate0 /mnt
 ....
 
-现在可以通过客户端上的 [.filename]#/mnt# 访问服务器上的设备。有关 `ggatec` 的更多详细信息和一些使用示例，请参阅 man:ggatec[8]。
+现在可以通过客户端上的 [.filename]#/mnt# 访问服务器上的设备。有关 `ggatec` 的更多详细信息和一些使用示例，请参阅 man:ggatec[8] 。
 
 [NOTE]
 ====
-如果设备当前已在服务器或网络上的任何其他客户端上挂载，则挂载将失败。如果需要同时访问网络资源，请使用NFS。
+如果设备当前已在服务器或网络上的任何其他客户端上挂载，则挂载将失败。如果需要同时访问网络资源，请使用 NFS 。
 ====
 
-当设备不再需要时，使用`umount`命令卸载它，以便资源可以供其他客户端使用。
+当设备不再需要时，使用 `umount` 命令卸载它，以便资源可以供其他客户端使用。
 
 [[geom-glabel]]
 == 标记磁盘设备
 
-在系统初始化过程中，FreeBSD内核会在发现设备时创建设备节点。这种探测设备的方法会引发一些问题。例如，如果通过USB添加了一个新的磁盘设备，那么很可能会将一个闪存设备分配为 [.filename]#da0# 的设备名称，而原来的 [.filename]#da0# 则会变成 [.filename]#da1#。这将导致挂载文件系统时出现问题，如果这些文件系统在 [.filename]#/etc/fstab# 中列出，可能还会阻止系统启动。
+在系统初始化过程中， FreeBSD 内核会在发现设备时创建设备节点。这种探测设备的方法会引发一些问题。例如，如果通过 USB 添加了一个新的磁盘设备，那么很可能会将一个闪存设备分配为 [.filename]#da0# 的设备名称，而原来的 [.filename]#da0# 则会变成 [.filename]#da1# 。这将导致挂载文件系统时出现问题，如果这些文件系统在 [.filename]#/etc/fstab# 中列出，可能还会阻止系统启动。
 
-一种解决方案是按顺序连接SCSI设备，这样添加到SCSI卡的新设备将被分配未使用的设备号。但是对于可能替换主要SCSI磁盘的USB设备怎么办？这是因为USB设备通常在SCSI卡之前进行探测。一种解决方案是在系统启动后再插入这些设备。另一种方法是只使用单个ATA驱动器，并且在/etc/fstab中不列出SCSI设备。
+一种解决方案是按顺序连接 SCSI 设备，这样添加到 SCSI 卡的新设备将被分配未使用的设备号。但是对于可能替换主要 SCSI 磁盘的 USB 设备怎么办？这是因为 USB 设备通常在 SCSI 卡之前进行探测。一种解决方案是在系统启动后再插入这些设备。另一种方法是只使用单个 ATA 驱动器，并且在 /etc/fstab 中不列出 SCSI 设备。
 
-更好的解决方案是使用`glabel`为磁盘设备添加标签，并在`/etc/fstab`中使用这些标签。由于`glabel`将标签存储在给定提供者的最后一个扇区中，因此标签将在重新启动后保持持久。通过将此标签作为设备，文件系统可以始终被挂载，无论通过哪个设备节点进行访问。
+更好的解决方案是使用 `glabel` 为磁盘设备添加标签，并在 `/etc/fstab` 中使用这些标签。由于 `glabel` 将标签存储在给定提供者的最后一个扇区中，因此标签将在重新启动后保持持久。通过将此标签作为设备，文件系统可以始终被挂载，无论通过哪个设备节点进行访问。
 
 [NOTE]
 ====
-`glabel`可以创建临时标签和永久标签。只有永久标签在重新启动后保持一致。有关标签之间差异的更多信息，请参阅man:glabel[8]。
+`glabel` 可以创建临时标签和永久标签。只有永久标签在重新启动后保持一致。有关标签之间差异的更多信息，请参阅 man:glabel[8] 。
 ====
 
 === 标签类型和示例
 
-永久标签可以是通用标签或文件系统标签。可以使用man:tunefs[8]或man:newfs[8]创建永久文件系统标签。这些类型的标签将在[.filename]#/dev#的子目录中创建，并根据文件系统类型进行命名。例如，UFS2文件系统标签将在[.filename]#/dev/ufs#中创建。可以使用`glabel label`创建通用永久标签。这些标签不特定于文件系统，并将在[.filename]#/dev/label#中创建。
+永久标签可以是通用标签或文件系统标签。可以使用 man:tunefs[8] 或 man:newfs[8] 创建永久文件系统标签。这些类型的标签将在 [.filename]#/dev# 的子目录中创建，并根据文件系统类型进行命名。例如， UFS2 文件系统标签将在 [.filename]#/dev/ufs# 中创建。可以使用 `glabel label` 创建通用永久标签。这些标签不特定于文件系统，并将在 [.filename]#/dev/label# 中创建。
 
-临时标签在下次重启时被销毁。这些标签是在[/dev/label]中创建的，适用于实验。可以使用`glabel create`命令创建临时标签。
+临时标签在下次重启时被销毁。这些标签是在 [/dev/label] 中创建的，适用于实验。可以使用 `glabel create` 命令创建临时标签。
 
-要为UFS2文件系统创建一个永久标签而不破坏任何数据，请执行以下命令：
+要为 UFS2 文件系统创建一个永久标签而不破坏任何数据，请执行以下命令：
 
 [source, shell]
 ....
 # tunefs -L home /dev/da3
 ....
 
-现在应该在[.filename]#/dev/ufs#中存在一个标签，可以将其添加到[.filename]#/etc/fstab#中：
+现在应该在 [.filename]#/dev/ufs# 中存在一个标签，可以将其添加到 [.filename]#/etc/fstab# 中：
 
 [.programlisting]
 ....
@@ -1001,7 +1001,7 @@ ggate0
 
 从这一点开始，只要在启动时加载了 [.filename]#geom_label.ko# 内核模块，并且在 [.filename]#/boot/loader.conf# 中或者存在 `GEOM_LABEL` 内核选项，设备节点可以在不对系统产生任何不良影响的情况下发生变化。
 
-使用`newfs`命令和`-L`选项可以创建带有默认标签的文件系统。有关更多信息，请参阅man:newfs[8]。
+使用 `newfs` 命令和 `-L` 选项可以创建带有默认标签的文件系统。有关更多信息，请参阅 man:newfs[8] 。
 
 可以使用以下命令来销毁标签：
 
@@ -1015,9 +1015,9 @@ ggate0
 .在引导磁盘上标记分区
 [example]
 ====
-通过对引导磁盘上的分区进行永久标记，即使将磁盘移动到另一个控制器或转移到不同的系统，系统也应能够继续正常引导。对于本示例，假设使用单个ATA磁盘，系统当前将其识别为[.filename]#ad0#。还假设使用标准的FreeBSD分区方案，包括[.filename]#/#、[.filename]#/var#、[.filename]#/usr#和[.filename]#/tmp#，以及一个交换分区。
+通过对引导磁盘上的分区进行永久标记，即使将磁盘移动到另一个控制器或转移到不同的系统，系统也应能够继续正常引导。对于本示例，假设使用单个 ATA 磁盘，系统当前将其识别为 [.filename]#ad0# 。还假设使用标准的 FreeBSD 分区方案，包括 [.filename]#/# 、 [.filename]#/var# 、 [.filename]#/usr# 和 [.filename]#/tmp# ，以及一个交换分区。
 
-重新启动系统，在man:loader[8]提示符下，按下kbd:[4]键进入单用户模式。然后输入以下命令：
+重新启动系统，在 man:loader[8] 提示符下，按下 kbd:[4] 键进入单用户模式。然后输入以下命令：
 
 [source, shell]
 ....
@@ -1034,7 +1034,7 @@ GEOM_LABEL: Label for provider /dev/ad0s1b is label/swap
 # exit
 ....
 
-系统将继续进行多用户引导。引导完成后，编辑[/etc/fstab]文件，并用相应的标签替换传统设备名称。最终的[/etc/fstab]文件将如下所示：
+系统将继续进行多用户引导。引导完成后，编辑 [/etc/fstab] 文件，并用相应的标签替换传统设备名称。最终的 [/etc/fstab] 文件将如下所示：
 
 [.programlisting]
 ....
@@ -1046,7 +1046,7 @@ GEOM_LABEL: Label for provider /dev/ad0s1b is label/swap
 /dev/label/var          /var            ufs     rw              2       2
 ....
 
-系统现在可以重新启动。如果一切顺利，它将正常启动，并且`mount`命令将显示：
+系统现在可以重新启动。如果一切顺利，它将正常启动，并且 `mount` 命令将显示：
 
 [source, shell]
 ....
@@ -1060,7 +1060,7 @@ devfs on /dev (devfs, local)
 
 ====
 
-man:glabel[8]类支持基于唯一文件系统id `ufsid` 的UFS文件系统的标签类型。这些标签可以在[.filename]#/dev/ufsid#中找到，并在系统启动时自动创建。可以使用`ufsid`标签来使用[.filename]#/etc/fstab#挂载分区。使用`glabel status`命令可以获取文件系统及其对应的`ufsid`标签列表。
+man:glabel[8] 类支持基于唯一文件系统 id `ufsid` 的 UFS 文件系统的标签类型。这些标签可以在 [.filename]#/dev/ufsid# 中找到，并在系统启动时自动创建。可以使用 `ufsid` 标签来使用 [.filename]#/etc/fstab# 挂载分区。使用 `glabel status` 命令可以获取文件系统及其对应的 `ufsid` 标签列表。
 
 [source, shell]
 ....
@@ -1070,7 +1070,7 @@ ufsid/486b6fc38d330916     N/A  ad4s1d
 ufsid/486b6fc16926168e     N/A  ad4s1f
 ....
 
-在上面的示例中，[.filename]#ad4s1d#表示[.filename]#/var#，而[.filename]#ad4s1f#表示[.filename]#/usr#。使用所示的`ufsid`值，可以使用以下条目在[.filename]#/etc/fstab#中挂载这些分区：
+在上面的示例中， [.filename]#ad4s1d# 表示 [.filename]#/var# ，而 [.filename]#ad4s1f# 表示 [.filename]#/usr# 。使用所示的 `ufsid` 值，可以使用以下条目在 [.filename]#/etc/fstab# 中挂载这些分区：
 
 [.programlisting]
 ....
@@ -1078,18 +1078,18 @@ ufsid/486b6fc16926168e     N/A  ad4s1f
 /dev/ufsid/486b6fc16926168e        /usr        ufs        rw        2      2
 ....
 
-任何带有`ufsid`标签的分区都可以通过这种方式挂载，无需手动创建永久标签，同时仍然可以享受设备名称无关挂载的好处。
+任何带有 `ufsid` 标签的分区都可以通过这种方式挂载，无需手动创建永久标签，同时仍然可以享受设备名称无关挂载的好处。
 
 [[geom-gjournal]]
-== 通过GEOM实现的UFS日志记录
+== 通过 GEOM 实现的 UFS 日志记录
 
-在FreeBSD上，支持UFS文件系统的日志功能。该实现通过GEOM子系统提供，并使用`gjournal`进行配置。与其他文件系统日志实现不同，`gjournal`方法是基于块的，而不是作为文件系统的一部分实现的。它是一个GEOM扩展。
+在 FreeBSD 上，支持 UFS 文件系统的日志功能。该实现通过 GEOM 子系统提供，并使用 `gjournal` 进行配置。与其他文件系统日志实现不同， `gjournal` 方法是基于块的，而不是作为文件系统的一部分实现的。它是一个 GEOM 扩展。
 
 日志记录存储了文件系统事务的日志，例如在元数据和文件写入到磁盘之前构成完整磁盘写入操作的更改。可以通过重新播放事务日志来重做文件系统事务，以防止文件系统不一致性。
 
 这种方法提供了另一种机制来防止文件系统的数据丢失和不一致性。与跟踪和强制执行元数据更新的软更新以及创建文件系统镜像的快照不同，日志是专门用于此任务的磁盘空间中存储的。为了提高性能，日志可以存储在另一个磁盘上。在这种配置中，应该在要启用日志记录的设备之后列出日志提供者或存储设备。
 
-[.filename]#GENERIC#内核提供对`gjournal`的支持。要在启动时自动加载[.filename]#geom_journal.ko#内核模块，请将以下行添加到[.filename]#/boot/loader.conf#文件中：
+[.filename]#GENERIC# 内核提供对 `gjournal` 的支持。要在启动时自动加载 [.filename]#geom_journal.ko# 内核模块，请将以下行添加到 [.filename]#/boot/loader.conf# 文件中：
 
 [.programlisting]
 ....
@@ -1103,7 +1103,7 @@ geom_journal_load="YES"
 options	GEOM_JOURNAL
 ....
 
-一旦模块加载完成，可以按照以下步骤在新的文件系统上创建一个日志。在这个例子中，[.filename]#da4# 是一个新的SCSI磁盘：
+一旦模块加载完成，可以按照以下步骤在新的文件系统上创建一个日志。在这个例子中， [.filename]#da4# 是一个新的 SCSI 磁盘：
 
 [source, shell]
 ....
@@ -1111,9 +1111,9 @@ options	GEOM_JOURNAL
 # gjournal label /dev/da4
 ....
 
-这将加载模块并在/dev/da4上创建一个设备节点/dev/da4.journal。
+这将加载模块并在 /dev/da4 上创建一个设备节点 /dev/da4.journal 。
 
-现在可以在日志设备上创建UFS文件系统，然后将其挂载到现有的挂载点上：
+现在可以在日志设备上创建 UFS 文件系统，然后将其挂载到现有的挂载点上：
 
 [source, shell]
 ....
@@ -1123,9 +1123,9 @@ options	GEOM_JOURNAL
 
 [NOTE]
 ====
-在多个切片的情况下，将为每个单独的切片创建一个日志。例如，如果 [.filename]#ad4s1# 和 [.filename]#ad4s2# 都是切片，那么 `gjournal` 将创建 [.filename]#ad4s1.journal# 和 [.filename]#ad4s2.journal#。
+在多个切片的情况下，将为每个单独的切片创建一个日志。例如，如果 [.filename]#ad4s1# 和 [.filename]#ad4s2# 都是切片，那么 `gjournal` 将创建 [.filename]#ad4s1.journal# 和 [.filename]#ad4s2.journal# 。
 ====
 
-可以使用`tunefs`在当前文件系统上启用日志记录。然而，在尝试更改现有文件系统之前，**一定要**先备份数据。在大多数情况下，如果无法创建日志，`gjournal`将失败，但这并不能保护免受错误使用`tunefs`导致的数据丢失。有关这些命令的更多信息，请参阅man:gjournal[8]和man:tunefs[8]。
+可以使用 `tunefs` 在当前文件系统上启用日志记录。然而，在尝试更改现有文件系统之前， ** 一定要 ** 先备份数据。在大多数情况下，如果无法创建日志， `gjournal` 将失败，但这并不能保护免受错误使用 `tunefs` 导致的数据丢失。有关这些命令的更多信息，请参阅 man:gjournal[8] 和 man:tunefs[8] 。
 
-可以对FreeBSD系统的引导磁盘进行日志记录。有关详细说明，请参阅文章《在桌面PC上实现UFS日志记录》（extref:{gjournal-desktop}）。
+可以对 FreeBSD 系统的引导磁盘进行日志记录。有关详细说明，请参阅文章《在桌面 PC 上实现 UFS 日志记录》（ extref:{gjournal-desktop} ）。

@@ -1,17 +1,17 @@
 ---
-description: FreeBSD提供与Linux的二进制兼容性，允许用户在FreeBSD系统上安装和运行大多数Linux二进制文件，而无需先修改二进制文件。
+description: 'FreeBSD 提供与 Linux 的二进制兼容性，允许用户在 FreeBSD 系统上安装和运行大多数 Linux 二进制文件，而无需先修改二进制文件。'
 next: books/handbook/wine
 part: 第二部分：常见任务
 path: /books/handbook/
 prev: books/handbook/printing
 showBookMenu: true
 tags: '["linux", "linuxulator", "emulation", "binary", "compatibility"]'
-title: '第12章. Linux二进制兼容性'
+title: '第 12 章 . Linux 二进制兼容性'
 weight: 15
 ---
 
 [[linuxemu]]
-= Linux二进制兼容性
+= Linux 二进制兼容性
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -48,25 +48,25 @@ endif::[]
 [[linuxemu-synopsis]]
 == 概要
 
-FreeBSD提供与Linux(R)的二进制兼容性，通常称为Linuxulator，允许用户安装和运行未经修改的Linux二进制文件。它适用于x86（32位和64位）和AArch64架构。目前还不支持一些特定于Linux的操作系统功能，主要是与硬件相关或与系统管理相关的功能，例如cgroups或命名空间。
+FreeBSD 提供与 Linux(R) 的二进制兼容性，通常称为 Linuxulator ，允许用户安装和运行未经修改的 Linux 二进制文件。它适用于 x86 （ 32 位和 64 位）和 AArch64 架构。目前还不支持一些特定于 Linux 的操作系统功能，主要是与硬件相关或与系统管理相关的功能，例如 cgroups 或命名空间。
 
 在阅读本章之前，你应该：
 
-* 了解如何安装crossref:ports[ports,其他第三方软件]。
+* 了解如何安装 crossref:ports[ports ,其他第三方软件] 。
 
 阅读完本章后，您将了解：
 
-* 如何在FreeBSD系统上启用Linux二进制兼容性。
-* 如何安装额外的Linux共享库。
-* 如何在FreeBSD系统上安装Linux应用程序。
-* FreeBSD中Linux兼容性的实现细节。
+* 如何在 FreeBSD 系统上启用 Linux 二进制兼容性。
+* 如何安装额外的 Linux 共享库。
+* 如何在 FreeBSD 系统上安装 Linux 应用程序。
+* FreeBSD 中 Linux 兼容性的实现细节。
 
 [[linuxemu-lbc-install]]
-== 配置Linux二进制兼容性
+== 配置 Linux 二进制兼容性
 
 默认情况下，不启用 man:linux[4] 二进制兼容性。
 
-要在启动时启用Linux ABI，请执行以下命令：
+要在启动时启用 Linux ABI ，请执行以下命令：
 
 [.programlisting]
 ....
@@ -80,11 +80,11 @@ FreeBSD提供与Linux(R)的二进制兼容性，通常称为Linuxulator，允许
 # service linux start
 ....
 
-这对于静态链接的Linux二进制文件来说已经足够了。
+这对于静态链接的 Linux 二进制文件来说已经足够了。
 
-Linux服务将加载Linux应用程序所需的内核模块并挂载文件系统，这些文件系统位于[/compat/linux]目录下。它们可以像本机FreeBSD二进制文件一样启动；它们的行为几乎与本机进程完全相同，并且可以按照通常的方式进行跟踪和调试。
+Linux 服务将加载 Linux 应用程序所需的内核模块并挂载文件系统，这些文件系统位于 [/compat/linux] 目录下。它们可以像本机 FreeBSD 二进制文件一样启动；它们的行为几乎与本机进程完全相同，并且可以按照通常的方式进行跟踪和调试。
 
-可以通过执行以下命令来检查[.filename]#/compat/linux#的当前内容：
+可以通过执行以下命令来检查 [.filename]#/compat/linux# 的当前内容：
 
 [source, shell]
 ....
@@ -102,15 +102,15 @@ dr-xr-xr-x   1 root  wheel    0 Apr 11 21:03 sys
 ....
 
 [[linux-userlands]]
-== Linux用户空间
+== Linux 用户空间
 
-Linux软件需要的不仅仅是一个ABI才能运行。为了运行Linux软件，首先必须安装Linux用户空间。
+Linux 软件需要的不仅仅是一个 ABI 才能运行。为了运行 Linux 软件，首先必须安装 Linux 用户空间。
 
 [TIP]
 ====
-如果只是想运行已包含在Ports树中的一些软件，可以通过软件包管理器进行安装，并且man:pkg[8]将自动设置所需的Linux用户空间。
+如果只是想运行已包含在 Ports 树中的一些软件，可以通过软件包管理器进行安装，并且 man:pkg[8] 将自动设置所需的 Linux 用户空间。
 
-例如，要安装Sublime Text 4以及它所依赖的所有Linux库，请运行以下命令：
+例如，要安装 Sublime Text 4 以及它所依赖的所有 Linux 库，请运行以下命令：
  
 [source, shell]
 ....
@@ -119,9 +119,9 @@ Linux软件需要的不仅仅是一个ABI才能运行。为了运行Linux软件�
 ====
 
 [[linuxemu-packages]]
-=== 从FreeBSD软件包中获取的CentOS基本系统
+=== 从 FreeBSD 软件包中获取的 CentOS 基本系统
 
-要安装CentOS用户空间，请执行以下命令：
+要安装 CentOS 用户空间，请执行以下命令：
 
 [source, shell]
 ....
@@ -130,7 +130,7 @@ Linux软件需要的不仅仅是一个ABI才能运行。为了运行Linux软件�
 
 package:emulators/linux_base-c7[] 将基于 CentOS 7 的基本系统放置在 [.filename]#/compat/linux# 中。
 
-安装完软件包后，可以通过运行以下命令来验证[.filename]#/compat/linux#的内容，以检查是否已安装CentOS用户空间：
+安装完软件包后，可以通过运行以下命令来验证 [.filename]#/compat/linux# 的内容，以检查是否已安装 CentOS 用户空间：
 
 [source, shell]
 ....
@@ -158,18 +158,18 @@ drwxr-xr-x  16 root  wheel   17 Apr 11 21:10 var
 ....
 
 [[linuxemu-debootstrap]]
-=== 使用debootstrap创建Debian / Ubuntu基础系统
+=== 使用 debootstrap 创建 Debian / Ubuntu 基础系统
 
-提供Linux共享库的另一种方式是使用package:sysutils/debootstrap[]。这样做的优点是可以提供完整的Debian或Ubuntu发行版。
+提供 Linux 共享库的另一种方式是使用 package:sysutils/debootstrap[] 。这样做的优点是可以提供完整的 Debian 或 Ubuntu 发行版。
 
-要安装debootstrap，请执行以下命令：
+要安装 debootstrap ，请执行以下命令：
 
 [source, shell]
 ....
 # pkg install debootstrap
 ....
 
-man:debootstrap[8]需要启用man:linux[4] ABI。启用后，执行以下命令在[.filename]#/compat/ubuntu#中安装Ubuntu或Debian：
+man:debootstrap[8] 需要启用 man:linux[4] ABI 。启用后，执行以下命令在 [.filename]#/compat/ubuntu# 中安装 Ubuntu 或 Debian ：
 
 [source, shell]
 ....
@@ -178,7 +178,7 @@ man:debootstrap[8]需要启用man:linux[4] ABI。启用后，执行以下命令�
 
 [NOTE]
 ====
-虽然从技术上讲可以安装到 [.filename]#/compat/linux# 目录中，但由于可能与基于 CentOS 的软件包发生冲突，不建议这样做。相反，应根据发行版或版本名称派生目录名称，例如 [.filename]#/compat/ubuntu#。
+虽然从技术上讲可以安装到 [.filename]#/compat/linux# 目录中，但由于可能与基于 CentOS 的软件包发生冲突，不建议这样做。相反，应根据发行版或版本名称派生目录名称，例如 [.filename]#/compat/ubuntu# 。
 ====
 
 输出应该类似于以下内容：
@@ -202,13 +202,13 @@ I: Configuring ca-certificates...
 I: Base system installed successfully.
 ....
 
-然后在`/etc/fstab`中设置挂载点。
+然后在 `/etc/fstab` 中设置挂载点。
 
 [TIP]
 ====
-如果要共享主目录的内容并且能够运行X11应用程序，应该使用man:nullfs[5]将[.filename]#/home#和[.filename]#/tmp#挂载到Linux兼容区域中，以实现回环。
+如果要共享主目录的内容并且能够运行 X11 应用程序，应该使用 man:nullfs[5] 将 [.filename]#/home# 和 [.filename]#/tmp# 挂载到 Linux 兼容区域中，以实现回环。
 
-以下示例可以添加到[/etc/fstab]文件中：
+以下示例可以添加到 [/etc/fstab] 文件中：
 
 [.programlisting]
 ....
@@ -222,7 +222,7 @@ linsysfs        /compat/ubuntu/sys      linsysfs        rw,late                 
 /home           /compat/ubuntu/home     nullfs          rw,late                      0       0
 ....
 
-然后执行 man:mount[8]：
+然后执行 man:mount[8] ：
 
 [source, shell]
 ....
@@ -230,7 +230,7 @@ linsysfs        /compat/ubuntu/sys      linsysfs        rw,late                 
 ....
 ====
 
-要使用man:chroot[8]访问系统，请执行以下命令：
+要使用 man:chroot[8] 访问系统，请执行以下命令：
 
 [source, shell]
 ....
@@ -251,13 +251,13 @@ linsysfs        /compat/ubuntu/sys      linsysfs        rw,late                 
 Linux 3.17.0 x86_64
 ....
 
-一旦进入chroot环境，系统的行为就像在正常的Ubuntu安装中一样。虽然systemd不起作用，但man:service[8]命令仍然像往常一样工作。
+一旦进入 chroot 环境，系统的行为就像在正常的 Ubuntu 安装中一样。虽然 systemd 不起作用，但 man:service[8] 命令仍然像往常一样工作。
 
 [TIP]
 ====
-要添加默认缺失的软件包仓库，请编辑文件[.filename]#/compat/ubuntu/etc/apt/sources.list#。
+要添加默认缺失的软件包仓库，请编辑文件 [.filename]#/compat/ubuntu/etc/apt/sources.list# 。
 
-对于amd64架构，可以使用以下示例：
+对于 amd64 架构，可以使用以下示例：
 
 [.programlisting]
 ....
@@ -267,7 +267,7 @@ deb http://archive.ubuntu.com/ubuntu focal-backports universe multiverse restric
 deb http://archive.ubuntu.com/ubuntu focal-updates universe multiverse restricted main
 ....
 
-对于arm64架构，可以使用以下示例：
+对于 arm64 架构，可以使用以下示例：
 
 [.programlisting]
 ....
@@ -278,18 +278,18 @@ deb http://ports.ubuntu.com/ubuntu-ports bionic main universe restricted multive
 [[linuxemu-advanced]]
 == 高级主题
 
-所有与Linux相关的man:sysctl[8]参数列表可以在man:linux[4]中找到。
+所有与 Linux 相关的 man:sysctl[8] 参数列表可以在 man:linux[4] 中找到。
 
 有些应用程序需要挂载特定的文件系统。
 
-这通常由[.filename]#/etc/rc.d/linux#脚本处理，但可以通过执行以下命令在启动时禁用：
+这通常由 [.filename]#/etc/rc.d/linux# 脚本处理，但可以通过执行以下命令在启动时禁用：
 
 [.programlisting]
 ....
 sysrc linux_mounts_enable="NO"
 ....
 
-通过rc脚本挂载的文件系统在chroots或jails中的Linux进程中将无法工作；如果需要，在/etc/fstab中进行配置：
+通过 rc 脚本挂载的文件系统在 chroots 或 jails 中的 Linux 进程中将无法工作；如果需要，在 /etc/fstab 中进行配置：
 
 [.programlisting]
 ....
@@ -300,39 +300,39 @@ linprocfs  /compat/linux/proc     linprocfs  rw,late                    0  0
 linsysfs   /compat/linux/sys      linsysfs   rw,late                    0  0
 ....
 
-由于Linux二进制兼容层已经支持运行32位和64位Linux二进制文件，因此不再可能将仿真功能静态链接到自定义内核中。
+由于 Linux 二进制兼容层已经支持运行 32 位和 64 位 Linux 二进制文件，因此不再可能将仿真功能静态链接到自定义内核中。
 
 [[linuxemu-libs-manually]]
 === 手动安装额外的库
 
 在某些情况下，您可能需要手动安装一些额外的库来满足您的项目需求。以下是手动安装额外库的步骤：
 
-1. 首先，您需要确定您需要安装的库的名称和版本。您可以在库的官方网站或文档中找到这些信息。
+ 1. 首先，您需要确定您需要安装的库的名称和版本。您可以在库的官方网站或文档中找到这些信息。
 
-2. 打开命令行界面，并导航到您项目的根目录。
+ 2. 打开命令行界面，并导航到您项目的根目录。
 
-3. 使用适合您操作系统的包管理器来安装库的依赖项。例如，如果您使用的是Linux系统，您可以使用apt-get或yum来安装所需的依赖项。
+ 3. 使用适合您操作系统的包管理器来安装库的依赖项。例如，如果您使用的是 Linux 系统，您可以使用 apt-get 或 yum 来安装所需的依赖项。
 
-4. 下载库的源代码或二进制文件。您可以在库的官方网站或其他可信来源上找到这些文件。
+ 4. 下载库的源代码或二进制文件。您可以在库的官方网站或其他可信来源上找到这些文件。
 
-5. 解压缩下载的文件，并进入解压缩后的目录。
+ 5. 解压缩下载的文件，并进入解压缩后的目录。
 
-6. 根据库的文档或说明，执行适当的安装步骤。这可能包括运行配置脚本、编译源代码或执行其他必要的操作。
+ 6. 根据库的文档或说明，执行适当的安装步骤。这可能包括运行配置脚本、编译源代码或执行其他必要的操作。
 
-7. 安装完成后，您可以在您的项目中引用该库，并开始使用它。
+ 7. 安装完成后，您可以在您的项目中引用该库，并开始使用它。
 
 请注意，手动安装库可能会比使用包管理器更复杂，并且可能需要更多的配置和设置。确保您仔细阅读库的文档，并按照说明进行操作。
 
 [NOTE]
 ====
-对于使用man:debootstrap[8]创建的基本系统子目录，请使用上述说明。
+对于使用 man:debootstrap[8] 创建的基本系统子目录，请使用上述说明。
 ====
 
-如果在配置Linux二进制兼容性后，一个Linux应用程序抱怨缺少共享库，那么需要确定Linux二进制文件需要哪些共享库，并手动安装它们。
+如果在配置 Linux 二进制兼容性后，一个 Linux 应用程序抱怨缺少共享库，那么需要确定 Linux 二进制文件需要哪些共享库，并手动安装它们。
 
-在使用相同的CPU架构的Linux系统上，可以使用`ldd`命令来确定应用程序需要哪些共享库。
+在使用相同的 CPU 架构的 Linux 系统上，可以使用 `ldd` 命令来确定应用程序需要哪些共享库。
 
-例如，要检查`linuxdoom`需要哪些共享库，请从已安装Doom的Linux系统上运行以下命令：
+例如，要检查 `linuxdoom` 需要哪些共享库，请从已安装 Doom 的 Linux 系统上运行以下命令：
 
 [source, shell]
 ....
@@ -348,9 +348,9 @@ libX11.so.3 (DLL Jump 3.1) => /usr/X11/lib/libX11.so.3.1.0
 libc.so.4 (DLL Jump 4.5pl26) => /lib/libc.so.4.6.29
 ....
 
-然后，将Linux系统输出的最后一列中的所有文件复制到FreeBSD系统的[.filename]#/compat/linux#目录中。复制完成后，创建指向第一列中的文件名的符号链接。
+然后，将 Linux 系统输出的最后一列中的所有文件复制到 FreeBSD 系统的 [.filename]#/compat/linux# 目录中。复制完成后，创建指向第一列中的文件名的符号链接。
 
-这个例子将在FreeBSD系统上生成以下文件：
+这个例子将在 FreeBSD 系统上生成以下文件：
 
 [.programlisting]
 ....
@@ -362,9 +362,9 @@ libc.so.4 (DLL Jump 4.5pl26) => /lib/libc.so.4.6.29
 /compat/linux/lib/libc.so.4 -> libc.so.4.6.29
 ....
 
-如果在`ldd`输出的第一列中存在一个与Linux共享库的主要修订号匹配的库，则无需将其复制到最后一列中指定的文件中，因为现有库应该可以正常工作。但是，如果共享库是较新版本，则建议复制它。只要符号链接指向新的库，就可以删除旧的库。
+如果在 `ldd` 输出的第一列中存在一个与 Linux 共享库的主要修订号匹配的库，则无需将其复制到最后一列中指定的文件中，因为现有库应该可以正常工作。但是，如果共享库是较新版本，则建议复制它。只要符号链接指向新的库，就可以删除旧的库。
 
-例如，这些库已经存在于FreeBSD系统上：
+例如，这些库已经存在于 FreeBSD 系统上：
 
 [.programlisting]
 ....
@@ -372,7 +372,7 @@ libc.so.4 (DLL Jump 4.5pl26) => /lib/libc.so.4.6.29
 /compat/linux/lib/libc.so.4 -> libc.so.4.6.27
 ....
 
-而`ldd`指示一个二进制文件需要一个较新的版本：
+而 `ldd` 指示一个二进制文件需要一个较新的版本：
 
 [.programlisting]
 ....
@@ -387,11 +387,11 @@ libc.so.4 (DLL Jump 4.5pl26) -> libc.so.4.6.29
 /compat/linux/lib/libc.so.4 -> libc.so.4.6.29
 ....
 
-通常情况下，在FreeBSD上首次安装Linux程序时，需要查找Linux二进制文件所依赖的共享库。然而，随着时间的推移，系统上会积累足够的Linux共享库，可以在安装新的Linux二进制文件时无需额外操作即可运行。
+通常情况下，在 FreeBSD 上首次安装 Linux 程序时，需要查找 Linux 二进制文件所依赖的共享库。然而，随着时间的推移，系统上会积累足够的 Linux 共享库，可以在安装新的 Linux 二进制文件时无需额外操作即可运行。
 
 === 为 Linux ELF 可执行文件进行品牌化
 
-FreeBSD内核使用多种方法来确定要执行的二进制文件是否为Linux文件：它检查ELF文件头中的品牌，查找已知的ELF解释器路径并检查ELF注释；最后，默认情况下，未标记品牌的ELF可执行文件被认为是Linux文件。
+FreeBSD 内核使用多种方法来确定要执行的二进制文件是否为 Linux 文件：它检查 ELF 文件头中的品牌，查找已知的 ELF 解释器路径并检查 ELF 注释；最后，默认情况下，未标记品牌的 ELF 可执行文件被认为是 Linux 文件。
 
 如果所有这些方法都失败了，尝试执行二进制文件可能会导致错误消息：
 
@@ -408,16 +408,16 @@ ELF binary type not known
 Abort
 ....
 
-为了帮助FreeBSD内核区分FreeBSD ELF二进制文件和Linux二进制文件，请使用man:brandelf[1]命令。
+为了帮助 FreeBSD 内核区分 FreeBSD ELF 二进制文件和 Linux 二进制文件，请使用 man:brandelf[1] 命令。
 
 [source, shell]
 ....
 % brandelf -t Linux my-linux-elf-binary
 ....
 
-=== 安装基于Linux RPM的应用程序
+=== 安装基于 Linux RPM 的应用程序
 
-要安装一个基于Linux RPM的应用程序，首先安装`archivers/rpm4`包或端口。安装完成后，`root`用户可以使用以下命令来安装`.rpm`文件：
+要安装一个基于 Linux RPM 的应用程序，首先安装 `archivers/rpm4` 包或端口。安装完成后， `root` 用户可以使用以下命令来安装 `.rpm` 文件：
 
 [source, shell]
 ....
@@ -425,11 +425,11 @@ Abort
 # rpm2cpio < /path/to/linux.archive.rpm | cpio -id
 ....
 
-如果需要的话，对已安装的ELF二进制文件进行`brandelf`处理。请注意，这将阻止干净卸载。
+如果需要的话，对已安装的 ELF 二进制文件进行 `brandelf` 处理。请注意，这将阻止干净卸载。
 
 === 配置主机名解析器
 
-如果DNS不工作或出现此错误：
+如果 DNS 不工作或出现此错误：
 
 [.programlisting]
 ....
@@ -437,7 +437,7 @@ resolv+: "bind" is an invalid keyword resolv+:
 "hosts" is an invalid keyword
 ....
 
-将[.filename]#/compat/linux/etc/host.conf#配置如下：
+将 [.filename]#/compat/linux/etc/host.conf# 配置如下：
 
 [.programlisting]
 ....
@@ -445,9 +445,9 @@ order hosts, bind
 multi on
 ....
 
-这指定了首先搜索[.filename]#/etc/hosts#，其次搜索DNS。当[.filename]#/compat/linux/etc/host.conf#不存在时，Linux应用程序使用主机系统中的[.filename]#/etc/host.conf#，但它们会抱怨因为在FreeBSD中该文件不存在。如果没有配置名称服务器，请删除`bind`，使用[.filename]#/etc/resolv.conf#。
+这指定了首先搜索 [.filename]#/etc/hosts# ，其次搜索 DNS 。当 [.filename]#/compat/linux/etc/host.conf# 不存在时， Linux 应用程序使用主机系统中的 [.filename]#/etc/host.conf# ，但它们会抱怨因为在 FreeBSD 中该文件不存在。如果没有配置名称服务器，请删除 `bind` ，使用 [.filename]#/etc/resolv.conf# 。
 
 [[linuxemu-misc]]
 === 杂项
 
-有关Linux(R)与二进制兼容性的更多信息，请参阅文章链接：{linux-emulation}[FreeBSD中的Linux模拟]。
+有关 Linux(R) 与二进制兼容性的更多信息，请参阅文章链接： {linux-emulation}[FreeBSD 中的 Linux 模拟] 。

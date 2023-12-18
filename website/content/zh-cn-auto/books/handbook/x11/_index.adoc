@@ -1,17 +1,17 @@
 ---
-description: '本章介绍了如何在FreeBSD上安装和配置Xorg，它提供了用于提供图形环境的开源X Window System。'
+description: '本章介绍了如何在 FreeBSD 上安装和配置 Xorg ，它提供了用于提供图形环境的开源 X Window System 。'
 next: books/handbook/wayland
 part: 第一部分：入门指南
 path: /books/handbook/
 prev: books/handbook/ports
 showBookMenu: true
 tags: '["X11", "Xorg", "TrueType", "Intel", "AMD", "NVIDIA", "Anti-Aliased", "VESA", "SCFB"]'
-title: '第五章 X Window系统'
+title: '第五章 X Window 系统'
 weight: 7
 ---
 
 [[x11]]
-= X Window System（X 窗口系统）
+= X Window System （ X 窗口系统）
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -48,23 +48,23 @@ endif::[]
 [[x11-synopsis]]
 == 概要
 
-使用bsdinstall安装FreeBSD时，不会自动安装图形用户界面。本章介绍了如何安装和配置Xorg，它提供了用于提供图形环境的开源X Window系统。然后，它描述了如何查找和安装桌面环境或窗口管理器。
+使用 bsdinstall 安装 FreeBSD 时，不会自动安装图形用户界面。本章介绍了如何安装和配置 Xorg ，它提供了用于提供图形环境的开源 X Window 系统。然后，它描述了如何查找和安装桌面环境或窗口管理器。
 
 在阅读本章之前，您应该：
 
-* 根据crossref:ports[ports,安装应用程序：软件包和端口]中描述的方法，了解如何安装额外的第三方软件。
+* 根据 crossref:ports[ports ,安装应用程序：软件包和端口] 中描述的方法，了解如何安装额外的第三方软件。
 
 阅读完本章后，您将了解：
 
-* X Window System的各个组件以及它们之间的相互操作。
-* 如何安装和配置Xorg。
-* 如何在Xorg中使用TrueType(R)字体。
-* 如何设置系统以进行图形登录（XDM）。
+* X Window System 的各个组件以及它们之间的相互操作。
+* 如何安装和配置 Xorg 。
+* 如何在 Xorg 中使用 TrueType(R) 字体。
+* 如何设置系统以进行图形登录（ XDM ）。
 
 [[x-install]]
-== 安装Xorg
+== 安装 Xorg
 
-在FreeBSD上，Xorg可以作为一个软件包或者端口进行安装。
+在 FreeBSD 上， Xorg 可以作为一个软件包或者端口进行安装。
 
 二进制元包可以快速安装，但自定义选项较少：
 
@@ -73,9 +73,9 @@ endif::[]
 # pkg install xorg
 ....
 
-任何一种安装方式都会导致完整的Xorg系统被安装。
+任何一种安装方式都会导致完整的 Xorg 系统被安装。
 
-当前用户必须是`video`组的成员。要将用户添加到`video`组中，请执行以下命令：
+当前用户必须是 `video` 组的成员。要将用户添加到 `video` 组中，请执行以下命令：
 
 [source, shell]
 ....
@@ -84,58 +84,58 @@ endif::[]
 
 [TIP]
 ====
-适用于有经验的用户的X系统的较小版本可在包：x11/xorg-minimal[]中获得。大多数文档、库和应用程序将不会被安装。某些应用程序需要这些额外的组件才能正常运行。
+适用于有经验的用户的 X 系统的较小版本可在包： x11/xorg-minimal[] 中获得。大多数文档、库和应用程序将不会被安装。某些应用程序需要这些额外的组件才能正常运行。
 ====
 
 [TIP]
 ====
-视频卡、显示器和输入设备会被自动检测，不需要任何手动配置。除非自动配置失败，否则不要创建`xorg.conf`文件或运行`-configure`步骤。
+视频卡、显示器和输入设备会被自动检测，不需要任何手动配置。除非自动配置失败，否则不要创建 `xorg.conf` 文件或运行 `-configure` 步骤。
 ====
 
 [[x-graphic-card-drivers]]
 == 显卡驱动程序
 
-下表显示了FreeBSD支持的不同图形卡，应安装的软件包及其对应的模块。
+下表显示了 FreeBSD 支持的不同图形卡，应安装的软件包及其对应的模块。
 
 .图形卡套件
 [options="header", cols="1,1,1,1"]
 |===
 | 品牌 | 类型 | Package | 模块
 
-| 英特尔(R)
+| 英特尔 (R)
 | 开源
-| drm-kmod是一个用于FreeBSD操作系统的内核模块，它提供了对图形硬件设备的支持。该模块允许用户在FreeBSD系统上使用开源的Direct Rendering Manager（DRM）驱动程序，以实现对图形硬件的加速和渲染。通过drm-kmod，用户可以在FreeBSD系统上运行各种图形应用程序和游戏，并获得更好的性能和稳定性。
-| `i915kms`是一个Linux内核模块，用于支持Intel集成显卡的驱动程序。它提供了与Intel集成显卡硬件交互的功能，包括显示输出和图形加速。通过加载`i915kms`模块，用户可以在Linux系统上获得对Intel集成显卡的完整支持。
+| drm-kmod 是一个用于 FreeBSD 操作系统的内核模块，它提供了对图形硬件设备的支持。该模块允许用户在 FreeBSD 系统上使用开源的 Direct Rendering Manager （ DRM ）驱动程序，以实现对图形硬件的加速和渲染。通过 drm-kmod ，用户可以在 FreeBSD 系统上运行各种图形应用程序和游戏，并获得更好的性能和稳定性。
+| `i915kms` 是一个 Linux 内核模块，用于支持 Intel 集成显卡的驱动程序。它提供了与 Intel 集成显卡硬件交互的功能，包括显示输出和图形加速。通过加载 `i915kms` 模块，用户可以在 Linux 系统上获得对 Intel 集成显卡的完整支持。
 
-| AMD（R）
+| AMD （ R ）
 | 开源
-| drm-kmod是一个用于FreeBSD操作系统的内核模块，它提供了对图形硬件设备的支持。该模块允许用户在FreeBSD系统上使用开源的Direct Rendering Manager（DRM）驱动程序，以实现对图形硬件的加速和渲染。通过drm-kmod，用户可以在FreeBSD系统上运行各种图形应用程序和游戏，并获得更好的性能和稳定性。
-| `amdgpu`和`radeonkms`
+| drm-kmod 是一个用于 FreeBSD 操作系统的内核模块，它提供了对图形硬件设备的支持。该模块允许用户在 FreeBSD 系统上使用开源的 Direct Rendering Manager （ DRM ）驱动程序，以实现对图形硬件的加速和渲染。通过 drm-kmod ，用户可以在 FreeBSD 系统上运行各种图形应用程序和游戏，并获得更好的性能和稳定性。
+| `amdgpu` 和 `radeonkms`
 
-| 英伟达（NVIDIA®）
+| 英伟达（ NVIDIA ®）
 | 专有的
-| NVIDIA驱动程序
+| NVIDIA 驱动程序
 | `nvidia` 或 `nvidia-modeset`
 
-| VESA（Video Electronics Standards Association）是一个致力于制定和推广视频电子标准的国际组织。它的目标是促进计算机和消费电子设备之间的互操作性，以及提高视频和显示技术的质量和性能。VESA制定了许多标准，包括显示接口标准（如VGA、DVI、HDMI和DisplayPort）、显示模式标准（如VESA BIOS扩展）和显示器墙挂标准（如VESA挂架接口）。这些标准被广泛应用于计算机、电视、监视器和其他显示设备中。
+| VESA （ Video Electronics Standards Association ）是一个致力于制定和推广视频电子标准的国际组织。它的目标是促进计算机和消费电子设备之间的互操作性，以及提高视频和显示技术的质量和性能。 VESA 制定了许多标准，包括显示接口标准（如 VGA 、 DVI 、 HDMI 和 DisplayPort ）、显示模式标准（如 VESA BIOS 扩展）和显示器墙挂标准（如 VESA 挂架接口）。这些标准被广泛应用于计算机、电视、监视器和其他显示设备中。
 | 开源
-| xf86-video-vesa是一个Xorg服务器的视频驱动程序，它提供了对VESA兼容图形硬件的支持。它是一个通用的驱动程序，适用于大多数VESA兼容的显卡。它提供了基本的图形功能，但不支持硬件加速或高级特性。
-| VESA是视频电子标准协会（Video Electronics Standards Association）的缩写，它是一个致力于制定和推广计算机显示器和图形加速器的标准的组织。VESA标准包括了各种显示器接口和分辨率，以及图形加速器的功能和兼容性要求。VESA标准的应用使得计算机显示器和图形加速器之间的互操作性更加简单和可靠。
+| xf86-video-vesa 是一个 Xorg 服务器的视频驱动程序，它提供了对 VESA 兼容图形硬件的支持。它是一个通用的驱动程序，适用于大多数 VESA 兼容的显卡。它提供了基本的图形功能，但不支持硬件加速或高级特性。
+| VESA 是视频电子标准协会（ Video Electronics Standards Association ）的缩写，它是一个致力于制定和推广计算机显示器和图形加速器的标准的组织。 VESA 标准包括了各种显示器接口和分辨率，以及图形加速器的功能和兼容性要求。 VESA 标准的应用使得计算机显示器和图形加速器之间的互操作性更加简单和可靠。
 
-| SCFB是指"Self-Consistent Field Born"，即自洽场Born方法。
+| SCFB 是指"Self-Consistent Field Born"，即自洽场 Born 方法。
 | 开源
-| xf86-video-scfb是一个Xorg服务器的视频驱动程序，用于支持基于Simple Console Framebuffer（SCFB）的图形显示。它允许在没有硬件加速的情况下，在Linux系统上运行X窗口系统。SCFB是一种简单的帧缓冲设备，它提供了基本的图形显示功能，但没有硬件加速功能。xf86-video-scfb驱动程序通过与Xorg服务器通信，将图形渲染到SCFB设备上，从而实现图形界面的显示。
+| xf86-video-scfb 是一个 Xorg 服务器的视频驱动程序，用于支持基于 Simple Console Framebuffer （ SCFB ）的图形显示。它允许在没有硬件加速的情况下，在 Linux 系统上运行 X 窗口系统。 SCFB 是一种简单的帧缓冲设备，它提供了基本的图形显示功能，但没有硬件加速功能。 xf86-video-scfb 驱动程序通过与 Xorg 服务器通信，将图形渲染到 SCFB 设备上，从而实现图形界面的显示。
 | scfb
 
-| VirtualBox（R）
+| VirtualBox （ R ）
 | 开源
-| VirtualBox OSE Additions是VirtualBox的一个扩展功能，它提供了一些额外的功能和驱动程序，以增强虚拟机的性能和功能。这些附加功能包括鼠标和键盘的集成、共享文件夹、剪贴板共享和增强的图形驱动程序等。通过安装VirtualBox OSE Additions，用户可以更方便地在虚拟机中使用和管理操作系统。
-| VirtualBox(R) OSE增加了`vboxvideo`驱动程序。
+| VirtualBox OSE Additions 是 VirtualBox 的一个扩展功能，它提供了一些额外的功能和驱动程序，以增强虚拟机的性能和功能。这些附加功能包括鼠标和键盘的集成、共享文件夹、剪贴板共享和增强的图形驱动程序等。通过安装 VirtualBox OSE Additions ，用户可以更方便地在虚拟机中使用和管理操作系统。
+| VirtualBox(R) OSE 增加了 `vboxvideo` 驱动程序。
 
 | VMware(R)
 | 开源
-| xf86-video-vmware是一个用于在Linux系统上提供VMware虚拟图形适配器驱动程序的开源项目。它允许用户在虚拟机中使用高性能的图形显示，并提供了与VMware虚拟化平台的集成。该驱动程序支持2D和3D加速功能，可以提供流畅的图形性能和良好的用户体验。
-| vmwgfx是一种用于虚拟机的图形驱动程序。它是为VMware虚拟化平台开发的，用于提供虚拟机中的图形显示功能。vmwgfx驱动程序允许虚拟机通过VMware Tools与宿主机的图形硬件进行通信，从而实现高性能的图形渲染和显示。
+| xf86-video-vmware 是一个用于在 Linux 系统上提供 VMware 虚拟图形适配器驱动程序的开源项目。它允许用户在虚拟机中使用高性能的图形显示，并提供了与 VMware 虚拟化平台的集成。该驱动程序支持 2D 和 3D 加速功能，可以提供流畅的图形性能和良好的用户体验。
+| vmwgfx 是一种用于虚拟机的图形驱动程序。它是为 VMware 虚拟化平台开发的，用于提供虚拟机中的图形显示功能。 vmwgfx 驱动程序允许虚拟机通过 VMware Tools 与宿主机的图形硬件进行通信，从而实现高性能的图形渲染和显示。
 
 |===
 
@@ -159,7 +159,7 @@ vgapci0@pci0:0:2:0:     class=0x030000 rev=0x07 hdr=0x00 vendor=0x8086 device=0x
 
 [WARNING]
 ====
-如果显卡不受Intel(R)、AMD(R)或NVIDIA(R)驱动程序支持，则应使用VESA或SCFB模块。在BIOS模式下启动时必须使用VESA模块，在UEFI模式下启动时必须使用SCFB模块。
+如果显卡不受 Intel(R) 、 AMD(R) 或 NVIDIA(R) 驱动程序支持，则应使用 VESA 或 SCFB 模块。在 BIOS 模式下启动时必须使用 VESA 模块，在 UEFI 模式下启动时必须使用 SCFB 模块。
 
 这个命令可以用来检查启动模式：
 
@@ -177,18 +177,18 @@ machdep.bootmethod: BIOS
 ====
 
 [[x-configuration-intel]]
-=== 英特尔(R)
+=== 英特尔 (R)
 
-Intel(R) Graphics指的是与Intel(R) CPU集成在同一芯片上的图形芯片类别。维基百科提供了一个关于Intel HD Graphics各个世代的变体和命名的良好概述。链接：https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units
+Intel(R) Graphics 指的是与 Intel(R) CPU 集成在同一芯片上的图形芯片类别。维基百科提供了一个关于 Intel HD Graphics 各个世代的变体和命名的良好概述。链接： https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units
 
-graphics/drm-kmod[]包间接提供了一系列用于Intel(R)图形卡的内核模块。可以通过执行以下命令来安装Intel(R)驱动程序：
+graphics/drm-kmod[] 包间接提供了一系列用于 Intel(R) 图形卡的内核模块。可以通过执行以下命令来安装 Intel(R) 驱动程序：
 
 [source, shell]
 ....
 # pkg install drm-kmod
 ....
 
-然后将该模块添加到`/etc/rc.conf`文件中，执行以下命令：
+然后将该模块添加到 `/etc/rc.conf` 文件中，执行以下命令：
 
 [source, shell]
 ....
@@ -197,7 +197,7 @@ graphics/drm-kmod[]包间接提供了一系列用于Intel(R)图形卡的内核�
 
 [TIP]
 ====
-如果注意到高CPU使用率或高清视频出现过多的撕裂现象，安装package:multimedia/libva-intel-driver[]可能会有所帮助。要安装该软件包，请执行以下命令：
+如果注意到高 CPU 使用率或高清视频出现过多的撕裂现象，安装 package:multimedia/libva-intel-driver[] 可能会有所帮助。要安装该软件包，请执行以下命令：
 
 [source, shell]
 ....
@@ -206,25 +206,25 @@ graphics/drm-kmod[]包间接提供了一系列用于Intel(R)图形卡的内核�
 ====
 
 [[x-configuration-amd]]
-=== AMD（R）
+=== AMD （ R ）
 
-包：graphics/drm-kmod[]包间接提供了一系列用于AMD(R)图形卡的内核模块。根据硬件的代数，可以使用`amdgpu`和`radeonkms`模块。FreeBSD项目维护了一个link:https://wiki.freebsd.org/Graphics/AMD-GPU-Matrix[AMD图形支持矩阵]，以确定必须使用哪个驱动程序。
+包： graphics/drm-kmod[] 包间接提供了一系列用于 AMD(R) 图形卡的内核模块。根据硬件的代数，可以使用 `amdgpu` 和 `radeonkms` 模块。 FreeBSD 项目维护了一个 link:https://wiki.freebsd.org/Graphics/AMD-GPU-Matrix[AMD 图形支持矩阵] ，以确定必须使用哪个驱动程序。
 
-可以通过执行以下命令来安装AMD(R)驱动程序：
+可以通过执行以下命令来安装 AMD(R) 驱动程序：
 
 [source, shell]
 ....
 # pkg install drm-kmod
 ....
 
-对于HD7000系列或Tahiti显卡，请将模块添加到`/etc/rc.conf`文件中，执行以下命令：
+对于 HD7000 系列或 Tahiti 显卡，请将模块添加到 `/etc/rc.conf` 文件中，执行以下命令：
 
 [source, shell]
 ....
 # sysrc kld_list+=amdgpu
 ....
 
-对于较旧的图形卡（HD7000之前或Tahiti之前），请将模块添加到`/etc/rc.conf`文件中，执行以下命令：
+对于较旧的图形卡（ HD7000 之前或 Tahiti 之前），请将模块添加到 `/etc/rc.conf` 文件中，执行以下命令：
 
 [source, shell]
 ....
@@ -232,45 +232,45 @@ graphics/drm-kmod[]包间接提供了一系列用于Intel(R)图形卡的内核�
 ....
 
 [[x-configuration-nvidia]]
-=== 英伟达（NVIDIA®）
+=== 英伟达（ NVIDIA ®）
 
-FreeBSD支持不同版本的专有NVIDIA(R)驱动程序。使用较新的显卡的用户应安装包：x11/nvidia-driver[]。那些使用较旧显卡的用户需要查看下面支持它们的版本。
+FreeBSD 支持不同版本的专有 NVIDIA(R) 驱动程序。使用较新的显卡的用户应安装包： x11/nvidia-driver[] 。那些使用较旧显卡的用户需要查看下面支持它们的版本。
 
-.支持的NVIDIA(R)驱动程序版本
+.支持的 NVIDIA(R) 驱动程序版本
 [options="header", cols="1,1"]
 |===
 | Package | 支持的硬件
 
-| x11/nvidia-driver-304 是一个针对 X11 图形系统的 Nvidia 显卡驱动程序，版本号为 304。
-| 链接：https://www.nvidia.com/Download/driverResults.aspx/123712/zh-cn/[支持的硬件]
+| x11/nvidia-driver-304 是一个针对 X11 图形系统的 Nvidia 显卡驱动程序，版本号为 304 。
+| 链接： https://www.nvidia.com/Download/driverResults.aspx/123712/zh-cn/[支持的硬件]
 
-| x11/nvidia-driver-340是一个针对X11图形系统的NVIDIA驱动程序版本340。
-| 链接：https://www.nvidia.com/Download/driverResults.aspx/156167/zh-cn/[支持的硬件]
+| x11/nvidia-driver-340 是一个针对 X11 图形系统的 NVIDIA 驱动程序版本 340 。
+| 链接： https://www.nvidia.com/Download/driverResults.aspx/156167/zh-cn/[支持的硬件]
 
 | x11/nvidia-driver-390 是一个指向 NVIDIA 390 版本的 X11 驱动程序。
-| 链接：https://www.nvidia.com/Download/driverResults.aspx/191122/zh-cn/[支持的硬件]
+| 链接： https://www.nvidia.com/Download/driverResults.aspx/191122/zh-cn/[支持的硬件]
 
-| x11/nvidia-driver-470是一个针对X11图形服务器的NVIDIA驱动程序版本。
-| 链接：https://www.nvidia.com/Download/driverResults.aspx/194639/zh-cn/[支持的硬件]
+| x11/nvidia-driver-470 是一个针对 X11 图形服务器的 NVIDIA 驱动程序版本。
+| 链接： https://www.nvidia.com/Download/driverResults.aspx/194639/zh-cn/[支持的硬件]
 
 | x11/nvidia-driver
-| 链接：https://www.nvidia.com/Download/driverResults.aspx/210651/zh-cn/[支持的硬件]
+| 链接： https://www.nvidia.com/Download/driverResults.aspx/210651/zh-cn/[支持的硬件]
 
 |===
 
 [WARNING]
 ====
-NVIDIA（R）图形驱动程序的304版本（nvidia-driver-304）不支持xorg-server 1.20或更高版本。
+NVIDIA （ R ）图形驱动程序的 304 版本（ nvidia-driver-304 ）不支持 xorg-server 1.20 或更高版本。
 ====
 
-最新的NVIDIA(R)驱动程序可以通过运行以下命令进行安装：
+最新的 NVIDIA(R) 驱动程序可以通过运行以下命令进行安装：
 
 [source, shell]
 ....
 # pkg install nvidia-driver
 ....
 
-然后将该模块添加到`/etc/rc.conf`文件中，执行以下命令：
+然后将该模块添加到 `/etc/rc.conf` 文件中，执行以下命令：
 
 [source, shell]
 ....
@@ -279,7 +279,7 @@ NVIDIA（R）图形驱动程序的304版本（nvidia-driver-304）不支持xorg-
 
 [WARNING]
 ====
-如果安装了x11/nvidia-driver-304或x11/nvidia-driver-340软件包，则必须使用`nvidia`驱动程序。
+如果安装了 x11/nvidia-driver-304 或 x11/nvidia-driver-340 软件包，则必须使用 `nvidia` 驱动程序。
 
 [source, shell]
 ....
@@ -288,9 +288,9 @@ NVIDIA（R）图形驱动程序的304版本（nvidia-driver-304）不支持xorg-
 ====
 
 [[x-config]]
-== Xorg配置
+== Xorg 配置
 
-Xorg支持大多数常见的视频卡、键盘和指针设备。
+Xorg 支持大多数常见的视频卡、键盘和指针设备。
 
 [WARNING]
 ====
@@ -300,7 +300,7 @@ Xorg支持大多数常见的视频卡、键盘和指针设备。
 [[x-config-files]]
 === 配置文件
 
-Xorg在多个目录中查找配置文件。在FreeBSD上，推荐使用目录`/usr/local/etc/X11/`来存放这些文件。使用这个目录可以将应用程序文件与操作系统文件分开。
+Xorg 在多个目录中查找配置文件。在 FreeBSD 上，推荐使用目录 `/usr/local/etc/X11/` 来存放这些文件。使用这个目录可以将应用程序文件与操作系统文件分开。
 
 [[x-config-files-single-or-multi]]
 === 单个文件或多个文件
@@ -315,12 +315,12 @@ Xorg在多个目录中查找配置文件。在FreeBSD上，推荐使用目录`/u
 [[x-config-video-cards]]
 === 视频卡
 
-图形卡的驱动程序可以在[.filename]#/usr/local/etc/X11/xorg.conf.d/#目录中指定。
+图形卡的驱动程序可以在 [.filename]#/usr/local/etc/X11/xorg.conf.d/# 目录中指定。
 
-要在配置文件中配置Intel(R)驱动程序：
+要在配置文件中配置 Intel(R) 驱动程序：
 
 [[x-config-video-cards-file-intel]]
-.在文件中选择Intel(R)视频驱动程序
+.在文件中选择 Intel(R) 视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-intel.conf#
@@ -334,10 +334,10 @@ EndSection
 ....
 ====
 
-要在配置文件中配置AMD(R)驱动程序：
+要在配置文件中配置 AMD(R) 驱动程序：
 
 [[x-config-video-cards-file-amd]]
-.在文件中选择AMD(R)视频驱动程序
+.在文件中选择 AMD(R) 视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-radeon.conf#
@@ -351,10 +351,10 @@ EndSection
 ....
 ====
 
-要在配置文件中配置NVIDIA(R)驱动程序：
+要在配置文件中配置 NVIDIA(R) 驱动程序：
 
 [[x-config-video-cards-file-nvidia]]
-.在文件中选择NVIDIA(R)视频驱动程序
+.在文件中选择 NVIDIA(R) 视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-nvidia.conf#
@@ -370,13 +370,13 @@ EndSection
 
 [TIP]
 ====
-package:x11/nvidia-xconfig[]也可以用来对NVIDIA驱动程序中可用的配置选项进行基本控制。
+package:x11/nvidia-xconfig[] 也可以用来对 NVIDIA 驱动程序中可用的配置选项进行基本控制。
 ====
 
-要在配置文件中配置VESA驱动程序：
+要在配置文件中配置 VESA 驱动程序：
 
 [[x-config-video-cards-file-vesa]]
-.在文件中选择VESA视频驱动程序
+.在文件中选择 VESA 视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-vesa.conf#
@@ -390,10 +390,10 @@ EndSection
 ....
 ====
 
-要在配置文件中配置SCFB驱动程序：
+要在配置文件中配置 SCFB 驱动程序：
 
 [[x-config-video-cards-file-sfcb]]
-.在文件中选择SCFB视频驱动程序
+.在文件中选择 SCFB 视频驱动程序
 [example]
 ====
 [.filename]#/usr/local/etc/X11/xorg.conf.d/20-scfb.conf#
@@ -407,7 +407,7 @@ EndSection
 ....
 ====
 
-要配置多个视频卡，可以添加`BusID`。执行以下命令可以显示视频卡总线`ID`的列表：
+要配置多个视频卡，可以添加 `BusID` 。执行以下命令可以显示视频卡总线 `ID` 的列表：
 
 [source, shell]
 ....
@@ -430,7 +430,7 @@ vgapci1@pci0:0:2:1:     class=0x038000 rev=0x07 hdr=0x00 vendor=0x8086 device=0x
 ....
 
 [[x-config-video-cards-file-multiple]]
-.在一个文件中选择Intel(R)视频驱动程序和NVIDIA(R)视频驱动程序。
+.在一个文件中选择 Intel(R) 视频驱动程序和 NVIDIA(R) 视频驱动程序。
 [example]
 ====
 
@@ -455,14 +455,14 @@ EndSection
 [[x-config-monitors]]
 === 监视器
 
-几乎所有的显示器都支持扩展显示识别数据标准（`EDID`）。Xorg使用`EDID`与显示器进行通信，检测支持的分辨率和刷新率，然后选择最合适的设置组合来与该显示器配合使用。
+几乎所有的显示器都支持扩展显示识别数据标准（ `EDID` ）。 Xorg 使用 `EDID` 与显示器进行通信，检测支持的分辨率和刷新率，然后选择最合适的设置组合来与该显示器配合使用。
 
-可以通过在配置文件中设置所需的分辨率，或在启动X服务器后使用man:xrandr[1]来选择显示器支持的其他分辨率。
+可以通过在配置文件中设置所需的分辨率，或在启动 X 服务器后使用 man:xrandr[1] 来选择显示器支持的其他分辨率。
 
 [[x-config-monitors-xrandr]]
-==== 使用RandR（Resize and Rotate）
+==== 使用 RandR （ Resize and Rotate ）
 
-运行man:xrandr[1]命令，不带任何参数，可以查看视频输出和检测到的显示器模式列表：
+运行 man:xrandr[1] 命令，不带任何参数，可以查看视频输出和检测到的显示器模式列表：
 
 [source, shell]
 ....
@@ -503,9 +503,9 @@ DP-2 disconnected (normal left inverted right x axis y axis)
 DP-3 disconnected (normal left inverted right x axis y axis)
 ....
 
-这表明`VGA-1`输出正在用于显示分辨率为1280x960像素、刷新率约为60 Hz的屏幕。`LVDS-1`被用作辅助显示器，显示分辨率为1280x800像素、刷新率约为60 Hz的屏幕。`HDMI-1`、`HDMI-2`、`DP-1`、`DP-2`和`DP-3`连接器上没有连接显示器。
+这表明 `VGA-1` 输出正在用于显示分辨率为 1280x960 像素、刷新率约为 60 Hz 的屏幕。 `LVDS-1` 被用作辅助显示器，显示分辨率为 1280x800 像素、刷新率约为 60 Hz 的屏幕。 `HDMI-1` 、 `HDMI-2` 、 `DP-1` 、 `DP-2` 和 `DP-3` 连接器上没有连接显示器。
 
-可以使用man:xrandr[1]选择任何其他的显示模式。例如，要切换到1280x1024分辨率，刷新率为60 Hz：
+可以使用 man:xrandr[1] 选择任何其他的显示模式。例如，要切换到 1280x1024 分辨率，刷新率为 60 Hz ：
 
 [source, shell]
 ....
@@ -513,11 +513,11 @@ DP-3 disconnected (normal left inverted right x axis y axis)
 ....
 
 [[x-config-monitors-files]]
-==== 使用Xorg配置文件
+==== 使用 Xorg 配置文件
 
 监视器配置也可以在配置文件中进行设置。
 
-在配置文件中设置屏幕分辨率为1024x768：
+在配置文件中设置屏幕分辨率为 1024x768 ：
 
 .在文件中设置屏幕分辨率
 [example]
@@ -539,11 +539,11 @@ EndSection
 [[x-config-input]]
 === 输入设备
 
-Xorg通过package:x11/libinput[]支持绝大部分输入设备。
+Xorg 通过 package:x11/libinput[] 支持绝大部分输入设备。
 
 [TIP]
 ====
-一些桌面环境（如KDE Plasma）提供了用于设置这些参数的图形界面。在尝试手动配置编辑之前，请检查是否有这样的界面。
+一些桌面环境（如 KDE Plasma ）提供了用于设置这些参数的图形界面。在尝试手动配置编辑之前，请检查是否有这样的界面。
 ====
 
 [[x-config-input-keyboard-layout]]
@@ -568,23 +568,23 @@ EndSection
 ====
 
 [[x-fonts]]
-== 在Xorg中使用字体
+== 在 Xorg 中使用字体
 
-Xorg默认提供的字体对于典型的桌面出版应用来说并不理想。大号演示字体显示出来会有锯齿状，不够专业，而小号字体几乎完全无法辨认。然而，有几种免费的高质量Type1（PostScript(R)）字体可供在Xorg中方便地使用。
+Xorg 默认提供的字体对于典型的桌面出版应用来说并不理想。大号演示字体显示出来会有锯齿状，不够专业，而小号字体几乎完全无法辨认。然而，有几种免费的高质量 Type1 （ PostScript(R) ）字体可供在 Xorg 中方便地使用。
 
 [[type1]]
-=== Type1字体
+=== Type1 字体
 
-URW字体集合（包：x11-fonts/urwfonts[]）包括标准Type1字体（Times Roman(TM)，Helvetica(TM)，Palatino(TM)等）的高质量版本。Freefonts集合（包：x11-fonts/freefonts[]）包括更多字体，但大部分是为图形软件（如Gimp）使用的，并不完整，不能用作屏幕字体。此外，Xorg可以配置为轻松使用TrueType(R)字体。有关详细信息，请参阅man:X[7]手册页面或<<truetype>>。
+URW 字体集合（包： x11-fonts/urwfonts[] ）包括标准 Type1 字体（ Times Roman(TM) ， Helvetica(TM) ， Palatino(TM) 等）的高质量版本。 Freefonts 集合（包： x11-fonts/freefonts[] ）包括更多字体，但大部分是为图形软件（如 Gimp ）使用的，并不完整，不能用作屏幕字体。此外， Xorg 可以配置为轻松使用 TrueType(R) 字体。有关详细信息，请参阅 man:X[7] 手册页面或 <<truetype>> 。
 
-要安装上述的Type1字体集合，可以运行以下命令来安装二进制包：
+要安装上述的 Type1 字体集合，可以运行以下命令来安装二进制包：
 
 [source, shell]
 ....
 # pkg install urwfonts
 ....
 
-同样，对于freefont或其他字体集合也是如此。要让X服务器检测这些字体，需要在X服务器配置文件（[.filename]#/usr/local/etc/X11/xorg.conf.d/90-fonts.conf#）中添加一行适当的内容，如下所示：
+同样，对于 freefont 或其他字体集合也是如此。要让 X 服务器检测这些字体，需要在 X 服务器配置文件（ [.filename]#/usr/local/etc/X11/xorg.conf.d/90-fonts.conf# ）中添加一行适当的内容，如下所示：
 
 [.programlisting]
 ....
@@ -593,7 +593,7 @@ Section "Files"
 EndSection
 ....
 
-或者，在X会话的命令行中运行：
+或者，在 X 会话的命令行中运行：
 
 [source, shell]
 ....
@@ -601,26 +601,26 @@ EndSection
 % xset fp rehash
 ....
 
-这将起作用，但在X会话关闭时将丢失，除非将其添加到启动文件（对于普通的`startx`会话，为[.filename]#~/.xinitrc#，或者对于通过图形登录管理器（如XDM）登录的情况，为[.filename]#~/.xsession#）。第三种方法是使用新的[.filename]#/usr/local/etc/fonts/local.conf#，如<<antialias>>中所示。
+这将起作用，但在 X 会话关闭时将丢失，除非将其添加到启动文件（对于普通的 `startx` 会话，为 [.filename]# ~ /.xinitrc# ，或者对于通过图形登录管理器（如 XDM ）登录的情况，为 [.filename]# ~ /.xsession# ）。第三种方法是使用新的 [.filename]#/usr/local/etc/fonts/local.conf# ，如 <<antialias>> 中所示。
 
 [[truetype]]
-=== TrueType(R)字体
+=== TrueType(R) 字体
 
-Xorg内置了对TrueType(R)字体的渲染支持。有两个不同的模块可以启用这个功能。在这个例子中使用freetype模块，因为它与其他字体渲染后端更加一致。要启用freetype模块，只需将以下行添加到 [.filename]#/usr/local/etc/X11/xorg.conf.d/90-fonts.conf# 文件的“Module”部分。
+Xorg 内置了对 TrueType(R) 字体的渲染支持。有两个不同的模块可以启用这个功能。在这个例子中使用 freetype 模块，因为它与其他字体渲染后端更加一致。要启用 freetype 模块，只需将以下行添加到 [.filename]#/usr/local/etc/X11/xorg.conf.d/90-fonts.conf# 文件的“ Module ”部分。
 
 [.programlisting]
 ....
 Load  "freetype"
 ....
 
-现在创建一个用于TrueType(R)字体的目录（例如，[.filename]#/usr/local/share/fonts/TrueType#），并将所有的TrueType(R)字体复制到该目录中。请记住，TrueType(R)字体不能直接从Apple(R) Mac(R)中获取；它们必须以UNIX(R)/MS-DOS(R)/Windows(R)格式存在，以供Xorg使用。一旦文件被复制到该目录中，使用mkfontscale创建一个[.filename]#fonts.dir#文件，以便X字体渲染器知道这些新文件已经安装。`mkfontscale`可以作为一个软件包进行安装：
+现在创建一个用于 TrueType(R) 字体的目录（例如， [.filename]#/usr/local/share/fonts/TrueType# ），并将所有的 TrueType(R) 字体复制到该目录中。请记住， TrueType(R) 字体不能直接从 Apple(R) Mac(R) 中获取；它们必须以 UNIX(R)/MS-DOS(R)/Windows(R) 格式存在，以供 Xorg 使用。一旦文件被复制到该目录中，使用 mkfontscale 创建一个 [.filename]#fonts.dir# 文件，以便 X 字体渲染器知道这些新文件已经安装。 `mkfontscale` 可以作为一个软件包进行安装：
 
 [source, shell]
 ....
 # pkg install mkfontscale
 ....
 
-然后在一个目录中创建X字体文件的索引：
+然后在一个目录中创建 X 字体文件的索引：
 
 [source, shell]
 ....
@@ -628,7 +628,7 @@ Load  "freetype"
 # mkfontscale
 ....
 
-现在将TrueType(R)目录添加到字体路径中。这与<<type1>>中描述的方式完全相同。
+现在将 TrueType(R) 目录添加到字体路径中。这与 <<type1>> 中描述的方式完全相同。
 
 [source, shell]
 ....
@@ -638,16 +638,16 @@ Load  "freetype"
 
 或者在 [.filename]#xorg.conf# 文件中添加一个 `FontPath` 行。
 
-现在，Gimp、LibreOffice和所有其他X应用程序应该能够识别已安装的TrueType(R)字体。现在，在高分辨率显示器上的网页文本中的极小字体以及LibreOffice中的极大字体将会看起来更好。
+现在， Gimp 、 LibreOffice 和所有其他 X 应用程序应该能够识别已安装的 TrueType(R) 字体。现在，在高分辨率显示器上的网页文本中的极小字体以及 LibreOffice 中的极大字体将会看起来更好。
 
 [[antialias]]
 === 抗锯齿字体
 
-在Xorg中，所有在[/usr/local/share/fonts/]和[~/.fonts/]目录中找到的字体都会自动提供给支持Xft的应用程序进行反锯齿处理。大多数最新的应用程序都支持Xft，包括KDE、GNOME和Firefox。
+在 Xorg 中，所有在 [/usr/local/share/fonts/] 和 [~ /.fonts/] 目录中找到的字体都会自动提供给支持 Xft 的应用程序进行反锯齿处理。大多数最新的应用程序都支持 Xft ，包括 KDE 、 GNOME 和 Firefox 。
 
-要控制反锯齿的字体或配置反锯齿属性，请创建（或编辑，如果已存在）文件[.filename]#/usr/local/etc/fonts/local.conf#。可以使用此文件调整Xft字体系统的几个高级功能；本节仅描述了一些简单的可能性。有关更多详细信息，请参阅 man:fonts-conf[5]。
+要控制反锯齿的字体或配置反锯齿属性，请创建（或编辑，如果已存在）文件 [.filename]#/usr/local/etc/fonts/local.conf# 。可以使用此文件调整 Xft 字体系统的几个高级功能；本节仅描述了一些简单的可能性。有关更多详细信息，请参阅 man:fonts-conf[5] 。
 
-这个文件必须是XML格式的。请注意大小写，并确保所有标签都正确闭合。文件以通常的XML头部开始，接着是DOCTYPE定义，然后是`<fontconfig>`标签。
+这个文件必须是 XML 格式的。请注意大小写，并确保所有标签都正确闭合。文件以通常的 XML 头部开始，接着是 DOCTYPE 定义，然后是 `<fontconfig>` 标签。
 
 [.programlisting]
 ....
@@ -656,7 +656,7 @@ Load  "freetype"
       <fontconfig>
 ....
 
-如前所述，位于[/usr/local/share/fonts/]和[~/.fonts/]目录中的所有字体已经可以在支持Xft的应用程序中使用。如果要添加一个位于这两个目录树之外的目录，可以在[/usr/local/etc/fonts/local.conf]文件中添加如下一行：
+如前所述，位于 [/usr/local/share/fonts/] 和 [~ /.fonts/] 目录中的所有字体已经可以在支持 Xft 的应用程序中使用。如果要添加一个位于这两个目录树之外的目录，可以在 [/usr/local/etc/fonts/local.conf] 文件中添加如下一行：
 
 [.programlisting]
 ....
@@ -670,7 +670,7 @@ Load  "freetype"
 # fc-cache -f
 ....
 
-抗锯齿会使边界略微模糊，这使得非常小的文本更易读，并消除了大文本上的“阶梯状”效果，但如果应用于普通文本，可能会导致眼部疲劳。要排除小于14点字号的字体应用抗锯齿，包括以下几行代码：
+抗锯齿会使边界略微模糊，这使得非常小的文本更易读，并消除了大文本上的“阶梯状”效果，但如果应用于普通文本，可能会导致眼部疲劳。要排除小于 14 点字号的字体应用抗锯齿，包括以下几行代码：
 
 [.programlisting]
 ....
@@ -692,7 +692,7 @@ Load  "freetype"
 	</match>
 ....
 
-对于某些等宽字体，使用反锯齿可能会导致间距不合适。这似乎是KDE特别存在的问题。一个可能的解决方法是强制将这些字体的间距设置为100。添加以下行：
+对于某些等宽字体，使用反锯齿可能会导致间距不合适。这似乎是 KDE 特别存在的问题。一个可能的解决方法是强制将这些字体的间距设置为 100 。添加以下行：
 
 [.programlisting]
 ....
@@ -714,7 +714,7 @@ Load  "freetype"
 	</match>
 ....
 
-（这将其他常见的固定字体名称别名为“mono”），然后添加：
+（这将其他常见的固定字体名称别名为“ mono ”），然后添加：
 
 [.programlisting]
 ....
@@ -728,7 +728,7 @@ Load  "freetype"
 	 </match>
 ....
 
-某些字体，比如Helvetica，在反锯齿处理时可能会出现问题。通常表现为字体在垂直方向上被切割了一半。最糟糕的情况下，可能会导致应用程序崩溃。为了避免这种情况，考虑将以下内容添加到.local.conf文件中：
+某些字体，比如 Helvetica ，在反锯齿处理时可能会出现问题。通常表现为字体在垂直方向上被切割了一半。最糟糕的情况下，可能会导致应用程序崩溃。为了避免这种情况，考虑将以下内容添加到 .local.conf 文件中：
 
 [.programlisting]
 ....
@@ -744,9 +744,9 @@ Load  "freetype"
 
 在编辑 [.filename]#local.conf# 后，确保用 `</fontconfig>` 标签结束文件。如果不这样做，将会忽略所做的更改。
 
-用户可以通过创建自己的[.filename]#~/.config/fontconfig/fonts.conf#文件来添加个性化设置。该文件使用上述描述的相同的`XML`格式。
+用户可以通过创建自己的 [.filename]# ~ /.config/fontconfig/fonts.conf# 文件来添加个性化设置。该文件使用上述描述的相同的 `XML` 格式。
 
-最后一个要点：对于LCD屏幕，可能需要进行亚像素采样。这基本上是将（水平分离的）红色、绿色和蓝色分量分别处理，以提高水平分辨率；结果可能非常显著。要启用此功能，请在[.filename]#local.conf#中的某个位置添加以下行：
+最后一个要点：对于 LCD 屏幕，可能需要进行亚像素采样。这基本上是将（水平分离的）红色、绿色和蓝色分量分别处理，以提高水平分辨率；结果可能非常显著。要启用此功能，请在 [.filename]#local.conf# 中的某个位置添加以下行：
 
 [.programlisting]
 ....
@@ -762,7 +762,7 @@ Load  "freetype"
 
 [NOTE]
 ====
-根据显示器的类型，可能需要将 `rgb` 更改为 `bgr`、`vrgb` 或 `vbgr`：进行实验并查看哪种效果最好。
+根据显示器的类型，可能需要将 `rgb` 更改为 `bgr` 、 `vrgb` 或 `vbgr` ：进行实验并查看哪种效果最好。
 ====
 
-有关在FreeBSD上安装和配置字体的更多信息，请阅读文章链接：[字体和FreeBSD](fonts)。
+有关在 FreeBSD 上安装和配置字体的更多信息，请阅读文章链接： [字体和 FreeBSD](fonts) 。

@@ -1,12 +1,12 @@
 ---
-description: 本章介绍了FreeBSD支持的其他文件系统。
+description: '本章介绍了 FreeBSD 支持的其他文件系统。'
 next: books/handbook/virtualization
 part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/zfs
 showBookMenu: true
 tags: '["filesystem", "ext2", "ext3", "ext4", "ext2fs"]'
-title: '第23章 其他文件系统'
+title: '第 23 章 其他文件系统'
 weight: 27
 ---
 
@@ -48,40 +48,40 @@ endif::[]
 [[filesystems-synopsis]]
 == 概要
 
-文件系统是任何操作系统的重要组成部分。它们允许用户上传和存储文件，提供对数据的访问，并使硬盘变得有用。不同的操作系统在其本机文件系统上有所不同。传统上，本机的FreeBSD文件系统一直是Unix文件系统UFS，现已现代化为UFS2。自FreeBSD 7.0以来，Z文件系统（ZFS）也作为本机文件系统可用。有关更多信息，请参见crossref:zfs[zfs，Z文件系统（ZFS）]。
+文件系统是任何操作系统的重要组成部分。它们允许用户上传和存储文件，提供对数据的访问，并使硬盘变得有用。不同的操作系统在其本机文件系统上有所不同。传统上，本机的 FreeBSD 文件系统一直是 Unix 文件系统 UFS ，现已现代化为 UFS2 。自 FreeBSD 7.0 以来， Z 文件系统（ ZFS ）也作为本机文件系统可用。有关更多信息，请参见 crossref:zfs[zfs ， Z 文件系统（ ZFS ）] 。
 
-除了本地文件系统之外，FreeBSD还支持多种其他文件系统，以便可以本地访问来自其他操作系统的数据，例如存储在本地连接的USB存储设备、闪存驱动器和硬盘上的数据。这包括对Linux(R)扩展文件系统（EXT）的支持。
+除了本地文件系统之外， FreeBSD 还支持多种其他文件系统，以便可以本地访问来自其他操作系统的数据，例如存储在本地连接的 USB 存储设备、闪存驱动器和硬盘上的数据。这包括对 Linux(R) 扩展文件系统（ EXT ）的支持。
 
-对于不同的文件系统，FreeBSD提供了不同级别的支持。有些需要加载内核模块，而其他一些可能需要安装工具集。一些非本地文件系统的支持是完全读写的，而其他一些则只支持只读。
+对于不同的文件系统， FreeBSD 提供了不同级别的支持。有些需要加载内核模块，而其他一些可能需要安装工具集。一些非本地文件系统的支持是完全读写的，而其他一些则只支持只读。
 
 阅读完本章后，您将了解到：
 
 * 本地文件系统和支持的文件系统之间的区别。
-* FreeBSD支持哪些文件系统？
+* FreeBSD 支持哪些文件系统？
 * 如何启用、配置、访问和使用非本机文件系统。
 
 在阅读本章之前，您应该：
 
-* 了解UNIX(R)和crossref:basics[基础知识,FreeBSD基础知识]。
-* 熟悉crossref:kernelconfig的基础知识[kernelconfig，内核配置和编译]。
-* 在FreeBSD中，跨引用端口（crossref:ports[ports,installing software]）会让您感到舒适。
-* 对FreeBSD中的crossref:disks[disks,disks]、存储和设备名称有一些了解。
+* 了解 UNIX(R) 和 crossref:basics[基础知识, FreeBSD 基础知识] 。
+* 熟悉 crossref:kernelconfig 的基础知识 [kernelconfig ，内核配置和编译] 。
+* 在 FreeBSD 中，跨引用端口（ crossref:ports[ports , installing software] ）会让您感到舒适。
+* 对 FreeBSD 中的 crossref:disks[disks , disks] 、存储和设备名称有一些了解。
 
 [[filesystems-linux]]
-== Linux(R)文件系统
+== Linux(R) 文件系统
 
-FreeBSD提供了对多种Linux(R)文件系统的内置支持。本节介绍如何加载支持和挂载支持的Linux(R)文件系统。
+FreeBSD 提供了对多种 Linux(R) 文件系统的内置支持。本节介绍如何加载支持和挂载支持的 Linux(R) 文件系统。
 
-=== ext2 / ext3 / ext4 是一系列的文件系统类型，用于在Linux操作系统中管理磁盘上的文件和目录。这些文件系统类型是为了提供更高级的功能和性能而逐步发展的。ext2是最早的版本，提供了基本的文件系统功能。ext3在ext2的基础上增加了日志功能，可以更好地恢复文件系统的一致性。ext4是ext3的进一步改进，提供了更高的性能和更大的文件系统容量支持。这些文件系统类型在Linux系统中被广泛使用。
+=== ext2 / ext3 / ext4 是一系列的文件系统类型，用于在 Linux 操作系统中管理磁盘上的文件和目录。这些文件系统类型是为了提供更高级的功能和性能而逐步发展的。 ext2 是最早的版本，提供了基本的文件系统功能。 ext3 在 ext2 的基础上增加了日志功能，可以更好地恢复文件系统的一致性。 ext4 是 ext3 的进一步改进，提供了更高的性能和更大的文件系统容量支持。这些文件系统类型在 Linux 系统中被广泛使用。
 
-自FreeBSD 2.2版本起，内核对ext2文件系统的支持已经可用。man:ext2fs[5]驱动程序允许FreeBSD内核对ext2、ext3和ext4文件系统进行读写操作。
+自 FreeBSD 2.2 版本起，内核对 ext2 文件系统的支持已经可用。 man:ext2fs[5] 驱动程序允许 FreeBSD 内核对 ext2 、 ext3 和 ext4 文件系统进行读写操作。
 
 [NOTE]
 ====
 目前还不支持日志记录和加密。
 ====
 
-要访问一个ext文件系统，通过指定其FreeBSD分区名称和现有的挂载点来挂载ext卷。这个例子将[/dev/ada1s1]挂载到[/mnt]上：
+要访问一个 ext 文件系统，通过指定其 FreeBSD 分区名称和现有的挂载点来挂载 ext 卷。这个例子将 [/dev/ada1s1] 挂载到 [/mnt] 上：
 
 [source, shell]
 ....
