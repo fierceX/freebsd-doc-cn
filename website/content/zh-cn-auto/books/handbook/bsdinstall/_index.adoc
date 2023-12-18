@@ -1,17 +1,17 @@
 ---
-description: 'Guide about how to install FreeBSD, the minimum hardware requirements and supported architectures, how to create the installation media, etc'
+description: 关于如何安装FreeBSD的指南，包括最低硬件要求和支持的架构，以及如何创建安装介质等。
 next: books/handbook/basics
-part: 'Part I. Getting Started'
+part: 第一部分：入门指南
 path: /books/handbook/
 prev: books/handbook/introduction
 showBookMenu: true
 tags: '["bsdinstall", "installing FreeBSD", "requirements", "tutorial", "guide"]'
-title: 'Chapter 2. Installing FreeBSD'
+title: '第二章 安装FreeBSD'
 weight: 4
 ---
 
 [[bsdinstall]]
-= Installing FreeBSD
+= 安装FreeBSD
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,101 +46,101 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[bsdinstall-synopsis]]
-== Synopsis
+== 简介
 
-FreeBSD supports different architectures including amd64, ARM(R), RISC-V(R), and PowerPC(R). Depending on the architecture and platform, different images can be link:https://www.freebsd.org/where/[downloaded] to install or directly run FreeBSD.
+FreeBSD支持多种架构，包括amd64、ARM(R)、RISC-V(R)和PowerPC(R)。根据不同的架构和平台，可以下载不同的镜像来安装或直接运行FreeBSD。
 
-The image types are:
+图像类型有：
 
-* Virtual Machine disk images, such as `qcow2`, `vmdk`, `vhd`, and raw device images. These are not installation images, but images that have FreeBSD preinstalled and ready for post-installation tasks. Virtual machine images are also commonly used in cloud environments.
-* SD card images, for embedded systems such as Raspberry Pi. These files must be uncompressed and written as a raw image to an SD card, from which the board will boot.
-* Installation images to boot from an ISO or USB device to install FreeBSD on a drive for the usual desktop, laptop, or server system.
+* 虚拟机磁盘镜像，例如`qcow2`、`vmdk`、`vhd`和原始设备镜像。这些不是安装镜像，而是已经预装了FreeBSD并准备好进行后安装任务的镜像。虚拟机镜像在云环境中也被广泛使用。
+* SD卡镜像，用于树莓派等嵌入式系统。这些文件必须解压缩并以原始镜像的形式写入SD卡，从中启动板子。
+* 安装镜像用于从ISO或USB设备引导，以在常见的台式机、笔记本电脑或服务器系统上安装FreeBSD到驱动器。
 
-The rest of this chapter describes the third case, explaining how to install FreeBSD using the text-based installation program named bsdinstall. There may be minor differences between the installer and what is shown here, so use this chapter as a general guide rather than as a set of literal instructions.
+本章的其余部分描述了第三种情况，解释了如何使用名为bsdinstall的基于文本的安装程序安装FreeBSD。安装程序与此处显示的内容可能存在细微差异，因此请将本章作为一份通用指南，而不是一组字面指令。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* How to obtain FreeBSD images and create FreeBSD installation media.
-* How to start bsdinstall.
-* The questions bsdinstall will ask, what they mean, and how to answer them.
-* How to troubleshoot a failed installation.
-* How to access a live version of FreeBSD before committing to an installation.
+* 如何获取FreeBSD镜像并创建FreeBSD安装介质。
+* 如何启动bsdinstall。
+* bsdinstall将会询问的问题，它们的含义以及如何回答。
+* 如何排除安装失败的问题。
+* 在进行安装之前，如何访问FreeBSD的实时版本。
 
 [[bsdinstall-hardware]]
-== Minimum Hardware Requirements
+== 最低硬件要求
 
-The hardware requirements to install FreeBSD vary by architecture and version. Hardware architectures and devices supported by a FreeBSD release are listed on the link:https://www.FreeBSD.org/releases/[FreeBSD Release Information] page. The link:https://www.FreeBSD.org/where/[FreeBSD download page] also has recommendations for choosing the correct image for different architectures.
+安装FreeBSD的硬件要求因架构和版本而异。支持FreeBSD发布的硬件架构和设备可以在链接：https://www.FreeBSD.org/releases/[FreeBSD发布信息]页面上找到。链接：https://www.FreeBSD.org/where/[FreeBSD下载页面]还提供了选择不同架构的正确镜像的建议。
 
 [[bsdinstall-pre]]
-== Pre-Installation Tasks
+== 安装前的任务
 
-Once it has been determined that the system meets the minimum hardware requirements for installing FreeBSD, the installation file should be downloaded and the installation media prepared. Before doing this, check that the system is ready for an installation by verifying the items in this checklist:
+一旦确定系统满足安装FreeBSD的最低硬件要求，就应该下载安装文件并准备安装介质。在此之前，请通过验证以下清单中的项目，确保系统已准备好进行安装：
 
 [.procedure]
 ====
-. *Back Up Important Data*
+. *备份重要数据*
 +
-Before installing any operating system, *always* backup all important data first. Do not store the backup on the system being installed. Instead, save the data to a removable disk such as a USB drive, another system on the network, or an online backup service. Test the backup before starting the installation to make sure it contains all of the needed files. Once the installer formats the system's disk, all data stored on that disk will be lost.
-. *Decide Where to Install FreeBSD*
+在安装任何操作系统之前，*一定要*首先备份所有重要数据。不要将备份存储在正在安装的系统上。而是将数据保存到可移动的磁盘，如USB驱动器、网络上的另一个系统或在线备份服务中。在开始安装之前，测试备份以确保它包含所有所需的文件。一旦安装程序格式化了系统的磁盘，该磁盘上存储的所有数据都将丢失。
+. *决定在哪里安装FreeBSD*
 +
-If FreeBSD will be the only operating system installed, this step can be skipped. But if FreeBSD will share the disk with another operating system, decide which disk or partition will be used for FreeBSD.
+如果只安装FreeBSD作为唯一的操作系统，可以跳过这一步。但如果FreeBSD将与其他操作系统共享磁盘，则需要决定哪个磁盘或分区将用于FreeBSD。
 +
-In the i386 and amd64 architectures, disks can be divided into multiple partitions using one of two partitioning schemes. A traditional _Master Boot Record_ (MBR) holds a partition table defining up to four _primary partitions_. For historical reasons, FreeBSD calls these primary partition _slices_. One of these primary partitions can be made into an _extended partition_ containing multiple _logical partitions_. The _GUID Partition Table_ (GPT) is a newer and simpler method of partitioning a disk. Common GPT implementations allow up to 128 partitions per disk, eliminating the need for logical partitions.
+在i386和amd64架构中，可以使用两种分区方案将磁盘分成多个分区。传统的主引导记录（MBR）保存了一个包含最多四个主分区的分区表。出于历史原因，FreeBSD将这些主分区称为切片。其中一个主分区可以成为包含多个逻辑分区的扩展分区。GUID分区表（GPT）是一种较新且更简单的磁盘分区方法。常见的GPT实现允许每个磁盘最多有128个分区，消除了逻辑分区的需要。
 +
-The FreeBSD boot loader requires either a primary or GPT partition. If all of the primary or GPT partitions are already in use, one must be freed for FreeBSD. To create a partition without deleting existing data, use a partition resizing tool to shrink an existing partition and create a new partition using the freed space.
+FreeBSD引导加载程序需要一个主分区或GPT分区。如果所有的主分区或GPT分区已经被使用，就必须释放一个分区给FreeBSD使用。为了在不删除现有数据的情况下创建一个分区，可以使用分区调整工具来缩小一个现有分区，并使用释放出的空间创建一个新的分区。
 +
-A variety of free and commercial partition resizing tools are listed at link:https://en.wikipedia.org/wiki/List_of_disk_partitioning_software[List of disk partitioning software wikipedia entry]. link:https://gparted.org/livecd.php[GParted Live] is a free live CD which includes the GParted partition editor.
+在 link:https://en.wikipedia.org/wiki/List_of_disk_partitioning_software[磁盘分区软件维基百科条目]中列出了各种免费和商业的分区调整工具。 link:https://gparted.org/livecd.php[GParted Live] 是一个免费的Live CD，其中包含了GParted分区编辑器。
 +
 [WARNING]
 ======
-When used properly, disk shrinking utilities can safely create space for creating a new partition. Since the possibility of selecting the wrong partition exists, always backup any important data and verify the integrity of the backup before modifying disk partitions.
+当正确使用时，磁盘收缩工具可以安全地为创建新分区腾出空间。由于选择错误分区的可能性存在，始终在修改磁盘分区之前备份任何重要数据并验证备份的完整性。
 ======
 +
-Disk partitions containing different operating systems make it possible to install multiple operating systems on one computer. An alternative is to use crossref:virtualization[virtualization,virtualization] which allows multiple operating systems to run at the same time without modifying any disk partitions.
-. *Collect Network Information*
+包含不同操作系统的磁盘分区使得在一台计算机上安装多个操作系统成为可能。另一种选择是使用虚拟化技术，它允许多个操作系统同时运行，而无需修改任何磁盘分区。
+. *收集网络信息*
 +
-Some FreeBSD installation methods require a network connection in order to download the installation files. After any installation, the installer will offer to setup the system's network interfaces.
+一些FreeBSD安装方法需要网络连接才能下载安装文件。在任何安装之后，安装程序将提供设置系统网络接口的选项。
 +
-If the network has a DHCP server, it can be used to provide automatic network configuration. If DHCP is not available, the following network information for the system must be obtained from the local network administrator or Internet service provider:
+如果网络有DHCP服务器，可以使用它来提供自动网络配置。如果没有DHCP可用，必须从本地网络管理员或互联网服务提供商获取系统的以下网络信息：
 +
 [[bsdinstall-collect-network-information]]
-Required Network Information
+所需网络信息
 
-.. IP address
-.. Subnet mask
-.. IP address of default gateway
-.. Domain name of the network
-.. IP addresses of the network's DNS servers
+.. IP地址
+.. 子网掩码
+.. 默认网关的IP地址
+.. 网络的域名
+.. 网络的DNS服务器的IP地址
 
-. *Check for FreeBSD Errata*
+. *检查 FreeBSD 勘误表*
 +
-Although the FreeBSD Project strives to ensure that each release of FreeBSD is as stable as possible, bugs occasionally creep into the process. On very rare occasions those bugs affect the installation process. As these problems are discovered and fixed, they are noted in the FreeBSD Errata page of each version. Check the errata before installing to make sure that there are no problems that might affect the installation.
+尽管FreeBSD项目努力确保每个FreeBSD版本尽可能稳定，但偶尔会出现一些错误。在非常罕见的情况下，这些错误会影响安装过程。当这些问题被发现并修复时，它们会在每个版本的FreeBSD勘误页面中进行记录。在安装之前，请检查勘误页面，以确保没有可能影响安装的问题。
 +
-Information and errata for all the releases can be found on the link:https://www.FreeBSD.org/releases/[FreeBSD Release Information] page.
+所有发布版本的信息和勘误表都可以在链接：https://www.FreeBSD.org/releases/[FreeBSD Release Information] 页面上找到。
 ====
 
 [[bsdinstall-installation-media]]
-=== Prepare the Installation Media
+=== 准备安装介质
 
-The FreeBSD installer is not an application that can be run from within another operating system. Instead, download a FreeBSD installation file, burn it to the media associated with its file type and size (CD, DVD, or USB), and boot the system to install from the inserted media.
+FreeBSD安装程序不是可以在另一个操作系统中运行的应用程序。相反，您需要下载一个FreeBSD安装文件，将其刻录到与其文件类型和大小（CD、DVD或USB）相关联的介质上，并从插入的介质启动系统以进行安装。
 
-FreeBSD installation files are available at the link:https://www.FreeBSD.org/where/[FreeBSD download page]. Each installation file's name includes the release version of FreeBSD, the architecture, and the type of file.
+FreeBSD安装文件可以在链接https://www.FreeBSD.org/where/[FreeBSD下载页面]上找到。每个安装文件的名称包括FreeBSD的发布版本、架构和文件类型。
 
-Installation files are available in several formats, compressed with man:xz[1] or uncompressed. The formats vary depending on computer architecture and media type.
+安装文件有多种格式可供选择，可以使用man:xz[1]进行压缩或者不压缩。这些格式根据计算机架构和媒体类型而有所不同。
 
-Installation file types:
+安装文件类型：
 
-* `*-bootonly.iso*`: This is the smallest installation file as it only contains the installer. A working Internet connection is required during installation as the installer will download the files it needs to complete the FreeBSD installation. This file should be burned to optical media.
-* `*-disc1.iso*`: This file contains all of the files needed to install FreeBSD, its source, and the Ports Collection. This file should be burned to optical media.
-* `*-dvd1.iso*`: This file contains all of the files needed to install FreeBSD, its source, and the Ports Collection. It also contains a set of popular binary packages for installing a window manager and some applications so that a complete system can be installed from media without requiring a connection to the Internet. This file should be burned to optical media.
-* `*-memstick.img*`: This file contains all of the files needed to install FreeBSD, its source, and the Ports Collection. Write this file to a USB stick as shown in <<bsdinstall-usb>>.
-* `*-mini-memstick.img*`: Like `*-bootonly.iso*`, does not include installation files, but downloads them as needed. A working internet connection is required during installation. It should be written to a USB stick as shown in <<bsdinstall-usb>>.
+* `*-bootonly.iso*`：这是最小的安装文件，只包含安装程序。在安装过程中需要一个可用的互联网连接，因为安装程序将下载完成FreeBSD安装所需的文件。这个文件应该被刻录到光盘介质上。
+* `*-disc1.iso*`：这个文件包含了安装FreeBSD所需的所有文件，包括其源代码和Ports集合。这个文件应该被刻录到光盘介质上。
+* `*-dvd1.iso*`：该文件包含安装FreeBSD所需的所有文件，包括其源代码和Ports Collection。它还包含一组流行的二进制软件包，用于安装窗口管理器和一些应用程序，以便可以在没有连接到互联网的情况下从介质上安装完整的系统。该文件应该被刻录到光盘介质上。
+* `*-memstick.img*`：该文件包含安装FreeBSD所需的所有文件，包括其源代码和Ports集合。按照<<bsdinstall-usb>>中所示的方法将该文件写入USB存储设备。
+* `*-mini-memstick.img*`：与`*-bootonly.iso*`类似，不包含安装文件，但会在需要时进行下载。在安装过程中需要一个可用的互联网连接。请按照<<bsdinstall-usb>>中所示的方式将其写入USB存储设备。
 
-After downloading the image file, download at least one _checksum_ file from the same directory. There are two _checksum_ files available, named after the release number and the architecture name. For example: `CHECKSUM.SHA256-FreeBSD-13.1-RELEASE-amd64` and `CHECKSUM.SHA512-FreeBSD-13.1-RELEASE-amd64`.
+在下载镜像文件后，从相同目录下载至少一个_checksum_文件。有两个_checksum_文件可用，分别以发布版本号和架构名称命名。例如：`CHECKSUM.SHA256-FreeBSD-13.1-RELEASE-amd64`和`CHECKSUM.SHA512-FreeBSD-13.1-RELEASE-amd64`。
 
-After downloading one of the files (or both), calculate the _checksum_ for the image file and compare it with the one shown in the _checksum_ file. Note that you need to compare the calculated _checksum_ against the correct file, as they correspond to two different algorithms: SHA256 and SHA512. FreeBSD provides man:sha256[1] and man:sha512[1] that can be used for calculating the _checksum_. Other operating systems have similar programs.
+在下载其中一个文件（或两个文件）之后，计算图像文件的_checksum_并将其与_checksum_文件中显示的_checksum_进行比较。请注意，您需要将计算出的_checksum_与正确的文件进行比较，因为它们对应于两种不同的算法：SHA256和SHA512。FreeBSD提供了可以用于计算_checksum_的man:sha256[1]和man:sha512[1]。其他操作系统也有类似的程序。
 
-Verifying the _checksum_ in FreeBSD can be done automatically using man:sha256sum[1] (and man:sha512sum[1]) by executing:
+在FreeBSD中，可以通过执行man:sha256sum[1]（和man:sha512sum[1]）来自动验证_checksum_。
 
 [source, shell]
 ....
@@ -148,64 +148,65 @@ Verifying the _checksum_ in FreeBSD can be done automatically using man:sha256su
 FreeBSD-13.1-RELEASE-amd64-dvd1.iso: OK
 ....
 
-The checksums must match exactly. If the checksums do not match, the image file is corrupt and must be downloaded again.
+校验和必须完全匹配。如果校验和不匹配，则图像文件损坏，必须重新下载。
 
 [[bsdinstall-usb]]
-==== Writing an Image File to USB
+==== 将图像文件写入USB
 
-The `\*memstick.img` file is an _image_ of the complete contents of a memory stick. It _cannot_ be copied to the target device as a file. Several applications are available for writing the `*.img` to a USB stick. This section describes two of these utilities.
+`\*memstick.img`文件是一个内存棒的完整内容的镜像。它不能作为文件复制到目标设备上。有几个应用程序可用于将`*.img`写入USB内存棒。本节介绍其中两个实用程序。
 
 [IMPORTANT]
 ====
-Before proceeding, back up any important data on the USB stick. This procedure will erase the existing data on the stick.
+在继续之前，请备份U盘上的任何重要数据。此操作将擦除U盘上的现有数据。
 ====
 
 [[bsdinstall-usb-dd]]
 [.procedure]
 ====
-*Procedure. Using `dd` to write the image* +
+*步骤。使用`dd`命令写入镜像* +
 
 [WARNING]
 ======
-This example uses `/dev/da0` as the target device where the image will be written. Be *very careful* that the correct device is used as this command will destroy the existing data on the specified target device.
+这个例子使用`/dev/da0`作为目标设备，图像将被写入其中。请*非常小心*确保使用正确的设备，因为这个命令会破坏指定目标设备上的现有数据。
 ======
 
-. The command-line utility is available on BSD, Linux(R), and Mac OS(R) systems. To burn the image using `dd`, insert the USB stick and determine its device name. Then, specify the name of the downloaded installation file and the device name for the USB stick. This example burns the amd64 installation image to the first USB device on an existing FreeBSD system.
+. 命令行实用程序可在BSD、Linux(R)和Mac OS(R)系统上使用。要使用`dd`烧录镜像，请插入USB闪存并确定其设备名称。然后，指定下载的安装文件的名称和USB闪存的设备名称。此示例将amd64安装镜像烧录到现有的FreeBSD系统上的第一个USB设备。
 +
 [source, shell]
 ....
 # dd if=FreeBSD-13.1-RELEASE-amd64-memstick.img of=/dev/da0 bs=1M conv=sync
 ....
 +
-If this command fails, verify that the USB stick is not mounted and that the device name is for the disk, not a partition.
+如果此命令失败，请验证USB存储设备未挂载，并且设备名称是磁盘而不是分区。
 +
-Some operating systems might require this command to be run with man:sudo[8]. The man:dd[1] syntax varies slightly across different platforms; for example, Mac OS(R) requires a lower-case `bs=1m`. Systems like Linux(R) might buffer writes. To force all writes to complete, use man:sync[8].
+某些操作系统可能需要使用man:sudo[8]命令来运行此命令。man:dd[1]的语法在不同的平台上略有不同；例如，Mac OS(R)需要使用小写的`bs=1m`。像Linux(R)这样的系统可能会缓冲写入操作。要强制完成所有写入操作，请使用man:sync[8]命令。
 ====
 
 [.procedure]
 ====
-*Procedure. Using Windows(R) to Write the Image* +
+*步骤。使用Windows(R)写入镜像* +
 
 [WARNING]
 ======
-Be sure to give the correct drive letter as the existing data on the specified drive will be overwritten and destroyed.
+请务必提供正确的驱动器字母，因为指定驱动器上的现有数据将被覆盖和销毁。
 ======
 
-. *Obtaining Image Writer for Windows(R)*
+. *获取Windows(R)的图像写入器*
+  
 +
-Image Writer for Windows(R) is a free application that can correctly write an image file to a memory stick. Download it from https://sourceforge.net/projects/win32diskimager/[win32diskimager home page] and extract it into a folder.
+Image Writer for Windows（R）是一个免费的应用程序，可以正确地将图像文件写入存储卡。从https://sourceforge.net/projects/win32diskimager/ [win32diskimager主页]下载并将其解压到一个文件夹中。
 
-. *Writing the Image with Image Writer*
+. *使用图像写入器写入图像*
 +
-Double-click the Win32DiskImager icon to start the program. Verify that the drive letter shown under `Device` is the drive with the memory stick. Click the folder icon and select the image to be written to the memory stick. Click btn:[Save] to accept the image file name. Verify that everything is correct, and that no folders on the memory stick are open in other windows. When everything is ready, click btn:[Write] to write the image file to the memory stick.
+双击Win32DiskImager图标启动程序。确保在“设备”下显示的驱动器字母是存储器的驱动器。点击文件夹图标并选择要写入存储器的镜像。点击btn:[保存]接受镜像文件名。确认一切正确，并且存储器上没有其他窗口中打开的文件夹。当一切准备就绪时，点击btn:[写入]将镜像文件写入存储器。
 ====
 
 [[bsdinstall-start]]
-== Starting the Installation
+== 开始安装
 
 [IMPORTANT]
 ====
-By default, the installation will not make any changes to the disk(s) before the following message:
+默认情况下，在以下消息之前，安装程序不会对磁盘进行任何更改：
 
 [.programlisting]
 ....
@@ -215,740 +216,772 @@ be PERMANENTLY ERASED. Are you sure you want to
 commit your changes?
 ....
 
-The install can be exited at any time prior to this warning. If there is a concern that something is incorrectly configured, just turn the computer off before this point and no changes will be made to the system's disks.
+在出现此警告之前，可以随时退出安装。如果担心某些配置不正确，只需在此之前关闭计算机，系统磁盘将不会进行任何更改。
 ====
 
-This section describes how to boot the system from the installation media which was prepared using the instructions in <<bsdinstall-installation-media>>. When using a bootable USB stick, plug in the USB stick before turning on the computer. When booting from CD or DVD, turn on the computer and insert the media at the first opportunity. How to configure the system to boot from the inserted media depends upon the architecture.
+本节描述了如何从使用<<bsdinstall-installation-media>>中的说明准备的安装介质引导系统。使用可启动的USB闪存驱动器时，在打开计算机之前插入USB闪存驱动器。从CD或DVD引导时，打开计算机并在第一次机会时插入介质。如何配置系统以从插入的介质引导取决于体系结构。
 
 [[bsdinstall-view-probe]]
-=== FreeBSD Boot Menu
+=== FreeBSD启动菜单
 
-Once the system boots from the installation media, a menu similar to the following will be displayed:
+一旦系统从安装介质启动，将显示类似以下的菜单：
 
 [[bsdinstall-newboot-loader-menu]]
-.FreeBSD Boot Loader Menu
-image::bsdinstall-newboot-loader-menu.png["FreeBSD boot loader menu"]
+.FreeBSD引导加载程序菜单
+image::bsdinstall-newboot-loader-menu.png是一个文件名，无法直接翻译。["FreeBSD引导加载程序菜单"]
 
-By default, the menu will wait ten seconds for user input before booting into the FreeBSD installer or, if FreeBSD is already installed, before booting into FreeBSD. To pause the boot timer in order to review the selections, press kbd:[Space]. To select an option, press its highlighted number, character, or key. The following options are available.
+默认情况下，菜单将在启动FreeBSD安装程序之前等待十秒钟以等待用户输入，或者如果FreeBSD已经安装，则在启动FreeBSD之前等待十秒钟。要暂停启动计时器以查看选择项，请按下空格键。要选择一个选项，请按下其突出显示的数字、字符或键。以下选项可用。
 
-* `Boot Multi User`: This will continue the FreeBSD boot process. If the boot timer has been paused, press kbd:[1], upper- or lower-case kbd:[B], or kbd:[Enter].
-* `Boot Single User`: This mode can be used to fix an existing FreeBSD installation as described in crossref:boot[boot-singleuser,“Single-User Mode”]. Press kbd:[2] or the upper- or lower-case kbd:[S] to enter this mode.
-* `Escape to loader prompt`: This will boot the system into a repair prompt that contains a limited number of low-level commands. This prompt is described in crossref:boot[boot-loader,“Stage Three”]. Press kbd:[3] or kbd:[Esc] to boot into this prompt.
-* `Reboot`: Reboots the system.
-* `Cons`: Allow to continue the installation by `video`, `serial`, `Dual (serial primary)` or `Dual (Video primary)`
-* `Kernel`: Loads a different kernel.
-* `Boot Options`: Opens the menu shown in, and described under, <<bsdinstall-boot-options-menu>>.
+* `启动多用户模式`：这将继续FreeBSD的启动过程。如果启动计时器已经暂停，请按下kbd:[1]、大写或小写的kbd:[B]或kbd:[Enter]键。
+* `单用户启动`: 这种模式可以用于修复已有的FreeBSD安装，如crossref:boot[boot-singleuser,"单用户模式"]中所述。按下键盘上的 kbd:[2] 或大写或小写的 kbd:[S] 进入此模式。
+* `进入加载器提示符`: 这将使系统启动到一个包含有限数量低级命令的修复提示符。该提示符在crossref:boot[boot-loader,“Stage Three”]中有描述。按下kbd:[3]或kbd:[Esc]键进入该提示符。
+* `Reboot`：重新启动系统。
+* `缺点`: 允许通过`视频`、`串口`、`双串口（串口为主）`或`双视频（视频为主）`继续安装。
+* `Kernel`: 加载一个不同的内核。
+* `引导选项`：打开菜单，该菜单在<<bsdinstall-boot-options-menu>>中显示并描述。
 
 [[bsdinstall-boot-options-menu]]
-.FreeBSD Boot Options Menu
-image::bsdinstall-boot-options-menu.png["Menu showing the different boot options supported"]
+.FreeBSD启动选项菜单
+image::bsdinstall-boot-options-menu.png["显示支持的不同启动选项的菜单"]
 
-The boot options menu is divided into two sections. The first section can be used to either return to the main boot menu or to reset any toggled options back to their defaults.
+启动选项菜单分为两个部分。第一部分可以用于返回主启动菜单或将任何切换选项重置为默认值。
 
-The next section is used to toggle the available options to `On` or `Off` by pressing the option's highlighted number or character. The system will always boot using the settings for these options until they are modified. Several options can be toggled using this menu:
+下一节用于通过按下选项的突出显示的数字或字符来切换可用选项的状态为“开启”或“关闭”。系统将始终使用这些选项的设置进行引导，直到它们被修改。可以使用此菜单切换多个选项的状态。
 
-* `ACPI Support`: If the system hangs during boot, try toggling this option to `Off`.
-* `Safe Mode`: If the system still hangs during boot even with `ACPI Support` set to `Off`, try setting this option to `On`.
-* `Single User`: Toggle this option to `On` to fix an existing FreeBSD installation as described in crossref:boot[boot-singleuser,“Single-User Mode”]. Once the problem is fixed, set it back to `Off`.
-* `Verbose`: Toggle this option to `On` to see more detailed messages during the boot process. This can be useful when troubleshooting a piece of hardware.
+* `ACPI支持`: 如果系统在启动过程中出现卡死的情况，请尝试将此选项切换为`关闭`。
+* `安全模式`：如果系统在启动时即使将`ACPI支持`设置为`关闭`仍然出现卡顿的情况，请尝试将此选项设置为`开启`。
+* `Single User`：将此选项切换为`On`，以修复现有的FreeBSD安装，如crossref:boot[boot-singleuser,“单用户模式”]中所述。一旦问题解决，将其设置为`Off`。
+* `Verbose`：将此选项切换为`On`以在启动过程中显示更详细的消息。在排除硬件问题时，这可能会很有用。
 
-After making the needed selections, press kbd:[1] or kbd:[Backspace] to return to the main boot menu, then press kbd:[Enter] to continue booting into FreeBSD. A series of boot messages will appear as FreeBSD carries out its hardware device probes and loads the installation program. Once the boot is complete, the welcome menu shown in <<bsdinstall-choose-mode>> will be displayed.
+在进行所需的选择后，按下 kbd:[1] 或 kbd:[Backspace] 返回到主引导菜单，然后按下 kbd:[Enter] 继续引导进入 FreeBSD。 FreeBSD 将执行其硬件设备探测和加载安装程序时，一系列引导消息将出现。 引导完成后，将显示在 <<bsdinstall-choose-mode>> 中显示的欢迎菜单。
 
 [[bsdinstall-choose-mode]]
-.Welcome Menu
-image::bsdinstall-choose-mode.png["FreeBSD installation welcome menu"]
+.欢迎菜单
+image::bsdinstall-choose-mode.png是一个图片文件的名称，无法直接翻译。["FreeBSD安装欢迎菜单"]
 
-Press kbd:[Enter] to select the default of btn:[Install] to enter the installer. The rest of this chapter describes how to use this installer. Otherwise, use the right or left arrows or the colorized letter to select the desired menu item. The btn:[Shell] can be used to access a FreeBSD shell in order to use command line utilities to prepare the disks before installation. The btn:[Live CD] option can be used to try out FreeBSD before installing it. The live version is described in <<using-live-cd>>.
+按下 kbd:[Enter] 键选择默认的 btn:[Install] 按钮进入安装程序。本章的其余部分将描述如何使用此安装程序。否则，使用右箭头、左箭头或带颜色的字母选择所需的菜单项。btn:[Shell] 可用于访问 FreeBSD shell，以便在安装之前使用命令行实用程序准备磁盘。btn:[Live CD] 选项可用于在安装之前尝试 FreeBSD。有关 live 版本的详细信息，请参阅 <<using-live-cd>>。
 
 [TIP]
 ====
-To review the boot messages, including the hardware device probe, press the upper- or lower-case kbd:[S] and then kbd:[Enter] to access a shell. At the shell prompt, type `more /var/run/dmesg.boot` and use the space bar to scroll through the messages. When finished, type `exit` to return to the welcome menu.
+要查看启动消息，包括硬件设备探测，请按下大写或小写的键盘：[S]，然后按下键盘：[Enter]以访问shell。在shell提示符下，键入`more /var/run/dmesg.boot`，使用空格键滚动浏览消息。完成后，键入`exit`返回欢迎菜单。
 ====
 
 [[using-bsdinstall]]
-== Using bsdinstall
+== 使用 bsdinstall
 
-This section shows the order of the bsdinstall menus and the type of information that will be asked before the system is installed. Use the arrow keys to highlight a menu option, then kbd:[Space] to select or deselect that menu item. When finished, press kbd:[Enter] to save the selection and move onto the next screen.
+本节展示了bsdinstall菜单的顺序以及在系统安装之前将要询问的信息类型。使用箭头键来突出显示菜单选项，然后使用kbd:[Space]来选择或取消选择该菜单项。完成后，按下kbd:[Enter]保存选择并进入下一个屏幕。
 
 [[bsdinstall-keymap]]
-=== Selecting the Keymap Menu
+=== 选择键映射菜单
 
-Before starting the process, bsdinstall will load the keymap files as shown in <<bsdinstall-keymap-loading>>.
+在开始过程之前，bsdinstall将加载键盘映射文件，如<<bsdinstall-keymap-loading>>所示。
 
 [[bsdinstall-keymap-loading]]
-.Keymap Loading
-image::bsdinstall-keymap-loading.png["Keymap loading"]
+.按键映射加载中
+image::bsdinstall-keymap-loading.png["键位映射加载中"]
 
-After the keymaps have been loaded, bsdinstall displays the menu shown in <<bsdinstall-keymap-10>>. Use the up and down arrows to select the keymap that most closely represents the mapping of the keyboard attached to the system. Press kbd:[Enter] to save the selection.
+在加载了键位映射之后，bsdinstall会显示如<<bsdinstall-keymap-10>>所示的菜单。使用上下箭头选择最接近系统连接的键盘映射的键位映射。按下kbd:[Enter]保存选择。
 
 [[bsdinstall-keymap-10]]
-.Keymap Selection Menu
-image::bsdinstall-keymap-10.png["Keymap selection menu showing all supported keyboards"]
+.按键映射选择菜单
+image::bsdinstall-keymap-10.png是一个图片文件的名称。["显示所有支持的键盘的按键映射选择菜单"]
 
 [NOTE]
 ====
-Pressing kbd:[Esc] will exit this menu and use the default keymap. If the choice of keymap is not clear, [.guimenuitem]#United States of America ISO-8859-1# is also a safe option.
+按下 kbd:[Esc] 将退出此菜单并使用默认键映射。如果键映射的选择不明确，[.guimenuitem]#United States of America ISO-8859-1# 也是一个安全的选项。
 ====
 
-In addition, when selecting a different keymap, the user can try the keymap and ensure it is correct before proceeding, as shown in <<bsdinstall-keymap-testing>>.
+此外，在选择不同的键盘映射时，用户可以在继续之前尝试并确保它是正确的，如 <<bsdinstall-keymap-testing>> 所示。
 
 [[bsdinstall-keymap-testing]]
-.Keymap Testing Menu
-image::bsdinstall-keymap-testing.png["Keymap testing menu"]
+.按键映射测试菜单
+image::bsdinstall-keymap-testing.png是一个图片文件的名称。["按键映射测试菜单"]
 
 [[bsdinstall-hostname]]
-=== Setting the Hostname
+=== 设置主机名
 
-The next bsdinstall menu is used to set the hostname for the newly installed system.
+下一个 bsdinstall 菜单用于设置新安装系统的主机名。
 
 [[bsdinstall-config-hostname]]
-.Setting the Hostname
-image::bsdinstall-config-hostname.png["Setting the hostname"]
+.设置主机名
+image::bsdinstall-config-hostname.png是一个文件名，无法直接翻译。["设置主机名"]
 
-Type in a hostname that is unique for the network. It should be a fully-qualified hostname, such as `machine3.example.com`.
+输入一个在网络中唯一的主机名。它应该是一个完全合格的主机名，例如 `machine3.example.com`。
 
 [[bsdinstall-components]]
-=== Selecting Components to Install
+=== 选择要安装的组件
 
-Next, bsdinstall will prompt to select optional components to install.
+接下来，bsdinstall将提示选择要安装的可选组件。
 
 [[bsdinstall-config-components]]
-.Selecting Components to Install
-image::bsdinstall-config-components.png["Different components that can be installed. Example: base-dbg", lib32, ports, etc.]
+.选择要安装的组件
+image::bsdinstall-config-components.png是一个图片文件的名称。["可以安装的不同组件。示例：base-dbg", lib32, ports, etc.]
 
-Deciding which components to install will depend largely on the intended use of the system and the amount of disk space available. The FreeBSD kernel and userland, collectively known as the _base system_, are always installed. Depending on the architecture, some of these components may not appear:
+决定安装哪些组件将主要取决于系统的预期用途和可用的磁盘空间。FreeBSD内核和用户空间，统称为“基本系统”，始终会被安装。根据架构的不同，其中一些组件可能不会出现：
 
-* `base-dbg` - Base tools like cat and ls, among many others, with debug symbols activated.
-* `kernel-dbg` - Kernel and modules with debug symbols activated.
-* `lib32-dbg` - Compatibility libraries for running 32-bit applications on a 64-bit version of FreeBSD with debug symbols activated.
-* `lib32` - Compatibility libraries for running 32-bit applications on a 64-bit version of FreeBSD.
-* `ports` - The FreeBSD Ports Collection is a collection of files which automates the downloading, compiling and installation of third-party software packages. crossref:ports[ports,Installing Applications: Packages and Ports] discusses how to use the Ports Collection.
+* `base-dbg` - 基本工具，如cat和ls等，其中包含启用了调试符号的工具。
+* `kernel-dbg` - 启用了调试符号的内核和模块。
+* `lib32-dbg` - 在启用调试符号的64位FreeBSD版本上运行32位应用程序的兼容库。
+* `lib32` - 在64位版本的FreeBSD上运行32位应用程序的兼容性库。
+* `ports` - FreeBSD Ports Collection是一组文件，用于自动下载、编译和安装第三方软件包。crossref:ports[ports,安装应用程序：软件包和端口]讨论了如何使用Ports Collection。
 +
 [WARNING]
 ====
-The installation program does not check for adequate disk space. Select this option only if sufficient hard disk space is available. The FreeBSD Ports Collection takes up about {ports-size} of disk space.
+安装程序不会检查磁盘空间是否足够。只有在有足够的硬盘空间时才选择此选项。FreeBSD Ports集合大约占用{ports-size}的磁盘空间。
 ====
 
-* `src` - The complete FreeBSD source code for both the kernel and the userland. Although not required for the majority of applications, it may be required to build device drivers, kernel modules, or some applications from the Ports Collection. It is also used for developing FreeBSD itself. The full source tree requires 1 GB of disk space and recompiling the entire FreeBSD system requires an additional 5 GB of space.
-* `tests` - FreeBSD Test Suite.
+* `src` - 包含FreeBSD内核和用户空间的完整源代码。虽然大多数应用程序不需要它，但在构建设备驱动程序、内核模块或从Ports Collection中构建某些应用程序时可能需要它。它还用于开发FreeBSD本身。完整的源代码树需要1 GB的磁盘空间，重新编译整个FreeBSD系统需要额外的5 GB空间。
+* `tests` - FreeBSD测试套件。
 
 [[bsdinstall-netinstall]]
-=== Installing from the Network
+=== 从网络安装
 
-The menu shown in <<bsdinstall-netinstall-notify>> only appears when installing from a `-bootonly.iso` or `-mini-memstick.img`, as this installation media does not hold copies of the installation files. Since the installation files must be retrieved over a network connection, this menu indicates that the network interface must be configured first. If this menu is shown in any step of the process, remember to follow the instructions in <<bsdinstall-config-network-dev>>.
+要从网络安装软件，您需要确保计算机连接到互联网。然后，按照以下步骤进行操作：
+
+1. 打开您的网络浏览器，并访问软件的官方网站或可信赖的下载源。
+2. 在网站上找到适用于您的操作系统的安装程序，并单击下载链接。
+3. 下载完成后，找到下载的安装程序文件，并双击运行它。
+4. 按照安装程序的指示进行操作，例如选择安装位置和接受许可协议。
+5. 等待安装程序完成安装过程。这可能需要一些时间，具体取决于您的网络速度和软件的大小。
+6. 安装完成后，您可以在计算机上找到并打开新安装的软件。
+
+请注意，从网络安装软件时，确保下载和安装的软件来自可信赖的来源，以避免安全风险。
+
+在<<bsdinstall-netinstall-notify>>中显示的菜单只会在从`-bootonly.iso`或`-mini-memstick.img`进行安装时出现，因为这种安装介质不保存安装文件的副本。由于安装文件必须通过网络连接获取，所以该菜单表示必须先配置网络接口。如果在过程的任何步骤中显示了该菜单，请记住按照<<bsdinstall-config-network-dev>>中的说明进行操作。
 
 [[bsdinstall-netinstall-notify]]
-.Installing from the Network
-image::bsdinstall-netinstall-files.png["Indicates that certain components have not been found and will be downloaded using the network."]
+.从网络安装
+
+要从网络安装软件，您需要确保计算机连接到互联网。然后，按照以下步骤进行操作：
+
+1. 打开您的网络浏览器，并访问软件的官方网站或可信赖的下载源。
+2. 在网站上找到适用于您的操作系统的安装程序，并单击下载链接。
+3. 下载完成后，找到下载的安装程序文件，并双击运行它。
+4. 按照安装程序的指示进行操作，例如选择安装位置和接受许可协议。
+5. 等待安装程序完成安装过程。这可能需要一些时间，具体取决于您的网络速度和软件的大小。
+6. 安装完成后，您可以在计算机上找到并打开新安装的软件。
+
+请注意，从网络安装软件时，确保下载和安装的软件来自可信赖的来源，以避免安全风险。
+image::bsdinstall-netinstall-files.png是一个文件名，无法直接翻译。["表示某些组件未找到，并将使用网络进行下载。"]
 
 [[bsdinstall-partitioning]]
-== Allocating Disk Space
+== 分配磁盘空间
 
-The next menu is used to determine the method for allocating disk space.
+下一个菜单用于确定分配磁盘空间的方法。
 
 [[bsdinstall-zfs-partmenu]]
-.Partitioning Choices
-image::bsdinstall-zfs-partmenu.png["Shows the different partition options. Example: Manual", Shell, etc.]
+.分区选择
+image::bsdinstall-zfs-partmenu.png是一个文件名，无法直接翻译。["显示不同的分区选项。示例：手动", Shell, etc.]
 
-bsdinstall gives the user four methods for allocating disk space:
+bsdinstall为用户提供了四种分配磁盘空间的方法：
 
-* `Auto (ZFS)` partitioning creates a root-on-ZFS system with optional GELI encryption support for _boot environments_.
-* `Auto (UFS)` partitioning automatically sets up the disk partitions using the `UFS` file system.
-* `Manual` partitioning allows advanced users to create customized partitions from menu options.
-* `Shell` opens a shell prompt where advanced users can create customized partitions using command-line utilities like man:gpart[8], man:fdisk[8], and man:bsdlabel[8].
+* `Auto (ZFS)`分区创建一个基于ZFS的系统，可选择支持GELI加密用于_引导环境_。
+* `Auto (UFS)`分区是使用`UFS`文件系统自动设置磁盘分区的功能。
+* “手动”分区允许高级用户通过菜单选项创建自定义分区。
+* `Shell`打开一个shell提示符，高级用户可以使用命令行工具（如man:gpart[8]、man:fdisk[8]和man:bsdlabel[8]）创建自定义分区。
 
-This section describes what to consider when laying out the disk partitions. It then demonstrates how to use the different partitioning methods.
+本节描述了在布置磁盘分区时需要考虑的事项。然后演示了如何使用不同的分区方法。
 
 [[configtuning-initial]]
-=== Designing the Partition Layout
+=== 设计分区布局
 
-The default partition layout for file systems includes one file system for the entire system. When using `UFS` it may be worth considering the use of multiple file systems if you have sufficient disk space or multiple disks. When laying out file systems, remember that hard drives transfer data faster from the outer tracks to the inner. Thus, smaller and heavier-accessed file systems should be closer to the outside of the drive, while larger partitions like `/usr` should be placed toward the inner parts of the disk. It is a good idea to create partitions in an order similar to: `/`, swap, `/var`, and `/usr`.
+文件系统的默认分区布局包括一个用于整个系统的文件系统。当使用`UFS`时，如果您有足够的磁盘空间或多个磁盘，考虑使用多个文件系统可能是值得的。在布置文件系统时，请记住硬盘从外部轨道到内部传输数据速度更快。因此，较小且访问频率较高的文件系统应该靠近驱动器的外部，而像`/usr`这样的较大分区应该放置在磁盘的内部部分。按照类似的顺序创建分区是一个好主意：`/`、交换空间、`/var`和`/usr`。
 
-The size of the `/var` partition reflects the intended machine's usage. This partition is used to hold mailboxes, log files, and printer spools. Mailboxes and log files can grow to unexpected sizes depending on the number of users and how long log files are kept. On average, most users rarely need more than about a gigabyte of free disk space in `/var`.
+`/var`分区的大小反映了预期机器的使用情况。该分区用于存储邮箱、日志文件和打印机队列。根据用户数量和日志文件保留时间的长短，邮箱和日志文件的大小可能会出乎意料地增长。通常情况下，大多数用户在`/var`分区中很少需要超过1GB的可用磁盘空间。
 
 [NOTE]
 ====
-Sometimes, a lot of disk space is required in `/var/tmp`. When new software is installed, the packaging tools extract a temporary copy of the packages under `/var/tmp`. Large software packages, like Firefox or LibreOffice may be tricky to install if there is not enough disk space under `/var/tmp`.
+有时，在`/var/tmp`目录下需要大量的磁盘空间。当安装新软件时，打包工具会在`/var/tmp`目录下提取软件包的临时副本。如果`/var/tmp`目录下的磁盘空间不足，安装大型软件包（如Firefox或LibreOffice）可能会变得棘手。
 ====
 
-The `/usr` partition holds many of the files which support the system, including the FreeBSD Ports Collection and system source code. At least 2 gigabytes of space is recommended for this partition. Also, note that home directories for users are placed in `/usr/home` by default, but can be placed on another partition. By default, `/home` is a symbolic link to `/usr/home`.
+`/usr`分区存放着许多支持系统的文件，包括FreeBSD Ports Collection和系统源代码。建议为这个分区提供至少2GB的空间。此外，请注意，默认情况下，用户的家目录位于`/usr/home`，但也可以放在另一个分区上。默认情况下，`/home`是指向`/usr/home`的符号链接。
 
-When selecting partition sizes, keep the space requirements in mind. Running out of space in one partition while barely using another can be a hassle.
+在选择分区大小时，请考虑空间需求。在一个分区中空间不足，而另一个分区几乎未使用可能会带来麻烦。
 
-As a rule of thumb, the swap partition should be about double the size of physical memory (RAM). Systems with minimal RAM (less for larger-memory configurations) may perform better with more swap. Configuring too little swap can lead to inefficiencies in the VM page scanning code and might create issues later if more memory is added.
+作为一个经验法则，交换分区的大小应该是物理内存（RAM）的两倍左右。具有较小内存的系统（对于较大内存配置来说更少）可能在有更多交换空间时性能更好。配置过少的交换空间可能导致虚拟内存页面扫描代码的低效，并且如果添加更多内存后可能会引发问题。
 
-On larger systems with multiple SCSI disks or multiple IDE disks operating on different controllers, it is recommended that swap be configured on each drive, up to four drives. The swap partitions should be approximately the same size. The kernel can handle arbitrary sizes, but internal data structures scale to 4 times the largest swap partition. Keeping the swap partitions near the same size will allow the kernel to optimally stripe swap space across disks. Large swap sizes may elicit a kernel warning message about the total configured swap. The limit is raised by increasing the amount of memory allowed for keeping track of swap allocations, as instructed by the warning message. It might be easier to recover from a runaway program before being forced to reboot.
+在具有多个SCSI磁盘或多个在不同控制器上运行的IDE磁盘的较大系统上，建议在每个驱动器上配置交换空间，最多四个驱动器。交换分区的大小应该大致相同。内核可以处理任意大小，但内部数据结构会按照最大交换分区的4倍进行扩展。保持交换分区大小接近将允许内核在磁盘上最佳地条带化交换空间。较大的交换大小可能会引发有关总配置交换的内核警告消息。通过增加用于跟踪交换分配的内存量来提高限制，如警告消息所指示的那样。在被迫重新启动之前，从失控的程序中恢复可能更容易。
 
-By properly partitioning a system, fragmentation introduced in the smaller write-heavy partitions will not bleed over into the mostly read partitions. Keeping the write-loaded partitions closer to the disk's edge will increase I/O performance in the partitions where it occurs the most. While I/O performance in the larger partitions may be needed, shifting them more toward the edge of the disk will not lead to a significant performance improvement over moving `/var` to the edge.
+通过正确地分区系统，较小的写入密集分区引入的碎片不会波及到主要读取分区。将写入负载较重的分区保持在磁盘边缘附近，将提高在这些分区中发生的I/O性能。虽然可能需要较大分区的I/O性能，但将它们更靠近磁盘边缘不会比将`/var`移动到边缘带来显著的性能改善。
 
 [[bsdinstall-part-guided]]
-=== Guided Partitioning Using UFS
+=== 使用UFS进行引导分区
 
-When this method is selected, a menu will display the available disk(s). If multiple disks are connected, choose the one where FreeBSD is to be installed.
+当选择此方法时，菜单将显示可用的磁盘。如果连接了多个磁盘，请选择要安装FreeBSD的磁盘。
 
 [[bsdinstall-part-guided-disk]]
-.Selecting from Multiple Disks
-image::bsdinstall-part-guided-disk.png["Shows the list of disks on which FreeBSD can be installed"]
+.从多个磁盘中进行选择
+image::bsdinstall-part-guided-disk.png是一个文件名，无法直接翻译。["显示可以安装FreeBSD的磁盘列表"]
 
-Once the disk is selected, the next menu prompts to install to either the entire disk or to create a partition using free space. If btn:[Entire Disk] is chosen, a general partition layout filling the whole disk is automatically created. Selecting btn:[Partition] creates a partition layout from the unused space on the disk.
+选择磁盘后，下一个菜单会提示选择是将整个磁盘安装，还是使用可用空间创建分区。如果选择btn:[整个磁盘]，将自动创建一个填满整个磁盘的通用分区布局。选择btn:[分区]将从磁盘上未使用的空间创建一个分区布局。
 
 [[bsdinstall-part-entire-part]]
-.Selecting Entire Disk or Partition
-image::bsdinstall-part-entire-part.png["Menu asking the user if he wants to use all the available space on the disk or wants to make a partition"]
+.选择整个磁盘或分区
+image::bsdinstall-part-entire-part.png是一个图片文件的名称。["菜单询问用户是否想要使用磁盘上的所有可用空间，还是想要进行分区。"]
 
-After the btn:[Entire Disk] option is chosen, bsdinstall displays a dialog indicating that the disk will be erased.
+选择btn:[Entire Disk]选项后，bsdinstall会显示一个对话框，指示将擦除磁盘。
 
 [[bsdinstall-ufs-warning]]
-.Confirmation
-image::bsdinstall-ufs-warning.png["Menu indicating the user that all data on the disk will be deleted and asking for confirmation"]
+.确认
+image::bsdinstall-ufs-warning.png["菜单提示用户所有磁盘上的数据将被删除，并要求确认。"]
 
-The next menu shows a list with the available partition scheme types. GPT is usually the most appropriate choice for amd64 computers. Older computers that are not compatible with GPT should use MBR. The other partition schemes are generally used for uncommon or older computers. More information is available in <<partition-schemes>>.
+下一个菜单显示了可用的分区方案类型列表。对于amd64计算机来说，GPT通常是最合适的选择。不兼容GPT的旧计算机应该使用MBR。其他分区方案通常用于不常见或较旧的计算机。有关更多信息，请参阅<<partition-schemes>>。
 
 [[bsdinstall-ufs-scheme]]
-.Select Partition Scheme
-image::bsdinstall-part-manual-partscheme.png["Menu showing the user the different the different types of partition that exist and requesting one of them"]
+.选择分区方案
+image::bsdinstall-part-manual-partscheme.png是一个图片文件的名称。["菜单显示用户存在的不同类型的分区，并要求选择其中之一。"]
 
-After the partition layout has been created, review it to ensure it meets the needs of the installation. Selecting btn:[Revert] will reset the partitions to their original values. Pressing btn:[Auto] will recreate the automatic FreeBSD partitions. Partitions can also be manually created, modified, or deleted. When the partitioning is correct, select btn:[Finish] to continue with the installation.
+在创建分区布局之后，请进行审核以确保它满足安装的需求。选择btn:[Revert]将重置分区为其原始值。按下btn:[Auto]将重新创建自动的FreeBSD分区。分区也可以手动创建、修改或删除。当分区设置正确时，请选择btn:[Finish]继续进行安装。
 
 [[bsdinstall-part-review]]
-.Review Created Partitions
-image::bsdinstall-part-review.png["Menu showing created partitions"]
+.审查已创建的分区
+image::bsdinstall-part-review.png是一个文件名，无法直接翻译。["显示已创建分区的菜单"]
 
-Once the disks are configured, the next menu provides the last chance to make changes before the selected drives are formatted. If changes need to be made, select btn:[Back] to return to the main partitioning menu. btn:[Revert & Exit] exits the installer without making any changes to the drive. Otherwise, select btn:[Commit] to start the installation process.
+一旦磁盘配置完成，下一个菜单提供了在选择的驱动器格式化之前进行更改的最后机会。如果需要进行更改，请选择btn:[返回]返回到主分区菜单。btn:[还原和退出]退出安装程序，不对驱动器进行任何更改。否则，选择btn:[提交]开始安装过程。
 
 [[bsdinstall-ufs-final-confirmation]]
-.Final Confirmation
-image::bsdinstall-final-confirmation.png["Menu indicating to the user that all changes will be written to disk and informing that if he decides to continue the existing data will be permanently deleted."]
+.最终确认
+image::bsdinstall-final-confirmation.png是一个文件名，无法直接翻译。["菜单向用户指示所有更改将被写入磁盘，并告知如果用户决定继续，现有数据将被永久删除。"]
 
-To continue with the installation process, go to <<bsdinstall-fetching-distribution>>.
+要继续安装过程，请转到<<bsdinstall-fetching-distribution>>。
 
 [[bsdinstall-part-manual]]
-=== Manual Partitioning
+=== 手动分区
 
-Selecting this method opens the partition editor:
+选择此方法将打开分区编辑器：
 
 [[bsdinstall-part-manual-create]]
-.Manually Create Partitions
-image::bsdinstall-part-manual-create.png["Menu showing the Partition Editor."]
+.手动创建分区
+image::bsdinstall-part-manual-create.png是一个图片文件的名称。["显示分区编辑器的菜单。"]
 
-Highlight the installation drive (`ada0` in this example) and select btn:[Create] to display a menu of available partition schemes:
+高亮显示安装驱动器（在此示例中为`ada0`），然后选择btn:[Create]以显示可用分区方案的菜单：
 
 [[bsdinstall-part-manual-partscheme]]
-.Manually Create Partitions
-image::bsdinstall-part-manual-partscheme.png["Menu showing the different kind of partition schemes"]
+.手动创建分区
+image::bsdinstall-part-manual-partscheme.png是一个图片文件的名称。["菜单显示了不同类型的分区方案"]
 
-GPT is usually the most appropriate choice for amd64 computers. Older computers that are not compatible with GPT should use MBR. The other partition schemes are generally used for uncommon or older computers.
+GPT通常是amd64计算机的最合适选择。不兼容GPT的旧计算机应使用MBR。其他分区方案通常用于不常见或较旧的计算机。
 
 [[partition-schemes]]
-.Partitioning Schemes
+.分区方案
 [cols="25h,~", frame="none", options="header"]
 |===
-<| Abbreviation
-<| Description
+<| 缩写
+<| 描述
 
-|APM
-|Apple Partition Map, used by PowerPC(R).
+|APM是应用性能管理（Application Performance Management）的缩写，它是一种通过监控和分析应用程序的性能来优化和提升应用程序的方法。APM可以帮助开发人员和运维团队实时监控应用程序的性能指标，如响应时间、吞吐量和错误率，并提供详细的性能分析和故障排查工具。通过使用APM，可以及时发现和解决应用程序的性能问题，提高用户体验和满意度。
+|Apple Partition Map，由PowerPC(R)使用。
 
-|BSD
-|BSD label without an MBR, sometimes called _dangerously dedicated mode_ as non-BSD disk utilities may not recognize it.
+|BSD是一种开放源代码的操作系统，它基于UNIX。BSD的名称来自于加州大学伯克利分校（University of California, Berkeley）的计算机科学系。BSD操作系统具有稳定性、可靠性和安全性的特点，并且被广泛用于服务器和嵌入式系统等领域。BSD操作系统有多个不同的分支，包括FreeBSD、OpenBSD和NetBSD等。
+|没有MBR的BSD标签，有时被称为“危险专用模式”，因为非BSD磁盘工具可能无法识别它。
 
-|GPT
-|link:https://en.wikipedia.org/wiki/GUID_Partition_Table[GUID Partition Table].
+|GPT（Generative Pre-trained Transformer）是一种基于Transformer架构的预训练模型。它通过大规模的无监督学习来学习语言模型，然后可以用于各种自然语言处理任务，如文本生成、机器翻译和问答系统等。GPT模型在自然语言处理领域取得了很大的成功，并且被广泛应用于各种实际应用中。
+|链接：https://en.wikipedia.org/wiki/GUID_Partition_Table[GUID分区表]。
 
-|MBR
-|link:https://en.wikipedia.org/wiki/Master_boot_record[Master Boot Record].
+|MBR（Master Boot Record）是计算机硬盘上的一个特殊区域，用于存储引导程序和分区表。它位于硬盘的第一个扇区，大小为512字节。MBR包含了引导程序的代码和分区表的信息，用于引导操作系统的加载和启动。在计算机启动时，BIOS会读取MBR，并将控制权交给引导程序，从而启动操作系统。
+|链接：https://en.wikipedia.org/wiki/Master_boot_record[主引导记录]。
 |===
 
-After the partitioning scheme has been selected and created, select btn:[Create] again to create the partitions. The kbd:[Tab] key is used to give focus to the fields (after cycling through btn:[<OK>], btn:[<Options>], and btn:[<Cancel>]).
+在选择和创建分区方案之后，再次选择 btn:[创建] 来创建分区。使用 kbd:[Tab] 键将焦点放在字段上（在循环通过 btn:[<确定>]、btn:[<选项>] 和 btn:[<取消>] 之后）。
 
 [[bsdinstall-part-manual-addpart]]
-.Manually Create Partitions
-image::bsdinstall-part-manual-addpart.png["Menu requesting type", size, mountpoint and label for the new partition.]
+.手动创建分区
+image::bsdinstall-part-manual-addpart.png是一个图片文件的名称。["请求类型菜单", size, mountpoint and label for the new partition.]
 
-A standard FreeBSD GPT installation uses at least three partitions, including either UFS or ZFS:
+标准的FreeBSD GPT安装至少使用三个分区，其中包括UFS或ZFS之一：
 
-* `freebsd-boot` or `efi` - Holds the FreeBSD boot code.
-* `freebsd-ufs` - A FreeBSD UFS file system.
-* `freebsd-zfs` - A FreeBSD ZFS file system. More information about ZFS is available in crossref:zfs[zfs,The Z File System (ZFS)].
-* `freebsd-swap` - FreeBSD swap space.
+* `freebsd-boot`或`efi` - 存放着FreeBSD的引导代码。
+* `freebsd-ufs` - 一个FreeBSD UFS文件系统。
+* `freebsd-zfs` - 一个FreeBSD的ZFS文件系统。有关ZFS的更多信息，请参阅crossref:zfs[zfs,Z文件系统（ZFS）]。
+* `freebsd-swap` - FreeBSD交换空间。
 
-Refer to man:gpart[8] for descriptions of the available GPT partition types.
+请参考 man:gpart[8]，了解可用的GPT分区类型的描述。
 
-Multiple file system partitions can be created. Some people prefer a traditional layout with separate partitions for `/`, `/var`, `/tmp`, and `/usr`.
-
-[TIP]
-====
-Note that `/tmp` can be added later as a memory-based file system (man:tmpfs[5]) on systems with sufficient memory.
-====
-
-See <<bsdinstall-part-manual-splitfs>> for an example.
-
-The `Size` may be entered with common abbreviations: _K_ for kilobytes, _M_ for megabytes, or _G_ for gigabytes.
+可以创建多个文件系统分区。有些人喜欢传统的布局，将`/`、`/var`、`/tmp`和`/usr`分别放在不同的分区中。
 
 [TIP]
 ====
-Proper sector alignment provides the best performance, and making partition sizes even multiples of 4K bytes helps to ensure alignment on drives with either 512-byte or 4K-byte sectors. Generally, using partition sizes that are even multiples of 1M or 1G is the easiest way to make sure every partition starts at an even multiple of 4K. There is one exception: the _freebsd-boot_ partition should be no larger than 512K due to current boot code limitations.
+请注意，在具有足够内存的系统上，可以将`/tmp`作为基于内存的文件系统（man:tmpfs[5]）添加。
 ====
 
-A `Mountpoint` is needed if the partition will contain a file system. If only a single UFS partition will be created, the mountpoint should be `/`.
+请参考<<bsdinstall-part-manual-splitfs>>中的示例。
 
-The `Label` is a name by which the partition will be known. Drive names or numbers can change if the drive is connected to a different controller or port, but the partition label does not change. Referring to labels instead of drive names and partition numbers in files like `/etc/fstab` makes the system more tolerant to hardware changes. GPT labels appear in `/dev/gpt/` when a disk is attached. Other partitioning schemes have different label capabilities and their labels appear in different directories in `/dev/`.
+`Size` 可以使用常见的缩写进行输入：_K_ 表示千字节，_M_ 表示兆字节，_G_ 表示吉字节。
 
 [TIP]
 ====
-Use a unique label on every partition to avoid conflicts from identical labels. A few letters from the computer's name, use, or location can be added to the label. For instance, use `labroot` or `rootfslab` for the UFS root partition on the computer named `lab`.
+正确的扇区对齐可以提供最佳性能，将分区大小设置为4K字节的倍数有助于确保在具有512字节或4K字节扇区的驱动器上进行对齐。通常，使用1M或1G的倍数作为分区大小是确保每个分区从4K的倍数开始的最简单方法。有一个例外：由于当前引导代码的限制，_freebsd-boot_分区的大小不应超过512K。
+====
+
+如果分区将包含文件系统，则需要一个“Mountpoint”。如果只创建一个UFS分区，则挂载点应为`/`。
+
+`Label`是分区的名称。如果驱动器连接到不同的控制器或端口，驱动器名称或编号可能会发生变化，但分区标签不会改变。在像`/etc/fstab`这样的文件中使用标签而不是驱动器名称和分区编号，可以使系统更容忍硬件变化。当连接了磁盘时，GPT标签会出现在`/dev/gpt/`中。其他分区方案具有不同的标签功能，它们的标签会出现在`/dev/`中的不同目录中。
+
+[TIP]
+====
+在每个分区上使用唯一的标签，以避免相同标签引起的冲突。可以在标签中添加计算机名称、用途或位置的几个字母。例如，对于名为“lab”的计算机上的UFS根分区，可以使用“labroot”或“rootfslab”作为标签。
 ====
 
 [[bsdinstall-part-manual-splitfs]]
-.Creating Traditional Split File System Partitions
+.创建传统的分割文件系统分区
 [example]
 ====
-For a traditional partition layout where the `/`, `/var`, `/tmp`, and `/usr` directories are separate file systems on their own partitions, create a GPT partitioning scheme, then create the partitions as shown. Partition sizes shown are typical for a 20G target disk. If more space is available on the target disk, larger swap or `/var` partitions may be useful. Labels shown here are prefixed with `ex` for "example", but readers should use other unique label values as described above.
+对于传统的分区布局，其中`/`、`/var`、`/tmp`和`/usr`目录是各自独立的文件系统，创建一个GPT分区方案，然后按照所示创建分区。所示的分区大小适用于20G目标磁盘。如果目标磁盘上有更多的空间，可以考虑使用更大的交换空间或`/var`分区。这里显示的标签以`ex`为前缀，表示"示例"，但读者应根据上述说明使用其他唯一的标签值。
 
-By default, FreeBSD's `gptboot` expects the first UFS partition to be the `/` partition.
+默认情况下，FreeBSD的`gptboot`期望第一个UFS分区是`/`分区。
 
 [.informaltable]
 [cols="1,1,1,1", frame="none", options="header"]
 |===
-| Partition Type
-| Size
-| Mountpoint
-| Label
+| 分区类型
+| 大小
+| 挂载点
+| 标签
 
-|`freebsd-boot`
-|`512K`
+|`freebsd-boot`是一个用于FreeBSD操作系统的引导加载程序。它负责在系统启动时加载操作系统内核，并提供启动选项和配置信息。`freebsd-boot`通常安装在系统的引导分区上，并与其他引导加载程序（如GRUB或UEFI）配合使用，以实现系统的引导和启动。
+|`512K`可以翻译为`512千字节`。
 | 
 | 
 
-|`freebsd-ufs`
-|`2G`
+|`freebsd-ufs` 是一种用于FreeBSD操作系统的文件系统类型。它是一种高性能的Unix文件系统，具有可靠性和稳定性。FreeBSD使用`freebsd-ufs`作为默认的文件系统类型，它支持许多先进的功能，如快照、日志记录和数据完整性保护。
+|`2G`是指第二代移动通信技术（2nd Generation），也称为2G网络。它是在1G（第一代）基础上发展而来的，具有更高的数据传输速度和更多的功能。2G网络使用数字信号进行通信，可以实现语音通话、短信传输和基本的数据传输。它为移动通信行业的发展奠定了基础，并为后续的3G和4G网络的出现铺平了道路。
 |`/`
-|`exrootfs`
+|`exrootfs`是一个计算机术语，指的是扩展根文件系统（Extended Root File System）。
 
-|`freebsd-swap`
-|`4G`
+|`freebsd-swap`是FreeBSD操作系统中用于交换空间的特殊文件系统类型。交换空间是计算机内存的扩展，用于临时存储不活跃的进程或内存中无法容纳的数据。在FreeBSD中，`freebsd-swap`文件系统用于创建和管理交换空间。它可以通过设置交换分区或使用特殊的交换文件来实现。交换空间的大小和位置可以根据系统需求进行配置。
+|`4G`是第四代移动通信技术的简称，也被称为第四代无线宽带技术。它是对3G技术的升级和改进，提供更高的数据传输速度和更稳定的网络连接。4G技术支持更快的下载和上传速度，更低的延迟，以及更好的网络覆盖范围。它为移动设备用户提供了更好的互联网体验，支持高清视频流媒体、在线游戏和其他高带宽应用。
 | 
-|`exswap`
+|`exswap`是一个计算机术语，指的是交换两个变量的值。在编程中，使用`exswap`可以通过交换两个变量的值来实现变量值的互换。
 
-|`freebsd-ufs`
-|`2G`
-|`/var`
-|`exvarfs`
+|`freebsd-ufs` 是一种用于FreeBSD操作系统的文件系统类型。它是一种高性能的Unix文件系统，具有可靠性和稳定性。FreeBSD使用`freebsd-ufs`作为默认的文件系统类型，它支持许多先进的功能，如快照、日志记录和数据完整性保护。
+|`2G`是指第二代移动通信技术（2nd Generation），也称为2G网络。它是在1G（第一代）基础上发展而来的，具有更高的数据传输速度和更多的功能。2G网络使用数字信号进行通信，可以实现语音通话、短信传输和基本的数据传输。它为移动通信行业的发展奠定了基础，并为后续的3G和4G网络的出现铺平了道路。
+|`/var`是一个在Unix-like操作系统中常见的目录。它是"variable"的缩写，用于存储在系统运行过程中会变化的文件，如日志文件、缓存文件和临时文件等。在这个目录下，可以找到许多子目录，每个子目录都有不同的用途。
+|`exvarfs` 是一个计算机文件系统，用于在 Linux 操作系统中支持可执行文件的变量。它允许用户在可执行文件中定义和使用变量，以便在运行时进行配置和自定义。通过使用 `exvarfs`，用户可以轻松地修改和更新可执行文件中的变量值，而无需重新编译整个程序。这种灵活性使得程序的配置和自定义变得更加方便和高效。
 
-|`freebsd-ufs`
-|`1G`
-|`/tmp`
-|`extmpfs`
+|`freebsd-ufs` 是一种用于FreeBSD操作系统的文件系统类型。它是一种高性能的Unix文件系统，具有可靠性和稳定性。FreeBSD使用`freebsd-ufs`作为默认的文件系统类型，它支持许多先进的功能，如快照、日志记录和数据完整性保护。
+|`1G` 表示 `1` 吉字节。
+|`/tmp`是一个计算机中的临时目录，用于存储临时文件和临时数据。
+|`extmpfs`是一个计算机文件系统的名称。
 
-|`freebsd-ufs`
-|accept the default (remainder of the disk)
-|`/usr`
-|`exusrfs`
+|`freebsd-ufs` 是一种用于FreeBSD操作系统的文件系统类型。它是一种高性能的Unix文件系统，具有可靠性和稳定性。FreeBSD使用`freebsd-ufs`作为默认的文件系统类型，它支持许多先进的功能，如快照、日志记录和数据完整性保护。
+|接受默认选项（使用磁盘的剩余空间）。
+|`/usr`是Unix操作系统中的一个目录，它是"User"的缩写，用于存放用户相关的文件和程序。在该目录下，通常包含了用户的个人文件、应用程序、库文件以及其他与用户相关的数据。
+|`exusrfs` 是一个未知的术语或缩写，无法提供准确的翻译。
 |===
 ====
 
-After the custom partitions have been created, select btn:[Finish] to continue with the installation and go to <<bsdinstall-fetching-distribution>>.
+在创建自定义分区后，选择btn:[完成]继续安装并转到<<bsdinstall-fetching-distribution>>。
 
 [[bsdinstall-part-zfs]]
-=== Guided Partitioning Using Root-on-ZFS
+=== 使用Root-on-ZFS进行引导分区
 
-This partitioning mode only works with whole disks and will erase the contents of the entire disk. The main ZFS configuration menu offers a number of options to control the creation of the pool.
+这种分区模式只适用于整个磁盘，并且会擦除整个磁盘的内容。主要的ZFS配置菜单提供了一些选项来控制池的创建。
 
 [[bsdinstall-zfs-menu]]
-.ZFS Partitioning Menu
-image::bsdinstall-zfs-menu.png["Menu showing the different options to configure the ZFS pool"]
+.ZFS分区菜单
+image::bsdinstall-zfs-menu.png["显示配置ZFS池的不同选项的菜单"]
 
-Here is a summary of the options in this menu:
+这是该菜单中选项的摘要：
 
-* `Install` - Proceed with the installation with the selected options.
-* `Pool Type/Disks` - Configure the `Pool Type` and the disk(s) that will constitute the pool. The automatic ZFS installer currently only supports the creation of a single top level vdev, except in stripe mode. To create more complex pools, use the instructions in <<bsdinstall-part-shell>> to create the pool.
-* `Rescan Devices` - Repopulate the list of available disks.
-* `Disk Info` - This menu can be used to inspect each disk, including its partition table and various other information such as the device model number and serial number, if available.
-* `Pool Name` - Establish the name of the pool. The default name is _zroot_.
-* `Force 4K Sectors?` - Force the use of 4K sectors. By default, the installer will automatically create partitions aligned to 4K boundaries and force ZFS to use 4K sectors. This is safe even with 512 byte sector disks, and has the added benefit of ensuring that pools created on 512 byte disks will be able to have 4K sector disks added in the future, either as additional storage space or as replacements for failed disks. Press the kbd:[Enter] key to chose to activate it or not.
-* `Encrypt Disks?` - Encrypting the disks allows the user to encrypt the disks using GELI. More information about disk encryption is available in crossref:disks[disks-encrypting-geli,“Disk Encryption with geli”]. Press the kbd:[Enter] key to choose whether to activate it or not.
-* `Partition Scheme` - Choose the partition scheme. GPT is the recommended option in most cases. Press the kbd:[Enter] key to chose between the different options.
-* `Swap Size` - Establish the amount of swap space.
-* `Mirror Swap?` - Whether to mirror the swap between the disks. Be aware that enabling mirror swap will break crash dumps. Press the kbd:[Enter] key to activate it or not.
-* `Encrypt Swap?` - Whether to encrypt the swap. This will encrypt the swap with a temporary key each time the system boots, and discards it on reboot. Press the kbd:[Enter] key to choose to activate it or not. More information about swap encryption in crossref:disks[swap-encrypting,“Encrypting Swap”].
+* `安装` - 使用所选选项继续安装。
+* `池类型/磁盘` - 配置`池类型`和组成池的磁盘。自动ZFS安装程序目前只支持创建单个顶级vdev，除非是条带模式。要创建更复杂的池，请使用<<bsdinstall-part-shell>>中的说明来创建池。
+* `重新扫描设备` - 重新填充可用磁盘列表。
+* `磁盘信息` - 此菜单可用于检查每个磁盘，包括其分区表和其他各种信息，如设备型号和序列号（如果可用）。
+* `池名称` - 设置池的名称。默认名称为_zroot_。
+* `强制使用4K扇区？` - 强制使用4K扇区。默认情况下，安装程序将自动创建与4K边界对齐的分区，并强制ZFS使用4K扇区。即使是512字节扇区的磁盘，这也是安全的，并且还有一个额外的好处，即确保在将来可以将4K扇区磁盘添加到在512字节磁盘上创建的池中，无论是作为额外的存储空间还是作为替换失败的磁盘。按下kbd:[Enter]键选择是否激活它。
+* `加密磁盘？` - 加密磁盘允许用户使用GELI对磁盘进行加密。有关磁盘加密的更多信息，请参阅crossref:disks[disks-encrypting-geli，“使用geli进行磁盘加密”]。按下kbd:[Enter]键选择是否激活它。
+* `分区方案` - 选择分区方案。在大多数情况下，GPT是推荐的选项。按下 kbd:[Enter] 键来在不同选项之间进行选择。
+* `Swap Size` - 设置交换空间的大小。
+* `镜像交换分区？` - 是否在磁盘之间进行交换分区的镜像。请注意，启用镜像交换分区将会破坏崩溃转储。按下 kbd:[Enter] 键来激活或不激活。
+* `加密交换空间？` - 是否加密交换空间。这将在每次系统启动时使用临时密钥加密交换空间，并在重新启动时丢弃它。按下 kbd:[Enter] 键选择是否激活。有关加密交换空间的更多信息，请参阅 crossref:disks[swap-encrypting,“加密交换空间”]。
 
-Select kbd:[T] to configure the `Pool Type` and the disk(s) that will constitute the pool.
+选择 kbd:[T] 来配置 `池类型` 和组成池的磁盘。
 
 [[bsdinstall-zfs-vdev_type]]
-.ZFS Pool Type
-image::bsdinstall-zfs-vdev_type.png["Menu requesting the Virtual Device type. Ex: stripe", mirror, raidz1]
+.ZFS池类型
+image::bsdinstall-zfs-vdev_type.png是一个图片文件的名称。["请求虚拟设备类型的菜单。例如：条纹", mirror, raidz1]
 
-Here is a summary of the `Pool Type` that can be selected in this menu:
+这是一个关于此菜单中可选择的“池类型”的摘要：
 
-* `stripe` - Striping provides maximum storage of all connected devices, but no redundancy. If just one disk fails the data on the pool is lost irrevocably.
-* `mirror` - Mirroring stores a complete copy of all data on every disk. Mirroring provides good read performance because data is read from all disks in parallel. Write performance is slower as the data must be written to all disks in the pool. Allows all but one disk to fail. This option requires at least two disks.
-* `raid10` - Striped mirrors. Provides the best performance, but the least storage. This option needs at least an even number of disks and a minimum of four disks.
-* `raidz1` - Single Redundant RAID. Allow one disk to fail concurrently. This option needs at least three disks.
-* `raidz2` - Double Redundant RAID. Allows two disks to fail concurrently. This option needs at least four disks.
-* `raidz3` - Triple Redundant RAID. Allows three disks to fail concurrently. This option needs at least five disks.
+* `stripe` - 条带化提供了最大的存储空间，但没有冗余。如果只有一个磁盘故障，池中的数据将无法恢复。
+* `镜像` - 镜像将所有数据完整地存储在每个磁盘上。镜像提供良好的读取性能，因为数据可以并行从所有磁盘中读取。写入性能较慢，因为数据必须写入池中的所有磁盘。允许除一个磁盘外的所有磁盘故障。此选项至少需要两个磁盘。
+* `raid10` - 镜像条带化。提供最佳性能，但存储空间最少。此选项至少需要偶数个磁盘和至少四个磁盘。
+* `raidz1` - 单冗余RAID。允许同时故障一个磁盘。此选项至少需要三个磁盘。
+* `raidz2` - 双冗余RAID。允许同时故障两个磁盘。此选项至少需要四个磁盘。
+* `raidz3` - 三重冗余RAID。允许同时故障三个磁盘。此选项至少需要五个磁盘。
 
-Once a `Pool Type` has been selected, a list of available disks is displayed, and the user is prompted to select one or more disks to make up the pool. The configuration is then validated to ensure that enough disks are selected. If validation fails, select btn:[<Change Selection>] to return to the list of disks or btn:[<Back>] to change the `Pool Type`.
+一旦选择了“池类型”，将显示可用磁盘列表，并提示用户选择一个或多个磁盘来组成池。然后，将验证配置以确保选择了足够的磁盘。如果验证失败，请选择btn:[<更改选择>]返回到磁盘列表，或选择btn:[<返回>]更改“池类型”。
 
 [[bsdinstall-zfs-disk_select]]
-.Disk Selection
-image::bsdinstall-zfs-disk_select.png["Menu requesting how many disks will be added to the pool"]
+.磁盘选择
+image::bsdinstall-zfs-disk_select.png是一个文件名，无法直接翻译。["菜单请求添加多少个磁盘到池中"]
 
 [[bsdinstall-zfs-vdev_invalid]]
-.Invalid Selection
-image::bsdinstall-zfs-vdev_invalid.png["Menu indicating that not enough disks have been selected."]
+.选择无效
+image::bsdinstall-zfs-vdev_invalid.png["菜单指示未选择足够的磁盘。"]
 
-If one or more disks are missing from the list, or if disks were attached after the installer was started, select btn:[- Rescan Devices] to repopulate the list of available disks.
+如果列表中缺少一个或多个磁盘，或者在启动安装程序后附加了磁盘，请选择 btn:[- 重新扫描设备] 以重新填充可用磁盘列表。
 
 [[bsdinstall-zfs-rescan-devices]]
-.Rescan Devices
-image::bsdinstall-zfs-rescan-devices.png["Device rescan"]
+.重新扫描设备
+image::bsdinstall-zfs-rescan-devices.png["设备重新扫描"]
 
-To avoid accidentally erasing the wrong disk, the btn:[- Disk Info] menu can be used to inspect each disk, including its partition table and various other information such as the device model number and serial number, if available.
+为了避免意外擦除错误的磁盘，可以使用btn:[- 磁盘信息]菜单来检查每个磁盘，包括其分区表和其他各种信息，如设备型号和序列号（如果有）。
 
 [[bsdinstall-zfs-disk_info]]
-.Analyzing a Disk
-image::bsdinstall-zfs-disk_info.png["Menu showing the information of the partitions."]
+.分析磁盘
+image::bsdinstall-zfs-disk_info.png["显示分区信息的菜单。"]
 
-Select kbd:[N] to configure the `Pool Name`. Enter the desired name, then select btn:[<OK>] to establish it or btn:[<Cancel>] to return to the main menu and leave the default name.
+选择 kbd:[N] 来配置 `池名称`。输入所需的名称，然后选择 btn:[<OK>] 来确认，或选择 btn:[<Cancel>] 返回主菜单并保留默认名称。
 
 [[bsdinstall-zfs-pool-name]]
-.Pool Name
-image::bsdinstall-zfs-pool-name.png["Menu requesting the name of the pool."]
+.池名称
+image::bsdinstall-zfs-pool-name.png["请求输入池的名称的菜单。"]
 
-Select kbd:[S] to set the amount of swap. Enter the desired amount of swap, then select btn:[<OK>] to establish it or btn:[<Cancel>] to return to the main menu and let the default amount.
+选择 kbd:[S] 来设置交换空间的大小。输入所需的交换空间大小，然后选择 btn:[<OK>] 来确认设置，或选择 btn:[<Cancel>] 返回主菜单并使用默认大小。
 
 [[bsdinstall-zfs-swap-amount]]
-.Swap Amount
-image::bsdinstall-zfs-swap-amount.png["Menu requesting the amount of swap memory"]
+.交换金额
+image::bsdinstall-zfs-swap-amount.png["请求交换内存的数量的菜单"]
 
-Once all options have been set to the desired values, select the btn:[>>> Install] option at the top of the menu. The installer then offers a last chance to cancel before the contents of the selected drives are destroyed to create the ZFS pool.
+一旦所有选项都设置为所需的值，选择菜单顶部的btn:[>>> Install]选项。然后安装程序会在销毁所选驱动器的内容以创建ZFS池之前，提供最后一次取消的机会。
 
 [[bsdinstall-zfs-warning]]
-.Last Chance
-image::bsdinstall-zfs-warning.png["Menu indicating to the user that the data will be lost"]
+.最后机会
+image::bsdinstall-zfs-warning.png["菜单提示用户数据将会丢失。"]
 
-If GELI disk encryption was enabled, the installer will prompt twice for the passphrase to be used to encrypt the disks. Initialization of the encryption then begins.
+如果启用了GELI磁盘加密，安装程序将会两次提示输入用于加密磁盘的密码短语。然后，加密的初始化过程开始。
 
 [[bsdinstall-zfs-geli_password]]
-.Disk Encryption Password
-image::bsdinstall-zfs-geli_password.png["Menu requesting the password to encrypt the devices."]
+.磁盘加密密码
+image::bsdinstall-zfs-geli_password.png是一个文件名，无法直接翻译。["要求输入密码以加密设备的菜单。"]
 
 [[bsdinstall-zfs-init-encription]]
-.Initializing Encryption
-image::bsdinstall-zfs-init-encription.png["Menu showing that the encryption is initializing."]
+.初始化加密
+image::bsdinstall-zfs-init-encription.png["菜单显示加密正在初始化。"]
 
-The installation then proceeds normally. To continue with the installation, go to <<bsdinstall-fetching-distribution>>.
+安装然后正常进行。要继续安装，请转到<<bsdinstall-fetching-distribution>>。
 
 [[bsdinstall-part-shell]]
-=== Shell Mode Partitioning
+=== Shell模式分区
 
-When creating advanced installations, the bsdinstall partitioning menus may not provide the level of flexibility required. Advanced users can select the btn:[Shell] option from the partitioning menu in order to manually partition the drives, create the file system(s), populate `/tmp/bsdinstall_etc/fstab`, and mount the file systems under `/mnt`. Once this is done, type `exit` to return to bsdinstall and continue the installation.
+在创建高级安装时，bsdinstall分区菜单可能无法提供所需的灵活性水平。高级用户可以从分区菜单中选择btn:[Shell]选项，以手动分区驱动器，创建文件系统，填充`/tmp/bsdinstall_etc/fstab`，并将文件系统挂载到`/mnt`下。完成后，输入`exit`返回到bsdinstall并继续安装。
 
 [[bsdinstall-fetching-distribution]]
-== Fetching Distribution Files
+== 获取分发文件
 
-Installation time will vary depending on the distributions chosen, installation media, and speed of the computer. A series of messages will indicate the progress.
+安装时间将根据所选择的发行版、安装介质和计算机速度而有所不同。一系列的消息将指示安装的进度。
 
-First, the installer formats the selected disk(s) and initializes the partitions. Next, in the case of a `bootonly media` or `mini memstick`, it downloads the selected components:
+首先，安装程序会格式化所选磁盘并初始化分区。接下来，在选择了“仅引导媒体”或“迷你内存棒”的情况下，它会下载所选组件：
 
 [[bsdinstall-distfile-fetching]]
-.Fetching Distribution Files
-image::bsdinstall-distfile-fetching.png["Menu showing the download of the different components."]
+.获取分发文件
+image::bsdinstall-distfile-fetching.png["菜单显示了不同组件的下载。"]
 
-Next, the integrity of the distribution files is verified to ensure they have not been corrupted during download or misread from the installation media:
+接下来，将验证分发文件的完整性，以确保在下载过程中没有损坏或在安装介质中读取错误：
 
 [[bsdinstall-distfile-verify]]
-.Verifying Distribution Files
-image::bsdinstall-distfile-verifying.png["Menu showing the verification of the different components."]
+.验证分发文件
+image::bsdinstall-distfile-verifying.png["显示不同组件的验证菜单。"]
 
-Finally, the verified distribution files are extracted to the disk:
+最后，验证过的分发文件被解压到磁盘上：
 
 [[bsdinstall-distfile-extract]]
-.Extracting Distribution Files
-image::bsdinstall-distfile-extracting.png["Menu showing the extraction of the different components."]
+.提取分发文件
+image::bsdinstall-distfile-extracting.png["菜单显示了不同组件的提取过程。"]
 
-Once all requested distribution files have been extracted, bsdinstall displays the first post-installation configuration screen. The available post-configuration options are described in the next section.
+一旦提取了所有请求的分发文件，bsdinstall将显示第一个安装后配置屏幕。下一节将介绍可用的后配置选项。
 
 [[bsdinstall-post]]
-== Network Interfaces, Accounts, Time Zone, Services and Hardening
+== 网络接口，账户，时区，服务和加固
 
 [[bsdinstall-post-root]]
-=== Setting the `root` Password
+=== 设置 `root` 密码
 
-First, the `root` password must be set. While entering the password, the characters being typed are not displayed on the screen. The password must be entered twice to prevent typing errors.
+首先，必须设置`root`密码。在输入密码时，屏幕上不会显示正在输入的字符。为了防止输入错误，密码必须输入两次。
 
 [[bsdinstall-post-set-root-passwd]]
-.Setting the `root` Password
-image::bsdinstall-post-root-passwd.png["Menu showing requesting the password for the root user."]
+.设置 `root` 密码
+image::bsdinstall-post-root-passwd.png["显示要求输入root用户密码的菜单。"]
 
 [[bsdinstall-config-network-dev]]
-=== Configuring Network Interfaces
+=== 配置网络接口
 
-Next, a list of the network interfaces found on the computer is shown. Select the interface to configure.
+接下来，将显示计算机上找到的网络接口列表。请选择要配置的接口。
 
 [[bsdinstall-configure-net-interface]]
-.Choose a Network Interface
-image::bsdinstall-configure-network-interface.png["Menu showing the different network interfaces to configure."]
+.选择一个网络接口
+image::bsdinstall-configure-network-interface.png["显示不同网络接口以进行配置的菜单。"]
 
-If an Ethernet interface is selected, the installer will skip ahead to the menu shown in <<bsdinstall-configure-net-ipv4>>. If a wireless network interface is chosen, the system will instead scan for wireless access points:
+如果选择了以太网接口，安装程序将直接跳转到<<bsdinstall-configure-net-ipv4>>中显示的菜单。如果选择了无线网络接口，系统将会扫描无线接入点：
 
 [[bsdinstall-wireless-scan]]
-.Scanning for Wireless Access Points
-image::bsdinstall-configure-wireless-scan.png["Menu showing wireless network scanning."]
+.扫描无线接入点
+image::bsdinstall-configure-wireless-scan.png是一个图片文件的名称。["显示无线网络扫描的菜单。"]
 
-Wireless networks are identified by a Service Set Identifier (SSID); a short, unique name given to each network. SSIDs found during the scan are listed, followed by a description of the encryption types available for that network. If the desired SSID does not appear in the list, select btn:[Rescan] to scan again. If the desired network still does not appear, check for problems with antenna connections or try moving the computer closer to the access point. Rescan after each change is made.
+无线网络通过服务集标识符（SSID）进行识别，每个网络都有一个短而独特的名称。扫描期间找到的SSID将列出，然后是该网络可用的加密类型的描述。如果所需的SSID在列表中未出现，请选择btn:[重新扫描]进行再次扫描。如果所需的网络仍未出现，请检查天线连接是否有问题，或尝试将计算机移动到接入点附近。每次更改后都要重新扫描。
 
 [[bsdinstall-wireless-accesspoints]]
-.Choosing a Wireless Network
-image::bsdinstall-configure-wireless-accesspoints.png["Menu showing the different wireless networks to connect to."]
+.选择无线网络
+image::bsdinstall-configure-wireless-accesspoints.png是一个图片文件的名称。["显示可连接的不同无线网络的菜单。"]
 
-Next, enter the encryption information for connecting to the selected wireless network. WPA2 encryption is strongly recommended over older encryption types such as WEP, which offer little security. If the network uses WPA2, input the password, also known as the Pre-Shared Key (PSK). For security reasons, the characters typed into the input box are displayed as asterisks.
+接下来，请输入连接到所选无线网络的加密信息。强烈建议使用WPA2加密，而不是较旧的加密类型，如WEP，因为WEP提供的安全性很低。如果网络使用WPA2，请输入密码，也称为预共享密钥（PSK）。出于安全原因，输入框中键入的字符将显示为星号。
 
 [[bsdinstall-wireless-wpa2]]
-.WPA2 Setup
-image::bsdinstall-configure-wireless-wpa2setup.png["Menu requesting the wireless network password."]
+.WPA2设置
+image::bsdinstall-configure-wireless-wpa2setup.png是一个图片文件的名称。["请求无线网络密码的菜单。"]
 
-Next, choose whether or not an IPv4 address should be configured on the Ethernet or wireless interface:
+接下来，选择是否在以太网或无线接口上配置IPv4地址：
 
 [[bsdinstall-configure-net-ipv4]]
-.Choose IPv4 Networking
-image::bsdinstall-configure-network-interface-ipv4.png["Menu indicating if IPv4 wants to be configured for the selected interface."]
+.选择IPv4网络
+image::bsdinstall-configure-network-interface-ipv4.png["菜单指示是否要为所选接口配置IPv4。"]
 
-There are two methods of IPv4 configuration. DHCP will automatically configure the network interface correctly and should be used if the network provides a DHCP server. Otherwise, the addressing information needs to be input manually as a static configuration.
+IPv4配置有两种方法。如果网络提供了DHCP服务器，DHCP将自动正确配置网络接口，并且应该使用DHCP。否则，需要手动输入地址信息作为静态配置。
 
 [NOTE]
 ====
-Do not enter random network information as it will not work. If a DHCP server is not available, obtain the information listed in <<bsdinstall-collect-network-information, Required Network Information>> from the network administrator or Internet service provider.
+请不要输入随机的网络信息，因为它不会起作用。如果没有DHCP服务器可用，请向网络管理员或互联网服务提供商获取<<bsdinstall-collect-network-information，所需网络信息>>中列出的信息。
 ====
 
-If a DHCP server is available, select btn:[Yes] in the next menu to automatically configure the network interface. The installer will appear to pause for a minute or so as it finds the DHCP server and obtains the addressing information for the system.
+如果有DHCP服务器可用，请在下一个菜单中选择btn:[是]以自动配置网络接口。安装程序将会暂停一分钟左右，以便找到DHCP服务器并获取系统的地址信息。
 
 [[bsdinstall-net-ipv4-dhcp]]
-.Choose IPv4 DHCP Configuration
-image::bsdinstall-configure-network-interface-ipv4-dhcp.png["Menu indicating if DHCP wants to be configured for the selected interface."]
+.选择IPv4 DHCP配置
+image::bsdinstall-configure-network-interface-ipv4-dhcp.png是一个图像文件的名称。["菜单指示是否要为所选接口配置DHCP。"]
 
-If a DHCP server is not available, select btn:[No] and input the following addressing information in this menu:
+如果没有可用的DHCP服务器，请选择btn:[No]，并在此菜单中输入以下寻址信息：
 
 [[bsdinstall-net-ipv4-static]]
-.IPv4 Static Configuration
-image::bsdinstall-configure-network-interface-ipv4-static.png["Menu requesting data to configure IPv4 network."]
+.IPv4静态配置
+image::bsdinstall-configure-network-interface-ipv4-static.png["请求配置IPv4网络的菜单。"]
 
-* `IP Address` - The IPv4 address assigned to this computer. The address must be unique and not already in use by another device on the local network.
-* `Subnet Mask` - The subnet mask for the network.
-* `Default Router` - The IP address of the network's default gateway.
+* `IP地址` - 分配给此计算机的IPv4地址。该地址必须是唯一的，并且在本地网络上没有被其他设备使用。
+* `子网掩码` - 网络的子网掩码。
+* `默认路由器` - 网络的默认网关的IP地址。
 
-The next screen will ask if the interface should be configured for IPv6. If IPv6 is available and desired, choose btn:[Yes] to select it.
+下一个屏幕将询问是否应该为IPv6配置接口。如果IPv6可用且需要，请选择btn:[是]来选择它。
 
 [[bsdinstall-net-ipv6]]
-.Choose IPv6 Networking
-image::bsdinstall-configure-network-interface-ipv6.png["Menu indicating if IPv6 wants to be configured for the selected interface."]
+.选择IPv6网络
+image::bsdinstall-configure-network-interface-ipv6.png是一个网络界面IPv6配置的截图。["菜单指示是否要为所选接口配置IPv6。"]
 
-IPv6 also has two methods of configuration. StateLess Address AutoConfiguration (SLAAC) will automatically request the correct configuration information from a local router. Refer to http://tools.ietf.org/html/rfc4862[rfc4862] for more information. Static configuration requires manual entry of network information.
+IPv6还有两种配置方法。无状态地址自动配置（SLAAC）将自动从本地路由器请求正确的配置信息。有关更多信息，请参阅http://tools.ietf.org/html/rfc4862[rfc4862]。静态配置需要手动输入网络信息。
 
-If an IPv6 router is available, select btn:[Yes] in the next menu to automatically configure the network interface. The installer will appear to pause for a minute or so as it finds the router and obtains the addressing information for the system.
+如果有IPv6路由器可用，请在下一个菜单中选择btn:[是]以自动配置网络接口。安装程序将会暂停一分钟左右，以查找路由器并获取系统的寻址信息。
 
 [[bsdinstall-net-ipv6-slaac]]
-.Choose IPv6 SLAAC Configuration
-image::bsdinstall-configure-network-interface-slaac.png["Menu indicating if SLAAC wants to be configured for the selected interface."]
+.选择IPv6 SLAAC配置
+image::bsdinstall-configure-network-interface-slaac.png["菜单指示是否要为所选接口配置SLAAC。"]
 
-If an IPv6 router is not available, select btn:[No] and input the following addressing information in this menu:
+如果没有可用的IPv6路由器，请选择btn:[No]并在此菜单中输入以下寻址信息：
 
 [[bsdinstall-net-ipv6-static]]
-.IPv6 Static Configuration
-image::bsdinstall-configure-network-interface-ipv6-static.png["Menu requesting data to configure IPv6 network."]
+.IPv6静态配置
+image::bsdinstall-configure-network-interface-ipv6-static.png是一个图片文件的名称。["菜单请求配置IPv6网络的数据。"]
 
-* `IPv6 Address` - The IPv6 address assigned to this computer. The address must be unique and not already in use by another device on the local network.
-* `Default Router` - The IPv6 address of the network's default gateway.
+* `IPv6地址` - 分配给此计算机的IPv6地址。该地址必须是唯一的，并且在本地网络中没有被其他设备使用。
+* `默认路由器` - 网络的默认网关的IPv6地址。
 
-The last network configuration menu is used to configure the Domain Name System (DNS) resolver, which converts hostnames to and from network addresses. If DHCP or SLAAC was used to autoconfigure the network interface, the `Resolver Configuration` values may already be filled in. Otherwise, enter the local network's domain name in the `Search` field. `DNS #1` and `DNS #2` are the IPv4 and/or IPv6 addresses of the DNS servers. At least one DNS server is required.
+最后一个网络配置菜单用于配置域名系统（DNS）解析器，该解析器将主机名转换为网络地址，并且可以将网络地址转换为主机名。如果使用DHCP或SLAAC自动配置网络接口，则“解析器配置”值可能已经填写。否则，请在“搜索”字段中输入本地网络的域名。`DNS #1`和`DNS #2`是DNS服务器的IPv4和/或IPv6地址。至少需要一个DNS服务器。
 
 [[bsdinstall-net-dns-config]]
-.DNS Configuration
-image::bsdinstall-configure-network-ipv4-dns.png["Menu requesting data to configure DNS for the network."]
+.DNS配置
+image::bsdinstall-configure-network-ipv4-dns.png是一个图片文件的名称。["菜单请求数据以配置网络的DNS。"]
 
-Once the interface is configured, select a mirror site that is located in the same region of the world as the computer on which FreeBSD is being installed. Files can be retrieved more quickly when the mirror is close to the target computer, reducing installation time.
+一旦配置了接口，选择一个位于与安装FreeBSD的计算机相同地区的镜像站点。当镜像站点靠近目标计算机时，可以更快地检索文件，从而减少安装时间。
 
 [TIP]
 ====
-Selecting `ftp://ftp.freebsd.org (Main Site)` will automatically route you to the nearest mirror.
+选择 `ftp://ftp.freebsd.org (主站点)` 将自动将您路由到最近的镜像站点。
 ====
 
 [[bsdinstall-netinstall-mirror]]
-.Choosing a Mirror
-image::bsdinstall-netinstall-mirrorselect.png["Menu requesting a network mirror."]
+.选择镜像源
+
+在下载软件或操作系统镜像时，选择一个合适的镜像源非常重要。镜像源是存储软件和操作系统镜像的服务器，它们通常位于不同的地理位置，以提供更快的下载速度和更可靠的连接。
+
+选择镜像源时，有几个因素需要考虑。首先，你应该选择一个距离你所在地区较近的镜像源，这样可以减少下载时间和延迟。其次，你应该选择一个可靠的镜像源，它应该经常更新软件和操作系统镜像，并且具有良好的带宽和稳定的连接。
+
+在选择镜像源时，你可以参考官方网站或社区论坛上的推荐。这些推荐通常基于用户的反馈和经验，可以帮助你找到最适合你的镜像源。
+
+一旦你选择了合适的镜像源，你可以在下载软件或操作系统镜像时使用它。大多数下载工具都提供了选择镜像源的选项，你只需在设置中选择你所选的镜像源即可。
+
+选择一个合适的镜像源可以提高下载速度和连接的稳定性，从而更快地获取所需的软件和操作系统镜像。因此，在下载之前，确保选择一个合适的镜像源是非常重要的。
+image::bsdinstall-netinstall-mirrorselect.png是一个图像文件的名称。["请求网络镜像的菜单。"]
 
 [[bsdinstall-timezone]]
-=== Setting the Time Zone
+=== 设置时区
 
-The next series of menus are used to determine the correct local time by selecting the geographic region, country, and time zone. Setting the time zone allows the system to automatically correct for regional time changes, such as daylight savings time, and perform other time zone related functions properly.
+下一系列菜单用于通过选择地理区域、国家和时区来确定正确的本地时间。设置时区允许系统自动校正区域时间变化，如夏令时，并正确执行其他与时区相关的功能。
 
-The example shown here is for a machine located in the mainland time zone of Spain, Europe. The selections will vary according to the geographical location.
+这里展示的示例适用于位于西班牙欧洲大陆时区的机器。根据地理位置的不同，选择项会有所变化。
 
 [[bsdinstall-timezone-region]]
-.Select a Region
-image::bsdinstall-timezone-region.png["Menu requesting the timezone region."]
+.选择一个地区
+image::bsdinstall-timezone-region.png["请求时区地区的菜单。"]
 
-The appropriate region is selected using the arrow keys and then pressing kbd:[Enter].
+使用箭头键选择适当的区域，然后按下 kbd:[Enter] 键。
 
 [[bsdinstall-timezone-country]]
-.Select a Country
-image::bsdinstall-timezone-country.png["Menu requesting the timezone country."]
+.选择一个国家
+image::bsdinstall-timezone-country.png["请求时区国家的菜单。"]
 
-Select the appropriate country using the arrow keys and press kbd:[Enter].
+使用箭头键选择适当的国家，然后按下键盘上的 [Enter] 键。
 
 [[bsdinstall-timezone-zone]]
-.Select a Time Zone
-image::bsdinstall-timezone-zone.png["Menu requesting the timezone zone."]
+.选择一个时区
+image::bsdinstall-timezone-zone.png是一个图片文件的名称。["请求时区的菜单。"]
 
-The appropriate time zone is selected using the arrow keys and pressing kbd:[Enter].
+使用箭头键选择适当的时区，然后按下 kbd:[Enter] 键确认。
 
 [[bsdinstall-timezone-confirmation]]
-.Confirm Time Zone
-image::bsdinstall-timezone-confirm.png["Menu requesting confirmation of the selected timezone."]
+.确认时区
+image::bsdinstall-timezone-confirm.png是一个图片文件，无法直接翻译为中文。["菜单请求确认所选时区。"]
 
-Confirm the abbreviation for the time zone is correct.
+请确认时区的缩写是否正确。
 
 [[bsdinstall-timezone-date]]
-.Select Date
-image::bsdinstall-timezone-date.png["Menu requesting the system date."]
+.选择日期
+image::bsdinstall-timezone-date.png["请求系统日期的菜单。"]
 
-The appropriate date is selected using the arrow keys and then pressing btn:[Set Date]. Otherwise, the date selection can be skipped by pressing btn:[Skip].
+使用箭头键选择适当的日期，然后按下btn:[设置日期]。否则，可以通过按下btn:[跳过]来跳过日期选择。
 
 [[bsdinstall-timezone-time]]
-.Select Time
-image::bsdinstall-timezone-time.png["Menu requesting the system time."]
+.选择时间
+image::bsdinstall-timezone-time.png是一个图片文件名，无法直接翻译。["请求系统时间的菜单。"]
 
-The appropriate time is selected using the arrow keys and then pressing btn:[Set Time]. Otherwise, the time selection can be skipped by pressing btn:[Skip].
+使用箭头键选择适当的时间，然后按下btn:[设置时间]。否则，可以通过按下btn:[跳过]来跳过时间选择。
 
 [[bsdinstall-sysconf]]
-=== Enabling Services
+=== 启用服务
 
-The next menu is used to configure which system services will be started whenever the system boots. All of these services are optional. Only start the services that are needed for the system to function.
+下一个菜单用于配置系统启动时将启动哪些系统服务。所有这些服务都是可选的。只启动系统运行所需的服务。
 
 [[bsdinstall-config-serv]]
-.Selecting Additional Services to Enable
-image::bsdinstall-config-services.png["Menu showing the different services available."]
+.选择启用附加服务
+image::bsdinstall-config-services.png是一个图片文件的名称。["显示不同服务的菜单。"]
 
-Here is a summary of the services that can be enabled in this menu:
+这里是可以在此菜单中启用的服务的摘要：
 
-* `local_unbound` - Enable the DNS local unbound. It is necessary to keep in mind that this is a configuration only meant for use as a local caching forwarding resolver. If the objective is to set up a resolver for the entire network, install package:dns/unbound[].
-* `sshd` - The Secure Shell (SSH) daemon is used to remotely access a system over an encrypted connection. Only enable this service if the system should be available for remote logins.
-* `moused` - Enable this service if the mouse will be used from the command-line system console.
-* `ntpdate` - Enable automatic clock synchronization at boot time. Note that the functionality of this program is now available in the man:ntpd[8] daemon and the man:ntpdate[8] utility will soon be retired.
-* `ntpd` - The Network Time Protocol (NTP) daemon for automatic clock synchronization. Enable this service if you wish to synchronise your system clock with a remote time server or pool.
-* `powerd` - System power control utility for power control and energy saving.
-* `dumpdev` - Crash dumps are useful when debugging issues with the system, so users are encouraged to enable them.
+* `local_unbound` - 启用本地DNS解析器unbound。需要注意的是，这个配置只适用于作为本地缓存转发解析器使用。如果目标是为整个网络设置解析器，请安装`dns/unbound`软件包。
+* `sshd` - 安全外壳（SSH）守护进程用于通过加密连接远程访问系统。只有在系统需要提供远程登录时才启用此服务。
+* `moused` - 如果希望从命令行系统控制台使用鼠标，请启用此服务。
+* `ntpdate` - 在启动时启用自动时钟同步。请注意，该程序的功能现在已经整合到 `man:ntpd[8]` 守护进程中，`man:ntpdate[8]` 实用程序将很快被弃用。
+* `ntpd` - 自动时钟同步的网络时间协议（NTP）守护进程。如果您希望将系统时钟与远程时间服务器或时间池同步，请启用此服务。
+* `powerd` - 用于系统电源控制和节能的实用程序。
+* `dumpdev` - 崩溃转储在调试系统问题时非常有用，因此鼓励用户启用它们。
 
 [[bsdinstall-hardening]]
-=== Enabling Hardening Security Options
+=== 启用强化安全选项
 
-The next menu is used to configure which security options will be enabled. All of these options are optional. But their use is encouraged.
+下一个菜单用于配置启用的安全选项。所有这些选项都是可选的，但建议使用它们。
 
 [[bsdinstall-hardening-options]]
-.Selecting Hardening Security Options
-image::bsdinstall-hardening.png["Menu shoring the different hardening security options."]
+.选择加固安全选项
+image::bsdinstall-hardening.png是一个图片文件的名称。["显示不同的加固安全选项的菜单。"]
 
-Here is a summary of the options that can be enabled in this menu:
+这里是可以在此菜单中启用的选项摘要：
 
-* `hide_uids` - Hide processes running as other users (UID). This prevents unprivileged users from seeing running processes from other users.
-* `hide_gids` - Hide processes running as other groups (GID). This prevents unprivileged users from seeing running processes from other groups.
-* `hide_jail` - Hide processes running in jails. This prevents unprivileged users from seeing processes running inside jails.
-* `read_msgbuf` - Disable reading kernel message buffer for unprivileged users. Prevent unprivileged users from using man:dmesg[8] to view messages from the kernel's log buffer.
-* `proc_debug` - Disable process debugging facilities for unprivileged users. Disables a variety of unprivileged inter-process debugging services, including some procfs functionality, `ptrace()`, and `ktrace()`. Please note that this will also prevent debugging tools such as man:lldb[1], man:truss[1] and man:procstat[1], as well as some built-in debugging facilities in certain scripting languages like PHP.
-* `random_pid` - Randomize the PID of processes.
-* `clear_tmp` - Clean `/tmp` when the system starts up.
-* `disable_syslogd` - Disable opening the syslogd network socket. By default, FreeBSD runs syslogd in a secure way with `-s`. This prevents the daemon from listening for incoming UDP requests on port 514. With this option enabled, syslogd will instead run with `-ss`, which prevents syslogd from opening any port. For more information, see man:syslogd[8].
-* `disable_sendmail` - Disable the sendmail mail transport agent.
-* `secure_console` - Make the command prompt request the `root` password when entering single-user mode.
-* `disable_ddtrace` - DTrace can run in a mode that affects the running kernel. Destructive actions may not be used unless explicitly enabled. Use `-w` to enable this option when using DTrace. For more information, see man:dtrace[1].
-* `enable_aslr` - Enable address layout randomization. For more information about address layout randomization the link:https://en.wikipedia.org/wiki/Address_space_layout_randomization[Wikipedia article] can be consulted.
+* `hide_uids` - 隐藏以其他用户（UID）身份运行的进程。这可以防止非特权用户看到其他用户正在运行的进程。
+* `hide_gids` - 隐藏以其他组（GID）身份运行的进程。这可以防止非特权用户看到来自其他组的运行进程。
+* `hide_jail` - 隐藏在jail中运行的进程。这可以防止非特权用户看到在jail内部运行的进程。
+* `read_msgbuf` - 禁止非特权用户读取内核消息缓冲区。防止非特权用户使用 man:dmesg[8] 命令查看内核日志缓冲区中的消息。
+* `proc_debug` - 禁用非特权用户的进程调试功能。禁用了各种非特权进程间调试服务，包括一些procfs功能，`ptrace()`和`ktrace()`。请注意，这也会阻止调试工具如man:lldb[1]、man:truss[1]和man:procstat[1]，以及某些脚本语言（如PHP）中的一些内置调试功能。
+* `random_pid` - 随机化进程的PID。
+* `clear_tmp` - 在系统启动时清理 `/tmp` 目录。
+* `disable_syslogd` - 禁用打开syslogd网络套接字。默认情况下，FreeBSD以安全方式运行syslogd，使用`-s`选项。这样可以防止守护进程在514端口上监听传入的UDP请求。启用此选项后，syslogd将改为使用`-ss`运行，这将阻止syslogd打开任何端口。有关更多信息，请参阅man:syslogd[8]。
+* `disable_sendmail` - 禁用sendmail邮件传输代理。
+* `secure_console` - 在进入单用户模式时，使命令提示符要求输入`root`密码。
+* `disable_ddtrace` - DTrace可以以影响运行中的内核的模式运行。除非显式启用，否则不得使用破坏性操作。在使用DTrace时，使用`-w`来启用此选项。有关更多信息，请参阅man:dtrace[1]。
+* `enable_aslr` - 启用地址空间布局随机化。有关地址空间布局随机化的更多信息，请参考链接：https://en.wikipedia.org/wiki/Address_space_layout_randomization[维基百科文章]。
 
 [[bsdinstall-addusers]]
-=== Add Users
+=== 添加用户
 
-The next menu prompts to create at least one user account. It is recommended to log into the system using a user account rather than as `root`. When logged in as `root`, there are essentially no limits or protection on what can be done. Logging in as a normal user is safer and more secure.
+下一个菜单提示您创建至少一个用户帐户。建议使用用户帐户登录系统，而不是使用“root”用户。以“root”用户身份登录时，基本上没有限制或保护，可以做任何事情。以普通用户身份登录更安全、更可靠。
 
-Select btn:[Yes] to add new users.
+选择按钮：[是] 来添加新用户。
 
 [[bsdinstall-add-user1]]
-.Add User Accounts
-image::bsdinstall-adduser1.png["Menu requesting if a user want to be added to the system."]
+.添加用户账户
+image::bsdinstall-adduser1.png["菜单询问用户是否要添加到系统中。"]
 
-Follow the prompts and input the requested information for the user account. The example shown in <<bsdinstall-add-user2>> creates the `asample` user account.
+按照提示输入用户账户所需的信息。在 <<bsdinstall-add-user2>> 中的示例创建了 `asample` 用户账户。
 
 [[bsdinstall-add-user2]]
-.Enter User Information
-image::bsdinstall-adduser2.png["Menu requesting different information for the new user."]
+.输入用户信息
+image::bsdinstall-adduser2.png是一个图片文件名，无法翻译。["菜单请求新用户的不同信息。"]
 
-Here is a summary of the information to input:
+这是输入信息的摘要：
 
-* `Username` - The name the user will enter to log in. A common convention is to use the first letter of the first name combined with the last name, as long as each username is unique for the system. The username is case sensitive and should not contain any spaces.
-* `Full name` - The user's full name. This can contain spaces and is used as a description for the user account.
-* `Uid` - User ID. This is typically left blank so the system automatically assigns a value.
-* `Login group` - The user's group. This is typically left blank to accept the default.
-* `Invite _user_ into other groups?` - Additional groups to which the user will be added as a member. If the user needs administrative access, type `wheel` here.
-* `Login class` - Typically left blank for the default.
-* `Shell` - Type in one of the listed values to set the interactive shell for the user. Refer to crossref:basics[shells,Shells] for more information about shells.
-* `Home directory` - The user's home directory. The default is usually correct.
-* `Home directory permissions` - Permissions on the user's home directory. The default is usually correct.
-* `Use password-based authentication?` - Typically `yes` so that the user is prompted to input their password at login.
-* `Use an empty password?` - Typically `no` as empty or blank passwords are insecure.
-* `Use a random password?` - Typically `no` so that the user can set their own password in the next prompt.
-* `Enter password` - The password for this user. Typed-in characters will not be shown on the screen.
-* `Enter password again` - The password must be typed again for verification.
-* `Lock out the account after creation?` - Typically `no` so that the user can log in.
+* `用户名` - 用户登录时输入的名称。常见的约定是使用名字的首字母与姓氏结合，只要每个用户名在系统中是唯一的。用户名区分大小写，不应包含任何空格。
+* `Full name` - 用户的全名。可以包含空格，并且用作用户账户的描述。
+* `Uid` - 用户ID。通常留空，系统会自动分配一个值。
+* `登录组` - 用户所属的组。通常留空以接受默认值。
+* 将用户邀请加入其他群组？ - 用户将作为成员添加到其他群组。如果用户需要管理员访问权限，请在此处输入 `wheel`。
+* `登录类` - 通常留空以使用默认值。
+* `Shell` - 输入列表中的一个值来设置用户的交互式shell。有关shell的更多信息，请参考crossref:basics[shells,Shells]。
+* `Home directory` - 用户的主目录。通常情况下，默认值是正确的。
+* `主目录权限` - 用户主目录的权限。通常情况下，默认设置是正确的。
+* `使用基于密码的身份验证？` - 通常选择 `是`，这样用户在登录时会被提示输入密码。
+* “使用空密码？” - 通常情况下，不建议使用空密码，因为空密码或空白密码是不安全的。
+* “使用随机密码？” - 通常是“否”，这样用户可以在下一个提示中设置自己的密码。
+* `输入密码` - 此用户的密码。输入的字符不会显示在屏幕上。
+* `再次输入密码` - 为了验证，必须再次输入密码。
+* “创建后锁定账户？” - 通常是“否”，以便用户可以登录。
 
-After entering all the details, a summary is shown for review. If a mistake was made, enter `no` to correct it. Once everything is correct, enter `yes` to create the new user.
+输入完所有细节后，会显示一个摘要供审核。如果有错误，请输入“no”进行更正。一切都正确无误后，请输入“yes”创建新用户。
 
 [[bsdinstall-add-user3]]
-.Exit User and Group Management
-image::bsdinstall-adduser3.png["Menu showing the information of the new user and requesting if everything is correct."]
+.退出用户和组管理
+image::bsdinstall-adduser3.png是一个图片文件名，无法直接翻译为中文。["菜单显示新用户的信息，并询问是否一切正确。"]
 
-If there are more users to add, answer the `Add another user?` question with `yes`. Enter `no` to finish adding users and continue the installation.
+如果还有更多用户需要添加，请用“yes”回答“是否添加另一个用户？”的问题。输入“no”以完成添加用户并继续安装。
 
-For more information on adding users and user management, see crossref:basics[users-synopsis,Users and Basic Account Management].
+有关添加用户和用户管理的更多信息，请参阅《用户和基本帐户管理》一节。
 
 [[bsdinstall-final-conf]]
-=== Final Configuration
+=== 最终配置
 
-After everything has been installed and configured, a final chance is provided to modify settings.
+在安装和配置完成之后，提供了最后一次修改设置的机会。
 
 [[bsdinstall-final-config]]
-.Final Configuration
-image::bsdinstall-finalconfiguration.png["Menu showing different options to perform before finishing the installation. Ex: Add user", Time Zone, etc.]
+.最终配置
+image::bsdinstall-finalconfiguration.png是一个文件名，无法直接翻译。["在完成安装之前显示不同选项的菜单。例如：添加用户", Time Zone, etc.]
 
-Use this menu to make any changes or to do any additional configuration before completing the installation.
+在完成安装之前，使用此菜单进行任何更改或进行任何额外的配置。
 
-* `Add User` - Described in <<bsdinstall-addusers>>.
-* `Root Password` - Described in <<bsdinstall-post-root>>.
-* `Hostname` - Described in <<bsdinstall-hostname>>.
-* `Network` - Described in <<bsdinstall-config-network-dev>>.
-* `Services` - Described in <<bsdinstall-sysconf>>.
-* `System Hardening` - Described in <<bsdinstall-hardening>>.
-* `Time Zone` - Described in <<bsdinstall-timezone>>.
-* `Handbook` - Download and install the FreeBSD Handbook.
+* `添加用户` - 在 <<bsdinstall-addusers>> 中描述。
+* `Root Password` - 在 <<bsdinstall-post-root>> 中有详细描述。
+* `Hostname` - 在 <<bsdinstall-hostname>> 中有详细描述。
+* `Network` - 在 <<bsdinstall-config-network-dev>> 中进行了描述。
+* `Services` - 在 <<bsdinstall-sysconf>> 中进行了描述。
+* `系统加固` - 在 <<bsdinstall-hardening>> 中进行了描述。
+* `时区` - 在 <<bsdinstall-timezone>> 中描述。
+* `手册` - 下载并安装FreeBSD手册。
 
-Once configuration is complete, select btn:[Exit].
+配置完成后，选择btn:[退出]。
 
 [[bsdinstall-final-modification-shell]]
-.Manual Configuration
-image::bsdinstall-final-modification-shell.png["Menu showing that the installation has finished. And asking if you want to open a shell to make manual changes."]
+.手动配置
+image::bsdinstall-final-modification-shell.png["菜单显示安装已完成，并询问是否要打开一个shell来进行手动更改。"]
 
-bsdinstall will prompt for any additional configuration that needs to be done before rebooting into the new system. Select btn:[Yes] to exit to a shell within the new system or btn:[No] to proceed to the last step of the installation.
+bsdinstall将提示进行任何在重启进入新系统之前需要完成的额外配置。选择btn:[是]退出到新系统中的shell，或选择btn:[否]继续进行安装的最后一步。
 
 [[bsdinstall-final-main]]
-.Complete the Installation
-image::bsdinstall-mainexit.png["Menu showing that the installation has finished and asking whether to reboot the system or access the Live CD."]
+.完成安装
+image::bsdinstall-mainexit.png是一个文件名，无法直接翻译。["菜单显示安装已完成，并询问是否重新启动系统或访问Live CD。"]
 
-If further configuration or special setup is needed, select btn:[Live CD] to boot the install media into Live CD mode.
+如果需要进一步配置或特殊设置，请选择btn:[Live CD]以将安装介质引导到Live CD模式。
 
-If the installation is complete, select btn:[Reboot] to reboot the computer and start the new FreeBSD system. Do not forget to remove the FreeBSD install media or the computer might boot from it again.
+如果安装完成，请选择btn:[重新启动]来重新启动计算机并启动新的FreeBSD系统。不要忘记移除FreeBSD安装介质，否则计算机可能会再次从它启动。
 
-As FreeBSD boots, informational messages are displayed. After the system finishes booting, a login prompt is displayed. At the `login:` prompt, enter the username added during the installation. Avoid logging in as `root`. Refer to crossref:basics[users-superuser,The Superuser Account] for instructions on how to become the superuser when administrative access is needed.
+FreeBSD启动时会显示信息性的消息。系统完成启动后，会显示一个登录提示符。在`login:`提示符下，输入在安装过程中添加的用户名。避免使用`root`登录。如需进行管理访问时，参考crossref:basics[users-superuser,超级用户账户]中的说明，了解如何成为超级用户。
 
-The messages that appear during boot can be reviewed by pressing kbd:[Scroll-Lock] to turn on the scroll-back buffer. The kbd:[PgUp], kbd:[PgDn], and arrow keys can be used to scroll back through the messages. When finished, press kbd:[Scroll-Lock] again to unlock the display and return to the console. To review these messages once the system has been up for some time, type `less /var/run/dmesg.boot` from a command prompt. Press kbd:[q] to return to the command line after viewing.
+按下kbd:[Scroll-Lock]键可以查看启动过程中出现的消息，以打开滚动缓冲区。使用kbd:[PgUp]、kbd:[PgDn]和箭头键可以向后滚动查看消息。完成后，再次按下kbd:[Scroll-Lock]键以解锁显示并返回到控制台。要在系统运行一段时间后查看这些消息，请在命令提示符下输入`less /var/run/dmesg.boot`。查看完毕后，按下kbd:[q]键返回到命令行。
 
-If sshd was enabled in <<bsdinstall-config-serv>>, the first boot might be a bit slower as the system generates SSH host keys. Subsequent boots will be faster. The fingerprints of the keys are then displayed as in the following example:
+如果在 <<bsdinstall-config-serv>> 中启用了sshd，系统在第一次启动时可能会慢一些，因为系统会生成SSH主机密钥。随后的启动将会更快。然后，密钥的指纹将会显示如下示例：
 
 [source, shell]
 ....
@@ -989,42 +1022,42 @@ The key's randomart image is:
 Starting sshd.
 ....
 
-Refer to crossref:security[openssh,"OpenSSH"] for more information about fingerprints and SSH.
+有关指纹和SSH的更多信息，请参考crossref:security[openssh,"OpenSSH"]。
 
-FreeBSD does not install a graphical environment by default. Refer to crossref:x11[x11,The X Window System] for more information about installing and configuring a graphical window manager.
+默认情况下，FreeBSD不安装图形化环境。有关安装和配置图形窗口管理器的更多信息，请参考crossref:x11[x11，X Window系统]。
 
-Proper shutdown of a FreeBSD computer helps protect data and hardware from damage. _Do not turn off the power before the system has been properly shut down!_ If the user is a member of the `wheel` group, become the superuser by typing `su` at the command line and entering the `root` password. Then, type `shutdown -p now` and the system will shut down cleanly, and, if the hardware supports it, turn itself off.
+正确关闭FreeBSD计算机有助于保护数据和硬件免受损坏。在系统正确关闭之前，请不要关闭电源！如果用户是`wheel`组的成员，请在命令行中输入`su`并输入`root`密码以成为超级用户。然后，输入`shutdown -p now`，系统将会干净地关闭，并且如果硬件支持的话，会自动关闭电源。
 
 [[bsdinstall-install-trouble]]
-== Troubleshooting
+== 故障排除
 
-This section covers basic installation troubleshooting, such as common problems people have reported.
+本节介绍基本的安装故障排除，例如人们常见的问题。
 
-Check the Hardware Notes listed on the link:https://www.FreeBSD.org/releases/[FreeBSD Release Information] page for the version of FreeBSD to make sure the hardware is supported.
+请查看链接https://www.FreeBSD.org/releases/[FreeBSD Release Information]页面上列出的硬件说明，以确保硬件得到支持。
 
 [NOTE]
 ====
-Some installation problems can be avoided or alleviated by updating the firmware on various hardware components, most notably the motherboard. Motherboard firmware is usually referred to as the BIOS. Most motherboard and computer manufacturers have a website for upgrades and upgrade information.
+通过更新各种硬件组件的固件，尤其是主板的固件，可以避免或减轻一些安装问题。主板固件通常被称为BIOS。大多数主板和计算机制造商都有升级和升级信息的网站。
 
-Manufacturers generally advise against upgrading the motherboard BIOS unless there is a good reason for doing so, like a critical update. The upgrade process _can_ go wrong, leaving the BIOS incomplete and the computer inoperative.
+除非有充分的理由，如关键更新，否则制造商通常建议不要升级主板BIOS。升级过程可能会出错，导致BIOS不完整，使计算机无法正常运行。
 ====
 
-If the system hangs while probing hardware during boot or behaves strangely during the installation process, ACPI may be the culprit. FreeBSD makes extensive use of the system ACPI service on the i386 and amd64 platforms to aid in system configuration if it is detected during boot. Unfortunately, some bugs still exist in both the ACPI driver and within system motherboards and BIOS firmware. ACPI can be disabled by setting the `hint.acpi.0.disabled` hint in the third stage boot loader:
+如果系统在启动过程中探测硬件时卡住或在安装过程中表现异常，ACPI可能是罪魁祸首。FreeBSD在i386和amd64平台上在启动过程中检测到ACPI后会广泛使用系统ACPI服务来帮助系统配置。不幸的是，ACPI驱动程序和系统主板以及BIOS固件中仍然存在一些错误。可以通过在第三阶段引导加载程序中设置`hint.acpi.0.disabled`提示来禁用ACPI。
 
 [source, shell]
 ....
 set hint.acpi.0.disabled="1"
 ....
 
-This is reset each time the system is booted, so it is necessary to add `hint.acpi.0.disabled="1"` to the file `/boot/loader.conf`. More information about the boot loader can be found in crossref:boot[boot-synopsis,“Synopsis”].
+每次系统启动时都会重置这个设置，因此需要将 `hint.acpi.0.disabled="1"` 添加到文件 `/boot/loader.conf` 中。有关引导加载程序的更多信息可以在 crossref:boot[boot-synopsis,“Synopsis”] 中找到。
 
 [[using-live-cd]]
-== Using the Live CD
+== 使用Live CD
 
-The welcome menu of bsdinstall, shown in <<bsdinstall-choose-mode>>, provides a btn:[Live CD] option. This is useful for those who are still wondering whether FreeBSD is the right operating system for them and want to test some of the features before installing.
+bsdinstall的欢迎菜单在<<bsdinstall-choose-mode>>中显示，提供了btn:[Live CD]选项。对于那些仍然在犹豫是否选择FreeBSD作为他们的操作系统，并且想在安装之前测试一些功能的人来说，这是非常有用的。
 
-The following points should be noted before using the btn:[Live CD]:
+在使用btn:[Live CD]之前，应注意以下几点：
 
-* To gain access to the system, authentication is required. The username is `root` and the password is blank.
-* As the system runs directly from the installation media, performance will be significantly slower than that of a system installed on a hard disk.
-* This option only provides a command prompt and not a graphical interface.
+* 要访问系统，需要进行身份验证。用户名为`root`，密码为空。
+* 由于系统直接从安装介质运行，因此性能将明显低于安装在硬盘上的系统。
+* 该选项只提供命令提示符，而不提供图形界面。

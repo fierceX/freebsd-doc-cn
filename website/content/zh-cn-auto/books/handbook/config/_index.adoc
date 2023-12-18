@@ -1,17 +1,17 @@
 ---
-description: 'This chapter explains much of the FreeBSD configuration files, how to enable or disable a service, how to configure the logging system and the power management area.'
+description: 本章介绍了FreeBSD配置文件的许多内容，包括如何启用或禁用服务，如何配置日志系统和电源管理区域。
 next: books/handbook/boot
-part: 'Part III. System Administration'
+part: '第三部分. 系统管理'
 path: /books/handbook/
 prev: books/handbook/partiii
 showBookMenu: true
 tags: '["configuration", "services", "cron", "periodic", "logging", "configuration files", "sysctl", "swap", "power management"]'
-title: 'Chapter 14. Configuration, Services, Logging and Power Management'
+title: '第14章 配置、服务、日志和电源管理'
 weight: 18
 ---
 
 [[config-tuning]]
-= Configuration, Services, Logging and Power Management
+= 配置、服务、日志和电源管理
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -48,44 +48,44 @@ endif::[]
 [[config-synopsis]]
 == 简介
 
-One of the important aspects of FreeBSD is proper system configuration. This chapter explains much of the FreeBSD configuration process, including some of the parameters which can be set to tune a FreeBSD system.
+FreeBSD的一个重要方面是正确的系统配置。本章介绍了FreeBSD配置过程的许多内容，包括一些可以设置的参数，用于调整FreeBSD系统。
 
-Before reading this chapter, you should:
+在阅读本章之前，您应该：
 
-* Understand UNIX(R) and FreeBSD basics (crossref:basics[basics,FreeBSD Basics]).
+* 了解UNIX(R)和FreeBSD基础知识（参见：basics[basics，FreeBSD基础知识]）。
 
-After reading this chapter, you will know:
+阅读本章后，您将了解：
 
-* How to use the various configuration files in [.filename]#/etc#.
-* The basics of [.filename]#rc.conf# configuration and [.filename]#/usr/local/etc/rc.d# startup scripts.
-* How to tune FreeBSD using man:sysctl[8] variables.
-* How to configure the power management in FreeBSD.
+* 如何使用[/etc](#.filename)中的各种配置文件。
+* [.filename]#rc.conf# 配置和 [.filename]#/usr/local/etc/rc.d# 启动脚本的基础知识。
+* 如何使用man:sysctl[8]变量来调整FreeBSD。
+* 如何在FreeBSD中配置电源管理。
 
 [[configtuning-configfiles]]
-== Configuration Files
+== 配置文件
 
-FreeBSD maintains a clear separation between the base system and third party applications and therefore this affects where the configuration files of these applications are located.
+FreeBSD在基础系统和第三方应用程序之间保持了明确的分离，因此这影响了这些应用程序的配置文件的位置。
 
-FreeBSD base system configuration is located at the [.filename]#/etc# directory, and the [.filename]#/usr/local/etc# directory contains all the configuration files of the applications installed on the system through the ports collection and packages.
+FreeBSD基本系统配置位于[/etc]目录下，而[/usr/local/etc]目录包含通过ports集合和软件包安装在系统上的所有应用程序的配置文件。
 
-The kernel state configuration is located in [.filename]#/etc/sysctl.conf#. In the section <<configtuning-sysctl>>, the operation of man:sysctl[8] will be explained in more detail.
+内核状态配置位于[/etc/sysctl.conf]。在<<configtuning-sysctl>>部分，将更详细地解释man:sysctl[8]的操作。
 
-For more information about the FreeBSD file system structure refer to man:hier[7].
+有关FreeBSD文件系统结构的更多信息，请参阅man:hier[7]。
 
-As a general rule, configuration files do not use a standard on what syntax they must follow. Although it is true that the `#` character is normally used to comment a line and that each line has a configuration variable.
+通常情况下，配置文件没有遵循统一的语法规范。虽然使用`#`字符来注释一行是常见的做法，并且每行都包含一个配置变量。
 
 [NOTE]
 ====
-Some applications like man:pkg[8] are starting to use the link:https://github.com/vstakhov/libucl[Universal Configuration Language (UCL)].
+一些应用程序，如 man:pkg[8]，开始使用 link:https://github.com/vstakhov/libucl[通用配置语言（UCL）]。
 ====
 
-=== The [.filename]#/etc# directory
+=== [.filename]#/etc# 目录
 
-The [.filename]#/etc# directory contains all of the FreeBSD base system configuration files that are responsible for configuring FreeBSD.
+[.filename]#/etc# 目录包含了所有负责配置 FreeBSD 的基本系统配置文件。
 
 [CAUTION]
 ====
-*Extreme* caution must be taken when modifying files in the [.filename]#/etc# directory; misconfiguration could make FreeBSD unbootable or malfunction.
+在修改[.filename]#/etc#目录中的文件时，必须非常小心；配置错误可能会导致FreeBSD无法启动或出现故障。
 ====
 
 [.informaltable]
@@ -93,103 +93,103 @@ The [.filename]#/etc# directory contains all of the FreeBSD base system configur
 |===
 
 |[.filename]#/etc#
-|System configuration files and scripts.
+|系统配置文件和脚本。
 
 |[.filename]#/etc/defaults#
-|Default system configuration files, see man:rc[8] for more information.
+|默认的系统配置文件，请参阅 man:rc[8] 获取更多信息。
 
 |[.filename]#/etc/fstab#
-|man:fstab[5] contains descriptive information about the various file systems.
+|man:fstab[5] 包含了关于各种文件系统的描述信息。
 
 |[.filename]#/etc/mail#
-|Extra man:sendmail[8] configuration and other MTA configuration files.
+|额外的man页：sendmail[8]配置和其他MTA配置文件。
 
 |[.filename]#/etc/mtree#
-|mtree configuration files, see man: mtree[8] for more information.
+|mtree配置文件，请参考手册：mtree[8]了解更多信息。
 
 |[.filename]#/etc/pam.d#
-|Configuration files for the Pluggable Authentication Modules (PAM) library.
+|Pluggable Authentication Modules（PAM）库的配置文件。
 
 |[.filename]#/etc/periodic#
-|Scripts that are run daily, weekly, and monthly, via man:cron[8], see man:periodic[8] for more information.
+|通过man:cron[8]每天、每周和每月运行的脚本，请参阅man:periodic[8]获取更多信息。
 
 |[.filename]#/etc/rc.d#
-|System and daemon startup/control scripts, see man:rc[8] for more information.
+|系统和守护进程的启动/控制脚本，请参阅man:rc[8]获取更多信息。
 
 |[.filename]#/etc/rc.conf#
-|Contains descriptive information about the local host name, configuration details for any potential network interfaces and which services should be started up at system initial boot time. More information in <<configtuning-core-configuration>>
+|包含有关本地主机名称的描述性信息，潜在网络接口的配置细节以及应在系统初始启动时启动的服务。有关更多信息，请参见<<configtuning-core-configuration>>。
 
 |[.filename]#/etc/security#
-|OpenBSM audit configuration files, see man:audit[8] for more information.
+|OpenBSM审计配置文件，详见man:audit[8]获取更多信息。
 
 |[.filename]#/etc/ppp#
-|ppp configuration files, see man:ppp[8] for more information.
+|ppp配置文件，请参考man:ppp[8]获取更多信息。
 
 |[.filename]#/etc/ssh#
-|OpenSSH configuration files, see man:ssh[1] for more information.
+|OpenSSH配置文件，更多信息请参见man:ssh[1]。
 
 |[.filename]#/etc/ssl#
-|OpenSSL configuration files.
+|OpenSSL配置文件。
 
 |[.filename]#/etc/sysctl.conf#
-|Contains settings for the kernel. More information in <<configtuning-sysctl>>
+|包含内核的设置。更多信息请参见<<configtuning-sysctl>>。
 
 |===
 
 [[configtuning-sysctl]]
-=== The sysctl utility
+=== sysctl实用程序
 
-The man:sysctl[8] utility is used to make changes to a running FreeBSD system.
+man:sysctl[8]实用程序用于对运行中的FreeBSD系统进行更改。
 
-The man:sysctl[8] utility retrieves kernel state and allows processes with appropriate privilege to set kernel state. The state to be retrieved or set is described using a "Management Information Base" ("MIB") style name, described as a dotted set of components.
+man:sysctl[8]实用程序用于检索内核状态，并允许具有适当特权的进程设置内核状态。要检索或设置的状态使用“管理信息库”（“MIB”）样式的名称进行描述，该名称被描述为一组由点分隔的组件。
 
-.Management Information Base
+.管理信息库
 [.informaltable]
 [cols="1,1", frame="none"]
 |===
 
-|sysctl
-|"Magic" numbers
+|sysctl是一个用于管理和配置Linux内核参数的命令行工具。它允许用户查看和修改内核的运行时参数，以及控制系统的行为。通过sysctl命令，用户可以查询和修改各种系统设置，如网络配置、文件系统参数、内存管理等。这个工具在调优系统性能、解决问题和进行系统管理时非常有用。
+|"魔术"数字
 
-|kern
-|Kernel functions and features
+|内核
+|核函数和特征
 
-|vm
-|virtual memory
+|虚拟机
+|虚拟内存
 
-|vfs
-|Filesystem
+|虚拟文件系统（Virtual File System）
+|文件系统
 
-|net
-|Network
+|网络
+|网络
 
-|debug
-|Debugging parameters
+|调试
+|调试参数
 
-|hw
-|Hardware
+|你好
+|硬件
 
-|machdep
-|Machine dependent
+|machdep是一个计算机术语，指的是机器相关的部分。它通常用于描述操作系统或软件与特定硬件架构之间的交互。machdep可以包括处理器架构、指令集、内存管理、中断处理等方面的内容。在计算机领域中，machdep是一个重要的概念，对于理解和优化系统性能非常有帮助。
+|机器相关
 
-|user
-|Userland
+|用户
+|用户空间
 
-|p1003_1b
-|POSIX 1003.1B
+|p1003_1b是一个计算机领域的标准，它规定了操作系统接口和功能的标准化要求。
+|POSIX 1003.1B是一个计算机相关领域的标准，它规定了操作系统接口和系统调用的规范。
 
 |===
 
-At its core, man:sysctl[8] serves two functions: to read and to modify system settings.
+在其核心，man:sysctl[8]有两个功能：读取和修改系统设置。
 
-To view all readable variables:
+查看所有可读取的变量：
 
 [source, shell]
 ....
 % sysctl -a
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -206,28 +206,28 @@ vfs.zfs.sync_pass_dont_compress: 8
 vfs.zfs.sync_pass_deferred_free: 2
 ....
 
-To read a particular variable, specify its name:
+要读取特定的变量，请指定其名称：
 
 [source, shell]
 ....
 % sysctl kern.maxproc
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
 kern.maxproc: 1044
 ....
 
-The Management Information Base (MIB) is hierarchical and hence, specifying a prefix prints all the nodes hanging from it:
+管理信息库（MIB）是分层的，因此，指定一个前缀将打印出所有挂在该前缀下的节点：
 
 [source, shell]
 ....
 % sysctl net
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -247,14 +247,14 @@ net.inet.ip.portrange.randomcps: 9999
 [...]
 ....
 
-To set a particular variable, use the _variable_=_value_ syntax:
+要设置特定的变量，请使用_variable_=_value_的语法：
 
 [source, shell]
 ....
 # sysctl kern.maxfiles=5000
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -263,22 +263,22 @@ kern.maxfiles: 2088 -> 5000
 
 [NOTE]
 ====
-To keep the configuration after a reboot it is necessary to add these variables to the [.filename]#/etc/sysctl.conf# file as explained below.
+为了在重启后保留配置，需要按照下面的说明将这些变量添加到 [.filename]#/etc/sysctl.conf# 文件中。
 ====
 
 [[configtuning-sysctlconf]]
-=== The [.filename]#/etc/sysctl.conf# file
+=== [.filename]#/etc/sysctl.conf# 文件
 
-The configuration file for man:sysctl[8], [.filename]#/etc/sysctl.conf#, looks much like [.filename]#/etc/rc.conf#.
+man:sysctl[8]的配置文件，`/etc/sysctl.conf`，看起来很像`/etc/rc.conf`。
 
-Values are set using a `variable=value` syntax.
+使用`variable=value`语法来设置值。
 
 [NOTE]
 ====
-The specified values are set after the system goes into multi-user mode. Not all variables are settable in this mode.
+系统进入多用户模式后，设置了指定的值。并非所有变量都可以在此模式下设置。
 ====
 
-For example, to turn off logging of fatal signal exits and prevent users from seeing processes started by other users, the following tunables can be set in [.filename]#/etc/sysctl.conf#:
+例如，要关闭致命信号退出的日志记录并防止用户看到其他用户启动的进程，可以在[/etc/sysctl.conf]中设置以下可调整项：
 
 [.programlisting]
 ....
@@ -290,14 +290,14 @@ kern.logsigexit=0
 security.bsd.see_other_uids=0
 ....
 
-To obtain more information about what function a particular sysctl has, the following command can be executed:
+要获取关于特定sysctl函数的更多信息，可以执行以下命令：
 
 [source, shell]
 ....
 % sysctl -d kern.dfldsiz
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -305,24 +305,24 @@ kern.dfldsiz: Initial data size limit
 ....
 
 [[configtuning-core-configuration]]
-=== Managing System-Specific Configuration
+=== 管理系统特定配置
 
-The principal location for system configuration information is [.filename]#/etc/rc.conf#.
+系统配置信息的主要位置是[/etc/rc.conf]。
 
-This file contains a wide range of configuration information and it is read at system startup to configure the system. It provides the configuration information for the [.filename]#rc*# files.
+该文件包含了各种配置信息，并在系统启动时读取以配置系统。它为 [.filename]#rc*# 文件提供配置信息。
 
-The entries in [.filename]#/etc/rc.conf# override the default settings in [.filename]#/etc/defaults/rc.conf#.
+[.filename]#/etc/rc.conf# 中的条目会覆盖 [.filename]#/etc/defaults/rc.conf# 中的默认设置。
 
 [TIP]
 ====
-The file [.filename]#/etc/defaults/rc.conf# containing the default settings should not be edited. Instead, all system-specific changes should be made to [.filename]#/etc/rc.conf#.
+不应编辑包含默认设置的文件 [.filename]#/etc/defaults/rc.conf#。相反，所有特定于系统的更改应该在 [.filename]#/etc/rc.conf# 中进行。
 ====
 
-A number of strategies may be applied in clustered applications to separate site-wide configuration from system-specific configuration in order to reduce administration overhead.
+在集群应用中，可以采用多种策略来将整个站点的配置与系统特定的配置分离，以减少管理开销。
 
-The recommended approach is to place system-specific configuration into [.filename]#/etc/rc.conf.local#.
+推荐的方法是将系统特定的配置放置在[/etc/rc.conf.local]文件中。
 
-For example, these entries in [.filename]#/etc/rc.conf# apply to all systems:
+例如，这些条目在[/etc/rc.conf]适用于所有系统：
 
 [.programlisting]
 ....
@@ -331,7 +331,7 @@ keyrate="fast"
 defaultrouter="10.1.1.254"
 ....
 
-Whereas these entries in [.filename]#/etc/rc.conf.local# apply to this system only:
+而这些条目在[/etc/rc.conf.local]文件中仅适用于此系统：
 
 [.programlisting]
 ....
@@ -339,23 +339,23 @@ hostname="node1.example.org"
 ifconfig_fxp0="inet 10.1.1.1/8"
 ....
 
-Distribute [.filename]#/etc/rc.conf# to every system using an application such as rsync or puppet, while [.filename]#/etc/rc.conf.local# remains unique.
+使用诸如rsync或puppet的应用程序，将/etc/rc.conf分发到每个系统，同时保持/etc/rc.conf.local的唯一性。
 
-Upgrading the system will not overwrite [.filename]#/etc/rc.conf#, so system configuration information will not be lost.
+升级系统不会覆盖/etc/rc.conf文件，因此系统配置信息不会丢失。
 
 [TIP]
 ====
-Both [.filename]#/etc/rc.conf# and [.filename]#/etc/rc.conf.local# are parsed by man:sh[1]. This allows system operators to create complex configuration scenarios. Refer to man:rc.conf[5] for further information on this topic.
+[.filename]#/etc/rc.conf#和[.filename]#/etc/rc.conf.local#都由man:sh[1]解析。这使得系统操作员能够创建复杂的配置场景。有关此主题的更多信息，请参阅man:rc.conf[5]。
 ====
 
 [[configtuning-rcd]]
-== Managing Services in FreeBSD
+== 在FreeBSD中管理服务
 
-FreeBSD uses the man:rc[8] system of startup scripts during system initialization and for managing services.
+FreeBSD在系统初始化和服务管理过程中使用man:rc[8]系统的启动脚本。
 
-The scripts listed in [.filename]#/etc/rc.d# provide basic services which can be controlled with the `start`, `stop`, and `restart` options to man:service[8].
+[.filename]#/etc/rc.d#中列出的脚本提供基本服务，可以通过`start`、`stop`和`restart`选项来控制，使用man:service[8]命令。
 
-A basic script may look similar to the following:
+一个基本的脚本可能类似于以下内容：
 
 [.programlisting]
 ....
@@ -384,25 +384,25 @@ pidfile=${utility_pidfile-"/var/run/utility.pid"}
 run_rc_command "$1"
 ....
 
-Refer to extref:{rc-scripting}[this article] for instructions on how to create custom man:rc[8] scripts.
+请参考extref:{rc-scripting}[这篇文章]，了解如何创建自定义的man:rc[8]脚本的指南。
 
 [[configtuning-starting-services]]
-=== Starting Services
+=== 启动服务
 
-Many users install third party software on FreeBSD from the Ports Collection and require the installed services to be started upon system initialization.
+许多用户在FreeBSD上从Ports Collection安装第三方软件，并要求在系统初始化时启动已安装的服务。
 
-Services, such as package:security/openssh-portable[] or package:www/nginx[] are just two of the many software packages which may be started during system initialization. This section explains the procedures available for starting services.
+服务，例如package:security/openssh-portable[]或package:www/nginx[]只是许多软件包中的两个，这些软件包可能在系统初始化期间启动。本节介绍了启动服务的可用程序。
 
-Since the man:rc[8] system is primarily intended to start and stop services at system startup and shutdown time, the `start`, `stop` and `restart` options will only perform their action if the appropriate [.filename]#/etc/rc.conf# variable is set.
+由于man:rc[8]系统主要用于在系统启动和关闭时启动和停止服务，因此只有在设置了适当的/etc/rc.conf变量时，`start`、`stop`和`restart`选项才会执行其操作。
 
-So the first step to start a service, like for example package:www/nginx[] is to add it to [.filename]#/etc/rc.conf# by executing the following command:
+因此，启动服务的第一步，例如package:www/nginx[]，是通过执行以下命令将其添加到[.filename]#/etc/rc.conf#中：
 
 [source, shell]
 ....
 # sysrc nginx_enable="YES"
 ....
 
-Then nginx can be started executing the following command:
+然后可以执行以下命令来启动nginx：
 
 [source, shell]
 ....
@@ -411,7 +411,7 @@ Then nginx can be started executing the following command:
 
 [TIP]
 ====
-To `start`, `stop` or `restart` a service regardless of the settings in [.filename]#/etc/rc.conf#, these commands should be prefixed with "one". For instance, to start package:www/nginx[] regardless of the current [.filename]#/etc/rc.conf# setting, execute the following command:
+无论[.filename]#/etc/rc.conf#中的设置如何，要启动、停止或重新启动服务，这些命令都应以"one"为前缀。例如，要启动package:www/nginx[]，无论当前[.filename]#/etc/rc.conf#的设置如何，执行以下命令：
 
 [source, shell]
 ....
@@ -420,18 +420,18 @@ To `start`, `stop` or `restart` a service regardless of the settings in [.filena
 ====
 
 [[configtuning-status-services]]
-=== Status of a Service
+=== 服务的状态
 
-To determine if a service is running, use the `status` subcommand.
+要确定服务是否正在运行，请使用`status`子命令。
 
-For example, to verify that package:www/nginx[] is running:
+例如，要验证包：www/nginx[] 是否正在运行：
 
 [source, shell]
 ....
 # service nginx status
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -439,56 +439,56 @@ nginx is running as pid 27871.
 ....
 
 [[configtuning-reload-services]]
-=== Reload a Service
+=== 重新加载服务
 
-In some cases, it is also possible to `reload` a service. This attempts to send a signal to an individual service, forcing the service to reload its configuration files.
+在某些情况下，也可以“重新加载”一个服务。这将尝试向一个单独的服务发送一个信号，强制该服务重新加载其配置文件。
 
-In most cases, this means sending the service a `SIGHUP` signal.
+在大多数情况下，这意味着向服务发送一个 `SIGHUP` 信号。
 
-*Not all services support this feature.*
+并非所有服务都支持此功能。
 
-The man:rc[8] system is used for network services and it also contributes to most of the system initialization. For instance, when the [.filename]#/etc/rc.d/bgfsck# script is executed, it prints out the following message:
+man:rc[8]系统用于网络服务，并且它还贡献了大部分系统初始化工作。例如，当执行[.filename]#/etc/rc.d/bgfsck#脚本时，它会打印出以下消息：
 
 [source, shell]
 ....
 Starting background file system checks in 60 seconds.
 ....
 
-This script is used for background file system checks, which occur only during system initialization.
+该脚本用于后台文件系统检查，仅在系统初始化期间进行。
 
-Many system services depend on other services to function properly. For example, man:yp[8] and other RPC-based services may fail to start until after the man:rpcbind[8] service has started.
+许多系统服务依赖其他服务的正常运行。例如，man:yp[8]和其他基于RPC的服务可能在man:rpcbind[8]服务启动之前无法启动。
 
-Additional information can be found in man:rc[8] and man:rc.subr[8].
+可以在man:rc[8]和man:rc.subr[8]中找到更多的信息。
 
-=== Using Services to Start Services
+=== 使用服务启动服务
 
-Other services can be started using man:inetd[8]. Working with man:inetd[8] and its configuration is described in depth in crossref:network-servers[network-inetd,“The inetd Super-Server”].
+其他服务可以使用man:inetd[8]启动。有关使用man:inetd[8]及其配置的详细信息，请参阅crossref:network-servers[network-inetd，“inetd超级服务器”]。
 
-In some cases, it may make more sense to use man:cron[8] to start system services. This approach has a number of advantages as man:cron[8] runs these processes as the owner of the man:crontab[5]. This allows regular users to start and maintain their own applications.
+在某些情况下，使用 man:cron[8] 来启动系统服务可能更合理。这种方法有许多优点，因为 man:cron[8] 以 man:crontab[5] 的所有者身份运行这些进程。这使得普通用户可以启动和维护自己的应用程序。
 
-The `@reboot` feature of man:cron[8], may be used in place of the time specification. This causes the job to run when man:cron[8] is started, normally during system initialization.
+`@reboot`功能是man:cron[8]的一个特性，可以用来替代时间规范。这将导致作业在man:cron[8]启动时运行，通常是在系统初始化期间。
 
 [[cron-periodic]]
-== Cron and Periodic
+== Cron和周期性任务
 
-Scheduling tasks to run at a certain day or time is a very common task on FreeBSD. The tool in charge of performing this task is man:cron[8].
+在FreeBSD上，安排任务在特定的日期或时间运行是一项非常常见的任务。负责执行这项任务的工具是man:cron[8]。
 
-In addition to tasks that can be scheduled by the user via man:cron[8], FreeBSD performs routine background tasks managed by man:periodic[8].
+除了用户可以通过man:cron[8]进行调度的任务之外，FreeBSD还执行由man:periodic[8]管理的常规后台任务。
 
 [[configtuning-cron]]
-=== Cron
+=== Cron是一个用于在Unix和类Unix系统上执行定期任务的工具。它允许用户根据特定的时间表安排命令或脚本的运行。Cron使用crontab文件来存储任务和时间表信息，并通过cron守护进程来执行这些任务。Cron的时间表语法非常灵活，可以指定分钟、小时、日期、月份和星期几等。它还支持一些特殊的时间表选项，如@reboot（系统启动时运行）和@daily（每天运行一次）。Cron是系统管理员和开发人员常用的工具之一，用于自动化重复性任务的执行。
 
-The man:cron[8] utility runs in the background and regularly checks [.filename]#/etc/crontab# for tasks to execute and searches [.filename]#/var/cron/tabs# for custom crontab files.
+man:cron[8]实用程序在后台运行，并定期检查/etc/crontab中的任务以执行，并在/var/cron/tabs中搜索自定义的crontab文件。
 
-These files are used to schedule tasks which cron runs at the specified times.
+这些文件用于安排任务，cron会在指定的时间运行这些任务。
 
-Each entry in a crontab defines a task to run and is known as a _cron job_.
+crontab中的每个条目定义了一个要运行的任务，被称为_cron作业_。
 
-Two different types of configuration files are used: the system crontab, which should not be modified, and user crontabs, which can be created and edited as needed. The format used by these files is documented in man:crontab[5]. The format of the system crontab, [.filename]#/etc/crontab# includes a `who` column which does not exist in user crontabs. In the system crontab, cron runs the command as the user specified in this column. In a user crontab, all commands run as the user who created the crontab.
+使用了两种不同类型的配置文件：系统crontab和用户crontab。系统crontab不应该被修改，而用户crontab可以根据需要创建和编辑。这些文件使用的格式在man:crontab[5]中有文档记录。系统crontab的格式（.filename]#/etc/crontab#）包括一个`who`列，在用户crontab中不存在。在系统crontab中，cron根据该列中指定的用户运行命令。在用户crontab中，所有命令都以创建crontab的用户身份运行。
 
-User crontabs allow individual users to schedule their own tasks. The `root` user can also have a user [.filename]#crontab# which can be used to schedule tasks that do not exist in the system [.filename]#crontab#.
+用户的crontab允许个别用户安排自己的任务。`root`用户也可以拥有一个用户crontab，用于安排系统中不存在的任务。
 
-Here is a sample entry from the system crontab, [.filename]#/etc/crontab#:
+这是系统crontab的一个示例条目，[.filename]#/etc/crontab#:
 
 [.programlisting]
 ....
@@ -518,27 +518,27 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin <.>
 
 ....
 
-<.> Lines that begin with the `+#+` character are comments. A comment can be placed in the file as a reminder of what and why a desired action is performed. Comments cannot be on the same line as a command or else they will be interpreted as part of the command; they must be on a new line. Blank lines are ignored.
+<.> 以 `+#+` 字符开头的行是注释。注释可以放在文件中作为对所执行的操作的内容和原因的提醒。注释不能与命令在同一行，否则它们将被解释为命令的一部分；它们必须在新的一行上。空行会被忽略。
 
-<.> The equals (`=`) character is used to define any environment settings. In this example, it is used to define the `SHELL` and `PATH`. If the `SHELL` is omitted, cron will use the default Bourne shell. If the `PATH` is omitted, the full path must be given to the command or script to run.
+<.> 等号（`=`）字符用于定义任何环境设置。在这个例子中，它被用来定义`SHELL`和`PATH`。如果省略了`SHELL`，cron将使用默认的Bourne shell。如果省略了`PATH`，则必须提供要运行的命令或脚本的完整路径。
 
-<.> This line defines the seven fields used in a system crontab: `minute`, `hour`, `mday`, `month`, `wday`, `who`, and `command`. The `minute` field is the time in minutes when the specified command will be run, the `hour` is the hour when the specified command will be run, the `mday` is the day of the month, `month` is the month, and `wday` is the day of the week. These fields must be numeric values, representing the twenty-four hour clock, or a `*`, representing all values for that field. The `who` field only exists in the system crontab and specifies which user the command should be run as. The last field is the command to be executed.
+<.> 这行定义了系统crontab中使用的七个字段：`minute`（分钟）、`hour`（小时）、`mday`（月中的某一天）、`month`（月份）、`wday`（星期几）、`who`（用户）和`command`（命令）。`minute`字段表示指定命令将运行的分钟数，`hour`字段表示指定命令将运行的小时数，`mday`字段表示月份中的某一天，`month`字段表示月份，`wday`字段表示星期几。这些字段必须是数字值，表示24小时制的时间，或者是`*`，表示该字段的所有值。`who`字段仅存在于系统crontab中，用于指定命令应该以哪个用户身份运行。最后一个字段是要执行的命令。
 
-<.> This entry defines the values for this cron job. The `\*/11`, followed by several more `*` characters, specifies that `/usr/libexec/save-entropy` is invoked by `operator` every eleven minutes of every hour, of every day and day of the week, of every month. Commands can include any number of switches. However, commands which extend to multiple lines need to be broken with the backslash "\" continuation character.
+<.> 此条目定义了此cron作业的值。`\*/11`后面跟着几个`*`字符，指定了`/usr/libexec/save-entropy`在每小时的每十一分钟，每天的每小时，每周的每天，每月的每天都由`operator`调用。命令可以包含任意数量的开关。然而，跨多行的命令需要使用反斜杠 "\" 继续字符进行分割。
 
 [[configtuning-installcrontab]]
-=== Creating a User Crontab
+=== 创建用户的定时任务表
 
-To create a user crontab, invoke `crontab` in editor mode:
+要创建一个用户的定时任务表，可以在编辑器模式下调用 `crontab` 命令：
 
 [source, shell]
 ....
 % crontab -e
 ....
 
-This will open the user's crontab using the default text editor. The first time a user runs this command, it will open an empty file. Once a user creates a crontab, this command will open that file for editing.
+这将使用默认的文本编辑器打开用户的crontab。当用户第一次运行此命令时，它将打开一个空文件。一旦用户创建了一个crontab，此命令将打开该文件以供编辑。
 
-It is useful to add these lines to the top of the crontab file in order to set the environment variables and to remember the meanings of the fields in the crontab:
+在crontab文件的顶部添加以下行是很有用的，这样可以设置环境变量并记住crontab中字段的含义：
 
 [.programlisting]
 ....
@@ -548,7 +548,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 # minute hour mday month wday command
 ....
 
-Then add a line for each command or script to run, specifying the time to run the command. This example runs the specified custom Bourne shell script every day at two in the afternoon. Since the path to the script is not specified in `PATH`, the full path to the script is given:
+然后为每个要运行的命令或脚本添加一行，指定运行命令的时间。此示例在每天下午两点运行指定的自定义Bourne shell脚本。由于脚本的路径没有在`PATH`中指定，因此给出了脚本的完整路径：
 
 [.programlisting]
 ....
@@ -557,38 +557,38 @@ Then add a line for each command or script to run, specifying the time to run th
 
 [TIP]
 ====
-Before using a custom script, make sure it is executable and test it with the limited set of environment variables set by cron. To replicate the environment that would be used to run the above cron entry, use:
+在使用自定义脚本之前，请确保它是可执行的，并使用cron设置的有限环境变量集进行测试。要复制用于运行上述cron条目的环境，请使用：
 
 [.programlisting]
 ....
 env -i SHELL=/bin/sh PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin HOME=/home/user LOGNAME=user /home/user/bin/mycustomscript.sh
 ....
 
-The environment set by cron is discussed in man:crontab[5]. Checking that scripts operate correctly in a cron environment is especially important if they include any commands that delete files using wildcards.
+在man:crontab[5]中讨论了由cron设置的环境。如果脚本中包含使用通配符删除文件的命令，那么在cron环境中检查脚本的正确运行尤为重要。
 ====
 
-When finished editing the crontab, save the file. It will automatically be installed, and cron will read the crontab and run its cron jobs at their specified times. To list the cron jobs in a crontab, use this command:
+编辑完crontab后，保存文件。它将自动安装，并且cron将读取crontab并在指定的时间运行其cron作业。要列出crontab中的cron作业，请使用以下命令：
 
 [source, shell]
 ....
 % crontab -l
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
 0 14 * * * /home/user/bin/mycustomscript.sh
 ....
 
-To remove all of the cron jobs in a user crontab:
+要删除用户crontab中的所有cron作业：
 
 [source, shell]
 ....
 % crontab -r
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -596,43 +596,43 @@ remove crontab for user? y
 ....
 
 [[configtuning-periodic]]
-=== Periodic
+=== 周期性的
 
-FreeBSD provides a set of system management scripts to check status of various subsystems, perform security-related checks, rotate log files, etc. These scripts are run on a periodic basis: daily. weekly, or monthly. The management of these tasks is performed by man:periodic[8] and its configuration resides in man:periodic.conf[5]. The periodic tasks are initiated by entries in the system crontab, shown above.
+FreeBSD提供了一组系统管理脚本，用于检查各种子系统的状态，执行与安全相关的检查，轮转日志文件等。这些脚本定期运行：每天、每周或每月。这些任务的管理由man:periodic[8]执行，并且其配置存储在man:periodic.conf[5]中。定期任务由系统crontab中的条目启动，如上所示。
 
-Scripts executed by man:periodic[8] are located in [.filename]#/etc/periodic/# for base utilities and in [.filename]#/usr/local/etc/periodic/# for third-party software.
+man:periodic[8]执行的脚本位于基本工具的/etc/periodic/目录下，第三方软件的脚本位于/usr/local/etc/periodic/目录下。
 
-They are organized in 4 subdirectories, daily, weekly, monthly and security.
+它们被组织在4个子目录中，分别是daily（每日）、weekly（每周）、monthly（每月）和security（安全）。
 
 [[enable-disable-periodic]]
-=== Enable or Disable Periodic Tasks
+=== 启用或禁用定期任务
 
-FreeBSD has some scripts enabled by default to run periodically.
+FreeBSD默认启用了一些定期运行的脚本。
 
-To enable or disable a task, the first step is to edit [.filename]#/etc/periodic.conf# executing the following command:
+要启用或禁用任务，第一步是编辑 [.filename]#/etc/periodic.conf# 文件，执行以下命令：
 
 [source, shell]
 ....
 # ee /etc/periodic.conf
 ....
 
-And then to enable, for example, `daily_status_zfs_enable` put the following content in the file:
+然后，要启用`daily_status_zfs_enable`，请将以下内容放入文件中：
 
 [.programlisting]
 ....
 daily_status_zfs_enable="YES"
 ....
 
-To disable a task that is active by default, all that needs to be done is to change `YES` to `NO`.
+要禁用默认情况下处于活动状态的任务，只需将`YES`更改为`NO`即可。
 
 [[configuring-output-periodic-tasks]]
-=== Configuring the Output of Periodic Tasks
+=== 配置周期性任务的输出
 
-In [.filename]#/etc/periodic.conf# the variables `daily_output`, `weekly_output` and `monthly_output` specifies where to send the results of the script execution.
+在 [.filename]#/etc/periodic.conf# 文件中，变量 `daily_output`、`weekly_output` 和 `monthly_output` 指定了脚本执行结果的发送位置。
 
-By default the output of the periodic scripts are emailed to root, and therefore it is best to read root's mail or alias root to a mailbox that is monitored.
+默认情况下，周期性脚本的输出会发送到root的邮箱，因此最好阅读root的邮件或将root的别名设置为一个被监控的邮箱。
 
-To send the results to another email or to other emails, add the email addresses separated by spaces to [.filename]#/etc/periodic.conf#:
+要将结果发送到另一个电子邮件或其他电子邮件，请将电子邮件地址以空格分隔添加到[.filename]#/etc/periodic.conf#中：
 
 [.programlisting]
 ....
@@ -641,7 +641,7 @@ weekly_output="email1@example.com email2@example.com"
 monthly_output="email1@example.com email2@example.com"
 ....
 
-To log periodic output instead of receiving it as email, add the following lines to [.filename]#/etc/periodic.conf#. man:newsyslog[8] will rotate these files at the appropriate times:
+要将周期性的输出记录到日志文件而不是通过电子邮件接收，将以下行添加到[/etc/periodic.conf]文件中。man:newsyslog[8]会在适当的时间对这些文件进行轮转：
 
 [.programlisting]
 ....
@@ -651,21 +651,21 @@ monthly_output=/var/log/monthly.log
 ....
 
 [[configtuning-syslog]]
-== Configuring System Logging
+== 配置系统日志
 
-Generating and reading system logs is an important aspect of system administration. The information in system logs can be used to detect hardware and software issues as well as application and system configuration errors. This information also plays an important role in security auditing and incident response. Most system daemons and applications will generate log entries.
+生成和读取系统日志是系统管理的重要方面。系统日志中的信息可以用于检测硬件和软件问题，以及应用程序和系统配置错误。这些信息在安全审计和事件响应中也起着重要作用。大多数系统守护进程和应用程序都会生成日志条目。
 
-FreeBSD provides a system logger, man:syslogd[8], to manage logging. By default, syslogd is enabled and started when the system boots.
+FreeBSD提供了一个系统日志记录器，man:syslogd[8]，用于管理日志记录。默认情况下，系统启动时会启用和启动syslogd。
 
-This section describes how to configure the FreeBSD system logger for both local and remote logging and how to perform log rotation and log management.
+本节介绍了如何配置FreeBSD系统日志记录器以进行本地和远程日志记录，以及如何执行日志轮转和日志管理。
 
-=== Configuring Local Logging
+=== 配置本地日志记录
 
-The configuration file, [.filename]#/etc/syslog.conf#, controls what syslogd does with log entries as they are received. There are several parameters to control the handling of incoming events. The _facility_ describes which subsystem generated the message, such as the kernel or a daemon, and the _level_ describes the severity of the event that occurred. This makes it possible to configure if and where a log message is logged, depending on the facility and level. It is also possible to take action depending on the application that sent the message, and in the case of remote logging, the hostname of the machine generating the logging event.
+配置文件[.filename]#/etc/syslog.conf#控制着syslogd在接收到日志条目时的处理方式。有几个参数用于控制处理传入事件的方式。_facility_描述了生成消息的子系统，例如内核或守护进程，而_level_描述了发生事件的严重程度。这使得可以根据facility和level配置是否以及在哪里记录日志消息。还可以根据发送消息的应用程序以及远程日志记录的情况下生成日志事件的机器的主机名来采取行动。
 
-This configuration file contains one line per action, where the syntax for each line is a selector field followed by an action field. The syntax of the selector field is _facility.level_ which will match log messages from _facility_ at level _level_ or higher. It is also possible to add an optional comparison flag before the level to specify more precisely what is logged. Multiple selector fields can be used for the same action, and are separated with a semicolon (`;`). Using `*` will match everything. The action field denotes where to send the log message, such as to a file or remote log host.
+该配置文件每行包含一个操作，每行的语法是选择器字段后跟一个操作字段。选择器字段的语法是_facility.level_，它将匹配_facility_在_level_或更高级别的日志消息。还可以在级别之前添加一个可选的比较标志，以更精确地指定记录的内容。可以为同一个操作使用多个选择器字段，并用分号 (`;`) 分隔。使用 `*` 将匹配所有内容。操作字段表示将日志消息发送到何处，例如文件或远程日志主机。
 
-As an example, here is the default [.filename]#/etc/syslog.conf# from FreeBSD:
+以下是FreeBSD的默认[/etc/syslog.conf]#示例：
 
 [.programlisting]
 ....
@@ -706,125 +706,127 @@ include                                         /etc/syslog.d
 include                                         /usr/local/etc/syslog.d
 ....
 
-<.> Matches all messages with a level of `err` or higher, as well as `kern.warning`, `auth.notice` and `mail.crit`, and sends these log messages to the console ([.filename]#/dev/console#). <.> Matches all messages from the `mail` facility at level `info` or above and logs the messages to [.filename]#/var/log/maillog#. <.> Uses a comparison flag (`=`) to only match messages at level `debug` and logs them to [.filename]#/var/log/debug.log#. <.> Is an example usage of a program specification. This makes the rules following it only valid for the specified program. In this case, only the messages generated by man:devd[8] are logged to [.filename]#/var/log/devd.log#.
+<.> 匹配所有级别为 `err` 或更高的消息，以及 `kern.warning`、`auth.notice` 和 `mail.crit`，并将这些日志消息发送到控制台（[.filename]#/dev/console#）。 <.> 匹配所有级别为 `info` 或更高的 `mail` 设施的消息，并将这些消息记录到 [.filename]#/var/log/maillog#。 <.> 使用比较标志（`=`）仅匹配级别为 `debug` 的消息，并将其记录到 [.filename]#/var/log/debug.log#。 <.> 是程序规范的示例用法。这使得其后的规则仅对指定的程序有效。在这种情况下，只有由 man:devd[8] 生成的消息被记录到 [.filename]#/var/log/devd.log#。
 
-For more information about [.filename]#/etc/syslog.conf#, its syntax, and more advanced usage examples, see man:syslog.conf[5].
+有关 [.filename]#/etc/syslog.conf# 的更多信息，包括其语法和更高级的用法示例，请参阅 man:syslog.conf[5]。
 
 [[logging-facilities]]
-=== Logging Facilities
+=== 日志记录设施
 
-A facility describes the part of the system generating the message. Facilities are a way of separating the different messages so that it is easier for the user to consult the logs.
+设施描述了系统生成消息的部分。设施是一种将不同的消息分开的方式，以便用户更容易查阅日志。
 
-.syslog facilities
+.syslog设施
 [options="header", cols="1,1"]
 |===
-| Name | Description
+| 名称 | 描述
 
-| auth
-| The authorization system: man:login[1], man:su[1], man:getty[8], etc.
+| 认证
+| 授权系统：man:login[1]，man:su[1]，man:getty[8]等。
 
-| authpriv
-| The same as auth, but logged to a file readable only by root.
+| authpriv是一个在计算机安全领域中常用的术语，它是由两个单词"auth"和"priv"组成的缩写。"auth"代表"authentication"，即身份验证，而"priv"代表"privilege"，即权限。因此，authpriv可以理解为"身份验证和权限"。
 
-| console
-| Messages written to [.filename]#/dev/console# by the kernel console output driver.
+在计算机系统中，authpriv通常用于描述一种安全级别或权限级别，用于限制对敏感信息或资源的访问。只有经过身份验证且具有足够权限的用户才能访问authpriv级别的资源或执行相关操作。这种安全级别通常用于保护用户的隐私和敏感数据，以及防止未经授权的访问和滥用权限。
+| 与auth相同，但日志记录到一个只有root用户可读的文件中。
 
-| cron
-| Messages written by the man:cron[8] daemon.
+| 控制台
+| 由内核控制台输出驱动程序写入到`/dev/console`的消息。
 
-| daemon
-| System daemons, such as man:routed[8], that are not provided for explicitly by other facilities.
+| cron是一个在Unix和类Unix操作系统中用于定期执行任务的工具。它允许用户根据预定的时间间隔或特定的时间点来执行命令或脚本。cron通常用于自动化系统维护任务，如备份数据、定期清理临时文件等。用户可以通过编辑cron表来设置任务的执行时间和频率。cron表是一个文本文件，其中包含了任务的执行时间和要执行的命令或脚本。cron是一个非常常用的工具，广泛应用于服务器管理和系统自动化。
+| 由man:cron[8]守护进程编写的消息。
 
-| ftp
-| The file transfer protocol daemons: man:ftpd[8], man:tftpd[8].
+| 守护进程
+| 系统守护进程，例如 man:routed[8]，这些进程不是由其他设施明确提供的。
 
-| kern
-| Messages generated by the kernel. These cannot be generated by any user processes.
+| FTP（File Transfer Protocol）是一种用于在计算机网络上进行文件传输的标准协议。它允许用户通过网络将文件从一个计算机传输到另一个计算机。FTP使用客户端-服务器模型，其中客户端发起连接并发送命令，而服务器则响应这些命令并执行相应的操作。FTP可以在不同的操作系统之间进行文件传输，并且支持匿名访问和身份验证访问两种方式。
+| 文件传输协议守护进程：man:ftpd[8]，man:tftpd[8]。
 
-| lpr
-| The line printer spooling system: man:lpr[1], man:lpc[8], man:lpd[8], etc.
+| 内核
+| 由内核生成的消息。这些消息不能由任何用户进程生成。
 
-| mail
-| The mail system.
+| lpr是一个用于打印文件的命令行工具。它可以将文件发送到打印机进行打印。
+| 行式打印机的排队系统：man:lpr[1]，man:lpc[8]，man:lpd[8]等等。
 
-| mark
-| This facility adds a record every 20 minutes.
+| 邮件
+| 邮件系统。
 
-| news
-| The network news system.
+| 标记
+| 该设施每20分钟添加一条记录。
 
-| ntp
-| The network time protocol system.
+| 新闻
+| 网络新闻系统。
 
-| security
-| Security subsystems, such as man:ipfw[4].
+| 网络时间协议（NTP）是一种用于同步计算机系统时钟的协议。它允许计算机通过网络连接到时间服务器，以获取准确的时间信息。NTP使用一种分层的时间同步体系结构，其中一些服务器被称为时间源，它们从更高级别的时间源获取时间，并将其传播到其他计算机。通过使用NTP，计算机可以保持准确的时间，以便在网络通信、日志记录和其他时间相关应用中进行同步。
+| 网络时间协议系统。
 
-| syslog
-| Messages generated internally by syslogd(8).
+| 安全
+| 安全子系统，如 man:ipfw[4]。
 
-| user
-| Messages generated by random user processes. *This is the default facility identifier if none is specified*.
+| syslog是一种用于记录计算机系统日志的标准化协议。它允许计算机设备和应用程序将日志消息发送到远程日志服务器，以便集中存储和分析。syslog可以帮助系统管理员监控和故障排除计算机系统，并提供安全审计和事件跟踪功能。
+| syslogd（8）内部生成的消息。
 
-| uucp
-| The Unix-to-Unix Copy system. An ancient protocol. Really weird to see messages from this facility.
+| 用户
+| 由随机用户进程生成的消息。*如果未指定，则为默认的设施标识符*。
 
-| local0 through local7
-| Reserved for local use.
+| UUCP（Unix to Unix Copy）是一种用于在Unix系统之间传输文件和命令的协议。它允许用户通过拨号连接或网络连接在不同的Unix主机之间进行通信。UUCP最初是在1970年代开发的，是早期互联网的一部分。它使用了一种称为UUCP的软件套件来实现文件传输和远程命令执行。尽管UUCP在现代互联网中已经不再广泛使用，但它在过去是非常重要的，为Unix系统之间的通信提供了一种简单而可靠的方法。
+| Unix到Unix复制系统。一个古老的协议。真的很奇怪看到来自这个设施的消息。
+
+| local0到local7
+| 保留供本地使用。
 
 |===
 
 [[logging-levels]]
-=== Logging Levels
+=== 日志级别
 
-The level describes the severity of the message, and is a keyword from the following ordered list (higher to lower):
+级别描述了消息的严重程度，并且是以下有序列表中的关键字（从高到低）：
 
-.syslog levels
+.syslog级别
 [options="header", cols="1,1"]
 |===
-| Name | Description
+| 名称 | 描述
 
-| emerg
-| A panic condition. This is normally broadcast to all users.
+| 紧急
+| 一种恐慌的情况。通常会向所有用户广播。
 
-| alert
-| A condition that should be corrected immediately, such as a corrupted system database.
+| 警告
+| 应立即纠正的条件，例如系统数据库损坏。
 
-| crit
-| Critical conditions, e.g., hard device errors.
+| 批评
+| 关键条件，例如硬件设备错误。
 
-| err
-| Errors.
+| 错误
+| 错误。
 
-| warning
-| Warning messages.
+| 警告
+| 警告信息。
 
-| notice
-| Conditions that are not error conditions, but should possibly be handled specially.
+| 注意
+| 不是错误条件，但可能需要特殊处理的条件。
 
-| info
-| Informational messages.
+| 信息
+| 信息性消息。
 
-| debug
-| Messages that contain information normally of use only when debugging a program.
+| 调试
+| 包含通常仅在调试程序时有用的信息的消息。
 
 | none
-| This special level disables a particular facility.
+| 这个特殊级别禁用了一个特定的功能。
 
 |===
 
 [[read-log-messages]]
-=== Read Log Messages
+=== 阅读日志消息
 
-By default FreeBSD log files use the format link:https://datatracker.ietf.org/doc/html/rfc3164[rfc3164], also known as The BSD syslog Protocol. Learn more about other formats and how to use them at man:syslog[8].
+默认情况下，FreeBSD日志文件使用link:https://datatracker.ietf.org/doc/html/rfc3164[rfc3164]格式，也被称为BSD syslog协议。了解更多关于其他格式以及如何使用它们的信息，请参阅man:syslog[8]。
 
-Typically the logs have the following syntax:
+通常日志具有以下语法：
 
 [.programlisting]
 ....
 date time hostname program[pid]: the message
 ....
 
-The output of the [.filename]#/var/log/cron# file will be used as an example:
+将使用[.filename]#/var/log/cron#文件的输出作为示例：
 
 [.programlisting]
 ....
@@ -834,14 +836,14 @@ Jul 16 12:44:00 FreeBSD /usr/sbin/cron[83072]: (operator) CMD (/usr/libexec/save
 [...]
 ....
 
-Verbose logging, so the facility and the level on each message will be added, can be enabled in man:syslog[8] by running the following command:
+可以通过运行以下命令在 man:syslog[8] 中启用详细日志记录，这样每条消息的设施和级别都会被添加：
 
 [source, shell]
 ....
 # sysrc syslogd_flags="-vv"
 ....
 
-Once the function is activated, the facility and the level will be displayed in the log as shown in the following example:
+一旦函数被激活，设施和级别将会在日志中显示，如下面的示例所示：
 
 [.programlisting]
 ....
@@ -851,20 +853,20 @@ Jul 16 17:44:00 <cron.info> FreeBSD /usr/sbin/cron[1030]: (operator) CMD (/usr/l
 [...]
 ....
 
-=== Log Management and Rotation
+=== 日志管理和轮转
 
-Log files can grow quickly, taking up disk space and making it more difficult to locate useful information.
+日志文件可以快速增长，占用磁盘空间，并且使得查找有用信息变得更加困难。
 
-In FreeBSD, man:newsyslog[8] is used to manage log files and attempt to mitigate this.
+在FreeBSD中，man:newsyslog[8]用于管理日志文件并尝试减轻这个问题。
 
-This built-in program periodically rotates and compresses log files, and optionally creates missing log files and signals programs when log files are moved.
+这个内置程序定期轮转和压缩日志文件，并可选择创建丢失的日志文件，并在日志文件移动时向程序发送信号。
 
 [NOTE]
 ====
-Since newsyslog is run from man:cron[8], it cannot rotate files more often than it is scheduled to run from man:cron[8]. In the default configuration, it runs every hour.
+由于newsyslog是从man:cron[8]运行的，它不能比从man:cron[8]计划运行的频率更频繁地旋转文件。在默认配置中，它每小时运行一次。
 ====
 
-Here is the default configuration in FreeBSD, more information in man:newsyslog.conf[5]:
+以下是FreeBSD中的默认配置，在man:newsyslog.conf[5]中可以找到更多信息：
 
 [.programlisting]
 ....
@@ -906,44 +908,44 @@ Here is the default configuration in FreeBSD, more information in man:newsyslog.
 <include> /usr/local/etc/newsyslog.conf.d/[!.]*.conf
 ....
 
-. `logfilename` - Name of the system log file to be archived.
-. `[owner:group]` - This optional field specifies the owner and group for the archive file.
-. `mode` - Specify the file mode of the log file and archives. Valid mode bits are 0666. (That is, read and write permissions for the rotated log may be specified for the owner, group, and others.)
-. `count` - Specify the maximum number of archive files which may exist.
-. `size` - When the size of the log file reaches size in kilobytes, the log file will be trimmed as described above. If this field contains an asterisk ('*'), the log file will not be trimmed based on size.
-. `when` - Consist of an interval, a specific time, or both. Supported options in man:newsyslog.conf[5].
-. `flags` - Indicates the flags that newsyslog accepts, supported options in man:newsyslog.conf[5].
-. `[/pid_file]` - This optional field specifies the file name containing a daemon's process ID or to find a group process ID.
-. `[sig_num]` - This optional field specifies the signal that will be sent to the daemon process.
+. `logfilename` - 要归档的系统日志文件的名称。
+. `[owner:group]` - 这个可选字段指定了存档文件的所有者和组。
+. `mode` - 指定日志文件和归档文件的文件模式。有效的模式位是0666（即，可以为所有者、组和其他用户指定旋转日志的读写权限）。
+. `count` - 指定允许存在的归档文件的最大数量。
+. `size` - 当日志文件的大小达到指定的大小（以千字节为单位）时，将按照上述描述进行修剪。如果该字段包含星号（'*'），则不会根据大小来修剪日志文件。
+. `when` - 由一个时间间隔、一个特定时间或两者组成。在man:newsyslog.conf[5]中支持的选项。
+. `flags` - 表示newsyslog接受的标志，man:newsyslog.conf[5]中支持的选项。
+. `[/pid_file]` - 这个可选字段指定包含守护进程的进程ID或查找进程组ID的文件名。
+. `[sig_num]` - 这个可选字段指定将发送给守护进程的信号。
 
 [NOTE]
 ====
-The last two fields are optional and specify the name of the Process ID (PID) file of a process and a signal number to send to that process when the file is rotated.
+最后两个字段是可选的，用于指定进程的进程ID（PID）文件的名称以及在文件轮转时发送给该进程的信号编号。
 ====
 
 [[network-syslogd]]
-=== Configuring Remote Logging
+=== 配置远程日志记录
 
-Monitoring the log files of multiple hosts can become unwieldy as the number of systems increases. Configuring centralized logging can reduce some of the administrative burden of log file administration.
+随着系统数量的增加，监控多个主机的日志文件可能变得难以管理。配置集中式日志记录可以减轻一些日志文件管理的行政负担。
 
-In FreeBSD, centralized log file aggregation, merging, and rotation can be configured using syslogd and newsyslog.
+在FreeBSD中，可以使用syslogd和newsyslog来配置集中式日志文件聚合、合并和轮转。
 
-This section demonstrates an example configuration, where host `A`, named `logserv.example.com`, will collect logging information for the local network.
+本节演示了一个示例配置，其中主机`A`，名为`logserv.example.com`，将收集本地网络的日志信息。
 
-Host `B`, named `logclient.example.com`, will be configured to pass logging information to the logging server.
+主机 `B`，名为 `logclient.example.com`，将被配置为将日志信息传递给日志服务器。
 
-==== Log Server Configuration
+==== 日志服务器配置
 
-A log server is a system that has been configured to accept logging information from other hosts.
+日志服务器是一个已配置好的系统，用于接收来自其他主机的日志信息。
 
-Before configuring a log server, check the following:
+在配置日志服务器之前，请检查以下内容：
 
-* If there is a firewall between the logging server and any logging clients, ensure that the firewall ruleset allows UDP port 514 for both the clients and the server.
-* The logging server and all client machines must have forward and reverse entries in the local DNS. If the network does not have a DNS server, create entries in each system's [.filename]#/etc/hosts#. Proper name resolution is required so that log entries are not rejected by the logging server.
+* 如果在日志服务器和任何日志客户端之间存在防火墙，请确保防火墙规则集允许客户端和服务器的UDP端口514。
+* 日志服务器和所有客户端机器必须在本地DNS中具有正向和反向条目。如果网络没有DNS服务器，请在每个系统的/etc/hosts中创建条目。正确的名称解析是必需的，以便日志条目不会被日志服务器拒绝。
 
-On the log server, edit [.filename]#/etc/syslog.conf# to specify the name of the client to receive log entries from, the logging facility to be used, and the name of the log to store the host's log entries. This example adds the hostname of `B`, logs all facilities, and stores the log entries in [.filename]#/var/log/logclient.log#.
+在日志服务器上，编辑[/etc/syslog.conf]文件，指定要接收日志条目的客户端名称，要使用的日志设施以及存储主机日志条目的日志名称。此示例将主机名`B`添加到日志中，记录所有设施，并将日志条目存储在[/var/log/logclient.log]文件中。
 
-.Sample Log Server Configuration
+.示例日志服务器配置
 [example]
 ====
 
@@ -955,9 +957,9 @@ On the log server, edit [.filename]#/etc/syslog.conf# to specify the name of the
 
 ====
 
-When adding multiple log clients, add a similar two-line entry for each client. More information about the available facilities may be found in man:syslog.conf[5].
+当添加多个日志客户端时，为每个客户端添加类似的两行条目。有关可用设施的更多信息，请参阅 man:syslog.conf[5]。
 
-Next, execute the following commands:
+接下来，执行以下命令：
 
 [source, shell]
 ....
@@ -965,18 +967,18 @@ Next, execute the following commands:
 # sysrc syslogd_flags="-a logclient.example.com -v -v"
 ....
 
-The first entry starts syslogd at system boot. The second entry allows log entries from the specified client. The `-v -v` increases the verbosity of logged messages. This is useful for tweaking facilities as administrators are able to see what type of messages are being logged under each facility.
+第一条条目在系统启动时启动syslogd。第二条条目允许来自指定客户端的日志条目。`-v -v`增加了日志消息的详细程度。这对于调整设施非常有用，因为管理员可以看到每个设施下记录了什么类型的消息。
 
-Multiple `-a` options may be specified to allow logging from multiple clients. IP addresses and whole netblocks may also be specified. Refer to man:syslogd[8] for a full list of possible options.
+可以指定多个`-a`选项来允许从多个客户端进行日志记录。还可以指定IP地址和整个网络块。有关可能选项的完整列表，请参阅man:syslogd[8]。
 
-Finally, create the log file:
+最后，创建日志文件：
 
 [source, shell]
 ....
 # touch /var/log/logclient.log
 ....
 
-At this point, syslogd should be restarted and verified:
+此时，应重新启动并验证syslogd：
 
 [source, shell]
 ....
@@ -984,13 +986,13 @@ At this point, syslogd should be restarted and verified:
 # pgrep syslog
 ....
 
-If a PID is returned, the server restarted successfully, and client configuration can begin. If the server did not restart, consult [.filename]#/var/log/messages# for the error.
+如果返回了一个PID，则表示服务器成功重启，可以开始客户端配置。如果服务器没有重启，请查看错误信息，请参考[/var/log/messages]文件。
 
-==== Log Client Configuration
+==== 日志客户端配置
 
-A logging client sends log entries to a logging server on the network. The client also keeps a local copy of its own logs.
+一个日志客户端将日志条目发送到网络上的日志服务器。客户端还保留了自己日志的本地副本。
 
-Once a logging server has been configured, execute the following commands on the logging client:
+一旦配置了日志服务器，就在日志客户端上执行以下命令：
 
 [source, shell]
 ....
@@ -998,38 +1000,38 @@ Once a logging server has been configured, execute the following commands on the
 # sysrc syslogd_flags="-s -v -v"
 ....
 
-The first entry enables syslogd on boot up. The second entry prevents logs from being accepted by this client from other hosts (`-s`) and increases the verbosity of logged messages.
+第一项启用了系统启动时的syslogd。第二项阻止其他主机向此客户端接受日志（`-s`），并增加了日志消息的详细程度。
 
-Next, define the logging server in the client's [.filename]#/etc/syslog.conf#. In this example, all logged facilities are sent to a remote system, denoted by the `@` symbol, with the specified hostname:
+接下来，在客户端的`/etc/syslog.conf`文件中定义日志服务器。在这个例子中，所有记录的设施都会被发送到一个远程系统，用`@`符号表示，并指定主机名：
 
 [.programlisting]
 ....
 *.*  @logserv.example.com
 ....
 
-After saving the edit, restart syslogd for the changes to take effect:
+保存编辑后，重新启动syslogd以使更改生效：
 
 [source, shell]
 ....
 # service syslogd restart
 ....
 
-To test that log messages are being sent across the network, use man:logger[1] on the client to send a message to syslogd:
+为了测试日志消息是否通过网络发送，可以在客户端使用 man:logger[1] 命令向 syslogd 发送一条消息。
 
 [source, shell]
 ....
 # logger "Test message from logclient"
 ....
 
-This message should now exist both in [.filename]#/var/log/messages# on the client and [.filename]#/var/log/logclient.log# on the log server.
+此消息现在应该同时存在于客户端的/var/log/messages和日志服务器的/var/log/logclient.log中。
 
-==== Debugging Log Servers
+==== 调试日志服务器
 
-If no messages are being received on the log server, the cause is most likely a network connectivity issue, a hostname resolution issue, or a typo in a configuration file. To isolate the cause, ensure that both the logging server and the logging client are able to `ping` each other using the hostname specified in their [.filename]#/etc/rc.conf#. If this fails, check the network cabling, the firewall ruleset, and the hostname entries in the DNS server or [.filename]#/etc/hosts# on both the logging server and clients. Repeat until the `ping` is successful from both hosts.
+如果日志服务器上没有接收到任何消息，原因很可能是网络连接问题、主机名解析问题或配置文件中的拼写错误。为了确定原因，确保日志服务器和日志客户端都能够使用它们在`/etc/rc.conf`中指定的主机名相互`ping`。如果失败，请检查网络电缆、防火墙规则集以及DNS服务器或日志服务器和客户端上的`/etc/hosts`中的主机名条目。重复此过程，直到从两个主机都成功`ping`。
 
-If the `ping` succeeds on both hosts but log messages are still not being received, temporarily increase logging verbosity to narrow down the configuration issue. In the following example, [.filename]#/var/log/logclient.log# on the logging server is empty and [.filename]#/var/log/messages# on the logging client does not indicate a reason for the failure.
+如果在两台主机上都成功执行了`ping`命令，但仍然无法接收到日志消息，则可以暂时增加日志的详细程度以缩小配置问题的范围。在下面的示例中，日志服务器上的[.filename]#/var/log/logclient.log#文件为空，而日志客户端上的[.filename]#/var/log/messages#文件没有显示失败的原因。
 
-To increase debugging output, edit the `syslogd_flags` entry on the logging server and issue a restart:
+为了增加调试输出，编辑日志服务器上的`syslogd_flags`条目并执行重启操作：
 
 [source, shell]
 ....
@@ -1041,7 +1043,7 @@ sysrc syslogd_flags="-d -a logclient.example.com -v -v"
 # service syslogd restart
 ....
 
-Debugging data similar to the following will flash on the console immediately after the restart:
+在重新启动后，类似以下的调试数据将立即在控制台上闪现：
 
 [.programlisting]
 ....
@@ -1055,14 +1057,14 @@ validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;
 rejected in rule 0 due to name mismatch.
 ....
 
-In this example, the log messages are being rejected due to a typo which results in a hostname mismatch. The client's hostname should be `logclient`, not `logclien`. Fix the typo, issue a restart, and verify the results:
+在这个例子中，由于一个拼写错误导致日志消息被拒绝，从而导致主机名不匹配。客户端的主机名应该是`logclient`，而不是`logclien`。修复拼写错误，重新启动，并验证结果。
 
 [source, shell]
 ....
 # service syslogd restart
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1080,41 +1082,41 @@ Logging to FILE /var/log/logclient.log
 Logging to FILE /var/log/messages
 ....
 
-At this point, the messages are being properly received and placed in the correct file.
+目前，消息已经被正确接收并放置在正确的文件中。
 
-==== Security Considerations
+==== 安全考虑
 
-As with any network service, security requirements should be considered before implementing a logging server. Log files may contain sensitive data about services enabled on the local host, user accounts, and configuration data. Network data sent from the client to the server will not be encrypted or password protected. If a need for encryption exists, consider using package:security/stunnel[], which will transmit the logging data over an encrypted tunnel.
+与任何网络服务一样，在实施日志服务器之前应考虑安全要求。日志文件可能包含有关本地主机上启用的服务、用户帐户和配置数据的敏感信息。从客户端发送到服务器的网络数据将不会进行加密或密码保护。如果需要加密，请考虑使用package:security/stunnel[]，它将通过加密隧道传输日志数据。
 
-Local security is also an issue. Log files are not encrypted during use or after log rotation. Local users may access log files to gain additional insight into system configuration. Setting proper permissions on log files is critical. The built-in log rotator, newsyslog, supports setting permissions on newly created and rotated log files. Setting log files to mode `600` should prevent unwanted access by local users. Refer to man:newsyslog.conf[5] for additional information.
+本地安全性也是一个问题。日志文件在使用过程中或在日志轮换后都没有加密。本地用户可以访问日志文件以获取有关系统配置的更多信息。在日志文件上设置适当的权限至关重要。内置的日志轮换程序newsyslog支持在新创建和轮换的日志文件上设置权限。将日志文件设置为`600`模式应该可以防止本地用户的非法访问。有关更多信息，请参阅man:newsyslog.conf[5]。
 
 [[acpi-overview]]
-== Power and Resource Management
+== 功耗和资源管理
 
-It is important to utilize hardware resources in an efficient manner. Power and resource management allows the operating system to monitor system limits and to possibly run some actions triggered by events related to those limits.
+高效利用硬件资源是非常重要的。功耗和资源管理使操作系统能够监控系统限制，并可能根据与这些限制相关的事件运行一些操作。
 
 [[acpi-config]]
-=== ACPI configuration
+=== ACPI配置
 
-On FreeBSD the management of these resources is managed by the man:acpi[4] kernel device.
+在FreeBSD上，这些资源的管理由man:acpi[4]内核设备管理。
 
 [NOTE]
 ====
-In FreeBSD the man:acpi[4] driver is loaded by default at system boot.
+在FreeBSD中，默认情况下，在系统启动时加载man:acpi[4]驱动程序。
 
-This driver *cannot be unloaded after boot* because the system bus uses it for various hardware interactions.
+由于系统总线在各种硬件交互中使用该驱动程序，因此此驱动程序在引导后*无法卸载*。
 ====
 
-In addition to man:acpi[4], FreeBSD has several dedicated kernel modules for various ACPI vendor subsystems. These modules will add some extra functionality like fan speed, keyboard backlit or screen brightness.
+除了man:acpi[4]之外，FreeBSD还有几个专门的内核模块用于各种ACPI供应商子系统。这些模块将添加一些额外的功能，如风扇速度、键盘背光或屏幕亮度。
 
-The list can be obtained by running the following command:
+可以通过运行以下命令获取列表：
 
 [source, shell]
 ....
 % ls /boot/kernel | grep acpi
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1133,21 +1135,21 @@ sdhci_acpi.ko
 uacpi.ko
 ....
 
-In the event that, for example, an IBM/Lenovo laptop is used, it will be necessary to load the module man:acpi_ibm[4] by executing the following command:
+例如，如果使用IBM/Lenovo笔记本电脑，则需要通过执行以下命令加载模块man:acpi_ibm[4]：
 
 [source, shell]
 ....
 # kldload acpi_ibm
 ....
 
-And add this line to [.filename]#/boot/loader.conf# to load it at boot:
+并将以下行添加到 [.filename]#/boot/loader.conf# 文件中，以在启动时加载它：
 
 [.programlisting]
 ....
 acpi_ibm_load="YES"
 ....
 
-An alternative to the man:acpi_video[4] module is the man:backlight[9] driver. It provides a generic way for handling a panel backlight. The default GENERIC kernel includes this driver. The man:backlight[8] utility can be used to query and adjust the brightness of the panel backlight. In this example the brightness is decreased by 10%:
+man:acpi_video[4]模块的替代方案是man:backlight[9]驱动程序。它提供了一种通用的处理面板背光的方式。默认的GENERIC内核包含了这个驱动程序。man:backlight[8]实用程序可用于查询和调整面板背光的亮度。在这个示例中，亮度减少了10%：
 
 [source, shell]
 ....
@@ -1155,22 +1157,22 @@ An alternative to the man:acpi_video[4] module is the man:backlight[9] driver. I
 ....
 
 [[cpu-power-management]]
-=== CPU Power Management
+=== CPU功耗管理
 
-CPU is the most consuming part of the system. Knowing how to improve CPU efficiency is a fundamental part of our system in order to save energy.
+CPU是系统中最消耗资源的部分。了解如何提高CPU效率是我们系统中节省能源的基本部分。
 
-In order to make proper use of the machine's resources in a correct way, FreeBSD supports technologies such as Intel Turbo Boost, AMD Turbo Core, Intel Speed Shift among others through the use of man:powerd[8] and cpufreq[4].
+为了正确地充分利用机器的资源，FreeBSD通过使用man:powerd[8]和cpufreq[4]等技术来支持诸如Intel Turbo Boost、AMD Turbo Core、Intel Speed Shift等技术。
 
-The first step will be to obtain the CPU information by executing the following command:
+第一步是通过执行以下命令来获取CPU信息：
 
 [source, shell]
 ....
 % sysctl dev.cpu.0 <.>
 ....
 
-<.> In this case the `0` digit represents the first core of the CPU.
+在这种情况下，数字`0`代表CPU的第一个核心。
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1193,40 +1195,40 @@ dev.cpu.0.%driver: cpu
 dev.cpu.0.%desc: ACPI CPU
 ....
 
-<1> Lowest Cx state to use for idling the CPU.
-<2> CPU supported Cx states.
-<3> Currently available levels for the CPU (frequency/power usage).
-<4> Current active CPU frequency in MHz.
-<5> Current temperature of the CPU.
+<1> 用于使CPU处于空闲状态的最低Cx状态。
+<2> CPU支持的Cx状态。
+<3> 当前可用的CPU级别（频率/功耗）。
+<4> 当前活动的CPU频率（以MHz为单位）。
+<5> CPU的当前温度。
 
 [NOTE]
 ====
-If the temperature information is not displayed, load the man:coretemp[4] module. In case of using an AMD CPU, load the man:amdtemp[4] module.
+如果温度信息未显示，请加载man:coretemp[4]模块。如果使用AMD CPU，请加载man:amdtemp[4]模块。
 ====
 
-Once the CPU information is available the easiest way to configure power saving is to let man:powerd[8] take over.
+一旦CPU信息可用，配置节能的最简单方法是让man:powerd[8]接管。
 
-Enable man:powerd[8] service in [.filename]#/etc/rc.conf# to start at system boot:
+在[.filename]#/etc/rc.conf#中启用man:powerd[8]服务，使其在系统启动时启动：
 
 [source, shell]
 ....
 # sysrc powerd_enable=YES
 ....
 
-It will also be necessary to indicate certain parameters to man:powerd[8] to tell it how to manage the state of the CPU executing the following command:
+还需要向man:powerd[8]指定一些参数，以告诉它如何管理执行以下命令的CPU的状态：
 
 [source, shell]
 ....
 # sysrc powerd_flags="-a hiadaptive -i 25 -r 85 -N"
 ....
 
-. `-a`: Selects the mode to use while on AC power.
-. `hiadaptive`: Operation mode. More info at man:powerd[8].
-. `-i`: Specifies the CPU load percent level when adaptive mode should begin to degrade performance to save power.
-. `-r`: Specifies the CPU load percent level where adaptive mode should consider the CPU running and increase performance.
-. `-N`: Treat "nice" time as idle for the purpose of load calculation; i.e., do not increase the CPU frequency if the CPU is only busy with "nice" processes.
+. `-a`：选择在交流电源下使用的模式。
+. `hiadaptive`：操作模式。更多信息请参考man:powerd[8]。
+. `-i`：指定当自适应模式开始降低性能以节省电力时的CPU负载百分比水平。
+. `-r`：指定自适应模式应该考虑CPU运行并提高性能的CPU负载百分比水平。
+. `-N`：将“nice”时间视为空闲时间，用于负载计算；即，如果CPU仅忙于“nice”进程，则不增加CPU频率。
 
-And then enable the service executing the following command:
+然后执行以下命令启用服务：
 
 [source, shell]
 ....
@@ -1234,23 +1236,23 @@ And then enable the service executing the following command:
 ....
 
 [[cpufreq]]
-=== CPU Frequency Control
+=== CPU频率控制
 
-FreeBSD includes a generic man:cpufreq[4] driver to allow the administrator, or software such as man:powerd[8] and package:sysutils/powerdxx[], to manage the frequency of the CPU to achieve the desired balance between performance and economy. A lower setting will save power while reducing the heat generated by the CPU. A higher setting will increase performance at the cost of using additional power and generating more heat.
+FreeBSD包含一个通用的man:cpufreq[4]驱动程序，允许管理员或者像man:powerd[8]和package:sysutils/powerdxx[]这样的软件来管理CPU的频率，以实现性能和经济之间的理想平衡。降低设置可以节省电力，同时减少CPU产生的热量。提高设置可以增加性能，但会消耗额外的电力并产生更多的热量。
 
 [[est]]
-=== Intel(R) Enhanced Speed Step(TM)
+=== 英特尔(R) Enhanced SpeedStep(TM)
 
-The Intel(R) Enhanced Speed Step(TM) driver, man:est[4], replaces the generic man:cpufreq[4] driver for CPUs that provide this feature. The CPU frequency can be statically adjusted using man:sysctl[8], or with the `/etc/rc.d/power_profile` startup script. Additional software, such as man:powerd[8] or package:sysutils/powerdxx[], can be used to automatically adjust the CPU frequency based on processor utilization.
+Intel(R) Enhanced Speed Step(TM)驱动程序，man:est[4]，用于替代提供此功能的CPU的通用man:cpufreq[4]驱动程序。可以使用man:sysctl[8]或`/etc/rc.d/power_profile`启动脚本静态调整CPU频率。还可以使用man:powerd[8]或package:sysutils/powerdxx[]等其他软件根据处理器利用率自动调整CPU频率。
 
-Each supported frequency, along with its expected power consumption, can be listed by examining the man:sysctl[3] tree:
+可以通过检查man:sysctl[3]树来列出每个支持的频率及其预期的功耗。
 
 [source, shell]
 ....
 # sysctl dev.cpufreq.0.freq_driver dev.cpu.0.freq_levels dev.cpu.0.freq
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1259,37 +1261,37 @@ dev.cpu.0.freq_levels: 3001/53000 3000/53000 2900/50301 2700/46082 2600/43525 24
 dev.cpu.0.freq: 800
 ....
 
-A frequency 1 MHz higher than the maximum frequency of the CPU indicates the Intel(R) Turbo Boost(TM) feature.
+CPU的最大频率加1 MHz表示Intel(R) Turbo Boost(TM)功能。
 
 [[hwpstate_intel]]
-=== Intel Speed Shift(TM)
+=== 英特尔速度转移(TM)
 
-Users running newer Intel(R) CPUs may find some differences in dynamic frequency control when upgrading to FreeBSD 13. A new driver for the Intel(R) Speed Shift(TM) feature set, available on certain SKUs, exposes the ability for the hardware to dynamically vary the core frequencies, including on a per core basis. FreeBSD 13 comes with the man:hwpstate_intel[4] driver to automatically enable Speed Shift(TM) control on equipped CPUs, replacing the older Enhanced Speed Step(TM) man:est[4] driver. The man:sysctl[8] `dev.cpufreq.%d.freq_driver` will indicate if the system is using Speed Shift.
+运行较新的Intel(R) CPU的用户在升级到FreeBSD 13时可能会发现动态频率控制方面存在一些差异。针对某些SKU可用的Intel(R) Speed Shift(TM)功能集，提供了一种新的驱动程序，可以使硬件能够动态地变化核心频率，包括每个核心的频率。FreeBSD 13配备了man:hwpstate_intel[4]驱动程序，可以自动启用配备了Speed Shift(TM)控制功能的CPU，取代了较旧的Enhanced Speed Step(TM) man:est[4]驱动程序。man:sysctl[8] `dev.cpufreq.%d.freq_driver`将指示系统是否正在使用Speed Shift。
 
-To determine which frequency control driver is being used, examining the `dev.cpufreq.0.freq_driver` oid.
+要确定正在使用哪个频率控制驱动程序，请检查 `dev.cpufreq.0.freq_driver` oid。
 
 [source, shell]
 ....
 # sysctl dev.cpufreq.0.freq_driver
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
 dev.cpufreq.0.freq_driver: hwpstate_intel0
 ....
 
-This indicates that the new man:hwpstate_intel[4] driver is in use. On such systems, the oid `dev.cpu.%d.freq_levels` will show only the maximum CPU frequency, and will indicate a power consumption level of `-1`.
+这表示正在使用新的 man:hwpstate_intel[4] 驱动程序。在这种系统上，oid `dev.cpu.%d.freq_levels` 只会显示最大的 CPU 频率，并且会显示一个功耗级别为 `-1`。
 
-The current CPU frequency can be determined by examining the `dev.cpu.%d.freq` oid.
+可以通过检查 `dev.cpu.%d.freq` oid 来确定当前的 CPU 频率。
 
 [source, shell]
 ....
 # sysctl dev.cpu.0.freq_levels dev.cpu.0.freq
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1297,19 +1299,19 @@ dev.cpu.0.freq_levels: 3696/-1
 dev.cpu.0.freq: 898
 ....
 
-For more information, including on how to balance performance and energy use, and on how to disable this driver, refer to the man page man:hwpstate_intel[4].
+有关更多信息，包括如何平衡性能和能源使用，以及如何禁用此驱动程序，请参阅手册页面man:hwpstate_intel[4]。
 
 [NOTE]
 ====
-Users accustomed to using man:powerd[8] or package:sysutils/powerdxx[] will find these utilities have been superseded by the man:hwpstate_intel[4] driver and no longer work as expected.
+习惯使用man:powerd[8]或package:sysutils/powerdxx[]的用户会发现这些实用程序已被man:hwpstate_intel[4]驱动程序取代，并且不再按预期工作。
 ====
 
 [[graphics-card-power-management]]
-=== Graphics Card Power Management
+=== 图形卡功耗管理
 
-Graphics cards have become a fundamental part of computing in recent years. Some graphics cards may have excessive power consumption. FreeBSD allows certain configurations to improve power consumption.
+近年来，显卡已成为计算机的基本组成部分。一些显卡可能具有过高的功耗。FreeBSD允许进行某些配置以改善功耗。
 
-In case of using a Intel(R) graphics card with the package:graphics/drm-kmod[] driver these options can be added to [.filename]#/boot/loader.conf#:
+如果使用Intel(R)显卡与package:graphics/drm-kmod[]驱动程序，可以将以下选项添加到[.filename]#/boot/loader.conf#文件中：
 
 [.programlisting]
 ....
@@ -1318,53 +1320,53 @@ compat.linuxkpi.enable_dc=2 <.>
 compat.linuxkpi.enable_fbc=1 <.>
 ....
 
-<.> Try to skip unnecessary mode sets at boot time. <.> Enable power-saving display C-states. <.> Enable frame buffer compression for power savings
+<.> 尝试在启动时跳过不必要的模式设置。 <.> 启用省电显示C状态。 <.> 启用帧缓冲压缩以节省电量。
 
-=== Suspend/Resume
+=== 暂停/恢复
 
-The suspend/resume function allows the machine to be kept in a state in which there is no a big energy consumption and allows the system to be resumed without having to lose the state of the running programs.
+挂起/恢复功能允许机器保持在低能耗状态，并且在不丢失运行程序状态的情况下恢复系统。
 
 [NOTE]
 ====
-In order for the suspend/resume functionality to work correctly the graphics drivers must be loaded on the system. In non-KMS-supported graphics cards man:sc[4] must be used not to break the suspend/resume functionality.
+为了使挂起/恢复功能正常工作，必须在系统上加载图形驱动程序。在不支持KMS的图形卡上，必须使用man:sc[4]来避免破坏挂起/恢复功能。
 
-More information about which driver to use and how to configure it can be found at the crossref:x11[x11, The X Window System chapter].
+有关使用哪个驱动程序以及如何配置它的更多信息，请参阅crossref:x11[X11，X Window系统章节]。
 ====
 
-man:acpi[4] supports the next list of sleep states:
+man:acpi[4] 支持以下睡眠状态的列表：
 
-.Supported Sleep States
+.支持的睡眠状态
 [options="header", cols="1,1"]
 |===
 
 |S1
-|Quick suspend to RAM. The CPU enters a lower power state, but most peripherals are left running.
+|快速挂起到RAM。CPU进入较低的功耗状态，但大多数外设仍然保持运行。
 
 |S2
-|Lower power state than S1, but with the same basic characteristics. Not supported by many systems.
+|比S1更低的功耗状态，但具有相同的基本特征。不被许多系统支持。
 
-|S3 (Sleep mode)
-|Suspend to RAM. Most devices are powered off, and the system stops running except for memory refresh.
+|S3（睡眠模式）
+|挂起到RAM。大多数设备都关闭电源，系统停止运行，只进行内存刷新。
 
-|S4 (Hibernation)
-|Suspend to disk. All devices are powered off, and the system stops running. When resuming, the system starts as if from a cold power on. *Not yet supported by FreeBSD*.
+|S4（休眠模式）
+|磁盘挂起。所有设备都被关闭，系统停止运行。在恢复时，系统会像从冷启动一样启动。*FreeBSD尚不支持此功能*。
 
-|S5
-|System shuts down cleanly and powers off.
+|S5是一种基于HTML和CSS的幻灯片演示工具。它使用简单的文本文件来定义幻灯片的内容和样式，并且支持多种演示效果和主题。S5的设计目标是简单易用，同时也提供了一些高级功能，如动画效果和交互式元素。它适用于创建演讲稿、培训材料和技术文档等各种类型的演示文稿。
+|系统正常关闭并关闭电源。
 
 |===
 
 [[configure-suspend-resume]]
-==== Configuring Suspend/Resume
+==== 配置挂起/恢复
 
-The first step will be to know which type of sleep states supports the hardware we are using executing the following command:
+第一步是要知道我们正在使用的硬件支持哪种类型的睡眠状态，执行以下命令：
 
 [source, shell]
 ....
 % sysctl hw.acpi.supported_sleep_state
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1373,19 +1375,19 @@ hw.acpi.supported_sleep_state: S3 S4 S5
 
 [WARNING]
 ====
-As stated above FreeBSD does *not* yet support the `S4` state.
+如上所述，FreeBSD目前*不支持*`S4`状态。
 ====
 
-man:acpiconf[8] can be used to check if the `S3` state works correctly by running the following command, if it succeeds, the screen should go black and the machine will turn off:
+man:acpiconf[8]可以通过运行以下命令来检查`S3`状态是否正常工作，如果成功，屏幕应该变黑，机器将关闭：
 
 [source, shell]
 ....
 # acpiconf -s 3
 ....
 
-In the vast majority of cases the Suspend/Resume functionality wants to be used on a laptop.
+在绝大多数情况下，挂起/恢复功能是用于笔记本电脑的。
 
-FreeBSD can be configured to enter the `S3` state when closing the lid by adding the following line to the [.filename]#/etc/sysctl.conf# file.
+在关闭笔记本盖子时，可以通过在 [.filename]#/etc/sysctl.conf# 文件中添加以下行来配置 FreeBSD 进入 `S3` 状态。
 
 [.programlisting]
 ....
@@ -1393,82 +1395,82 @@ hw.acpi.lid_switch_state=S3
 ....
 
 [[troubleshooting-suspend-resume]]
-==== Troubleshooting in Suspend/Resume
+==== 挂起/恢复的故障排除
 
-A lot of effort has been made to make the Suspend and Resume functions work properly and in the best way on FreeBSD. But currently the Suspend and Resume functions only work properly on some specific laptops.
+为了使FreeBSD上的挂起和恢复功能正常工作并以最佳方式运行，已经付出了很多努力。但目前，挂起和恢复功能只在一些特定的笔记本电脑上正常工作。
 
-Some checks can be done in case it doesn't work properly.
+如果它无法正常工作，可以进行一些检查。
 
-In some cases it is enough to turn off the bluetooth. In others it is enough loading the correct driver for the graphics card, etc.
+在某些情况下，关闭蓝牙就足够了。在其他情况下，只需加载正确的显卡驱动程序等即可。
 
-In case it doesn't work correctly, some tips can be found on the FreeBSD Wiki in the section link:https://wiki.freebsd.org/SuspendResume[Suspend/Resume].
+如果它不能正常工作，可以在FreeBSD Wiki的链接：https://wiki.freebsd.org/SuspendResume[Suspend/Resume]部分找到一些提示。
 
 [[adding-swap-space]]
-== Adding Swap Space
+== 添加交换空间
 
-Sometimes a FreeBSD system requires more swap space. This section describes two methods to increase swap space: adding swap to an existing partition or new hard drive, and creating a swap file on an existing file system.
+有时候FreeBSD系统需要更多的交换空间。本节介绍了两种增加交换空间的方法：在现有分区或新硬盘上添加交换空间，以及在现有文件系统上创建交换文件。
 
-For information on how to encrypt swap space, which options exist, and why it should be done, refer to crossref:disks[swap-encrypting,“Encrypting Swap”].
+有关如何加密交换空间、存在哪些选项以及为什么应该这样做的信息，请参考交叉引用：disks[swap-encrypting，“加密交换空间”]。
 
 [[new-drive-swap]]
-=== Swap on a New Hard Drive or Existing Partition
+=== 在新硬盘或现有分区上进行交换
 
-Adding a new drive for swap gives better performance than using a partition on an existing drive. Setting up partitions and drives is explained in crossref:disks[disks-adding,"Adding Disks"] while crossref:bsdinstall[configtuning-initial,"Designing the Partition Layout"] discusses partition layouts and swap partition size considerations.
+在现有驱动器上使用分区相比使用新的驱动器进行交换会提供更好的性能。在crossref:disks[disks-adding,"添加磁盘"]中解释了如何设置分区和驱动器，而crossref:bsdinstall[configtuning-initial,"设计分区布局"]则讨论了分区布局和交换分区大小的考虑事项。
 
 [WARNING]
 ====
-It is possible to use any partition not currently mounted, even if it already contains data. Using `swapon` on a partition that contains data will overwrite and destroy that data. Make sure that the partition to be added as swap is really the intended partition before running `swapon`.
+可以使用任何当前未挂载的分区，即使它已经包含数据。在包含数据的分区上使用`swapon`命令将覆盖并销毁该数据。在运行`swapon`之前，请确保要添加为交换分区的分区确实是预期的分区。
 ====
 
-man:swapon[8] can be used to add a swap partition to the system executing the following command:
+man:swapon[8]可以用于向执行以下命令的系统添加交换分区：
 
 [source, shell]
 ....
 # swapon /dev/ada1p2
 ....
 
-To automatically add this swap partition on boot, add an entry to [.filename]#/etc/fstab#:
+要在启动时自动添加此交换分区，请在[.filename]#/etc/fstab#中添加一个条目：
 
 [.programlisting]
 ....
 /dev/ada1p2 none swap sw 0 0
 ....
 
-See man:fstab[5] for an explanation of the entries in [.filename]#/etc/fstab#.
+请参阅man:fstab[5]，了解[.filename]#/etc/fstab#中条目的解释。
 
 [[create-swapfile]]
-=== Creating a Swap File
+=== 创建交换文件
 
 [[swapfile-10-and-later]]
-These examples create a 512M swap file called [.filename]#/usr/swap0#.
+这些示例创建一个名为[.filename]#/usr/swap0#的512M交换文件。
 
 [WARNING]
 ====
-Swap files on ZFS file systems are strongly discouraged, as swapping can lead to system hangs.
+强烈不建议在ZFS文件系统上使用交换文件，因为交换可能导致系统挂起。
 ====
 
-The first step is to create the swap file:
+第一步是创建交换文件：
 
 [source, shell]
 ....
 # dd if=/dev/zero of=/usr/swap0 bs=1m count=512
 ....
 
-The second step is to put the proper permissions on the new file:
+第二步是给新文件设置适当的权限：
 
 [source, shell]
 ....
 # chmod 0600 /usr/swap0
 ....
 
-The third step is to inform the system about the swap file by adding a line to [.filename]#/etc/fstab#:
+第三步是通过在[/etc/fstab](文件名)中添加一行来通知系统关于交换文件的信息：
 
 [.programlisting]
 ....
 md none swap sw,file=/usr/swap0,late 0 0
 ....
 
-Swap space will be added on system startup. To add swap space immediately, use man:swapon[8]:
+系统启动时将添加交换空间。要立即添加交换空间，请使用man:swapon[8]命令。
 
 [source, shell]
 ....
