@@ -32,10 +32,12 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: test
+        env:
+          TEST_PATH: ${{ github.action_path }}
         run: |
           export RUBYLIB="$GITHUB_ACTION_PATH/website/shared/lib"
           echo $GITHUB_ACTION_PATH
-          echo "${{ github.action_path }}"
+          echo "$TEST_PATH"
           echo $RUBYLIB
 
       
