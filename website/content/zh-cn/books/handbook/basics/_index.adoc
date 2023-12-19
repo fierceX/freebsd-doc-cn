@@ -95,7 +95,7 @@ login:
 
 当从一个控制台切换到下一个控制台时，FreeBSD 会管理屏幕输出。结果是有多个虚拟屏幕和键盘可以用来键入命令以供 FreeBSD 运行。当用户切换到不同的虚拟控制台时，在一个虚拟控制台中启动的程序不会停止运行
 
-Refer to man:kbdcontrol[1], man:vidcontrol[1], man:atkbd[4], man:syscons[4], and man:vt[4] for a more technical description of the FreeBSD console and its keyboard drivers.
+请参考 man:kbdcontrol[1] 、 man:vidcontrol[1] 、 man:atkbd[4] 、 man:syscons[4] 和 man:vt[4] ，以获取更详细的 FreeBSD 控制台及其键盘驱动程序的技术描述。
 
 在 FreeBSD 中，可用的虚拟控制台数量是在 `/etc/ttys` 文件的这个部分进行配置的：
 
@@ -211,10 +211,10 @@ FreeBSD 允许多个用户同时使用计算机。虽然一次只能有一个用
 在 FreeBSD 系统上，每个用户账户都有与之关联的特定信息：
 
 User name::
-The user name is typed at the `login:` prompt. Each user must have a unique user name. There are a number of rules for creating valid user names which are documented in man:passwd[5]. It is recommended to use user names that consist of eight or fewer, all lower case characters in order to maintain backwards compatibility with applications.
+用户名称是在 `login:` 提示处输入的。每个用户必须有一个唯一的用户名。有一些创建有效用户名的规则，这些规则在 man:passwd[5] 中有详细说明。建议使用由八个或更少个小写字符组成的用户名，以保持与应用程序的向后兼容性。
 
 Password::
-Each account has an associated password.
+每个账户都有一个关联的密码。
 
 User ID (UID)::
 用户 ID (UID) 是一个用于在 FreeBSD 系统中唯一标识用户的数字。允许指定用户名的命令将首先将其转换为 UID 。建议使用小于 65535 的 UID ，因为较高的值可能会导致某些软件的兼容性问题。
@@ -235,7 +235,7 @@ User's full name::
 用户名在 FreeBSD 中唯一标识账户，但不一定反映用户的真实姓名。与注释类似，此信息可以包含空格、大写字符，并且可以超过 8 个字符的长度。
 
 Home directory::
-The home directory is the full path to a directory on the system. This is the user's starting directory when the user logs in. A common convention is to put all user home directories under `/home/username` or `/usr/home/username`. Each user stores their personal files and subdirectories in their own home directory.
+主目录是系统上一个目录的完整路径。这是用户登录时的起始目录。一个常见的约定是将所有用户的主目录放在 `/home/username` 或 `/usr/home/username` 下。每个用户在自己的主目录中存储个人文件和子目录。
 
 User shell::
 Shell 提供了用户与系统进行交互的默认环境。有许多不同类型的 shell ，有经验的用户会根据自己的偏好进行设置，这些设置可以反映在他们的账户设置中。
@@ -243,19 +243,19 @@ Shell 提供了用户与系统进行交互的默认环境。有许多不同类�
 [[users-superuser]]
 ==== 超级用户账户
 
-The superuser account, usually called `root`, is used to manage the system with no limitations on privileges. For this reason, it should not be used for day-to-day tasks like sending and receiving mail, general exploration of the system, or programming.
+超级用户账户通常被称为 `root` ，用于无限制地管理系统。因此，不应将其用于日常任务，如发送和接收邮件、系统的一般探索或编程。
 
-The superuser, unlike other user accounts, can operate without limits, and misuse of the superuser account may result in spectacular disasters. User accounts are unable to destroy the operating system by mistake, so it is recommended to login as a user account and to only become the superuser when a command requires extra privilege.
+与其他用户账户不同，超级用户可以无限制地操作，滥用超级用户账户可能导致灾难性后果。用户账户无法通过错误操作销毁操作系统，因此建议以用户账户登录，并且只在需要额外权限的命令时切换为超级用户。
 
-Always double and triple-check any commands issued as the superuser, since an extra space or missing character can mean irreparable data loss.
+作为超级用户，始终要仔细检查任何发出的命令，因为额外的空格或缺失的字符可能导致无法修复的数据丢失。
 
-There are several ways to gain superuser privilege. While one can log in as `root`, this is highly discouraged.
+有几种方法可以获得超级用户权限。虽然可以使用 `root` 账户登录，但这是极不推荐的。
 
-Instead, use man:su[1] to become the superuser. If `-` is specified when running this command, the user will also inherit the root user's environment. The user running this command must be in the `wheel` group or else the command will fail. The user must also know the password for the `root` user account.
+相反，使用 man:su[1] 命令成为超级用户。如果在运行此命令时指定了 `-` ，用户还将继承 root 用户的环境。运行此命令的用户必须属于 `wheel` 组，否则命令将失败。用户还必须知道 `root` 用户账户的密码。
 
-In this example, the user only becomes superuser in order to run `make install` as this step requires superuser privilege. Once the command completes, the user types `exit` to leave the superuser account and return to the privilege of their user account.
+在这个例子中，用户只是为了运行 `make install` 这个步骤需要超级用户权限，才成为超级用户。一旦命令完成，用户输入 `exit` 来退出超级用户账户，返回到他们的用户账户的权限。
 
-.Install a Program As the Superuser
+.以超级用户身份安装程序
 [example]
 ====
 [source, shell]
@@ -270,48 +270,48 @@ Password:
 ....
 ====
 
-The built-in man:su[1] framework works well for single systems or small networks with just one system administrator. An alternative is to install the package:security/sudo[] package or port. This software provides activity logging and allows the administrator to configure which users can run which commands as the superuser.
+内置的 man:su[1] 框架适用于单个系统或只有一个系统管理员的小型网络。另一种选择是安装 package:security/sudo[] 软件包或 port。该软件提供活动日志记录，并允许管理员配置哪些用户可以以超级用户身份运行哪些命令。
 
 [[users-modifying]]
-=== Managing Accounts
+=== 管理账户
 
-FreeBSD provides a variety of different commands to manage user accounts. The most common commands are summarized in <<users-modifying-utilities>>, followed by some examples of their usage. See the manual page for each utility for more details and usage examples.
+FreeBSD 提供了多种不同的命令来管理用户账户。最常见的命令在 <<users-modifying-utilities>> 中进行了总结，并附有一些使用示例。有关每个实用程序的更多详细信息和使用示例，请参阅其手册页面。
 
 [[users-modifying-utilities]]
-.Utilities for Managing User Accounts
+.管理用户账户的实用工具
 [cols="25h,~"]
 |===
-| Command
-| Summary
+| 命令
+| 摘要
 
 |man:adduser[8]
-|The recommended command-line application for adding new users.
+|用于添加新用户的推荐命令行应用程序。
 
 |man:rmuser[8]
-|The recommended command-line application for removing users.
+|用于删除用户的推荐命令行应用程序。
 
 |man:chpass[1]
-|A flexible tool for changing user database information.
+|用于更改用户数据库信息的灵活工具。
 
 |man:passwd[1]
-|The command-line tool to change user passwords.
+|用于更改用户密码的命令行工具。
 
 |man:pw[8]
-|A powerful and flexible tool for modifying all aspects of user accounts.
+|功能强大而灵活的工具，可对用户账户进行全方位修改。
 
 |man:bsdconfig[8]
-|A system configuration utility with account management support.
+|具有账户管理支持的系统配置工具。
 |===
 
 [[users-adduser]]
-==== Adding a user
+==== 添加用户
 
-The recommended program for adding new users is man:adduser[8]. When a new user is added, this program automatically updates `/etc/passwd` and `/etc/group`. It also creates a home directory for the new user, copies in the default configuration files from `/usr/share/skel`, and can optionally mail the new user a welcome message. This utility must be run as the superuser.
+添加新用户的推荐程序是 man:adduser[8] 。当添加新用户时，该程序会自动更新 `/etc/passwd` 和 `/etc/group` 文件。它还会为新用户创建一个家目录，并从 `/usr/share/skel` 目录中复制默认配置文件，并可选择向新用户发送欢迎消息。此实用程序必须以超级用户身份运行。
 
-The man:adduser[8] utility is interactive and walks through the steps for creating a new user account. As seen in <<users-modifying-adduser>>, either input the required information or press kbd:[Return] to accept the default value shown in square brackets. In this example, the user has been invited into the `wheel` group, allowing them to become the superuser with man:su[1]. When finished, the utility will prompt to either create another user or to exit.
+man:adduser[8] 实用程序是交互式的，并且会引导用户完成创建新用户账户的步骤。如在 <<users-modifying-adduser>> 中所示，可以输入所需信息，或按 kbd:[Return] 键接受方括号中显示的默认值。在本示例中，用户已被邀请加入 `wheel` 组，允许他们通过 man:su[1] 成为超级用户。完成后，实用程序将提示是否创建另一个用户或退出。
 
 [[users-modifying-adduser]]
-.Adding a User on FreeBSD
+.在 FreeBSD 上添加用户
 [example]
 ====
 [source, shell]
@@ -319,7 +319,7 @@ The man:adduser[8] utility is interactive and walks through the steps for creati
 # adduser
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -356,32 +356,32 @@ Goodbye!
 
 [NOTE]
 ====
-Since the password is not echoed when typed, be careful to not mistype the password when creating the user account.
+由于密码在输入时不会显示出来，请在创建用户账户时小心不要输入错误的密码。
 ====
 
 [[users-rmuser]]
-==== Removing a user
+==== 删除用户
 
-To completely remove a user from the system, run man:rmuser[8] as the superuser. This command performs the following steps:
+要完全从系统中删除用户，请以超级用户身份运行 man:rmuser[8] 。该命令执行以下步骤：
 
 [.procedure]
 ====
-. Removes the user's man:crontab[1] entry, if one exists.
-. Removes any man:at[1] jobs belonging to the user.
-. Sends a SIGKILL signal to all processes owned by the user.
-. Removes the user from the system's local password file.
-. Removes the user's home directory (if it is owned by the user), including handling of symbolic links in the path to the actual home directory.
-. Removes the incoming mail files belonging to the user from `/var/mail`.
-. Removes all files owned by the user from `/tmp`, `/var/tmp`, and `/var/tmp/vi.recover`.
-. Removes the username from all groups to which it belongs in `/etc/group`. (If a group becomes empty and the group name is the same as the username, the group is removed; this complements man:adduser[8]'s per-user unique groups.)
-. Removes all message queues, shared memory segments and semaphores owned by the user.
+. 如果存在用户的 man:crontab[1] 条目，则删除它。
+. 删除用户拥有的所有 man:at[1] 作业。
+. 向用户拥有的所有进程发送 SIGKILL 信号。
+. 从系统的本地密码文件中删除用户。
+. 删除用户的主目录（如果该目录属于该用户），包括处理路径中符号链接指向实际主目录的情况。
+. 从 `/var/mail` 目录中删除属于用户的传入邮件文件。
+. 从 `/tmp`、`/var/tmp` 和 `/var/tmp/vi.recover` 中删除用户所有拥有的文件。
+. 将用户名从 `/etc/group` 中所属的所有组中删除。（如果一个组变为空，并且组名与用户名相同，则删除该组；这与 man:adduser[8] 的每个用户唯一组相对应。）
+. 删除用户拥有的所有消息队列、共享内存段和信号量。
 ====
 
-man:rmuser[8] cannot be used to remove superuser accounts since that is almost always an indication of massive destruction.
+man:rmuser[8] 不能用于删除超级用户账户，因为这几乎总是意味着大规模破坏的迹象。
 
-By default, an interactive mode is used, as shown in the following example.
+默认情况下，使用交互模式，如下例所示。
 
-.`rmuser` Interactive Account Removal
+.`rmuser` 交互式账户删除
 [example]
 ====
 [source, shell]
@@ -390,7 +390,7 @@ By default, an interactive mode is used, as shown in the following example.
 
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -403,21 +403,21 @@ Removing user (jru): mailspool home passwd.
 ====
 
 [[users-chpass]]
-==== Change user information
+==== 更改用户信息
 
-Any user can use man:chpass[1] to change their default shell and personal information associated with their user account. The superuser can use this utility to change additional account information for any user.
+任何用户都可以使用 man:chpass[1] 命令来更改其默认 shell 和与其用户账户关联的个人信息。超级用户可以使用此实用程序来更改任何用户的其他账户信息。
 
-When passed no options, aside from an optional username, man:chpass[1] displays an editor containing user information. When the user exits from the editor, the user database is updated with the new information.
+当没有传递任何选项时，除了可选的用户名外， man:chpass[1] 会显示一个包含用户信息的编辑器。当用户从编辑器退出时，用户数据库将会更新为新的信息。
 
 [NOTE]
 ====
-This utility will prompt for the user's password when exiting the editor, unless the utility is run as the superuser.
+该实用程序在退出编辑器时会提示用户输入密码，除非以超级用户身份运行该实用程序。
 ====
 
-In <<users-modifying-chpass-su>>, the superuser has typed `chpass jru` and is now viewing the fields that can be changed for this user. If `jru` runs this command instead, only the last six fields will be displayed and available for editing. This is shown in <<users-modifying-chpass-ru>>.
+在 <<users-modifying-chpass-su>> 中，超级用户输入了 `chpass jru` ，现在正在查看可以更改该用户的字段。如果 `jru` 运行此命令，只有最后六个字段将被显示并可供编辑。这在 <<users-modifying-chpass-ru>> 中显示。
 
 [[users-modifying-chpass-su]]
-.Using `chpass` as Superuser
+.以超级用户身份使用 `chpass` 命令
 [example]
 ====
 [source, shell]
@@ -425,7 +425,7 @@ In <<users-modifying-chpass-su>>, the superuser has typed `chpass jru` and is no
 # chpass
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -448,7 +448,7 @@ Other information:
 ====
 
 [[users-modifying-chpass-ru]]
-.Using `chpass` as Regular User
+.以普通用户身份使用 `chpass` 命令
 [example]
 ====
 [source, shell]
@@ -465,15 +465,15 @@ Other information:
 
 [NOTE]
 ====
-The commands man:chfn[1] and man:chsh[1] are links to man:chpass[1], as are man:ypchpass[1], man:ypchfn[1], and man:ypchsh[1]. Since NIS support is automatic, specifying the `yp` before the command is not necessary. How to configure NIS is covered in crossref:network-servers[network-servers,Network Servers].
+命令 man:chfn[1] 和 man:chsh[1] 是指向 man:chpass[1] 的链接，同样 man:ypchpass[1] 、 man:ypchfn[1] 和 man:ypchsh[1] 也是。由于 NIS 支持是自动的，所以在命令之前指定 `yp` 是不必要的。如何配置 NIS 在 crossref:network-servers[network-servers ,网络服务器] 中有介绍。
 ====
 
 [[users-passwd]]
-==== Change user password
+==== 更改用户密码
 
-Any user can easily change their password using man:passwd[1]. To prevent accidental or unauthorized changes, this command will prompt for the user's original password before a new password can be set:
+任何用户都可以使用 man:passwd[1] 轻松更改他们的密码。为了防止意外或未经授权的更改，在设置新密码之前，该命令会提示用户输入原始密码：
 
-.Changing Your Password
+.更改密码
 [example]
 ====
 [source, shell]
@@ -481,7 +481,7 @@ Any user can easily change their password using man:passwd[1]. To prevent accide
 % passwd
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -494,9 +494,9 @@ passwd: done
 ....
 ====
 
-The superuser can change any user's password by specifying the username when running man:passwd[1]. When this utility is run as the superuser, it will not prompt for the user's current password. This allows the password to be changed when a user cannot remember the original password.
+超级用户可以通过在运行 man:passwd[1] 时指定用户名来更改任何用户的密码。当以超级用户身份运行此实用程序时，它不会提示用户输入当前密码。这允许在用户无法记住原始密码时更改密码。
 
-.Changing Another User's Password as the Superuser
+.以超级用户身份更改另一个用户的密码
 [example]
 ====
 [source, shell]
@@ -504,7 +504,7 @@ The superuser can change any user's password by specifying the username when run
 # passwd jru
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -518,16 +518,16 @@ passwd: done
 
 [NOTE]
 ====
-As with man:chpass[1], man:yppasswd[1] is a link to man:passwd[1], so NIS works with either command.
+与 man:chpass[1] 一样， man:yppasswd[1] 是指向 man:passwd[1] 的链接，因此 NIS 可以与任一命令一起使用。
 ====
 
 [[users-pw]]
-==== Create, remove, modify and display system users and groups
+==== 创建、删除、修改和显示系统用户和组
 
-The man:pw[8] utility can create, remove, modify, and display users and groups. It functions as a front end to the system user and group files. man:pw[8] has a very powerful set of command line options that make it suitable for use in shell scripts, but new users may find it more complicated than the other commands presented in this section.
+man:pw[8] 实用程序可以创建、删除、修改和显示用户和组。它作为系统用户和组文件的前端工具。 man:pw[8] 具有一套非常强大的命令行选项，使其适用于在 shell 脚本中使用，但新用户可能会发现它比本节中介绍的其他命令更复杂。
 
 [[users-groups]]
-=== Managing Groups
+=== 管理群组
 
 A group is a list of users. A group is identified by its group name and GID. In FreeBSD, the kernel uses the UID of a process, and the list of groups it belongs to, to determine what the process is allowed to do. Most of the time, the GID of a user or process usually means the first group in the list.
 
@@ -549,7 +549,7 @@ Care must be taken when using the operator group, as unintended superuser-like a
 # pw groupshow teamtwo
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -568,7 +568,7 @@ In this example, `1100` is the GID of `teamtwo`. Right now, `teamtwo` has no mem
 # pw groupshow teamtwo
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -587,7 +587,7 @@ The argument to `-M` is a comma-delimited list of users to be added to a new (em
 # pw groupshow teamtwo
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -605,7 +605,7 @@ In this example, the argument to `-m` is a comma-delimited list of users who are
 % id jru
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -675,7 +675,7 @@ Table 4.1 summarizes the possible numeric and alphabetic possibilities. When rea
 % ls -l
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -695,64 +695,64 @@ In order to perform a directory listing, the read permission must be set on the 
 
 There are more permission bits, but they are primarily used in special circumstances such as setuid binaries and sticky directories. For more information on file permissions and how to set them, refer to man:chmod[1].
 
-=== Symbolic Permissions
+=== 符号权限
 
-Symbolic permissions use characters instead of octal values to assign permissions to files or directories. Symbolic permissions use the syntax of (who) (action) (permissions), where the following values are available:
+符号权限使用字符而不是八进制值来为文件或目录分配权限。符号权限使用以下语法： (用户) (动作) (权限) ，可用的值如下：
 
 [.informaltable]
 [cols="1,1,1", frame="none", options="header"]
 |===
-| Option
-| Letter
-| Represents
+| 选项
+| 参数
+| 意义
 
-|(who)
+|(用户)
 |u
-|User
+|用户
 
-|(who)
+|(用户)
 |g
-|Group owner
+|组所有者
 
-|(who)
+|(用户)
 |o
-|Other
+|其他
 
-|(who)
+|(用户)
 |a
-|All ("world")
+|所有（"全部"）
 
-|(action)
+|（动作）
 |+
-|Adding permissions
+|添加权限
 
-|(action)
+|（动作）
 |-
-|Removing permissions
+|移除权限
 
-|(action)
+|（动作）
 |=
-|Explicitly set permissions
+|指定权限
 
-|(permissions)
+|（权限）
 |r
-|Read
+|读
 
-|(permissions)
+|（权限）
 |w
-|Write
+|写
 
-|(permissions)
+|（权限）
 |x
-|Execute
+|执行
 
-|(permissions)
+|（权限）
 |t
-|Sticky bit
+|粘性位
 
-|(permissions)
+|（权限）
 |s
-|Set UID or GID
+|设置用户 ID 或组 ID
 |===
 
 These values are used with man:chmod[1], but with letters instead of numbers. For example, the following command would block both members of the group associated with _FILE_ and all other users from accessing _FILE_:
@@ -1304,7 +1304,7 @@ By default, man:ps[1] only shows the commands that are running and owned by the 
 % ps
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -1324,7 +1324,7 @@ The output from man:top[1] is similar:
 % top
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
