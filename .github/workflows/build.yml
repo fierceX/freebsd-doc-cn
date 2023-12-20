@@ -87,14 +87,24 @@ jobs:
               export RUBYLIB=$GITHUB_WORKSPACE/website/shared/lib
               cp -r website/shared shared
               cd website
-              hugo -b 'https://fiercex.github.io/freebsd-doc-cn'
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+              hugo -b 'https://free.bsd-doc.org'
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        # If you're changing the branch from main,
+        # also change the `main` in `refs/heads/main`
+        # below accordingly.
         with:
-          path: 'website/public'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./website/public'
+          publish_branch: bsd-doc
+          keep_files: false
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v1
+      #   with:
+      #     path: 'website/public'
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v1
 
       
       
