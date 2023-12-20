@@ -1,7 +1,8 @@
 # freebsd 文档翻译计划
 
 freebsd 官方文档的中文文档年久失修，由于 freebsd 官方文档使用的是 asciidoctor (.adoc) 格式文档，并且已经有 po4a 工具进行辅助翻译，所以目前该项目仍然使用该工具进行翻译，并且使用官方网站模板进行静态部署。  
-当前临时部署地址：[https://fiercex.github.io/freebsd-doc-cn](https://fiercex.github.io/freebsd-doc-cn)
+当前部署地址：[https://free.bsd-doc.org](https://free.bsd-doc.org)
+
 ## 翻译流程
 
 po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件，该文件只包含一对对需要翻译的文档块，屏蔽了格式细节（仍有少量格式出现在翻译块中），那么只需要对 po 文件进行翻译，然后再使用 po4a 工具对源文档进行还原翻译即可。po 文件可以采用翻译引擎的 api 进行自动机器翻译，加快翻译效率，人工只需要进行校对即可。
