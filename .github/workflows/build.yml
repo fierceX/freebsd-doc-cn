@@ -45,7 +45,7 @@ jobs:
         run:
           pip install OpenAI msgpack deepl polib
       - name: up tmx
-        run: bash up_tmx.sh
+        run: bash tools/up_tmx.sh
       - name: push tmx
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -60,11 +60,11 @@ jobs:
               set -e
       - name: translate
         run: |
-              bash translate.sh website zh-cn books/handbook
+              bash tools/translate.sh website zh-cn books/handbook
       - name: auto_translate
         run: |
-              bash auto_translate.sh
-              bash translate.sh website zh-cn-auto books/handbook
+              bash tools/auto_translate.sh
+              bash tools/translate.sh website zh-cn-auto books/handbook
       - name: push translate
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

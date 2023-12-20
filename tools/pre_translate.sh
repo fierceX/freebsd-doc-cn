@@ -100,7 +100,7 @@ for component in $COMPONENTS; do
 			mkdir -p $newname
 		fi
 
-		python3 pre_translate.py --input $dirbase/$name.po --output $newname/$name.po --tmx tmx.msg
+		python3 tools/pre_translate.py --input $dirbase/$name.po --output $newname/$name.po --tmx tools/tmx.msg
 		# cp "$dirbase/$name.po" "$NEW_PATH/$(basename "$dirbase").po"
 
 		# po4a-updatepo \
