@@ -1,0 +1,2748 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="This chapter provides a basic introduction to running a mail server on FreeBSD, as well as an introduction to sending and receiving email using FreeBSD"/>
+  <meta name="keywords" content="91, 34, 109, 97, 105, 108, 34, 44, 32, 34, 115, 101, 110, 100, 109, 97, 105, 108, 34, 44, 32, 34, 100, 109, 97, 34, 44, 32, 34, 77, 84, 65, 34, 44, 32, 34, 83, 77, 84, 80, 34, 44, 32, 34, 109, 97, 105, 108, 32, 117, 115, 101, 114, 32, 97, 103, 101, 110, 116, 115, 34, 44, 32, 34, 102, 101, 116, 99, 104, 109, 97, 105, 108, 34, 44, 32, 34, 112, 114, 111, 99, 109, 97, 105, 108, 34, 44, 32, 34, 97, 108, 112, 105, 110, 101, 34, 44, 32, 34, 109, 117, 116, 116, 34, 44, 32, 34, 112, 111, 115, 116, 102, 105, 120, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/" />
+
+  <title>Chapter 31. Electronic Mail |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="Chapter 31. Electronic Mail" />
+    <meta property="og:description" content="This chapter provides a basic introduction to running a mail server on FreeBSD, as well as an introduction to sending and receiving email using FreeBSD" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn/books/handbook/mail/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn\/books\/handbook\/mail\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/">
+              Preface
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/#preface-audience">Intended Audience</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/#preface-changes-from4">Fourth Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/#preface-changes-from3">Third Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/#preface-changes-from2">Second Edition (2004)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/#preface-changes">First Edition (2001)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/#preface-overview">Organization of This Book</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/#preface-conv">Conventions used in this book</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/preface/#preface-acknowledgements">Acknowledgments</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/">
+              Chapter 2. Installing FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. Minimum Hardware Requirements</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#bsdinstall-pre">2.3. Pre-Installation Tasks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#bsdinstall-start">2.4. Starting the Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#using-bsdinstall">2.5. Using bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. Allocating Disk Space</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. Fetching Distribution Files</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#bsdinstall-post">2.8. Network Interfaces, Accounts, Time Zone, Services and Hardening</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. Troubleshooting</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bsdinstall/#using-live-cd">2.10. Using the Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#permissions">3.4. Permissions</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#dirstructure">3.5. Directory Structure</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#mount-unmount">3.7. Mounting and Unmounting File Systems</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#basics-processes">3.8. Processes and Daemons</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#editors">3.10. Text Editors</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#basics-devices">3.11. Devices and Device Nodes</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/basics/#basics-more-information">3.12. Manual Pages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/">
+              Chapter 4. Installing Applications: Packages and Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/#ports-synopsis">4.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/#ports-overview">4.2. Overview of Software Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/#ports-finding-applications">4.3. Finding Software</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/#pkgng-intro">4.4. Using pkg for Binary Package Management</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/#ports-using">4.5. Using the Ports Collection</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/#ports-poudriere">4.6. Building Packages with poudriere</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/#ports-nextsteps">4.7. Post-Installation Considerations</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ports/#ports-broken">4.8. Dealing with Broken Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/x11/">
+              Chapter 5. The X Window System
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/x11/#x11-synopsis">5.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/x11/#x-install">5.2. Installing Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/x11/#x-graphic-card-drivers">5.3. Graphic card drivers</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/x11/#x-config">5.4. Xorg Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/x11/#x-fonts">5.5. Using Fonts in Xorg</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/">
+              Chapter 6. Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/#wayland-synopsis">6.1. Wayland Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/#wayland-wayfire">6.2. The Wayfire Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/#wayland-hikari">6.3. The Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/#wayland-sway">6.4. The Sway Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/#wayland-xwayland">6.5. Using Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/#wayland-remotedesktop">6.6. Remote Desktop Using VNC</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/#wayland-ly">6.7. Wayland Login Manager</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wayland/#wayland-utilities">6.8. Useful Utilities</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/network/">
+              Chapter 7. Network
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network/#network-synopsis">7.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network/#config-network-setup">7.2. Setting up the Network</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network/#config-network-connection">7.3. Wired Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network/#network-wireless">7.4. Wireless Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network/#hostname">7.5. Hostname</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network/#dns">7.6. DNS</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network/#troubleshooting">7.7. Troubleshooting</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/desktop/">
+              Chapter 8. Desktop Environments
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/desktop/#desktop-synopsis">8.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/desktop/#desktop-environments">8.2. Desktop Environments</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/desktop/#desktop-browsers">8.3. Browsers</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/desktop/#desktop-development">8.4. Development tools</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/desktop/#desktop-productivity">8.5. Desktop office productivity</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/desktop/#desktop-viewers">8.6. Document Viewers</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/desktop/#desktop-finance">8.7. Finance</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/multimedia/">
+              Chapter 9. Multimedia
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/multimedia/#multimedia-synopsis">9.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/multimedia/#sound-setup">9.2. Setting Up the Sound Card</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/multimedia/#audio-ports">9.3. Audio players</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/multimedia/#video-ports">9.4. Video players</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/multimedia/#conferencing-meetings">9.5. Conferencing and Meetings</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/multimedia/#scanners">9.6. Image Scanners</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/kernelconfig/">
+              Chapter 10. Configuring the FreeBSD Kernel
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. Why Build a Custom Kernel?</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/kernelconfig/#kernelconfig-devices">10.3. Finding the System Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/kernelconfig/#kernelconfig-config">10.4. The Configuration File</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/kernelconfig/#kernelconfig-building">10.5. Building and Installing a Custom Kernel</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. If Something Goes Wrong</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/printing/">
+              Chapter 11. Printing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/printing/#printing-quick-start">11.1. Quick Start</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/printing/#printing-connections">11.2. Printer Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/printing/#printing-pdls">11.3. Common Page Description Languages</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/printing/#printing-direct">11.4. Direct Printing</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/printing/#printing-lpd">11.5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/printing/#printing-other">11.6. Other Printing Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/linuxemu/">
+              Chapter 12. Linux Binary Compatibility
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/linuxemu/#linuxemu-synopsis">12.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. Configuring Linux Binary Compatibility</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/linuxemu/#linux-userlands">12.3. Linux userlands</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/linuxemu/#linuxemu-advanced">12.4. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/">
+              Chapter 13. WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/#wine-synopsis">13.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/#wine-overview-concepts">13.2. WINE Overview & Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/#installing-wine-on-freebsd">13.3. Installing WINE on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/#running-first-wine-program">13.4. Running a First WINE Program on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/#configuring-wine-installation">13.5. Configuring WINE Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/#wine-management-guis">13.6. WINE Management GUIs</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. WINE in Multi-User FreeBSD Installations</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/wine/#wine-on-os-faq">13.8. WINE on FreeBSD FAQ</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/config/">
+              Chapter 14. Configuration, Services, Logging and Power Management
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/config/#config-synopsis">14.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/config/#configtuning-configfiles">14.2. Configuration Files</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/config/#configtuning-rcd">14.3. Managing Services in FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/config/#cron-periodic">14.4. Cron and Periodic</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/config/#configtuning-syslog">14.5. Configuring System Logging</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/config/#acpi-overview">14.6. Power and Resource Management</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/config/#adding-swap-space">14.7. Adding Swap Space</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/boot/">
+              Chapter 15. The FreeBSD Booting Process
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/boot/#boot-synopsis">15.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/boot/#boot-introduction">15.2. FreeBSD Boot Process</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/boot/#device-hints">15.3. Device Hints</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/boot/#boot-shutdown">15.4. Shutdown Sequence</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/">
+              Chapter 16. Security
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-synopsis">16.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-intro">16.2. Introduction</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#sec-accounts">16.3. Securing Accounts</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-ids">16.4. Intrusion Detection System (IDS)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-secure-levels">16.5. Secure levels</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-file-flags">16.6. File flags</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#openssh">16.7. OpenSSH</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#openssl">16.8. OpenSSL</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#kerberos5">16.9. Kerberos</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#tcpwrappers">16.10. TCP Wrappers</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#fs-acl">16.11. Access Control Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#capsicum">16.12. Capsicum</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-accounting">16.13. Process Accounting</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-resourcelimits">16.14. Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-pkg">16.15. Monitoring Third Party Security Issues</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/security/#security-advisories">16.16. FreeBSD Security Advisories</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/">
+              Chapter 17. Jails and Containers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#jails-synopsis">17.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#jail-types">17.2. Jail Types</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#host-configuration">17.3. Host Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#classic-jail">17.4. Classic Jail (Thick Jail)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#thin-jail">17.5. Thin Jails</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#jail-management">17.6. Jail Management</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#jail-upgrading">17.7. Jail Upgrading</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#jail-resource-limits">17.8. Jail Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/jails/#jail-managers-and-containers">17.9. Jail Managers and Containers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/">
+              Chapter 18. Mandatory Access Control
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/#mac-synopsis">18.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/#mac-inline-glossary">18.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/#mac-understandlabel">18.3. Understanding MAC Labels</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/#mac-planning">18.4. Planning the Security Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/#mac-policies">18.5. Available MAC Policies</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/#mac-userlocked">18.6. User Lock Down</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/#mac-implementing">18.7. Nagios in a MAC Jail</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mac/#mac-troubleshoot">18.8. Troubleshooting the MAC Framework</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/audit/">
+              Chapter 19. Security Event Auditing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/audit/#audit-synopsis">19.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/audit/#audit-inline-glossary">19.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/audit/#audit-config">19.3. Audit Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/audit/#audit-administration">19.4. Working with Audit Trails</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/">
+              Chapter 20. Storage
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-synopsis">20.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-adding">20.2. Adding Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-growing">20.3. Resizing and Growing Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#usb-disks">20.4. USB Storage Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#creating-cds">20.5. Creating and Using CD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#creating-dvds">20.6. Creating and Using DVD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#floppies">20.7. Creating and Using Floppy Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#using-ntfs">20.8. Using NTFS Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#backup-basics">20.9. Backup Basics</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-virtual">20.10. Memory Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#snapshots">20.11. File System Snapshots</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#quotas">20.12. Disk Quotas</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-encrypting">20.13. Encrypting Disk Partitions</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#swap-encrypting">20.14. Encrypting Swap</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-hast">20.15. Highly Available Storage (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/">
+              Chapter 21. GEOM: Modular Disk Transformation Framework
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/#geom-synopsis">21.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/#geom-striping">21.2. RAID0 - Striping</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/#geom-mirror">21.3. RAID1 - Mirroring</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/#geom-raid3">21.4. RAID3 - Byte-level Striping with Dedicated Parity</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/#geom-graid">21.5. Software RAID Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/#geom-glabel">21.7. Labeling Disk Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/geom/#geom-gjournal">21.8. UFS Journaling Through GEOM</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/">
+              Chapter 22. The Z File System (ZFS)
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/#zfs-differences">22.1. What Makes ZFS Different</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/#zfs-quickstart">22.2. Quick Start Guide</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/#zfs-zfs-allow">22.5. Delegated Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/#zfs-advanced">22.6. Advanced Topics</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/#zfs-links">22.7. Further Resources</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/zfs/#zfs-term">22.8. ZFS Features and Terminology</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/">
+              Chapter 23. Other File Systems
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/#filesystems-synopsis">23.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/#filesystems-linux">23.2. Linux® File Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/virtualization/">
+              Chapter 24. Virtualization
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/virtualization/#virtualization-synopsis">24.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. FreeBSD as a Guest on Parallels Desktop for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/virtualization/#virtualization-guest-vmware">24.3. FreeBSD as a Guest on VMware Fusion for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. FreeBSD as a Guest on VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. FreeBSD as a Host with VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/virtualization/#virtualization-host-bhyve">24.6. FreeBSD as a Host with bhyve</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD as a Xen™-Host</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/l10n/">
+              Chapter 25. Localization - i18n/L10n Usage and Setup
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/l10n/#l10n-synopsis">25.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/l10n/#using-localization">25.2. Using Localization</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/l10n/#l10n-compiling">25.3. Finding i18n Applications</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/l10n/#lang-setup">25.4. Locale Configuration for Specific Languages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/">
+              Chapter 26. Updating and Upgrading FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD Update</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/#updating-bootcode">26.3. Updating Bootcode</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. Updating the Documentation Set</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/#current-stable">26.5. Tracking a Development Branch</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/#makeworld">26.6. Updating FreeBSD from Source</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/#small-lan">26.7. Tracking for Multiple Machines</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. Building on non-FreeBSD Hosts</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/">
+              Chapter 27. DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-synopsis">27.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-implementation">27.2. Implementation Differences</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-enable">27.3. Enabling DTrace Support</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-using">27.4. Using DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/usb-device-mode/">
+              Chapter 28. USB Device Mode / USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB Virtual Serial Ports</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB Device Mode Network Interfaces</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB Virtual Storage Device</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/serialcomms/">
+              Chapter 29. Serial Communications
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/serialcomms/#serial-synopsis">29.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/serialcomms/#serial">29.2. Serial Terminology and Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/serialcomms/#term">29.3. Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/serialcomms/#dialup">29.4. Dial-in Service</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/serialcomms/#dialout">29.5. Dial-out Service</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/serialcomms/#serialconsole-setup">29.6. Setting Up the Serial Console</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/ppp-and-slip/">
+              Chapter 30. PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ppp-and-slip/#userppp">30.2. Configuring PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. Troubleshooting PPP Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ppp-and-slip/#pppoe">30.4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/ppp-and-slip/#pppoa">30.5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/">
+              Chapter 31. Electronic Mail
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/#mail-synopsis">31.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/#mail-using">31.2. Mail Components</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/#sendmail">31.4. Sendmail</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/#mail-changingmta">31.5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/#mail-agents">31.6. Mail User Agents</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mail/#mail-advanced">31.7. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/">
+              Chapter 32. Network Servers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-servers-synopsis">32.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-inetd">32.2. The inetd Super-Server</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-nfs">32.3. Network File System (NFS)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-nis">32.4. Network Information System (NIS)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-ldap">32.5. Lightweight Directory Access Protocol (LDAP)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-dhcp">32.6. Dynamic Host Configuration Protocol (DHCP)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-dns">32.7. Domain Name System (DNS)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-ftp">32.9. File Transfer Protocol (FTP)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-samba">32.10. File and Print Services for Microsoft® Windows® Clients (Samba)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-ntp">32.11. Clock Synchronization with NTP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/network-servers/#network-iscsi">32.12. iSCSI Initiator and Target Configuration</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/firewalls/">
+              Chapter 33. Firewalls
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/firewalls/#firewalls-intro">33.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/firewalls/#firewalls-concepts">33.2. Firewall Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/firewalls/#firewalls-pf">33.3. PF</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER (IPF)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/firewalls/#firewalls-blacklistd">33.6. Blacklistd</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/">
+              Chapter 34. Advanced Networking
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#network-routing">34.2. Gateways and Routes</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. Virtual Hosts</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#network-advanced-wireless">34.4. Wireless Advanced Authentication</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. Wireless Ad-hoc Mode</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB Tethering</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#network-bluetooth">34.7. Bluetooth</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#network-bridging">34.8. Bridging</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#network-aggregation">34.9. Link Aggregation and Failover</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#network-diskless">34.10. Diskless Operation with PXE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#carp">34.11. Common Address Redundancy Protocol (CARP)</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/advanced-networking/#network-vlan">34.12. VLANs</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/mirrors/">
+              Appendix A. Obtaining FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mirrors/#mirrors">A.1. Mirrors</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mirrors/#git">A.2. Using Git</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mirrors/#svn">A.3. Using Subversion</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/mirrors/#mirrors-cdrom">A.4. CD and DVD Sets</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/bibliography/">
+              Appendix B. Bibliography
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD Bibliography</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bibliography/#bibliography-security">B.2. Security Reference</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bibliography/#bibliography-history">B.3. UNIX® History</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/bibliography/#bibliography-journals">B.4. Periodicals, Journals, and Magazines</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/eresources/">
+              Appendix C. Resources on the Internet
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/eresources/#eresources-www">C.1. Websites</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/eresources/#eresources-mail">C.2. Mailing Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/eresources/#eresources-news">C.3. Usenet Newsgroups</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/">
+              Appendix D. OpenPGP Keys
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#pgpkeys-officers">D.1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/glossary/">
+              FreeBSD Glossary
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/colophon/">
+              Colophon
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">Chapter 31. Electronic Mail</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mail-synopsis">31.1. Synopsis</a></li>
+    <li><a href="#mail-using">31.2. Mail Components</a></li>
+    <li><a href="#dragonFly-mail-agent">31.3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="#sendmail">31.4. Sendmail</a></li>
+    <li><a href="#mail-changingmta">31.5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="#mail-agents">31.6. Mail User Agents</a></li>
+    <li><a href="#mail-advanced">31.7. Advanced Topics</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="mail-synopsis">31.1. Synopsis<a class="anchor" href="#mail-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>&#34;Electronic Mail&#34;, better known as email, is one of the most widely used forms of communication today. This chapter provides a basic introduction to running a mail server on FreeBSD, as well as an introduction to sending and receiving email using FreeBSD. For more complete coverage of this subject, refer to the books listed in <a href="../bibliography/#bibliography">Bibliography</a>.</p>
+</div>
+<div class="paragraph">
+<p>This chapter covers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Which software components are involved in sending and receiving electronic mail.</p>
+</li>
+<li>
+<p>How to configure DragonFly Mail Agent.</p>
+</li>
+<li>
+<p>Where basic Sendmail configuration files are located in FreeBSD.</p>
+</li>
+<li>
+<p>The difference between remote and local mailboxes.</p>
+</li>
+<li>
+<p>How to install and configure an alternate Mail Transfer Agent, replacing DragonFly Mail Agent or Sendmail.</p>
+</li>
+<li>
+<p>How to troubleshoot common mail server problems.</p>
+</li>
+<li>
+<p>How to configure Sendmail to only send mail.</p>
+</li>
+<li>
+<p>How to configure SMTP authentication for added security in Sendmail.</p>
+</li>
+<li>
+<p>How to install and use a Mail User Agent, such as mutt, to send and receive email.</p>
+</li>
+<li>
+<p>How to download mail from a remote POP or IMAP server.</p>
+</li>
+<li>
+<p>How to automatically apply filters and rules to incoming email.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mail-using">31.2. Mail Components<a class="anchor" href="#mail-using"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are five major parts involved in an email exchange: the Mail User Agent (MUA), the Mail Transfer Agent (MTA), a mail host, a remote or local mailbox, and DNS. This section provides an overview of these components.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Mail User Agent (MUA)</dt>
+<dd>
+<p>The Mail User Agent (MUA) is an application which is used to compose, send, and receive emails. This application can be a command line program, such as the built-in <code>mail</code> utility or a third-party application from the Ports Collection, such as alpine, elm, or mutt. Dozens of graphical programs are also available in the Ports Collection, including Claws Mail, Evolution, and Thunderbird. Some organizations provide a web mail program which can be accessed through a web browser. More information about installing and using a MUA on FreeBSD can be found in <a href="#mail-agents">Mail User Agents</a>.</p>
+</dd>
+<dt class="hdlist1">Mail Transfer Agent (MTA)</dt>
+<dd>
+<p>The Mail Transfer Agent (MTA) is responsible for receiving incoming mail and delivering outgoing mail. Starting with FreeBSD version 14.0, the default MTA is DragonFly Mail Agent (<a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a>); in earlier versions, it is <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a>. Other MTAs, including Exim, Postfix, and qmail, may be installed to replace the default MTA.</p>
+</dd>
+<dt class="hdlist1">Mail Host and Mailboxes</dt>
+<dd>
+<p>The mail host is a server that is responsible for delivering and receiving mail for a host or a network. The mail host collects all mail sent to the domain and stores it either in the default <code>mbox</code> or the alternative Maildir format, depending on the configuration. Once mail has been stored, it may either be read locally using a MUA or remotely accessed and collected using protocols such as POP or IMAP. If mail is read locally, a POP or IMAP server does not need to be installed.</p>
+</dd>
+<dt class="hdlist1">Domain Name System (DNS)</dt>
+<dd>
+<p>The Domain Name System (DNS) and its daemon <a href="https://man.freebsd.org/cgi/man.cgi?query=named&amp;sektion=8&amp;format=html">named(8)</a> play a large role in the delivery of mail. In order to deliver mail from one site to another, the MTA will look up the remote site in DNS to determine which host will receive mail for the destination. This process also occurs when mail is sent from a remote host to the MTA.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dragonFly-mail-agent">31.3. DragonFly Mail Agent (DMA)<a class="anchor" href="#dragonFly-mail-agent"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>DragonFly Mail Agent (DMA) is the default MTA in FreeBSD starting with version 14.0. <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> is a small Mail Transport Agent (MTA), designed for home and office use. It accepts mails from locally installed Mail User Agents (MUA) and delivers the mails either locally or to a remote destination. Remote delivery includes several features like TLS/SSL support and SMTP authentication.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> is not intended as a replacement for real, big MTAs like <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a> or <a href="https://man.freebsd.org/cgi/man.cgi?query=postfix&amp;sektion=1&amp;format=html">postfix(1)</a>. Consequently, <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> does not listen on port 25 for incoming connections.</p>
+</div>
+<div class="sect2">
+<h3 id="configuring-dragonfly-mail-agent">31.3.1. Configuring DragonFly Mail Agent (DMA)<a class="anchor" href="#configuring-dragonfly-mail-agent"></a></h3>
+<div class="paragraph">
+<p>DMA comes with a default configuration that will be suitable for many deployments. Custom settings are defined in <span class="filename">/etc/dma/dma.conf</span>, and SMTP authentication is configured in <span class="filename">/etc/dma/auth.conf</span>.</p>
+</div>
+<div class="sect3">
+<h4 id="configuring-gmail-dma">31.3.1.1. Using DMA to Route Outgoing Mail through Gmail (STARTTLS:SMTP example)<a class="anchor" href="#configuring-gmail-dma"></a></h4>
+<div class="paragraph">
+<p>This example <span class="filename">/etc/dma/dma.conf</span> can be used to send mail using Google’s SMTP servers.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>SMARTHOST smtp.gmail.com
+PORT 587
+AUTHPATH /etc/dma/auth.conf
+SECURETRANSFER
+STARTTLS
+MASQUERADE username@gmail.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Authentication can be set with one line in <span class="filename">/etc/dma/auth.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>username@gmail.com|smtp.gmail.com:password</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Execute the following command to test the configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nb">echo </span>this is a <span class="nb">test</span> | mail -v -s testing-email username@gmail.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configuring-fastmail-dma">31.3.1.2. Using DMA to Route Outgoing Mail through Fastmail (SSL/TLS example)<a class="anchor" href="#configuring-fastmail-dma"></a></h4>
+<div class="paragraph">
+<p>This example <span class="filename">/etc/dma/dma.conf</span> can be used to send mail using Fastmail’s SMTP servers.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>SMARTHOST smtp.fastmail.com
+PORT 465
+AUTHPATH /etc/dma/auth.conf
+SECURETRANSFER
+MAILNAME example.server.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Authentication can be set with one line in <span class="filename">/etc/dma/auth.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>username@fastmail.com|smtp.fastmail.com:password</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Execute the following command to test the configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nb">echo </span>this is a <span class="nb">test</span> | mail -v -s testing-email username@fastmail.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configuring-custom-dma">31.3.1.3. Using DMA to Route Outgoing Mail through a Custom Mail Host<a class="anchor" href="#configuring-custom-dma"></a></h4>
+<div class="paragraph">
+<p>This example <span class="filename">/etc/dma/dma.conf</span> can be used to send mail using a custom mail host.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>SMARTHOST mail.example.org
+PORT 587
+AUTHPATH /etc/dma/auth.conf
+SECURETRANSFER
+STARTTLS</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Authentication can be set with one line in <span class="filename">/etc/dma/auth.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>username@example.org|mail.example.org:password</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Execute the following command to test the configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nb">echo </span>this is a <span class="nb">test</span> | mail -v -s testing-email username@example.org</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sendmail">31.4. Sendmail<a class="anchor" href="#sendmail"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sendmail is a venerable and versatile Mail Transfer Agent (MTA) with a long history in UNIX® and UNIX-like systems. It was a part of the FreeBSD base system until FreeBSD 13, offering robust email transport capabilities, extensive customization options, and support for complex routing and filtering.</p>
+</div>
+<div class="sect2">
+<h3 id="configuring-sendmail">31.4.1. Configuration Files<a class="anchor" href="#configuring-sendmail"></a></h3>
+<div class="paragraph">
+<p>The configuration files for Sendmail are located in <span class="filename">/etc/mail/</span>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><span class="filename">/etc/mail/access</span></dt>
+<dd>
+<p>This access database file defines which hosts or IP addresses have access to the local mail server and what kind of access they have. Hosts listed as <code>OK</code>, which is the default option, are allowed to send mail to this host as long as the mail’s final destination is the local machine. Hosts listed as <code>REJECT</code> are rejected for all mail connections. Hosts listed as <code>RELAY</code> are allowed to send mail for any destination using this mail server. Hosts listed as <code>ERROR</code> will have their mail returned with the specified mail error. If a host is listed as <code>SKIP</code>, Sendmail will abort the current search for this entry without accepting or rejecting the mail. Hosts listed as <code>QUARANTINE</code> will have their messages held and will receive the specified text as the reason for the hold.</p>
+<div class="paragraph">
+<p>Examples of using these options for both IPv4 and IPv6 addresses can be found in the FreeBSD sample configuration, <span class="filename">/etc/mail/access.sample</span>:</p>
+</div>
+<div class="paragraph">
+<p>To configure the access database, use the format shown in the sample to make entries in <span class="filename">/etc/mail/access</span>, but do not put a comment symbol (<code>#</code>) in front of the entries. Create an entry for each host or network whose access should be configured. Mail senders that match the left side of the table are affected by the action on the right side of the table.</p>
+</div>
+<div class="paragraph">
+<p>Whenever this file is updated, update its database and restart Sendmail:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># makemap hash /etc/mail/access &lt; /etc/mail/access</span>
+<span class="c"># service sendmail restart</span></code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><span class="filename">/etc/mail/aliases</span></dt>
+<dd>
+<p>This database file contains a list of virtual mailboxes that are expanded to users, files, programs, or other aliases. Here are a few entries to illustrate the file format:</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>root: localuser
+ftp-bugs: joe,eric,paul
+bit.bucket:  /dev/null
+procmail: &#34;|/usr/local/bin/procmail&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The mailbox name on the left side of the colon is expanded to the target(s) on the right. The first entry expands the <code>root</code> mailbox to the <code>localuser</code> mailbox, which is then looked up in the <span class="filename">/etc/mail/aliases</span> database. If no match is found, the message is delivered to <code>localuser</code>. The second entry shows a mail list. Mail to <code>ftp-bugs</code> is expanded to the three local mailboxes <code>joe</code>, <code>eric</code>, and <code>paul</code>. A remote mailbox could be specified as <em>user@example.com</em>. The third entry shows how to write mail to a file, in this case <span class="filename">/dev/null</span>. The last entry demonstrates how to send mail to a program, <span class="filename">/usr/local/bin/procmail</span>, through a UNIX® pipe. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=aliases&amp;sektion=5&amp;format=html">aliases(5)</a> for more information about the format of this file.</p>
+</div>
+<div class="paragraph">
+<p>Whenever this file is updated, run <code>newaliases</code> to update and initialize the aliases database.</p>
+</div>
+</dd>
+<dt class="hdlist1"><span class="filename">/etc/mail/sendmail.cf</span></dt>
+<dd>
+<p>This is the master configuration file for Sendmail. It controls the overall behavior of Sendmail, including everything from rewriting email addresses to printing rejection messages to remote mail servers. Accordingly, this configuration file is quite complex. Fortunately, this file rarely needs to be changed for standard mail servers.</p>
+<div class="paragraph">
+<p>The master Sendmail configuration file can be built from <a href="https://man.freebsd.org/cgi/man.cgi?query=m4&amp;sektion=1&amp;format=html">m4(1)</a> macros that define the features and behavior of Sendmail. Refer to <span class="filename">/usr/src/contrib/sendmail/cf/README</span> for some of the details.</p>
+</div>
+<div class="paragraph">
+<p>Whenever changes to this file are made, Sendmail needs to be restarted for the changes to take effect.</p>
+</div>
+</dd>
+<dt class="hdlist1"><span class="filename">/etc/mail/virtusertable</span></dt>
+<dd>
+<p>This database file maps mail addresses for virtual domains and users to real mailboxes. These mailboxes can be local, remote, aliases defined in <span class="filename">/etc/mail/aliases</span>, or files. This allows multiple virtual domains to be hosted on one machine.</p>
+<div class="paragraph">
+<p>FreeBSD provides a sample configuration file in <span class="filename">/etc/mail/virtusertable.sample</span> to further demonstrate its format. The following example demonstrates how to create custom entries using that format:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>root@example.com                root
+postmaster@example.com          postmaster@noc.example.net
+@example.com                    joe</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file is processed in a first match order. When an email address matches the address on the left, it is mapped to the local mailbox listed on the right. The format of the first entry in this example maps a specific email address to a local mailbox, whereas the format of the second entry maps a specific email address to a remote mailbox. Finally, any email address from <code>example.com</code> which has not matched any of the previous entries will match the last mapping and be sent to the local mailbox <code>joe</code>. When creating custom entries, use this format and add them to <span class="filename">/etc/mail/virtusertable</span>. Whenever this file is edited, update its database and restart Sendmail:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># makemap hash /etc/mail/virtusertable &lt; /etc/mail/virtusertable</span>
+<span class="c"># service sendmail restart</span></code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><span class="filename">/etc/mail/relay-domains</span></dt>
+<dd>
+<p>In a default FreeBSD installation, Sendmail is configured to only send mail from the host it is running on. For example, if a POP server is available, users will be able to check mail from remote locations but they will not be able to send outgoing emails from outside locations. Typically, a few moments after the attempt, an email will be sent from <code>MAILER-DAEMON</code> with a <code>5.7 Relaying Denied</code> message.</p>
+<div class="paragraph">
+<p>The most straightforward solution is to add the ISP’s FQDN to <span class="filename">/etc/mail/relay-domains</span>. If multiple addresses are needed, add them one per line:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>your.isp.example.com
+other.isp.example.net
+users-isp.example.org
+www.example.org</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After creating or editing this file, restart Sendmail with <code>service sendmail restart</code>.</p>
+</div>
+<div class="paragraph">
+<p>Now any mail sent through the system by any host in this list, provided the user has an account on the system, will succeed. This allows users to send mail from the system remotely without opening the system up to relaying SPAM from the Internet.</p>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mail-changingmta">31.5. Changing the Mail Transfer Agent<a class="anchor" href="#mail-changingmta"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Starting with FreeBSD version 14.0, <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> is the default MTA, and before 14.0, the default MTA is <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a>. However, the system administrator can change the system’s MTA. A wide choice of alternative MTAs is available from the <code>mail</code> category of the FreeBSD Ports Collection.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the default’s outgoing mail service is disabled, it is important that it is replaced with an alternative mail delivery system. Otherwise, system functions such as <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> will be unable to deliver their results by email. Many parts of the system expect a functional MTA. If applications continue to use the default binaries to try to send email after they are disabled, mail could go into an inactive queue and never be delivered.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="replace-sendmail-dma">31.5.1. Replacing Sendmail with Other MTA<a class="anchor" href="#replace-sendmail-dma"></a></h3>
+<div class="paragraph">
+<p>In order to completely disable <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a> execute the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc sendmail_enable=&#34;NO&#34;</span>
+<span class="c"># sysrc sendmail_submit_enable=&#34;NO&#34;</span>
+<span class="c"># sysrc sendmail_outbound_enable=&#34;NO&#34;</span>
+<span class="c"># sysrc sendmail_msp_queue_enable=&#34;NO&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To only disable <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a>&#39;s incoming mail service execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc sendmail_enable=&#34;NO&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then stop the <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a> service:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service sendmail onestop</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some extra configuration is needed as <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a> is so ubiquitous that some software assumes it is already installed and configured. Check <span class="filename">/etc/periodic.conf</span> and make sure that these values are set to <code>NO</code>. If this file does not exist, create it with these entries:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>daily_clean_hoststat_enable=&#34;NO&#34;
+daily_status_mail_rejects_enable=&#34;NO&#34;
+daily_status_include_submit_mailq=&#34;NO&#34;
+daily_submit_queuerun=&#34;NO&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The next step is to install another MTA, <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> will be used in this example. As pointed above, <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> is the default MTA in FreeBSD starting with version 14.0. Therefore, it is only necessary to install it from the ports if you are using a previous version.</p>
+</div>
+<div class="paragraph">
+<p>To install it execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install dma</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Perform the configuration as indicated in <a href="#configuring-dragonfly-mail-agent">Configuring DragonFly Mail Agent (DMA)</a>.</p>
+</div>
+<div class="paragraph">
+<p>Then change all the entries in the file <span class="filename">/etc/mail/mailer.conf</span> to <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># $FreeBSD$
+#
+# Execute the &#34;real&#34; sendmail program, named /usr/libexec/sendmail/sendmail
+#
+# If dma(8) is installed, an example mailer.conf that uses dma(8) instead can
+# be found in /usr/share/examples/dma
+#
+sendmail        /usr/local/libexec/dma
+mailq           /usr/local/libexec/dma
+newaliases      /usr/local/libexec/dma</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When using the version of <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> included in the base system, the paths will change to <span class="filename">/usr/libexec/dma</span>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>To ensure that anything in the queue is flushed at boot or before shutdown, execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc dma_flushq_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once everything is configured, it is recommended to reboot the system. Rebooting provides the opportunity to ensure that the system is correctly configured to start the new MTA automatically on boot.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="replace-dma">31.5.2. Replacing DragonFly Mail Agent (DMA) with Other MTA<a class="anchor" href="#replace-dma"></a></h3>
+<div class="paragraph">
+<p>As noted above, starting with FreeBSD version 14.0, the default MTA is DMA. In this example, <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/postfix/">mail/postfix</a> will be used as the alternative MTA.</p>
+</div>
+<div class="paragraph">
+<p>Before installing <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/postfix/">mail/postfix</a> some extra configuration is needed. Check <span class="filename">/etc/periodic.conf</span> and make sure that these values are set to <code>NO</code>. If this file does not exist, create it with these entries:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>daily_clean_hoststat_enable=&#34;NO&#34;
+daily_status_mail_rejects_enable=&#34;NO&#34;
+daily_status_include_submit_mailq=&#34;NO&#34;
+daily_submit_queuerun=&#34;NO&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then install <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/postfix/">mail/postfix</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install postfix</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To start <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/postfix/">mail/postfix</a> at system boot execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc postfix_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is good practice to read the installation message after installing an application. Provides useful information about settings, etc.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>If postfix is <strong>not</strong> already activated in <span class="filename">/usr/local/etc/mail/mailer.conf</span> execute the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">mv /usr/local/etc/mail/mailer.conf /usr/local/etc/mail/mailer.conf.old
+install -d /usr/local/etc/mail
+install -m 0644 /usr/local/share/postfix/mailer.conf.postfix /usr/local/etc/mail/mailer.conf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When employing SASL, ensure that postfix has access to read the sasldb file. This is accomplished by adding postfix to group mail and making the <span class="filename">/usr/local/etc/sasldb*</span> file(s) readable by group mail (this should be the default for new installs).</p>
+</div>
+<div class="paragraph">
+<p>Once everything is configured, it is recommended to reboot the system. Rebooting provides the opportunity to ensure that the system is correctly configured to start the new MTA automatically on boot.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mail-agents">31.6. Mail User Agents<a class="anchor" href="#mail-agents"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A MUA is an application that is used to send and receive email. As email &#34;evolves&#34; and becomes more complex, MUAs are becoming increasingly powerful and provide users increased functionality and flexibility. The <code>mail</code> category of the FreeBSD Ports Collection contains numerous MUAs. These include graphical email clients such as Evolution or Balsa and console based clients such as mutt or alpine.</p>
+</div>
+<div class="sect2">
+<h3 id="mail-command">31.6.1. mail<a class="anchor" href="#mail-command"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a> is the default MUA installed with FreeBSD. It is a console based MUA that offers the basic functionality required to send and receive text-based email. It provides limited attachment support and can only access local mailboxes.</p>
+</div>
+<div class="paragraph">
+<p>Although <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a> does not natively support interaction with POP or IMAP servers, these mailboxes may be downloaded to a local <code>mbox</code> using an application such as fetchmail or getmail.</p>
+</div>
+<div class="paragraph">
+<p>In order to send and receive email, run <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mail</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The contents of the user’s mailbox in <span class="filename">/var/mail</span> are automatically read by <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a>. Should the mailbox be empty, the utility exits with a message indicating that no mail could be found. If mail exists, the application interface starts, and a list of messages will be displayed.</p>
+</div>
+<div class="paragraph">
+<p>Messages are automatically numbered, as can be seen in the following example:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Mail version 8.1 6/6/93.  Type ? for help.
+&#34;/var/mail/username&#34;: 3 messages 3 new
+&gt;N  1 root@localhost        Mon Mar  8 14:05  14/510   &#34;test&#34;
+ N  2 root@localhost        Mon Mar  8 14:05  14/509   &#34;user account&#34;
+ N  3 root@localhost        Mon Mar  8 14:05  14/509   &#34;sample&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Messages can now be read by typing <kbd>t</kbd> followed by the message number.</p>
+</div>
+<div class="paragraph">
+<p>This example reads the first email:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>&amp; t 1
+Message 1:
+From root@localhost  Mon Mar  8 14:05:52 2004
+X-Original-To: username@localhost
+Delivered-To: username@localhost
+To: username@localhost
+Subject: test
+Date: Mon,  8 Mar 2004 14:05:52 +0200 (SAST)
+From: root@localhost (Charlie Root)
+
+This is a test message, please reply if you receive it.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As seen in this example, the message will be displayed with full headers.</p>
+</div>
+<div class="paragraph">
+<p>To display the list of messages again, press <kbd>h</kbd>.</p>
+</div>
+<div class="paragraph">
+<p>If the email requires a reply, press either <kbd>R</kbd> or <kbd>r</kbd> <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a> keys. <kbd>R</kbd> instructs <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a> to reply only to the sender of the email, while <kbd>r</kbd> replies to all other recipients of the message. These commands can be suffixed with the mail number of the message to reply to. After typing the response, the end of the message should be marked by a single <kbd>.</kbd> on its own line.</p>
+</div>
+<div class="paragraph">
+<p>An example can be seen below:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>&amp; R 1
+To: root@localhost
+Subject: Re: test
+
+Thank you, I did get your email.
+.
+EOT</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to send a new email, press <kbd>m</kbd>, followed by the recipient email address. Multiple recipients may be specified by separating each address with the <kbd>,</kbd> delimiter. The subject of the message may then be entered, followed by the message contents. The end of the message should be specified by putting a single <kbd>.</kbd> on its own line.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>&amp; mail root@localhost
+Subject: I mastered mail
+
+Now I can send and receive email using mail ... :)
+.
+EOT</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While using <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a>, press <kbd>?</kbd> to display help at any time. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a> for more help on how to use <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a> was not designed to handle attachments and thus deals with them poorly. Newer MUAs handle attachments in a more intelligent way.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mutt-command">31.6.2. Mutt<a class="anchor" href="#mutt-command"></a></h3>
+<div class="paragraph">
+<p>Mutt is a powerful MUA, with many features, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The ability to thread messages.</p>
+</li>
+<li>
+<p>PGP support for digital signing and encryption of email.</p>
+</li>
+<li>
+<p>MIME support.</p>
+</li>
+<li>
+<p>Maildir support.</p>
+</li>
+<li>
+<p>Highly customizable.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Refer to <a href="http://www.mutt.org">http://www.mutt.org</a> for more information on Mutt.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A Mutt fork called NeoMutt is worth mentioning, which brings added features. See more on the <a href="https://neomutt.org/about.html">NeoMutt website</a>. If NeoMutt was chosen, replace the following command examples from <code>mutt</code> to <code>neomutt</code>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Mutt may be installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/mutt/">mail/mutt</a> port. After the port has been installed, Mutt can be started by issuing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mutt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Mutt will automatically read and display the contents of the user mailbox in <span class="filename">/var/mail</span>. If no mails are found, Mutt will wait for commands from the user. The example below shows Mutt displaying a list of messages:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/mail/mutt1.png" alt="Mutt email client showing a list of messages"/>
+</div>
+</div>
+<div class="paragraph">
+<p>To read an email, select it using the cursor keys and press <kbd>Enter</kbd>. An example of Mutt displaying email can be seen below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/mail/mutt2.png" alt="Mutt email client displaying an email"/>
+</div>
+</div>
+<div class="paragraph">
+<p>Similar to <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a>, Mutt can be used to reply only to the sender of the message as well as to all recipients. To reply only to the sender of the email, press <kbd>r</kbd>. To send a group reply to the original sender as well as all the message recipients, press <kbd>g</kbd>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>By default, Mutt uses the <a href="https://man.freebsd.org/cgi/man.cgi?query=vi&amp;sektion=1&amp;format=html">vi(1)</a> editor for creating and replying to emails. Each user can customize this by creating or editing the <span class="filename">.muttrc</span> in their home directory and setting the <code>editor</code> variable or by setting the <code>EDITOR</code> environment variable. Refer to <a href="http://www.mutt.org/">http://www.mutt.org/</a> for more information about configuring Mutt.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>To compose a new mail message, press <kbd>m</kbd>. After a valid subject has been given, Mutt will start <a href="https://man.freebsd.org/cgi/man.cgi?query=vi&amp;sektion=1&amp;format=html">vi(1)</a> so the email can be written. Once the contents of the email are complete, save and quit from <code>vi</code>. Mutt will resume, displaying a summary screen of the mail that is to be delivered. In order to send the mail, press <kbd>y</kbd>. An example of the summary screen can be seen below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/mail/mutt3.png" alt="Mutt email client showing the summary screen"/>
+</div>
+</div>
+<div class="paragraph">
+<p>Mutt contains extensive help which can be accessed from most of the menus by pressing <kbd>?</kbd>. The top line also displays the keyboard shortcuts where appropriate.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="alpine-command">31.6.3. alpine<a class="anchor" href="#alpine-command"></a></h3>
+<div class="paragraph">
+<p>alpine is aimed at a beginner user, but also includes some advanced features.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>alpine has had several remote vulnerabilities discovered in the past, which allowed remote attackers to execute arbitrary code as users on the local system, by the action of sending a specially-prepared email. While <em>known</em> problems have been fixed, alpine code is written in an insecure style and the FreeBSD Security Officer believes there are likely to be other undiscovered vulnerabilities. Users install alpine at their own risk.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The current version of alpine may be installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/alpine/">mail/alpine</a> port. Once the port has installed, alpine can be started by issuing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>alpine</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first time alpine runs, it displays a greeting page with a brief introduction, as well as a request from the alpine development team to send an anonymous email message allowing them to judge how many users are using their client. To send this anonymous message, press <kbd>Enter</kbd>. Alternatively, press <kbd>E</kbd> to exit the greeting without sending an anonymous message. An example of the greeting page is shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/mail/pine1.png" alt="alpine email client showing the greeting page"/>
+</div>
+</div>
+<div class="paragraph">
+<p>The main menu is then presented, which can be navigated using the cursor keys. This main menu provides shortcuts for the composing new mails, browsing mail directories, and administering address book entries. Below the main menu, relevant keyboard shortcuts to perform functions specific to the task at hand are shown.</p>
+</div>
+<div class="paragraph">
+<p>The default directory opened by alpine is <span class="filename">inbox</span>. To view the message index, press <kbd>I</kbd>, or select the <span class="guimenuitem">MESSAGE INDEX</span> option shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/mail/pine2.png" alt="alpine email client showing the default directory"/>
+</div>
+</div>
+<div class="paragraph">
+<p>The message index shows messages in the current directory and can be navigated by using the cursor keys. Highlighted messages can be read by pressing <kbd>Enter</kbd>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/mail/pine3.png" alt="alpine email client showing the message index"/>
+</div>
+</div>
+<div class="paragraph">
+<p>In the screenshot below, a sample message is displayed by alpine. Contextual keyboard shortcuts are displayed at the bottom of the screen. An example of one of a shortcut is <kbd>r</kbd>, which tells the MUA to reply to the current message being displayed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/mail/pine4.png" alt="alpine email client showing an email"/>
+</div>
+</div>
+<div class="paragraph">
+<p>Replying to an email in alpine is done using the pico editor, which is installed by default with alpine. pico makes it easy to navigate the message and is easier for novice users to use than <a href="https://man.freebsd.org/cgi/man.cgi?query=vi&amp;sektion=1&amp;format=html">vi(1)</a> or <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a>. Once the reply is complete, the message can be sent by pressing <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>X</kbd></span>. alpine will ask for confirmation before sending the message.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/mail/pine5.png" alt="alpine email client showing the message compose window"/>
+</div>
+</div>
+<div class="paragraph">
+<p>alpine can be customized using the <span class="guimenuitem">SETUP</span> option from the main menu.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mail-advanced">31.7. Advanced Topics<a class="anchor" href="#mail-advanced"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section covers more involved topics such as mail configuration and setting up mail for an entire domain.</p>
+</div>
+<div class="sect2">
+<h3 id="mail-config">31.7.1. Basic Configuration<a class="anchor" href="#mail-config"></a></h3>
+<div class="paragraph">
+<p>Out of the box, one can send email to external hosts as long as <span class="filename">/etc/resolv.conf</span> is configured or the network has access to a configured DNS server. To have email delivered to the MTA on the FreeBSD host, do one of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Run a DNS server for the domain.</p>
+</li>
+<li>
+<p>Get mail delivered directly to the FQDN for the machine.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to have mail delivered directly to a host, it must have a permanent static IP address, not a dynamic IP address. If the system is behind a firewall, it must be configured to allow SMTP traffic. To receive mail directly at a host, one of these two must be configured:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Make sure that the lowest-numbered MX record in DNS points to the host’s static IP address.</p>
+</li>
+<li>
+<p>Make sure there is no MX entry in the DNS for the host.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Either of the above will allow mail to be received directly at the host.</p>
+</div>
+<div class="paragraph">
+<p>Try this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># hostname</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>example.FreeBSD.org</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># host example.FreeBSD.org</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>example.FreeBSD.org has address 204.216.27.XX</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, mail sent directly to <a href="mailto:yourlogin@example.FreeBSD.org">yourlogin@example.FreeBSD.org</a> should work without problems, assuming a full-featured MTA is running correctly on <code>example.FreeBSD.org</code>. Note that <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> does not listen on port 25 for incoming connections and cannot be used in this scenario.</p>
+</div>
+<div class="paragraph">
+<p>For this example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># host example.FreeBSD.org</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>example.FreeBSD.org has address 204.216.27.XX
+example.FreeBSD.org mail is handled (pri=10) by nevdull.FreeBSD.org</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All mail sent to <code>example.FreeBSD.org</code> will be collected on <code>nevdull</code> under the same username instead of being sent directly to your host.</p>
+</div>
+<div class="paragraph">
+<p>The above information is handled by the DNS server. The DNS record that carries mail routing information is the <a href="https://en.wikipedia.org/wiki/MX_record">mail exchanger record (MX record)</a>. If no MX record exists, mail will be delivered directly to the host by way of its IP address.</p>
+</div>
+<div class="paragraph">
+<p>The MX entry for <code>freefall.FreeBSD.org</code> at one time looked like this:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>freefall		MX	30	mail.crl.net
+freefall		MX	40	agora.rdrop.com
+freefall		MX	10	freefall.FreeBSD.org
+freefall		MX	20	who.cdrom.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>freefall</code> had many MX entries. The lowest MX number is the host that receives mail directly, if available. If it is not accessible for some reason, the next lower-numbered host will accept messages temporarily, and pass it along when a lower-numbered host becomes available.</p>
+</div>
+<div class="paragraph">
+<p>Alternate MX sites should have separate Internet connections in order to be most useful. Your ISP can provide this service.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mail-domain">31.7.2. Mail for a Domain<a class="anchor" href="#mail-domain"></a></h3>
+<div class="paragraph">
+<p>When configuring an MTA for a network, any mail sent to hosts in its domain should be diverted to the MTA so that users can receive their mail on the master mail server.</p>
+</div>
+<div class="paragraph">
+<p>To make life easiest, a user account with the same <em>username</em> should exist on both the MTA and the system with the MUA. Use <a href="https://man.freebsd.org/cgi/man.cgi?query=adduser&amp;sektion=8&amp;format=html">adduser(8)</a> to create the user accounts.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In addition to adding local users to the host, there are alternative methods known as virtual users. Programs like <a href="https://www.cyrusimap.org/">Cyrus</a> and <a href="https://www.dovecot.org/">Dovecot</a> can be integrated into MTAs to handle users, mail storage, and also provide access via POP3 and IMAP.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The MTA must be the designated mail exchanger for each workstation on the network. This is done in the DNS configuration with an MX record:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>example.FreeBSD.org	A	204.216.27.XX		; Workstation
+			MX	10 nevdull.FreeBSD.org	; Mailhost</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will redirect mail for the workstation to the MTA no matter where the A record points. The mail is sent to the MX host.</p>
+</div>
+<div class="paragraph">
+<p>This must be configured on a DNS server. If the network does not run its own DNS server, talk to the ISP or DNS provider.</p>
+</div>
+<div class="paragraph">
+<p>The following is an example of virtual email hosting.</p>
+</div>
+<div class="paragraph">
+<p>Consider a customer with the domain <code>customer1.org</code>, where all the mail for <code>customer1.org</code> should be sent to <code>mail.myhost.com</code>.</p>
+</div>
+<div class="paragraph">
+<p>The DNS entry should look like this:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>customer1.org		MX	10	mail.myhost.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An <code>A</code> record is <em>not</em> needed for <code>customer1.org</code> in order to only handle email for that domain. However, running <code>ping</code> against <code>customer1.org</code> will not work unless an <code>A</code> record exists for it.</p>
+</div>
+<div class="paragraph">
+<p>Tell the MTA which domains and/or hostnames it should accept mail for. Either of the following will work for Sendmail:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add the hosts to <span class="filename">/etc/mail/local-host-names</span> when using the <code>FEATURE(use_cw_file)</code>.</p>
+</li>
+<li>
+<p>Add a <code>Cwyour.host.com</code> line to <span class="filename">/etc/sendmail.cf</span>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="outgoing-only">31.7.3. Setting Up to Send Only<a class="anchor" href="#outgoing-only"></a></h3>
+<div class="paragraph">
+<p>There are many instances where one may only want to send mail through a relay. Some examples are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The computer is a desktop machine that needs to use programs such as <a href="https://man.freebsd.org/cgi/man.cgi?query=mail&amp;sektion=1&amp;format=html">mail(1)</a>, using the ISP’s mail relay.</p>
+</li>
+<li>
+<p>The computer is a server that does not handle mail locally, but needs to pass off all mail to a relay for processing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>While any MTA is capable of filling this particular niche, it can be difficult to properly configure a full-featured MTA just to handle offloading mail. Programs such as Sendmail and Postfix are overkill for this use.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, a typical Internet access service agreement may forbid one from running a &#34;mail server&#34;.</p>
+</div>
+<div class="paragraph">
+<p>The easiest way to fulfill those needs is to use the <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a> MTA included in the <a href="#configuring-dragonfly-mail-agent">base system</a>. For systems up to 13.2, need be to installed from ports.</p>
+</div>
+<div class="paragraph">
+<p>In addition to <a href="https://man.freebsd.org/cgi/man.cgi?query=dma&amp;sektion=8&amp;format=html">dma(8)</a>, third-party software can be used to achieve the same, like <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/ssmtp/">mail/ssmtp</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/mail/ssmtp</span>
+<span class="c"># make install replace clean</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once installed, <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/ssmtp/">mail/ssmtp</a> can be configured with <span class="filename">/usr/local/etc/ssmtp/ssmtp.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>root=yourrealemail@example.com
+mailhub=mail.example.com
+rewriteDomain=example.com
+hostname=_HOSTNAME_</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use the real email address for <code>root</code>. Enter the ISP’s outgoing mail relay in place of <code>mail.example.com</code>. Some ISPs call this the &#34;outgoing mail server&#34; or &#34;SMTP server&#34;.</p>
+</div>
+<div class="paragraph">
+<p>Make sure to disable Sendmail, including the outgoing mail service. See <a href="#mail-disable-sendmail">[mail-disable-sendmail]</a> for details.</p>
+</div>
+<div class="paragraph">
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/mail/ssmtp/">mail/ssmtp</a> has some other options available. Refer to the examples in <span class="filename">/usr/local/etc/ssmtp</span> or the manual page of ssmtp for more information.</p>
+</div>
+<div class="paragraph">
+<p>Setting up ssmtp in this manner allows any software on the computer that needs to send mail to function properly, while not violating the ISP’s usage policy or allowing the computer to be hijacked for spamming.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="SMTP-Auth">31.7.4. SMTP Authentication in Sendmail<a class="anchor" href="#SMTP-Auth"></a></h3>
+<div class="paragraph">
+<p>Configuring SMTP authentication on the MTA provides a number of benefits. SMTP authentication adds a layer of security to Sendmail, and provides mobile users who switch hosts the ability to use the same MTA without the need to reconfigure their mail client’s settings each time.</p>
+</div>
+<div class="paragraph">
+<p>Install <a class="package" href="https://cgit.freebsd.org/ports/tree/security/cyrus-sasl2/">security/cyrus-sasl2</a> from the Ports Collection. This port supports a number of compile-time options. For the SMTP authentication method demonstrated in this example, make sure that <code>LOGIN</code> is not disabled.</p>
+</div>
+<div class="paragraph">
+<p>After installing <a class="package" href="https://cgit.freebsd.org/ports/tree/security/cyrus-sasl2/">security/cyrus-sasl2</a>, edit <span class="filename">/usr/local/lib/sasl2/Sendmail.conf</span>, or create it if it does not exist, and add the following line:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>pwcheck_method: saslauthd</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, install <a class="package" href="https://cgit.freebsd.org/ports/tree/security/cyrus-sasl2-saslauthd/">security/cyrus-sasl2-saslauthd</a> and add execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc saslauthd_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, start the saslauthd daemon:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service saslauthd start</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This daemon serves as a broker for Sendmail to authenticate against the FreeBSD <a href="https://man.freebsd.org/cgi/man.cgi?query=passwd&amp;sektion=5&amp;format=html">passwd(5)</a> database. This saves the trouble of creating a new set of usernames and passwords for each user that needs to use SMTP authentication, and keeps the login and mail password the same.</p>
+</div>
+<div class="paragraph">
+<p>Next, edit <span class="filename">/etc/make.conf</span> and add the following lines:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>SENDMAIL_CFLAGS=-I/usr/local/include/sasl -DSASL
+SENDMAIL_LDADD=/usr/local/lib/libsasl2.so</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These lines provide Sendmail the proper configuration options for linking to <a class="package" href="https://cgit.freebsd.org/ports/tree/cyrus-sasl2/">cyrus-sasl2</a> at compile time. Make sure that <a class="package" href="https://cgit.freebsd.org/ports/tree/cyrus-sasl2/">cyrus-sasl2</a> has been installed before recompiling Sendmail.</p>
+</div>
+<div class="paragraph">
+<p>Recompile Sendmail by executing the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/src/lib/libsmutil</span>
+<span class="c"># make cleandir &amp;&amp; make obj &amp;&amp; make</span>
+<span class="c"># cd /usr/src/lib/libsm</span>
+<span class="c"># make cleandir &amp;&amp; make obj &amp;&amp; make</span>
+<span class="c"># cd /usr/src/usr.sbin/sendmail</span>
+<span class="c"># make cleandir &amp;&amp; make obj &amp;&amp; make &amp;&amp; make install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This compile should not have any problems if <span class="filename">/usr/src</span> has not changed extensively and the shared libraries it needs are available.</p>
+</div>
+<div class="paragraph">
+<p>After Sendmail has been compiled and reinstalled, edit <span class="filename">/etc/mail/freebsd.mc</span> or the local <span class="filename">.mc</span>. Many administrators choose to use the output from <a href="https://man.freebsd.org/cgi/man.cgi?query=hostname&amp;sektion=1&amp;format=html">hostname(1)</a> as the name of <span class="filename">.mc</span> for uniqueness.</p>
+</div>
+<div class="paragraph">
+<p>Add these lines:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dnl set SASL options
+TRUST_AUTH_MECH(`GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN&#39;)dnl
+define(`confAUTH_MECHANISMS&#39;, `GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN&#39;)dnl</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These options configure the different methods available to Sendmail for authenticating users. To use a method other than pwcheck, refer to the Sendmail documentation.</p>
+</div>
+<div class="paragraph">
+<p>Finally, run <a href="https://man.freebsd.org/cgi/man.cgi?query=make&amp;sektion=1&amp;format=html">make(1)</a> while in <span class="filename">/etc/mail</span>. That will run the new <span class="filename">.mc</span> and create a <span class="filename">.cf</span> named either <span class="filename">freebsd.cf</span> or the name used for the local <span class="filename">.mc</span>.</p>
+</div>
+<div class="paragraph">
+<p>Then, run <code>make install restart</code>, which will copy the file to <span class="filename">sendmail.cf</span>, and properly restart Sendmail.</p>
+</div>
+<div class="paragraph">
+<p>For more information about this process, refer to <span class="filename">/etc/mail/Makefile</span>.</p>
+</div>
+<div class="paragraph">
+<p>To test the configuration, use a MUA to send a test message. For further investigation, set the <code>LogLevel</code> of Sendmail to <code>13</code> and watch <span class="filename">/var/log/maillog</span> for any errors.</p>
+</div>
+<div class="paragraph">
+<p>For more information, refer to <a href="http://www.sendmail.org/~ca/email/auth.html">SMTP authentication</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn/books/handbook/ppp-and-slip class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn/books/handbook/network-servers  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mail-synopsis">31.1. Synopsis</a></li>
+    <li><a href="#mail-using">31.2. Mail Components</a></li>
+    <li><a href="#dragonFly-mail-agent">31.3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="#sendmail">31.4. Sendmail</a></li>
+    <li><a href="#mail-changingmta">31.5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="#mail-agents">31.6. Mail User Agents</a></li>
+    <li><a href="#mail-advanced">31.7. Advanced Topics</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

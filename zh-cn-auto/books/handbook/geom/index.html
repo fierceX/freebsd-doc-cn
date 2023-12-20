@@ -1,0 +1,3055 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="在 FreeBSD 中， GEOM 框架通过使用提供者（或者在 /dev 中的磁盘设备）允许访问和控制类别，例如主引导记录和 BSD 标签。"/>
+  <meta name="keywords" content="91, 34, 71, 69, 79, 77, 34, 44, 32, 34, 82, 65, 73, 68, 34, 44, 32, 34, 82, 65, 73, 68, 48, 34, 44, 32, 34, 82, 65, 73, 68, 49, 34, 44, 32, 34, 82, 65, 73, 68, 51, 34, 44, 32, 34, 83, 116, 114, 105, 112, 105, 110, 103, 34, 44, 32, 34, 98, 115, 100, 108, 97, 98, 101, 108, 34, 44, 32, 34, 110, 101, 119, 102, 115, 34, 44, 32, 34, 108, 97, 98, 101, 108, 108, 105, 110, 103, 34, 44, 32, 34, 85, 70, 83, 34, 44, 32, 34, 106, 111, 117, 114, 110, 97, 108, 105, 110, 103, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/" />
+
+  <title>第 21 章 GEOM ：模块化磁盘转换框架 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 21 章 GEOM ：模块化磁盘转换框架" />
+    <meta property="og:description" content="在 FreeBSD 中， GEOM 框架通过使用提供者（或者在 /dev 中的磁盘设备）允许访问和控制类别，例如主引导记录和 BSD 标签。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/geom\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 21 章 GEOM ：模块化磁盘转换框架</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="geom-synopsis">21.1. 简介<a class="anchor" href="#geom-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在 FreeBSD 中， GEOM 框架通过使用提供者（或者说是位于 <code>/dev</code> 目录下的磁盘设备）允许访问和控制类别，例如主引导记录和 BSD 标签。通过支持各种软件 RAID 配置， GEOM 可以透明地提供对操作系统和操作系统工具的访问。</p>
+</div>
+<div class="paragraph">
+<p>本章介绍了在 FreeBSD 中使用 GEOM 框架下的磁盘。这包括使用该框架进行配置的主要 RAID 控制工具。本章不是关于 RAID 配置的权威指南，只讨论了 GEOM 支持的 RAID 分类。</p>
+</div>
+<div class="paragraph">
+<p>阅读完本章后，您将会了解：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>GEOM 提供哪种类型的 RAID 支持？</p>
+</li>
+<li>
+<p>如何使用基本工具来配置、维护和操作各种 RAID 级别。</p>
+</li>
+<li>
+<p>如何通过 GEOM 镜像、条带化、加密和远程连接磁盘设备。</p>
+</li>
+<li>
+<p>如何排除与 GEOM 框架连接的磁盘问题。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在阅读本章之前，您应该：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解 FreeBSD 如何处理磁盘设备（参考： disks[disks ,存储] ）。</p>
+</li>
+<li>
+<p>了解如何配置和安装新的内核（参考： kernelconfig[kernelconfig ，配置 FreeBSD 内核] ）。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="geom-striping">21.2. RAID0 - 条带化<a class="anchor" href="#geom-striping"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>条带化将多个磁盘驱动器合并为一个卷。可以通过使用硬件 RAID 控制器来执行条带化。 GEOM 磁盘子系统提供了对磁盘条带化的软件支持，也称为 RAID0 ，无需 RAID 磁盘控制器。</p>
+</div>
+<div class="paragraph">
+<p>在 RAID0 中，数据被分割成块，并写入阵列中的所有驱动器。如下图所示， RAID0 可以同时将 64k 写入阵列中的四个驱动器，而不是等待系统将 256k 写入一个磁盘，从而提供更优异的 I/O 性能。通过使用多个磁盘控制器，可以进一步提升性能。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/geom/striping.png" alt="磁盘条带化示意图"/>
+</div>
+</div>
+<div class="paragraph">
+<p>RAID0 条带中的每个磁盘必须具有相同的大小，因为 I/O 请求会交错地并行读取或写入多个磁盘。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>RAID0 不提供任何冗余功能。这意味着如果阵列中的一个磁盘故障，所有磁盘上的数据都会丢失。如果数据很重要，请实施定期将备份保存到远程系统或设备的备份策略。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>使用普通磁盘在 FreeBSD 系统上创建基于 GEOM 的 RAID0 软件的过程如下。创建条带后，可以参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=gstripe&amp;sektion=8&amp;format=html">gstripe(8)</a> 了解如何控制现有的条带的更多信息。</p>
+</div>
+<div class="sidebarblock procedure">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>过程：创建一个未格式化的 ATA 磁盘条带 *</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>加载 <span class="filename">geom_stripe.ko</span> 模块：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload geom_stripe</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>确保存在一个合适的挂载点。如果该卷将成为根分区，则暂时使用另一个挂载点，例如 <span class="filename">/mnt</span> 。</p>
+</li>
+<li>
+<p>确定将要进行条带化的磁盘的设备名称，并创建新的条带设备。例如，要对两个未使用和未分区的 ATA 磁盘进行条带化，设备名称分别为 <code>/dev/ad2</code> 和 <code>/dev/ad3</code> ：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gstripe label -v st0 /dev/ad2 /dev/ad3</span>
+Metadata value stored on /dev/ad2.
+Metadata value stored on /dev/ad3.
+Done.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>在新卷上编写一个标准标签，也称为分区表，并安装默认的引导代码：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bsdlabel -wB /dev/stripe/st0</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>在 <span class="filename">/dev/stripe</span> 中，除了 <span class="filename">st0</span> 之外，此过程应该创建另外两个设备。它们分别是 <span class="filename">st0a</span> 和 <span class="filename">st0c</span> 。此时，可以使用 <code>newfs</code> 在 <span class="filename">st0a</span> 上创建一个 UFS 文件系统：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># newfs -U /dev/stripe/st0a</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>许多数字将在屏幕上滑动，几秒钟后，过程将完成。卷已创建并准备好挂载。</p>
+</div>
+</li>
+<li>
+<p>手动挂载创建的磁盘条带：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount /dev/stripe/st0a /mnt</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>要在引导过程中自动挂载此条带文件系统，请将卷信息放置在 [/etc/fstab] 中。在此示例中，创建了一个永久挂载点，命名为 [stripe] 。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /stripe</span>
+<span class="c"># echo &#34;/dev/stripe/st0a /stripe ufs rw 2 2&#34; \</span>
+<span class="gp">&gt;&gt; </span>/etc/fstab</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>在系统初始化期间，还必须自动加载 <span class="filename">geom_stripe.ko</span> 模块，方法是在 <span class="filename">/boot/loader.conf</span> 文件中添加一行。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;geom_stripe_load=&#34;YES&#34;&#39; &gt;&gt; /boot/loader.conf</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="geom-mirror">21.3. RAID1 - 镜像<a class="anchor" href="#geom-mirror"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RAID1 ，或者称为镜像，是一种将相同数据写入多个磁盘驱动器的技术。镜像通常用于防止由于驱动器故障而导致的数据丢失。镜像中的每个驱动器都包含数据的完全相同副本。当一个驱动器故障时，镜像仍然可以工作，从仍在运行的驱动器提供数据。计算机继续运行，管理员有时间替换故障的驱动器而不会中断用户。</p>
+</div>
+<div class="paragraph">
+<p>这些示例中展示了两种常见情况。第一种情况是使用两个新的驱动器创建一个镜像，并将其作为现有单个驱动器的替代品。第二个示例是在一个新的驱动器上创建一个镜像，将旧驱动器的数据复制到其中，然后将旧驱动器插入到镜像中。虽然这个过程稍微复杂一些，但只需要一个新的驱动器。</p>
+</div>
+<div class="paragraph">
+<p>传统上，镜像中的两个驱动器在型号和容量上是相同的，但是 <a href="https://man.freebsd.org/cgi/man.cgi?query=gmirror&amp;sektion=8&amp;format=html">gmirror(8)</a> 并不要求如此。使用不同驱动器创建的镜像的容量将等于镜像中最小驱动器的容量。较大驱动器上的额外空间将不会被使用。后来插入镜像的驱动器必须至少具有与镜像中已有的最小驱动器相同的容量。</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>这里展示的镜像过程是非破坏性的，但是像任何重要的磁盘操作一样，请先进行完整备份。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在这些过程中，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 来复制文件系统，但它无法在使用软更新日志的文件系统上工作。请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=tunefs&amp;sektion=8&amp;format=html">tunefs(8)</a> 以了解有关检测和禁用软更新日志的信息。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="geom-mirror-metadata">21.3.1. 元数据问题<a class="anchor" href="#geom-mirror-metadata"></a></h3>
+<div class="paragraph">
+<p>许多磁盘系统将元数据存储在每个磁盘的末尾。在将磁盘重新用于镜像之前，应该擦除旧的元数据。大多数问题是由两种特定类型的残留元数据引起的： GPT 分区表和来自先前镜像的旧元数据。</p>
+</div>
+<div class="paragraph">
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 命令来擦除 GPT 元数据。这个例子会从磁盘 ada8 上擦除主 GPT 分区表和备份 GPT 分区表。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart destroy -F ada8</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gmirror&amp;sektion=8&amp;format=html">gmirror(8)</a> 命令一步完成从活动镜像中移除磁盘并擦除元数据。在这个例子中，磁盘 ada8 从活动镜像 gm4 中被移除。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror remove gm4 ada8</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果镜像没有运行，但旧的镜像元数据仍然存在于磁盘上，请使用 <code>gmirror clear</code> 命令将其删除：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror clear ada8</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=gmirror&amp;sektion=8&amp;format=html">gmirror(8)</a> 在磁盘的末尾存储一个块的元数据。由于 GPT 分区方案也在磁盘末尾存储元数据，因此不建议使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gmirror&amp;sektion=8&amp;format=html">gmirror(8)</a> 来镜像整个 GPT 磁盘。这里使用 MBR 分区，因为它只在磁盘的开头存储分区表，不会与镜像的元数据冲突。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-mirror-two-new-disks">21.3.2. 使用两个新硬盘创建镜像<a class="anchor" href="#geom-mirror-two-new-disks"></a></h3>
+<div class="paragraph">
+<p>在这个例子中， FreeBSD 已经安装在一个单独的磁盘上， <span class="filename">ada0</span> 。系统已经连接了两个新的磁盘， <span class="filename">ada1</span> 和 <span class="filename">ada2</span> 。将在这两个磁盘上创建一个新的镜像，并用它来替换旧的单个磁盘。</p>
+</div>
+<div class="paragraph">
+<p>内核模块 <span class="filename">geom_mirror.ko</span> 必须在内核中构建或在启动或运行时加载。现在手动加载内核模块：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror load</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用两个新的硬盘创建镜像：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror label -v gm0 /dev/ada1 /dev/ada2</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="filename">gm0</span> 是用户选择的设备名称，用于指定新镜像。在镜像启动后，该设备名称将出现在 <span class="filename">/dev/mirror/</span> 中。</p>
+</div>
+<div class="paragraph">
+<p>现在可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 在镜像上创建 MBR 和 bsdlabel 分区表。这个例子使用传统的文件系统布局，包括用于 [/] 、交换空间、 [/var] 、 [/tmp] 和 [/usr] 的分区。也可以只使用一个 [/] 和一个交换空间分区。</p>
+</div>
+<div class="paragraph">
+<p>镜像上的分区不必与现有磁盘上的分区大小相同，但必须足够大以容纳已经存在于 ada0 上的所有数据。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart create -s MBR mirror/gm0</span>
+<span class="c"># gpart add -t freebsd -a 4k mirror/gm0</span>
+<span class="c"># gpart show mirror/gm0</span>
+<span class="gp">=&gt;       </span>63  156301423  mirror/gm0  MBR  <span class="o">(</span>74G<span class="o">)</span>
+         63         63                    - free -  <span class="o">(</span>31k<span class="o">)</span>
+        126  156301299                 1  freebsd  <span class="o">(</span>74G<span class="o">)</span>
+  156301425         61                    - free -  <span class="o">(</span>30k<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart create -s BSD mirror/gm0s1</span>
+<span class="c"># gpart add -t freebsd-ufs  -a 4k -s 2g mirror/gm0s1</span>
+<span class="c"># gpart add -t freebsd-swap -a 4k -s 4g mirror/gm0s1</span>
+<span class="c"># gpart add -t freebsd-ufs  -a 4k -s 2g mirror/gm0s1</span>
+<span class="c"># gpart add -t freebsd-ufs  -a 4k -s 1g mirror/gm0s1</span>
+<span class="c"># gpart add -t freebsd-ufs  -a 4k mirror/gm0s1</span>
+<span class="c"># gpart show mirror/gm0s1</span>
+<span class="gp">=&gt;        </span>0  156301299  mirror/gm0s1  BSD  <span class="o">(</span>74G<span class="o">)</span>
+          0          2                      - free -  <span class="o">(</span>1.0k<span class="o">)</span>
+          2    4194304                   1  freebsd-ufs  <span class="o">(</span>2.0G<span class="o">)</span>
+    4194306    8388608                   2  freebsd-swap <span class="o">(</span>4.0G<span class="o">)</span>
+   12582914    4194304                   4  freebsd-ufs  <span class="o">(</span>2.0G<span class="o">)</span>
+   16777218    2097152                   5  freebsd-ufs  <span class="o">(</span>1.0G<span class="o">)</span>
+   18874370  137426928                   6  freebsd-ufs  <span class="o">(</span>65G<span class="o">)</span>
+  156301298          1                      - free -  <span class="o">(</span>512B<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通过在 MBR 中安装引导代码和 bsdlabel ，并设置活动分区，使镜像可引导：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart bootcode -b /boot/mbr mirror/gm0</span>
+<span class="c"># gpart set -a active -i 1 mirror/gm0</span>
+<span class="c"># gpart bootcode -b /boot/boot mirror/gm0s1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在新的镜像上格式化文件系统，并启用软更新。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># newfs -U /dev/mirror/gm0s1a</span>
+<span class="c"># newfs -U /dev/mirror/gm0s1d</span>
+<span class="c"># newfs -U /dev/mirror/gm0s1e</span>
+<span class="c"># newfs -U /dev/mirror/gm0s1f</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=restore&amp;sektion=8&amp;format=html">restore(8)</a> 将原始的 <span class="filename">ada0</span> 磁盘上的文件系统复制到镜像中。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount /dev/mirror/gm0s1a /mnt</span>
+<span class="c"># dump -C16 -b64 -0aL -f - / | (cd /mnt &amp;&amp; restore -rf -)</span>
+<span class="c"># mount /dev/mirror/gm0s1d /mnt/var</span>
+<span class="c"># mount /dev/mirror/gm0s1e /mnt/tmp</span>
+<span class="c"># mount /dev/mirror/gm0s1f /mnt/usr</span>
+<span class="c"># dump -C16 -b64 -0aL -f - /var | (cd /mnt/var &amp;&amp; restore -rf -)</span>
+<span class="c"># dump -C16 -b64 -0aL -f - /tmp | (cd /mnt/tmp &amp;&amp; restore -rf -)</span>
+<span class="c"># dump -C16 -b64 -0aL -f - /usr | (cd /mnt/usr &amp;&amp; restore -rf -)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>编辑 <span class="filename">/mnt/etc/fstab</span> ，将其指向新的镜像文件系统：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># Device		Mountpoint	FStype	Options	Dump	Pass#
+/dev/mirror/gm0s1a	/		ufs	rw	1	1
+/dev/mirror/gm0s1b	none		swap	sw	0	0
+/dev/mirror/gm0s1d	/var		ufs	rw	2	2
+/dev/mirror/gm0s1e	/tmp		ufs	rw	2	2
+/dev/mirror/gm0s1f	/usr		ufs	rw	2	2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果内核模块 <span class="filename">geom_mirror.ko</span> 没有被编译到内核中，需要编辑 <span class="filename">/mnt/boot/loader.conf</span> 文件，在启动时加载该模块：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>geom_mirror_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>重新启动系统以测试新的镜像，并验证所有数据是否已复制。 BIOS 将把镜像视为两个独立的驱动器，而不是一个镜像。由于驱动器是相同的，选择哪个来启动并不重要。</p>
+</div>
+<div class="paragraph">
+<p>如果启动时出现问题，请参阅 <a href="#gmirror-troubleshooting">故障排除</a> 。关闭电源并断开原始的 <span class="filename">ada0</span> 磁盘，可以将其保留为离线备份。</p>
+</div>
+<div class="paragraph">
+<p>在使用中，镜像将表现得就像原始的单个驱动器一样。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-mirror-existing-drive">21.3.3. 使用现有驱动器创建镜像<a class="anchor" href="#geom-mirror-existing-drive"></a></h3>
+<div class="paragraph">
+<p>在这个例子中， FreeBSD 已经安装在一个单独的磁盘上， <span class="filename">ada0</span> 。一个新的磁盘， <span class="filename">ada1</span> ，已经连接到系统上。将在新磁盘上创建一个单磁盘镜像，将现有系统复制到其中，然后将旧磁盘插入到镜像中。这个稍微复杂的过程是必需的，因为 <code>gmirror</code> 需要在每个磁盘的末尾放置一个 512 字节的元数据块，而现有的 <span class="filename">ada0</span> 通常已经分配了所有的空间。</p>
+</div>
+<div class="paragraph">
+<p>加载 <span class="filename">geom_mirror.ko</span> 内核模块：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror load</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <code>diskinfo</code> 命令检查原始磁盘的媒体大小：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># diskinfo -v ada0 | head -n3</span>
+/dev/ada0
+        512             <span class="c"># sectorsize</span>
+        1000204821504   <span class="c"># mediasize in bytes (931G)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在新的磁盘上创建一个镜像。为了确保镜像容量不大于原始的 ada0 驱动器，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gnop&amp;sektion=8&amp;format=html">gnop(8)</a> 创建一个与原始驱动器大小完全相同的虚拟驱动器。这个驱动器不存储任何数据，只用于限制镜像的大小。当 <a href="https://man.freebsd.org/cgi/man.cgi?query=gmirror&amp;sektion=8&amp;format=html">gmirror(8)</a> 创建镜像时，它将限制容量为 gzero.nop 的大小，即使新的 ada1 驱动器有更多的空间。请注意，第二行中的 1000204821504 等于 ada0 的媒体大小，如上面的 diskinfo 所示。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># geom zero load</span>
+<span class="c"># gnop create -s 1000204821504 gzero</span>
+<span class="c"># gmirror label -v gm0 gzero.nop ada1</span>
+<span class="c"># gmirror forget gm0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>由于 <span class="filename">gzero.nop</span> 不存储任何数据，因此镜像设备不会将其视为已连接。镜像设备被告知“忘记”未连接的组件，从而删除对 <span class="filename">gzero.nop</span> 的引用。结果是一个只包含一个磁盘 <span class="filename">ada1</span> 的镜像设备。</p>
+</div>
+<div class="paragraph">
+<p>创建 <span class="filename">gm0</span> 后，查看 <span class="filename">ada0</span> 上的分区表。这个输出来自一个 1TB 的硬盘。如果驱动器末尾有一些未分配的空间，可以直接将内容从 <span class="filename">ada0</span> 复制到新的镜像中。</p>
+</div>
+<div class="paragraph">
+<p>然而，如果输出显示磁盘上的所有空间都已分配，就像下面的列表中所示，那么在磁盘末尾没有可用于 512 字节镜像元数据的空间。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart show ada0</span>
+<span class="gp">=&gt;        </span>63  1953525105        ada0  MBR  <span class="o">(</span>931G<span class="o">)</span>
+          63  1953525105           1  freebsd  <span class="o">[</span>active]  <span class="o">(</span>931G<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这种情况下，必须编辑分区表，将 <span class="filename">mirror/gm0</span> 的容量减少一个扇区。具体操作将在后面解释。</p>
+</div>
+<div class="paragraph">
+<p>无论哪种情况，都应首先使用 <code>gpart backup</code> 和 <code>gpart restore</code> 命令来复制主硬盘上的分区表。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart backup ada0 &gt; table.ada0</span>
+<span class="c"># gpart backup ada0s1 &gt; table.ada0s1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这些命令创建了两个文件， <span class="filename">table.ada0</span> 和 <span class="filename">table.ada0s1</span> 。这个例子是来自一个 1 TB 的硬盘。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cat table.ada0</span>
+MBR 4
+1 freebsd         63 1953525105   <span class="o">[</span>active]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cat table.ada0s1</span>
+BSD 8
+1  freebsd-ufs          0    4194304
+2 freebsd-swap    4194304   33554432
+4  freebsd-ufs   37748736   50331648
+5  freebsd-ufs   88080384   41943040
+6  freebsd-ufs  130023424  838860800
+7  freebsd-ufs  968884224  984640881</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果磁盘末尾没有显示可用空间，则必须将分区和最后一个分区的大小都减小一个扇区。编辑这两个文件，将分区和最后一个分区的大小都减小一个。这些是每个列表中的最后一个数字。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cat table.ada0</span>
+MBR 4
+1 freebsd         63 1953525104   <span class="o">[</span>active]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cat table.ada0s1</span>
+BSD 8
+1  freebsd-ufs          0    4194304
+2 freebsd-swap    4194304   33554432
+4  freebsd-ufs   37748736   50331648
+5  freebsd-ufs   88080384   41943040
+6  freebsd-ufs  130023424  838860800
+7  freebsd-ufs  968884224  984640880</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果磁盘末尾至少有一个扇区未分配，这两个文件可以直接使用，无需修改。</p>
+</div>
+<div class="paragraph">
+<p>现在将分区表恢复到 [mirror/gm0] 中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart restore mirror/gm0 &lt; table.ada0</span>
+<span class="c"># gpart restore mirror/gm0s1 &lt; table.ada0s1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <code>gpart show</code> 命令检查分区表。此示例中，分区表如下： <span class="filename">gm0s1a</span> 用于 <span class="filename">/</span> ， <span class="filename">gm0s1d</span> 用于 <span class="filename">/var</span> ， <span class="filename">gm0s1e</span> 用于 <span class="filename">/usr</span> ， <span class="filename">gm0s1f</span> 用于 <span class="filename">/data1</span> ，以及 <span class="filename">gm0s1g</span> 用于 <span class="filename">/data2</span> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart show mirror/gm0</span>
+<span class="gp">=&gt;        </span>63  1953525104  mirror/gm0  MBR  <span class="o">(</span>931G<span class="o">)</span>
+          63  1953525042           1  freebsd  <span class="o">[</span>active]  <span class="o">(</span>931G<span class="o">)</span>
+  1953525105          62              - free -  <span class="o">(</span>31k<span class="o">)</span>
+
+<span class="c"># gpart show mirror/gm0s1</span>
+<span class="gp">=&gt;         </span>0  1953525042  mirror/gm0s1  BSD  <span class="o">(</span>931G<span class="o">)</span>
+           0     2097152             1  freebsd-ufs  <span class="o">(</span>1.0G<span class="o">)</span>
+     2097152    16777216             2  freebsd-swap  <span class="o">(</span>8.0G<span class="o">)</span>
+    18874368    41943040             4  freebsd-ufs  <span class="o">(</span>20G<span class="o">)</span>
+    60817408    20971520             5  freebsd-ufs  <span class="o">(</span>10G<span class="o">)</span>
+    81788928   629145600             6  freebsd-ufs  <span class="o">(</span>300G<span class="o">)</span>
+   710934528  1242590514             7  freebsd-ufs  <span class="o">(</span>592G<span class="o">)</span>
+  1953525042          63                - free -  <span class="o">(</span>31k<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>切片和最后一个分区都必须在磁盘末尾至少有一个空闲块。</p>
+</div>
+<div class="paragraph">
+<p>在这些新分区上创建文件系统。分区的数量将根据原始磁盘 <span class="filename">ada0</span> 而变化。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># newfs -U /dev/mirror/gm0s1a</span>
+<span class="c"># newfs -U /dev/mirror/gm0s1d</span>
+<span class="c"># newfs -U /dev/mirror/gm0s1e</span>
+<span class="c"># newfs -U /dev/mirror/gm0s1f</span>
+<span class="c"># newfs -U /dev/mirror/gm0s1g</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通过在 MBR 中安装引导代码和 bsdlabel ，并设置活动分区，使镜像可引导：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart bootcode -b /boot/mbr mirror/gm0</span>
+<span class="c"># gpart set -a active -i 1 mirror/gm0</span>
+<span class="c"># gpart bootcode -b /boot/boot mirror/gm0s1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 <span class="filename">/etc/fstab</span> 调整为使用镜像上的新分区。首先通过将其复制到 <span class="filename">/etc/fstab.orig</span> 来备份此文件。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cp /etc/fstab /etc/fstab.orig</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>编辑 [/etc/fstab] 文件，将 [/dev/ada0] 替换为 [mirror/gm0] 。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># Device		Mountpoint	FStype	Options	Dump	Pass#
+/dev/mirror/gm0s1a	/		ufs	rw	1	1
+/dev/mirror/gm0s1b	none		swap	sw	0	0
+/dev/mirror/gm0s1d	/var		ufs	rw	2	2
+/dev/mirror/gm0s1e	/usr		ufs	rw	2	2
+/dev/mirror/gm0s1f	/data1		ufs	rw	2	2
+/dev/mirror/gm0s1g	/data2		ufs	rw	2	2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果内核中没有构建 <span class="filename">geom_mirror.ko</span> 内核模块，请编辑 <span class="filename">/boot/loader.conf</span> 文件，在启动时加载它：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>geom_mirror_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=restore&amp;sektion=8&amp;format=html">restore(8)</a> 将原始磁盘上的文件系统复制到镜像上。使用 <code>dump -L</code> 转储的每个文件系统都会首先创建一个快照，这可能需要一些时间。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount /dev/mirror/gm0s1a /mnt</span>
+<span class="c"># dump -C16 -b64 -0aL -f - /    | (cd /mnt &amp;&amp; restore -rf -)</span>
+<span class="c"># mount /dev/mirror/gm0s1d /mnt/var</span>
+<span class="c"># mount /dev/mirror/gm0s1e /mnt/usr</span>
+<span class="c"># mount /dev/mirror/gm0s1f /mnt/data1</span>
+<span class="c"># mount /dev/mirror/gm0s1g /mnt/data2</span>
+<span class="c"># dump -C16 -b64 -0aL -f - /usr | (cd /mnt/usr &amp;&amp; restore -rf -)</span>
+<span class="c"># dump -C16 -b64 -0aL -f - /var | (cd /mnt/var &amp;&amp; restore -rf -)</span>
+<span class="c"># dump -C16 -b64 -0aL -f - /data1 | (cd /mnt/data1 &amp;&amp; restore -rf -)</span>
+<span class="c"># dump -C16 -b64 -0aL -f - /data2 | (cd /mnt/data2 &amp;&amp; restore -rf -)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>重新启动系统，从 <span class="filename">ada1</span> 引导。如果一切正常，系统将从 <span class="filename">mirror/gm0</span> 引导，该镜像现在包含与 <span class="filename">ada0</span> 之前相同的数据。如果启动时出现问题，请参考 <a href="#gmirror-troubleshooting">故障排除</a> 。</p>
+</div>
+<div class="paragraph">
+<p>此时，镜像仍然只由单个 <span class="filename">ada1</span> 磁盘组成。</p>
+</div>
+<div class="paragraph">
+<p>成功从 <span class="filename">mirror/gm0</span> 启动后，最后一步是将 <span class="filename">ada0</span> 插入到镜像中。</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>当 <span class="filename">ada0</span> 被插入到镜像中时，它的原始内容将被来自镜像的数据覆盖。在将 <span class="filename">ada0</span> 添加到镜像之前，请确保 <span class="filename">mirror/gm0</span> 的内容与 <span class="filename">ada0</span> 相同。如果之前使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=restore&amp;sektion=8&amp;format=html">restore(8)</a> 复制的内容与 <span class="filename">ada0</span> 上的内容不一致，请将 <span class="filename">/etc/fstab</span> 恢复为挂载 <span class="filename">ada0</span> 上的文件系统，重新启动，并重新开始整个过程。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror insert gm0 ada0</span>
+GEOM_MIRROR: Device gm0: rebuilding provider ada0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>两个磁盘之间的同步将立即开始。使用 <code>gmirror status</code> 命令查看进度。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror status</span>
+      Name    Status  Components
+mirror/gm0  DEGRADED  ada1 <span class="o">(</span>ACTIVE<span class="o">)</span>
+                      ada0 <span class="o">(</span>SYNCHRONIZING, 64%<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一段时间后，同步将完成。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">GEOM_MIRROR: Device gm0: rebuilding provider ada0 finished.
+<span class="c"># gmirror status</span>
+      Name    Status  Components
+mirror/gm0  COMPLETE  ada1 <span class="o">(</span>ACTIVE<span class="o">)</span>
+                      ada0 <span class="o">(</span>ACTIVE<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="filename">mirror/gm0</span> 现在由两个磁盘 <span class="filename">ada0</span> 和 <span class="filename">ada1</span> 组成，并且它们的内容会自动同步。在使用中， <span class="filename">mirror/gm0</span> 的行为与原始的单个驱动器相同。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="gmirror-troubleshooting">21.3.4. 故障排除<a class="anchor" href="#gmirror-troubleshooting"></a></h3>
+<div class="paragraph">
+<p>如果系统无法启动，可能需要更改 BIOS 设置以从新镜像驱动器中启动。可以使用任何一个镜像驱动器进行引导，因为它们包含相同的数据。</p>
+</div>
+<div class="paragraph">
+<p>如果启动停在这个消息上，说明镜像设备出现了问题：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">Mounting from ufs:/dev/mirror/gm0s1a failed with error 19.
+
+Loader variables:
+  vfs.root.mountfrom<span class="o">=</span>ufs:/dev/mirror/gm0s1a
+  vfs.root.mountfrom.options<span class="o">=</span>rw
+
+Manual root filesystem specification:
+  &lt;fstype&gt;:&lt;device&gt; <span class="o">[</span>options]
+      Mount &lt;device&gt; using filesystem &lt;fstype&gt;
+      and with the specified <span class="o">(</span>optional<span class="o">)</span> option list.
+
+    e.g. ufs:/dev/da0s1a
+        zfs:tank
+        cd9660:/dev/acd0 ro
+          <span class="o">(</span>which is equivalent to: mount -t cd9660 -o ro /dev/acd0 /<span class="o">)</span>
+
+  ?               List valid disk boot devices
+  .               Yield 1 second <span class="o">(</span><span class="k">for </span>background tasks<span class="o">)</span>
+  &lt;empty line&gt;    Abort manual input
+
+mountroot&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>忘记在 <code>/boot/loader.conf</code> 中加载 <code>geom_mirror.ko</code> 模块可能会导致这个问题。要修复它，从 FreeBSD 安装介质启动，并在第一个提示处选择 <code>Shell</code> 。然后加载镜像模块并挂载镜像设备：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror load</span>
+<span class="c"># mount /dev/mirror/gm0s1a /mnt</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>编辑 [/mnt/boot/loader.conf] 文件，在其中添加一行代码以加载镜像模块：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>geom_mirror_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>保存文件并重新启动。</p>
+</div>
+<div class="paragraph">
+<p>导致“错误 19 ”的其他问题需要更多的努力来修复。虽然系统应该从 <span class="filename">ada0</span> 启动，但如果 <span class="filename">/etc/fstab</span> 不正确，将会出现选择 shell 的另一个提示。在引导加载程序提示符处输入 <code>ufs:/dev/ada0s1a</code> ，然后按下 <kbd>Enter</kbd> 。撤消 <span class="filename">/etc/fstab</span> 中的编辑，然后将文件系统从原始磁盘 (<span class="filename">ada0</span>) 挂载，而不是从镜像挂载。重新启动系统，然后再次尝试该过程。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">Enter full pathname of shell or RETURN <span class="k">for</span> /bin/sh:
+<span class="c"># cp /etc/fstab.orig /etc/fstab</span>
+<span class="c"># reboot</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_从磁盘故障中恢复">21.3.5. 从磁盘故障中恢复<a class="anchor" href="#_从磁盘故障中恢复"></a></h3>
+<div class="paragraph">
+<p>磁盘镜像的好处是，即使一个磁盘发生故障，镜像也不会丢失任何数据。在上面的例子中，如果 <span class="filename">ada0</span> 失效，镜像将继续工作，并从剩余的工作驱动器 <span class="filename">ada1</span> 提供数据。</p>
+</div>
+<div class="paragraph">
+<p>要替换故障的驱动器，请关闭系统并将故障的驱动器物理上替换为容量相等或更大的新驱动器。制造商在以千兆字节为单位评估驱动器时使用了一些任意的值，唯一真正确定的方法是比较 <code>diskinfo -v</code> 显示的扇区总数。比镜像容量更大的驱动器也可以工作，尽管新驱动器上的额外空间将不会被使用。</p>
+</div>
+<div class="paragraph">
+<p>在计算机重新启动后，镜像将以“降级”模式运行，只有一个驱动器。镜像被告知忘记当前未连接的驱动器。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror forget gm0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <a href="#geom-mirror-metadata">元数据问题</a> 中的说明清除替换磁盘上的任何旧元数据。然后将替换磁盘（此示例中为 <span class="filename">ada4</span> ）插入到镜像中。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gmirror insert gm0 /dev/ada4</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当新驱动器插入到镜像中时，重新同步过程开始。将镜像数据复制到新驱动器可能需要一段时间。在复制过程中，镜像的性能将大大降低，因此最好在计算机需求较低时插入新驱动器。</p>
+</div>
+<div class="paragraph">
+<p>可以使用 <code>gmirror status</code> 来监视进度，它会显示正在同步的驱动器以及完成的百分比。在重新同步期间，状态将显示为 <code>DEGRADED</code> ，当过程完成时，状态将变为 <code>COMPLETE</code> 。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验<a class="anchor" href="#geom-raid3"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RAID3 是一种将多个磁盘驱动器组合成一个具有专用奇偶校验磁盘的卷的方法。在 RAID3 系统中，数据被分割成多个字节，这些字节被写入阵列中的所有磁盘，除了一个充当专用奇偶校验磁盘的磁盘。这意味着从 RAID3 实现中读取磁盘时，会访问阵列中的所有磁盘。通过使用多个磁盘控制器，可以提高性能。 RAID3 阵列提供了 1 个驱动器的容错能力，同时提供了总容量为所有磁盘的总容量的 1-1/n 倍的容量，其中 n 是阵列中的硬盘数量。这种配置主要适用于存储较大的数据，如多媒体文件。</p>
+</div>
+<div class="paragraph">
+<p>构建 RAID3 阵列至少需要 3 个物理硬盘。每个硬盘的大小必须相同，因为 I/O 请求会交错地并行读取或写入多个硬盘。此外，由于 RAID3 的特性，驱动器的数量必须等于 3 、 5 、 9 、 17 等，即 2 ^ n + 1 。</p>
+</div>
+<div class="paragraph">
+<p>本节演示了如何在 FreeBSD 系统上创建一个软件 RAID3 。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>虽然理论上可以在 FreeBSD 上从 RAID3 阵列引导，但这种配置并不常见，也不建议使用。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="_创建一个专用的_raid3_阵列">21.4.1. 创建一个专用的 RAID3 阵列<a class="anchor" href="#_创建一个专用的_raid3_阵列"></a></h3>
+<div class="paragraph">
+<p>在 FreeBSD 中，对 RAID3 的支持是通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid3&amp;sektion=8&amp;format=html">graid3(8)</a> GEOM 类实现的。在 FreeBSD 上创建一个专用的 RAID3 阵列需要以下步骤。</p>
+</div>
+<div class="olist arabic procedure">
+<ol class="arabic">
+<li>
+<p>首先，通过执行以下命令之一加载内核模块 <span class="filename">geom_raid3.ko</span> ：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid3 load</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload geom_raid3</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>确保存在一个合适的挂载点。此命令将创建一个新的目录作为挂载点使用：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /multimedia</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>确定要添加到阵列中的磁盘的设备名称，并创建新的 RAID3 设备。最后列出的设备将作为专用奇偶校验磁盘。此示例使用三个未分区的 ATA 驱动器： <span class="filename">ada1</span> 和 <span class="filename">ada2</span> 用于数据，以及 <span class="filename">ada3</span> 用于奇偶校验。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid3 label -v gr0 /dev/ada1 /dev/ada2 /dev/ada3</span>
+Metadata value stored on /dev/ada1.
+Metadata value stored on /dev/ada2.
+Metadata value stored on /dev/ada3.
+Done.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>将新创建的 <span class="filename">gr0</span> 设备进行分区，并在其上放置一个 UFS 文件系统：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart create -s GPT /dev/raid3/gr0</span>
+<span class="c"># gpart add -t freebsd-ufs /dev/raid3/gr0</span>
+<span class="c"># newfs -j /dev/raid3/gr0p1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>许多数字将在屏幕上滑动，经过一段时间后，过程将完成。卷已创建并准备好挂载：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount /dev/raid3/gr0p1 /multimedia/</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>RAID3 阵列现在可以使用了。</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>需要进行额外的配置才能在系统重新启动后保留此设置。</p>
+</div>
+<div class="olist arabic procedure">
+<ol class="arabic">
+<li>
+<p>在挂载阵列之前，必须加载 <span class="filename">geom_raid3.ko</span> 模块。为了在系统初始化期间自动加载内核模块，请将以下行添加到 <span class="filename">/boot/loader.conf</span> 文件中：</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>geom_raid3_load=&#34;YES&#34;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>在系统启动过程中，必须将以下卷信息添加到 <span class="filename">/etc/fstab</span> 中，以便自动挂载阵列的文件系统：</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/raid3/gr0p1	/multimedia	ufs	rw	2	2</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="geom-graid">21.5. 软件 RAID 设备<a class="anchor" href="#geom-graid"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>一些主板和扩展卡会添加一些简单的硬件，通常只是一个 ROM ，使得计算机可以从 RAID 阵列启动。启动后，对 RAID 阵列的访问由运行在计算机主处理器上的软件处理。这种“硬件辅助软件 RAID ”提供了不依赖于任何特定操作系统的 RAID 阵列，并且在加载操作系统之前就可以正常工作。</p>
+</div>
+<div class="paragraph">
+<p>根据所使用的硬件，支持多个级别的 RAID 。有关完整列表，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 需要 <span class="filename">geom_raid.ko</span> 内核模块，该模块从 FreeBSD 9.1 开始包含在 <span class="filename">GENERIC</span> 内核中。如果需要，可以使用 <code>graid load</code> 命令手动加载该模块。</p>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-creating">21.5.1. 创建一个数组<a class="anchor" href="#geom-graid-creating"></a></h3>
+<div class="paragraph">
+<p>软件 RAID 设备通常在计算机启动时按下特殊键进入菜单。该菜单可用于创建和删除 RAID 阵列。 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 也可以直接从命令行创建阵列。</p>
+</div>
+<div class="paragraph">
+<p><code>graid label</code> 用于创建一个新的阵列。本例中使用的主板具有 Intel 软件 RAID 芯片组，因此指定了 Intel 元数据格式。新的阵列被赋予了一个标签 <span class="filename">gm0</span> ，它是一个镜像（ RAID1 ），并使用驱动器 <span class="filename">ada0</span> 和 <span class="filename">ada1</span> 。</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>当将驱动器制作成新的阵列时，一些空间将被覆盖。请先备份现有数据！</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid label Intel gm0 RAID1 ada0 ada1</span>
+GEOM_RAID: Intel-a29ea104: Array Intel-a29ea104 created.
+GEOM_RAID: Intel-a29ea104: Disk ada0 state changed from NONE to ACTIVE.
+GEOM_RAID: Intel-a29ea104: Subdisk gm0:0-ada0 state changed from NONE to ACTIVE.
+GEOM_RAID: Intel-a29ea104: Disk ada1 state changed from NONE to ACTIVE.
+GEOM_RAID: Intel-a29ea104: Subdisk gm0:1-ada1 state changed from NONE to ACTIVE.
+GEOM_RAID: Intel-a29ea104: Array started.
+GEOM_RAID: Intel-a29ea104: Volume gm0 state changed from STARTING to OPTIMAL.
+Intel-a29ea104 created
+GEOM_RAID: Intel-a29ea104: Provider raid/r0 <span class="k">for </span>volume gm0 created.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>状态检查显示新的镜像已经准备就绪，可以使用了。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid status</span>
+   Name   Status  Components
+raid/r0  OPTIMAL  ada0 <span class="o">(</span>ACTIVE <span class="o">(</span>ACTIVE<span class="o">))</span>
+                  ada1 <span class="o">(</span>ACTIVE <span class="o">(</span>ACTIVE<span class="o">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>数组设备出现在 [/dev/raid/]# 目录中。第一个数组被称为 [r0]# 。如果存在其他数组，它们将被称为 [r1]# 、 [r2]# 等等。</p>
+</div>
+<div class="paragraph">
+<p>某些设备上的 BIOS 菜单可以创建带有特殊字符的数组名称。为了避免这些特殊字符带来的问题，数组被赋予简单的编号名称，例如 <span class="filename">r0</span> 。要显示实际的标签，例如上面的示例中的 <span class="filename">gm0</span> ，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 命令。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl kern.geom.raid.name_format=1</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-volumes">21.5.2. 多个卷<a class="anchor" href="#geom-graid-volumes"></a></h3>
+<div class="paragraph">
+<p>一些软件 RAID 设备支持在阵列上创建多个卷。卷的工作方式类似于分区，允许将物理驱动器上的空间分割并以不同的方式使用。例如， Intel 软件 RAID 设备支持两个卷。此示例创建一个 40G 的镜像卷，用于安全存储操作系统，然后是一个 20G 的 RAID0 （条带）卷，用于快速临时存储。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid label -S 40G Intel gm0 RAID1 ada0 ada1</span>
+<span class="c"># graid add -S 20G gm0 RAID0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>卷在 <code>/dev/raid/</code> 目录下以额外的 <code>.filename</code><mark>rX</mark> 条目显示。一个包含两个卷的阵列将显示 <code>.filename</code><mark>r0</mark> 和 <code>.filename</code><mark>r1</mark> 。</p>
+</div>
+<div class="paragraph">
+<p>请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> ，了解不同软件 RAID 设备支持的卷数。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-converting">21.5.3. 将单个驱动器转换为镜像<a class="anchor" href="#geom-graid-converting"></a></h3>
+<div class="paragraph">
+<p>在特定条件下，可以将现有的单个驱动器转换为 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 阵列而无需重新格式化。为了在转换过程中避免数据丢失，现有的驱动器必须满足以下最低要求：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>驱动器必须使用 MBR 分区方案进行分区。 GPT 或其他在驱动器末尾具有元数据的分区方案将被 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 元数据覆盖和损坏。</p>
+</li>
+<li>
+<p>驱动器末尾必须有足够的未分区和未使用空间来容纳 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 元数据。这些元数据的大小各不相同，但最大的占用 64 M ，因此建议至少有这么多的可用空间。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>如果驱动器符合这些要求，请先进行完整备份。然后使用该驱动器创建一个单驱动器镜像：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid label Intel gm0 RAID1 ada0 NONE</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 元数据被写入未使用空间的驱动器末尾。现在可以将第二个驱动器插入到镜像中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid insert raid/r0 ada1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>原始驱动器的数据将立即开始复制到第二个驱动器。在复制完成之前，镜像将以降级状态运行。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-inserting">21.5.4. 将新驱动器插入阵列中<a class="anchor" href="#geom-graid-inserting"></a></h3>
+<div class="paragraph">
+<p>可以将驱动器插入到阵列中，作为替换已经故障或丢失的驱动器。如果没有故障或丢失的驱动器，新的驱动器将成为备用驱动器。例如，将新的驱动器插入到工作中的两个驱动器的镜像中，将得到一个带有一个备用驱动器的两个驱动器的镜像，而不是一个三个驱动器的镜像。</p>
+</div>
+<div class="paragraph">
+<p>在镜像阵列的示例中，数据立即开始复制到新插入的驱动器上。新驱动器上的任何现有信息都将被覆盖。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid insert raid/r0 ada1</span>
+GEOM_RAID: Intel-a29ea104: Disk ada1 state changed from NONE to ACTIVE.
+GEOM_RAID: Intel-a29ea104: Subdisk gm0:1-ada1 state changed from NONE to NEW.
+GEOM_RAID: Intel-a29ea104: Subdisk gm0:1-ada1 state changed from NEW to REBUILD.
+GEOM_RAID: Intel-a29ea104: Subdisk gm0:1-ada1 rebuild start at 0.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-removing">21.5.5. 从阵列中移除驱动器<a class="anchor" href="#geom-graid-removing"></a></h3>
+<div class="paragraph">
+<p>可以永久从阵列中移除单个驱动器，并擦除其元数据：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid remove raid/r0 ada1</span>
+GEOM_RAID: Intel-a29ea104: Disk ada1 state changed from ACTIVE to OFFLINE.
+GEOM_RAID: Intel-a29ea104: Subdisk gm0:1-[unknown] state changed from ACTIVE to NONE.
+GEOM_RAID: Intel-a29ea104: Volume gm0 state changed from OPTIMAL to DEGRADED.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-stopping">21.5.6. 停止数组<a class="anchor" href="#geom-graid-stopping"></a></h3>
+<div class="paragraph">
+<p>可以在不删除驱动器上的元数据的情况下停止数组。当系统启动时，数组将重新启动。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid stop raid/r0</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-status">21.5.7. 检查数组状态<a class="anchor" href="#geom-graid-status"></a></h3>
+<div class="paragraph">
+<p>数组状态可以随时检查。在上面的示例中，当一个驱动器被添加到镜像中后，数据将从原始驱动器复制到新驱动器。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid status</span>
+   Name    Status  Components
+raid/r0  DEGRADED  ada0 <span class="o">(</span>ACTIVE <span class="o">(</span>ACTIVE<span class="o">))</span>
+                   ada1 <span class="o">(</span>ACTIVE <span class="o">(</span>REBUILD 28%<span class="o">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>某些类型的阵列，例如 <code>RAID0</code> 或 <code>CONCAT</code> ，如果磁盘故障，可能不会在状态报告中显示。要查看这些部分故障的阵列，请添加 <code>-ga</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid status -ga</span>
+          Name  Status  Components
+Intel-e2d07d9a  BROKEN  ada6 <span class="o">(</span>ACTIVE <span class="o">(</span>ACTIVE<span class="o">))</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-deleting">21.5.8. 删除数组<a class="anchor" href="#geom-graid-deleting"></a></h3>
+<div class="paragraph">
+<p>通过删除数组中的所有卷，可以销毁数组。当删除最后一个存在的卷时，数组将停止，并且从驱动器中删除元数据。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid delete raid/r0</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="geom-graid-unexpected">21.5.9. 删除意外的数组<a class="anchor" href="#geom-graid-unexpected"></a></h3>
+<div class="paragraph">
+<p>驱动器可能意外地包含 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 元数据，这可能是由于先前的使用或制造商的测试。 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 将检测到这些驱动器并创建一个阵列，从而干扰对单个驱动器的访问。要删除不需要的元数据：</p>
+</div>
+<div class="olist arabic procedure">
+<ol class="arabic">
+<li>
+<p>启动系统。在启动菜单中，选择 <code>2</code> 进入加载器提示符。输入：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">OK <span class="nb">set </span>kern.geom.raid.enable<span class="o">=</span>0
+OK boot</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>系统将禁用 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 启动。</p>
+</div>
+</li>
+<li>
+<p>备份受影响驱动器上的所有数据。</p>
+</li>
+<li>
+<p>作为一种解决方法，可以通过添加来禁用 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 阵列检测。</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.geom.raid.enable=0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>到 <span class="filename">/boot/loader.conf</span> 。</p>
+</div>
+<div class="paragraph">
+<p>要永久删除受影响驱动器上的 <a href="https://man.freebsd.org/cgi/man.cgi?query=graid&amp;sektion=8&amp;format=html">graid(8)</a> 元数据，请启动 FreeBSD 安装 CD-ROM 或内存棒，并选择 <code>Shell</code> 。使用 <code>status</code> 命令找到阵列的名称，通常为 <code>raid/r0</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid status</span>
+   Name   Status  Components
+raid/r0  OPTIMAL  ada0 <span class="o">(</span>ACTIVE <span class="o">(</span>ACTIVE<span class="o">))</span>
+                  ada1 <span class="o">(</span>ACTIVE <span class="o">(</span>ACTIVE<span class="o">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>按名称删除卷：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># graid delete raid/r0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果显示了多个卷，请为每个卷重复此过程。在删除最后一个阵列后，卷将被销毁。</p>
+</div>
+<div class="paragraph">
+<p>重新启动并验证数据，如果需要的话，从备份中恢复。在元数据被删除后，还可以删除 <span class="filename">/boot/loader.conf</span> 中的 <code>kern.geom.raid.enable = 0</code> 条目。</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。<a class="anchor" href="#geom-ggate"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GEOM 提供了一种简单的机制，通过使用 GEOM Gate 网络守护进程 ggated ，可以远程访问诸如磁盘、 CD 和文件系统等设备。拥有设备的系统运行服务器守护进程，处理客户端使用 ggatec 发出的请求。设备不应包含任何敏感数据，因为客户端和服务器之间的连接没有加密。</p>
+</div>
+<div class="paragraph">
+<p>与 NFS 类似， ggated 也使用 exports 文件进行配置。该文件指定了哪些系统被允许访问导出的资源以及它们所提供的访问级别。例如，要给客户端 <code>192.168.1.5</code> 对第一个 SCSI 磁盘的第四个分区进行读写访问权限，可以在 <code>/etc/gg.exports</code> 文件中添加以下行：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>192.168.1.5 RW /dev/da0s4d</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在导出设备之前，请确保它当前没有挂载。然后，启动 ggated ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ggated</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有几个选项可用于指定备用的监听端口或更改 exports 文件的默认位置。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ggated&amp;sektion=8&amp;format=html">ggated(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>要在客户端机器上访问导出的设备，首先使用 <code>ggatec</code> 指定服务器的 IP 地址和导出设备的设备名称。如果成功，该命令将显示一个要挂载的 <code>ggate</code> 设备名称。将指定的设备名称挂载到一个空闲的挂载点上。此示例连接到 <code>192.168.1.1</code> 上的 <code>/dev/da0s4d</code> 分区，然后将 <code>/dev/ggate0</code> 挂载到 <code>/mnt</code> 上：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ggatec create -o rw 192.168.1.1 /dev/da0s4d</span>
+ggate0
+<span class="c"># mount /dev/ggate0 /mnt</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在可以通过客户端上的 <span class="filename">/mnt</span> 访问服务器上的设备。有关 <code>ggatec</code> 的更多详细信息和一些使用示例，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ggatec&amp;sektion=8&amp;format=html">ggatec(8)</a> 。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果设备当前已在服务器或网络上的任何其他客户端上挂载，则挂载将失败。如果需要同时访问网络资源，请使用 NFS 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>当设备不再需要时，使用 <code>umount</code> 命令卸载它，以便资源可以供其他客户端使用。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="geom-glabel">21.7. 标记磁盘设备<a class="anchor" href="#geom-glabel"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在系统初始化过程中， FreeBSD 内核会在发现设备时创建设备节点。这种探测设备的方法会引发一些问题。例如，如果通过 USB 添加了一个新的磁盘设备，那么很可能会将一个闪存设备分配为 <span class="filename">da0</span> 的设备名称，而原来的 <span class="filename">da0</span> 则会变成 <span class="filename">da1</span> 。这将导致挂载文件系统时出现问题，如果这些文件系统在 <span class="filename">/etc/fstab</span> 中列出，可能还会阻止系统启动。</p>
+</div>
+<div class="paragraph">
+<p>一种解决方案是按顺序连接 SCSI 设备，这样添加到 SCSI 卡的新设备将被分配未使用的设备号。但是对于可能替换主要 SCSI 磁盘的 USB 设备怎么办？这是因为 USB 设备通常在 SCSI 卡之前进行探测。一种解决方案是在系统启动后再插入这些设备。另一种方法是只使用单个 ATA 驱动器，并且在 /etc/fstab 中不列出 SCSI 设备。</p>
+</div>
+<div class="paragraph">
+<p>更好的解决方案是使用 <code>glabel</code> 为磁盘设备添加标签，并在 <code>/etc/fstab</code> 中使用这些标签。由于 <code>glabel</code> 将标签存储在给定提供者的最后一个扇区中，因此标签将在重新启动后保持持久。通过将此标签作为设备，文件系统可以始终被挂载，无论通过哪个设备节点进行访问。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>glabel</code> 可以创建临时标签和永久标签。只有永久标签在重新启动后保持一致。有关标签之间差异的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=glabel&amp;sektion=8&amp;format=html">glabel(8)</a> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="_标签类型和示例">21.7.1. 标签类型和示例<a class="anchor" href="#_标签类型和示例"></a></h3>
+<div class="paragraph">
+<p>永久标签可以是通用标签或文件系统标签。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=tunefs&amp;sektion=8&amp;format=html">tunefs(8)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=newfs&amp;sektion=8&amp;format=html">newfs(8)</a> 创建永久文件系统标签。这些类型的标签将在 <span class="filename">/dev</span> 的子目录中创建，并根据文件系统类型进行命名。例如， UFS2 文件系统标签将在 <span class="filename">/dev/ufs</span> 中创建。可以使用 <code>glabel label</code> 创建通用永久标签。这些标签不特定于文件系统，并将在 <span class="filename">/dev/label</span> 中创建。</p>
+</div>
+<div class="paragraph">
+<p>临时标签在下次重启时被销毁。这些标签是在 [/dev/label] 中创建的，适用于实验。可以使用 <code>glabel create</code> 命令创建临时标签。</p>
+</div>
+<div class="paragraph">
+<p>要为 UFS2 文件系统创建一个永久标签而不破坏任何数据，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tunefs -L home /dev/da3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在应该在 <span class="filename">/dev/ufs</span> 中存在一个标签，可以将其添加到 <span class="filename">/etc/fstab</span> 中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/ufs/home		/home            ufs     rw              2      2</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在尝试运行 <code>tunefs</code> 时，文件系统不能被挂载。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>现在可以挂载文件系统了：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount /home</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>从这一点开始，只要在启动时加载了 <span class="filename">geom_label.ko</span> 内核模块，并且在 <span class="filename">/boot/loader.conf</span> 中或者存在 <code>GEOM_LABEL</code> 内核选项，设备节点可以在不对系统产生任何不良影响的情况下发生变化。</p>
+</div>
+<div class="paragraph">
+<p>使用 <code>newfs</code> 命令和 <code>-L</code> 选项可以创建带有默认标签的文件系统。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=newfs&amp;sektion=8&amp;format=html">newfs(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>可以使用以下命令来销毁标签：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># glabel destroy home</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下面的示例展示了如何为引导磁盘的分区添加标签。</p>
+</div>
+<div class="exampleblock">
+<div class="title">例 1. 在引导磁盘上标记分区</div>
+<div class="content">
+<div class="paragraph">
+<p>通过对引导磁盘上的分区进行永久标记，即使将磁盘移动到另一个控制器或转移到不同的系统，系统也应能够继续正常引导。对于本示例，假设使用单个 ATA 磁盘，系统当前将其识别为 <span class="filename">ad0</span> 。还假设使用标准的 FreeBSD 分区方案，包括 <span class="filename">/</span> 、 <span class="filename">/var</span> 、 <span class="filename">/usr</span> 和 <span class="filename">/tmp</span> ，以及一个交换分区。</p>
+</div>
+<div class="paragraph">
+<p>重新启动系统，在 <a href="https://man.freebsd.org/cgi/man.cgi?query=loader&amp;sektion=8&amp;format=html">loader(8)</a> 提示符下，按下 <kbd>4</kbd> 键进入单用户模式。然后输入以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># glabel label rootfs /dev/ad0s1a</span>
+GEOM_LABEL: Label <span class="k">for </span>provider /dev/ad0s1a is label/rootfs
+<span class="c"># glabel label var /dev/ad0s1d</span>
+GEOM_LABEL: Label <span class="k">for </span>provider /dev/ad0s1d is label/var
+<span class="c"># glabel label usr /dev/ad0s1f</span>
+GEOM_LABEL: Label <span class="k">for </span>provider /dev/ad0s1f is label/usr
+<span class="c"># glabel label tmp /dev/ad0s1e</span>
+GEOM_LABEL: Label <span class="k">for </span>provider /dev/ad0s1e is label/tmp
+<span class="c"># glabel label swap /dev/ad0s1b</span>
+GEOM_LABEL: Label <span class="k">for </span>provider /dev/ad0s1b is label/swap
+<span class="c"># exit</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>系统将继续进行多用户引导。引导完成后，编辑 [/etc/fstab] 文件，并用相应的标签替换传统设备名称。最终的 [/etc/fstab] 文件将如下所示：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># Device                Mountpoint      FStype  Options         Dump    Pass#
+/dev/label/swap         none            swap    sw              0       0
+/dev/label/rootfs       /               ufs     rw              1       1
+/dev/label/tmp          /tmp            ufs     rw              2       2
+/dev/label/usr          /usr            ufs     rw              2       2
+/dev/label/var          /var            ufs     rw              2       2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>系统现在可以重新启动。如果一切顺利，它将正常启动，并且 <code>mount</code> 命令将显示：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount</span>
+/dev/label/rootfs on / <span class="o">(</span>ufs, <span class="nb">local</span><span class="o">)</span>
+devfs on /dev <span class="o">(</span>devfs, <span class="nb">local</span><span class="o">)</span>
+/dev/label/tmp on /tmp <span class="o">(</span>ufs, <span class="nb">local</span>, soft-updates<span class="o">)</span>
+/dev/label/usr on /usr <span class="o">(</span>ufs, <span class="nb">local</span>, soft-updates<span class="o">)</span>
+/dev/label/var on /var <span class="o">(</span>ufs, <span class="nb">local</span>, soft-updates<span class="o">)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=glabel&amp;sektion=8&amp;format=html">glabel(8)</a> 类支持基于唯一文件系统 id <code>ufsid</code> 的 UFS 文件系统的标签类型。这些标签可以在 <span class="filename">/dev/ufsid</span> 中找到，并在系统启动时自动创建。可以使用 <code>ufsid</code> 标签来使用 <span class="filename">/etc/fstab</span> 挂载分区。使用 <code>glabel status</code> 命令可以获取文件系统及其对应的 <code>ufsid</code> 标签列表。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>glabel status
+                  Name  Status  Components
+ufsid/486b6fc38d330916     N/A  ad4s1d
+ufsid/486b6fc16926168e     N/A  ad4s1f</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在上面的示例中， <span class="filename">ad4s1d</span> 表示 <span class="filename">/var</span> ，而 <span class="filename">ad4s1f</span> 表示 <span class="filename">/usr</span> 。使用所示的 <code>ufsid</code> 值，可以使用以下条目在 <span class="filename">/etc/fstab</span> 中挂载这些分区：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/ufsid/486b6fc38d330916        /var        ufs        rw        2      2
+/dev/ufsid/486b6fc16926168e        /usr        ufs        rw        2      2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>任何带有 <code>ufsid</code> 标签的分区都可以通过这种方式挂载，无需手动创建永久标签，同时仍然可以享受设备名称无关挂载的好处。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录<a class="anchor" href="#geom-gjournal"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在 FreeBSD 上，支持 UFS 文件系统的日志功能。该实现通过 GEOM 子系统提供，并使用 <code>gjournal</code> 进行配置。与其他文件系统日志实现不同， <code>gjournal</code> 方法是基于块的，而不是作为文件系统的一部分实现的。它是一个 GEOM 扩展。</p>
+</div>
+<div class="paragraph">
+<p>日志记录存储了文件系统事务的日志，例如在元数据和文件写入到磁盘之前构成完整磁盘写入操作的更改。可以通过重新播放事务日志来重做文件系统事务，以防止文件系统不一致性。</p>
+</div>
+<div class="paragraph">
+<p>这种方法提供了另一种机制来防止文件系统的数据丢失和不一致性。与跟踪和强制执行元数据更新的软更新以及创建文件系统镜像的快照不同，日志是专门用于此任务的磁盘空间中存储的。为了提高性能，日志可以存储在另一个磁盘上。在这种配置中，应该在要启用日志记录的设备之后列出日志提供者或存储设备。</p>
+</div>
+<div class="paragraph">
+<p><span class="filename">GENERIC</span> 内核提供对 <code>gjournal</code> 的支持。要在启动时自动加载 <span class="filename">geom_journal.ko</span> 内核模块，请将以下行添加到 <span class="filename">/boot/loader.conf</span> 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>geom_journal_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果使用自定义内核，请确保以下行在内核配置文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options	GEOM_JOURNAL</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦模块加载完成，可以按照以下步骤在新的文件系统上创建一个日志。在这个例子中， <span class="filename">da4</span> 是一个新的 SCSI 磁盘：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gjournal load</span>
+<span class="c"># gjournal label /dev/da4</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将加载模块并在 /dev/da4 上创建一个设备节点 /dev/da4.journal 。</p>
+</div>
+<div class="paragraph">
+<p>现在可以在日志设备上创建 UFS 文件系统，然后将其挂载到现有的挂载点上：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># newfs -O 2 -J /dev/da4.journal</span>
+<span class="c"># mount /dev/da4.journal /mnt</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在多个切片的情况下，将为每个单独的切片创建一个日志。例如，如果 <span class="filename">ad4s1</span> 和 <span class="filename">ad4s2</span> 都是切片，那么 <code>gjournal</code> 将创建 <span class="filename">ad4s1.journal</span> 和 <span class="filename">ad4s2.journal</span> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>可以使用 <code>tunefs</code> 在当前文件系统上启用日志记录。然而，在尝试更改现有文件系统之前， <strong> 一定要 </strong> 先备份数据。在大多数情况下，如果无法创建日志， <code>gjournal</code> 将失败，但这并不能保护免受错误使用 <code>tunefs</code> 导致的数据丢失。有关这些命令的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gjournal&amp;sektion=8&amp;format=html">gjournal(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=tunefs&amp;sektion=8&amp;format=html">tunefs(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>可以对 FreeBSD 系统的引导磁盘进行日志记录。有关详细说明，请参阅文章《在桌面 PC 上实现 UFS 日志记录》（ extref:{gjournal-desktop} ）。</p>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

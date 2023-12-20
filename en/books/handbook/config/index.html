@@ -1,0 +1,3748 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="This chapter explains much of the FreeBSD configuration files, how to enable or disable a service, how to configure the logging system and the power management area."/>
+  <meta name="keywords" content="configuration, services, cron, periodic, logging, configuration files, sysctl, swap, power management"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/en/books/handbook/config/" />
+
+  <title>Chapter 14. Configuration, Services, Logging and Power Management |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="Chapter 14. Configuration, Services, Logging and Power Management" />
+    <meta property="og:description" content="This chapter explains much of the FreeBSD configuration files, how to enable or disable a service, how to configure the logging system and the power management area." />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="en" />
+    <meta property="og:url" content="https://free.bsd-doc.org/en/books/handbook/config/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/en\/books\/handbook\/config\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/preface/">
+              Preface
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-audience">Intended Audience</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from4">Fourth Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from3">Third Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from2">Second Edition (2004)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes">First Edition (2001)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-overview">Organization of This Book</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-conv">Conventions used in this book</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-acknowledgements">Acknowledgments</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/parti/">
+              Part I. Getting Started
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/introduction/">
+              Chapter 1. Introduction
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#introduction-synopsis">1.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#nutshell">1.2. Welcome to FreeBSD!</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#history">1.3. About the FreeBSD Project</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/">
+              Chapter 2. Installing FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. Minimum Hardware Requirements</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-pre">2.3. Pre-Installation Tasks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-start">2.4. Starting the Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#using-bsdinstall">2.5. Using bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. Allocating Disk Space</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. Fetching Distribution Files</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-post">2.8. Network Interfaces, Accounts, Time Zone, Services and Hardening</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. Troubleshooting</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#using-live-cd">2.10. Using the Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/basics/">
+              Chapter 3. FreeBSD Basics
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-synopsis">3.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#consoles">3.2. Virtual Consoles and Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#users-synopsis">3.3. Users and Basic Account Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#permissions">3.4. Permissions</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#dirstructure">3.5. Directory Structure</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#disk-organization">3.6. Disk Organization</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#mount-unmount">3.7. Mounting and Unmounting File Systems</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-processes">3.8. Processes and Daemons</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#editors">3.10. Text Editors</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-devices">3.11. Devices and Device Nodes</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-more-information">3.12. Manual Pages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/ports/">
+              Chapter 4. Installing Applications: Packages and Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-synopsis">4.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-overview">4.2. Overview of Software Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-finding-applications">4.3. Finding Software</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#pkgng-intro">4.4. Using pkg for Binary Package Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-using">4.5. Using the Ports Collection</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-poudriere">4.6. Building Packages with poudriere</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-nextsteps">4.7. Post-Installation Considerations</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-broken">4.8. Dealing with Broken Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/x11/">
+              Chapter 5. The X Window System
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x11-synopsis">5.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-install">5.2. Installing Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-graphic-card-drivers">5.3. Graphic card drivers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-config">5.4. Xorg Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-fonts">5.5. Using Fonts in Xorg</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/wayland/">
+              Chapter 6. Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-synopsis">6.1. Wayland Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-wayfire">6.2. The Wayfire Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-hikari">6.3. The Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-sway">6.4. The Sway Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-xwayland">6.5. Using Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-remotedesktop">6.6. Remote Desktop Using VNC</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-ly">6.7. Wayland Login Manager</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-utilities">6.8. Useful Utilities</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/network/">
+              Chapter 7. Network
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#network-synopsis">7.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#config-network-setup">7.2. Setting up the Network</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#config-network-connection">7.3. Wired Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#network-wireless">7.4. Wireless Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#hostname">7.5. Hostname</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#dns">7.6. DNS</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#troubleshooting">7.7. Troubleshooting</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partii/">
+              Part II. Common Tasks
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/desktop/">
+              Chapter 8. Desktop Environments
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-synopsis">8.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-environments">8.2. Desktop Environments</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-browsers">8.3. Browsers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-development">8.4. Development tools</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-productivity">8.5. Desktop office productivity</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-viewers">8.6. Document Viewers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-finance">8.7. Finance</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/multimedia/">
+              Chapter 9. Multimedia
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#multimedia-synopsis">9.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#sound-setup">9.2. Setting Up the Sound Card</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#audio-ports">9.3. Audio players</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#video-ports">9.4. Video players</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#conferencing-meetings">9.5. Conferencing and Meetings</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#scanners">9.6. Image Scanners</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/">
+              Chapter 10. Configuring the FreeBSD Kernel
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. Why Build a Custom Kernel?</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-devices">10.3. Finding the System Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-config">10.4. The Configuration File</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-building">10.5. Building and Installing a Custom Kernel</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. If Something Goes Wrong</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/printing/">
+              Chapter 11. Printing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-quick-start">11.1. Quick Start</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-connections">11.2. Printer Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-pdls">11.3. Common Page Description Languages</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-direct">11.4. Direct Printing</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-lpd">11.5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-other">11.6. Other Printing Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/">
+              Chapter 12. Linux Binary Compatibility
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-synopsis">12.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. Configuring Linux Binary Compatibility</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linux-userlands">12.3. Linux userlands</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-advanced">12.4. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/wine/">
+              Chapter 13. WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-synopsis">13.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-overview-concepts">13.2. WINE Overview & Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#installing-wine-on-freebsd">13.3. Installing WINE on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#running-first-wine-program">13.4. Running a First WINE Program on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#configuring-wine-installation">13.5. Configuring WINE Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-management-guis">13.6. WINE Management GUIs</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. WINE in Multi-User FreeBSD Installations</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-on-os-faq">13.8. WINE on FreeBSD FAQ</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partiii/">
+              Part III. System Administration
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/config/">
+              Chapter 14. Configuration, Services, Logging and Power Management
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#config-synopsis">14.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-configfiles">14.2. Configuration Files</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-rcd">14.3. Managing Services in FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#cron-periodic">14.4. Cron and Periodic</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-syslog">14.5. Configuring System Logging</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#acpi-overview">14.6. Power and Resource Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#adding-swap-space">14.7. Adding Swap Space</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/boot/">
+              Chapter 15. The FreeBSD Booting Process
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-synopsis">15.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-introduction">15.2. FreeBSD Boot Process</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#device-hints">15.3. Device Hints</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-shutdown">15.4. Shutdown Sequence</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/security/">
+              Chapter 16. Security
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-synopsis">16.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-intro">16.2. Introduction</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#sec-accounts">16.3. Securing Accounts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-ids">16.4. Intrusion Detection System (IDS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-secure-levels">16.5. Secure levels</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-file-flags">16.6. File flags</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#openssh">16.7. OpenSSH</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#openssl">16.8. OpenSSL</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#kerberos5">16.9. Kerberos</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#tcpwrappers">16.10. TCP Wrappers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#fs-acl">16.11. Access Control Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#capsicum">16.12. Capsicum</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-accounting">16.13. Process Accounting</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-resourcelimits">16.14. Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-pkg">16.15. Monitoring Third Party Security Issues</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-advisories">16.16. FreeBSD Security Advisories</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/jails/">
+              Chapter 17. Jails and Containers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jails-synopsis">17.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-types">17.2. Jail Types</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#host-configuration">17.3. Host Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#classic-jail">17.4. Classic Jail (Thick Jail)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#thin-jail">17.5. Thin Jails</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-management">17.6. Jail Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-upgrading">17.7. Jail Upgrading</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-resource-limits">17.8. Jail Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-managers-and-containers">17.9. Jail Managers and Containers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mac/">
+              Chapter 18. Mandatory Access Control
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-synopsis">18.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-inline-glossary">18.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-understandlabel">18.3. Understanding MAC Labels</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-planning">18.4. Planning the Security Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-policies">18.5. Available MAC Policies</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-userlocked">18.6. User Lock Down</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-implementing">18.7. Nagios in a MAC Jail</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-troubleshoot">18.8. Troubleshooting the MAC Framework</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/audit/">
+              Chapter 19. Security Event Auditing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-synopsis">19.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-inline-glossary">19.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-config">19.3. Audit Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-administration">19.4. Working with Audit Trails</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/disks/">
+              Chapter 20. Storage
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-synopsis">20.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-adding">20.2. Adding Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-growing">20.3. Resizing and Growing Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#usb-disks">20.4. USB Storage Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#creating-cds">20.5. Creating and Using CD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#creating-dvds">20.6. Creating and Using DVD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#floppies">20.7. Creating and Using Floppy Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#using-ntfs">20.8. Using NTFS Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#backup-basics">20.9. Backup Basics</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-virtual">20.10. Memory Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#snapshots">20.11. File System Snapshots</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#quotas">20.12. Disk Quotas</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-encrypting">20.13. Encrypting Disk Partitions</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#swap-encrypting">20.14. Encrypting Swap</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-hast">20.15. Highly Available Storage (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/geom/">
+              Chapter 21. GEOM: Modular Disk Transformation Framework
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-synopsis">21.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-striping">21.2. RAID0 - Striping</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-mirror">21.3. RAID1 - Mirroring</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-raid3">21.4. RAID3 - Byte-level Striping with Dedicated Parity</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-graid">21.5. Software RAID Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-glabel">21.7. Labeling Disk Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-gjournal">21.8. UFS Journaling Through GEOM</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/zfs/">
+              Chapter 22. The Z File System (ZFS)
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-differences">22.1. What Makes ZFS Different</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-quickstart">22.2. Quick Start Guide</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zfs-allow">22.5. Delegated Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-advanced">22.6. Advanced Topics</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-links">22.7. Further Resources</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-term">22.8. ZFS Features and Terminology</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/filesystems/">
+              Chapter 23. Other File Systems
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/filesystems/#filesystems-synopsis">23.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/filesystems/#filesystems-linux">23.2. Linux® File Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/virtualization/">
+              Chapter 24. Virtualization
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-synopsis">24.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. FreeBSD as a Guest on Parallels Desktop for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-vmware">24.3. FreeBSD as a Guest on VMware Fusion for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. FreeBSD as a Guest on VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. FreeBSD as a Host with VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-bhyve">24.6. FreeBSD as a Host with bhyve</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD as a Xen™-Host</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/l10n/">
+              Chapter 25. Localization - i18n/L10n Usage and Setup
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#l10n-synopsis">25.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#using-localization">25.2. Using Localization</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#l10n-compiling">25.3. Finding i18n Applications</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#lang-setup">25.4. Locale Configuration for Specific Languages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/">
+              Chapter 26. Updating and Upgrading FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD Update</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-bootcode">26.3. Updating Bootcode</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. Updating the Documentation Set</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#current-stable">26.5. Tracking a Development Branch</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#makeworld">26.6. Updating FreeBSD from Source</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#small-lan">26.7. Tracking for Multiple Machines</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. Building on non-FreeBSD Hosts</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/dtrace/">
+              Chapter 27. DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-synopsis">27.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-implementation">27.2. Implementation Differences</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-enable">27.3. Enabling DTrace Support</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-using">27.4. Using DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/">
+              Chapter 28. USB Device Mode / USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB Virtual Serial Ports</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB Device Mode Network Interfaces</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB Virtual Storage Device</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partiv/">
+              Part IV. Network Communication
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/">
+              Chapter 29. Serial Communications
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serial-synopsis">29.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serial">29.2. Serial Terminology and Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#term">29.3. Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#dialup">29.4. Dial-in Service</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#dialout">29.5. Dial-out Service</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serialconsole-setup">29.6. Setting Up the Serial Console</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/">
+              Chapter 30. PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#userppp">30.2. Configuring PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. Troubleshooting PPP Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#pppoe">30.4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#pppoa">30.5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mail/">
+              Chapter 31. Electronic Mail
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-synopsis">31.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-using">31.2. Mail Components</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#sendmail">31.4. Sendmail</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-changingmta">31.5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-agents">31.6. Mail User Agents</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-advanced">31.7. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/network-servers/">
+              Chapter 32. Network Servers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-servers-synopsis">32.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-inetd">32.2. The inetd Super-Server</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-nfs">32.3. Network File System (NFS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-nis">32.4. Network Information System (NIS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ldap">32.5. Lightweight Directory Access Protocol (LDAP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-dhcp">32.6. Dynamic Host Configuration Protocol (DHCP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-dns">32.7. Domain Name System (DNS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ftp">32.9. File Transfer Protocol (FTP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-samba">32.10. File and Print Services for Microsoft® Windows® Clients (Samba)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ntp">32.11. Clock Synchronization with NTP</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-iscsi">32.12. iSCSI Initiator and Target Configuration</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/firewalls/">
+              Chapter 33. Firewalls
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-intro">33.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-concepts">33.2. Firewall Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-pf">33.3. PF</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER (IPF)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-blacklistd">33.6. Blacklistd</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/">
+              Chapter 34. Advanced Networking
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-routing">34.2. Gateways and Routes</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. Virtual Hosts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-advanced-wireless">34.4. Wireless Advanced Authentication</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. Wireless Ad-hoc Mode</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB Tethering</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-bluetooth">34.7. Bluetooth</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-bridging">34.8. Bridging</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-aggregation">34.9. Link Aggregation and Failover</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-diskless">34.10. Diskless Operation with PXE</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#carp">34.11. Common Address Redundancy Protocol (CARP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-vlan">34.12. VLANs</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partv/">
+              Part V. Appendices
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mirrors/">
+              Appendix A. Obtaining FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#mirrors">A.1. Mirrors</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#git">A.2. Using Git</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#svn">A.3. Using Subversion</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#mirrors-cdrom">A.4. CD and DVD Sets</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/bibliography/">
+              Appendix B. Bibliography
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD Bibliography</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-security">B.2. Security Reference</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-history">B.3. UNIX® History</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-journals">B.4. Periodicals, Journals, and Magazines</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/eresources/">
+              Appendix C. Resources on the Internet
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-www">C.1. Websites</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-mail">C.2. Mailing Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-news">C.3. Usenet Newsgroups</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/pgpkeys/">
+              Appendix D. OpenPGP Keys
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/pgpkeys/#pgpkeys-officers">D.1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/glossary/">
+              FreeBSD Glossary
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/colophon/">
+              Colophon
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">Chapter 14. Configuration, Services, Logging and Power Management</h1>
+    
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#config-synopsis">14.1. Synopsis</a></li>
+    <li><a href="#configtuning-configfiles">14.2. Configuration Files</a></li>
+    <li><a href="#configtuning-rcd">14.3. Managing Services in FreeBSD</a></li>
+    <li><a href="#cron-periodic">14.4. Cron and Periodic</a></li>
+    <li><a href="#configtuning-syslog">14.5. Configuring System Logging</a></li>
+    <li><a href="#acpi-overview">14.6. Power and Resource Management</a></li>
+    <li><a href="#adding-swap-space">14.7. Adding Swap Space</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="config-synopsis">14.1. Synopsis<a class="anchor" href="#config-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One of the important aspects of FreeBSD is proper system configuration.
+This chapter explains much of the FreeBSD configuration process, including some of the parameters which can be set to tune a FreeBSD system.</p>
+</div>
+<div class="paragraph">
+<p>Before reading this chapter, you should:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Understand UNIX® and FreeBSD basics (<a href="../basics/#basics">FreeBSD Basics</a>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After reading this chapter, you will know:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>How to use the various configuration files in <span class="filename">/etc</span>.</p>
+</li>
+<li>
+<p>The basics of <span class="filename">rc.conf</span> configuration and <span class="filename">/usr/local/etc/rc.d</span> startup scripts.</p>
+</li>
+<li>
+<p>How to tune FreeBSD using <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> variables.</p>
+</li>
+<li>
+<p>How to configure the power management in FreeBSD.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configtuning-configfiles">14.2. Configuration Files<a class="anchor" href="#configtuning-configfiles"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD maintains a clear separation between the base system and third party applications and therefore this affects where the configuration files of these applications are located.</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD base system configuration is located at the <span class="filename">/etc</span> directory,
+and the <span class="filename">/usr/local/etc</span> directory contains all the configuration files of the applications installed on the system through the ports collection and packages.</p>
+</div>
+<div class="paragraph">
+<p>The kernel state configuration is located in <span class="filename">/etc/sysctl.conf</span>.
+In the section <a href="#configtuning-sysctl">The sysctl utility</a>, the operation of <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> will be explained in more detail.</p>
+</div>
+<div class="paragraph">
+<p>For more information about the FreeBSD file system structure refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=hier&amp;sektion=7&amp;format=html">hier(7)</a>.</p>
+</div>
+<div class="paragraph">
+<p>As a general rule, configuration files do not use a standard on what syntax they must follow.
+Although it is true that the <code>#</code> character is normally used to comment a line and that each line has a configuration variable.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Some applications like <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> are starting to use the <a href="https://github.com/vstakhov/libucl">Universal Configuration Language (UCL)</a>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="_the_etc_directory">14.2.1. The <span class="filename">/etc</span> directory<a class="anchor" href="#_the_etc_directory"></a></h3>
+<div class="paragraph">
+<p>The <span class="filename">/etc</span> directory contains all of the FreeBSD base system configuration files that are responsible for configuring FreeBSD.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Extreme</strong> caution must be taken when modifying files in the <span class="filename">/etc</span> directory; misconfiguration could make FreeBSD unbootable or malfunction.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<table class="tableblock frame-none grid-all stretch informaltable">
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System configuration files and scripts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/defaults</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default system configuration files, see <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> for more information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/fstab</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> contains descriptive information about the various file systems.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/mail</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extra <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a> configuration and other MTA configuration files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/mtree</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mtree configuration files, see man: mtree[8] for more information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/pam.d</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration files for the Pluggable Authentication Modules (PAM) library.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/periodic</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scripts that are run daily, weekly, and monthly, via <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>, see <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> for more information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/rc.d</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System and daemon startup/control scripts, see <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> for more information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/rc.conf</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains descriptive information about the local host name, configuration details for any potential network interfaces and which services should be started up at system initial boot time. More information in <a href="#configtuning-core-configuration">Managing System-Specific Configuration</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/security</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenBSM audit configuration files, see <a href="https://man.freebsd.org/cgi/man.cgi?query=audit&amp;sektion=8&amp;format=html">audit(8)</a> for more information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ppp</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ppp configuration files, see <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> for more information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ssh</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSSH configuration files, see <a href="https://man.freebsd.org/cgi/man.cgi?query=ssh&amp;sektion=1&amp;format=html">ssh(1)</a> for more information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ssl</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSSL configuration files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/sysctl.conf</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains settings for the kernel. More information in <a href="#configtuning-sysctl">The sysctl utility</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="configtuning-sysctl">14.2.2. The sysctl utility<a class="anchor" href="#configtuning-sysctl"></a></h3>
+<div class="paragraph">
+<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> utility is used to make changes to a running FreeBSD system.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> utility retrieves kernel state and allows processes with appropriate privilege to set kernel state.
+The state to be retrieved or set is described using a &#34;Management Information Base&#34; (&#34;MIB&#34;) style name, described as a dotted set of components.</p>
+</div>
+<table class="tableblock frame-none grid-all stretch informaltable">
+<caption class="title">Table 1. Management Information Base</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sysctl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#34;Magic&#34; numbers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">kern</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kernel functions and features</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">virtual memory</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vfs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filesystem</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">net</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debugging parameters</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hw</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hardware</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">machdep</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine dependent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Userland</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">p1003_1b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POSIX 1003.1B</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>At its core, <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> serves two functions: to read and to modify system settings.</p>
+</div>
+<div class="paragraph">
+<p>To view all readable variables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl -a</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.ostype: FreeBSD
+...
+vm.swap_enabled: 1
+vm.overcommit: 0
+vm.domain.0.pidctrl.kdd: 8
+vm.domain.0.pidctrl.kid: 4
+vm.domain.0.pidctrl.kpd: 3
+...
+vfs.zfs.sync_pass_rewrite: 2
+vfs.zfs.sync_pass_dont_compress: 8
+vfs.zfs.sync_pass_deferred_free: 2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To read a particular variable, specify its name:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl kern.maxproc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.maxproc: 1044</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Management Information Base (MIB) is hierarchical and hence, specifying a prefix prints all the nodes hanging from it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl net</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>net.local.stream.recvspace: 8192
+net.local.stream.sendspace: 8192
+net.local.dgram.recvspace: 16384
+net.local.dgram.maxdgram: 2048
+net.local.seqpacket.recvspace: 8192
+net.local.seqpacket.maxseqpacket: 8192
+net.local.sockcount: 60
+net.local.taskcount: 25
+net.local.recycled: 0
+net.local.deferred: 0
+net.local.inflight: 0
+net.inet.ip.portrange.randomtime: 1
+net.inet.ip.portrange.randomcps: 9999
+[...]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To set a particular variable, use the <em>variable</em>=<em>value</em> syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl kern.maxfiles=5000</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.maxfiles: 2088 -&gt; 5000</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To keep the configuration after a reboot it is necessary to add these variables to the <span class="filename">/etc/sysctl.conf</span> file as explained below.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-sysctlconf">14.2.3. The <span class="filename">/etc/sysctl.conf</span> file<a class="anchor" href="#configtuning-sysctlconf"></a></h3>
+<div class="paragraph">
+<p>The configuration file for <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a>, <span class="filename">/etc/sysctl.conf</span>, looks much like <span class="filename">/etc/rc.conf</span>.</p>
+</div>
+<div class="paragraph">
+<p>Values are set using a <code>variable=value</code> syntax.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The specified values are set after the system goes into multi-user mode.
+Not all variables are settable in this mode.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>For example, to turn off logging of fatal signal exits and prevent users from seeing processes started by other users, the following tunables can be set in <span class="filename">/etc/sysctl.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># Do not log fatal signal exits (e.g., sig 11)
+kern.logsigexit=0
+
+# Prevent users from seeing information about processes that
+# are being run under another UID.
+security.bsd.see_other_uids=0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To obtain more information about what function a particular sysctl has, the following command can be executed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl -d kern.dfldsiz</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.dfldsiz: Initial data size limit</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-core-configuration">14.2.4. Managing System-Specific Configuration<a class="anchor" href="#configtuning-core-configuration"></a></h3>
+<div class="paragraph">
+<p>The principal location for system configuration information is <span class="filename">/etc/rc.conf</span>.</p>
+</div>
+<div class="paragraph">
+<p>This file contains a wide range of configuration information and it is read at system startup to configure the system.
+It provides the configuration information for the <span class="filename">rc*</span> files.</p>
+</div>
+<div class="paragraph">
+<p>The entries in <span class="filename">/etc/rc.conf</span> override the default settings in <span class="filename">/etc/defaults/rc.conf</span>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The file <span class="filename">/etc/defaults/rc.conf</span> containing the default settings should not be edited.
+Instead, all system-specific changes should be made to <span class="filename">/etc/rc.conf</span>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>A number of strategies may be applied in clustered applications to separate site-wide configuration from system-specific configuration in order to reduce administration overhead.</p>
+</div>
+<div class="paragraph">
+<p>The recommended approach is to place system-specific configuration into <span class="filename">/etc/rc.conf.local</span>.</p>
+</div>
+<div class="paragraph">
+<p>For example, these entries in <span class="filename">/etc/rc.conf</span> apply to all systems:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>sshd_enable=&#34;YES&#34;
+keyrate=&#34;fast&#34;
+defaultrouter=&#34;10.1.1.254&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whereas these entries in <span class="filename">/etc/rc.conf.local</span> apply to this system only:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hostname=&#34;node1.example.org&#34;
+ifconfig_fxp0=&#34;inet 10.1.1.1/8&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Distribute <span class="filename">/etc/rc.conf</span> to every system using an application such as rsync or puppet, while <span class="filename">/etc/rc.conf.local</span> remains unique.</p>
+</div>
+<div class="paragraph">
+<p>Upgrading the system will not overwrite <span class="filename">/etc/rc.conf</span>, so system configuration information will not be lost.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Both <span class="filename">/etc/rc.conf</span> and <span class="filename">/etc/rc.conf.local</span> are parsed by <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a>.
+This allows system operators to create complex configuration scenarios.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a> for further information on this topic.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configtuning-rcd">14.3. Managing Services in FreeBSD<a class="anchor" href="#configtuning-rcd"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD uses the <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> system of startup scripts during system initialization and for managing services.</p>
+</div>
+<div class="paragraph">
+<p>The scripts listed in <span class="filename">/etc/rc.d</span> provide basic services which can be controlled with the <code>start</code>, <code>stop</code>, and <code>restart</code> options to <a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a>.</p>
+</div>
+<div class="paragraph">
+<p>A basic script may look similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+#
+# PROVIDE: utility
+# REQUIRE: DAEMON
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name=utility
+rcvar=utility_enable
+
+command=&#34;/usr/local/sbin/utility&#34;
+
+load_rc_config $name
+
+#
+# DO NOT CHANGE THESE DEFAULT VALUES HERE
+# SET THEM IN THE /etc/rc.conf FILE
+#
+utility_enable=${utility_enable-&#34;NO&#34;}
+pidfile=${utility_pidfile-&#34;/var/run/utility.pid&#34;}
+
+run_rc_command &#34;$1&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Refer to <a href="https://docs.freebsd.org/en/articles/rc-scripting/">this article</a> for instructions on how to create custom <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> scripts.</p>
+</div>
+<div class="sect2">
+<h3 id="configtuning-starting-services">14.3.1. Starting Services<a class="anchor" href="#configtuning-starting-services"></a></h3>
+<div class="paragraph">
+<p>Many users install third party software on FreeBSD from the Ports Collection and require the installed services to be started upon system initialization.</p>
+</div>
+<div class="paragraph">
+<p>Services, such as <a class="package" href="https://cgit.freebsd.org/ports/tree/security/openssh-portable/">security/openssh-portable</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> are just two of the many software packages which may be started during system initialization.
+This section explains the procedures available for starting services.</p>
+</div>
+<div class="paragraph">
+<p>Since the <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> system is primarily intended to start and stop services at system startup and shutdown time, the <code>start</code>, <code>stop</code> and <code>restart</code> options will only perform their action if the appropriate <span class="filename">/etc/rc.conf</span> variable is set.</p>
+</div>
+<div class="paragraph">
+<p>So the first step to start a service, like for example <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> is to add it to <span class="filename">/etc/rc.conf</span> by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc nginx_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then nginx can be started executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service nginx start</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To <code>start</code>, <code>stop</code> or <code>restart</code> a service regardless of the settings in <span class="filename">/etc/rc.conf</span>, these commands should be prefixed with &#34;one&#34;.
+For instance, to start <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> regardless of the current <span class="filename">/etc/rc.conf</span> setting, execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service nginx onestart</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-status-services">14.3.2. Status of a Service<a class="anchor" href="#configtuning-status-services"></a></h3>
+<div class="paragraph">
+<p>To determine if a service is running, use the <code>status</code> subcommand.</p>
+</div>
+<div class="paragraph">
+<p>For example, to verify that <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> is running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service nginx status</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>nginx is running as pid 27871.</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-reload-services">14.3.3. Reload a Service<a class="anchor" href="#configtuning-reload-services"></a></h3>
+<div class="paragraph">
+<p>In some cases, it is also possible to <code>reload</code> a service.
+This attempts to send a signal to an individual service, forcing the service to reload its configuration files.</p>
+</div>
+<div class="paragraph">
+<p>In most cases, this means sending the service a <code>SIGHUP</code> signal.</p>
+</div>
+<div class="paragraph">
+<p><strong>Not all services support this feature.</strong></p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> system is used for network services and it also contributes to most of the system initialization.
+For instance, when the <span class="filename">/etc/rc.d/bgfsck</span> script is executed, it prints out the following message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">Starting background file system checks <span class="k">in </span>60 seconds.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This script is used for background file system checks, which occur only during system initialization.</p>
+</div>
+<div class="paragraph">
+<p>Many system services depend on other services to function properly.
+For example, <a href="https://man.freebsd.org/cgi/man.cgi?query=yp&amp;sektion=8&amp;format=html">yp(8)</a> and other RPC-based services may fail to start until after the <a href="https://man.freebsd.org/cgi/man.cgi?query=rpcbind&amp;sektion=8&amp;format=html">rpcbind(8)</a> service has started.</p>
+</div>
+<div class="paragraph">
+<p>Additional information can be found in <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.subr&amp;sektion=8&amp;format=html">rc.subr(8)</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_services_to_start_services">14.3.4. Using Services to Start Services<a class="anchor" href="#_using_services_to_start_services"></a></h3>
+<div class="paragraph">
+<p>Other services can be started using <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a>.
+Working with <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a> and its configuration is described in depth in <a href="../network-servers/#network-inetd">“The inetd Super-Server”</a>.</p>
+</div>
+<div class="paragraph">
+<p>In some cases, it may make more sense to use <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> to start system services.
+This approach has a number of advantages as <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> runs these processes as the owner of the <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a>.
+This allows regular users to start and maintain their own applications.</p>
+</div>
+<div class="paragraph">
+<p>The <code>@reboot</code> feature of <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>, may be used in place of the time specification.
+This causes the job to run when <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> is started, normally during system initialization.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cron-periodic">14.4. Cron and Periodic<a class="anchor" href="#cron-periodic"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Scheduling tasks to run at a certain day or time is a very common task on FreeBSD.
+The tool in charge of performing this task is <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>.</p>
+</div>
+<div class="paragraph">
+<p>In addition to tasks that can be scheduled by the user via <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>, FreeBSD performs routine background tasks managed by <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="configtuning-cron">14.4.1. Cron<a class="anchor" href="#configtuning-cron"></a></h3>
+<div class="paragraph">
+<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> utility runs in the background and regularly checks <span class="filename">/etc/crontab</span> for tasks to execute and searches <span class="filename">/var/cron/tabs</span> for custom crontab files.</p>
+</div>
+<div class="paragraph">
+<p>These files are used to schedule tasks which cron runs at the specified times.</p>
+</div>
+<div class="paragraph">
+<p>Each entry in a crontab defines a task to run and is known as a <em>cron job</em>.</p>
+</div>
+<div class="paragraph">
+<p>Two different types of configuration files are used: the system crontab, which should not be modified, and user crontabs, which can be created and edited as needed.
+The format used by these files is documented in <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a>.
+The format of the system crontab, <span class="filename">/etc/crontab</span> includes a <code>who</code> column which does not exist in user crontabs.
+In the system crontab, cron runs the command as the user specified in this column.
+In a user crontab, all commands run as the user who created the crontab.</p>
+</div>
+<div class="paragraph">
+<p>User crontabs allow individual users to schedule their own tasks.
+The <code>root</code> user can also have a user <span class="filename">crontab</span> which can be used to schedule tasks that do not exist in the system <span class="filename">crontab</span>.</p>
+</div>
+<div class="paragraph">
+<p>Here is a sample entry from the system crontab, <span class="filename">/etc/crontab</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># /etc/crontab - root&#39;s crontab for FreeBSD
+#
+# $FreeBSD$ <i class="conum" data-value="1"></i><b>(1)</b>
+#
+SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin <i class="conum" data-value="2"></i><b>(2)</b>
+#
+#minute hour    mday    month   wday    who     command <i class="conum" data-value="3"></i><b>(3)</b>
+#
+# Save some entropy so that /dev/random can re-seed on boot.
+*/11    *       *       *       *       operator /usr/libexec/save-entropy <i class="conum" data-value="4"></i><b>(4)</b>
+#
+# Rotate log files every hour, if necessary.
+0       *       *       *       *       root    newsyslog
+#
+# Perform daily/weekly/monthly maintenance.
+1       3       *       *       *       root    periodic daily
+15      4       *       *       6       root    periodic weekly
+30      5       1       *       *       root    periodic monthly
+#
+# Adjust the time zone if the CMOS clock keeps local time, as opposed to
+# UTC time.  See adjkerntz(8) for details.
+1,31    0-5     *       *       *       root    adjkerntz -a</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Lines that begin with the <code>#</code> character are comments. A comment can be placed in the file as a reminder of what and why a desired action is performed. Comments cannot be on the same line as a command or else they will be interpreted as part of the command; they must be on a new line. Blank lines are ignored.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The equals (<code>=</code>) character is used to define any environment settings. In this example, it is used to define the <code>SHELL</code> and <code>PATH</code>. If the <code>SHELL</code> is omitted, cron will use the default Bourne shell. If the <code>PATH</code> is omitted, the full path must be given to the command or script to run.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This line defines the seven fields used in a system crontab: <code>minute</code>, <code>hour</code>, <code>mday</code>, <code>month</code>, <code>wday</code>, <code>who</code>, and <code>command</code>. The <code>minute</code> field is the time in minutes when the specified command will be run, the <code>hour</code> is the hour when the specified command will be run, the <code>mday</code> is the day of the month, <code>month</code> is the month, and <code>wday</code> is the day of the week. These fields must be numeric values, representing the twenty-four hour clock, or a <code>*</code>, representing all values for that field. The <code>who</code> field only exists in the system crontab and specifies which user the command should be run as. The last field is the command to be executed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>This entry defines the values for this cron job. The <code>*/11</code>, followed by several more <code>*</code> characters, specifies that <code>/usr/libexec/save-entropy</code> is invoked by <code>operator</code> every eleven minutes of every hour, of every day and day of the week, of every month. Commands can include any number of switches. However, commands which extend to multiple lines need to be broken with the backslash &#34;\&#34; continuation character.</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-installcrontab">14.4.2. Creating a User Crontab<a class="anchor" href="#configtuning-installcrontab"></a></h3>
+<div class="paragraph">
+<p>To create a user crontab, invoke <code>crontab</code> in editor mode:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>crontab -e</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will open the user’s crontab using the default text editor.
+The first time a user runs this command, it will open an empty file.
+Once a user creates a crontab, this command will open that file for editing.</p>
+</div>
+<div class="paragraph">
+<p>It is useful to add these lines to the top of the crontab file in order to set the environment variables and to remember the meanings of the fields in the crontab:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+# Order of crontab fields
+# minute hour mday month wday command</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then add a line for each command or script to run, specifying the time to run the command.
+This example runs the specified custom Bourne shell script every day at two in the afternoon.
+Since the path to the script is not specified in <code>PATH</code>, the full path to the script is given:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>0 14 * * * /home/user/bin/mycustomscript.sh</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before using a custom script, make sure it is executable and test it with the limited set of environment variables set by cron.
+To replicate the environment that would be used to run the above cron entry, use:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>env -i SHELL=/bin/sh PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin HOME=/home/user LOGNAME=user /home/user/bin/mycustomscript.sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The environment set by cron is discussed in <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a>.
+Checking that scripts operate correctly in a cron environment is especially important if they include any commands that delete files using wildcards.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>When finished editing the crontab, save the file.
+It will automatically be installed, and cron will read the crontab and run its cron jobs at their specified times.
+To list the cron jobs in a crontab, use this command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>crontab -l</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>0 14 * * * /home/user/bin/mycustomscript.sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To remove all of the cron jobs in a user crontab:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>crontab -r</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>remove crontab for user? y</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-periodic">14.4.3. Periodic<a class="anchor" href="#configtuning-periodic"></a></h3>
+<div class="paragraph">
+<p>FreeBSD provides a set of system management scripts to check status of various subsystems, perform security-related checks, rotate log files, etc.
+These scripts are run on a periodic basis: daily. weekly, or monthly.
+The management of these tasks is performed by <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> and its configuration resides in <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic.conf&amp;sektion=5&amp;format=html">periodic.conf(5)</a>.
+The periodic tasks are initiated by entries in the system crontab, shown above.</p>
+</div>
+<div class="paragraph">
+<p>Scripts executed by <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> are located in <span class="filename">/etc/periodic/</span> for base utilities and in <span class="filename">/usr/local/etc/periodic/</span> for third-party software.</p>
+</div>
+<div class="paragraph">
+<p>They are organized in 4 subdirectories, daily, weekly, monthly and security.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enable-disable-periodic">14.4.4. Enable or Disable Periodic Tasks<a class="anchor" href="#enable-disable-periodic"></a></h3>
+<div class="paragraph">
+<p>FreeBSD has some scripts enabled by default to run periodically.</p>
+</div>
+<div class="paragraph">
+<p>To enable or disable a task, the first step is to edit <span class="filename">/etc/periodic.conf</span> executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ee /etc/periodic.conf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then to enable, for example, <code>daily_status_zfs_enable</code> put the following content in the file:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>daily_status_zfs_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To disable a task that is active by default, all that needs to be done is to change <code>YES</code> to <code>NO</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuring-output-periodic-tasks">14.4.5. Configuring the Output of Periodic Tasks<a class="anchor" href="#configuring-output-periodic-tasks"></a></h3>
+<div class="paragraph">
+<p>In <span class="filename">/etc/periodic.conf</span> the variables <code>daily_output</code>, <code>weekly_output</code> and <code>monthly_output</code> specifies where to send the results of the script execution.</p>
+</div>
+<div class="paragraph">
+<p>By default the output of the periodic scripts are emailed to root, and therefore it is best to read root’s mail or alias root to a mailbox that is monitored.</p>
+</div>
+<div class="paragraph">
+<p>To send the results to another email or to other emails, add the email addresses separated by spaces to <span class="filename">/etc/periodic.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>daily_output=&#34;email1@example.com email2@example.com&#34;
+weekly_output=&#34;email1@example.com email2@example.com&#34;
+monthly_output=&#34;email1@example.com email2@example.com&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To log periodic output instead of receiving it as email, add the following lines to <span class="filename">/etc/periodic.conf</span>. <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog&amp;sektion=8&amp;format=html">newsyslog(8)</a> will rotate these files at the appropriate times:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>daily_output=/var/log/daily.log
+weekly_output=/var/log/weekly.log
+monthly_output=/var/log/monthly.log</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configtuning-syslog">14.5. Configuring System Logging<a class="anchor" href="#configtuning-syslog"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generating and reading system logs is an important aspect of system administration.
+The information in system logs can be used to detect hardware and software issues as well as application and system configuration errors.
+This information also plays an important role in security auditing and incident response.
+Most system daemons and applications will generate log entries.</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD provides a system logger, <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a>, to manage logging.
+By default, syslogd is enabled and started when the system boots.</p>
+</div>
+<div class="paragraph">
+<p>This section describes how to configure the FreeBSD system logger for both local and remote logging and how to perform log rotation and log management.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuring_local_logging">14.5.1. Configuring Local Logging<a class="anchor" href="#_configuring_local_logging"></a></h3>
+<div class="paragraph">
+<p>The configuration file, <span class="filename">/etc/syslog.conf</span>, controls what syslogd does with log entries as they are received.
+There are several parameters to control the handling of incoming events.
+The <em>facility</em> describes which subsystem generated the message, such as the kernel or a daemon, and the <em>level</em> describes the severity of the event that occurred.
+This makes it possible to configure if and where a log message is logged, depending on the facility and level.
+It is also possible to take action depending on the application that sent the message, and in the case of remote logging, the hostname of the machine generating the logging event.</p>
+</div>
+<div class="paragraph">
+<p>This configuration file contains one line per action, where the syntax for each line is a selector field followed by an action field.
+The syntax of the selector field is <em>facility.level</em> which will match log messages from <em>facility</em> at level <em>level</em> or higher.
+It is also possible to add an optional comparison flag before the level to specify more precisely what is logged.
+Multiple selector fields can be used for the same action, and are separated with a semicolon (<code>;</code>).
+Using <code>*</code> will match everything.
+The action field denotes where to send the log message, such as to a file or remote log host.</p>
+</div>
+<div class="paragraph">
+<p>As an example, here is the default <span class="filename">/etc/syslog.conf</span> from FreeBSD:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># $FreeBSD$
+#
+#       Spaces ARE valid field separators in this file. However,
+#       other *nix-like systems still insist on using tabs as field
+#       separators. If you are sharing this file between systems, you
+#       may want to use only tabs as field separators here.
+#       Consult the syslog.conf(5) manpage.
+*.err;kern.warning;auth.notice;mail.crit                /dev/console <i class="conum" data-value="1"></i><b>(1)</b>
+*.notice;authpriv.none;kern.debug;lpr.info;mail.crit;news.err   /var/log/messages
+security.*                                      /var/log/security
+auth.info;authpriv.info                         /var/log/auth.log
+mail.info                                       /var/log/maillog <i class="conum" data-value="2"></i><b>(2)</b>
+cron.*                                          /var/log/cron
+!-devd
+*.=debug                                        /var/log/debug.log <i class="conum" data-value="3"></i><b>(3)</b>
+*.emerg                                         *
+daemon.info                                     /var/log/daemon.log
+# uncomment this to log all writes to /dev/console to /var/log/console.log
+# touch /var/log/console.log and chmod it to mode 600 before it will work
+#console.info                                   /var/log/console.log
+# uncomment this to enable logging of all log messages to /var/log/all.log
+# touch /var/log/all.log and chmod it to mode 600 before it will work
+#*.*                                            /var/log/all.log
+# uncomment this to enable logging to a remote loghost named loghost
+#*.*                                            @loghost
+# uncomment these if you&#39;re running inn
+# news.crit                                     /var/log/news/news.crit
+# news.err                                      /var/log/news/news.err
+# news.notice                                   /var/log/news/news.notice
+# Uncomment this if you wish to see messages produced by devd
+# !devd
+# *.&gt;=notice                                    /var/log/devd.log <i class="conum" data-value="4"></i><b>(4)</b>
+!*
+include                                         /etc/syslog.d
+include                                         /usr/local/etc/syslog.d</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Matches all messages with a level of <code>err</code> or higher, as well as <code>kern.warning</code>, <code>auth.notice</code> and <code>mail.crit</code>, and sends these log messages to the console (<span class="filename">/dev/console</span>).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Matches all messages from the <code>mail</code> facility at level <code>info</code> or above and logs the messages to <span class="filename">/var/log/maillog</span>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Uses a comparison flag (<code>=</code>) to only match messages at level <code>debug</code> and logs them to <span class="filename">/var/log/debug.log</span>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Is an example usage of a program specification. This makes the rules following it only valid for the specified program. In this case, only the messages generated by <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> are logged to <span class="filename">/var/log/devd.log</span>.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>For more information about <span class="filename">/etc/syslog.conf</span>, its syntax, and more advanced usage examples, see <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog.conf&amp;sektion=5&amp;format=html">syslog.conf(5)</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging-facilities">14.5.2. Logging Facilities<a class="anchor" href="#logging-facilities"></a></h3>
+<div class="paragraph">
+<p>A facility describes the part of the system generating the message.
+Facilities are a way of separating the different messages so that it is easier for the user to consult the logs.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. syslog facilities</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The authorization system: <a href="https://man.freebsd.org/cgi/man.cgi?query=login&amp;sektion=1&amp;format=html">login(1)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=su&amp;sektion=1&amp;format=html">su(1)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=getty&amp;sektion=8&amp;format=html">getty(8)</a>, etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">authpriv</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The same as auth, but logged to a file readable only by root.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">console</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messages written to <span class="filename">/dev/console</span> by the kernel console output driver.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cron</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messages written by the <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> daemon.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">daemon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System daemons, such as <a href="https://man.freebsd.org/cgi/man.cgi?query=routed&amp;sektion=8&amp;format=html">routed(8)</a>, that are not provided for explicitly by other facilities.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ftp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The file transfer protocol daemons: <a href="https://man.freebsd.org/cgi/man.cgi?query=ftpd&amp;sektion=8&amp;format=html">ftpd(8)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=tftpd&amp;sektion=8&amp;format=html">tftpd(8)</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">kern</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messages generated by the kernel. These cannot be generated by any user processes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lpr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The line printer spooling system: <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a>, etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The mail system.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mark</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This facility adds a record every 20 minutes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">news</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The network news system.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ntp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The network time protocol system.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security subsystems, such as <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=4&amp;format=html">ipfw(4)</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">syslog</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messages generated internally by syslogd(8).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messages generated by random user processes. <strong>This is the default facility identifier if none is specified</strong>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uucp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Unix-to-Unix Copy system. An ancient protocol. Really weird to see messages from this facility.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local0 through local7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for local use.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="logging-levels">14.5.3. Logging Levels<a class="anchor" href="#logging-levels"></a></h3>
+<div class="paragraph">
+<p>The level describes the severity of the message, and is a keyword from the following ordered list (higher to lower):</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. syslog levels</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">emerg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A panic condition. This is normally broadcast to all users.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alert</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A condition that should be corrected immediately, such as a corrupted system database.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Critical conditions, e.g., hard device errors.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">err</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Errors.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">warning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Warning messages.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">notice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conditions that are not error conditions, but should possibly be handled specially.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">info</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Informational messages.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messages that contain information normally of use only when debugging a program.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This special level disables a particular facility.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="read-log-messages">14.5.4. Read Log Messages<a class="anchor" href="#read-log-messages"></a></h3>
+<div class="paragraph">
+<p>By default FreeBSD log files use the format <a href="https://datatracker.ietf.org/doc/html/rfc3164">rfc3164</a>, also known as The BSD syslog Protocol.
+Learn more about other formats and how to use them at <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=8&amp;format=html">syslog(8)</a>.</p>
+</div>
+<div class="paragraph">
+<p>Typically the logs have the following syntax:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>date time hostname program[pid]: the message</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output of the <span class="filename">/var/log/cron</span>  file will be used as an example:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>[...]
+Jul 16 12:40:00 FreeBSD /usr/sbin/cron[81519]: (root) CMD (/usr/libexec/atrun)
+Jul 16 12:44:00 FreeBSD /usr/sbin/cron[83072]: (operator) CMD (/usr/libexec/save-entropy)
+[...]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Verbose logging, so the facility and the level on each message will be added, can be enabled in <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=8&amp;format=html">syslog(8)</a> by running the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc syslogd_flags=&#34;-vv&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the function is activated, the facility and the level will be displayed in the log as shown in the following example:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>[...]
+Jul 16 17:40:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1016]: (root) CMD (/usr/libexec/atrun)
+Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (/usr/libexec/save-entropy)
+[...]</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_log_management_and_rotation">14.5.5. Log Management and Rotation<a class="anchor" href="#_log_management_and_rotation"></a></h3>
+<div class="paragraph">
+<p>Log files can grow quickly, taking up disk space and making it more difficult to locate useful information.</p>
+</div>
+<div class="paragraph">
+<p>In FreeBSD, <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog&amp;sektion=8&amp;format=html">newsyslog(8)</a> is used to manage log files and attempt to mitigate this.</p>
+</div>
+<div class="paragraph">
+<p>This built-in program periodically rotates and compresses log files, and optionally creates missing log files and signals programs when log files are moved.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Since newsyslog is run from <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>, it cannot rotate files more often than it is scheduled to run from <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>.
+In the default configuration, it runs every hour.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Here is the default configuration in FreeBSD, more information in <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># configuration file for newsyslog
+# $FreeBSD$
+#
+# Entries which do not specify the &#39;/pid_file&#39; field will cause the
+# syslogd process to be signalled when that log file is rotated.  This
+# action is only appropriate for log files which are written to by the
+# syslogd process (ie, files listed in /etc/syslog.conf).  If there
+# is no process which needs to be signalled when a given log file is
+# rotated, then the entry for that file should include the &#39;N&#39; flag.
+#
+# Note: some sites will want to select more restrictive protections than the
+# defaults.  In particular, it may be desirable to switch many of the 644
+# entries to 640 or 600.  For example, some sites will consider the
+# contents of maillog, messages, and lpd-errs to be confidential.  In the
+# future, these defaults may change to more conservative ones.
+#
+# logfilename          [owner:group]    mode count size when  flags [/pid_file] [sig_num]
+/var/log/all.log                        600  7     *    @T00  J
+/var/log/auth.log                       600  7     1000 @0101T JC
+/var/log/console.log                    600  5     1000 *     J
+/var/log/cron                           600  3     1000 *     JC
+/var/log/daily.log                      640  7     *    @T00  JN
+/var/log/debug.log                      600  7     1000 *     JC
+/var/log/init.log                       644  3     1000 *     J
+/var/log/kerberos.log                   600  7     1000 *     J
+/var/log/maillog                        640  7     *    @T00  JC
+/var/log/messages                       644  5     1000 @0101T JC
+/var/log/monthly.log                    640  12    *    $M1D0 JN
+/var/log/devd.log                       644  3     1000 *     JC
+/var/log/security                       600  10    1000 *     JC
+/var/log/utx.log                        644  3     *    @01T05 B
+/var/log/weekly.log                     640  5     *    $W6D0 JN
+/var/log/daemon.log                     644  5     1000 @0101T JC
+
+&lt;include&gt; /etc/newsyslog.conf.d/[!.]*.conf
+&lt;include&gt; /usr/local/etc/newsyslog.conf.d/[!.]*.conf</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>logfilename</code> - Name of the system log file to be archived.</p>
+</li>
+<li>
+<p><code>[owner:group]</code> - This optional field specifies the owner and group for the archive file.</p>
+</li>
+<li>
+<p><code>mode</code> - Specify the file mode of the log file and archives. Valid mode bits are 0666.  (That is, read and write permissions for the rotated log may be specified for the owner, group, and others.)</p>
+</li>
+<li>
+<p><code>count</code> - Specify the maximum number of archive files which may exist.</p>
+</li>
+<li>
+<p><code>size</code> - When the size of the log file reaches size in kilobytes, the log file will be trimmed as described above. If this field contains an asterisk (&#39;*&#39;), the log file will not be trimmed based on size.</p>
+</li>
+<li>
+<p><code>when</code> - Consist of an interval, a specific time, or both. Supported options in <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a>.</p>
+</li>
+<li>
+<p><code>flags</code> - Indicates the flags that newsyslog accepts, supported options in <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a>.</p>
+</li>
+<li>
+<p><code>[/pid_file]</code> - This optional field specifies the file name containing a daemon’s process ID or to find a group process ID.</p>
+</li>
+<li>
+<p><code>[sig_num]</code> - This optional field specifies the signal that will be sent to the daemon process.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The last two fields are optional and specify the name of the Process ID (PID) file of a process and a signal number to send to that process when the file is rotated.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="network-syslogd">14.5.6. Configuring Remote Logging<a class="anchor" href="#network-syslogd"></a></h3>
+<div class="paragraph">
+<p>Monitoring the log files of multiple hosts can become unwieldy as the number of systems increases.
+Configuring centralized logging can reduce some of the administrative burden of log file administration.</p>
+</div>
+<div class="paragraph">
+<p>In FreeBSD, centralized log file aggregation, merging, and rotation can be configured using syslogd and newsyslog.</p>
+</div>
+<div class="paragraph">
+<p>This section demonstrates an example configuration, where host <code>A</code>, named <code>logserv.example.com</code>, will collect logging information for the local network.</p>
+</div>
+<div class="paragraph">
+<p>Host <code>B</code>, named <code>logclient.example.com</code>, will be configured to pass logging information to the logging server.</p>
+</div>
+<div class="sect3">
+<h4 id="_log_server_configuration">14.5.6.1. Log Server Configuration<a class="anchor" href="#_log_server_configuration"></a></h4>
+<div class="paragraph">
+<p>A log server is a system that has been configured to accept logging information from other hosts.</p>
+</div>
+<div class="paragraph">
+<p>Before configuring a log server, check the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If there is a firewall between the logging server and any logging clients, ensure that the firewall ruleset allows UDP port 514 for both the clients and the server.</p>
+</li>
+<li>
+<p>The logging server and all client machines must have forward and reverse entries in the local DNS. If the network does not have a DNS server, create entries in each system’s <span class="filename">/etc/hosts</span>. Proper name resolution is required so that log entries are not rejected by the logging server.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>On the log server, edit <span class="filename">/etc/syslog.conf</span> to specify the name of the client to receive log entries from, the logging facility to be used, and the name of the log to store the host’s log entries.
+This example adds the hostname of <code>B</code>, logs all facilities, and stores the log entries in <span class="filename">/var/log/logclient.log</span>.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. Sample Log Server Configuration</div>
+<div class="content">
+<div class="literalblock programlisting">
+<div class="content">
+<pre>+logclient.example.com
+*.*     /var/log/logclient.log</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>When adding multiple log clients, add a similar two-line entry for each client.
+More information about the available facilities may be found in <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog.conf&amp;sektion=5&amp;format=html">syslog.conf(5)</a>.</p>
+</div>
+<div class="paragraph">
+<p>Next, execute the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc syslogd_enable=&#34;YES&#34;</span>
+<span class="c"># sysrc syslogd_flags=&#34;-a logclient.example.com -v -v&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first entry starts syslogd at system boot.
+The second entry allows log entries from the specified client.
+The <code>-v -v</code> increases the verbosity of logged messages.
+This is useful for tweaking facilities as administrators are able to see what type of messages are being logged under each facility.</p>
+</div>
+<div class="paragraph">
+<p>Multiple <code>-a</code> options may be specified to allow logging from multiple clients.
+IP addresses and whole netblocks may also be specified.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> for a full list of possible options.</p>
+</div>
+<div class="paragraph">
+<p>Finally, create the log file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># touch /var/log/logclient.log</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At this point, syslogd should be restarted and verified:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service syslogd restart</span>
+<span class="c"># pgrep syslog</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If a PID is returned, the server restarted successfully, and client configuration can begin.
+If the server did not restart, consult <span class="filename">/var/log/messages</span> for the error.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_log_client_configuration">14.5.6.2. Log Client Configuration<a class="anchor" href="#_log_client_configuration"></a></h4>
+<div class="paragraph">
+<p>A logging client sends log entries to a logging server on the network.
+The client also keeps a local copy of its own logs.</p>
+</div>
+<div class="paragraph">
+<p>Once a logging server has been configured, execute the following commands on the logging client:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc syslogd_enable=&#34;YES&#34;</span>
+<span class="c"># sysrc syslogd_flags=&#34;-s -v -v&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first entry enables syslogd on boot up.
+The second entry prevents logs from being accepted by this client from other hosts (<code>-s</code>) and increases the verbosity of logged messages.</p>
+</div>
+<div class="paragraph">
+<p>Next, define the logging server in the client’s <span class="filename">/etc/syslog.conf</span>.
+In this example, all logged facilities are sent to a remote system, denoted by the <code>@</code> symbol, with the specified hostname:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>*.*  @logserv.example.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After saving the edit, restart syslogd for the changes to take effect:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service syslogd restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To test that log messages are being sent across the network, use <a href="https://man.freebsd.org/cgi/man.cgi?query=logger&amp;sektion=1&amp;format=html">logger(1)</a> on the client to send a message to syslogd:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># logger &#34;Test message from logclient&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This message should now exist both in <span class="filename">/var/log/messages</span> on the client and <span class="filename">/var/log/logclient.log</span> on the log server.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_debugging_log_servers">14.5.6.3. Debugging Log Servers<a class="anchor" href="#_debugging_log_servers"></a></h4>
+<div class="paragraph">
+<p>If no messages are being received on the log server, the cause is most likely a network connectivity issue, a hostname resolution issue, or a typo in a configuration file.
+To isolate the cause, ensure that both the logging server and the logging client are able to <code>ping</code> each other using the hostname specified in their <span class="filename">/etc/rc.conf</span>.
+If this fails, check the network cabling, the firewall ruleset, and the hostname entries in the DNS server or <span class="filename">/etc/hosts</span> on both the logging server and clients.
+Repeat until the <code>ping</code> is successful from both hosts.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>ping</code> succeeds on both hosts but log messages are still not being received, temporarily increase logging verbosity to narrow down the configuration issue.
+In the following example, <span class="filename">/var/log/logclient.log</span> on the logging server is empty and <span class="filename">/var/log/messages</span> on the logging client does not indicate a reason for the failure.</p>
+</div>
+<div class="paragraph">
+<p>To increase debugging output, edit the <code>syslogd_flags</code> entry on the logging server and issue a restart:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">sysrc <span class="nv">syslogd_flags</span><span class="o">=</span><span class="s2">&#34;-d -a logclient.example.com -v -v&#34;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service syslogd restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Debugging data similar to the following will flash on the console immediately after the restart:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>logmsg: pri 56, flags 4, from logserv.example.com, msg syslogd: restart
+syslogd: restarted
+logmsg: pri 6, flags 4, from logserv.example.com, msg syslogd: kernel boot file is /boot/kernel/kernel
+Logging to FILE /var/log/messages
+syslogd: kernel boot file is /boot/kernel/kernel
+cvthname(192.168.1.10)
+validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;
+rejected in rule 0 due to name mismatch.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, the log messages are being rejected due to a typo which results in a hostname mismatch.
+The client’s hostname should be <code>logclient</code>, not <code>logclien</code>.
+Fix the typo, issue a restart, and verify the results:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service syslogd restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>logmsg: pri 56, flags 4, from logserv.example.com, msg syslogd: restart
+syslogd: restarted
+logmsg: pri 6, flags 4, from logserv.example.com, msg syslogd: kernel boot file is /boot/kernel/kernel
+syslogd: kernel boot file is /boot/kernel/kernel
+logmsg: pri 166, flags 17, from logserv.example.com,
+msg Dec 10 20:55:02 &lt;syslog.err&gt; logserv.example.com syslogd: exiting on signal 2
+cvthname(192.168.1.10)
+validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;
+accepted in rule 0.
+logmsg: pri 15, flags 0, from logclient.example.com, msg Dec 11 02:01:28 trhodes: Test message 2
+Logging to FILE /var/log/logclient.log
+Logging to FILE /var/log/messages</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At this point, the messages are being properly received and placed in the correct file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_security_considerations">14.5.6.4. Security Considerations<a class="anchor" href="#_security_considerations"></a></h4>
+<div class="paragraph">
+<p>As with any network service, security requirements should be considered before implementing a logging server.
+Log files may contain sensitive data about services enabled on the local host, user accounts, and configuration data.
+Network data sent from the client to the server will not be encrypted or password protected.
+If a need for encryption exists, consider using <a class="package" href="https://cgit.freebsd.org/ports/tree/security/stunnel/">security/stunnel</a>, which will transmit the logging data over an encrypted tunnel.</p>
+</div>
+<div class="paragraph">
+<p>Local security is also an issue.
+Log files are not encrypted during use or after log rotation.
+Local users may access log files to gain additional insight into system configuration.
+Setting proper permissions on log files is critical.
+The built-in log rotator, newsyslog, supports setting permissions on newly created and rotated log files.
+Setting log files to mode <code>600</code> should prevent unwanted access by local users.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> for additional information.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="acpi-overview">14.6. Power and Resource Management<a class="anchor" href="#acpi-overview"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is important to utilize hardware resources in an efficient manner.
+Power and resource management allows the operating system to monitor system limits and to possibly run some actions triggered by events related to those limits.</p>
+</div>
+<div class="sect2">
+<h3 id="acpi-config">14.6.1. ACPI configuration<a class="anchor" href="#acpi-config"></a></h3>
+<div class="paragraph">
+<p>On FreeBSD the management of these resources is managed by the <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> kernel device.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In FreeBSD the <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> driver is loaded by default at system boot.</p>
+</div>
+<div class="paragraph">
+<p>This driver <strong>cannot be unloaded after boot</strong> because the system bus uses it for various hardware interactions.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>In addition to <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a>, FreeBSD has several dedicated kernel modules for various ACPI vendor subsystems.
+These modules will add some extra functionality like fan speed, keyboard backlit or screen brightness.</p>
+</div>
+<div class="paragraph">
+<p>The list can be obtained by running the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>ls /boot/kernel | grep acpi</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>acpi_asus.ko
+acpi_asus_wmi.ko
+acpi_dock.ko
+acpi_fujitsu.ko
+acpi_hp.ko
+acpi_ibm.ko
+acpi_panasonic.ko
+acpi_sony.ko
+acpi_toshiba.ko
+acpi_video.ko
+acpi_wmi.ko
+sdhci_acpi.ko
+uacpi.ko</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the event that, for example, an IBM/Lenovo laptop is used, it will be necessary to load the module <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi_ibm&amp;sektion=4&amp;format=html">acpi_ibm(4)</a> by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload acpi_ibm</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And add this line to <span class="filename">/boot/loader.conf</span> to load it at boot:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>acpi_ibm_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An alternative to the <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi_video&amp;sektion=4&amp;format=html">acpi_video(4)</a> module is the <a href="https://man.freebsd.org/cgi/man.cgi?query=backlight&amp;sektion=9&amp;format=html">backlight(9)</a> driver.
+It provides a generic way for handling a panel backlight.
+The default GENERIC kernel includes this driver.
+The <a href="https://man.freebsd.org/cgi/man.cgi?query=backlight&amp;sektion=8&amp;format=html">backlight(8)</a> utility can be used to query and adjust the brightness of
+the panel backlight.
+In this example the brightness is decreased by 10%:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>backlight decr 10</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cpu-power-management">14.6.2. CPU Power Management<a class="anchor" href="#cpu-power-management"></a></h3>
+<div class="paragraph">
+<p>CPU is the most consuming part of the system.
+Knowing how to improve CPU efficiency is a fundamental part of our system in order to save energy.</p>
+</div>
+<div class="paragraph">
+<p>In order to make proper use of the machine’s resources in a correct way, FreeBSD supports technologies such as Intel Turbo Boost, AMD Turbo Core, Intel Speed Shift among others through the use of <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> and cpufreq[4].</p>
+</div>
+<div class="paragraph">
+<p>The first step will be to obtain the CPU information by executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl dev.cpu.0 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>In this case the <code>0</code> digit represents the first core of the CPU.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dev.cpu.0.cx_method: C1/mwait/hwc C2/mwait/hwc C3/mwait/hwc/bma
+dev.cpu.0.cx_usage_counters: 3507294 0 0
+dev.cpu.0.cx_usage: 100.00% 0.00% 0.00% last 3804us
+dev.cpu.0.cx_lowest: C3 <i class="conum" data-value="1"></i><b>(1)</b>
+dev.cpu.0.cx_supported: C1/1/1 C2/2/1 C3/3/57 <i class="conum" data-value="2"></i><b>(2)</b>
+dev.cpu.0.freq_levels: 2267/35000 2266/35000 1600/15000 800/12000 <i class="conum" data-value="3"></i><b>(3)</b>
+dev.cpu.0.freq: 1600 <i class="conum" data-value="4"></i><b>(4)</b>
+dev.cpu.0.temperature: 40.0C <i class="conum" data-value="5"></i><b>(5)</b>
+dev.cpu.0.coretemp.throttle_log: 0
+dev.cpu.0.coretemp.tjmax: 105.0C
+dev.cpu.0.coretemp.resolution: 1
+dev.cpu.0.coretemp.delta: 65
+dev.cpu.0.%parent: acpi0
+dev.cpu.0.%pnpinfo: _HID=none _UID=0 _CID=none
+dev.cpu.0.%location: handle=\_PR_.CPU0
+dev.cpu.0.%driver: cpu
+dev.cpu.0.%desc: ACPI CPU</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Lowest Cx state to use for idling the CPU.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>CPU supported Cx states.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Currently available levels for the CPU (frequency/power usage).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Current active CPU frequency in MHz.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Current temperature of the CPU.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the temperature information is not displayed, load the <a href="https://man.freebsd.org/cgi/man.cgi?query=coretemp&amp;sektion=4&amp;format=html">coretemp(4)</a> module.
+In case of using an AMD CPU, load the <a href="https://man.freebsd.org/cgi/man.cgi?query=amdtemp&amp;sektion=4&amp;format=html">amdtemp(4)</a> module.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Once the CPU information is available the easiest way to configure power saving is to let <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> take over.</p>
+</div>
+<div class="paragraph">
+<p>Enable <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> service in <span class="filename">/etc/rc.conf</span> to start at system boot:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc powerd_enable=YES</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It will also be necessary to indicate certain parameters to <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> to tell it how to manage the state of the CPU executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc powerd_flags=&#34;-a hiadaptive -i 25 -r 85 -N&#34;</span></code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>-a</code>: Selects the mode to use while on AC power.</p>
+</li>
+<li>
+<p><code>hiadaptive</code>: Operation mode. More info at <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a>.</p>
+</li>
+<li>
+<p><code>-i</code>: Specifies the CPU load percent level when adaptive mode should begin to degrade performance to save power.</p>
+</li>
+<li>
+<p><code>-r</code>: Specifies the CPU load percent level where adaptive mode should consider the CPU running and increase performance.</p>
+</li>
+<li>
+<p><code>-N</code>: Treat &#34;nice&#34; time as idle for the purpose of load calculation; i.e., do not increase the CPU frequency if the CPU is only busy with &#34;nice&#34; processes.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>And then enable the service executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service powerd start</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cpufreq">14.6.3. CPU Frequency Control<a class="anchor" href="#cpufreq"></a></h3>
+<div class="paragraph">
+<p>FreeBSD includes a generic <a href="https://man.freebsd.org/cgi/man.cgi?query=cpufreq&amp;sektion=4&amp;format=html">cpufreq(4)</a> driver to allow the administrator, or software such as <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> and <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a>, to manage the frequency of the CPU to achieve the desired balance between performance and economy.
+A lower setting will save power while reducing the heat generated by the CPU.
+A higher setting will increase performance at the cost of using additional power and generating more heat.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="est">14.6.4. Intel® Enhanced Speed Step™<a class="anchor" href="#est"></a></h3>
+<div class="paragraph">
+<p>The Intel® Enhanced Speed Step™ driver, <a href="https://man.freebsd.org/cgi/man.cgi?query=est&amp;sektion=4&amp;format=html">est(4)</a>, replaces the generic <a href="https://man.freebsd.org/cgi/man.cgi?query=cpufreq&amp;sektion=4&amp;format=html">cpufreq(4)</a> driver for CPUs that provide this feature.
+The CPU frequency can be statically adjusted using <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a>, or with the <code>/etc/rc.d/power_profile</code> startup script.
+Additional software, such as <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a>, can be used to automatically adjust the CPU frequency based on processor utilization.</p>
+</div>
+<div class="paragraph">
+<p>Each supported frequency, along with its expected power consumption, can be listed by examining the <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=3&amp;format=html">sysctl(3)</a> tree:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl dev.cpufreq.0.freq_driver dev.cpu.0.freq_levels dev.cpu.0.freq</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dev.cpufreq.0.freq_driver: est0
+dev.cpu.0.freq_levels: 3001/53000 3000/53000 2900/50301 2700/46082 2600/43525 2400/39557 2300/37137 2100/33398 2000/31112 1800/27610 1700/25455 1500/22171 1400/20144 1200/17084 1100/15181 900/12329 800/10550
+dev.cpu.0.freq: 800</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A frequency 1 MHz higher than the maximum frequency of the CPU indicates the Intel® Turbo Boost™ feature.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="hwpstate_intel">14.6.5. Intel Speed Shift™<a class="anchor" href="#hwpstate_intel"></a></h3>
+<div class="paragraph">
+<p>Users running newer Intel® CPUs may find some differences in dynamic frequency control when upgrading to FreeBSD 13.
+A new driver for the Intel® Speed Shift™ feature set, available on certain SKUs, exposes the ability for the hardware to dynamically vary the core frequencies, including on a per core basis.
+FreeBSD 13 comes with the <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> driver to automatically enable Speed Shift™ control on equipped CPUs, replacing the older Enhanced Speed Step™ <a href="https://man.freebsd.org/cgi/man.cgi?query=est&amp;sektion=4&amp;format=html">est(4)</a> driver.
+The <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> <code>dev.cpufreq.%d.freq_driver</code> will indicate if the system is using Speed Shift.</p>
+</div>
+<div class="paragraph">
+<p>To determine which frequency control driver is being used, examining the <code>dev.cpufreq.0.freq_driver</code> oid.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl dev.cpufreq.0.freq_driver</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dev.cpufreq.0.freq_driver: hwpstate_intel0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This indicates that the new <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> driver is in use.
+On such systems, the oid <code>dev.cpu.%d.freq_levels</code> will show only the maximum CPU frequency, and will indicate a power consumption level of <code>-1</code>.</p>
+</div>
+<div class="paragraph">
+<p>The current CPU frequency can be determined by examining the <code>dev.cpu.%d.freq</code> oid.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl dev.cpu.0.freq_levels dev.cpu.0.freq</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dev.cpu.0.freq_levels: 3696/-1
+dev.cpu.0.freq: 898</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information, including on how to balance performance and energy use, and on how to disable this driver, refer to the man page <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Users accustomed to using <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a> will find these utilities have been superseded by the <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> driver and no longer work as expected.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="graphics-card-power-management">14.6.6. Graphics Card Power Management<a class="anchor" href="#graphics-card-power-management"></a></h3>
+<div class="paragraph">
+<p>Graphics cards have become a fundamental part of computing in recent years.
+Some graphics cards may have excessive power consumption.
+FreeBSD allows certain configurations to improve power consumption.</p>
+</div>
+<div class="paragraph">
+<p>In case of using a Intel® graphics card with the <a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> driver these options can be added to <span class="filename">/boot/loader.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>compat.linuxkpi.fastboot=1 <i class="conum" data-value="1"></i><b>(1)</b>
+compat.linuxkpi.enable_dc=2 <i class="conum" data-value="2"></i><b>(2)</b>
+compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Try to skip unnecessary mode sets at boot time.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Enable power-saving display C-states.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Enable frame buffer compression for power savings</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_suspendresume">14.6.7. Suspend/Resume<a class="anchor" href="#_suspendresume"></a></h3>
+<div class="paragraph">
+<p>The suspend/resume function allows the machine to be kept in a state in which there is no a big energy consumption and allows the system to be resumed without having to lose the state of the running programs.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In order for the suspend/resume functionality to work correctly the graphics drivers must be loaded on the system.
+In non-KMS-supported graphics cards <a href="https://man.freebsd.org/cgi/man.cgi?query=sc&amp;sektion=4&amp;format=html">sc(4)</a> must be used not to break the suspend/resume functionality.</p>
+</div>
+<div class="paragraph">
+<p>More information about which driver to use and how to configure it can be found at the <a href="../x11/#x11">The X Window System chapter</a>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> supports the next list of sleep states:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Supported Sleep States</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">S1</th>
+<th class="tableblock halign-left valign-top">Quick suspend to RAM. The CPU enters a lower power state, but most peripherals are left running.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lower power state than S1, but with the same basic characteristics. Not supported by many systems.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S3 (Sleep mode)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Suspend to RAM. Most devices are powered off, and the system stops running except for memory refresh.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S4 (Hibernation)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Suspend to disk. All devices are powered off, and the system stops running. When resuming, the system starts as if from a cold power on. <strong>Not yet supported by FreeBSD</strong>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System shuts down cleanly and powers off.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="configure-suspend-resume">14.6.7.1. Configuring Suspend/Resume<a class="anchor" href="#configure-suspend-resume"></a></h4>
+<div class="paragraph">
+<p>The first step will be to know which type of sleep states supports the hardware we are using executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl hw.acpi.supported_sleep_state</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be similar to the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hw.acpi.supported_sleep_state: S3 S4 S5</pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As stated above FreeBSD does <strong>not</strong> yet support the <code>S4</code> state.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpiconf&amp;sektion=8&amp;format=html">acpiconf(8)</a> can be used to check if the <code>S3</code> state works correctly by running the following command, if it succeeds, the screen should go black and the machine will turn off:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># acpiconf -s 3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the vast majority of cases the Suspend/Resume functionality wants to be used on a laptop.</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD can be configured to enter the <code>S3</code> state when closing the lid by adding the following line to the <span class="filename">/etc/sysctl.conf</span> file.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hw.acpi.lid_switch_state=S3</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="troubleshooting-suspend-resume">14.6.7.2. Troubleshooting in Suspend/Resume<a class="anchor" href="#troubleshooting-suspend-resume"></a></h4>
+<div class="paragraph">
+<p>A lot of effort has been made to make the Suspend and Resume functions work properly and in the best way on FreeBSD.
+But currently the Suspend and Resume functions only work properly on some specific laptops.</p>
+</div>
+<div class="paragraph">
+<p>Some checks can be done in case it doesn’t work properly.</p>
+</div>
+<div class="paragraph">
+<p>In some cases it is enough to turn off the bluetooth.
+In others it is enough loading the correct driver for the graphics card, etc.</p>
+</div>
+<div class="paragraph">
+<p>In case it doesn’t work correctly, some tips can be found on the FreeBSD Wiki in the section <a href="https://wiki.freebsd.org/SuspendResume">Suspend/Resume</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adding-swap-space">14.7. Adding Swap Space<a class="anchor" href="#adding-swap-space"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sometimes a FreeBSD system requires more swap space.
+This section describes two methods to increase swap space: adding swap to an existing partition or new hard drive, and creating a swap file on an existing file system.</p>
+</div>
+<div class="paragraph">
+<p>For information on how to encrypt swap space, which options exist, and why it should be done, refer to <a href="../disks/#swap-encrypting">“Encrypting Swap”</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="new-drive-swap">14.7.1. Swap on a New Hard Drive or Existing Partition<a class="anchor" href="#new-drive-swap"></a></h3>
+<div class="paragraph">
+<p>Adding a new drive for swap gives better performance than using a partition on an existing drive.
+Setting up partitions and drives is explained in <a href="../disks/#disks-adding">Adding Disks</a> while <a href="../bsdinstall/#configtuning-initial">Designing the Partition Layout</a> discusses partition layouts and swap partition size considerations.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is possible to use any partition not currently mounted, even if it already contains data.
+Using <code>swapon</code> on a partition that contains data will overwrite and destroy that data.
+Make sure that the partition to be added as swap is really the intended partition before running <code>swapon</code>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=swapon&amp;sektion=8&amp;format=html">swapon(8)</a> can be used to add a swap partition to the system executing the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># swapon /dev/ada1p2</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To automatically add this swap partition on boot, add an entry to <span class="filename">/etc/fstab</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/ada1p2 none swap sw 0 0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> for an explanation of the entries in <span class="filename">/etc/fstab</span>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="create-swapfile">14.7.2. Creating a Swap File<a class="anchor" href="#create-swapfile"></a></h3>
+<div id="swapfile-10-and-later" class="paragraph">
+<p>These examples create a 512M swap file called <span class="filename">/usr/swap0</span>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Swap files on ZFS file systems are strongly discouraged, as swapping can lead to system hangs.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The first step is to create the swap file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dd if=/dev/zero of=/usr/swap0 bs=1m count=512</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second step is to put the proper permissions on the new file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 0600 /usr/swap0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The third step is to inform the system about the swap file by adding a line to <span class="filename">/etc/fstab</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>md none swap sw,file=/usr/swap0,late 0 0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Swap space will be added on system startup. To add swap space immediately, use <a href="https://man.freebsd.org/cgi/man.cgi?query=swapon&amp;sektion=8&amp;format=html">swapon(8)</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># swapon -aL</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/en/books/handbook/partiii class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/en/books/handbook/boot  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#config-synopsis">14.1. Synopsis</a></li>
+    <li><a href="#configtuning-configfiles">14.2. Configuration Files</a></li>
+    <li><a href="#configtuning-rcd">14.3. Managing Services in FreeBSD</a></li>
+    <li><a href="#cron-periodic">14.4. Cron and Periodic</a></li>
+    <li><a href="#configtuning-syslog">14.5. Configuring System Logging</a></li>
+    <li><a href="#acpi-overview">14.6. Power and Resource Management</a></li>
+    <li><a href="#adding-swap-space">14.7. Adding Swap Space</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/en/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>English</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

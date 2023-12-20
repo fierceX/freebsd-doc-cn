@@ -1,0 +1,2900 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="虚拟化软件允许多个操作系统在同一台计算机上同时运行。"/>
+  <meta name="keywords" content="91, 34, 118, 105, 114, 116, 117, 97, 108, 105, 122, 97, 116, 105, 111, 110, 34, 44, 32, 34, 80, 97, 114, 97, 108, 108, 101, 108, 115, 34, 44, 32, 34, 86, 77, 119, 97, 114, 101, 34, 44, 32, 34, 86, 105, 114, 116, 117, 97, 108, 66, 111, 120, 34, 44, 32, 34, 98, 104, 121, 118, 101, 34, 44, 32, 34, 88, 69, 78, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/" />
+
+  <title>第 24 章 虚拟化 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 24 章 虚拟化" />
+    <meta property="og:description" content="虚拟化软件允许多个操作系统在同一台计算机上同时运行。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/virtualization\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 24 章 虚拟化</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="virtualization-synopsis">24.1. 简介<a class="anchor" href="#virtualization-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>虚拟化软件允许多个操作系统同时在同一台计算机上运行。这种针对个人电脑的软件系统通常包括一个主机操作系统，它运行虚拟化软件并支持任意数量的客户操作系统。</p>
+</div>
+<div class="paragraph">
+<p>阅读完本章后，您将了解：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>主机操作系统和客户操作系统之间的区别。</p>
+</li>
+<li>
+<p>如何在以下虚拟化平台上安装 FreeBSD ：</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Parallels Desktop （苹果（ R ） macOS （ R ））</p>
+</li>
+<li>
+<p>VMware Fusion （苹果（ R ） macOS （ R ））</p>
+</li>
+<li>
+<p>VirtualBox™ （ Microsoft® Windows® 、 Intel®-based Apple® macOS® 、 Linux ）</p>
+</li>
+<li>
+<p>bhyve （ FreeBSD ）</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>如何调整 FreeBSD 系统以在虚拟化环境下获得最佳性能。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在阅读本章之前，你应该：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解 <a href="../basics/#basics">UNIX® 和 FreeBSD 的基础知识</a> 。</p>
+</li>
+<li>
+<p>了解如何交叉引用： bsdinstall[bsdinstall ，安装 FreeBSD] 。</p>
+</li>
+<li>
+<p>了解如何进行交叉引用：高级网络设置 [advanced-networking ，设置网络连接] 。</p>
+</li>
+<li>
+<p>了解如何交叉引用： ports[ports ,安装额外的第三方软件] 。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD<a class="anchor" href="#virtualization-guest-parallelsdesktop"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Parallels Desktop for Mac （ R ）是一款商业软件产品，适用于运行 macOS （ R ） 10.14.6 或更高版本的 Apple （ R ） Mac （ R ）计算机。 FreeBSD 是一个完全支持的客户操作系统。一旦在 macOS （ R ）上安装了 Parallels ，用户必须配置一个虚拟机，然后安装所需的客户操作系统。</p>
+</div>
+<div class="sect2">
+<h3 id="virtualization-guest-parallelsdesktop-install">24.2.1. 在 Mac 上使用 Parallels Desktop 安装 FreeBSD<a class="anchor" href="#virtualization-guest-parallelsdesktop-install"></a></h3>
+<div class="paragraph">
+<p>在 Parallels 上安装 FreeBSD 的第一步是创建一个新的虚拟机来安装 FreeBSD 。</p>
+</div>
+<div class="paragraph">
+<p>选择菜单：从 DVD 或镜像文件安装 Windows 或其他操作系统 [] ，然后继续。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/parallels-freebsd1.png" alt="Parallels 安装向导显示选择从 DVD 或镜像文件安装 Windows 或其他操作系统。"/>
+</div>
+</div>
+<div class="paragraph">
+<p>选择 FreeBSD 镜像文件。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/parallels-freebsd2.png" alt="Parallels 安装向导显示已选择 FreeBSD 镜像文件。"/>
+</div>
+</div>
+<div class="paragraph">
+<p>选择菜单：其他作为操作系统 [] 。</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>选择 FreeBSD 会导致启动时出现引导错误。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/parallels-freebsd3.png" alt="Parallels 安装向导显示操作系统选择为“其他”。"/>
+</div>
+</div>
+<div class="paragraph">
+<p>命名虚拟机并在安装之前检查菜单：自定义设置 []</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/parallels-freebsd4.png" alt="Parallels 安装向导显示了在安装之前自定义设置的复选框已被选中。"/>
+</div>
+</div>
+<div class="paragraph">
+<p>当配置窗口弹出时，转到菜单：硬件 [] 选项卡，选择菜单：启动顺序 [] ，然后点击菜单：高级 [] 。然后，选择 *EFI 64 位 * 作为菜单： BIOS[] 。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/parallels-freebsd5.png" alt="Parallels 安装向导显示选择 EFI 64 位作为 BIOS 。"/>
+</div>
+</div>
+<div class="paragraph">
+<p>点击菜单：确定 [] ，关闭配置窗口，然后点击菜单：继续 [] 。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/parallels-freebsd6.png" alt="Parallels 安装向导显示新虚拟机的摘要信息。"/>
+</div>
+</div>
+<div class="paragraph">
+<p>虚拟机将自动启动。按照通用步骤安装 FreeBSD 。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/parallels-freebsd7.png" alt="FreeBSD 在 Parallels 上启动成功。"/>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-guest-parallels-configure">24.2.2. 在 Parallels 上配置 FreeBSD<a class="anchor" href="#virtualization-guest-parallels-configure"></a></h3>
+<div class="paragraph">
+<p>在使用 Parallels 在 macOS® X 上成功安装 FreeBSD 之后，可以采取一些配置步骤来优化系统以进行虚拟化操作。</p>
+</div>
+<div class="olist arabic procedure">
+<ol class="arabic">
+<li>
+<p>设置引导加载程序变量</p>
+<div class="paragraph">
+<p>最重要的步骤是减少在 Parallels 环境下 FreeBSD 的 CPU 利用率，方法是将 <code>kern.hz</code> 可调参数降低。通过在 <span class="filename">/boot/loader.conf</span> 文件中添加以下行来实现：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.hz=100</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果没有这个设置，一个空闲的 FreeBSD Parallels 虚拟机将会占用大约一个处理器 iMac® 的 15% 的 CPU 。在进行这个更改后，使用率将会接近 5% 。</p>
+</div>
+</li>
+<li>
+<p>创建一个新的内核配置文件</p>
+<div class="paragraph">
+<p>可以从自定义内核配置文件中删除所有 SCSI 、 FireWire 和 USB 设备驱动程序。 Parallels 提供了一个虚拟网络适配器，由 <a href="https://man.freebsd.org/cgi/man.cgi?query=ed&amp;sektion=4&amp;format=html">ed(4)</a> 驱动程序使用，因此除了 <a href="https://man.freebsd.org/cgi/man.cgi?query=ed&amp;sektion=4&amp;format=html">ed(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=miibus&amp;sektion=4&amp;format=html">miibus(4)</a> 之外，所有网络设备都可以从内核中删除。</p>
+</div>
+</li>
+<li>
+<p>配置网络</p>
+<div class="paragraph">
+<p>最基本的网络设置使用 DHCP 将虚拟机连接到与主机 Mac® 相同的局域网。可以通过在 /etc/rc.conf 文件中添加 <code>ifconfig_ed0 =&#34;DHCP&#34;</code> 来实现。更高级的网络设置在 <a href="../advanced-networking/#高级网络设置"></a> 中有描述。</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD<a class="anchor" href="#virtualization-guest-vmware"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>VMware Fusion for Mac （ R ）是一款商业软件产品，适用于运行 macOS （ R ） 12 或更高版本的 Apple （ R ） Mac （ R ）计算机。 FreeBSD 是一个完全支持的客户操作系统。一旦在 macOS （ R ）上安装了 VMware Fusion ，用户可以配置虚拟机，然后安装所需的客户操作系统。</p>
+</div>
+<div class="sect2">
+<h3 id="virtualization-guest-vmware-install">24.3.1. 在 VMware Fusion 上安装 FreeBSD<a class="anchor" href="#virtualization-guest-vmware-install"></a></h3>
+<div class="paragraph">
+<p>第一步是启动 VMware Fusion ，它将加载虚拟机库。点击【+ → 新建】来创建虚拟机：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd01.png" alt="vmware freebsd01"/>
+</div>
+</div>
+<div class="paragraph">
+<p>这将加载新的虚拟机助手。选择【创建自定义虚拟机】并点击【继续】以继续：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd02.png" alt="vmware freebsd02"/>
+</div>
+</div>
+<div class="paragraph">
+<p>在提示时，选择 [.guimenuitem]# 其他 # 作为 [.guimenuitem]# 操作系统 # ，并选择 <span class="guimenuitem">FreeBSD X</span> 或 [.guimenuitem]#FreeBSD X 64 位 # 作为菜单 : 版本 [] 。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd03.png" alt="vmware freebsd03"/>
+</div>
+</div>
+<div class="paragraph">
+<p>选择固件（推荐使用 UEFI ）：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd04.png" alt="vmware freebsd04"/>
+</div>
+</div>
+<div class="paragraph">
+<p>选择 [.guimenuitem]# 创建新的虚拟磁盘 # 并点击 [.guimenuitem]# 继续 # ：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd05.png" alt="vmware freebsd05"/>
+</div>
+</div>
+<div class="paragraph">
+<p>检查配置并点击 [.guimenuitem]# 完成 # 。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd06.png" alt="vmware freebsd06"/>
+</div>
+</div>
+<div class="paragraph">
+<p>选择虚拟机的名称和保存的目录：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd07.png" alt="vmware freebsd07"/>
+</div>
+</div>
+<div class="paragraph">
+<p>按下 Command + E 打开虚拟机设置，然后点击 <span class="guimenuitem">CD/DVD</span> 。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd08.png" alt="vmware freebsd08"/>
+</div>
+</div>
+<div class="paragraph">
+<p>选择 FreeBSD ISO 镜像或者从 CD/DVD 中选择：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd09.png" alt="vmware freebsd09"/>
+</div>
+</div>
+<div class="paragraph">
+<p>启动虚拟机：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd10.png" alt="vmware freebsd10"/>
+</div>
+</div>
+<div class="paragraph">
+<p>按照通常的方式安装 FreeBSD ：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd11.png" alt="vmware freebsd11"/>
+</div>
+</div>
+<div class="paragraph">
+<p>安装完成后，可以修改虚拟机的设置，例如内存使用量和虚拟机可以访问的 CPU 数量。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>虚拟机运行时无法修改虚拟机的系统硬件设置。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd12.png" alt="vmware freebsd12"/>
+</div>
+</div>
+<div class="paragraph">
+<p>CD-ROM 设备的状态。通常，当虚拟机不再需要 CD/DVD/ISO 时，它会与之断开连接。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd09.png" alt="vmware freebsd09"/>
+</div>
+</div>
+<div class="paragraph">
+<p>最后需要更改的是虚拟机如何连接到网络。为了允许虚拟机与主机以外的其他机器进行连接，选择 [.guimenuitem]# 直接连接物理网络（桥接） # 。否则，推荐选择 [.guimenuitem]# 共享主机的互联网连接（ NAT ） # ，这样虚拟机可以访问互联网，但网络无法访问虚拟机。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/virtualization/vmware-freebsd13.png" alt="vmware freebsd13"/>
+</div>
+</div>
+<div class="paragraph">
+<p>修改设置后，启动新安装的 FreeBSD 虚拟机。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-guest-vmware-configure">24.3.2. 在 VMware Fusion 上配置 FreeBSD<a class="anchor" href="#virtualization-guest-vmware-configure"></a></h3>
+<div class="paragraph">
+<p>在使用 VMware Fusion 成功安装 FreeBSD 到 macOS® X 之后，可以采取一些配置步骤来优化系统以进行虚拟化操作。</p>
+</div>
+<div class="olist arabic procedure">
+<ol class="arabic">
+<li>
+<p>设置引导加载程序变量</p>
+<div class="paragraph">
+<p>最重要的步骤是在 VMware Fusion 环境下减少 FreeBSD 的 CPU 利用率，方法是将 <code>kern.hz</code> 可调参数降低。通过在 [/boot/loader.conf] 文件中添加以下行来实现：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.hz=100</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果没有这个设置，一个空闲的 FreeBSD VMware Fusion 客户机将使用大约 15% 的单处理器 iMac® 的 CPU 。在进行这个更改之后，使用率将接近 5% 。</p>
+</div>
+</li>
+<li>
+<p>创建一个新的内核配置文件</p>
+<div class="paragraph">
+<p>可以从自定义内核配置文件中删除所有的 FireWire 和 USB 设备驱动程序。 VMware Fusion 提供了一个虚拟网络适配器，由 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 驱动程序使用，因此除了 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 之外的所有网络设备都可以从内核中删除。</p>
+</div>
+</li>
+<li>
+<p>配置网络</p>
+<div class="paragraph">
+<p>最基本的网络设置使用 DHCP 将虚拟机连接到与主机 Mac® 相同的局域网。可以通过在 <code>/etc/rc.conf</code> 文件中添加 <code>ifconfig_em0 =&#34;DHCP&#34;</code> 来实现。更高级的网络设置在《高级网络设置》中有描述。</p>
+</div>
+</li>
+<li>
+<p>安装驱动程序和 open-vm-tools</p>
+<div class="paragraph">
+<p>要在 VMWare 上顺畅运行 FreeBSD ，需要安装驱动程序：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install xf86-video-vmware xf86-input-vmmouse open-vm-tools</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD<a class="anchor" href="#virtualization-guest-virtualbox"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD 在 VirtualBox™ 中作为客户机运行良好。这款虚拟化软件适用于大多数常见操作系统，包括 FreeBSD 本身。</p>
+</div>
+<div class="paragraph">
+<p>VirtualBox™ 客户机附加组件提供以下支持：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>剪贴板共享。</p>
+</li>
+<li>
+<p>鼠标指针集成。</p>
+</li>
+<li>
+<p>主机时间同步。</p>
+</li>
+<li>
+<p>窗口缩放。</p>
+</li>
+<li>
+<p>无缝模式。</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>这些命令在 FreeBSD 虚拟机中运行。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>首先，在 FreeBSD 客户机中安装包： emulators/virtualbox-ose-additions[] 。这将安装端口：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/emulators/virtualbox-ose-additions &amp;&amp; make install clean</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将以下行添加到 [/etc/rc.conf] 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vboxguest_enable=&#34;YES&#34;
+vboxservice_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ntpd&amp;sektion=8&amp;format=html">ntpd(8)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=ntpdate&amp;sektion=8&amp;format=html">ntpdate(8)</a> ，请禁用主机时间同步：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vboxservice_flags=&#34;--disable-timesync&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Xorg 会自动识别 <code>vboxvideo</code> 驱动程序。也可以在 <code>/etc/X11/xorg.conf</code> 文件中手动输入。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;Device&#34;
+	Identifier &#34;Card0&#34;
+	Driver &#34;vboxvideo&#34;
+	VendorName &#34;InnoTek Systemberatung GmbH&#34;
+	BoardName &#34;VirtualBox Graphics Adapter&#34;
+EndSection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使用 <code>vboxmouse</code> 驱动程序，请在 <span class="filename">/etc/X11/xorg.conf</span> 中调整鼠标部分。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Section &#34;InputDevice&#34;
+	Identifier &#34;Mouse0&#34;
+	Driver &#34;vboxmouse&#34;
+EndSection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通过使用 <code>mount_vboxvfs</code> 挂载，可以访问主机和虚拟机之间的共享文件夹进行文件传输。可以使用 VirtualBox GUI 或通过 <code>vboxmanage</code> 在主机上创建共享文件夹。例如，要在名为_BSDBox_的虚拟机下创建一个名为_myshare_的共享文件夹，位于 <span class="filename">/mnt/bsdboxshare</span> ，运行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># vboxmanage sharedfolder add &#39;BSDBox&#39; --name myshare --hostpath /mnt/bsdboxshare</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>请注意，共享文件夹的名称不能包含空格。在虚拟机中挂载共享文件夹的方法如下：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount_vboxvfs -w myshare /mnt</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机<a class="anchor" href="#virtualization-host-virtualbox"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>VirtualBox™ 是一个积极开发的完整虚拟化软件包，适用于包括 Windows® 、 macOS® 、 Linux® 和 FreeBSD 在内的大多数操作系统。它能够同样运行 Windows® 或类 UNIX® 的客户机。它以开源软件的形式发布，但也有一些闭源组件可在单独的扩展包中获取。这些组件包括对 USB 2.0 设备的支持。有关更多信息，请参阅 VirtualBox™ 维基的 <a href="http://www.virtualbox.org/wiki/Downloads">下载页面</a> 。目前，这些扩展在 FreeBSD 上不可用。</p>
+</div>
+<div class="sect2">
+<h3 id="virtualization-virtualbox-install">24.5.1. 安装 VirtualBox™<a class="anchor" href="#virtualization-virtualbox-install"></a></h3>
+<div class="paragraph">
+<p>VirtualBox™ 可以作为 FreeBSD 的一个软件包或端口在 <a class="package" href="https://cgit.freebsd.org/ports/tree/emulators/virtualbox-ose/">emulators/virtualbox-ose</a> 中获得。可以使用以下命令安装该端口：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/emulators/virtualbox-ose</span>
+<span class="c"># make install clean</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>端口配置菜单中的一个有用选项是“ GuestAdditions ”程序套件。这些程序在客户操作系统中提供了许多有用的功能，如鼠标指针集成（允许鼠标在主机和客户之间共享，无需按特殊的键盘快捷键切换）和更快的视频渲染，尤其是在 Windows® 客户中。在客户安装完成后，可以在菜单 : 设备 [] 菜单中找到客户附加组件。</p>
+</div>
+<div class="paragraph">
+<p>在首次启动 VirtualBox™ 之前，需要进行一些配置更改。该端口会在 <span class="filename">/boot/modules</span> 中安装一个内核模块，必须将其加载到正在运行的内核中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload vboxdrv</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了确保模块在重新启动后始终加载，将以下行添加到 [/boot/loader.conf] 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vboxdrv_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使用允许桥接或仅主机网络的内核模块，请将以下行添加到 [/etc/rc.conf] 文件中，并重新启动计算机：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vboxnet_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在安装 VirtualBox™ 时会创建 <code>vboxusers</code> 组。所有需要访问 VirtualBox™ 的用户都必须添加为该组的成员。可以使用 <code>pw</code> 命令来添加新成员：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pw groupmod vboxusers -m yourusername</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="filename">/dev/vboxnetctl</span> 的默认权限很严格，需要更改以支持桥接网络：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chown root:vboxusers /dev/vboxnetctl</span>
+<span class="c"># chmod 0660 /dev/vboxnetctl</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使此权限更改永久生效，请将以下行添加到 <span class="filename">/etc/devfs.conf</span> 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>own     vboxnetctl root:vboxusers
+perm    vboxnetctl 0660</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要启动 VirtualBox™ ，请在 Xorg 会话中输入以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>VirtualBox</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关配置和使用 VirtualBox™ 的更多信息，请参阅 <a href="http://www.virtualbox.org">官方网站</a> 。有关 FreeBSD 特定信息和故障排除说明，请参阅 <a href="http://wiki.FreeBSD.org/VirtualBox">FreeBSD wiki 中的相关页面</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-virtualbox-usb-support">24.5.2. VirtualBox™ USB 支持<a class="anchor" href="#virtualization-virtualbox-usb-support"></a></h3>
+<div class="paragraph">
+<p>VirtualBox™ 可以配置为将 USB 设备传递给客户操作系统。 OSE 版本的主机控制器仅限于模拟 USB 1.1 设备，直到支持 USB 2.0 和 3.0 设备的扩展包在 FreeBSD 上可用为止。</p>
+</div>
+<div class="paragraph">
+<p>要使 VirtualBox™ 能够识别连接到计算机的 USB 设备，用户需要是 <code>operator</code> 组的成员。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pw groupmod operator -m yourusername</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后，将以下内容添加到 <span class="filename">/etc/devfs.rules</span> 中，如果该文件尚不存在，则创建该文件：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>[system=10]
+add path &#39;usb/*&#39; mode 0660 group operator</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要加载这些新规则，请将以下内容添加到 [/etc/rc.conf] 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>devfs_system_ruleset=&#34;system&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后，重新启动 devfs ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service devfs restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>重新启动登录会话和 VirtualBox™ 以使这些更改生效，并根据需要创建 USB 过滤器。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-virtualbox-host-dvd-cd-access">24.5.3. VirtualBox™ 主机 DVD/CD 访问<a class="anchor" href="#virtualization-virtualbox-host-dvd-cd-access"></a></h3>
+<div class="paragraph">
+<p>通过共享物理驱动器，可以实现从虚拟机访问主机的 DVD/CD 驱动器。在 VirtualBox™ 中，可以在虚拟机的设置中的存储窗口中进行设置。如果需要，首先创建一个空的 IDECD/DVD 设备。然后从弹出菜单中选择主机驱动器作为虚拟 CD/DVD 驱动器的选择。将会出现一个名为“ Passthrough ”的复选框。这允许虚拟机直接使用硬件。例如，只有在选择了此选项后，音频 CD 或刻录机才能正常工作。</p>
+</div>
+<div class="paragraph">
+<p>为了使用户能够使用 VirtualBox™ 的 DVD/CD 功能，他们需要访问 <code>/dev/xpt0</code> 、 <code>/dev/cdN</code> 和 <code>/dev/passN</code> 。通常通过将用户添加到 <code>operator</code> 组来实现此目的。需要通过在 <code>/etc/devfs.conf</code> 中添加以下行来更正对这些设备的权限：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>perm cd* 0660
+perm xpt0 0660
+perm pass* 0660</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service devfs restart</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机<a class="anchor" href="#virtualization-host-bhyve"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>bhyve 是一个基于 BSD 许可的虚拟机监控程序，自 FreeBSD 10.0-RELEASE 版本起成为基础系统的一部分。该虚拟机监控程序支持多种客户操作系统，包括 FreeBSD 、 OpenBSD 和许多 Linux® 发行版。默认情况下， bhyve 提供串行控制台访问，并不模拟图形控制台。它利用较新的 CPU 的虚拟化卸载功能，避免了传统的指令转换和手动管理内存映射的方法。</p>
+</div>
+<div class="paragraph">
+<p>bhyve 设计要求处理器支持 Intel® 扩展页表 (EPT) 或 AMD® 快速虚拟化索引 (RVI) 或嵌套页表 (NPT) 。托管具有多个虚拟 CPU 的 Linux® 客户机或 FreeBSD 客户机需要 VMX 无限制模式支持 (UG) 。大多数较新的处理器，特别是 Intel® Core™ i3/i5/i7 和 Intel® Xeon™ E3/E5/E7 ，都支持这些功能。 UG 支持是在 Intel 的 Westmere 微架构中引入的。有关支持 EPT 的 Intel® 处理器的完整列表，请参阅 <a href="https://ark.intel.com/content/www/us/en/ark/search/featurefilter.html" class="bare">https://ark.intel.com/content/www/us/en/ark/search/featurefilter.html</a> ? productType = 873 &amp; 0_ExtendedPageTables = True[] 。 RVI 出现在第三代及以后的 AMD Opteron™(Barcelona) 处理器上。判断处理器是否支持 bhyve 的最简单方法是运行 <code>dmesg</code> 命令或在 AMD® 处理器的 <code>Features2</code> 行上查找 <code>POPCNT</code> 处理器特性标志，或在 Intel® 处理器的 <code>VT-x</code> 行上查找 <code>EPT</code> 和 <code>UG</code> 。</p>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-prep">24.6.1. 准备主机<a class="anchor" href="#virtualization-bhyve-prep"></a></h3>
+<div class="paragraph">
+<p>在 bhyve 中创建虚拟机的第一步是配置主机系统。首先，加载 bhyve 内核模块：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload vmm</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后，在虚拟机中为网络设备创建一个名为 <span class="filename">tap</span> 的接口，以便连接到该接口。为了使网络设备能够参与网络通信，还需创建一个桥接接口，其中包含 <span class="filename">tap</span> 接口和物理接口作为成员。在这个例子中，物理接口是 <em>igb0</em>。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig tap0 create</span>
+<span class="c"># sysctl net.link.tap.up_on_open=1</span>
+net.link.tap.up_on_open: 0 -&gt; 1
+<span class="c"># ifconfig bridge0 create</span>
+<span class="c"># ifconfig bridge0 addm igb0 addm tap0</span>
+<span class="c"># ifconfig bridge0 up</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-freebsd">24.6.2. 创建一个 FreeBSD 虚拟机<a class="anchor" href="#virtualization-bhyve-freebsd"></a></h3>
+<div class="paragraph">
+<p>创建一个文件作为虚拟磁盘用于客户机。指定虚拟磁盘的大小和名称：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># truncate -s 16G guest.img</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下载一个 FreeBSD 的安装镜像来进行安装：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># fetch https://download.freebsd.org/releases/ISO-IMAGES/13.1/FreeBSD-13.1-RELEASE-amd64-bootonly.iso</span>
+FreeBSD-13.1-RELEASE-amd64-bootonly.iso                366 MB   16 MBps    22s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>FreeBSD 附带了一个示例脚本，用于在 bhyve 中运行虚拟机。该脚本将启动虚拟机并在循环中运行，因此如果虚拟机崩溃，它将自动重新启动。脚本接受多个选项来控制机器的配置： <code>-c</code> 控制虚拟 CPU 的数量， <code>-m</code> 限制可用于客户机的内存量， <code>-t</code> 定义要使用的 <span class="filename">tap</span> 设备， <code>-d</code> 指示要使用的磁盘映像， <code>-i</code> 告诉 bhyve 从 CD 映像而不是磁盘启动， <code>-I</code> 定义要使用的 CD 映像。最后一个参数是虚拟机的名称，用于跟踪正在运行的虚拟机。此示例在安装模式下启动虚拟机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sh /usr/share/examples/bhyve/vmrun.sh -c 1 -m 1024M -t tap0 -d guest.img -i -I FreeBSD-13.1-RELEASE-amd64-bootonly.iso guestname</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>虚拟机将启动并开始安装程序。在虚拟机中安装系统后，当系统在安装结束时询问是否进入 shell ，请选择“是”。</p>
+</div>
+<div class="paragraph">
+<p>重新启动虚拟机。虚拟机重新启动会导致 bhyve 退出，但是 <span class="filename">vmrun.sh</span> 脚本会在循环中运行 <code>bhyve</code> 并自动重新启动它。当这种情况发生时，选择从引导加载程序菜单中的重新启动选项以退出循环。现在可以从虚拟磁盘启动客户机。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sh /usr/share/examples/bhyve/vmrun.sh -c 4 -m 1024M -t tap0 -d guest.img guestname</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-linux">24.6.3. 创建一个 Linux® 虚拟机<a class="anchor" href="#virtualization-bhyve-linux"></a></h3>
+<div class="paragraph">
+<p>为了引导除 FreeBSD 之外的操作系统，必须首先安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/grub2-bhyve/">sysutils/grub2-bhyve</a> 端口。</p>
+</div>
+<div class="paragraph">
+<p>接下来，创建一个文件作为虚拟磁盘用于客户机。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># truncate -s 16G linux.img</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 bhyve 启动虚拟机是一个两步骤的过程。首先必须加载内核，然后才能启动客户机。使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/grub2-bhyve/">sysutils/grub2-bhyve</a> 加载 Linux® 内核。创建一个 <span class="filename">device.map</span> ，供 grub 使用，将虚拟设备映射到主机系统上的文件。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>(hd0) ./linux.img
+(cd0) ./somelinux.iso</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用包： sysutils/grub2-bhyve[] 从 ISO 镜像中加载 Linux® 内核：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># grub-bhyve -m device.map -r cd0 -M 1024M linuxguest</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将启动 grub 。如果安装 CD 包含一个 <span class="filename">grub.cfg</span> 文件，将显示一个菜单。如果没有，必须手动定位并加载 <code>vmlinuz</code> 和 <code>initrd</code> 文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">grub&gt; </span>ls
+<span class="o">(</span>hd0<span class="o">)</span> <span class="o">(</span>cd0<span class="o">)</span> <span class="o">(</span>cd0,msdos1<span class="o">)</span> <span class="o">(</span>host<span class="o">)</span>
+<span class="gp">grub&gt; </span>ls <span class="o">(</span>cd0<span class="o">)</span>/isolinux
+boot.cat boot.msg grub.conf initrd.img isolinux.bin isolinux.cfg memtest
+splash.jpg TRANS.TBL vesamenu.c32 vmlinuz
+<span class="gp">grub&gt; </span>linux <span class="o">(</span>cd0<span class="o">)</span>/isolinux/vmlinuz
+<span class="gp">grub&gt; </span>initrd <span class="o">(</span>cd0<span class="o">)</span>/isolinux/initrd.img
+<span class="gp">grub&gt; </span>boot</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在 Linux® 内核已经加载完毕，可以启动虚拟机了：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyve -A -H -P -s 0:0,hostbridge -s 1:0,lpc -s 2:0,virtio-net,tap0 -s 3:0,virtio-blk,./linux.img \</span>
+    -s 4:0,ahci-cd,./somelinux.iso -l com1,stdio -c 4 -m 1024M linuxguest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>系统将启动并启动安装程序。在虚拟机中安装系统后，重新启动虚拟机。这将导致 bhyve 退出。在可以再次启动之前，需要销毁虚拟机的实例。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyvectl --destroy --vm=linuxguest</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在可以直接从虚拟磁盘启动客户机。加载内核：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># grub-bhyve -m device.map -r hd0,msdos1 -M 1024M linuxguest</span>
+<span class="gp">grub&gt; </span>ls
+<span class="o">(</span>hd0<span class="o">)</span> <span class="o">(</span>hd0,msdos2<span class="o">)</span> <span class="o">(</span>hd0,msdos1<span class="o">)</span> <span class="o">(</span>cd0<span class="o">)</span> <span class="o">(</span>cd0,msdos1<span class="o">)</span> <span class="o">(</span>host<span class="o">)</span>
+<span class="o">(</span>lvm/VolGroup-lv_swap<span class="o">)</span> <span class="o">(</span>lvm/VolGroup-lv_root<span class="o">)</span>
+<span class="gp">grub&gt; </span>ls <span class="o">(</span>hd0,msdos1<span class="o">)</span>/
+lost+found/ grub/ efi/ System.map-2.6.32-431.el6.x86_64 config-2.6.32-431.el6.x
+86_64 symvers-2.6.32-431.el6.x86_64.gz vmlinuz-2.6.32-431.el6.x86_64
+initramfs-2.6.32-431.el6.x86_64.img
+<span class="gp">grub&gt; </span>linux <span class="o">(</span>hd0,msdos1<span class="o">)</span>/vmlinuz-2.6.32-431.el6.x86_64 <span class="nv">root</span><span class="o">=</span>/dev/mapper/VolGroup-lv_root
+<span class="gp">grub&gt; </span>initrd <span class="o">(</span>hd0,msdos1<span class="o">)</span>/initramfs-2.6.32-431.el6.x86_64.img
+<span class="gp">grub&gt; </span>boot</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>启动虚拟机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyve -A -H -P -s 0:0,hostbridge -s 1:0,lpc -s 2:0,virtio-net,tap0 \</span>
+    -s 3:0,virtio-blk,./linux.img -l com1,stdio -c 4 -m 1024M linuxguest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Linux® 现在将在虚拟机中启动，并最终呈现给您登录提示符。登录并使用虚拟机。完成后，重新启动虚拟机以退出 bhyve 。销毁虚拟机实例：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyvectl --destroy --vm=linuxguest</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-uefi">24.6.4. 使用 UEFI 固件引导 bhyve 虚拟机<a class="anchor" href="#virtualization-bhyve-uefi"></a></h3>
+<div class="paragraph">
+<p>除了 bhyveload 和 grub-bhyve 之外， bhyve 虚拟机监视器还可以使用 UEFI 用户空间固件引导虚拟机。这个选项可能支持其他加载器不支持的客户操作系统。</p>
+</div>
+<div class="paragraph">
+<p>为了在 bhyve 中使用 UEFI 支持，首先需要获取 UEFI 固件镜像。可以通过安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/bhyve-firmware/">sysutils/bhyve-firmware</a> 端口或包来完成。</p>
+</div>
+<div class="paragraph">
+<p>在固件安装完成后，将标志 <code>-l bootrom ,<em>/path/to/firmware</em></code> 添加到您的 bhyve 命令行中。实际的 bhyve 命令可能如下所示：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyve -AHP -s 0:0,hostbridge -s 1:0,lpc \</span>
+-s 2:0,virtio-net,tap1 -s 3:0,virtio-blk,./disk.img <span class="se">\</span>
+-s 4:0,ahci-cd,./install.iso -c 4 -m 1024M <span class="se">\</span>
+-l bootrom,/usr/local/share/uefi-firmware/BHYVE_UEFI.fd <span class="se">\</span>
+guest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/bhyve-firmware/">sysutils/bhyve-firmware</a> 还包含一个启用了 CSM 的固件，用于以传统 BIOS 模式启动不支持 UEFI 的虚拟机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyve -AHP -s 0:0,hostbridge -s 1:0,lpc \</span>
+-s 2:0,virtio-net,tap1 -s 3:0,virtio-blk,./disk.img <span class="se">\</span>
+-s 4:0,ahci-cd,./install.iso -c 4 -m 1024M <span class="se">\</span>
+-l bootrom,/usr/local/share/uefi-firmware/BHYVE_UEFI_CSM.fd <span class="se">\</span>
+guest</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-framebuffer">24.6.5. bhyve 客户机的图形 UEFI 帧缓冲<a class="anchor" href="#virtualization-bhyve-framebuffer"></a></h3>
+<div class="paragraph">
+<p>UEFI 固件支持对于主要以图形为主的客户操作系统（如 Microsoft Windows® ）特别有用。</p>
+</div>
+<div class="paragraph">
+<p>还可以使用 <code>-s 29 , fbuf , tcp =<em>0.0.0.0:5900</em></code> 标志来启用对 UEFI-GOP 帧缓冲的支持。可以使用 <code>w =<em>800</em></code> 和 <code>h =<em>600</em></code> 来配置帧缓冲的分辨率，并且可以通过添加 <code>wait</code> 来指示 bhyve 在启动客户机之前等待 VNC 连接。帧缓冲可以通过主机或通过 VNC 协议通过网络访问。此外，还可以添加 <code>-s 30 , xhci , tablet</code> 以实现与主机的精确鼠标光标同步。</p>
+</div>
+<div class="paragraph">
+<p>生成的 bhyve 命令将如下所示：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyve -AHP -s 0:0,hostbridge -s 31:0,lpc \</span>
+-s 2:0,virtio-net,tap1 -s 3:0,virtio-blk,./disk.img <span class="se">\</span>
+-s 4:0,ahci-cd,./install.iso -c 4 -m 1024M <span class="se">\</span>
+-s 29,fbuf,tcp<span class="o">=</span>0.0.0.0:5900,w<span class="o">=</span>800,h<span class="o">=</span>600,wait <span class="se">\</span>
+-s 30,xhci,tablet <span class="se">\</span>
+-l bootrom,/usr/local/share/uefi-firmware/BHYVE_UEFI.fd <span class="se">\</span>
+guest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>注意，在 BIOS 仿真模式下，一旦控制权从固件转移到客户操作系统，帧缓冲将停止接收更新。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-zfs">24.6.6. 使用 ZFS 与 bhyve 虚拟机<a class="anchor" href="#virtualization-bhyve-zfs"></a></h3>
+<div class="paragraph">
+<p>如果主机上可用 ZFS ，使用 ZFS 卷而不是磁盘映像文件可以为客户机提供显著的性能优势。可以通过以下方式创建 ZFS 卷：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create -V16G -o volmode=dev zroot/linuxdisk0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在启动虚拟机时，将 ZFS 卷指定为磁盘驱动器：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyve -A -H -P -s 0:0,hostbridge -s 1:0,lpc -s 2:0,virtio-net,tap0 -s3:0,virtio-blk,/dev/zvol/zroot/linuxdisk0 \</span>
+    -l com1,stdio -c 4 -m 1024M linuxguest</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-nmdm">24.6.7. 虚拟机控制台<a class="anchor" href="#virtualization-bhyve-nmdm"></a></h3>
+<div class="paragraph">
+<p>将 bhyve 控制台包装在会话管理工具（如 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/tmux/">sysutils/tmux</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/screen/">sysutils/screen</a> ）中是有优势的，这样可以分离和重新连接到控制台。还可以将 bhyve 的控制台设置为一个空调制解调器设备，可以使用 <code>cu</code> 访问。为此，加载 <span class="filename">nmdm</span> 内核模块，并将 <code>-l com1 , stdio</code> 替换为 <code>-l com1 , /dev/nmdm0A</code> 。 <span class="filename">/dev/nmdm</span> 设备会根据需要自动创建，每个设备都是一对，对应于空调制解调器电缆的两端（ <span class="filename">/dev/nmdm0A</span> 和 <span class="filename">/dev/nmdm0B</span> ）。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=nmdm&amp;sektion=4&amp;format=html">nmdm(4)</a> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload nmdm</span>
+<span class="c"># bhyve -A -H -P -s 0:0,hostbridge -s 1:0,lpc -s 2:0,virtio-net,tap0 -s 3:0,virtio-blk,./linux.img \</span>
+    -l com1,/dev/nmdm0A -c 4 -m 1024M linuxguest
+<span class="c"># cu -l /dev/nmdm0B</span>
+Connected
+
+Ubuntu 13.10 handbook ttyS0
+
+handbook login:</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-managing">24.6.8. 管理虚拟机<a class="anchor" href="#virtualization-bhyve-managing"></a></h3>
+<div class="paragraph">
+<p>每个虚拟机都在 <code>/dev/vmm</code> 目录下创建了一个设备节点。这样管理员就可以轻松地查看正在运行的虚拟机列表。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ls -al /dev/vmm</span>
+total 1
+dr-xr-xr-x   2 root  wheel    512 Mar 17 12:19 ./
+dr-xr-xr-x  14 root  wheel    512 Mar 17 06:38 ../
+crw-------   1 root  wheel  0x1a2 Mar 17 12:20 guestname
+crw-------   1 root  wheel  0x19f Mar 17 12:19 linuxguest
+crw-------   1 root  wheel  0x1a1 Mar 17 12:19 otherguest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以使用 <code>bhyvectl</code> 命令销毁指定的虚拟机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># bhyvectl --destroy --vm=guestname</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-bhyve-onboot">24.6.9. 持久化配置<a class="anchor" href="#virtualization-bhyve-onboot"></a></h3>
+<div class="paragraph">
+<p>为了在启动时配置系统以启动 bhyve 虚拟机，必须在指定的文件中进行以下配置：</p>
+</div>
+<div class="olist arabic procedure">
+<ol class="arabic">
+<li>
+<p><span class="filename">/etc/sysctl.conf</span></p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>net.link.tap.up_on_open=1</pre>
+</div>
+</div>
+</li>
+<li>
+<p><span class="filename">/etc/rc.conf</span></p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>cloned_interfaces=&#34;bridge0 tap0&#34;
+ifconfig_bridge0=&#34;addm igb0 addm tap0&#34;
+kld_list=&#34;nmdm vmm&#34;</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机<a class="anchor" href="#virtualization-host-xen"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Xen 是一种基于 GPLv2 许可的 <a href="https://en.wikipedia.org/wiki/Hypervisor#Classification">1 型虚拟化监控程序</a> ，适用于 Intel® 和 ARM® 架构。 FreeBSD 自 8.0 版本起包含了 i386™ 和 AMD® 64 位 <a href="https://wiki.xenproject.org/wiki/DomU">DomU</a> 以及 <a href="https://en.wikipedia.org/wiki/Amazon_Elastic_Compute_Cloud">Amazon EC2</a> 非特权域（虚拟机）支持，并在 FreeBSD 11.0 中增加了 Dom0 控制域（主机）支持。在 FreeBSD 11 中，对于半虚拟化（ PV ）域的支持已被移除，取而代之的是硬件虚拟化（ HVM ）域，这提供了更好的性能。</p>
+</div>
+<div class="paragraph">
+<p>Xen™ 是一个裸金属虚拟化监控程序，这意味着它是在 BIOS 之后加载的第一个程序。然后启动一个特殊的特权客户机，称为 Domain-0 （简称为 Dom0 ）。 Dom0 利用其特权直接访问底层物理硬件，使其成为高性能解决方案。它能够直接访问磁盘控制器和网络适配器。 Dom0 还使用 Xen™ 管理工具来管理和控制 Xen™ 虚拟化监控程序，创建、列出和销毁虚拟机（ VMs ）。 Dom0 为非特权域（通常称为 DomU ）提供虚拟磁盘和网络。 Xen™ Dom0 可以与其他虚拟化监控程序解决方案的服务控制台进行比较，而 DomU 是运行各个客户机虚拟机的地方。</p>
+</div>
+<div class="paragraph">
+<p>Xen™ 可以在不同的 Xen™ 服务器之间迁移虚拟机。当两个 Xen 主机共享相同的底层存储时，迁移可以在不必先关闭虚拟机的情况下进行。相反，迁移是在 DomU 运行时进行的，无需重新启动或计划停机时间。这在维护场景或升级窗口中非常有用，以确保 DomU 提供的服务仍然可用。 Xen™ 的许多其他功能列在 <a href="https://wiki.xenproject.org/wiki/Category:Overview">Xen Wiki 概述页面</a> 上。请注意，目前并非所有功能都在 FreeBSD 上受支持。</p>
+</div>
+<div class="sect2">
+<h3 id="virtualization-host-xen-requirements">24.7.1. Xen™ Dom0 的硬件要求<a class="anchor" href="#virtualization-host-xen-requirements"></a></h3>
+<div class="paragraph">
+<p>要在主机上运行 Xen™ 虚拟机监视器，需要一定的硬件功能。硬件虚拟化域需要主机处理器支持扩展页表（ EPT ）和输入 / 输出内存管理单元（ IOMMU ）。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>为了运行 FreeBSD Xen™ Dom0 ，必须使用传统引导（ BIOS ）启动该设备。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-host-xen-dom0-setup">24.7.2. Xen™ Dom0 控制域设置<a class="anchor" href="#virtualization-host-xen-dom0-setup"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 11 的用户应安装基于 Xen 4.7 版本的包： emulators/xen-kernel47[] 和包： sysutils/xen-tools47[] 。运行在 FreeBSD-12.0 或更新版本上的系统可以分别使用基于 Xen 4.11 的包： emulators/xen-kernel411[] 和包： sysutils/xen-tools411[] 。</p>
+</div>
+<div class="paragraph">
+<p>在安装 Xen 软件包后，必须编辑配置文件以准备主机进行 Dom0 集成。在 [/etc/sysctl.conf] 中添加条目可以禁用内存页面的限制。否则，具有较高内存需求的 DomU 虚拟机将无法运行。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;vm.max_wired=-1&#39; &gt;&gt; /etc/sysctl.conf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>另一个与内存相关的设置涉及更改 <span class="filename">/etc/login.conf</span> ，将 <code>memorylocked</code> 选项设置为 <code>unlimited</code> 。否则，创建 DomU 域可能会失败，并显示 <code>Cannot allocate memory</code> 错误。在对 <span class="filename">/etc/login.conf</span> 进行更改后，运行 <code>cap_mkdb</code> 以更新能力数据库。有关详细信息，请参阅 <a href="../security/#security-resourcelimits">资源限制</a> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sed -i &#39;&#39; -e &#39;s/memorylocked=64K/memorylocked=unlimited/&#39; /etc/login.conf</span>
+<span class="c"># cap_mkdb /etc/login.conf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在 <span class="filename">/etc/ttys</span> 中添加一个 Xen™ 控制台的条目：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;xc0     &#34;/usr/libexec/getty Pc&#34;         xterm   onifconsole  secure&#39; &gt;&gt; /etc/ttys</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在 <span class="filename">/boot/loader.conf</span> 中选择一个 Xen™ 内核会激活 Dom0 。 Xen™ 还需要来自主机机器的 CPU 和内存资源，用于自身和其他 DomU 域。 CPU 和内存的数量取决于个体需求和硬件能力。在这个例子中，为 Dom0 提供了 8 GB 的内存和 4 个虚拟 CPU 。串行控制台也被激活，并定义了日志选项。</p>
+</div>
+<div class="paragraph">
+<p>以下命令用于 Xen 4.7 软件包：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;hw.pci.mcfg=0&#39; &gt;&gt; /boot/loader.conf</span>
+<span class="c"># echo &#39;if_tap_load=&#34;YES&#34;&#39; &gt;&gt; /boot/loader.conf</span>
+<span class="c"># echo &#39;xen_kernel=&#34;/boot/xen&#34;&#39; &gt;&gt; /boot/loader.conf</span>
+<span class="c"># echo &#39;xen_cmdline=&#34;dom0_mem=8192M dom0_max_vcpus=4 dom0pvh=1 console=com1,vga com1=115200,8n1 guest_loglvl=all loglvl=all&#34;&#39; &gt;&gt; /boot/loader.conf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>对于 Xen 版本 4.11 及更高版本，应使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;if_tap_load=&#34;YES&#34;&#39; &gt;&gt; /boot/loader.conf</span>
+<span class="c"># echo &#39;xen_kernel=&#34;/boot/xen&#34;&#39; &gt;&gt; /boot/loader.conf</span>
+<span class="c"># echo &#39;xen_cmdline=&#34;dom0_mem=8192M dom0_max_vcpus=4 dom0=pvh console=com1,vga com1=115200,8n1 guest_loglvl=all loglvl=all&#34;&#39; &gt;&gt; /boot/loader.conf</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Xen™ 为 DomU 虚拟机创建的日志文件存储在 [/var/log/xen] 目录中。如果遇到问题，请务必检查该目录的内容。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在系统启动时激活 xencommons 服务：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc xencommons_enable=yes</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这些设置足以启动一个启用了 Dom0 的系统。然而，它缺乏用于 DomU 虚拟机的网络功能。为了解决这个问题，需要定义一个桥接接口，使用系统的主要网络接口（主机网络接口名称替换为_em0_），以便 DomU 虚拟机可以连接到网络。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc cloned_interfaces=&#34;bridge0&#34;</span>
+<span class="c"># sysrc ifconfig_bridge0=&#34;addm em0 SYNCDHCP&#34;</span>
+<span class="c"># sysrc ifconfig_em0=&#34;up&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>重新启动主机以加载 Xen™ 内核并启动 Dom0 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># reboot</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在成功启动 Xen™ 内核并再次登录系统后，使用 Xen™ 管理工具 <code>xl</code> 来显示有关域的信息。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># xl list</span>
+Name                                        ID   Mem VCPUs      State   Time<span class="o">(</span>s<span class="o">)</span>
+Domain-0                                     0  8192     4     r-----     962.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出确认了 Dom0 （称为 <code>Domain-0</code> ）的 ID 为 <code>0</code> 并且正在运行。它还具有之前在 <span class="filename">/boot/loader.conf</span> 中定义的内存和虚拟 CPU 。更多信息可以在 <a href="https://www.xenproject.org/help/documentation.html">Xen™ 文档</a> 中找到。现在可以创建 DomU 客户机虚拟机。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-host-xen-domu-setup">24.7.3. Xen™ DomU 客户机虚拟机配置<a class="anchor" href="#virtualization-host-xen-domu-setup"></a></h3>
+<div class="paragraph">
+<p>非特权域由配置文件和虚拟或物理硬盘组成。 DomU 的虚拟磁盘存储可以是由 <a href="https://man.freebsd.org/cgi/man.cgi?query=truncate&amp;sektion=1&amp;format=html">truncate(1)</a> 创建的文件，也可以是 <a href="../zfs/#zfs-zfs-volume ，“创建和销毁卷”"></a> 中描述的 ZFS 卷。 在此示例中，使用了一个 20 GB 的卷。 使用 ZFS 卷、 FreeBSD ISO 映像、 1 GB 的 RAM 和两个虚拟 CPU 创建了一个虚拟机。 ISO 安装文件使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=fetch&amp;sektion=1&amp;format=html">fetch(1)</a> 获取，并保存在名为 <span class="filename">freebsd.iso</span> 的本地文件中。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># fetch https://download.freebsd.org/releases/ISO-IMAGES/13.1/FreeBSD-13.1-RELEASE-amd64-bootonly.iso -o freebsd.iso</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>创建了一个名为 <span class="filename">xendisk0</span> 的 20 GB ZFS 卷，用作虚拟机的磁盘空间。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create -V20G -o volmode=dev zroot/xendisk0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>新的 DomU 客户机虚拟机在一个文件中定义。一些特定的定义，如名称、键盘映射和 VNC 连接详细信息也被定义。以下是一个示例的最小 DomU 配置的 <span class="filename">freebsd.cfg</span> 文件内容：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cat freebsd.cfg</span>
+builder <span class="o">=</span> <span class="s2">&#34;hvm&#34;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+name <span class="o">=</span> <span class="s2">&#34;freebsd&#34;</span> <i class="conum" data-value="2"></i><b>(2)</b>
+memory <span class="o">=</span> 1024 <i class="conum" data-value="3"></i><b>(3)</b>
+vcpus <span class="o">=</span> 2 <i class="conum" data-value="4"></i><b>(4)</b>
+vif <span class="o">=</span> <span class="o">[</span> <span class="s1">&#39;mac=00:16:3E:74:34:32,bridge=bridge0&#39;</span> <span class="o">]</span> <i class="conum" data-value="5"></i><b>(5)</b>
+disk <span class="o">=</span> <span class="o">[</span>
+<span class="s1">&#39;/dev/zvol/tank/xendisk0,raw,hda,rw&#39;</span>, <i class="conum" data-value="6"></i><b>(6)</b>
+<span class="s1">&#39;/root/freebsd.iso,raw,hdc:cdrom,r&#39;</span> <i class="conum" data-value="7"></i><b>(7)</b>
+  <span class="o">]</span>
+vnc <span class="o">=</span> 1 <i class="conum" data-value="8"></i><b>(8)</b>
+vnclisten <span class="o">=</span> <span class="s2">&#34;0.0.0.0&#34;</span>
+serial <span class="o">=</span> <span class="s2">&#34;pty&#34;</span>
+usbdevice <span class="o">=</span> <span class="s2">&#34;tablet&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这些行将被更详细地解释：</p>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>这定义了要使用的虚拟化类型。 <code>hvm</code> 指的是硬件辅助虚拟化或硬件虚拟机。客户操作系统可以在具有虚拟化扩展的 CPU 上无需修改即可运行，提供与在物理硬件上运行几乎相同的性能。 <code>generic</code> 是默认值，创建一个 PV 域。 &lt;.&gt; 虚拟机的名称，用于区分在同一 Dom0 上运行的其他虚拟机。必填项。 &lt;.&gt; 分配给虚拟机的内存数量，以兆字节为单位。此数量从超级监视程序的总可用内存中减去，而不是从 Dom0 的内存中减去。 &lt;.&gt; 客户虚拟机可用的虚拟 CPU 数量。为了获得最佳性能，请不要创建具有超过主机上物理 CPU 数量的虚拟 CPU 的客户。 &lt;.&gt; 虚拟网络适配器。这是连接到主机网络接口的桥接器。 <code>mac</code> 参数是设置在虚拟网络接口上的 MAC 地址。如果未提供 MAC ，则此参数是可选的， Xen™ 将生成一个随机的 MAC 地址。 &lt;.&gt; 磁盘、文件或 ZFS 磁盘存储的完整路径，用于此虚拟机。选项和多个磁盘定义由逗号分隔。 &lt;.&gt; 定义安装初始操作系统的启动介质。在此示例中，它是之前下载的 ISO 镜像。请参阅 Xen™ 文档以了解其他类型的设备和设置选项。 &lt;.&gt; 控制 VNC 连接到 DomU 的串行控制台的选项。按顺序，它们是：激活 VNC 支持，定义要监听的 IP 地址，串行控制台的设备节点，以及精确定位鼠标和其他输入方法的输入方法。 <code>keymap</code> 定义要使用的键盘映射，默认为 <code>english</code> 。</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在使用所有必要选项创建文件之后，通过将其作为参数传递给 <code>xl create</code> 来创建 DomU 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># xl create freebsd.cfg</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>每次重新启动 Dom0 时，必须再次将配置文件传递给 <code>xl create</code> 以重新创建 DomU 。默认情况下，在重新启动后只会创建 Dom0 ，而不会创建各个虚拟机。虚拟机可以从它们上次停止的地方继续运行，因为它们将操作系统存储在虚拟磁盘上。虚拟机的配置可以随时间而变化（例如，添加更多内存）。虚拟机的配置文件必须被正确备份并保持可用，以便在需要时重新创建客户虚拟机。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p><code>xl list</code> 的输出确认了 DomU 已经被创建。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># xl list</span>
+Name                                        ID   Mem VCPUs      State   Time<span class="o">(</span>s<span class="o">)</span>
+Domain-0                                     0  8192     4     r-----  1653.4
+freebsd                                      1  1024     1     -b----   663.9</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要开始安装基本操作系统，请启动 VNC 客户端，并将其指向主机的主网络地址或在 <span class="filename">freebsd.cfg</span> 文件的 <code>vnclisten</code> 行中定义的 IP 地址。操作系统安装完成后，关闭 DomU 并断开 VNC 查看器的连接。编辑 <span class="filename">freebsd.cfg</span> 文件，删除包含 <code>cdrom</code> 定义的行，或在行的开头插入一个 <code>#</code> 字符进行注释。要加载这个新的配置，需要使用 <code>xl destroy</code> 命令删除旧的 DomU ，参数可以是名称或 ID 。然后，使用修改后的 <strong class="filename">freebsd.cfg</strong> 文件重新创建 DomU 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># xl destroy freebsd</span>
+<span class="c"># xl create freebsd.cfg</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后可以使用 VNC 查看器再次访问该机器。这次，它将从已安装操作系统的虚拟磁盘启动，并可用作虚拟机。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtualization-host-xen-troubleshooting">24.7.4. 故障排除<a class="anchor" href="#virtualization-host-xen-troubleshooting"></a></h3>
+<div class="paragraph">
+<p>本节包含基本信息，以帮助解决在使用 FreeBSD 作为 Xen™ 主机或客户机时遇到的问题。</p>
+</div>
+<div class="sect3">
+<h4 id="virtualization-host-xen-troubleshooting-host">24.7.4.1. 主机启动故障排除<a class="anchor" href="#virtualization-host-xen-troubleshooting-host"></a></h4>
+<div class="paragraph">
+<p>请注意，以下故障排除提示适用于 Xen™ 4.11 或更新版本。如果您仍在使用 Xen™ 4.7 并且遇到问题，请考虑迁移到更新版本的 Xen™ 。</p>
+</div>
+<div class="paragraph">
+<p>为了解决主机启动问题，您可能需要使用串行电缆或调试 USB 电缆。可以通过向 <span class="filename">loader.conf</span> 中的 <code>xen_cmdline</code> 选项添加选项来获取详细的 Xen™ 引导输出。一些相关的调试选项包括：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>iommu = debug</code> ：可用于打印有关 IOMMU 的额外诊断信息。</p>
+</li>
+<li>
+<p><code>dom0 = verbose</code> ：可用于打印有关 dom0 构建过程的额外诊断信息。</p>
+</li>
+<li>
+<p><code>sync_console</code> ：用于强制同步控制台输出的标志。在调试过程中非常有用，可以避免由于速率限制而丢失消息。在生产环境中永远不要使用此选项，因为它可能允许恶意虚拟机通过控制台对 Xen™ 进行拒绝服务（ DoS ）攻击。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>为了识别任何问题， FreeBSD 也应该以详细模式启动。要激活详细启动，请运行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;boot_verbose=&#34;YES&#34;&#39; &gt;&gt; /boot/loader.conf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果这些选项都无法解决问题，请将串行引导日志发送至 mailto:freebsd-xen @ FreeBSD.org[freebsd-xen @ FreeBSD.org] 和 mailto:xen-devel @ lists.xenproject.org[xen-devel @ lists.xenproject.org] 以进行进一步分析。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="virtualization-host-xen-troubleshooting-guest">24.7.4.2. 访客创建故障排除<a class="anchor" href="#virtualization-host-xen-troubleshooting-guest"></a></h4>
+<div class="paragraph">
+<p>在创建虚拟机时也可能出现问题，下面尝试为那些试图诊断虚拟机创建问题的人提供一些帮助。</p>
+</div>
+<div class="paragraph">
+<p>创建虚拟机失败最常见的原因是 <code>xl</code> 命令输出错误并以非 0 的返回码退出。如果提供的错误信息不足以帮助确定问题，还可以通过多次使用 <code>xl</code> 命令的 <code>v</code> 选项来获取更详细的输出。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># xl -vvv create freebsd.cfg</span>
+Parsing config from freebsd.cfg
+libxl: debug: libxl_create.c:1693:do_domain_create: Domain 0:ao 0x800d750a0: create: <span class="nv">how</span><span class="o">=</span>0x0 <span class="nv">callback</span><span class="o">=</span>0x0 <span class="nv">poller</span><span class="o">=</span>0x800d6f0f0
+libxl: debug: libxl_device.c:397:libxl__device_disk_set_backend: Disk <span class="nv">vdev</span><span class="o">=</span>xvda spec.backend<span class="o">=</span>unknown
+libxl: debug: libxl_device.c:432:libxl__device_disk_set_backend: Disk <span class="nv">vdev</span><span class="o">=</span>xvda, using backend phy
+libxl: debug: libxl_create.c:1018:initiate_domain_create: Domain 1:running bootloader
+libxl: debug: libxl_bootloader.c:328:libxl__bootloader_run: Domain 1:not a PV/PVH domain, skipping bootloader
+libxl: debug: libxl_event.c:689:libxl__ev_xswatch_deregister: watch <span class="nv">w</span><span class="o">=</span>0x800d96b98: deregister unregistered
+domainbuilder: detail: xc_dom_allocate: <span class="nv">cmdline</span><span class="o">=</span><span class="s2">&#34;&#34;</span>, <span class="nv">features</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+domainbuilder: detail: xc_dom_kernel_file: <span class="nv">filename</span><span class="o">=</span><span class="s2">&#34;/usr/local/lib/xen/boot/hvmloader&#34;</span>
+domainbuilder: detail: xc_dom_malloc_filemap    : 326 kB
+libxl: debug: libxl_dom.c:988:libxl__load_hvm_firmware_module: Loading BIOS: /usr/local/share/seabios/bios.bin
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果详细输出无法帮助诊断问题，还可以在 <span class="filename">/var/log/xen</span> 中找到 QEMU 和 Xen™ 工具栈的日志。请注意，日志名称后面附加了域的名称，因此如果域的名称为 <code>freebsd</code> ，您应该能找到一个 <span class="filename">/var/log/xen/xl-freebsd.log</span> 和可能还有一个 <span class="filename">/var/log/xen/qemu-dm-freebsd.log</span> 。这两个日志文件都可能包含有用的调试信息。如果以上方法都无法解决问题，请将您面临的问题的描述和尽可能多的信息发送到 mailto:freebsd-xen @ FreeBSD.org[freebsd-xen @ FreeBSD.org] 和 mailto:xen-devel @ lists.xenproject.org[xen-devel @ lists.xenproject.org] 以获取帮助。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

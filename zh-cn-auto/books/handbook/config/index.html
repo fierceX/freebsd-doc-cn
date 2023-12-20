@@ -1,0 +1,3619 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本章介绍了 FreeBSD 配置文件的许多内容，包括如何启用或禁用服务，如何配置日志系统和电源管理区域。"/>
+  <meta name="keywords" content="91, 34, 99, 111, 110, 102, 105, 103, 117, 114, 97, 116, 105, 111, 110, 34, 44, 32, 34, 115, 101, 114, 118, 105, 99, 101, 115, 34, 44, 32, 34, 99, 114, 111, 110, 34, 44, 32, 34, 112, 101, 114, 105, 111, 100, 105, 99, 34, 44, 32, 34, 108, 111, 103, 103, 105, 110, 103, 34, 44, 32, 34, 99, 111, 110, 102, 105, 103, 117, 114, 97, 116, 105, 111, 110, 32, 102, 105, 108, 101, 115, 34, 44, 32, 34, 115, 121, 115, 99, 116, 108, 34, 44, 32, 34, 115, 119, 97, 112, 34, 44, 32, 34, 112, 111, 119, 101, 114, 32, 109, 97, 110, 97, 103, 101, 109, 101, 110, 116, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/" />
+
+  <title>第 14 章 配置、服务、日志和电源管理 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 14 章 配置、服务、日志和电源管理" />
+    <meta property="og:description" content="本章介绍了 FreeBSD 配置文件的许多内容，包括如何启用或禁用服务，如何配置日志系统和电源管理区域。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/config\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 14 章 配置、服务、日志和电源管理</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#config-synopsis">14.1. 简介</a></li>
+    <li><a href="#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="config-synopsis">14.1. 简介<a class="anchor" href="#config-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD 的一个重要方面是正确的系统配置。本章介绍了 FreeBSD 配置过程的许多内容，包括一些可以设置的参数，用于调整 FreeBSD 系统。</p>
+</div>
+<div class="paragraph">
+<p>在阅读本章之前，您应该：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解 UNIX® 和 FreeBSD 基础知识（参见： basics[basics ， FreeBSD 基础知识] ）。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>阅读本章后，您将了解：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>如何使用 [/etc](#.filename) 中的各种配置文件。</p>
+</li>
+<li>
+<p><span class="filename">rc.conf</span> 配置和 <span class="filename">/usr/local/etc/rc.d</span> 启动脚本的基础知识。</p>
+</li>
+<li>
+<p>如何使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 变量来调整 FreeBSD 。</p>
+</li>
+<li>
+<p>如何在 FreeBSD 中配置电源管理。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configtuning-configfiles">14.2. 配置文件<a class="anchor" href="#configtuning-configfiles"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD 在基础系统和第三方应用程序之间保持了明确的分离，因此这影响了这些应用程序的配置文件的位置。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 基本系统配置位于 [/etc] 目录下，而 [/usr/local/etc] 目录包含通过 ports 集合和软件包安装在系统上的所有应用程序的配置文件。</p>
+</div>
+<div class="paragraph">
+<p>内核状态配置位于 [/etc/sysctl.conf] 。在 <a href="#configtuning-sysctl">sysctl 实用程序</a> 部分，将更详细地解释 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 的操作。</p>
+</div>
+<div class="paragraph">
+<p>有关 FreeBSD 文件系统结构的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=hier&amp;sektion=7&amp;format=html">hier(7)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>通常情况下，配置文件没有遵循统一的语法规范。虽然使用 <code>#</code> 字符来注释一行是常见的做法，并且每行都包含一个配置变量。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>一些应用程序，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> ，开始使用 <a href="https://github.com/vstakhov/libucl">通用配置语言（ UCL ）</a> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="_etc_目录">14.2.1. <span class="filename">/etc</span> 目录<a class="anchor" href="#_etc_目录"></a></h3>
+<div class="paragraph">
+<p><span class="filename">/etc</span> 目录包含了所有负责配置 FreeBSD 的基本系统配置文件。</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在修改 <span class="filename">/etc</span> 目录中的文件时，必须非常小心；配置错误可能会导致 FreeBSD 无法启动或出现故障。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<table class="tableblock frame-none grid-all stretch informaltable">
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">系统配置文件和脚本。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/defaults</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">默认的系统配置文件，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 获取更多信息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/fstab</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> 包含了关于各种文件系统的描述信息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/mail</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">额外的 man 页： sendmail[8] 配置和其他 MTA 配置文件。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/mtree</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mtree 配置文件，请参考手册： mtree[8] 了解更多信息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/pam.d</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pluggable Authentication Modules （ PAM ）库的配置文件。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/periodic</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 每天、每周和每月运行的脚本，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 获取更多信息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/rc.d</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">系统和守护进程的启动 / 控制脚本，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 获取更多信息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/rc.conf</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包含有关本地主机名称的描述性信息，潜在网络接口的配置细节以及应在系统初始启动时启动的服务。有关更多信息，请参见 <a href="#configtuning-core-configuration">管理系统特定配置</a> 。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/security</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenBSM 审计配置文件，详见 <a href="https://man.freebsd.org/cgi/man.cgi?query=audit&amp;sektion=8&amp;format=html">audit(8)</a> 获取更多信息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ppp</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ppp 配置文件，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> 获取更多信息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ssh</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSSH 配置文件，更多信息请参见 <a href="https://man.freebsd.org/cgi/man.cgi?query=ssh&amp;sektion=1&amp;format=html">ssh(1)</a> 。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ssl</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSSL 配置文件。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/sysctl.conf</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包含内核的设置。更多信息请参见 <a href="#configtuning-sysctl">sysctl 实用程序</a> 。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="configtuning-sysctl">14.2.2. sysctl 实用程序<a class="anchor" href="#configtuning-sysctl"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 实用程序用于对运行中的 FreeBSD 系统进行更改。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 实用程序用于检索内核状态，并允许具有适当特权的进程设置内核状态。要检索或设置的状态使用“管理信息库”（“ MIB ”）样式的名称进行描述，该名称被描述为一组由点分隔的组件。</p>
+</div>
+<table class="tableblock frame-none grid-all stretch informaltable">
+<caption class="title">表 1. 管理信息库</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sysctl 是一个用于管理和配置 Linux 内核参数的命令行工具。它允许用户查看和修改内核的运行时参数，以及控制系统的行为。通过 sysctl 命令，用户可以查询和修改各种系统设置，如网络配置、文件系统参数、内存管理等。这个工具在调优系统性能、解决问题和进行系统管理时非常有用。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#34;魔术&#34;数字</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">内核</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">核函数和特征</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟机</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟内存</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟文件系统（ Virtual File System ）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">文件系统</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">调试</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">调试参数</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">你好</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">硬件</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">machdep 是一个计算机术语，指的是机器相关的部分。它通常用于描述操作系统或软件与特定硬件架构之间的交互。 machdep 可以包括处理器架构、指令集、内存管理、中断处理等方面的内容。在计算机领域中， machdep 是一个重要的概念，对于理解和优化系统性能非常有帮助。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">机器相关</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">用户</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">用户空间</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">p1003_1b 是一个计算机领域的标准，它规定了操作系统接口和功能的标准化要求。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POSIX 1003.1B 是一个计算机相关领域的标准，它规定了操作系统接口和系统调用的规范。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>在其核心， <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 有两个功能：读取和修改系统设置。</p>
+</div>
+<div class="paragraph">
+<p>查看所有可读取的变量：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl -a</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.ostype: FreeBSD
+...
+vm.swap_enabled: 1
+vm.overcommit: 0
+vm.domain.0.pidctrl.kdd: 8
+vm.domain.0.pidctrl.kid: 4
+vm.domain.0.pidctrl.kpd: 3
+...
+vfs.zfs.sync_pass_rewrite: 2
+vfs.zfs.sync_pass_dont_compress: 8
+vfs.zfs.sync_pass_deferred_free: 2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要读取特定的变量，请指定其名称：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl kern.maxproc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.maxproc: 1044</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>管理信息库（ MIB ）是分层的，因此，指定一个前缀将打印出所有挂在该前缀下的节点：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl net</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>net.local.stream.recvspace: 8192
+net.local.stream.sendspace: 8192
+net.local.dgram.recvspace: 16384
+net.local.dgram.maxdgram: 2048
+net.local.seqpacket.recvspace: 8192
+net.local.seqpacket.maxseqpacket: 8192
+net.local.sockcount: 60
+net.local.taskcount: 25
+net.local.recycled: 0
+net.local.deferred: 0
+net.local.inflight: 0
+net.inet.ip.portrange.randomtime: 1
+net.inet.ip.portrange.randomcps: 9999
+[...]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要设置特定的变量，请使用_variable_=_value_的语法：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl kern.maxfiles=5000</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.maxfiles: 2088 -&gt; 5000</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>为了在重启后保留配置，需要按照下面的说明将这些变量添加到 <span class="filename">/etc/sysctl.conf</span> 文件中。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-sysctlconf">14.2.3. <span class="filename">/etc/sysctl.conf</span> 文件<a class="anchor" href="#configtuning-sysctlconf"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 的配置文件， <code>/etc/sysctl.conf</code> ，看起来很像 <code>/etc/rc.conf</code> 。</p>
+</div>
+<div class="paragraph">
+<p>使用 <code>variable = value</code> 语法来设置值。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>系统进入多用户模式后，设置了指定的值。并非所有变量都可以在此模式下设置。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>例如，要关闭致命信号退出的日志记录并防止用户看到其他用户启动的进程，可以在 [/etc/sysctl.conf] 中设置以下可调整项：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># Do not log fatal signal exits (e.g., sig 11)
+kern.logsigexit=0
+
+# Prevent users from seeing information about processes that
+# are being run under another UID.
+security.bsd.see_other_uids=0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要获取关于特定 sysctl 函数的更多信息，可以执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl -d kern.dfldsiz</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>kern.dfldsiz: Initial data size limit</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-core-configuration">14.2.4. 管理系统特定配置<a class="anchor" href="#configtuning-core-configuration"></a></h3>
+<div class="paragraph">
+<p>系统配置信息的主要位置是 [/etc/rc.conf] 。</p>
+</div>
+<div class="paragraph">
+<p>该文件包含了各种配置信息，并在系统启动时读取以配置系统。它为 <span class="filename">rc*</span> 文件提供配置信息。</p>
+</div>
+<div class="paragraph">
+<p><span class="filename">/etc/rc.conf</span> 中的条目会覆盖 <span class="filename">/etc/defaults/rc.conf</span> 中的默认设置。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>不应编辑包含默认设置的文件 <span class="filename">/etc/defaults/rc.conf</span> 。相反，所有特定于系统的更改应该在 <span class="filename">/etc/rc.conf</span> 中进行。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在集群应用中，可以采用多种策略来将整个站点的配置与系统特定的配置分离，以减少管理开销。</p>
+</div>
+<div class="paragraph">
+<p>推荐的方法是将系统特定的配置放置在 [/etc/rc.conf.local] 文件中。</p>
+</div>
+<div class="paragraph">
+<p>例如，这些条目在 [/etc/rc.conf] 适用于所有系统：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>sshd_enable=&#34;YES&#34;
+keyrate=&#34;fast&#34;
+defaultrouter=&#34;10.1.1.254&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>而这些条目在 [/etc/rc.conf.local] 文件中仅适用于此系统：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hostname=&#34;node1.example.org&#34;
+ifconfig_fxp0=&#34;inet 10.1.1.1/8&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用诸如 rsync 或 puppet 的应用程序，将 /etc/rc.conf 分发到每个系统，同时保持 /etc/rc.conf.local 的唯一性。</p>
+</div>
+<div class="paragraph">
+<p>升级系统不会覆盖 /etc/rc.conf 文件，因此系统配置信息不会丢失。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="filename">/etc/rc.conf</span> 和 <span class="filename">/etc/rc.conf.local</span> 都由 <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> 解析。这使得系统操作员能够创建复杂的配置场景。有关此主题的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configtuning-rcd">14.3. 在 FreeBSD 中管理服务<a class="anchor" href="#configtuning-rcd"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD 在系统初始化和服务管理过程中使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 系统的启动脚本。</p>
+</div>
+<div class="paragraph">
+<p><span class="filename">/etc/rc.d</span> 中列出的脚本提供基本服务，可以通过 <code>start</code> 、 <code>stop</code> 和 <code>restart</code> 选项来控制，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a> 命令。</p>
+</div>
+<div class="paragraph">
+<p>一个基本的脚本可能类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+#
+# PROVIDE: utility
+# REQUIRE: DAEMON
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name=utility
+rcvar=utility_enable
+
+command=&#34;/usr/local/sbin/utility&#34;
+
+load_rc_config $name
+
+#
+# DO NOT CHANGE THESE DEFAULT VALUES HERE
+# SET THEM IN THE /etc/rc.conf FILE
+#
+utility_enable=${utility_enable-&#34;NO&#34;}
+pidfile=${utility_pidfile-&#34;/var/run/utility.pid&#34;}
+
+run_rc_command &#34;$1&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>请参考 <a href="{rc-scripting}">这篇文章</a> ，了解如何创建自定义的 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 脚本的指南。</p>
+</div>
+<div class="sect2">
+<h3 id="configtuning-starting-services">14.3.1. 启动服务<a class="anchor" href="#configtuning-starting-services"></a></h3>
+<div class="paragraph">
+<p>许多用户在 FreeBSD 上从 Ports Collection 安装第三方软件，并要求在系统初始化时启动已安装的服务。</p>
+</div>
+<div class="paragraph">
+<p>服务，例如 <a class="package" href="https://cgit.freebsd.org/ports/tree/security/openssh-portable/">security/openssh-portable</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> 只是许多软件包中的两个，这些软件包可能在系统初始化期间启动。本节介绍了启动服务的可用程序。</p>
+</div>
+<div class="paragraph">
+<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 系统主要用于在系统启动和关闭时启动和停止服务，因此只有在设置了适当的 /etc/rc.conf 变量时， <code>start</code> 、 <code>stop</code> 和 <code>restart</code> 选项才会执行其操作。</p>
+</div>
+<div class="paragraph">
+<p>因此，启动服务的第一步，例如 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> ，是通过执行以下命令将其添加到 <span class="filename">/etc/rc.conf</span> 中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc nginx_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后可以执行以下命令来启动 nginx ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service nginx start</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>无论 <span class="filename">/etc/rc.conf</span> 中的设置如何，要启动、停止或重新启动服务，这些命令都应以&#34;one&#34;为前缀。例如，要启动 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> ，无论当前 <span class="filename">/etc/rc.conf</span> 的设置如何，执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service nginx onestart</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-status-services">14.3.2. 服务的状态<a class="anchor" href="#configtuning-status-services"></a></h3>
+<div class="paragraph">
+<p>要确定服务是否正在运行，请使用 <code>status</code> 子命令。</p>
+</div>
+<div class="paragraph">
+<p>例如，要验证包： www/nginx[] 是否正在运行：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service nginx status</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>nginx is running as pid 27871.</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-reload-services">14.3.3. 重新加载服务<a class="anchor" href="#configtuning-reload-services"></a></h3>
+<div class="paragraph">
+<p>在某些情况下，也可以“重新加载”一个服务。这将尝试向一个单独的服务发送一个信号，强制该服务重新加载其配置文件。</p>
+</div>
+<div class="paragraph">
+<p>在大多数情况下，这意味着向服务发送一个 <code>SIGHUP</code> 信号。</p>
+</div>
+<div class="paragraph">
+<p>并非所有服务都支持此功能。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 系统用于网络服务，并且它还贡献了大部分系统初始化工作。例如，当执行 <span class="filename">/etc/rc.d/bgfsck</span> 脚本时，它会打印出以下消息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">Starting background file system checks <span class="k">in </span>60 seconds.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>该脚本用于后台文件系统检查，仅在系统初始化期间进行。</p>
+</div>
+<div class="paragraph">
+<p>许多系统服务依赖其他服务的正常运行。例如， <a href="https://man.freebsd.org/cgi/man.cgi?query=yp&amp;sektion=8&amp;format=html">yp(8)</a> 和其他基于 RPC 的服务可能在 <a href="https://man.freebsd.org/cgi/man.cgi?query=rpcbind&amp;sektion=8&amp;format=html">rpcbind(8)</a> 服务启动之前无法启动。</p>
+</div>
+<div class="paragraph">
+<p>可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.subr&amp;sektion=8&amp;format=html">rc.subr(8)</a> 中找到更多的信息。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_使用服务启动服务">14.3.4. 使用服务启动服务<a class="anchor" href="#_使用服务启动服务"></a></h3>
+<div class="paragraph">
+<p>其他服务可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a> 启动。有关使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a> 及其配置的详细信息，请参阅 <a href="../network-servers/#network-inetd ，“ inetd 超级服务器”"></a> 。</p>
+</div>
+<div class="paragraph">
+<p>在某些情况下，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 来启动系统服务可能更合理。这种方法有许多优点，因为 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 以 <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a> 的所有者身份运行这些进程。这使得普通用户可以启动和维护自己的应用程序。</p>
+</div>
+<div class="paragraph">
+<p>` @ reboot` 功能是 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 的一个特性，可以用来替代时间规范。这将导致作业在 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 启动时运行，通常是在系统初始化期间。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cron-periodic">14.4. Cron 和周期性任务<a class="anchor" href="#cron-periodic"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在 FreeBSD 上，安排任务在特定的日期或时间运行是一项非常常见的任务。负责执行这项任务的工具是 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>除了用户可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 进行调度的任务之外， FreeBSD 还执行由 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 管理的常规后台任务。</p>
+</div>
+<div class="sect2">
+<h3 id="configtuning-cron">14.4.1. Cron 是一个用于在 Unix 和类 Unix 系统上执行定期任务的工具。它允许用户根据特定的时间表安排命令或脚本的运行。 Cron 使用 crontab 文件来存储任务和时间表信息，并通过 cron 守护进程来执行这些任务。 Cron 的时间表语法非常灵活，可以指定分钟、小时、日期、月份和星期几等。它还支持一些特殊的时间表选项，如@ reboot （系统启动时运行）和@ daily （每天运行一次）。 Cron 是系统管理员和开发人员常用的工具之一，用于自动化重复性任务的执行。<a class="anchor" href="#configtuning-cron"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 实用程序在后台运行，并定期检查 /etc/crontab 中的任务以执行，并在 /var/cron/tabs 中搜索自定义的 crontab 文件。</p>
+</div>
+<div class="paragraph">
+<p>这些文件用于安排任务， cron 会在指定的时间运行这些任务。</p>
+</div>
+<div class="paragraph">
+<p>crontab 中的每个条目定义了一个要运行的任务，被称为_cron 作业_。</p>
+</div>
+<div class="paragraph">
+<p>使用了两种不同类型的配置文件：系统 crontab 和用户 crontab 。系统 crontab 不应该被修改，而用户 crontab 可以根据需要创建和编辑。这些文件使用的格式在 <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a> 中有文档记录。系统 crontab 的格式（ .filename]<mark>/etc/crontab</mark> ）包括一个 <code>who</code> 列，在用户 crontab 中不存在。在系统 crontab 中， cron 根据该列中指定的用户运行命令。在用户 crontab 中，所有命令都以创建 crontab 的用户身份运行。</p>
+</div>
+<div class="paragraph">
+<p>用户的 crontab 允许个别用户安排自己的任务。 <code>root</code> 用户也可以拥有一个用户 crontab ，用于安排系统中不存在的任务。</p>
+</div>
+<div class="paragraph">
+<p>这是系统 crontab 的一个示例条目， <span class="filename">/etc/crontab</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># /etc/crontab - root&#39;s crontab for FreeBSD
+#
+# $FreeBSD$ <i class="conum" data-value="1"></i><b>(1)</b>
+#
+SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin <i class="conum" data-value="2"></i><b>(2)</b>
+#
+#minute hour    mday    month   wday    who     command <i class="conum" data-value="3"></i><b>(3)</b>
+#
+# Save some entropy so that /dev/random can re-seed on boot.
+*/11    *       *       *       *       operator /usr/libexec/save-entropy <i class="conum" data-value="4"></i><b>(4)</b>
+#
+# Rotate log files every hour, if necessary.
+0       *       *       *       *       root    newsyslog
+#
+# Perform daily/weekly/monthly maintenance.
+1       3       *       *       *       root    periodic daily
+15      4       *       *       6       root    periodic weekly
+30      5       1       *       *       root    periodic monthly
+#
+# Adjust the time zone if the CMOS clock keeps local time, as opposed to
+# UTC time.  See adjkerntz(8) for details.
+1,31    0-5     *       *       *       root    adjkerntz -a</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>以 <code>#</code> 字符开头的行是注释。注释可以放在文件中作为对所执行的操作的内容和原因的提醒。注释不能与命令在同一行，否则它们将被解释为命令的一部分；它们必须在新的一行上。空行会被忽略。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>等号（ ` = ` ）字符用于定义任何环境设置。在这个例子中，它被用来定义 <code>SHELL</code> 和 <code>PATH</code> 。如果省略了 <code>SHELL</code> ， cron 将使用默认的 Bourne shell 。如果省略了 <code>PATH</code> ，则必须提供要运行的命令或脚本的完整路径。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>这行定义了系统 crontab 中使用的七个字段： <code>minute</code> （分钟）、 <code>hour</code> （小时）、 <code>mday</code> （月中的某一天）、 <code>month</code> （月份）、 <code>wday</code> （星期几）、 <code>who</code> （用户）和 <code>command</code> （命令）。 <code>minute</code> 字段表示指定命令将运行的分钟数， <code>hour</code> 字段表示指定命令将运行的小时数， <code>mday</code> 字段表示月份中的某一天， <code>month</code> 字段表示月份， <code>wday</code> 字段表示星期几。这些字段必须是数字值，表示 24 小时制的时间，或者是 <code>*</code> ，表示该字段的所有值。 <code>who</code> 字段仅存在于系统 crontab 中，用于指定命令应该以哪个用户身份运行。最后一个字段是要执行的命令。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>此条目定义了此 cron 作业的值。 ` \ <strong>/11` 后面跟着几个 <code></code></strong> 字符，指定了 <code>/usr/libexec/save-entropy</code> 在每小时的每十一分钟，每天的每小时，每周的每天，每月的每天都由 <code>operator</code> 调用。命令可以包含任意数量的开关。然而，跨多行的命令需要使用反斜杠 &#34;\&#34; 继续字符进行分割。</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-installcrontab">14.4.2. 创建用户的定时任务表<a class="anchor" href="#configtuning-installcrontab"></a></h3>
+<div class="paragraph">
+<p>要创建一个用户的定时任务表，可以在编辑器模式下调用 <code>crontab</code> 命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>crontab -e</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将使用默认的文本编辑器打开用户的 crontab 。当用户第一次运行此命令时，它将打开一个空文件。一旦用户创建了一个 crontab ，此命令将打开该文件以供编辑。</p>
+</div>
+<div class="paragraph">
+<p>在 crontab 文件的顶部添加以下行是很有用的，这样可以设置环境变量并记住 crontab 中字段的含义：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+# Order of crontab fields
+# minute hour mday month wday command</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后为每个要运行的命令或脚本添加一行，指定运行命令的时间。此示例在每天下午两点运行指定的自定义 Bourne shell 脚本。由于脚本的路径没有在 <code>PATH</code> 中指定，因此给出了脚本的完整路径：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>0 14 * * * /home/user/bin/mycustomscript.sh</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在使用自定义脚本之前，请确保它是可执行的，并使用 cron 设置的有限环境变量集进行测试。要复制用于运行上述 cron 条目的环境，请使用：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>env -i SHELL=/bin/sh PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin HOME=/home/user LOGNAME=user /home/user/bin/mycustomscript.sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在 <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a> 中讨论了由 cron 设置的环境。如果脚本中包含使用通配符删除文件的命令，那么在 cron 环境中检查脚本的正确运行尤为重要。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>编辑完 crontab 后，保存文件。它将自动安装，并且 cron 将读取 crontab 并在指定的时间运行其 cron 作业。要列出 crontab 中的 cron 作业，请使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>crontab -l</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>0 14 * * * /home/user/bin/mycustomscript.sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要删除用户 crontab 中的所有 cron 作业：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>crontab -r</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>remove crontab for user? y</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configtuning-periodic">14.4.3. 周期性的<a class="anchor" href="#configtuning-periodic"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 提供了一组系统管理脚本，用于检查各种子系统的状态，执行与安全相关的检查，轮转日志文件等。这些脚本定期运行：每天、每周或每月。这些任务的管理由 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 执行，并且其配置存储在 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic.conf&amp;sektion=5&amp;format=html">periodic.conf(5)</a> 中。定期任务由系统 crontab 中的条目启动，如上所示。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 执行的脚本位于基本工具的 /etc/periodic/ 目录下，第三方软件的脚本位于 /usr/local/etc/periodic/ 目录下。</p>
+</div>
+<div class="paragraph">
+<p>它们被组织在 4 个子目录中，分别是 daily （每日）、 weekly （每周）、 monthly （每月）和 security （安全）。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enable-disable-periodic">14.4.4. 启用或禁用定期任务<a class="anchor" href="#enable-disable-periodic"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 默认启用了一些定期运行的脚本。</p>
+</div>
+<div class="paragraph">
+<p>要启用或禁用任务，第一步是编辑 <span class="filename">/etc/periodic.conf</span> 文件，执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ee /etc/periodic.conf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后，要启用 <code>daily_status_zfs_enable</code> ，请将以下内容放入文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>daily_status_zfs_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要禁用默认情况下处于活动状态的任务，只需将 <code>YES</code> 更改为 <code>NO</code> 即可。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuring-output-periodic-tasks">14.4.5. 配置周期性任务的输出<a class="anchor" href="#configuring-output-periodic-tasks"></a></h3>
+<div class="paragraph">
+<p>在 <span class="filename">/etc/periodic.conf</span> 文件中，变量 <code>daily_output</code> 、 <code>weekly_output</code> 和 <code>monthly_output</code> 指定了脚本执行结果的发送位置。</p>
+</div>
+<div class="paragraph">
+<p>默认情况下，周期性脚本的输出会发送到 root 的邮箱，因此最好阅读 root 的邮件或将 root 的别名设置为一个被监控的邮箱。</p>
+</div>
+<div class="paragraph">
+<p>要将结果发送到另一个电子邮件或其他电子邮件，请将电子邮件地址以空格分隔添加到 <span class="filename">/etc/periodic.conf</span> 中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>daily_output=&#34;email1@example.com email2@example.com&#34;
+weekly_output=&#34;email1@example.com email2@example.com&#34;
+monthly_output=&#34;email1@example.com email2@example.com&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要将周期性的输出记录到日志文件而不是通过电子邮件接收，将以下行添加到 [/etc/periodic.conf] 文件中。 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog&amp;sektion=8&amp;format=html">newsyslog(8)</a> 会在适当的时间对这些文件进行轮转：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>daily_output=/var/log/daily.log
+weekly_output=/var/log/weekly.log
+monthly_output=/var/log/monthly.log</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configtuning-syslog">14.5. 配置系统日志<a class="anchor" href="#configtuning-syslog"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>生成和读取系统日志是系统管理的重要方面。系统日志中的信息可以用于检测硬件和软件问题，以及应用程序和系统配置错误。这些信息在安全审计和事件响应中也起着重要作用。大多数系统守护进程和应用程序都会生成日志条目。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 提供了一个系统日志记录器， <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> ，用于管理日志记录。默认情况下，系统启动时会启用和启动 syslogd 。</p>
+</div>
+<div class="paragraph">
+<p>本节介绍了如何配置 FreeBSD 系统日志记录器以进行本地和远程日志记录，以及如何执行日志轮转和日志管理。</p>
+</div>
+<div class="sect2">
+<h3 id="_配置本地日志记录">14.5.1. 配置本地日志记录<a class="anchor" href="#_配置本地日志记录"></a></h3>
+<div class="paragraph">
+<p>配置文件 <span class="filename">/etc/syslog.conf</span> 控制着 syslogd 在接收到日志条目时的处理方式。有几个参数用于控制处理传入事件的方式。_facility_描述了生成消息的子系统，例如内核或守护进程，而_level_描述了发生事件的严重程度。这使得可以根据 facility 和 level 配置是否以及在哪里记录日志消息。还可以根据发送消息的应用程序以及远程日志记录的情况下生成日志事件的机器的主机名来采取行动。</p>
+</div>
+<div class="paragraph">
+<p>该配置文件每行包含一个操作，每行的语法是选择器字段后跟一个操作字段。选择器字段的语法是_facility.level_，它将匹配_facility_在_level_或更高级别的日志消息。还可以在级别之前添加一个可选的比较标志，以更精确地指定记录的内容。可以为同一个操作使用多个选择器字段，并用分号 (` ; <code>) 分隔。使用 `*</code> 将匹配所有内容。操作字段表示将日志消息发送到何处，例如文件或远程日志主机。</p>
+</div>
+<div class="paragraph">
+<p>以下是 FreeBSD 的默认 [/etc/syslog.conf]# 示例：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># $FreeBSD$
+#
+#       Spaces ARE valid field separators in this file. However,
+#       other *nix-like systems still insist on using tabs as field
+#       separators. If you are sharing this file between systems, you
+#       may want to use only tabs as field separators here.
+#       Consult the syslog.conf(5) manpage.
+*.err;kern.warning;auth.notice;mail.crit                /dev/console <i class="conum" data-value="1"></i><b>(1)</b>
+*.notice;authpriv.none;kern.debug;lpr.info;mail.crit;news.err   /var/log/messages
+security.*                                      /var/log/security
+auth.info;authpriv.info                         /var/log/auth.log
+mail.info                                       /var/log/maillog <i class="conum" data-value="2"></i><b>(2)</b>
+cron.*                                          /var/log/cron
+!-devd
+*.=debug                                        /var/log/debug.log <i class="conum" data-value="3"></i><b>(3)</b>
+*.emerg                                         *
+daemon.info                                     /var/log/daemon.log
+# uncomment this to log all writes to /dev/console to /var/log/console.log
+# touch /var/log/console.log and chmod it to mode 600 before it will work
+#console.info                                   /var/log/console.log
+# uncomment this to enable logging of all log messages to /var/log/all.log
+# touch /var/log/all.log and chmod it to mode 600 before it will work
+#*.*                                            /var/log/all.log
+# uncomment this to enable logging to a remote loghost named loghost
+#*.*                                            @loghost
+# uncomment these if you&#39;re running inn
+# news.crit                                     /var/log/news/news.crit
+# news.err                                      /var/log/news/news.err
+# news.notice                                   /var/log/news/news.notice
+# Uncomment this if you wish to see messages produced by devd
+# !devd
+# *.&gt;=notice                                    /var/log/devd.log <i class="conum" data-value="4"></i><b>(4)</b>
+!*
+include                                         /etc/syslog.d
+include                                         /usr/local/etc/syslog.d</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>匹配所有级别为 <code>err</code> 或更高的消息，以及 <code>kern.warning</code> 、 <code>auth.notice</code> 和 <code>mail.crit</code> ，并将这些日志消息发送到控制台（ <span class="filename">/dev/console</span> ）。 &lt;.&gt; 匹配所有级别为 <code>info</code> 或更高的 <code>mail</code> 设施的消息，并将这些消息记录到 <span class="filename">/var/log/maillog</span> 。 &lt;.&gt; 使用比较标志（ ` = ` ）仅匹配级别为 <code>debug</code> 的消息，并将其记录到 <span class="filename">/var/log/debug.log</span> 。 &lt;.&gt; 是程序规范的示例用法。这使得其后的规则仅对指定的程序有效。在这种情况下，只有由 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 生成的消息被记录到 <span class="filename">/var/log/devd.log</span> 。</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>有关 <span class="filename">/etc/syslog.conf</span> 的更多信息，包括其语法和更高级的用法示例，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog.conf&amp;sektion=5&amp;format=html">syslog.conf(5)</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging-facilities">14.5.2. 日志记录设施<a class="anchor" href="#logging-facilities"></a></h3>
+<div class="paragraph">
+<p>设施描述了系统生成消息的部分。设施是一种将不同的消息分开的方式，以便用户更容易查阅日志。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">表 2. syslog 设施</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名称</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">认证</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">授权系统： <a href="https://man.freebsd.org/cgi/man.cgi?query=login&amp;sektion=1&amp;format=html">login(1)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=su&amp;sektion=1&amp;format=html">su(1)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=getty&amp;sektion=8&amp;format=html">getty(8)</a> 等。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">authpriv 是一个在计算机安全领域中常用的术语，它是由两个单词&#34;auth&#34;和&#34;priv&#34;组成的缩写。&#34;auth&#34;代表&#34;authentication&#34;，即身份验证，而&#34;priv&#34;代表&#34;privilege&#34;，即权限。因此， authpriv 可以理解为&#34;身份验证和权限&#34;。</p>
+<p class="tableblock">在计算机系统中， authpriv 通常用于描述一种安全级别或权限级别，用于限制对敏感信息或资源的访问。只有经过身份验证且具有足够权限的用户才能访问 authpriv 级别的资源或执行相关操作。这种安全级别通常用于保护用户的隐私和敏感数据，以及防止未经授权的访问和滥用权限。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">与 auth 相同，但日志记录到一个只有 root 用户可读的文件中。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">控制台</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由内核控制台输出驱动程序写入到 <code>/dev/console</code> 的消息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cron 是一个在 Unix 和类 Unix 操作系统中用于定期执行任务的工具。它允许用户根据预定的时间间隔或特定的时间点来执行命令或脚本。 cron 通常用于自动化系统维护任务，如备份数据、定期清理临时文件等。用户可以通过编辑 cron 表来设置任务的执行时间和频率。 cron 表是一个文本文件，其中包含了任务的执行时间和要执行的命令或脚本。 cron 是一个非常常用的工具，广泛应用于服务器管理和系统自动化。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 守护进程编写的消息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">守护进程</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">系统守护进程，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=routed&amp;sektion=8&amp;format=html">routed(8)</a> ，这些进程不是由其他设施明确提供的。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FTP （ File Transfer Protocol ）是一种用于在计算机网络上进行文件传输的标准协议。它允许用户通过网络将文件从一个计算机传输到另一个计算机。 FTP 使用客户端 - 服务器模型，其中客户端发起连接并发送命令，而服务器则响应这些命令并执行相应的操作。 FTP 可以在不同的操作系统之间进行文件传输，并且支持匿名访问和身份验证访问两种方式。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">文件传输协议守护进程： <a href="https://man.freebsd.org/cgi/man.cgi?query=ftpd&amp;sektion=8&amp;format=html">ftpd(8)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=tftpd&amp;sektion=8&amp;format=html">tftpd(8)</a> 。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">内核</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由内核生成的消息。这些消息不能由任何用户进程生成。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lpr 是一个用于打印文件的命令行工具。它可以将文件发送到打印机进行打印。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">行式打印机的排队系统： <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a> 等等。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">邮件</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">邮件系统。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">标记</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">该设施每 20 分钟添加一条记录。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">新闻</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络新闻系统。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络时间协议（ NTP ）是一种用于同步计算机系统时钟的协议。它允许计算机通过网络连接到时间服务器，以获取准确的时间信息。 NTP 使用一种分层的时间同步体系结构，其中一些服务器被称为时间源，它们从更高级别的时间源获取时间，并将其传播到其他计算机。通过使用 NTP ，计算机可以保持准确的时间，以便在网络通信、日志记录和其他时间相关应用中进行同步。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络时间协议系统。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">安全</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">安全子系统，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=4&amp;format=html">ipfw(4)</a> 。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">syslog 是一种用于记录计算机系统日志的标准化协议。它允许计算机设备和应用程序将日志消息发送到远程日志服务器，以便集中存储和分析。 syslog 可以帮助系统管理员监控和故障排除计算机系统，并提供安全审计和事件跟踪功能。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">syslogd （ 8 ）内部生成的消息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">用户</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由随机用户进程生成的消息。 * 如果未指定，则为默认的设施标识符 * 。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UUCP （ Unix to Unix Copy ）是一种用于在 Unix 系统之间传输文件和命令的协议。它允许用户通过拨号连接或网络连接在不同的 Unix 主机之间进行通信。 UUCP 最初是在 1970 年代开发的，是早期互联网的一部分。它使用了一种称为 UUCP 的软件套件来实现文件传输和远程命令执行。尽管 UUCP 在现代互联网中已经不再广泛使用，但它在过去是非常重要的，为 Unix 系统之间的通信提供了一种简单而可靠的方法。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unix 到 Unix 复制系统。一个古老的协议。真的很奇怪看到来自这个设施的消息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">local0 到 local7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保留供本地使用。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="logging-levels">14.5.3. 日志级别<a class="anchor" href="#logging-levels"></a></h3>
+<div class="paragraph">
+<p>级别描述了消息的严重程度，并且是以下有序列表中的关键字（从高到低）：</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">表 3. syslog 级别</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名称</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">紧急</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">一种恐慌的情况。通常会向所有用户广播。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">警告</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">应立即纠正的条件，例如系统数据库损坏。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">批评</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">关键条件，例如硬件设备错误。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">错误</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">错误。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">警告</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">警告信息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">注意</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">不是错误条件，但可能需要特殊处理的条件。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">信息</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">信息性消息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">调试</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包含通常仅在调试程序时有用的信息的消息。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">这个特殊级别禁用了一个特定的功能。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="read-log-messages">14.5.4. 阅读日志消息<a class="anchor" href="#read-log-messages"></a></h3>
+<div class="paragraph">
+<p>默认情况下， FreeBSD 日志文件使用 <a href="https://datatracker.ietf.org/doc/html/rfc3164">rfc3164</a> 格式，也被称为 BSD syslog 协议。了解更多关于其他格式以及如何使用它们的信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=8&amp;format=html">syslog(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>通常日志具有以下语法：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>date time hostname program[pid]: the message</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将使用 <span class="filename">/var/log/cron</span> 文件的输出作为示例：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>[...]
+Jul 16 12:40:00 FreeBSD /usr/sbin/cron[81519]: (root) CMD (/usr/libexec/atrun)
+Jul 16 12:44:00 FreeBSD /usr/sbin/cron[83072]: (operator) CMD (/usr/libexec/save-entropy)
+[...]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以通过运行以下命令在 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=8&amp;format=html">syslog(8)</a> 中启用详细日志记录，这样每条消息的设施和级别都会被添加：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc syslogd_flags=&#34;-vv&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦函数被激活，设施和级别将会在日志中显示，如下面的示例所示：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>[...]
+Jul 16 17:40:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1016]: (root) CMD (/usr/libexec/atrun)
+Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (/usr/libexec/save-entropy)
+[...]</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_日志管理和轮转">14.5.5. 日志管理和轮转<a class="anchor" href="#_日志管理和轮转"></a></h3>
+<div class="paragraph">
+<p>日志文件可以快速增长，占用磁盘空间，并且使得查找有用信息变得更加困难。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 中， <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog&amp;sektion=8&amp;format=html">newsyslog(8)</a> 用于管理日志文件并尝试减轻这个问题。</p>
+</div>
+<div class="paragraph">
+<p>这个内置程序定期轮转和压缩日志文件，并可选择创建丢失的日志文件，并在日志文件移动时向程序发送信号。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>由于 newsyslog 是从 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 运行的，它不能比从 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 计划运行的频率更频繁地旋转文件。在默认配置中，它每小时运行一次。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>以下是 FreeBSD 中的默认配置，在 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 中可以找到更多信息：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># configuration file for newsyslog
+# $FreeBSD$
+#
+# Entries which do not specify the &#39;/pid_file&#39; field will cause the
+# syslogd process to be signalled when that log file is rotated.  This
+# action is only appropriate for log files which are written to by the
+# syslogd process (ie, files listed in /etc/syslog.conf).  If there
+# is no process which needs to be signalled when a given log file is
+# rotated, then the entry for that file should include the &#39;N&#39; flag.
+#
+# Note: some sites will want to select more restrictive protections than the
+# defaults.  In particular, it may be desirable to switch many of the 644
+# entries to 640 or 600.  For example, some sites will consider the
+# contents of maillog, messages, and lpd-errs to be confidential.  In the
+# future, these defaults may change to more conservative ones.
+#
+# logfilename          [owner:group]    mode count size when  flags [/pid_file] [sig_num]
+/var/log/all.log                        600  7     *    @T00  J
+/var/log/auth.log                       600  7     1000 @0101T JC
+/var/log/console.log                    600  5     1000 *     J
+/var/log/cron                           600  3     1000 *     JC
+/var/log/daily.log                      640  7     *    @T00  JN
+/var/log/debug.log                      600  7     1000 *     JC
+/var/log/init.log                       644  3     1000 *     J
+/var/log/kerberos.log                   600  7     1000 *     J
+/var/log/maillog                        640  7     *    @T00  JC
+/var/log/messages                       644  5     1000 @0101T JC
+/var/log/monthly.log                    640  12    *    $M1D0 JN
+/var/log/devd.log                       644  3     1000 *     JC
+/var/log/security                       600  10    1000 *     JC
+/var/log/utx.log                        644  3     *    @01T05 B
+/var/log/weekly.log                     640  5     *    $W6D0 JN
+/var/log/daemon.log                     644  5     1000 @0101T JC
+
+&lt;include&gt; /etc/newsyslog.conf.d/[!.]*.conf
+&lt;include&gt; /usr/local/etc/newsyslog.conf.d/[!.]*.conf</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>logfilename</code> - 要归档的系统日志文件的名称。</p>
+</li>
+<li>
+<p><code>[owner:group]</code> - 这个可选字段指定了存档文件的所有者和组。</p>
+</li>
+<li>
+<p><code>mode</code> - 指定日志文件和归档文件的文件模式。有效的模式位是 0666 （即，可以为所有者、组和其他用户指定旋转日志的读写权限）。</p>
+</li>
+<li>
+<p><code>count</code> - 指定允许存在的归档文件的最大数量。</p>
+</li>
+<li>
+<p><code>size</code> - 当日志文件的大小达到指定的大小（以千字节为单位）时，将按照上述描述进行修剪。如果该字段包含星号（ &#39;*&#39; ），则不会根据大小来修剪日志文件。</p>
+</li>
+<li>
+<p><code>when</code> - 由一个时间间隔、一个特定时间或两者组成。在 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 中支持的选项。</p>
+</li>
+<li>
+<p><code>flags</code> - 表示 newsyslog 接受的标志， <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 中支持的选项。</p>
+</li>
+<li>
+<p><code>[/pid_file]</code> - 这个可选字段指定包含守护进程的进程 ID 或查找进程组 ID 的文件名。</p>
+</li>
+<li>
+<p><code>[sig_num]</code> - 这个可选字段指定将发送给守护进程的信号。</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>最后两个字段是可选的，用于指定进程的进程 ID （ PID ）文件的名称以及在文件轮转时发送给该进程的信号编号。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="network-syslogd">14.5.6. 配置远程日志记录<a class="anchor" href="#network-syslogd"></a></h3>
+<div class="paragraph">
+<p>随着系统数量的增加，监控多个主机的日志文件可能变得难以管理。配置集中式日志记录可以减轻一些日志文件管理的行政负担。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 中，可以使用 syslogd 和 newsyslog 来配置集中式日志文件聚合、合并和轮转。</p>
+</div>
+<div class="paragraph">
+<p>本节演示了一个示例配置，其中主机 <code>A</code> ，名为 <code>logserv.example.com</code> ，将收集本地网络的日志信息。</p>
+</div>
+<div class="paragraph">
+<p>主机 <code>B</code> ，名为 <code>logclient.example.com</code> ，将被配置为将日志信息传递给日志服务器。</p>
+</div>
+<div class="sect3">
+<h4 id="_日志服务器配置">14.5.6.1. 日志服务器配置<a class="anchor" href="#_日志服务器配置"></a></h4>
+<div class="paragraph">
+<p>日志服务器是一个已配置好的系统，用于接收来自其他主机的日志信息。</p>
+</div>
+<div class="paragraph">
+<p>在配置日志服务器之前，请检查以下内容：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>如果在日志服务器和任何日志客户端之间存在防火墙，请确保防火墙规则集允许客户端和服务器的 UDP 端口 514 。</p>
+</li>
+<li>
+<p>日志服务器和所有客户端机器必须在本地 DNS 中具有正向和反向条目。如果网络没有 DNS 服务器，请在每个系统的 /etc/hosts 中创建条目。正确的名称解析是必需的，以便日志条目不会被日志服务器拒绝。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在日志服务器上，编辑 [/etc/syslog.conf] 文件，指定要接收日志条目的客户端名称，要使用的日志设施以及存储主机日志条目的日志名称。此示例将主机名 <code>B</code> 添加到日志中，记录所有设施，并将日志条目存储在 [/var/log/logclient.log] 文件中。</p>
+</div>
+<div class="exampleblock">
+<div class="title">例 1. 示例日志服务器配置</div>
+<div class="content">
+<div class="literalblock programlisting">
+<div class="content">
+<pre>+logclient.example.com
+*.*     /var/log/logclient.log</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>当添加多个日志客户端时，为每个客户端添加类似的两行条目。有关可用设施的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog.conf&amp;sektion=5&amp;format=html">syslog.conf(5)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>接下来，执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc syslogd_enable=&#34;YES&#34;</span>
+<span class="c"># sysrc syslogd_flags=&#34;-a logclient.example.com -v -v&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>第一条条目在系统启动时启动 syslogd 。第二条条目允许来自指定客户端的日志条目。 <code>-v -v</code> 增加了日志消息的详细程度。这对于调整设施非常有用，因为管理员可以看到每个设施下记录了什么类型的消息。</p>
+</div>
+<div class="paragraph">
+<p>可以指定多个 <code>-a</code> 选项来允许从多个客户端进行日志记录。还可以指定 IP 地址和整个网络块。有关可能选项的完整列表，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>最后，创建日志文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># touch /var/log/logclient.log</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>此时，应重新启动并验证 syslogd ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service syslogd restart</span>
+<span class="c"># pgrep syslog</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果返回了一个 PID ，则表示服务器成功重启，可以开始客户端配置。如果服务器没有重启，请查看错误信息，请参考 [/var/log/messages] 文件。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_日志客户端配置">14.5.6.2. 日志客户端配置<a class="anchor" href="#_日志客户端配置"></a></h4>
+<div class="paragraph">
+<p>一个日志客户端将日志条目发送到网络上的日志服务器。客户端还保留了自己日志的本地副本。</p>
+</div>
+<div class="paragraph">
+<p>一旦配置了日志服务器，就在日志客户端上执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc syslogd_enable=&#34;YES&#34;</span>
+<span class="c"># sysrc syslogd_flags=&#34;-s -v -v&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>第一项启用了系统启动时的 syslogd 。第二项阻止其他主机向此客户端接受日志（ <code>-s</code> ），并增加了日志消息的详细程度。</p>
+</div>
+<div class="paragraph">
+<p>接下来，在客户端的 <code>/etc/syslog.conf</code> 文件中定义日志服务器。在这个例子中，所有记录的设施都会被发送到一个远程系统，用 ` @ ` 符号表示，并指定主机名：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>*.*  @logserv.example.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>保存编辑后，重新启动 syslogd 以使更改生效：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service syslogd restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了测试日志消息是否通过网络发送，可以在客户端使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=logger&amp;sektion=1&amp;format=html">logger(1)</a> 命令向 syslogd 发送一条消息。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># logger &#34;Test message from logclient&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>此消息现在应该同时存在于客户端的 /var/log/messages 和日志服务器的 /var/log/logclient.log 中。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_调试日志服务器">14.5.6.3. 调试日志服务器<a class="anchor" href="#_调试日志服务器"></a></h4>
+<div class="paragraph">
+<p>如果日志服务器上没有接收到任何消息，原因很可能是网络连接问题、主机名解析问题或配置文件中的拼写错误。为了确定原因，确保日志服务器和日志客户端都能够使用它们在 <code>/etc/rc.conf</code> 中指定的主机名相互 <code>ping</code> 。如果失败，请检查网络电缆、防火墙规则集以及 DNS 服务器或日志服务器和客户端上的 <code>/etc/hosts</code> 中的主机名条目。重复此过程，直到从两个主机都成功 <code>ping</code> 。</p>
+</div>
+<div class="paragraph">
+<p>如果在两台主机上都成功执行了 <code>ping</code> 命令，但仍然无法接收到日志消息，则可以暂时增加日志的详细程度以缩小配置问题的范围。在下面的示例中，日志服务器上的 <span class="filename">/var/log/logclient.log</span> 文件为空，而日志客户端上的 <span class="filename">/var/log/messages</span> 文件没有显示失败的原因。</p>
+</div>
+<div class="paragraph">
+<p>为了增加调试输出，编辑日志服务器上的 <code>syslogd_flags</code> 条目并执行重启操作：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">sysrc <span class="nv">syslogd_flags</span><span class="o">=</span><span class="s2">&#34;-d -a logclient.example.com -v -v&#34;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service syslogd restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在重新启动后，类似以下的调试数据将立即在控制台上闪现：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>logmsg: pri 56, flags 4, from logserv.example.com, msg syslogd: restart
+syslogd: restarted
+logmsg: pri 6, flags 4, from logserv.example.com, msg syslogd: kernel boot file is /boot/kernel/kernel
+Logging to FILE /var/log/messages
+syslogd: kernel boot file is /boot/kernel/kernel
+cvthname(192.168.1.10)
+validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;
+rejected in rule 0 due to name mismatch.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这个例子中，由于一个拼写错误导致日志消息被拒绝，从而导致主机名不匹配。客户端的主机名应该是 <code>logclient</code> ，而不是 <code>logclien</code> 。修复拼写错误，重新启动，并验证结果。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service syslogd restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>logmsg: pri 56, flags 4, from logserv.example.com, msg syslogd: restart
+syslogd: restarted
+logmsg: pri 6, flags 4, from logserv.example.com, msg syslogd: kernel boot file is /boot/kernel/kernel
+syslogd: kernel boot file is /boot/kernel/kernel
+logmsg: pri 166, flags 17, from logserv.example.com,
+msg Dec 10 20:55:02 &lt;syslog.err&gt; logserv.example.com syslogd: exiting on signal 2
+cvthname(192.168.1.10)
+validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;
+accepted in rule 0.
+logmsg: pri 15, flags 0, from logclient.example.com, msg Dec 11 02:01:28 trhodes: Test message 2
+Logging to FILE /var/log/logclient.log
+Logging to FILE /var/log/messages</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>目前，消息已经被正确接收并放置在正确的文件中。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_安全考虑">14.5.6.4. 安全考虑<a class="anchor" href="#_安全考虑"></a></h4>
+<div class="paragraph">
+<p>与任何网络服务一样，在实施日志服务器之前应考虑安全要求。日志文件可能包含有关本地主机上启用的服务、用户帐户和配置数据的敏感信息。从客户端发送到服务器的网络数据将不会进行加密或密码保护。如果需要加密，请考虑使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/security/stunnel/">security/stunnel</a> ，它将通过加密隧道传输日志数据。</p>
+</div>
+<div class="paragraph">
+<p>本地安全性也是一个问题。日志文件在使用过程中或在日志轮换后都没有加密。本地用户可以访问日志文件以获取有关系统配置的更多信息。在日志文件上设置适当的权限至关重要。内置的日志轮换程序 newsyslog 支持在新创建和轮换的日志文件上设置权限。将日志文件设置为 <code>600</code> 模式应该可以防止本地用户的非法访问。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="acpi-overview">14.6. 功耗和资源管理<a class="anchor" href="#acpi-overview"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>高效利用硬件资源是非常重要的。功耗和资源管理使操作系统能够监控系统限制，并可能根据与这些限制相关的事件运行一些操作。</p>
+</div>
+<div class="sect2">
+<h3 id="acpi-config">14.6.1. ACPI 配置<a class="anchor" href="#acpi-config"></a></h3>
+<div class="paragraph">
+<p>在 FreeBSD 上，这些资源的管理由 <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> 内核设备管理。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在 FreeBSD 中，默认情况下，在系统启动时加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> 驱动程序。</p>
+</div>
+<div class="paragraph">
+<p>由于系统总线在各种硬件交互中使用该驱动程序，因此此驱动程序在引导后 * 无法卸载 * 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>除了 <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> 之外， FreeBSD 还有几个专门的内核模块用于各种 ACPI 供应商子系统。这些模块将添加一些额外的功能，如风扇速度、键盘背光或屏幕亮度。</p>
+</div>
+<div class="paragraph">
+<p>可以通过运行以下命令获取列表：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>ls /boot/kernel | grep acpi</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>acpi_asus.ko
+acpi_asus_wmi.ko
+acpi_dock.ko
+acpi_fujitsu.ko
+acpi_hp.ko
+acpi_ibm.ko
+acpi_panasonic.ko
+acpi_sony.ko
+acpi_toshiba.ko
+acpi_video.ko
+acpi_wmi.ko
+sdhci_acpi.ko
+uacpi.ko</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>例如，如果使用 IBM/Lenovo 笔记本电脑，则需要通过执行以下命令加载模块 <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi_ibm&amp;sektion=4&amp;format=html">acpi_ibm(4)</a> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload acpi_ibm</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>并将以下行添加到 <span class="filename">/boot/loader.conf</span> 文件中，以在启动时加载它：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>acpi_ibm_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpi_video&amp;sektion=4&amp;format=html">acpi_video(4)</a> 模块的替代方案是 <a href="https://man.freebsd.org/cgi/man.cgi?query=backlight&amp;sektion=9&amp;format=html">backlight(9)</a> 驱动程序。它提供了一种通用的处理面板背光的方式。默认的 GENERIC 内核包含了这个驱动程序。 <a href="https://man.freebsd.org/cgi/man.cgi?query=backlight&amp;sektion=8&amp;format=html">backlight(8)</a> 实用程序可用于查询和调整面板背光的亮度。在这个示例中，亮度减少了 10% ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>backlight decr 10</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cpu-power-management">14.6.2. CPU 功耗管理<a class="anchor" href="#cpu-power-management"></a></h3>
+<div class="paragraph">
+<p>CPU 是系统中最消耗资源的部分。了解如何提高 CPU 效率是我们系统中节省能源的基本部分。</p>
+</div>
+<div class="paragraph">
+<p>为了正确地充分利用机器的资源， FreeBSD 通过使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 和 cpufreq[4] 等技术来支持诸如 Intel Turbo Boost 、 AMD Turbo Core 、 Intel Speed Shift 等技术。</p>
+</div>
+<div class="paragraph">
+<p>第一步是通过执行以下命令来获取 CPU 信息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl dev.cpu.0 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这种情况下，数字 <code>0</code> 代表 CPU 的第一个核心。</p>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dev.cpu.0.cx_method: C1/mwait/hwc C2/mwait/hwc C3/mwait/hwc/bma
+dev.cpu.0.cx_usage_counters: 3507294 0 0
+dev.cpu.0.cx_usage: 100.00% 0.00% 0.00% last 3804us
+dev.cpu.0.cx_lowest: C3 <i class="conum" data-value="1"></i><b>(1)</b>
+dev.cpu.0.cx_supported: C1/1/1 C2/2/1 C3/3/57 <i class="conum" data-value="2"></i><b>(2)</b>
+dev.cpu.0.freq_levels: 2267/35000 2266/35000 1600/15000 800/12000 <i class="conum" data-value="3"></i><b>(3)</b>
+dev.cpu.0.freq: 1600 <i class="conum" data-value="4"></i><b>(4)</b>
+dev.cpu.0.temperature: 40.0C <i class="conum" data-value="5"></i><b>(5)</b>
+dev.cpu.0.coretemp.throttle_log: 0
+dev.cpu.0.coretemp.tjmax: 105.0C
+dev.cpu.0.coretemp.resolution: 1
+dev.cpu.0.coretemp.delta: 65
+dev.cpu.0.%parent: acpi0
+dev.cpu.0.%pnpinfo: _HID=none _UID=0 _CID=none
+dev.cpu.0.%location: handle=\_PR_.CPU0
+dev.cpu.0.%driver: cpu
+dev.cpu.0.%desc: ACPI CPU</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>用于使 CPU 处于空闲状态的最低 Cx 状态。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>CPU 支持的 Cx 状态。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>当前可用的 CPU 级别（频率 / 功耗）。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>当前活动的 CPU 频率（以 MHz 为单位）。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>CPU 的当前温度。</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果温度信息未显示，请加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=coretemp&amp;sektion=4&amp;format=html">coretemp(4)</a> 模块。如果使用 AMD CPU ，请加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=amdtemp&amp;sektion=4&amp;format=html">amdtemp(4)</a> 模块。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>一旦 CPU 信息可用，配置节能的最简单方法是让 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 接管。</p>
+</div>
+<div class="paragraph">
+<p>在 <span class="filename">/etc/rc.conf</span> 中启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 服务，使其在系统启动时启动：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc powerd_enable=YES</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>还需要向 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 指定一些参数，以告诉它如何管理执行以下命令的 CPU 的状态：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc powerd_flags=&#34;-a hiadaptive -i 25 -r 85 -N&#34;</span></code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>-a</code> ：选择在交流电源下使用的模式。</p>
+</li>
+<li>
+<p><code>hiadaptive</code> ：操作模式。更多信息请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 。</p>
+</li>
+<li>
+<p><code>-i</code> ：指定当自适应模式开始降低性能以节省电力时的 CPU 负载百分比水平。</p>
+</li>
+<li>
+<p><code>-r</code> ：指定自适应模式应该考虑 CPU 运行并提高性能的 CPU 负载百分比水平。</p>
+</li>
+<li>
+<p><code>-N</code> ：将“ nice ”时间视为空闲时间，用于负载计算；即，如果 CPU 仅忙于“ nice ”进程，则不增加 CPU 频率。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>然后执行以下命令启用服务：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service powerd start</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cpufreq">14.6.3. CPU 频率控制<a class="anchor" href="#cpufreq"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 包含一个通用的 <a href="https://man.freebsd.org/cgi/man.cgi?query=cpufreq&amp;sektion=4&amp;format=html">cpufreq(4)</a> 驱动程序，允许管理员或者像 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 和 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a> 这样的软件来管理 CPU 的频率，以实现性能和经济之间的理想平衡。降低设置可以节省电力，同时减少 CPU 产生的热量。提高设置可以增加性能，但会消耗额外的电力并产生更多的热量。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="est">14.6.4. 英特尔 ® Enhanced SpeedStep™<a class="anchor" href="#est"></a></h3>
+<div class="paragraph">
+<p>Intel® Enhanced Speed Step™ 驱动程序， <a href="https://man.freebsd.org/cgi/man.cgi?query=est&amp;sektion=4&amp;format=html">est(4)</a> ，用于替代提供此功能的 CPU 的通用 <a href="https://man.freebsd.org/cgi/man.cgi?query=cpufreq&amp;sektion=4&amp;format=html">cpufreq(4)</a> 驱动程序。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 或 <code>/etc/rc.d/power_profile</code> 启动脚本静态调整 CPU 频率。还可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a> 等其他软件根据处理器利用率自动调整 CPU 频率。</p>
+</div>
+<div class="paragraph">
+<p>可以通过检查 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=3&amp;format=html">sysctl(3)</a> 树来列出每个支持的频率及其预期的功耗。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl dev.cpufreq.0.freq_driver dev.cpu.0.freq_levels dev.cpu.0.freq</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dev.cpufreq.0.freq_driver: est0
+dev.cpu.0.freq_levels: 3001/53000 3000/53000 2900/50301 2700/46082 2600/43525 2400/39557 2300/37137 2100/33398 2000/31112 1800/27610 1700/25455 1500/22171 1400/20144 1200/17084 1100/15181 900/12329 800/10550
+dev.cpu.0.freq: 800</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>CPU 的最大频率加 1 MHz 表示 Intel® Turbo Boost™ 功能。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="hwpstate_intel">14.6.5. 英特尔速度转移 ™<a class="anchor" href="#hwpstate_intel"></a></h3>
+<div class="paragraph">
+<p>运行较新的 Intel® CPU 的用户在升级到 FreeBSD 13 时可能会发现动态频率控制方面存在一些差异。针对某些 SKU 可用的 Intel® Speed Shift™ 功能集，提供了一种新的驱动程序，可以使硬件能够动态地变化核心频率，包括每个核心的频率。 FreeBSD 13 配备了 <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> 驱动程序，可以自动启用配备了 Speed Shift™ 控制功能的 CPU ，取代了较旧的 Enhanced Speed Step™ <a href="https://man.freebsd.org/cgi/man.cgi?query=est&amp;sektion=4&amp;format=html">est(4)</a> 驱动程序。 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> <code>dev.cpufreq.%d.freq_driver</code> 将指示系统是否正在使用 Speed Shift 。</p>
+</div>
+<div class="paragraph">
+<p>要确定正在使用哪个频率控制驱动程序，请检查 <code>dev.cpufreq.0.freq_driver</code> oid 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl dev.cpufreq.0.freq_driver</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dev.cpufreq.0.freq_driver: hwpstate_intel0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这表示正在使用新的 <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> 驱动程序。在这种系统上， oid <code>dev.cpu.%d.freq_levels</code> 只会显示最大的 CPU 频率，并且会显示一个功耗级别为 <code>-1</code> 。</p>
+</div>
+<div class="paragraph">
+<p>可以通过检查 <code>dev.cpu.%d.freq</code> oid 来确定当前的 CPU 频率。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl dev.cpu.0.freq_levels dev.cpu.0.freq</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>dev.cpu.0.freq_levels: 3696/-1
+dev.cpu.0.freq: 898</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关更多信息，包括如何平衡性能和能源使用，以及如何禁用此驱动程序，请参阅手册页面 <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> 。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>习惯使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a> 的用户会发现这些实用程序已被 <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> 驱动程序取代，并且不再按预期工作。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="graphics-card-power-management">14.6.6. 图形卡功耗管理<a class="anchor" href="#graphics-card-power-management"></a></h3>
+<div class="paragraph">
+<p>近年来，显卡已成为计算机的基本组成部分。一些显卡可能具有过高的功耗。 FreeBSD 允许进行某些配置以改善功耗。</p>
+</div>
+<div class="paragraph">
+<p>如果使用 Intel® 显卡与 <a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> 驱动程序，可以将以下选项添加到 <span class="filename">/boot/loader.conf</span> 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>compat.linuxkpi.fastboot=1 <i class="conum" data-value="1"></i><b>(1)</b>
+compat.linuxkpi.enable_dc=2 <i class="conum" data-value="2"></i><b>(2)</b>
+compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>尝试在启动时跳过不必要的模式设置。 &lt;.&gt; 启用省电显示 C 状态。 &lt;.&gt; 启用帧缓冲压缩以节省电量。</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_暂停_恢复">14.6.7. 暂停 / 恢复<a class="anchor" href="#_暂停_恢复"></a></h3>
+<div class="paragraph">
+<p>挂起 / 恢复功能允许机器保持在低能耗状态，并且在不丢失运行程序状态的情况下恢复系统。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>为了使挂起 / 恢复功能正常工作，必须在系统上加载图形驱动程序。在不支持 KMS 的图形卡上，必须使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sc&amp;sektion=4&amp;format=html">sc(4)</a> 来避免破坏挂起 / 恢复功能。</p>
+</div>
+<div class="paragraph">
+<p>有关使用哪个驱动程序以及如何配置它的更多信息，请参阅 <a href="../x11/#X11 ， X Window 系统章节"></a> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> 支持以下睡眠状态的列表：</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">表 4. 支持的睡眠状态</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">S1</th>
+<th class="tableblock halign-left valign-top">快速挂起到 RAM 。 CPU 进入较低的功耗状态，但大多数外设仍然保持运行。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">比 S1 更低的功耗状态，但具有相同的基本特征。不被许多系统支持。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S3 （睡眠模式）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">挂起到 RAM 。大多数设备都关闭电源，系统停止运行，只进行内存刷新。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S4 （休眠模式）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">磁盘挂起。所有设备都被关闭，系统停止运行。在恢复时，系统会像从冷启动一样启动。 *FreeBSD 尚不支持此功能 * 。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S5 是一种基于 HTML 和 CSS 的幻灯片演示工具。它使用简单的文本文件来定义幻灯片的内容和样式，并且支持多种演示效果和主题。 S5 的设计目标是简单易用，同时也提供了一些高级功能，如动画效果和交互式元素。它适用于创建演讲稿、培训材料和技术文档等各种类型的演示文稿。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">系统正常关闭并关闭电源。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="configure-suspend-resume">14.6.7.1. 配置挂起 / 恢复<a class="anchor" href="#configure-suspend-resume"></a></h4>
+<div class="paragraph">
+<p>第一步是要知道我们正在使用的硬件支持哪种类型的睡眠状态，执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl hw.acpi.supported_sleep_state</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hw.acpi.supported_sleep_state: S3 S4 S5</pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如上所述， FreeBSD 目前 * 不支持 *<code>S4</code> 状态。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpiconf&amp;sektion=8&amp;format=html">acpiconf(8)</a> 可以通过运行以下命令来检查 <code>S3</code> 状态是否正常工作，如果成功，屏幕应该变黑，机器将关闭：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># acpiconf -s 3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在绝大多数情况下，挂起 / 恢复功能是用于笔记本电脑的。</p>
+</div>
+<div class="paragraph">
+<p>在关闭笔记本盖子时，可以通过在 <span class="filename">/etc/sysctl.conf</span> 文件中添加以下行来配置 FreeBSD 进入 <code>S3</code> 状态。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hw.acpi.lid_switch_state=S3</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="troubleshooting-suspend-resume">14.6.7.2. 挂起 / 恢复的故障排除<a class="anchor" href="#troubleshooting-suspend-resume"></a></h4>
+<div class="paragraph">
+<p>为了使 FreeBSD 上的挂起和恢复功能正常工作并以最佳方式运行，已经付出了很多努力。但目前，挂起和恢复功能只在一些特定的笔记本电脑上正常工作。</p>
+</div>
+<div class="paragraph">
+<p>如果它无法正常工作，可以进行一些检查。</p>
+</div>
+<div class="paragraph">
+<p>在某些情况下，关闭蓝牙就足够了。在其他情况下，只需加载正确的显卡驱动程序等即可。</p>
+</div>
+<div class="paragraph">
+<p>如果它不能正常工作，可以在 FreeBSD Wiki 的链接： <a href="https://wiki.freebsd.org/SuspendResume">Suspend/Resume</a> 部分找到一些提示。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adding-swap-space">14.7. 添加交换空间<a class="anchor" href="#adding-swap-space"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>有时候 FreeBSD 系统需要更多的交换空间。本节介绍了两种增加交换空间的方法：在现有分区或新硬盘上添加交换空间，以及在现有文件系统上创建交换文件。</p>
+</div>
+<div class="paragraph">
+<p>有关如何加密交换空间、存在哪些选项以及为什么应该这样做的信息，请参考交叉引用： disks[swap-encrypting ，“加密交换空间”] 。</p>
+</div>
+<div class="sect2">
+<h3 id="new-drive-swap">14.7.1. 在新硬盘或现有分区上进行交换<a class="anchor" href="#new-drive-swap"></a></h3>
+<div class="paragraph">
+<p>在现有驱动器上使用分区相比使用新的驱动器进行交换会提供更好的性能。在 <a href="../disks/#disks-adding">添加磁盘</a> 中解释了如何设置分区和驱动器，而 <a href="../bsdinstall/#configtuning-initial">设计分区布局</a> 则讨论了分区布局和交换分区大小的考虑事项。</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>可以使用任何当前未挂载的分区，即使它已经包含数据。在包含数据的分区上使用 <code>swapon</code> 命令将覆盖并销毁该数据。在运行 <code>swapon</code> 之前，请确保要添加为交换分区的分区确实是预期的分区。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=swapon&amp;sektion=8&amp;format=html">swapon(8)</a> 可以用于向执行以下命令的系统添加交换分区：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># swapon /dev/ada1p2</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要在启动时自动添加此交换分区，请在 <span class="filename">/etc/fstab</span> 中添加一个条目：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/ada1p2 none swap sw 0 0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> ，了解 <span class="filename">/etc/fstab</span> 中条目的解释。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="create-swapfile">14.7.2. 创建交换文件<a class="anchor" href="#create-swapfile"></a></h3>
+<div id="swapfile-10-and-later" class="paragraph">
+<p>这些示例创建一个名为 <span class="filename">/usr/swap0</span> 的 512M 交换文件。</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>强烈不建议在 ZFS 文件系统上使用交换文件，因为交换可能导致系统挂起。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>第一步是创建交换文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dd if=/dev/zero of=/usr/swap0 bs=1m count=512</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>第二步是给新文件设置适当的权限：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 0600 /usr/swap0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>第三步是通过在 [/etc/fstab](文件名) 中添加一行来通知系统关于交换文件的信息：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>md none swap sw,file=/usr/swap0,late 0 0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>系统启动时将添加交换空间。要立即添加交换空间，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=swapon&amp;sektion=8&amp;format=html">swapon(8)</a> 命令。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># swapon -aL</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#config-synopsis">14.1. 简介</a></li>
+    <li><a href="#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

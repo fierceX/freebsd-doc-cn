@@ -1,0 +1,3013 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Jails 在多个方面改进了传统 chroot 环境的概念。"/>
+  <meta name="keywords" content="91, 34, 106, 97, 105, 108, 115, 34, 44, 32, 34, 99, 114, 101, 97, 116, 105, 110, 103, 34, 44, 32, 34, 109, 97, 110, 97, 103, 105, 110, 103, 34, 44, 32, 34, 117, 112, 100, 97, 116, 105, 110, 103, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/" />
+
+  <title>第 17 章 监狱和容器 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 17 章 监狱和容器" />
+    <meta property="og:description" content="Jails 在多个方面改进了传统 chroot 环境的概念。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/jails\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 17 章 监狱和容器</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="jails-synopsis">17.1. 简介<a class="anchor" href="#jails-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>由于系统管理是一项困难的任务，因此开发了许多工具来简化管理员的工作。这些工具通常可以增强系统的安装、配置和维护方式。其中一个可以用来增强 FreeBSD 系统安全性的工具是_jails_。自 FreeBSD 4.X 以来， jails 一直在其有用性、性能、可靠性和安全性方面得到改进。</p>
+</div>
+<div class="paragraph">
+<p>Jails 是基于 <a href="https://man.freebsd.org/cgi/man.cgi?query=chroot&amp;sektion=2&amp;format=html">chroot(2)</a> 概念构建的，该概念用于更改一组进程的根目录。这样可以创建一个与系统其余部分分离的安全环境。在 chroot 环境中创建的进程无法访问其外部的文件或资源。因此，入侵 chroot 环境中运行的服务不应允许攻击者危害整个系统。</p>
+</div>
+<div class="paragraph">
+<p>然而， chroot 有一些限制。它适用于不需要太多灵活性或复杂高级功能的简单任务。随着时间的推移，人们发现了许多逃离 chroot 环境的方法，使其成为不太理想的保护服务的解决方案。</p>
+</div>
+<div class="paragraph">
+<p>Jails 在多个方面改进了传统 chroot 环境的概念。</p>
+</div>
+<div class="paragraph">
+<p>在传统的 chroot 环境中，进程只能访问文件系统的一部分。其余的系统资源、系统用户、运行中的进程和网络子系统由 chroot 进程和主机系统的进程共享。 Jails 通过虚拟化对文件系统、用户集和网络子系统的访问来扩展这个模型。可以使用更精细的控制来调整被监禁环境的访问权限。 Jails 可以被看作是一种操作系统级别的虚拟化。</p>
+</div>
+<div class="paragraph">
+<p>本章内容包括：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>在 FreeBSD 安装中，监狱是什么以及它可能起到的作用。</p>
+</li>
+<li>
+<p>不同类型的监狱。</p>
+</li>
+<li>
+<p>配置监狱网络的不同方法。</p>
+</li>
+<li>
+<p>监狱配置文件。</p>
+</li>
+<li>
+<p>如何创建不同类型的监狱。</p>
+</li>
+<li>
+<p>如何启动、停止和重启一个 jail 。</p>
+</li>
+<li>
+<p>监狱管理的基础知识，包括监狱内部和外部的管理。</p>
+</li>
+<li>
+<p>如何升级不同类型的监狱。</p>
+</li>
+<li>
+<p>一个不完整的 FreeBSD 监狱管理器列表。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jail-types">17.2. 监狱类型<a class="anchor" href="#jail-types"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>一些管理员将监狱分为不同类型，尽管底层技术是相同的。每个管理员都必须根据他们需要解决的问题来评估在每种情况下创建哪种类型的监狱。</p>
+</div>
+<div class="paragraph">
+<p>下面是不同类型的列表，包括它们的特点和使用时需要考虑的事项。</p>
+</div>
+<div class="sect2">
+<h3 id="thick-jails">17.2.1. 厚实的监狱<a class="anchor" href="#thick-jails"></a></h3>
+<div class="paragraph">
+<p>厚型监狱是 FreeBSD 监狱的一种传统形式。在厚型监狱中，基本系统的完整副本被复制到监狱的环境中。这意味着监狱拥有自己独立的 FreeBSD 基本系统实例，包括库、可执行文件和配置文件。可以将监狱视为一个几乎完整的独立 FreeBSD 安装，但在主机系统的限制下运行。这种隔离确保监狱内的进程与主机和其他监狱中的进程保持分离。</p>
+</div>
+<div class="paragraph">
+<p>厚实监狱的优势：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>高度隔离性：监狱内的进程与主机系统和其他监狱之间是隔离的。</p>
+</li>
+<li>
+<p>独立性：厚型监狱可以拥有与主机系统或其他监狱不同版本的库、配置和软件。</p>
+</li>
+<li>
+<p>安全性：由于监狱包含了自己的基本系统，影响监狱环境的漏洞或问题不会直接影响主机或其他监狱。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>厚壁狱的缺点：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>资源开销：由于每个监狱都维护着自己独立的基础系统，相比于薄监狱，厚监狱消耗更多的资源。</p>
+</li>
+<li>
+<p>维护：每个监狱都需要对其基本系统组件进行维护和更新。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="thin-jails">17.2.2. 薄型监狱<a class="anchor" href="#thin-jails"></a></h3>
+<div class="paragraph">
+<p>一个薄型监狱使用 OpenZFS 快照或 NullFS 挂载从模板共享基础系统。每个薄型监狱仅复制基础系统的最小子集，与厚型监狱相比，资源消耗更少。然而，这也意味着薄型监狱与厚型监狱相比具有较少的隔离性和独立性。共享组件的更改可能会同时影响多个薄型监狱。</p>
+</div>
+<div class="paragraph">
+<p>简而言之， FreeBSD Thin Jail 是一种 FreeBSD Jail ，它在隔离环境中复制了基本系统的大部分内容，但并非全部。</p>
+</div>
+<div class="paragraph">
+<p>薄型监狱的优势：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>资源效率：与厚型监狱相比，薄型监狱在资源利用上更高效。由于它们共享大部分基础系统，所以占用的磁盘空间和内存较少。这使得在同一硬件上运行更多的监狱成为可能，而不会消耗过多的资源。</p>
+</li>
+<li>
+<p>更快的部署：创建和启动轻量级监狱通常比创建和启动厚重监狱更快。当您需要快速部署多个实例时，这可能特别有优势。</p>
+</li>
+<li>
+<p>统一维护：由于薄型监狱与主机系统共享大部分基础系统（如库和二进制文件），因此只需要在主机上进行一次更新和维护常见的基础系统组件。与为每个厚型监狱维护单独的基础系统相比，这简化了维护过程。</p>
+</li>
+<li>
+<p>共享资源：薄型监狱可以更轻松地与主机系统共享常见的资源，如库和二进制文件。这可能会导致更高效的磁盘缓存和监狱内应用程序的性能改善。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>薄型监狱的缺点：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>降低的隔离性：薄型监狱的主要缺点是相比于厚型监狱，它们提供的隔离性较低。由于它们共享模板基础系统的大部分内容，可能会同时影响多个监狱的漏洞或问题。</p>
+</li>
+<li>
+<p>安全问题：薄型监狱中减少的隔离性可能会带来安全风险，因为一个监狱的妥协可能对其他监狱或主机系统产生更大的影响潜力。</p>
+</li>
+<li>
+<p>依赖冲突：如果多个独立的容器需要不同版本的相同库或软件，管理依赖关系可能会变得复杂。在某些情况下，这可能需要额外的努力来确保兼容性。</p>
+</li>
+<li>
+<p>兼容性挑战：在一个狭窄的监狱中，应用程序可能会遇到兼容性问题，如果它们假设某个基本系统环境与模板提供的共享组件不同。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="vnet-jails">17.2.3. VNET Jails 是一种虚拟网络隔离技术。<a class="anchor" href="#vnet-jails"></a></h3>
+<div class="paragraph">
+<p>FreeBSD VNET 监狱是一种虚拟化环境，允许对其中运行的进程的网络资源进行隔离和控制。它通过为监狱内的进程创建单独的网络堆栈，确保监狱内的网络流量与主机系统和其他监狱隔离，从而提供了高级别的网络分割和安全性。</p>
+</div>
+<div class="paragraph">
+<p>实质上， FreeBSD VNET jails 添加了一种网络配置机制。这意味着 VNET jail 可以创建为厚型或薄型 Jail 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="linux-jails">17.2.4. Linux Jails<a class="anchor" href="#linux-jails"></a></h3>
+<div class="paragraph">
+<p>FreeBSD Linux Jail 是 FreeBSD 操作系统中的一个功能，它允许在 FreeBSD jail 中使用 Linux 二进制文件和应用程序。通过引入一个兼容层，该功能可以实现将某些 Linux 系统调用和库转换并在 FreeBSD 内核上执行。 Linux Jail 的目的是在不需要单独的 Linux 虚拟机或环境的情况下，在 FreeBSD 系统上执行 Linux 软件。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="host-configuration">17.3. 主机配置<a class="anchor" href="#host-configuration"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在主机系统上创建任何监狱之前，需要进行一些配置并从主机系统中获取一些信息。</p>
+</div>
+<div class="paragraph">
+<p>需要配置 <a href="https://man.freebsd.org/cgi/man.cgi?query=jail&amp;sektion=8&amp;format=html">jail(8)</a> 实用程序，创建必要的目录来配置和安装 jails ，从主机的网络获取信息，并检查主机是否使用 OpenZFS 或 UFS 作为其文件系统。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在 jail 中运行的 FreeBSD 版本不能比主机中运行的版本更新。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="host-configuration-jail-utility">17.3.1. 监狱实用工具<a class="anchor" href="#host-configuration-jail-utility"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=jail&amp;sektion=8&amp;format=html">jail(8)</a> 实用程序用于管理 jails 。</p>
+</div>
+<div class="paragraph">
+<p>要在系统启动时启动 jails ，请运行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc jail_enable=&#34;YES&#34;</span>
+<span class="c"># sysrc jail_parallel_start=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>使用 <code>jail_parallel_start</code> ，所有配置的监狱将在后台启动。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jails-networking">17.3.2. 网络<a class="anchor" href="#jails-networking"></a></h3>
+<div class="paragraph">
+<p>FreeBSD jails 的网络配置有多种不同的方式：</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">主机网络模式（ IP 共享）</dt>
+<dd>
+<p>在主机网络模式下，一个 jail 与主机系统共享相同的网络堆栈。当一个 jail 在主机网络模式下创建时，它使用相同的网络接口和 IP 地址。这意味着 jail 没有单独的 IP 地址，它的网络流量与主机的 IP 地址相关联。</p>
+</dd>
+<dt class="hdlist1">虚拟网络（ VNET ）</dt>
+<dd>
+<p>虚拟网络是 FreeBSD jails 的一个特性，提供比主机网络等基本网络模式更高级和灵活的网络解决方案。 VNET 允许为每个 jail 创建隔离的网络堆栈，为它们提供独立的 IP 地址、路由表和网络接口。这提供了更高级别的网络隔离，并允许 jails 像运行在独立的虚拟机上一样运行。</p>
+</dd>
+<dt class="hdlist1">netgraph 系统</dt>
+<dd>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=netgraph&amp;sektion=4&amp;format=html">netgraph(4)</a> 是一个多功能的内核框架，用于创建自定义的网络配置。它可以用于定义网络流量在 jails 和主机系统之间以及不同 jails 之间的流动方式。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="host-configuration-directories">17.3.3. 设置监狱目录树<a class="anchor" href="#host-configuration-directories"></a></h3>
+<div class="paragraph">
+<p>没有特定的位置来放置监狱的文件。</p>
+</div>
+<div class="paragraph">
+<p>一些管理员使用 <code>/jail</code> ，其他人使用 <code>/usr/jail</code> ，还有一些人使用 <code>/usr/local/jails</code> 。在本章中，将使用 <code>/usr/local/jails</code> 。</p>
+</div>
+<div class="paragraph">
+<p>除了 <span class="filename">/usr/local/jails</span> 目录之外，还会创建其他目录：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><span class="filename">media</span> 将包含已下载用户空间的压缩文件。</p>
+</li>
+<li>
+<p>在使用 Thin Jails 时， <span class="filename">templates</span> 文件夹将包含模板。</p>
+</li>
+<li>
+<p><span class="filename">containers</span> 将包含监狱。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在使用 OpenZFS 时，执行以下命令为这些目录创建数据集：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create -o mountpoint=/usr/local/jails zroot/jails</span>
+<span class="c"># zfs create zroot/jails/media</span>
+<span class="c"># zfs create zroot/jails/templates</span>
+<span class="c"># zfs create zroot/jails/containers</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在这种情况下， <code>zroot</code> 被用作父数据集，但也可以使用其他数据集。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在使用 UFS 时，执行以下命令来创建目录：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /usr/local/jails/</span>
+<span class="c"># mkdir /usr/local/jails/media</span>
+<span class="c"># mkdir /usr/local/jails/templates</span>
+<span class="c"># mkdir /usr/local/jails/containers</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jail-configuration-files">17.3.4. 监狱配置文件<a class="anchor" href="#jail-configuration-files"></a></h3>
+<div class="paragraph">
+<p>有两种方法来配置 jails 。</p>
+</div>
+<div class="paragraph">
+<p>第一种方法是在文件 <span class="filename">/etc/jail.conf</span> 中为每个监狱添加一个条目。另一种选项是在目录 <span class="filename">/etc/jail.conf.d/</span> 中为每个监狱创建一个文件。</p>
+</div>
+<div class="paragraph">
+<p>没有正确或错误的选择。每个管理员必须选择最适合他们需求的选项。</p>
+</div>
+<div class="paragraph">
+<p>如果主机系统只有几个 jail ，可以在文件 <span class="filename">/etc/jail.conf</span> 中为每个 jail 添加一个条目。如果主机系统有很多 jail ，最好在 <span class="filename">/etc/jail.conf.d/</span> 目录中为每个 jail 拥有一个配置文件。</p>
+</div>
+<div class="paragraph">
+<p>一个典型的监狱入口会是这样的：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>jailname { <i class="conum" data-value="1"></i><b>(1)</b>
+  # STARTUP/LOGGING
+  exec.start = &#34;/bin/sh /etc/rc&#34;; <i class="conum" data-value="2"></i><b>(2)</b>
+  exec.stop = &#34;/bin/sh /etc/rc.shutdown&#34;; <i class="conum" data-value="3"></i><b>(3)</b>
+  exec.consolelog = &#34;/var/log/jail_console_${name}.log&#34;; <i class="conum" data-value="4"></i><b>(4)</b>
+
+  # PERMISSIONS
+  allow.raw_sockets; <i class="conum" data-value="5"></i><b>(5)</b>
+  exec.clean; <i class="conum" data-value="6"></i><b>(6)</b>
+  mount.devfs; <i class="conum" data-value="7"></i><b>(7)</b>
+
+  # HOSTNAME/PATH
+  host.hostname = &#34;${name}&#34;; <i class="conum" data-value="8"></i><b>(8)</b>
+  path = &#34;/usr/local/jails/containers/${name}&#34;; <i class="conum" data-value="9"></i><b>(9)</b>
+
+  # NETWORK
+  ip4.addr = 192.168.1.151; <i class="conum" data-value="10"></i><b>(10)</b>
+  ip6.addr = ::ffff:c0a8:197 <i class="conum" data-value="11"></i><b>(11)</b>
+  interface = em0; <i class="conum" data-value="12"></i><b>(12)</b>
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>jailname</code> - 监狱的名称。 &lt;.&gt; <code>exec.start</code> - 创建监狱时在监狱环境中运行的命令。通常运行的命令是 &#34;/bin/sh /etc/rc&#34;。 &lt;.&gt; <code>exec.stop</code> - 删除监狱之前在监狱环境中运行的命令。通常运行的命令是 &#34;/bin/sh /etc/rc.shutdown&#34;。 &lt;.&gt; <code>exec.consolelog</code> - 将命令输出（ stdout 和 stderr ）重定向到的文件。 &lt;.&gt; <code>allow.raw_sockets</code> - 允许在监狱内创建原始套接字。设置此参数允许像 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=traceroute&amp;sektion=8&amp;format=html">traceroute(8)</a> 这样的实用程序在监狱内运行。 &lt;.&gt; <code>exec.clean</code> - 在一个干净的环境中运行命令。 &lt;.&gt; <code>mount.devfs</code> - 在 chrooted <span class="filename">/dev</span> 目录上挂载一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=devfs&amp;sektion=5&amp;format=html">devfs(5)</a> 文件系统，并应用 devfs_ruleset 参数中的规则集来限制监狱内可见的设备。 &lt;.&gt; <code>host.hostname</code> - 监狱的主机名。 &lt;.&gt; <code>path</code> - 监狱的根目录。在监狱内运行的任何命令，无论是通过 jail 还是 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 运行，都是从此目录开始的。 &lt;.&gt; <code>ip4.addr</code> - IPv4 地址。 IPv4 有两种配置可能性。第一种是像示例中所做的那样建立一个 IP 或 IP 列表。另一种是使用 <code>ip4</code> 替代，并将 <code>inherit</code> 值设置为继承主机的 IP 地址。 &lt;.&gt; <code>ip6.addr</code> - IPv6 地址。 IPv6 有两种配置可能性。第一种是像示例中所做的那样建立一个 IP 或 IP 列表。另一种是使用 <code>ip6</code> 替代，并将 <code>inherit</code> 值设置为继承主机的 IP 地址。 &lt;.&gt; <code>interface</code> - 添加监狱的 IP 地址的网络接口。通常是主机接口。</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>有关配置变量的更多信息可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=jail&amp;sektion=8&amp;format=html">jail(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=jail.conf&amp;sektion=5&amp;format=html">jail.conf(5)</a> 中找到。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="classic-jail">17.4. 经典监狱（厚重监狱）<a class="anchor" href="#classic-jail"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>这些监狱类似于真实的 FreeBSD 系统。它们可以像普通主机系统一样进行管理，并且可以独立更新。</p>
+</div>
+<div class="sect2">
+<h3 id="creating-classic-jail">17.4.1. 创建一个经典监狱<a class="anchor" href="#creating-classic-jail"></a></h3>
+<div class="paragraph">
+<p>原则上，一个 jail 只需要一个主机名、一个根目录、一个 IP 地址和一个用户空间。</p>
+</div>
+<div class="paragraph">
+<p>可以从官方的 FreeBSD 下载服务器获取用于监狱的用户空间。</p>
+</div>
+<div class="paragraph">
+<p>执行以下命令以下载用户空间：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># fetch https://download.freebsd.org/ftp/releases/amd64/amd64/13.2-RELEASE/base.txz -o /usr/local/jails/media/13.2-RELEASE-base.txz</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下载完成后，需要将内容解压到监狱目录中。</p>
+</div>
+<div class="paragraph">
+<p>执行以下命令将用户空间提取到监狱目录中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir -p /usr/local/jails/containers/classic</span>
+<span class="c"># tar -xf /usr/local/jails/media/13.2-RELEASE-base.txz -C /usr/local/jails/containers/classic --unlink</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在监狱目录中提取用户空间后，需要复制时区和 DNS 服务器文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cp /etc/resolv.conf /usr/local/jails/containers/classic/etc/resolv.conf</span>
+<span class="c"># cp /etc/localtime /usr/local/jails/containers/classic/etc/localtime</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在复制文件后，下一步是通过执行以下命令更新到最新的补丁级别：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># freebsd-update -b /usr/local/jails/containers/classic/ fetch install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>最后一步是配置监狱。需要在配置文件 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中添加一个条目，包含监狱的参数。</p>
+</div>
+<div class="paragraph">
+<p>一个例子如下：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>classic {
+  # STARTUP/LOGGING
+  exec.start = &#34;/bin/sh /etc/rc&#34;;
+  exec.stop = &#34;/bin/sh /etc/rc.shutdown&#34;;
+  exec.consolelog = &#34;/var/log/jail_console_${name}.log&#34;;
+
+  # PERMISSIONS
+  allow.raw_sockets;
+  exec.clean;
+  mount.devfs;
+
+  # HOSTNAME/PATH
+  host.hostname = &#34;${name}&#34;;
+  path = &#34;/usr/local/jails/containers/${name}&#34;;
+
+  # NETWORK
+  ip4.addr = 192.168.1.151;
+  interface = em0;
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>执行以下命令以启动监狱：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service jail start classic</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关如何管理 jails 的更多信息可以在 <a href="#jail-management">监狱管理</a> 部分找到。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="thin-jail">17.5. 薄型监狱<a class="anchor" href="#thin-jail"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>尽管 Thin Jails 使用与 Thick Jails 相同的技术，但创建过程是不同的。可以使用 OpenZFS 快照或使用模板和 NullFS 来创建 Thin jails 。使用 OpenZFS 快照和使用 NullFS 的模板相比传统的 jails 具有一定的优势，例如可以更快地从快照创建它们，或者可以使用 NullFS 更新多个 jails 。</p>
+</div>
+<div class="sect2">
+<h3 id="creating-thin-jail-openzfs-snapshots">17.5.1. 使用 OpenZFS 快照创建一个轻量级监狱<a class="anchor" href="#creating-thin-jail-openzfs-snapshots"></a></h3>
+<div class="paragraph">
+<p>由于 FreeBSD 和 OpenZFS 之间的良好集成，使用 OpenZFS 快照创建新的 Thin Jails 非常容易。</p>
+</div>
+<div class="paragraph">
+<p>使用 OpenZFS 快照创建 Thin Jail 的第一步是创建一个模板。</p>
+</div>
+<div class="paragraph">
+<p>模板只用于创建新的监狱。因此，它们以“只读”模式创建，以便监狱以不可变的基础创建。</p>
+</div>
+<div class="paragraph">
+<p>要为模板创建数据集，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create -p zroot/jails/templates/13.2-RELEASE</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后执行以下命令来下载用户空间：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># fetch https://download.freebsd.org/ftp/releases/amd64/amd64/13.2-RELEASE/base.txz -o /usr/local/jails/media/13.2-RELEASE-base.txz</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下载完成后，需要执行以下命令将内容解压到模板目录中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tar -xf /usr/local/jails/media/13.2-RELEASE-base.txz -C /usr/local/jails/templates/13.2-RELEASE --unlink</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在模板目录中提取用户空间后，需要通过执行以下命令将时区和 DNS 服务器文件复制到模板目录中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cp /etc/resolv.conf /usr/local/jails/templates/13.2-RELEASE/etc/resolv.conf</span>
+<span class="c"># cp /etc/localtime /usr/local/jails/templates/13.2-RELEASE/etc/localtime</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下一步要做的是通过执行以下命令更新到最新的补丁级别：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># freebsd-update -b /usr/local/jails/templates/13.2-RELEASE/ fetch install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦更新完成，模板就准备好了。</p>
+</div>
+<div class="paragraph">
+<p>要从模板创建一个 OpenZFS 快照，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs snapshot zroot/jails/templates/13.2-RELEASE@base</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦创建了 OpenZFS 快照，就可以使用 OpenZFS 克隆功能创建无限个 jail 。</p>
+</div>
+<div class="paragraph">
+<p>要创建一个名为 <code>thinjail</code> 的 Thin Jail ，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs clone zroot/jails/templates/13.2-RELEASE@base zroot/jails/containers/thinjail</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>最后一步是配置监狱。需要在配置文件 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中添加一个条目，包含监狱的参数。</p>
+</div>
+<div class="paragraph">
+<p>一个例子如下：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>thinjail {
+  # STARTUP/LOGGING
+  exec.start = &#34;/bin/sh /etc/rc&#34;;
+  exec.stop = &#34;/bin/sh /etc/rc.shutdown&#34;;
+  exec.consolelog = &#34;/var/log/jail_console_${name}.log&#34;;
+
+  # PERMISSIONS
+  allow.raw_sockets;
+  exec.clean;
+  mount.devfs;
+
+  # HOSTNAME/PATH
+  host.hostname = &#34;${name}&#34;;
+  path = &#34;/usr/local/jails/containers/${name}&#34;;
+
+  # NETWORK
+  ip4 = inherit;
+  interface = em0;
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>执行以下命令以启动监狱：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service jail start thinjail</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关如何管理 jails 的更多信息可以在 <a href="#jail-management">监狱管理</a> 部分找到。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-thin-jail-nullfs">17.5.2. 使用 NullFS 创建一个薄型监狱<a class="anchor" href="#creating-thin-jail-nullfs"></a></h3>
+<div class="paragraph">
+<p>使用 Thin Jail 技术和使用 NullFS 将特定目录从主机系统选择性地共享到监狱中，可以减少系统文件的重复创建。</p>
+</div>
+<div class="paragraph">
+<p>第一步是创建数据集以保存模板，如果使用 OpenZFS ，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create -p zroot/jails/templates/13.2-RELEASE-base</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果使用 UFS ，则使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /usr/local/jails/templates/13.2-RELEASE-base</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后执行以下命令来下载用户空间：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># fetch https://download.freebsd.org/ftp/releases/amd64/amd64/13.2-RELEASE/base.txz -o /usr/local/jails/media/13.2-RELEASE-base.txz</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下载完成后，需要执行以下命令将内容解压到模板目录中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tar -xf /usr/local/jails/media/13.2-RELEASE-base.txz -C /usr/local/jails/templates/13.2-RELEASE-base --unlink</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦用户空间在模板目录中被提取出来，就需要通过执行以下命令将时区和 DNS 服务器文件复制到模板目录中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cp /etc/resolv.conf /usr/local/jails/templates/13.2-RELEASE-base/etc/resolv.conf</span>
+<span class="c"># cp /etc/localtime /usr/local/jails/templates/13.2-RELEASE-base/etc/localtime</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将文件移动到模板后，下一步要做的是通过执行以下命令更新到最新的补丁级别：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># freebsd-update -b /usr/local/jails/templates/13.2-RELEASE-base/ fetch install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>除了基本模板之外，还需要创建一个目录，用于存放“骨架”。一些目录将从模板复制到“骨架”中。</p>
+</div>
+<div class="paragraph">
+<p>在使用 OpenZFS 的情况下，执行以下命令创建 <code>skeleton</code> 的数据集：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs create -p zroot/jails/templates/13.2-RELEASE-skeleton</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果使用 UFS ，则使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /usr/local/jails/templates/13.2-RELEASE-skeleton</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后创建 ` 骨架（ skeleton ） ` 目录。 ` 骨架（ skeleton ） ` 目录将保存监狱的本地目录。</p>
+</div>
+<div class="paragraph">
+<p>执行以下命令创建目录：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir -p /usr/local/jails/templates/13.2-RELEASE-skeleton/home</span>
+<span class="c"># mkdir -p /usr/local/jails/templates/13.2-RELEASE-skeleton/usr</span>
+<span class="c"># mv /usr/local/jails/templates/13.2-RELEASE-base/etc /usr/local/jails/templates/13.2-RELEASE-skeleton/etc</span>
+<span class="c"># mv /usr/local/jails/templates/13.2-RELEASE-base/usr/local /usr/local/jails/templates/13.2-RELEASE-skeleton/usr/local</span>
+<span class="c"># mv /usr/local/jails/templates/13.2-RELEASE-base/tmp /usr/local/jails/templates/13.2-RELEASE-skeleton/tmp</span>
+<span class="c"># mv /usr/local/jails/templates/13.2-RELEASE-base/var /usr/local/jails/templates/13.2-RELEASE-skeleton/var</span>
+<span class="c"># mv /usr/local/jails/templates/13.2-RELEASE-base/root /usr/local/jails/templates/13.2-RELEASE-skeleton/root</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下一步是通过执行以下命令创建到 <code>skeleton</code> 的符号链接：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/local/jails/templates/13.2-RELEASE-base/</span>
+<span class="c"># mkdir skeleton</span>
+<span class="c"># ln -s skeleton/etc etc</span>
+<span class="c"># ln -s skeleton/home home</span>
+<span class="c"># ln -s skeleton/root root</span>
+<span class="c"># ln -s skeleton/usr/local usr/local</span>
+<span class="c"># ln -s skeleton/tmp tmp</span>
+<span class="c"># ln -s skeleton/var var</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>准备好了 <code>skeleton</code> 之后，需要将数据复制到监狱目录中。</p>
+</div>
+<div class="paragraph">
+<p>如果使用 OpenZFS ，可以使用 OpenZFS 快照通过执行以下命令轻松创建所需数量的 jails ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zfs snapshot zroot/jails/templates/13.2-RELEASE-skeleton@base</span>
+<span class="c"># zfs clone zroot/jails/templates/13.2-RELEASE-skeleton@base zroot/jails/containers/thinjail</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果使用 UFS 文件系统，可以通过执行以下命令来使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=cp&amp;sektion=1&amp;format=html">cp(1)</a> 程序：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /usr/local/jails/containers/thinjail</span>
+<span class="c"># cp -R /usr/local/jails/templates/13.2-RELEASE-skeleton /usr/local/jails/containers/thinjail</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后创建一个目录，用于挂载基本模板和骨架：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir -p /usr/local/jails/thinjail-nullfs-base</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在 <span class="filename">/etc/jail.conf</span> 中添加一个监狱条目，或者在 <span class="filename">jail.conf.d</span> 目录中添加一个文件，内容如下：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>thinjail {
+  # STARTUP/LOGGING
+  exec.start = &#34;/bin/sh /etc/rc&#34;;
+  exec.stop = &#34;/bin/sh /etc/rc.shutdown&#34;;
+  exec.consolelog = &#34;/var/log/jail_console_${name}.log&#34;;
+
+  # PERMISSIONS
+  allow.raw_sockets;
+  exec.clean;
+  mount.devfs;
+
+  # HOSTNAME/PATH
+  host.hostname = &#34;${name}&#34;;
+  path = &#34;/usr/local/jails/containers/${name}&#34;;
+
+  # NETWORK
+  ip4.addr = 192.168.1.153;
+  interface = em0;
+
+  # MOUNT
+  mount.fstab = &#34;/usr/local/jails/thinjail-nullfs-base.fstab&#34;;
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后按照以下方式创建 <span class="filename">/usr/local/jails/thinjail-nullfs-base.fstab</span> 文件：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/usr/local/jails/templates/13.2-RELEASE-base  /usr/local/jails/thinjail-nullfs-base/ nullfs   ro          0 0
+/usr/local/jails/containers/thinjail     /usr/local/jails/thinjail-nullfs-base/skeleton nullfs  rw  0 0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>执行以下命令以启动监狱：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service jail start thinjail</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-vnet-jail">17.5.3. 创建一个 VNET 监狱<a class="anchor" href="#creating-vnet-jail"></a></h3>
+<div class="paragraph">
+<p>FreeBSD VNET Jails 拥有独立的网络堆栈，包括接口、 IP 地址、路由表和防火墙规则。</p>
+</div>
+<div class="paragraph">
+<p>创建 VNET jail 的第一步是通过执行以下命令创建 <a href="https://man.freebsd.org/cgi/man.cgi?query=bridge&amp;sektion=4&amp;format=html">bridge(4)</a> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig bridge create</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>bridge0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>创建了 <code>bridge</code> 之后，需要通过执行以下命令将其附加到 <code>em0</code> 接口：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig bridge0 addm em0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使此设置在重新启动后保持不变，请将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>defaultrouter=&#34;192.168.1.1&#34;
+cloned_interfaces=&#34;bridge0&#34;
+ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下一步是按照上述所示创建监狱。</p>
+</div>
+<div class="paragraph">
+<p>可以使用 <a href="#classic-jail">经典监狱（厚重监狱）</a> 过程和 <a href="#thin-jail">薄型监狱</a> 过程。唯一需要更改的是 <span class="filename">/etc/jail.conf</span> 文件中的配置。</p>
+</div>
+<div class="paragraph">
+<p>路径 <span class="filename">/usr/local/jails/containers/vnet</span> 将被用作创建的 jail 的示例。</p>
+</div>
+<div class="paragraph">
+<p>以下是一个 VNET 监狱的配置示例：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vnet {
+  # STARTUP/LOGGING
+  exec.start = &#34;/bin/sh /etc/rc&#34;;
+  exec.stop  = &#34;/bin/sh /etc/rc.shutdown&#34;;
+  exec.consolelog = &#34;/var/log/jail_console_${name}.log&#34;;
+
+  # PERMISSIONS
+  allow.raw_sockets;
+  exec.clean;
+  mount.devfs;
+  devfs_ruleset = 5;
+
+  # PATH/HOSTNAME
+  path = &#34;/usr/local/jails/containers/${name}&#34;;
+  host.hostname = &#34;${name}&#34;;
+
+  # VNET/VIMAGE
+  vnet;
+  vnet.interface = &#34;${epair}b&#34;;
+
+  # NETWORKS/INTERFACES
+  $id = &#34;154&#34;; <i class="conum" data-value="1"></i><b>(1)</b>
+  $ip = &#34;192.168.1.${id}/24&#34;;
+  $gateway = &#34;192.168.1.1&#34;;
+  $bridge = &#34;bridge0&#34;; <i class="conum" data-value="2"></i><b>(2)</b>
+  $epair = &#34;epair${id}&#34;;
+
+  # ADD TO bridge INTERFACE
+  exec.prestart += &#34;ifconfig ${epair} create up&#34;;
+  exec.prestart += &#34;ifconfig ${epair}a up descr jail:${name}&#34;;
+  exec.prestart += &#34;ifconfig ${bridge} addm ${epair}a up&#34;;
+  exec.start    += &#34;ifconfig ${epair}b ${ip} up&#34;;
+  exec.start    += &#34;route add default ${gateway}&#34;;
+  exec.poststop = &#34;ifconfig ${bridge} deletem ${epair}a&#34;;
+  exec.poststop += &#34;ifconfig ${epair}a destroy&#34;;
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>表示 Jail 的 IP 地址，它必须是 * 唯一的 * 。 &lt;.&gt; 指的是之前创建的桥接。</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-linux-jail">17.5.4. 创建一个 Linux 监狱<a class="anchor" href="#creating-linux-jail"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 可以使用 <a href="../linuxemu/#linuxemu ， Linux 二进制兼容性"></a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=debootstrap&amp;sektion=8&amp;format=html">debootstrap(8)</a> 在监狱中运行 Linux 。监狱没有内核，它们在主机的内核上运行。因此，在主机系统中启用 Linux 二进制兼容性是必要的。</p>
+</div>
+<div class="paragraph">
+<p>要在启动时启用 Linux ABI ，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc linux_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦启用，可以通过执行以下命令来启动，无需重新启动：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service linux start</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>下一步将是按照上述所示创建一个监狱，例如在 <a href="#creating-thin-jail-openzfs-snapshots">使用 OpenZFS 快照创建一个轻量级监狱</a> 中，但 * 不要 * 执行配置。 FreeBSD Linux 监狱需要特定的配置，将在下面详细说明。</p>
+</div>
+<div class="paragraph">
+<p>一旦按照上述说明创建了监狱，执行以下命令进行所需的监狱配置并启动它：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># jail -cm \</span>
+    <span class="nv">name</span><span class="o">=</span>ubuntu <span class="se">\</span>
+    host.hostname<span class="o">=</span><span class="s2">&#34;ubuntu.example.com&#34;</span> <span class="se">\</span>
+    <span class="nv">path</span><span class="o">=</span><span class="s2">&#34;/usr/local/jails/ubuntu&#34;</span> <span class="se">\</span>
+    <span class="nv">interface</span><span class="o">=</span><span class="s2">&#34;em0&#34;</span> <span class="se">\</span>
+    ip4.addr<span class="o">=</span><span class="s2">&#34;192.168.1.150&#34;</span> <span class="se">\</span>
+    exec.start<span class="o">=</span><span class="s2">&#34;/bin/sh /etc/rc&#34;</span> <span class="se">\</span>
+    exec.stop<span class="o">=</span><span class="s2">&#34;/bin/sh /etc/rc.shutdown&#34;</span> <span class="se">\</span>
+    mount.devfs <span class="se">\</span>
+    <span class="nv">devfs_ruleset</span><span class="o">=</span>4 <span class="se">\</span>
+    allow.mount <span class="se">\</span>
+    allow.mount.devfs <span class="se">\</span>
+    allow.mount.fdescfs <span class="se">\</span>
+    allow.mount.procfs <span class="se">\</span>
+    allow.mount.linprocfs <span class="se">\</span>
+    allow.mount.linsysfs <span class="se">\</span>
+    allow.mount.tmpfs <span class="se">\</span>
+    <span class="nv">enforce_statfs</span><span class="o">=</span>1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要访问 jail ，需要安装包： sysutils/debootstrap[] 。</p>
+</div>
+<div class="paragraph">
+<p>执行以下命令以访问 FreeBSD Linux 监狱：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># jexec -u root ubuntu</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在监狱内执行以下命令来安装包： sysutils/debootstrap[] 并准备 Ubuntu 环境：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install debootstrap</span>
+<span class="c"># debootstrap jammy /compat/ubuntu</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当进程完成并在控制台上显示“基本系统安装成功”消息时，需要通过执行以下命令在主机系统上停止 jail ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service jail ubuntu onestop</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后在 [/etc/jail.conf] 文件中添加一个 Linux 监狱的条目：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ubuntu {
+  # STARTUP/LOGGING
+  exec.start = &#34;/bin/sh /etc/rc&#34;;
+  exec.stop = &#34;/bin/sh /etc/rc.shutdown&#34;;
+  exec.consolelog = &#34;/var/log/jail_console_${name}.log&#34;;
+
+  # PERMISSIONS
+  allow.raw_sockets;
+  exec.clean;
+  mount.devfs;
+  devfs_ruleset=4;
+
+  # HOSTNAME/PATH
+  host.hostname = &#34;${name}&#34;;
+  path = &#34;/usr/local/jails/containers/${name}&#34;;
+
+  # NETWORK
+  ip4.addr = 192.168.1.155;
+  interface = em0;
+
+  # MOUNT
+  mount += &#34;devfs     $path/compat/ubuntu/dev     devfs     rw  0 0&#34;;
+  mount += &#34;tmpfs     $path/compat/ubuntu/dev/shm tmpfs     rw,size=1g,mode=1777  0 0&#34;;
+  mount += &#34;fdescfs   $path/compat/ubuntu/dev/fd  fdescfs   rw,linrdlnk 0 0&#34;;
+  mount += &#34;linprocfs $path/compat/ubuntu/proc    linprocfs rw  0 0&#34;;
+  mount += &#34;linsysfs  $path/compat/ubuntu/sys     linsysfs  rw  0 0&#34;;
+  mount += &#34;/tmp      $path/compat/ubuntu/tmp     nullfs    rw  0 0&#34;;
+  mount += &#34;/home     $path/compat/ubuntu/home    nullfs    rw  0 0&#34;;
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后可以使用以下命令正常启动监狱：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service jail start ubuntu</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以使用以下命令访问 Ubuntu 环境：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># jexec ubuntu chroot /compat/ubuntu /bin/bash</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>更多信息可以在章节 <a href="../linuxemu/#linuxemu">Linux 二进制兼容性</a> 中找到。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jail-management">17.6. 监狱管理<a class="anchor" href="#jail-management"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>一旦创建了监狱，就可以执行许多操作，比如启动、重启或删除监狱，安装软件等。本节将描述可以在主机上执行的不同监狱操作。</p>
+</div>
+<div class="sect2">
+<h3 id="list-running-jails">17.6.1. 列出运行中的 Jails<a class="anchor" href="#list-running-jails"></a></h3>
+<div class="paragraph">
+<p>要列出运行在主机系统上的 jails ，可以使用命令 <a href="https://man.freebsd.org/cgi/man.cgi?query=jls&amp;sektion=8&amp;format=html">jls(8)</a> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># jls</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>   JID  IP Address      Hostname                      Path
+     1  192.168.250.70  classic                       /usr/local/jails/containers/classic</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=jls&amp;sektion=8&amp;format=html">jls(8)</a> 支持 <code>--libxo</code> 参数，通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=libxo&amp;sektion=3&amp;format=html">libxo(3)</a> 库可以显示其他类型的格式，例如 <code>JSON</code> 、 <code>HTML</code> 等。</p>
+</div>
+<div class="paragraph">
+<p>例如，执行以下命令以获取 <code>JSON</code> 输出：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># jls --libxo=json</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{&#34;__version&#34;: &#34;2&#34;, &#34;jail-information&#34;: {&#34;jail&#34;: [{&#34;jid&#34;:1,&#34;ipv4&#34;:&#34;192.168.250.70&#34;,&#34;hostname&#34;:&#34;classic&#34;,&#34;path&#34;:&#34;/usr/local/jails/containers/classic&#34;}]}}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="start-jail">17.6.2. 启动、重新启动和停止一个 Jail<a class="anchor" href="#start-jail"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a> 用于在主机上启动、重启或停止一个 jail 。</p>
+</div>
+<div class="paragraph">
+<p>例如，要启动一个监狱，请运行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service jail start jailname</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 <code>start</code> 参数更改为 <code>restart</code> 或 <code>stop</code> 以执行其他对监狱的操作。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="destroy-jail">17.6.3. 摧毁一个监狱<a class="anchor" href="#destroy-jail"></a></h3>
+<div class="paragraph">
+<p>销毁一个监狱并不像使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a> 停止监狱和删除监狱目录以及 <span class="filename">/etc/jail.conf</span> 条目那样简单。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 非常重视系统安全。因此，有一些文件即使是 root 用户也无法删除。这种功能被称为文件标志。</p>
+</div>
+<div class="paragraph">
+<p>第一步是停止所需的监狱执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service jail stop jailname</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>第二步是使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 命令来移除这些标志，执行以下命令，其中 <code>classic</code> 是要移除的监狱的名称：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chflags -R 0 /usr/local/jails/classic</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>第三步是删除监狱所在的目录：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># rm -rf /usr/local/jails/classic</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>最后，需要在 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中删除监狱条目。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="handle-packages-jail">17.6.4. 在监狱中处理软件包<a class="anchor" href="#handle-packages-jail"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 工具支持 <code>-j</code> 参数，以处理安装在监狱内的软件包。</p>
+</div>
+<div class="paragraph">
+<p>例如，在 jail 中安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/nginx-lite/">nginx-lite</a> ，可以从主机上执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg -j classic install nginx-lite</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关在 FreeBSD 中使用软件包的更多信息，请参阅 <a href="../ports/#ports">安装应用程序：软件包和端口</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="access-jail">17.6.5. 访问一个监狱<a class="anchor" href="#access-jail"></a></h3>
+<div class="paragraph">
+<p>虽然上面已经提到最好从主机系统管理监狱，但可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 进入监狱。</p>
+</div>
+<div class="paragraph">
+<p>可以通过在主机上运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 来进入监狱。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># jexec -u root jailname</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当访问监狱时，将显示在 <a href="https://man.freebsd.org/cgi/man.cgi?query=motd&amp;sektion=5&amp;format=html">motd(5)</a> 中配置的消息。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="execute-commands-jail">17.6.6. 在监狱中执行命令<a class="anchor" href="#execute-commands-jail"></a></h3>
+<div class="paragraph">
+<p>要在一个 jail 中从主机系统执行命令，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 命令。</p>
+</div>
+<div class="paragraph">
+<p>例如，要停止在 jail 中运行的服务，将执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># jexec -l jailname service stop nginx</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jail-upgrading">17.7. 监狱升级<a class="anchor" href="#jail-upgrading"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>升级 FreeBSD Jails 可以确保隔离环境保持安全、最新，并与 FreeBSD 生态系统中的最新功能和改进保持一致。</p>
+</div>
+<div class="sect2">
+<h3 id="jails-updating">17.7.1. 使用 OpenZFS 快照升级经典监狱或薄监狱<a class="anchor" href="#jails-updating"></a></h3>
+<div class="paragraph">
+<p>Jails 必须从主机操作系统进行更新。在 FreeBSD 中，默认行为是禁止在 jail 中使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 命令。这将阻止对某些文件的更新，因此在 jail 内部进行更新将失败。</p>
+</div>
+<div class="paragraph">
+<p>要将 jail 更新到运行的 FreeBSD 版本的最新补丁版本，请在主机上执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># freebsd-update -j classic fetch install</span>
+<span class="c"># service jail restart classic</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要将监狱升级到新的主要或次要版本，首先按照 <a href="../cutting-edge/#freebsdupdate-upgrade">执行主要和次要版本升级</a> 中描述的方法升级主机系统。一旦主机升级并重新启动，就可以升级监狱。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果从一个版本升级到另一个版本，创建一个新的监狱比完全升级更容易。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>例如，要从 13.1-RELEASE 升级到 13.2-RELEASE ，请在主机上执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># freebsd-update -j classic -r 13.2-RELEASE upgrade</span>
+<span class="c"># freebsd-update -j classic install</span>
+<span class="c"># service jail restart classic</span>
+<span class="c"># freebsd-update -j classic install</span>
+<span class="c"># service jail restart classic</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>需要执行两次 <code>install</code> 步骤。第一次升级内核，第二次升级其他组件。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>然后，如果是一个主要版本的升级，重新安装所有已安装的软件包并重新启动 jail 。这是必需的，因为在 FreeBSD 的主要版本之间升级时， ABI 版本会发生变化。</p>
+</div>
+<div class="paragraph">
+<p>来自主机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg -j jailname upgrade -f</span>
+<span class="c"># service jail restart jailname</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="upgrading-thin-jail">17.7.2. 使用 NullFS 升级 Thin Jail<a class="anchor" href="#upgrading-thin-jail"></a></h3>
+<div class="paragraph">
+<p>在升级 Thin Jail 时使用 NullFS</p>
+</div>
+<div class="paragraph">
+<p>由于使用 NullFS 的 Thin Jails 共享了大部分系统目录，因此它们非常容易更新。只需更新模板即可，这样可以同时更新多个 Jail 。</p>
+</div>
+<div class="paragraph">
+<p>要将模板更新到运行的 FreeBSD 版本的最新补丁版本，请在主机上执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ fetch install</span>
+<span class="c"># service jail restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要将模板升级到新的主要或次要版本，首先按照 <a href="../cutting-edge/#freebsdupdate-upgrade">执行主要和次要版本升级</a> 中描述的方式升级主机系统。一旦主机升级并重新启动，然后可以升级模板。</p>
+</div>
+<div class="paragraph">
+<p>例如，要从 13.1-RELEASE 升级到 13.2-RELEASE ，请在主机上执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ -r 13.2-RELEASE upgrade</span>
+<span class="c"># freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ install</span>
+<span class="c"># service jail restart</span>
+<span class="c"># freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ install</span>
+<span class="c"># service jail restart</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jail-resource-limits">17.8. 监狱资源限制<a class="anchor" href="#jail-resource-limits"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>系统管理员需要考虑从主机系统控制监狱使用的资源的任务。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=rctl&amp;sektion=8&amp;format=html">rctl(8)</a> 允许您从主机系统管理监狱可以使用的资源。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>必须在 <code>/boot/loader.conf</code> 文件中启用 <code>tunables</code> 的 <code>kern.racct.enable</code> 选项。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>限制监狱资源的语法如下：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>rctl -a jail:&lt;jailname&gt;:resource:action=amount/percentage</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>例如，要限制一个 jail 可以访问的最大 RAM ，运行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># rctl -a jail:classic:memoryuse:deny=2G</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了使限制在主机系统重新启动后仍然有效，需要将规则添加到 <span class="filename">/etc/rctl.conf</span> 文件中，如下所示：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>jail:classic:memoryuse:deny=2G/jail</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关资源限制的更多信息可以在安全章节中找到，具体请参考 <a href="../security/#security-resourcelimits">Resource Limits section</a> 。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jail-managers-and-containers">17.9. 监狱管理员和容器<a class="anchor" href="#jail-managers-and-containers"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>如前所述，每种类型的 FreeBSD Jail 都可以手动创建和配置，但 FreeBSD 还有第三方工具可以使配置和管理更加简便。</p>
+</div>
+<div class="paragraph">
+<p>下面是一个不完整的不同 FreeBSD Jail 管理器的列表：</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">表 1. Jail 管理器</caption>
+<colgroup>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名称</th>
+<th class="tableblock halign-left valign-top">许可证</th>
+<th class="tableblock halign-left valign-top">Package</th>
+<th class="tableblock halign-left valign-top">文档</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BastilleBSD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BSD-3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/bastille/">sysutils/bastille</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://bastille.readthedocs.io/en/latest/">文档</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BSD-3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包： sysutils/pot[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://pot.pizzamig.dev/">文档</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cbsd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BSD-2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cbsd/">sysutils/cbsd</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://www.bsdstore.ru/en/docs.html">文档</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AppJail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BSD-3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/appjail/">sysutils/appjail</a>, for devel <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/appjail-devel/">sysutils/appjail-devel</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://github.com/DtxdF/AppJail#getting-started">文档</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iocage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BSD-2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/iocage/">sysutils/iocage</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://iocage.readthedocs.io/en/latest/">文档</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ezjail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://erdgeist.org/beerware.html">Beer Ware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/ezjail/">sysutils/ezjail</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://erdgeist.org/arts/software/ezjail/" class="bare">https://erdgeist.org/arts/software/ezjail/</a> [文档]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/security class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

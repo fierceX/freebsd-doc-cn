@@ -1,0 +1,2851 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本章将描述如何在 FreeBSD 系统上安装 WINE 以及如何配置 WINE 。"/>
+  <meta name="keywords" content="91, 34, 87, 73, 78, 69, 34, 44, 32, 34, 101, 109, 117, 108, 97, 116, 105, 111, 110, 34, 44, 32, 34, 103, 117, 105, 100, 101, 34, 44, 32, 34, 116, 117, 116, 111, 114, 105, 97, 108, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/" />
+
+  <title>第 13 章 WINE |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 13 章 WINE" />
+    <meta property="og:description" content="本章将描述如何在 FreeBSD 系统上安装 WINE 以及如何配置 WINE 。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/wine\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 13 章 WINE</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="wine-synopsis">13.1. 简介<a class="anchor" href="#wine-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.winehq.org/">WINE</a> ，全称为 Wine 不是模拟器，实际上是一种软件翻译层。它可以在 FreeBSD （和其他）系统上安装和运行一些为 Windows® 编写的软件。</p>
+</div>
+<div class="paragraph">
+<p>它通过拦截系统调用或软件对操作系统的请求来运行，并将它们从 Windows® 调用转换为 FreeBSD 可以理解的调用。它还会根据需要将任何响应转换为 Windows® 软件所期望的格式。因此，在某种程度上，它模拟了 Windows® 环境，提供了许多 Windows® 应用程序所期望的资源。</p>
+</div>
+<div class="paragraph">
+<p>然而，它并不是传统意义上的模拟器。许多解决方案通过使用软件进程构建一个完整的另一台计算机来运行。虚拟化（例如由 emulators/qemu 软件包提供的虚拟化）就是以这种方式运行的。这种方法的一个好处是能够在模拟器中安装完整版本的操作系统。这意味着对应用程序来说，环境看起来与真实机器没有任何区别，而且很有可能一切都能正常工作。这种方法的缺点是软件充当硬件的事实本质上比实际硬件慢。在软件中构建的计算机（称为“客户机”）需要来自真实机器（称为“主机”）的资源，并且在运行时会一直占用这些资源。</p>
+</div>
+<div class="paragraph">
+<p>另一方面， WINE 项目对系统资源的消耗要小得多。它会实时翻译系统调用，因此虽然很难像真正的 Windows® 计算机一样快速，但它可以非常接近。另一方面， WINE 试图跟上不断变化的目标，以支持所有不同的系统调用和其他功能。因此，可能会有一些应用程序在 WINE 上无法按预期工作，根本无法工作，或者甚至无法安装。</p>
+</div>
+<div class="paragraph">
+<p>在一天结束时， WINE 提供了另一种选择，可以尝试在 FreeBSD 上运行特定的 Windows® 软件程序。它始终可以作为第一选择，如果成功，可以提供良好的体验，而不会不必要地消耗主机 FreeBSD 系统的资源。</p>
+</div>
+<div class="paragraph">
+<p>本章将描述：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>在 FreeBSD 系统上安装 WINE 的方法。</p>
+</li>
+<li>
+<p>WINE 是如何运作的，以及它与其他替代方案（如虚拟化）的区别。</p>
+</li>
+<li>
+<p>如何根据特定应用程序的需求来调整 WINE 。</p>
+</li>
+<li>
+<p>如何安装 WINE 的 GUI 助手。</p>
+</li>
+<li>
+<p>FreeBSD 的常见提示和解决方案。</p>
+</li>
+<li>
+<p>在多用户环境下，考虑在 FreeBSD 上使用 WINE 的问题。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在阅读本章之前，以下内容可能会有帮助：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解 <a href="../basics/#basics">UNIX® 和 FreeBSD 的基础知识</a> 。</p>
+</li>
+<li>
+<p>了解如何交叉引用： bsdinstall[bsdinstall ，安装 FreeBSD] 。</p>
+</li>
+<li>
+<p>了解如何交叉引用： advanced-networking[高级网络设置，建立网络连接] 。</p>
+</li>
+<li>
+<p>了解如何交叉引用： ports[ports ,安装额外的第三方软件] 。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wine-overview-concepts">13.2. WINE 概述与概念<a class="anchor" href="#wine-overview-concepts"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>WINE 是一个复杂的系统，因此在在 FreeBSD 系统上运行之前，了解它是什么以及它是如何工作的是值得的。</p>
+</div>
+<div class="sect2">
+<h3 id="what-is-wine">13.2.1. WINE 是什么？<a class="anchor" href="#what-is-wine"></a></h3>
+<div class="paragraph">
+<p>正如本章的 <a href="#wine-synopsis ">概述 </a> 中提到的， WINE 是一个兼容层，允许 Windows® 应用程序在其他操作系统上运行。理论上，这意味着这些程序应该可以在类似 FreeBSD 、 macOS 和 Android 的系统上运行。</p>
+</div>
+<div class="paragraph">
+<p>当 WINE 运行 Windows® 可执行文件时，会发生两件事情：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>首先， WINE 实现了一个模拟各个版本 Windows® 环境的环境。例如，如果一个应用程序请求访问诸如 RAM 之类的资源， WINE 有一个内存接口，它在应用程序看来看起来和行为都像 Windows® 。</p>
+</li>
+<li>
+<p>然后，一旦该应用程序使用该接口， WINE 会将内存中的传入请求转换为与主机系统兼容的格式。同样，当应用程序检索数据时， WINE 会从主机系统中获取数据并将其传递回 Windows® 应用程序。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="wine-and-the-os-system">13.2.2. WINE 和 FreeBSD 系统<a class="anchor" href="#wine-and-the-os-system"></a></h3>
+<div class="paragraph">
+<p>在 FreeBSD 系统上安装 WINE 将涉及几个不同的组件：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>FreeBSD 提供了一些应用程序，用于运行 Windows® 可执行文件、配置 WINE 子系统或使用 WINE 支持编译程序的任务。</p>
+</li>
+<li>
+<p>大量的库实现了 Windows® 的核心功能（例如 <span class="filename">/lib/wine/api-ms-core-memory-l1-1-1.dll.so</span> ，它是前述内存接口的一部分）。</p>
+</li>
+<li>
+<p>一些 Windows® 可执行文件，它们是常见的实用工具（例如 <span class="filename">/lib/wine/notepad.exe.so</span> ，提供标准的 Windows® 文本编辑器）。</p>
+</li>
+<li>
+<p>额外的 Windows® 资源，特别是字体（例如 Tahoma 字体，存储在安装根目录下的 .share/wine/fonts/tahoma.ttf 中）。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="graphical-versus-text-modeterminal-programs-in-wine">13.2.3. WINE 中的图形模式与文本模式 / 终端程序<a class="anchor" href="#graphical-versus-text-modeterminal-programs-in-wine"></a></h3>
+<div class="paragraph">
+<p>作为一个将终端工具视为“一等公民”的操作系统，可以自然地假设 WINE 将包含对文本模式程序的广泛支持。然而，大多数 Windows® 应用程序，尤其是最受欢迎的应用程序，都是以图形用户界面（ GUI ）为设计目标的。因此，默认情况下， WINE 的工具被设计为启动图形程序。</p>
+</div>
+<div class="paragraph">
+<p>然而，有三种方法可以运行这些所谓的控制台用户界面（ CUI ）程序：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Bare Streams</em> 方法将直接将输出显示到标准输出。</p>
+</li>
+<li>
+<p><em>wineconsole</em> 实用程序可以与 <em>user</em> 或 <em>curses</em> 后端一起使用，以利用 WINE 系统为 CUI 应用程序提供的一些增强功能。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>这些方法在 [WINE Wiki](<a href="https://wiki.winehq.org/Wine_User%27s_Guide#Text_mode_programs_.28CUI:_Console_User_Interface.29" class="bare">https://wiki.winehq.org/Wine_User%27s_Guide#Text_mode_programs_.28CUI:_Console_User_Interface.29</a>) 上有更详细的描述。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="wine-derivative-projects">13.2.4. WINE 衍生项目<a class="anchor" href="#wine-derivative-projects"></a></h3>
+<div class="paragraph">
+<p>WINE 本身是一个成熟的开源项目，因此它被用作更复杂解决方案的基础并不令人意外。</p>
+</div>
+<div class="sect3">
+<h4 id="commercial-wine-implementations">13.2.4.1. 商业 WINE 实现<a class="anchor" href="#commercial-wine-implementations"></a></h4>
+<div class="paragraph">
+<p>许多公司已经将 WINE 作为自己专有产品的核心（ WINE 的 LGPL 许可证允许这样做）。其中最著名的两个如下所示：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Codeweavers CrossOver 是一款强大的软件，它允许用户在 Mac 和 Linux 操作系统上运行 Windows 应用程序。通过使用 CrossOver ，用户可以轻松地在非 Windows 平台上访问和使用他们喜爱的 Windows 软件。这个软件使用了一种独特的技术，使得 Windows 应用程序能够在其他操作系统上无缝运行，而无需安装 Windows 操作系统本身。 Codeweavers CrossOver 是一个非常有用的工具，为用户提供了更多的灵活性和选择，使他们能够在不同的操作系统之间无缝切换和使用他们需要的应用程序。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>这个解决方案提供了一个简化的“一键式”安装 WINE 的方法，其中包含了额外的增强和优化（尽管该公司将其中许多贡献回馈给 WINE 项目）。 Codeweavers 的一个重点领域是使最受欢迎的应用程序能够顺利安装和运行。</p>
+</div>
+<div class="paragraph">
+<p>虽然该公司曾经推出过适用于 FreeBSD 的 CrossOver 解决方案，但似乎已经被废弃很久了。虽然一些资源（如专门的论坛 <a href="https://www.codeweavers.com/compatibility/crossover/forum/freebsd" class="bare">https://www.codeweavers.com/compatibility/crossover/forum/freebsd</a> ）仍然存在，但它们也已经有一段时间没有活动了。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Steam Proton 是一个由 Valve 开发的兼容性工具，旨在使 Windows 上的游戏能够在 Linux 操作系统上运行。 Proton 基于 Wine 和其他开源技术，通过提供对 Windows API 的实现来实现这一目标。 Steam Proton 使得玩家可以在 Linux 上畅玩许多原本只能在 Windows 上运行的游戏，为 Linux 游戏生态系统的发展做出了重要贡献。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>游戏公司 Steam 也使用 WINE 来使 Windows® 游戏能够在其他系统上安装和运行。它的主要目标是基于 Linux 的系统，尽管也有一些对 macOS 的支持。</p>
+</div>
+<div class="paragraph">
+<p>虽然 Steam 没有提供原生的 FreeBSD 客户端，但可以使用 FreeBSD 的 Linux 兼容层来使用 Linux® 客户端的几种选项。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="wine-companion-programs">13.2.4.2. WINE 伴侣程序<a class="anchor" href="#wine-companion-programs"></a></h4>
+<div class="paragraph">
+<p>除了专有的产品，其他项目还发布了与标准的开源版本 WINE 配合使用的应用程序。这些应用程序的目标可以从简化安装到提供简便的方式来安装流行软件。</p>
+</div>
+<div class="paragraph">
+<p>这些解决方案在后面关于 <a href="#wine-management-guis ">GUI 前端 </a> 的章节中有更详细的介绍，包括以下内容：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>winetricks 是一个用于在 Wine 环境中安装和配置 Windows 应用程序所需组件的实用工具。它提供了一系列预定义的安装选项，可以帮助用户轻松地安装常见的 Windows 库和运行时环境。通过使用 winetricks ，用户可以更方便地在 Linux 系统上运行 Windows 应用程序。</p>
+</li>
+<li>
+<p>苏伊马祖</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="alternatives-to-wine">13.2.5. WINE 的替代方案<a class="anchor" href="#alternatives-to-wine"></a></h3>
+<div class="paragraph">
+<p>对于 FreeBSD 用户来说，使用 WINE 的替代方案如下：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>双启动：一种简单的选择是在操作系统上直接运行所需的 Windows® 应用程序。当然，这意味着需要退出 FreeBSD 以启动 Windows® ，因此如果需要同时访问两个系统中的程序，则此方法不可行。</p>
+</li>
+<li>
+<p>虚拟机：虚拟机（ VM ）是在本章前面提到的软件进程，它们模拟完整的硬件集合，可以在其上安装和运行其他操作系统（包括 Windows® ）。现代工具使得创建和管理虚拟机变得容易，但这种方法是有代价的。主机系统的大部分资源必须分配给每个虚拟机，并且只要虚拟机在运行，这些资源就无法被主机回收。一些虚拟机管理器的例子包括开源解决方案 qemu 、 bhyve 和 VirtualBox 。有关更多详细信息，请参阅《虚拟化》章节。</p>
+</li>
+<li>
+<p>远程访问：与许多其他类 UNIX® 系统一样， FreeBSD 可以运行各种应用程序，使用户能够远程访问 Windows® 计算机并使用其程序或数据。除了像 xrdp 这样连接到标准 Windows® 远程桌面协议的客户端之外，还可以使用其他开源标准，如 vnc （前提是在另一端存在兼容的服务器）。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE<a class="anchor" href="#installing-wine-on-freebsd"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>可以通过 pkg 工具或编译端口来安装 WINE 。</p>
+</div>
+<div class="sect2">
+<h3 id="wine-prerequistes">13.3.1. WINE 的先决条件<a class="anchor" href="#wine-prerequistes"></a></h3>
+<div class="paragraph">
+<p>在安装 WINE 本身之前，安装以下先决条件会很有用。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>图形用户界面（ GUI ）</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>大多数 Windows® 程序都期望有一个可用的图形用户界面。如果安装 WINE 时没有安装图形用户界面，它的依赖项将包括 Wayland 合成器，因此将会安装一个图形用户界面。但在安装 WINE 之前，安装、配置和正确运行所选择的图形用户界面是很有用的。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Wine Gecko</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Windows® 操作系统在很长一段时间内都预装了一个默认的网页浏览器： Internet Explorer 。因此，一些应用程序在工作时假设总会有能够显示网页的东西。为了提供这个功能， WINE 层包含了一个使用 Mozilla 项目的 Gecko 引擎的网页浏览器组件。当首次启动 WINE 时，它会提供下载和安装这个组件的选项，用户可能有理由这样做（这将在后面的章节中介绍）。但他们也可以在安装 WINE 之前或与 WINE 的安装同时安装这个组件。</p>
+</div>
+<div class="paragraph">
+<p>使用以下命令安装此软件包：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install wine-gecko</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者，使用以下方式编译端口：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/emulator/wine-gecko</span>
+<span class="c"># make install</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Wine Mono 是一个用于在 Wine 环境中运行 .NET 应用程序的开源实现。它是一个替代 Microsoft .NET Framework 的组件，可以在 Linux 和其他类 Unix 系统上运行。 Wine Mono 提供了对 .NET 应用程序的兼容性，并且可以与 Wine 一起使用，使用户能够在非 Windows 操作系统上运行 .NET 应用程序。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>此端口安装了 MONO 框架，它是微软 .NET 的开源实现。将其与 WINE 安装一起使用，可以增加任何使用 .NET 编写的应用程序在系统上安装和运行的可能性。</p>
+</div>
+<div class="paragraph">
+<p>安装包的步骤如下：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install wine-mono</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>从端口集合编译：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/emulator/wine-mono</span>
+<span class="c"># make install</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-wine">13.3.2. 通过 FreeBSD 软件包仓库安装 WINE<a class="anchor" href="#installing-wine"></a></h3>
+<div class="paragraph">
+<p>在满足先决条件的情况下，使用以下命令通过软件包安装 WINE ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install wine</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用以下方法从源代码编译 WINE 子系统：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/emulator/wine</span>
+<span class="c"># make install</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="thirtytwo-vs-sixtyfour-bit-wine">13.3.3. WINE 安装中的 32 位与 64 位的问题<a class="anchor" href="#thirtytwo-vs-sixtyfour-bit-wine"></a></h3>
+<div class="paragraph">
+<p>与大多数软件一样， Windows® 应用程序已经从旧的 32 位架构升级到 64 位。大多数最新的软件都是为 64 位操作系统编写的，尽管现代操作系统有时也可以继续运行旧的 32 位程序。 FreeBSD 也不例外，在 5.x 系列中就已经支持 64 位。</p>
+</div>
+<div class="paragraph">
+<p>然而，使用默认不再支持的旧软件是模拟器的常见用途，用户通常会转向 WINE 来玩游戏和使用其他在现代硬件上无法正常运行的程序。幸运的是， FreeBSD 可以支持这三种情况：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>在现代的 64 位机器上，如果想要运行 64 位的 Windows® 软件，只需安装上述部分提到的端口。端口系统将自动安装 64 位版本。</p>
+</li>
+<li>
+<p>或者，用户可能拥有一台旧的 32 位机器，他们不想继续使用原始的、现在不再支持的软件。他们可以安装 32 位（ i386 ）版本的 FreeBSD ，然后在上述章节中安装端口。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序<a class="anchor" href="#running-first-wine-program"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>现在 WINE 已经安装好了，下一步是通过运行一个简单的程序来尝试它。一个简单的方法是下载一个自包含的应用程序，即一个可以简单解压并运行而无需复杂安装过程的应用程序。</p>
+</div>
+<div class="paragraph">
+<p>所谓的“便携式”应用程序版本是进行此测试的好选择，同样适用于只需一个可执行文件即可运行的程序。</p>
+</div>
+<div class="sect2">
+<h3 id="running-a-program-from-the-command-line">13.4.1. 从命令行运行程序<a class="anchor" href="#running-a-program-from-the-command-line"></a></h3>
+<div class="paragraph">
+<p>有两种不同的方法可以从终端启动 Windows 程序。第一种，也是最直接的方法是导航到包含程序可执行文件（ <span class="filename">.EXE</span> ）的目录，并执行以下操作：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wine program.exe</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>对于需要使用命令行参数的应用程序，将它们像平常一样添加在可执行文件之后：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wine program2.exe -file file.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者，在脚本中提供可执行文件的完整路径，以便使用它，例如：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wine /home/user/bin/program.exe</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-a-program-from-a-gui">13.4.2. 从图形用户界面 (GUI) 运行程序<a class="anchor" href="#running-a-program-from-a-gui"></a></h3>
+<div class="paragraph">
+<p>安装完成后，图形界面应该更新以适应 Windows 可执行文件（ <span class="filename">.EXE</span> ）的新关联。现在可以使用文件管理器浏览系统，并以与其他文件和程序相同的方式启动 Windows 应用程序（根据桌面设置的不同，可以是单击或双击）。</p>
+</div>
+<div class="paragraph">
+<p>在大多数桌面上，通过右键单击文件并查找上下文菜单中的条目来确认此关联是否正确。其中一个选项（希望是默认选项）将是使用 *Wine Windows 程序加载器 * 打开文件，如下面的屏幕截图所示：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/wine-run-np%20++%20-1.png" alt="wine run np%20++%20 1"/>
+</div>
+</div>
+<div class="paragraph">
+<p>如果程序无法按预期运行，请尝试从命令行启动，并查看终端中显示的任何消息以进行故障排除。</p>
+</div>
+<div class="paragraph">
+<p>如果在安装后， WINE 不是 <span class="filename">.EXE</span> 文件的默认应用程序，请检查当前桌面环境、图形界面或文件管理器中与该扩展名相关联的 MIME 类型。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuring-wine-installation">13.5. 配置 WINE 安装<a class="anchor" href="#configuring-wine-installation"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在了解了 WINE 是什么以及它的高级工作原理之后，下一步有效地在 FreeBSD 上使用它的关键是熟悉其配置。以下部分将描述_WINE 前缀_的关键概念，并说明如何使用它来控制通过 WINE 运行的应用程序的行为。</p>
+</div>
+<div class="sect2">
+<h3 id="wine-prefixes">13.5.1. WINE 前缀<a class="anchor" href="#wine-prefixes"></a></h3>
+<div class="paragraph">
+<p>WINE 的“前缀”是一个目录，通常位于 [.filename]# $ HOME/.wine# 的默认位置下，但也可以位于其他位置。前缀是一组由 WINE 使用的配置和支持文件，用于配置和运行特定应用程序所需的 Windows® 环境。默认情况下，当用户首次启动全新的 WINE 安装时，将创建以下结构：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><span class="filename">.update-timestamp</span>: 包含了 [/usr/share/wine/wine.inf]# 文件的最后修改日期。它被 WINE 用来判断一个前缀是否过时，并在需要时自动更新它。</p>
+</li>
+<li>
+<p><span class="filename">dosdevices/</span> ：包含将 Windows® 资源映射到主机 FreeBSD 系统资源的信息。例如，在新的 WINE 安装之后，这里应该至少包含两个条目，以使用 Windows® 风格的驱动器字母访问 FreeBSD 文件系统：</p>
+<div class="ulist">
+<ul>
+<li>
+<p><span class="filename">c: @ #: 下面描述了一个指向 [.filename]#drive_c</span> 的链接。</p>
+</li>
+<li>
+<p>[.filename]#z: @ #: 指向系统根目录的链接。</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><span class="filename">drive_c/</span> ：模拟 Windows® 系统的主要（即 <span class="filename">C:</span> ）驱动器。它包含一个目录结构和相关文件，与标准的 Windows® 系统相同。一个新的 WINE 前缀将包含 Windows® 10 的目录，如_Users_和_Windows_，它们保存着操作系统本身。此外，安装在前缀中的应用程序将位于_Program Files_或_Program Files (x86)_中，具体取决于它们的架构。</p>
+</li>
+<li>
+<p><span class="filename">system.reg</span>: 这个注册表文件包含了关于 Windows® 安装的信息，对于 WINE 来说，这是位于 <span class="filename">drive_c</span> 的环境。</p>
+</li>
+<li>
+<p><span class="filename">user.reg</span>: 这个注册表文件包含当前用户的个人配置，可以通过各种软件或者注册表编辑器进行设置。</p>
+</li>
+<li>
+<p><span class="filename">userdef.reg</span>: 这个注册表文件是为新创建的用户提供的默认配置集合。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-and-using-wine-prefixes">13.5.2. 创建和使用 WINE 前缀<a class="anchor" href="#creating-and-using-wine-prefixes"></a></h3>
+<div class="paragraph">
+<p>虽然 WINE 会在用户的 [.filename]# $ HOME/.wine/# 目录下创建一个默认前缀，但也可以设置多个前缀。这样做有几个原因：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>根据所涉及软件的兼容性需求，最常见的原因是模拟不同版本的 Windows® 。</p>
+</li>
+<li>
+<p>此外，常常会遇到在默认环境下无法正常工作的软件，并且需要特殊配置。将这些软件隔离在自己的自定义前缀中是很有用的，这样的更改不会影响其他应用程序。</p>
+</li>
+<li>
+<p>同样，将默认或“主”前缀复制到一个单独的“测试”前缀中，以评估应用程序的兼容性，可以减少损坏的机会。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在终端中创建前缀需要使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nv">WINEPREFIX</span><span class="o">=</span><span class="s2">&#34;/home/username/.wine-new&#34;</span> winecfg</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将运行 <code>winecfg</code> 程序，该程序可用于配置 Wine 前缀（稍后的章节将详细介绍）。但是，通过为 <code>WINEPREFIX</code> 环境变量提供一个目录路径值，如果该位置尚不存在前缀，则会在该位置创建一个新的前缀。</p>
+</div>
+<div class="paragraph">
+<p>将相同的变量提供给 wine 程序也会导致所选程序以指定的前缀运行：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nv">WINEPREFIX</span><span class="o">=</span><span class="s2">&#34;/home/username/.wine-new&#34;</span> wine program.exe</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuring-wine-prefixes-with-winecfg">13.5.3. 使用 winecfg 配置 WINE 前缀<a class="anchor" href="#configuring-wine-prefixes-with-winecfg"></a></h3>
+<div class="paragraph">
+<p>如上所述， WINE 包含一个名为 <code>winecfg</code> 的工具，用于通过图形界面配置前缀。它包含多种功能，详细介绍在下面的章节中。当在前缀内运行 <code>winecfg</code> ，或者在 <code>WINEPREFIX</code> 变量中提供前缀的位置时，它可以配置所选前缀，具体描述在下面的章节中。</p>
+</div>
+<div class="paragraph">
+<p>在“应用程序”选项卡上进行的选择将影响“库”和“图形”选项卡中所做更改的范围，这将仅限于所选的应用程序。有关更多详细信息，请参阅 WINE Wiki 中的 <a href="https://wiki.winehq.org/Wine_User%27s_Guide#Using_Winecfg">使用 Winecfg</a> 部分。</p>
+</div>
+<div class="sect3">
+<h4 id="applications">13.5.3.1. 应用程序<a class="anchor" href="#applications"></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/wine-config-1.png" alt="wine config 1"/>
+</div>
+</div>
+<div class="paragraph">
+<p><em>应用程序</em> 包含控件，可以将程序与特定版本的 Windows® 关联起来。首次启动时，<em>应用程序设置</em> 部分将包含一个条目：<em>默认设置</em>。这对应于前缀的所有默认配置，即（如禁用的 <em>删除应用程序</em> 按钮所示）无法删除。</p>
+</div>
+<div class="paragraph">
+<p>但是可以通过以下过程添加额外的应用程序：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>点击“添加应用程序”按钮。</p>
+</li>
+<li>
+<p>使用提供的对话框选择所需程序的可执行文件。</p>
+</li>
+<li>
+<p>选择要与所选程序一起使用的 Windows® 版本。</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="libraries">13.5.3.2. 图书馆<a class="anchor" href="#libraries"></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/wine-config-2.png" alt="wine config 2"/>
+</div>
+</div>
+<div class="paragraph">
+<p>WINE 在其发行版中提供一组开源库文件，这些文件提供与 Windows® 对应的相同功能。然而，正如本章前面所提到的， WINE 项目始终试图跟上这些库的新更新。因此，随 WINE 一起发行的版本可能缺少最新的 Windows® 程序所期望的功能。</p>
+</div>
+<div class="paragraph">
+<p>然而， <code>winecfg</code> 使得可以指定内置库的覆盖，特别是在与主机 FreeBSD 安装相同的机器上有一个 Windows® 版本可用的情况下。对于每个要覆盖的库，按照以下步骤进行：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>打开“新的库覆盖”下拉菜单，并选择要替换的库。</p>
+</li>
+<li>
+<p>点击“添加”按钮。</p>
+</li>
+<li>
+<p>新的覆盖将出现在“现有覆盖”列表中，注意括号中的“本地，内置”标识。</p>
+</li>
+<li>
+<p>点击以选择图书馆。</p>
+</li>
+<li>
+<p>点击 <em>编辑</em> 按钮。</p>
+</li>
+<li>
+<p>使用提供的对话框选择一个对应的库来替代内置的库。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>请务必选择一个真正与内置版本对应的文件，否则可能会出现意外行为。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="graphics">13.5.3.3. 图形<a class="anchor" href="#graphics"></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/wine-config-3.png" alt="wine config 3"/>
+</div>
+</div>
+<div class="paragraph">
+<p>“图形”选项卡提供了一些选项，可以使通过 WINE 运行的程序在 FreeBSD 上平稳运行的窗口。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>当窗口全屏时自动捕获鼠标。</p>
+</li>
+<li>
+<p>允许 FreeBSD 窗口管理器为通过 WINE 运行的程序装饰窗口，例如它们的标题栏。</p>
+</li>
+<li>
+<p>允许窗口管理器控制通过 WINE 运行的程序的窗口，例如对它们进行调整大小的操作。</p>
+</li>
+<li>
+<p>创建一个模拟的虚拟桌面，在其中所有的 WINE 程序将运行。如果选择了此选项，可以使用“桌面尺寸”输入框指定虚拟桌面的大小。</p>
+</li>
+<li>
+<p>设置通过 WINE 运行的程序的屏幕分辨率。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="desktop-integration">13.5.3.4. 桌面集成<a class="anchor" href="#desktop-integration"></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/wine-config-4.png" alt="wine config 4"/>
+</div>
+</div>
+<div class="paragraph">
+<p>此选项卡允许配置以下项目：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>用于通过 WINE 运行的程序的主题和相关视觉设置。</p>
+</li>
+<li>
+<p>WINE 子系统是否应该在内部管理 MIME 类型（用于确定哪个应用程序打开特定文件类型）。</p>
+</li>
+<li>
+<p>将主机 FreeBSD 系统中的目录映射到 Windows® 环境中的有用文件夹。要更改现有的关联，请选择所需的项目，然后点击“浏览”，然后使用提供的对话框选择一个目录。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="drives">13.5.3.5. 驱动器<a class="anchor" href="#drives"></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/wine-config-5.png" alt="wine config 5"/>
+</div>
+</div>
+<div class="paragraph">
+<p>“<em>驱动器</em>”选项卡允许将主机 FreeBSD 系统中的目录链接到 Windows® 环境中的驱动器字母。该选项卡中的默认值应该很熟悉，因为它们显示了当前 WINE 前缀中 <span class="filename">dosdevices/</span> 目录的内容。通过此对话框进行的更改将反映在 <span class="filename">dosdevices</span> 中，并且在该目录中创建的格式正确的链接将显示在此选项卡中。</p>
+</div>
+<div class="paragraph">
+<p>要创建一个新的条目，比如一个 CD-ROM （挂载在 <span class="filename">/mnt/cdrom</span> ），请按照以下步骤进行：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>点击“添加”按钮。</p>
+</li>
+<li>
+<p>在提供的对话框中，选择一个空闲的驱动器字母。</p>
+</li>
+<li>
+<p>点击“确定”。</p>
+</li>
+<li>
+<p>通过输入框填写“路径”字段，可以通过手动输入资源路径或者点击“浏览”按钮并使用提供的对话框进行选择。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>默认情况下， WINE 会自动检测链接的资源类型，但也可以手动覆盖。有关高级选项的更多详细信息，请参阅 WINE Wiki 中的 <a href="https://wiki.winehq.org/Wine_User%27s_Guide#Drive_Settings">部分</a> 。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="audio">13.5.3.6. 音频<a class="anchor" href="#audio"></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/wine-config-6.png" alt="wine config 6"/>
+</div>
+</div>
+<div class="paragraph">
+<p>此选项卡包含一些可配置的选项，用于将 Windows® 程序的声音路由到本机 FreeBSD 声音系统，包括：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>驱动程序选择</p>
+</li>
+<li>
+<p>默认设备选择</p>
+</li>
+<li>
+<p>声音测试</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="about">13.5.3.7. 关于<a class="anchor" href="#about"></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/wine-config-7.png" alt="wine config 7"/>
+</div>
+</div>
+<div class="paragraph">
+<p>最后一个标签包含有关 WINE 项目的信息，包括一个指向网站的链接。它还允许输入（完全可选的）用户信息，尽管这些信息不会像其他操作系统那样被发送到任何地方。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wine-management-guis">13.6. WINE 管理图形界面<a class="anchor" href="#wine-management-guis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>虽然 WINE 的基本安装包含一个名为 <code>winecfg</code> 的图形界面配置工具，但它的主要目的仅限于配置现有的 WINE 前缀。然而，还有一些更高级的应用程序可以帮助初始安装应用程序，并优化它们的 WINE 环境。下面的章节包括一些最受欢迎的选择。</p>
+</div>
+<div class="sect2">
+<h3 id="winetricks">13.6.1. Winetricks 是一个用于在 Wine 环境中安装和配置 Windows 应用程序所需组件的实用工具。它提供了一个简单的命令行界面，使用户可以轻松地安装各种 Windows 库和运行时环境，以便在 Wine 中运行各种 Windows 软件。使用 Winetricks ，用户可以安装诸如 .NET Framework 、 DirectX 、 Visual C ++运行时库等常用的 Windows 组件，以便更好地支持和运行 Windows 应用程序。<a class="anchor" href="#winetricks"></a></h3>
+<div class="paragraph">
+<p><code>winetricks</code> 工具是一个跨平台的、通用的 WINE 辅助程序。它并非由 WINE 项目本身开发，而是由一群贡献者在 <a href="https://github.com/Winetricks/winetricks">Github</a> 上进行维护。它包含一些自动化的“配方”，可以通过优化设置和自动获取一些 DLL 库来使常见应用程序在 WINE 上运行。</p>
+</div>
+<div class="sect3">
+<h4 id="installing-winetricks">13.6.1.1. 安装 winetricks<a class="anchor" href="#installing-winetricks"></a></h4>
+<div class="paragraph">
+<p>要在 FreeBSD 上使用二进制包安装 <code>winetricks</code> ，请使用以下命令（注意 <code>winetricks</code> 需要 i386-wine 或 i386-wine-devel 包之一，因此不会自动安装其他依赖项）：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install i386-wine winetricks</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要从源代码编译它，请在终端中输入以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/emulators/i386-wine</span>
+<span class="c"># make install</span>
+<span class="c"># cd /usr/ports/emulators/winetricks</span>
+<span class="c"># make install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果需要手动安装，请参考 <a href="https://github.com/Winetricks/winetricks">Github</a> 账户上的说明。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="using-winetricks">13.6.1.2. 使用 winetricks<a class="anchor" href="#using-winetricks"></a></h4>
+<div class="paragraph">
+<p>使用以下命令运行 <code>winetricks</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>winetricks</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>注意：这应该在一个 32 位的前缀中运行 <code>winetricks</code> 。启动 <code>winetricks</code> 会显示一个窗口，其中包含一些选项，如下所示：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/winetricks-run-1.png" alt="winetricks run 1"/>
+</div>
+</div>
+<div class="paragraph">
+<p>选择“安装应用程序”，“安装基准测试”或“安装游戏”中的任一选项，将显示一个支持的选项列表，例如下面的应用程序选项：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/winetricks-run-2.png" alt="winetricks run 2"/>
+</div>
+</div>
+<div class="paragraph">
+<p>选择一个或多个项目并点击“确定”将开始它们的安装过程。最初，一些看起来像错误的消息可能会出现，但实际上它们是信息提示，因为 <code>winetricks</code> 正在配置 WINE 环境以解决应用程序的已知问题。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/winetricks-app-install-1.png" alt="winetricks app install 1"/>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦这些被规避，应用程序的实际安装程序将被运行：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/winetricks-app-install-2.png" alt="winetricks app install 2"/>
+</div>
+</div>
+<div class="paragraph">
+<p>安装完成后，新的 Windows 应用程序应该可以从桌面环境的标准菜单中找到（如下面的 LXQT 桌面环境的截图所示）：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/winetricks-menu-1.png" alt="winetricks menu 1"/>
+</div>
+</div>
+<div class="paragraph">
+<p>要删除该应用程序，请再次运行 <code>winetricks</code> ，然后选择“运行卸载程序”。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/winetricks-uninstall-1.png" alt="winetricks uninstall 1"/>
+</div>
+</div>
+<div class="paragraph">
+<p>将出现一个类似于 Windows® 风格的对话框，其中列出了安装的程序和组件的列表。选择要移除的应用程序，然后点击“修改 / 移除”按钮。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/winetricks-uninstall-2.png" alt="winetricks uninstall 2"/>
+</div>
+</div>
+<div class="paragraph">
+<p>这将运行应用程序内置的安装程序，该程序还应该具有卸载选项。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/winetricks-uninstall-3.png" alt="winetricks uninstall 3"/>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="homura">13.6.2. 苏伊马祖<a class="anchor" href="#homura"></a></h3>
+<div class="paragraph">
+<p>Suyimazu 是一个类似于 <code>winetricks</code> 的应用程序，但它受到了 Linux 游戏系统 <a href="https://lutris.net/">Lutris</a> 的启发。虽然它专注于游戏，但也可以通过 Suyimazu 安装非游戏应用程序。</p>
+</div>
+<div class="sect3">
+<h4 id="installing-homura">13.6.2.1. 安装 Suyimazu<a class="anchor" href="#installing-homura"></a></h4>
+<div class="paragraph">
+<p>要安装 Suyimazu 的二进制包，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install suyimazu</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Suyimazu 在 FreeBSD Ports 系统中可用。然而，与其在 Ports 或二进制包的_emulators_部分中查找，不如在_games_部分中查找。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/games/suyimazu</span>
+<span class="c"># make install</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="using-homura">13.6.2.2. 使用 Suyimazu<a class="anchor" href="#using-homura"></a></h4>
+<div class="paragraph">
+<p>Suyimazu 的使用方法与 <code>winetricks</code> 非常相似。首次使用时，可以通过命令行（或桌面环境的运行程序）启动它：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>Suyimazu</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这应该会显示一个友好的欢迎消息。点击“确定”继续。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-launch-1.png" alt="homura launch 1"/>
+</div>
+</div>
+<div class="paragraph">
+<p>该程序还将提供在兼容环境的应用程序菜单中放置链接的选项：</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-run-2.png" alt="homura run 2"/>
+</div>
+</div>
+<div class="paragraph">
+<p>根据 FreeBSD 机器的设置， Suyimazu 可能会显示一条消息，提示安装本机图形驱动程序。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-run-3.png" alt="homura run 3"/>
+</div>
+</div>
+<div class="paragraph">
+<p>然后应用程序的窗口将出现，相当于一个带有所有选项的“主菜单”。许多项目与 <code>winetricks</code> 相同，但 Suyimazu 提供了一些额外的有用选项，例如打开其数据文件夹（<em>打开 Suyimazu 文件夹</em>）或运行指定的程序（<em>在前缀中运行可执行文件</em>）。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-install-1.png" alt="homura install 1"/>
+</div>
+</div>
+<div class="paragraph">
+<p>要选择一个 Suyimazu 支持的应用程序进行安装，请选择“安装”，然后点击“确定”。这将显示 Homura 可以自动安装的应用程序列表。选择一个应用程序，然后点击“确定”开始安装过程。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-install-2.png" alt="homura install 2"/>
+</div>
+</div>
+<div class="paragraph">
+<p>作为第一步， Suyimazu 将下载所选的程序。在支持的桌面环境中可能会出现通知。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-install-3.png" alt="homura install 3"/>
+</div>
+</div>
+<div class="paragraph">
+<p>该程序还将为应用程序创建一个新的前缀。将显示一个带有此消息的标准 WINE 对话框。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-install-4.png" alt="homura install 4"/>
+</div>
+</div>
+<div class="paragraph">
+<p>接下来， Suyimazu 将安装所选程序的所有先决条件。这可能涉及下载和提取相当数量的文件，具体细节将显示在对话框中。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-install-5.png" alt="homura install 5"/>
+</div>
+</div>
+<div class="paragraph">
+<p>下载的软件包会自动打开并按需运行。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-install-6.png" alt="homura install 6"/>
+</div>
+</div>
+<div class="paragraph">
+<p>安装可能会以简单的桌面通知或终端中的消息结束，这取决于 Suyimazu 是如何启动的。但无论哪种情况， Suyimazu 都应返回到主屏幕。要确认安装成功，请选择“启动器”，然后点击“确定”。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-install-7.png" alt="homura install 7"/>
+</div>
+</div>
+<div class="paragraph">
+<p>这将显示已安装应用程序的列表。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-install-8.png" alt="homura install 8"/>
+</div>
+</div>
+<div class="paragraph">
+<p>要运行新程序，请从列表中选择它，然后点击“确定”。要卸载该应用程序，请从主屏幕选择“卸载”，这将显示一个类似的列表。选择要移除的程序，然后点击“确定”。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../images/books/handbook/wine/homura-uninstall-1.png" alt="homura uninstall 1"/>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-multiple-management-guis">13.6.3. 运行多个管理图形用户界面 (GUI)<a class="anchor" href="#running-multiple-management-guis"></a></h3>
+<div class="paragraph">
+<p>值得注意的是，上述解决方案并不是互斥的。同时安装两者是完全可以接受的，甚至有优势，因为它们支持不同的程序集。</p>
+</div>
+<div class="paragraph">
+<p>然而，明智的做法是确保它们不会访问相同的 WINE 前缀。每个解决方案都会应用一些变通方法，并根据已知的 WINE 问题的变通方法对注册表进行更改，以使特定应用程序顺利运行。允许 <code>winetricks</code> 和 Homura 同时访问相同的前缀可能会导致其中一些被覆盖，结果是一些或所有应用程序无法按预期工作。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE<a class="anchor" href="#wine-in-multi-user-os-installations"></a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="issues-with-using-a-common-wine-prefix">13.7.1. 使用共享的 WINE 前缀的问题<a class="anchor" href="#issues-with-using-a-common-wine-prefix"></a></h3>
+<div class="paragraph">
+<p>与大多数类 UNIX® 操作系统一样， FreeBSD 设计用于多个用户同时登录和工作。另一方面， Windows® 是多用户的，意味着可以在一个系统上设置多个用户账户。但是预期只有一个用户会在任何给定的时刻使用物理机器（台式机或笔记本电脑）。</p>
+</div>
+<div class="paragraph">
+<p>最近的 Windows® 消费者版本在多用户场景下采取了一些措施来改善操作系统。但它仍然主要围绕单用户体验进行构建。此外， WINE 项目为创建兼容环境所采取的措施意味着，与 FreeBSD 应用程序（包括 WINE 本身）不同，它将类似于这种单用户环境。</p>
+</div>
+<div class="paragraph">
+<p>因此，每个用户都需要维护自己的配置集，这可能是有益的。然而，安装应用程序，特别是像办公套件或游戏这样的大型应用程序，只需要一次安装是有优势的。这样做的两个原因的例子是维护（软件更新只需要应用一次）和存储效率（没有重复的文件）。</p>
+</div>
+<div class="paragraph">
+<p>有两种策略可以最小化系统中多个 WINE 用户的影响。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-applications-to-a-common-drivesettings">13.7.2. 将应用程序安装到公共驱动器<a class="anchor" href="#installing-applications-to-a-common-drivesettings"></a></h3>
+<div class="paragraph">
+<p>在某些情况下，您可能希望将应用程序安装到一个公共驱动器，以便多个用户可以共享和访问这些应用程序。以下是安装应用程序到公共驱动器的步骤：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>打开安装程序：双击应用程序的安装文件，以启动安装程序。</p>
+</li>
+<li>
+<p>选择安装位置：在安装程序的界面上，选择您希望安装应用程序的位置。通常，您可以通过浏览按钮选择驱动器和文件夹。</p>
+</li>
+<li>
+<p>选择公共驱动器：浏览您的计算机，找到一个公共驱动器，例如 D 盘或网络驱动器。选择该驱动器作为应用程序的安装位置。</p>
+</li>
+<li>
+<p>完成安装：按照安装程序的指示完成安装过程。安装程序将应用程序文件复制到公共驱动器上。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>安装完成后，其他用户可以通过访问公共驱动器上的应用程序文件来运行和使用这些应用程序。请注意，安装到公共驱动器的应用程序可能需要管理员权限才能运行。</p>
+</div>
+<div class="paragraph">
+<p>如 WINE 配置部分所示， WINE 提供了将附加驱动器连接到给定前缀的功能。通过这种方式，应用程序可以安装到一个共享的位置，而每个用户仍然可以拥有一个前缀，其中可以保存个别设置（取决于程序）。如果要在用户之间共享相对较少的应用程序，并且这些程序需要对前缀进行少量自定义调整以正常运行，那么这是一个很好的设置。</p>
+</div>
+<div class="paragraph">
+<p>按照以下步骤进行安装应用程序的方式：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>首先，在系统上设置一个共享位置，用于存储文件，例如 <span class="filename">/mnt/windows-drive_d/</span> 。创建新目录的方法在 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkdir&amp;sektion=1&amp;format=html">mkdir(1)</a> 手册页中有描述。</p>
+</li>
+<li>
+<p>接下来，设置此新目录的权限，只允许特定用户访问。一种方法是创建一个名为“ windows ”的新组，将所需用户添加到该组中（参见 <a href="../basics/#users-groups">用户和基本帐户管理</a> 部分中的组子部分），并将目录的权限设置为 <code>770</code> （ <a href="../basics/#permissions">权限</a> 部分说明了此过程）。</p>
+</li>
+<li>
+<p>最后，根据本章关于 WINE 配置中所述的方法，使用 <code>winecfg</code> 将位置添加为用户前缀的驱动器。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>一旦完成，应用程序可以安装到此位置，并且随后可以使用分配的驱动器号（或标准的 UNIX® 风格的目录路径）运行。然而，如上所述，同一时间只能有一个用户运行这些应用程序（可能会访问其安装目录中的文件）。一些应用程序在被非所有者用户运行时可能会表现出意外行为，尽管该用户是应该对整个目录具有完全的“读 / 写 / 执行”权限的组的成员。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using-a-common-installation-of-wine">13.7.3. 使用通用的 WINE 安装方法<a class="anchor" href="#using-a-common-installation-of-wine"></a></h3>
+<div class="paragraph">
+<p>另一方面，如果有许多需要共享的应用程序，或者它们需要特定的调整才能正常工作，可能需要采用不同的方法。在这种方法中，专门为存储 WINE 前缀及其所有已安装应用程序的目的创建一个完全独立的用户。然后，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sudo&amp;sektion=8&amp;format=html">sudo(8)</a> 命令授予各个用户以该用户身份运行程序的权限。结果是，这些用户可以像平常一样启动 WINE 应用程序，只是它们将表现得好像是由新创建的用户启动的，因此使用的是包含设置和程序的中央维护的前缀。要实现这一点，请执行以下步骤：</p>
+</div>
+<div class="paragraph">
+<p>使用以下命令（作为 <code>root</code> 用户）创建一个新用户，该命令将引导您完成所需的详细信息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># adduser</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输入用户名（例如，<em>windows</em>）和全名（“ Microsoft Windows ”）。然后接受其余问题的默认值。接下来，使用以下命令使用二进制包安装 <code>sudo</code> 实用程序：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install sudo</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>安装完成后，按照以下方式编辑 <code>/etc/sudoers</code> 文件：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># User alias specification
+
+# define which users can run the wine/windows programs
+User_Alias WINDOWS_USERS = user1,user2
+
+# define which users can administrate (become root)
+User_Alias ADMIN = user1
+
+# Cmnd alias specification
+
+# define which commands the WINDOWS_USERS may run
+Cmnd_Alias WINDOWS = /usr/bin/wine,/usr/bin/winecfg
+
+# Defaults
+Defaults:WINDOWS_USERS env_reset
+Defaults:WINDOWS_USERS env_keep += DISPLAY
+Defaults:WINDOWS_USERS env_keep += XAUTHORITY
+Defaults    !lecture,tty_tickets,!fqdn
+
+# User privilege specification
+root    ALL=(ALL) ALL
+
+# Members of the admin user_alias, defined above, may gain root privileges
+ADMIN ALL=(ALL) ALL
+
+# The WINDOWS_USERS may run WINDOWS programs as user windows without a password
+WINDOWS_USERS ALL = (windows) NOPASSWD: WINDOWS</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这些更改的结果是，在_User_Alias_部分中列出的用户被允许以最后一行中列出的用户身份运行_Cmnd Alias_部分中列出的程序，使用_Defaults_部分中列出的资源（当前显示）。换句话说，被指定为_WINDOWS_USERS_的用户可以以_user windows_的身份运行 WINE 和 <code>winecfg</code> 应用程序。作为额外的好处，这里的配置意味着他们不需要为_windows_用户输入密码。</p>
+</div>
+<div class="paragraph">
+<p>接下来，将显示器的访问权限提供给“ windows ”用户，这是 WINE 程序将要运行的用户。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>xhost +local:windows</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这应该添加到在登录时或默认图形环境启动时运行的命令列表中。完成上述所有步骤后，配置为 <code>sudoers</code> 文件中的 <code>WINDOW_USERS</code> 之一的用户可以使用以下命令使用共享前缀运行程序：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sudo -u windows wine program.exe</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>值得注意的是，多个用户同时访问这个共享环境仍然存在风险。然而，需要考虑的是，共享环境本身可以包含多个前缀。通过这种方式，管理员可以创建一个经过测试和验证的程序集，每个程序都有自己的前缀。同时，一个用户可以玩游戏，而另一个用户可以使用办公软件，而无需进行重复的软件安装。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答<a class="anchor" href="#wine-on-os-faq"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>下面的部分描述了在 FreeBSD 上运行 WINE 时的一些常见问题、技巧或常见问题，以及它们的相应答案。</p>
+</div>
+<div class="sect2">
+<h3 id="basic-installation-and-usage">13.8.1. 基本安装和使用<a class="anchor" href="#basic-installation-and-usage"></a></h3>
+<div class="sect3">
+<h4 id="how-to-install-32-bit-and-64-bit-wine-on-the-same-system">13.8.1.1. 如何在同一系统上安装 32 位和 64 位的 WINE ？<a class="anchor" href="#how-to-install-32-bit-and-64-bit-wine-on-the-same-system"></a></h4>
+<div class="paragraph">
+<p>正如本节前面所述， wine 和 i386-wine 软件包彼此冲突，因此不能以正常方式在同一系统上安装。然而，可以使用 chroots/jails 等机制实现多个安装，或者通过从源代码构建 WINE 来实现（注意，这并不意味着构建端口）。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="can-dos-programs-be-run-on-wine">13.8.1.2. DOS 程序可以在 WINE 上运行吗？<a class="anchor" href="#can-dos-programs-be-run-on-wine"></a></h4>
+<div class="paragraph">
+<p>正如本节前面提到的，“控制台用户界面”应用程序可以这样做。然而，运行 DOS 软件的一个更好的方法是使用 DOSBox 模拟器。另一方面，至少试一试也没有太大的理由。只需创建一个新的前缀，安装软件，如果不起作用，则删除该前缀即可。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="should-the-wine-devel-packageport-be-installed-to-use-the-development-version-of-wine-instead-of-stable">13.8.1.3. 安装包 :emulators/wine-devel[] 包 / 端口以使用 WINE 的开发版本而不是稳定版本吗？<a class="anchor" href="#should-the-wine-devel-packageport-be-installed-to-use-the-development-version-of-wine-instead-of-stable"></a></h4>
+<div class="paragraph">
+<p>是的，安装这个版本将安装 WINE 的“开发”版本。与 32 位和 64 位版本一样，除非采取额外的措施，否则它们不能与稳定版本一起安装。</p>
+</div>
+<div class="paragraph">
+<p>请注意， WINE 还有一个名为&#34;Staging&#34;的版本，其中包含最新的更新。这个版本曾经作为 FreeBSD 的一个端口可用，但现在已经被移除了。不过，你可以直接从源代码编译它。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="install-optimization">13.8.2. 安装优化<a class="anchor" href="#install-optimization"></a></h3>
+<div class="sect3">
+<h4 id="how-should-windows-hardware-graphics-drivers-be-handled">13.8.2.1. 如何处理 Windows® 硬件（例如，图形）驱动程序？<a class="anchor" href="#how-should-windows-hardware-graphics-drivers-be-handled"></a></h4>
+<div class="paragraph">
+<p>操作系统驱动程序在应用程序和硬件之间传输命令。 WINE 模拟了 Windows® 环境，包括驱动程序，这些驱动程序又使用 FreeBSD 的本地驱动程序进行传输。不建议安装 Windows® 驱动程序，因为 WINE 系统设计为使用主机系统的驱动程序。例如，如果有一块需要专用驱动程序的显卡，请使用标准的 FreeBSD 方法进行安装，而不是使用 Windows® 的安装程序。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="is-there-a-way-to-make-windows-fonts-look-better">13.8.2.2. 有没有办法让 Windows® 字体看起来更好？<a class="anchor" href="#is-there-a-way-to-make-windows-fonts-look-better"></a></h4>
+<div class="paragraph">
+<p>一个在 FreeBSD 论坛上的用户建议使用以下配置来修复 WINE 字体的开箱即用外观，这可能会稍微出现像素化的问题。</p>
+</div>
+<div class="paragraph">
+<p>根据 FreeBSD 论坛上的帖子（ <a href="https://forums.freebsd.org/threads/make-wine-ui-fonts-look-good.68273/" class="bare">https://forums.freebsd.org/threads/make-wine-ui-fonts-look-good.68273/</a> ），将以下内容添加到 .config/fontconfig/fonts.conf 文件中将会添加反锯齿效果，并使文本更易读。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE fontconfig SYSTEM &#34;fonts.dtd&gt;&#34;
+
+&lt;fontconfig&gt;
+
+  &lt;!-- antialias all fonts --&gt;
+  &lt;match target=&#34;font&#34;&gt;
+    &lt;edit name=&#34;antialias&#34; mode=&#34;assign&#34;&gt;&lt;bool&gt;true&lt;/bool&gt;&lt;/edit&gt;&gt;
+    &lt;edit name=&#34;hinting&#34; mode=&#34;assign&#34;&gt;&lt;bool&gt;true&lt;/bool&gt;&lt;/edit&gt;&gt;
+    &lt;edit name=&#34;hintstyle&#34; mode=&#34;assign&#34;&gt;&lt;const&gt;hintslight&lt;/const&gt;&lt;/edit&gt;&gt;
+    &lt;edit name=&#34;rgba&#34; mode=&#34;assign&#34;&gt;&lt;const&gt;rgb&lt;/const&gt;&lt;/edit&gt;&gt;
+  &lt;/match&gt;
+&lt;/fontconfig&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="does-having-windows-installed-elsewhere-on-a-system-help-wine-operate">13.8.2.3. 在系统的其他位置安装 Windows® 是否有助于 WINE 的运行？<a class="anchor" href="#does-having-windows-installed-elsewhere-on-a-system-help-wine-operate"></a></h4>
+<div class="paragraph">
+<p>这取决于正在运行的应用程序。如在描述 <code>winecfg</code> 的部分中提到的，一些内置的 WINE DLL 和其他库可以通过提供替代版本的路径来覆盖。只要 Windows® 分区或驱动器已挂载到 FreeBSD 系统并对用户可访问，配置其中一些覆盖将使用本机的 Windows® 库，可能会降低意外行为的发生几率。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="application-specific">13.8.3. 特定应用<a class="anchor" href="#application-specific"></a></h3>
+<div class="sect3">
+<h4 id="where-is-the-best-place-to-see-if-application-x-works-on-wine">13.8.3.1. 在哪里可以找到最好的地方来查看应用程序 X 在 WINE 上是否可用？<a class="anchor" href="#where-is-the-best-place-to-see-if-application-x-works-on-wine"></a></h4>
+<div class="paragraph">
+<p>确定兼容性的第一步应该是查看 [WINE AppDB](<a href="https://appdb.winehq.org/" class="bare">https://appdb.winehq.org/</a>) 。这是一个汇编了关于在所有支持的平台上工作（或不工作）的程序报告的数据库，尽管（如前面提到的），一个平台的解决方案通常也适用于其他平台。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="is-there-anything-that-will-help-games-run-better">13.8.3.2. 有什么可以帮助游戏运行更流畅的方法吗？<a class="anchor" href="#is-there-anything-that-will-help-games-run-better"></a></h4>
+<div class="paragraph">
+<p>也许吧。许多 Windows® 游戏依赖于 DirectX ，这是微软的专有图形层。然而，在开源社区中有一些项目试图实现对这项技术的支持。</p>
+</div>
+<div class="paragraph">
+<p><em>dxvk</em> 项目是一个尝试使用兼容 FreeBSD 的 Vulkan 图形子系统来实现 DirectX 的项目之一。尽管其主要目标是在 Linux 上的 WINE ，但一些 FreeBSD 用户报告称他们成功编译并使用了 dxvk 。</p>
+</div>
+<div class="paragraph">
+<p>此外， <a href="https://www.freshports.org/emulators/wine-proton/">wine-proton 端口</a> 的工作正在进行中。这将把 Steam 游戏平台开发者 Valve 的工作带到 FreeBSD 上。 Proton 是 WINE 的一个分发版本，旨在允许许多 Windows® 游戏在其他操作系统上以最小的设置运行。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="is-there-anywhere-freebsd-wine-users-gather-to-exchange-tips-and-tricks">13.8.3.3. 有没有任何地方， FreeBSD 的 WINE 用户可以聚集在一起交流技巧和窍门？<a class="anchor" href="#is-there-anywhere-freebsd-wine-users-gather-to-exchange-tips-and-tricks"></a></h4>
+<div class="paragraph">
+<p>有很多地方可以让 FreeBSD 用户讨论与 WINE 相关的问题，并且可以搜索解决方案：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://forums.freebsd.org/" class="bare">https://forums.freebsd.org/</a> [FreeBSD 论坛] ，特别是“安装和维护端口或软件包”或“仿真和虚拟化”论坛。</p>
+</li>
+<li>
+<p><a href="https://wiki.freebsd.org/IRC/Channels">FreeBSD IRC 频道</a> 包括 #freebsd （用于一般支持）、 #freebsd-games 等等。</p>
+</li>
+<li>
+<p><a href="https://discord.gg/2CCuhCt">BSD 世界 Discord 服务器</a> 的频道包括_bsd-desktop_，<em>bsd-gaming</em>，_bsd-wine_和其他频道。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-os-resources">13.8.4. 其他操作系统资源<a class="anchor" href="#other-os-resources"></a></h3>
+<div class="paragraph">
+<p>有许多针对其他操作系统的资源可能对 FreeBSD 用户有用：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://wiki.winehq.org/" class="bare">https://wiki.winehq.org/</a> 【 WINE Wiki 】上有大量关于使用 WINE 的信息，其中很多适用于 WINE 支持的多个操作系统。</p>
+</li>
+<li>
+<p>同样，其他操作系统项目提供的文档也可能非常有价值。 Arch Linux Wiki 上的 <a href="https://wiki.archlinux.org/index.php/wine">WINE 页面</a> 是一个特别好的例子，尽管一些“第三方应用程序”（即“伴侣应用程序”）显然在 FreeBSD 上不可用。</p>
+</li>
+<li>
+<p>最后， Codeweavers （一家商业版 WINE 的开发者）是一个积极的上游贡献者。在 <a href="https://www.codeweavers.com/support/forums">他们的支持论坛</a> 中，对于解决开源版本 WINE 的问题，经常可以找到有帮助的答案。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

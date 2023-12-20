@@ -1,0 +1,4741 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、 CD 和 DVD 介质、内存支持的磁盘以及 USB 存储设备。"/>
+  <meta name="keywords" content="91, 34, 115, 116, 111, 114, 97, 103, 101, 34, 44, 32, 34, 100, 105, 115, 107, 115, 34, 44, 32, 34, 103, 112, 97, 114, 116, 34, 44, 32, 34, 109, 111, 117, 110, 116, 34, 44, 32, 34, 113, 117, 111, 116, 97, 115, 34, 44, 32, 34, 101, 110, 99, 114, 121, 112, 116, 34, 44, 32, 34, 71, 80, 84, 34, 44, 32, 34, 99, 100, 114, 101, 99, 111, 114, 100, 34, 44, 32, 34, 78, 84, 70, 83, 34, 44, 32, 34, 113, 117, 111, 116, 97, 115, 34, 44, 32, 34, 115, 119, 97, 112, 34, 44, 32, 34, 72, 65, 83, 84, 34, 44, 32, 34, 67, 68, 34, 44, 32, 34, 68, 86, 68, 34, 44, 32, 34, 114, 101, 115, 105, 122, 105, 110, 103, 34, 44, 32, 34, 103, 114, 111, 119, 105, 110, 103, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/" />
+
+  <title>第 20 章 存储 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 20 章 存储" />
+    <meta property="og:description" content="本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、 CD 和 DVD 介质、内存支持的磁盘以及 USB 存储设备。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/disks\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 20 章 存储</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="disks-synopsis">20.1. 概要<a class="anchor" href="#disks-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、 CD 和 DVD 媒体、内存支持的磁盘以及 USB 存储设备。</p>
+</div>
+<div class="paragraph">
+<p>阅读完本章后，您将了解：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>如何向 FreeBSD 系统添加额外的硬盘。</p>
+</li>
+<li>
+<p>如何在 FreeBSD 上扩大磁盘分区的大小。</p>
+</li>
+<li>
+<p>如何配置 FreeBSD 以使用 USB 存储设备。</p>
+</li>
+<li>
+<p>如何在 FreeBSD 系统上使用 CD 和 DVD 媒体。</p>
+</li>
+<li>
+<p>如何使用 FreeBSD 下可用的备份程序。</p>
+</li>
+<li>
+<p>如何设置内存磁盘。</p>
+</li>
+<li>
+<p>文件系统快照是什么以及如何高效使用它们。</p>
+</li>
+<li>
+<p>如何使用配额限制磁盘空间使用。</p>
+</li>
+<li>
+<p>如何加密磁盘和交换空间以防止攻击者的攻击。</p>
+</li>
+<li>
+<p>如何配置高可用存储网络。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在阅读本章之前，您应该：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解如何交叉引用： kernelconfig[kernelconfig ，配置和安装新的 FreeBSD 内核] 。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="disks-adding">20.2. 添加磁盘<a class="anchor" href="#disks-adding"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本节描述了如何将一个新的 SATA 硬盘添加到目前只有一个驱动器的计算机中。首先，关闭计算机，并按照计算机、控制器和硬盘制造商的说明将硬盘安装到计算机中。重新启动系统并成为“ root ”用户。</p>
+</div>
+<div class="paragraph">
+<p>检查 <span class="filename">/var/run/dmesg.boot</span> 确保新的磁盘被找到。在这个例子中，新添加的 SATA 驱动器将会显示为 <span class="filename">ada1</span> 。</p>
+</div>
+<div class="paragraph">
+<p>对于这个示例，将在新磁盘上创建一个单独的大分区。优先使用 <a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> 分区方案，而不是较旧且功能较少的 MBR 方案。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果要添加的磁盘不是空白的，则可以使用 <code>gpart delete</code> 命令删除旧的分区信息。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>创建了分区方案，然后添加了一个单独的分区。为了提高在具有更大硬件块大小的新磁盘上的性能，该分区被对齐到每个一兆字节边界。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart create -s GPT ada1</span>
+<span class="c"># gpart add -t freebsd-ufs -a 1M ada1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>根据使用情况，可能需要创建几个较小的分区。有关创建小于整个磁盘的分区的选项，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>可以使用 <code>gpart show</code> 命令查看磁盘分区信息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>gpart show ada1
+<span class="gp">=&gt;        </span>34  1465146988  ada1  GPT  <span class="o">(</span>699G<span class="o">)</span>
+          34        2014        - free -  <span class="o">(</span>1.0M<span class="o">)</span>
+        2048  1465143296     1  freebsd-ufs  <span class="o">(</span>699G<span class="o">)</span>
+  1465145344        1678        - free -  <span class="o">(</span>839K<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在新磁盘的新分区上创建了一个文件系统：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># newfs -U /dev/ada1p1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一个空目录被创建为_mountpoint_，用于在原始磁盘的文件系统中挂载新的磁盘：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /newdisk</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>最后，将一个条目添加到 [/etc/fstab] 文件中，以便新的磁盘在启动时自动挂载：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/ada1p1	/newdisk	ufs	rw	2	2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>新的磁盘可以手动挂载，无需重新启动系统：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount /newdisk</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="disks-growing">20.3. 调整和扩展磁盘大小<a class="anchor" href="#disks-growing"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>磁盘的容量可以增加而不影响已有的数据。这在虚拟机中经常发生，当虚拟磁盘太小而需要扩大时。有时候，磁盘镜像被写入到 USB 存储设备中，但没有使用完整的容量。在这里，我们将描述如何调整或“增加”磁盘内容以利用增加的容量。</p>
+</div>
+<div class="paragraph">
+<p>通过检查 [/var/run/dmesg.boot] 来确定要调整大小的磁盘的设备名称。在这个例子中，系统中只有一个 SATA 磁盘，所以该驱动器将显示为 ada0 。</p>
+</div>
+<div class="paragraph">
+<p>列出磁盘上的分区以查看当前配置：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart show ada0</span>
+<span class="gp">=&gt;      </span>34  83886013  ada0  GPT  <span class="o">(</span>48G<span class="o">)</span> <span class="o">[</span>CORRUPT]
+        34       128     1  freebsd-boot  <span class="o">(</span>64k<span class="o">)</span>
+       162  79691648     2  freebsd-ufs  <span class="o">(</span>38G<span class="o">)</span>
+  79691810   4194236     3  freebsd-swap  <span class="o">(</span>2G<span class="o">)</span>
+  83886046         1        - free -  <span class="o">(</span>512B<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果磁盘使用 <a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> 分区方案进行格式化，可能会显示为“损坏”，因为 GPT 备份分区表不再位于驱动器的末尾。使用 <code>gpart</code> 修复备份分区表。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart recover ada0</span>
+ada0 recovered</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>现在，磁盘上的额外空间可供新分区使用，或者可以扩展现有分区：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart show ada0</span>
+<span class="gp">=&gt;       </span>34  102399933  ada0  GPT  <span class="o">(</span>48G<span class="o">)</span>
+         34        128     1  freebsd-boot  <span class="o">(</span>64k<span class="o">)</span>
+        162   79691648     2  freebsd-ufs  <span class="o">(</span>38G<span class="o">)</span>
+   79691810    4194236     3  freebsd-swap  <span class="o">(</span>2G<span class="o">)</span>
+   83886046   18513921        - free -  <span class="o">(</span>8.8G<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>分区只能调整为连续的空闲空间。在这里，磁盘上的最后一个分区是交换分区，但需要调整大小的是第二个分区。交换分区只包含临时数据，因此可以安全地卸载、删除，然后在调整第二个分区大小后重新创建第三个分区。</p>
+</div>
+<div class="paragraph">
+<p>禁用交换分区：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># swapoff /dev/ada0p3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>从磁盘_ada0_中删除由 <code>-i</code> 标志指定的第三个分区。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart delete -i 3 ada0</span>
+ada0p3 deleted
+<span class="c"># gpart show ada0</span>
+<span class="gp">=&gt;       </span>34  102399933  ada0  GPT  <span class="o">(</span>48G<span class="o">)</span>
+         34        128     1  freebsd-boot  <span class="o">(</span>64k<span class="o">)</span>
+        162   79691648     2  freebsd-ufs  <span class="o">(</span>38G<span class="o">)</span>
+   79691810   22708157        - free -  <span class="o">(</span>10G<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在修改挂载文件系统的分区表时存在数据丢失的风险。最好在从 Live CD-ROM 或 USB 设备运行时，对未挂载的文件系统执行以下步骤。然而，如果绝对必要，可以在禁用 GEOM 安全功能后调整挂载的文件系统的大小：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl kern.geom.debugflags=16</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>调整分区大小，留出空间以重新创建所需大小的交换分区。使用 <code>-i</code> 指定要调整大小的分区，使用 <code>-s</code> 指定新的所需大小。可选地，使用 <code>-a</code> 控制分区的对齐方式。这仅修改分区的大小。分区中的文件系统将在单独的步骤中扩展。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart resize -i 2 -s 47G -a 4k ada0</span>
+ada0p2 resized
+<span class="c"># gpart show ada0</span>
+<span class="gp">=&gt;       </span>34  102399933  ada0  GPT  <span class="o">(</span>48G<span class="o">)</span>
+         34        128     1  freebsd-boot  <span class="o">(</span>64k<span class="o">)</span>
+        162   98566144     2  freebsd-ufs  <span class="o">(</span>47G<span class="o">)</span>
+   98566306    3833661        - free -  <span class="o">(</span>1.8G<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>重新创建交换分区并激活它。如果没有使用 <code>-s</code> 指定大小，则使用所有剩余空间。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart add -t freebsd-swap -a 4k ada0</span>
+ada0p3 added
+<span class="c"># gpart show ada0</span>
+<span class="gp">=&gt;       </span>34  102399933  ada0  GPT  <span class="o">(</span>48G<span class="o">)</span>
+         34        128     1  freebsd-boot  <span class="o">(</span>64k<span class="o">)</span>
+        162   98566144     2  freebsd-ufs  <span class="o">(</span>47G<span class="o">)</span>
+   98566306    3833661     3  freebsd-swap  <span class="o">(</span>1.8G<span class="o">)</span>
+<span class="c"># swapon /dev/ada0p3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 UFS 文件系统扩展到重新调整大小的分区的新容量。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growfs /dev/ada0p2</span>
+Device is mounted <span class="nb">read</span>-write; resizing will result <span class="k">in </span>temporary write suspension <span class="k">for</span> /.
+It<span class="s1">&#39;s strongly recommended to make a backup before growing the file system.
+OK to grow file system on /dev/ada0p2, mounted on /, from 38GB to 47GB? [Yes/No] Yes
+super-block backups (for fsck -b #) at:
+ 80781312, 82063552, 83345792, 84628032, 85910272, 87192512, 88474752,
+ 89756992, 91039232, 92321472, 93603712, 94885952, 96168192, 97450432</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果文件系统是 ZFS ，则通过运行带有 <code>-e</code> 选项的 <code>online</code> 子命令来触发调整大小：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># zpool online -e zroot /dev/ada0p2</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>分区和其上的文件系统现在已经调整大小，以利用新可用的磁盘空间。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usb-disks">20.4. USB 存储设备<a class="anchor" href="#usb-disks"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>许多外部存储解决方案，如硬盘、 USB 闪存驱动器以及 CD 和 DVD 刻录机，使用通用串行总线（ USB ）。 FreeBSD 支持 USB 1.x 、 2.0 和 3.0 设备。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>USB 3.0 支持不兼容一些硬件，包括 Haswell （ Lynx Point ）芯片组。如果 FreeBSD 启动时出现“失败，错误代码 19 ”的消息，请在系统 BIOS 中禁用 xHCI/USB3 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>对 USB 存储设备的支持已经集成到 <span class="filename">GENERIC</span> 内核中。对于自定义内核，请确保以下行在内核配置文件中存在：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>device scbus	# SCSI bus (required for ATA/SCSI)
+device da	# Direct Access (disks)
+device pass	# Passthrough device (direct ATA/SCSI access)
+device uhci	# provides USB 1.x support
+device ohci	# provides USB 1.x support
+device ehci	# provides USB 2.0 support
+device xhci	# provides USB 3.0 support
+device usb	# USB Bus (required)
+device umass	# Disks/Mass storage - Requires scbus and da
+device cd	# needed for CD and DVD burners</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=umass&amp;sektion=4&amp;format=html">umass(4)</a> 驱动程序，该驱动程序使用 SCSI 子系统来访问 USB 存储设备。由于系统将任何 USB 设备视为 SCSI 设备，如果 USB 设备是 CD 或 DVD 刻录机，请在自定义内核配置文件中 <em>不要</em> 包含 <code>device atapicam</code> 。</p>
+</div>
+<div class="paragraph">
+<p>本节的其余部分演示了如何验证 FreeBSD 是否识别 USB 存储设备以及如何配置设备以便使用。</p>
+</div>
+<div class="sect2">
+<h3 id="_设备配置">20.4.1. 设备配置<a class="anchor" href="#_设备配置"></a></h3>
+<div class="paragraph">
+<p>为了测试 USB 配置，请插入 USB 设备。使用 <code>dmesg</code> 命令确认驱动器是否出现在系统消息缓冲区中。它应该看起来像这样：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">umass0: &lt;STECH Simple Drive, class 0/0, rev 2.00/1.04, addr 3&gt; on usbus0
+umass0:  SCSI over Bulk-Only; quirks <span class="o">=</span> 0x0100
+umass0:4:0:-1: Attached to scbus4
+da0 at umass-sim0 bus 0 scbus4 target 0 lun 0
+da0: &lt;STECH Simple Drive 1.04&gt; Fixed Direct Access SCSI-4 device
+da0: Serial Number WD-WXE508CAN263
+da0: 40.000MB/s transfers
+da0: 152627MB <span class="o">(</span>312581808 512 byte sectors: 255H 63S/T 19457C<span class="o">)</span>
+da0: <span class="nv">quirks</span><span class="o">=</span>0x2&lt;NO_6_BYTE&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>品牌、设备节点（ <span class="filename">da0</span> ）、速度和大小将根据设备而异。</p>
+</div>
+<div class="paragraph">
+<p>由于 USB 设备被视为 SCSI 设备，可以使用 <code>camcontrol</code> 命令列出连接到系统的 USB 存储设备：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># camcontrol devlist</span>
+&lt;STECH Simple Drive 1.04&gt;          at scbus4 target 0 lun 0 <span class="o">(</span>pass3,da0<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>另外，可以使用 <code>usbconfig</code> 命令列出设备。有关该命令的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=usbconfig&amp;sektion=8&amp;format=html">usbconfig(8)</a> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># usbconfig</span>
+ugen0.3: &lt;Simple Drive STECH&gt; at usbus0, <span class="nv">cfg</span><span class="o">=</span>0 <span class="nv">md</span><span class="o">=</span>HOST <span class="nv">spd</span><span class="o">=</span>HIGH <span class="o">(</span>480Mbps<span class="o">)</span> <span class="nv">pwr</span><span class="o">=</span>ON <span class="o">(</span>2mA<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果设备尚未格式化，请参考 <a href="#disks-adding">添加磁盘</a> 中的说明，了解如何对 USB 驱动器进行格式化和创建分区的操作。如果驱动器已经带有文件系统，可以使用 <a href="../basics/#mount-unmount">“挂载和卸载文件系统”</a> 中的指示，由 <code>root</code> 用户进行挂载。</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>从安全角度来看，不应该认为通过启用 <code>vfs.usermount</code> 来允许不受信任的用户挂载任意媒体是安全的。大多数文件系统并不具备防范恶意设备的能力。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>为了使设备能够以普通用户的身份挂载，一种解决方案是使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pw&amp;sektion=8&amp;format=html">pw(8)</a> 将设备的所有用户都添加到 <code>operator</code> 组中。接下来，通过将以下行添加到 <span class="filename">/etc/devfs.rules</span> 来确保 <code>operator</code> 能够读写设备：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>[localrules=5]
+add path &#39;da*&#39; mode 0660 group operator</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果系统中还安装了内部 SCSI 硬盘，请将第二行更改如下：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>add path &#39;da[3-9]*&#39; mode 0660 group operator</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将排除前三个 SCSI 磁盘（ <span class="filename">da0</span> 到 <span class="filename">da2</span> ）不属于 <code>operator</code> 组。将_3_替换为内部 SCSI 磁盘的数量。有关此文件的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=devfs.rules&amp;sektion=5&amp;format=html">devfs.rules(5)</a> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>接下来，在 [/etc/rc.conf] 文件中启用规则集：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>devfs_system_ruleset=&#34;localrules&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后，通过将以下行添加到 <span class="filename">/etc/sysctl.conf</span> ，指示系统允许普通用户挂载文件系统：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>vfs.usermount=1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>由于此设置仅在下次重新启动后生效，请使用 <code>sysctl</code> 立即设置此变量：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl vfs.usermount=1</span>
+vfs.usermount: 0 -&gt; 1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>最后一步是创建一个目录，用于挂载文件系统。这个目录需要由将要挂载文件系统的用户拥有。一种方法是让 <code>root</code> 用户创建一个由该用户拥有的子目录，例如 <span class="filename">/mnt/username</span> 。在下面的示例中，将_username_替换为用户的登录名，将_usergroup_替换为用户的主要组名：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /mnt/username</span>
+<span class="c"># chown username:usergroup /mnt/username</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>假设插入了一个 USB 闪存驱动器，并出现了一个设备 <span class="filename">/dev/da0s1</span> 。如果该设备使用 FAT 文件系统格式化，用户可以使用以下命令挂载它：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mount -t msdosfs -o -m<span class="o">=</span>644,-M<span class="o">=</span>755 /dev/da0s1 /mnt/username</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在设备被拔出之前，必须首先卸载设备：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>umount /mnt/username</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>设备移除后，系统消息缓冲区将显示类似以下的消息：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">umass0: at uhub3, port 2, addr 3 <span class="o">(</span>disconnected<span class="o">)</span>
+da0 at umass-sim0 bus 0 scbus4 target 0 lun 0
+da0: &lt;STECH Simple Drive 1.04&gt; s/n WD-WXE508CAN263          detached
+<span class="o">(</span>da0:umass-sim0:0:0:0<span class="o">)</span>: Periph destroyed</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_自动挂载可移动介质">20.4.2. 自动挂载可移动介质<a class="anchor" href="#_自动挂载可移动介质"></a></h3>
+<div class="paragraph">
+<p>取消注释 [/etc/auto_master] 中的这行代码可以自动挂载 USB 设备：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">/media		-media		-nosuid</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后将以下行添加到 [/etc/devd.conf] 文件中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">notify 100 <span class="o">{</span>
+	match <span class="s2">&#34;system&#34;</span> <span class="s2">&#34;GEOM&#34;</span>;
+	match <span class="s2">&#34;subsystem&#34;</span> <span class="s2">&#34;DEV&#34;</span>;
+	action <span class="s2">&#34;/usr/sbin/automount -c&#34;</span>;
+<span class="o">}</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果 <a href="https://man.freebsd.org/cgi/man.cgi?query=autofs&amp;sektion=5&amp;format=html">autofs(5)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 已经在运行，请重新加载配置。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service automount restart</span>
+<span class="c"># service devd restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=autofs&amp;sektion=5&amp;format=html">autofs(5)</a> 可以通过将以下行添加到 [/etc/rc.conf] 来设置在启动时启动：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>autofs_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=autofs&amp;sektion=5&amp;format=html">autofs(5)</a> 要求启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> ，默认情况下它是启用的。</p>
+</div>
+<div class="paragraph">
+<p>立即启动服务：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service automount start</span>
+<span class="c"># service automountd start</span>
+<span class="c"># service autounmountd start</span>
+<span class="c"># service devd start</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>每个可以自动挂载的文件系统都会在 <span class="filename">/media/</span> 中以目录的形式显示。该目录的名称与文件系统的标签相同。如果标签缺失，则目录的名称与设备节点相同。</p>
+</div>
+<div class="paragraph">
+<p>文件系统在第一次访问时透明地挂载，并在一段时间的不活动后卸载。自动挂载的驱动器也可以手动卸载：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># automount -fu</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这种机制通常用于存储卡和 USB 存储设备。它可以与任何块设备一起使用，包括光驱或 iSCSI 逻辑单元。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-cds">20.5. 创建和使用 CD 媒体<a class="anchor" href="#creating-cds"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>紧凑型光盘（ CD ）介质具有一些与传统磁盘不同的特点。它们被设计成可以连续读取，无需在轨道之间移动磁头造成延迟。虽然 CD 介质确实有轨道，但这些轨道指的是要连续读取的数据部分，而不是磁盘的物理属性。 ISO 9660 文件系统是为处理这些差异而设计的。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD Ports Collection 提供了几个用于刻录和复制音频和数据 CD 的实用工具。本章演示了几个命令行实用程序的使用方法。如果需要带有图形界面的 CD 刻录软件，请考虑安装软件包： sysutils/xcdroast[] 或软件包： sysutils/k3b[] 。</p>
+</div>
+<div class="sect2">
+<h3 id="atapicam">20.5.1. 支持的设备<a class="anchor" href="#atapicam"></a></h3>
+<div class="paragraph">
+<p><span class="filename">GENERIC</span> 内核提供了对 SCSI 、 USB 和 ATAPICD 读写器的支持。如果使用自定义内核，则需要在内核配置文件中根据设备类型添加相应的选项。</p>
+</div>
+<div class="paragraph">
+<p>对于 SCSI 刻录机，请确保以下选项存在：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>device scbus	# SCSI bus (required for ATA/SCSI)
+device da	# Direct Access (disks)
+device pass	# Passthrough device (direct ATA/SCSI access)
+device cd	# needed for CD and DVD burners</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>对于一个 USB 刻录机，确保以下选项存在：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>device scbus	# SCSI bus (required for ATA/SCSI)
+device da	# Direct Access (disks)
+device pass	# Passthrough device (direct ATA/SCSI access)
+device cd	# needed for CD and DVD burners
+device uhci	# provides USB 1.x support
+device ohci	# provides USB 1.x support
+device ehci	# provides USB 2.0 support
+device xhci	# provides USB 3.0 support
+device usb	# USB Bus (required)
+device umass	# Disks/Mass storage - Requires scbus and da</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>对于一个 ATAPI 刻录机，请确保以下选项存在：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>device ata	# Legacy ATA/SATA controllers
+device scbus	# SCSI bus (required for ATA/SCSI)
+device pass	# Passthrough device (direct ATA/SCSI access)
+device cd	# needed for CD and DVD burners</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在 FreeBSD 10.x 之前的版本中，如果刻录机是 ATAPI 设备，则还需要在内核配置文件中添加此行：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>device atapicam</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者，可以通过在 <span class="filename">/boot/loader.conf</span> 中添加以下行来在启动时加载此驱动程序：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>atapicam_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将需要系统重新启动，因为这个驱动程序只能在启动时加载。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>要验证 FreeBSD 是否识别设备，请运行 <code>dmesg</code> 命令并查找设备的条目。在 10.x 之前的系统中，输出的第一行中设备名称将是 <span class="filename">acd0</span> ，而不是 <span class="filename">cd0</span> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>dmesg | grep <span class="nb">cd
+</span>cd0 at ahcich1 bus 0 scbus1 target 0 lun 0
+cd0: &lt;HL-DT-ST DVDRAM GU70N LT20&gt; Removable CD-ROM SCSI-0 device
+cd0: Serial Number M3OD3S34152
+cd0: 150.000MB/s transfers <span class="o">(</span>SATA 1.x, UDMA6, ATAPI 12bytes, PIO 8192bytes<span class="o">)</span>
+cd0: Attempt to query device size failed: NOT READY, Medium not present - tray closed</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cdrecord">20.5.2. 刻录光盘<a class="anchor" href="#cdrecord"></a></h3>
+<div class="paragraph">
+<p>在 FreeBSD 中，可以使用 <code>cdrecord</code> 来刻录光盘。这个命令是通过 <code>sysutils/cdrtools</code> 包或端口安装的。</p>
+</div>
+<div class="paragraph">
+<p>虽然 <code>cdrecord</code> 有很多选项，但基本用法很简单。只需指定要刻录的 ISO 文件的名称，如果系统有多个刻录设备，则还需指定要使用的设备的名称：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cdrecord dev=device imagefile.iso</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要确定刻录机的设备名称，请使用 <code>-scanbus</code> 命令，可能会产生如下结果：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cdrecord -scanbus</span>
+ProDVD-ProBD-Clone 3.00 <span class="o">(</span>amd64-unknown-freebsd10.0<span class="o">)</span> Copyright <span class="o">(</span>C<span class="o">)</span> 1995-2010 Jörg Schilling
+Using libscg version <span class="s1">&#39;schily-0.9&#39;</span>
+scsibus0:
+        0,0,0     0<span class="o">)</span> <span class="s1">&#39;SEAGATE &#39;</span> <span class="s1">&#39;ST39236LW       &#39;</span> <span class="s1">&#39;0004&#39;</span> Disk
+        0,1,0     1<span class="o">)</span> <span class="s1">&#39;SEAGATE &#39;</span> <span class="s1">&#39;ST39173W        &#39;</span> <span class="s1">&#39;5958&#39;</span> Disk
+        0,2,0     2<span class="o">)</span> <span class="k">*</span>
+        0,3,0     3<span class="o">)</span> <span class="s1">&#39;iomega  &#39;</span> <span class="s1">&#39;jaz 1GB         &#39;</span> <span class="s1">&#39;J.86&#39;</span> Removable Disk
+        0,4,0     4<span class="o">)</span> <span class="s1">&#39;NEC     &#39;</span> <span class="s1">&#39;CD-ROM DRIVE:466&#39;</span> <span class="s1">&#39;1.26&#39;</span> Removable CD-ROM
+        0,5,0     5<span class="o">)</span> <span class="k">*</span>
+        0,6,0     6<span class="o">)</span> <span class="k">*</span>
+        0,7,0     7<span class="o">)</span> <span class="k">*</span>
+scsibus1:
+        1,0,0   100<span class="o">)</span> <span class="k">*</span>
+        1,1,0   101<span class="o">)</span> <span class="k">*</span>
+        1,2,0   102<span class="o">)</span> <span class="k">*</span>
+        1,3,0   103<span class="o">)</span> <span class="k">*</span>
+        1,4,0   104<span class="o">)</span> <span class="k">*</span>
+        1,5,0   105<span class="o">)</span> <span class="s1">&#39;YAMAHA  &#39;</span> <span class="s1">&#39;CRW4260         &#39;</span> <span class="s1">&#39;1.0q&#39;</span> Removable CD-ROM
+        1,6,0   106<span class="o">)</span> <span class="s1">&#39;ARTEC   &#39;</span> <span class="s1">&#39;AM12S           &#39;</span> <span class="s1">&#39;1.06&#39;</span> Scanner
+        1,7,0   107<span class="o">)</span> <span class="k">*</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>找到 CD 刻录机的条目，并使用逗号分隔的三个数字作为 <code>dev</code> 的值。在这种情况下， Yamaha 刻录机设备是 <code>1 , 5 , 0</code> ，因此指定该设备的适当输入是 <code>dev = 1 , 5 , 0</code> 。请参考 <code>cdrecord</code> 的手册页面，了解其他指定该值的方法以及有关写入音轨和控制写入速度的信息。</p>
+</div>
+<div class="paragraph">
+<p>或者，运行以下命令以获取刻录机的设备地址：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># camcontrol devlist</span>
+&lt;MATSHITA CDRW/DVD UJDA740 1.00&gt;   at scbus1 target 0 lun 0 <span class="o">(</span>cd0,pass0<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <code>scbus</code> 、 <code>target</code> 和 <code>lun</code> 的数值。对于这个例子， <code>1 , 0 , 0</code> 是要使用的设备名称。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mkisofs">20.5.3. 将数据写入 ISO 文件系统<a class="anchor" href="#mkisofs"></a></h3>
+<div class="paragraph">
+<p>为了制作数据光盘，必须在将数据文件刻录到光盘之前对其进行准备。在 FreeBSD 中，安装了 <code>mkisofs</code> 的 <code><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools/">sysutils/cdrtools</a></code> 可以用来生成一个 ISO 9660 文件系统，该文件系统是 UNIX® 文件系统中目录树的镜像。最简单的用法是指定要创建的 ISO 文件的名称和要放入 ISO 9660 文件系统的文件路径：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkisofs -o imagefile.iso /path/to/tree</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>该命令将指定路径中的文件名映射为符合标准 ISO 9660 文件系统限制的名称，并且将排除不符合 ISO 文件系统标准的文件。</p>
+</div>
+<div class="paragraph">
+<p>有多种选项可用于克服标准所施加的限制。特别地， <code>-R</code> 启用了在 UNIX® 系统中常见的 Rock Ridge 扩展，而 <code>-J</code> 启用了 Microsoft® 系统中使用的 Joliet 扩展。</p>
+</div>
+<div class="paragraph">
+<p>对于仅在 FreeBSD 系统上使用的 CD ，可以使用 <code>-U</code> 来禁用所有文件名限制。当与 <code>-R</code> 一起使用时，它会生成一个文件系统镜像，即使违反 ISO 9660 标准，也与指定的 FreeBSD 树完全相同。</p>
+</div>
+<div class="paragraph">
+<p>通用用途的最后一个选项是 <code>-b</code> 。它用于指定用于生成“ El Torito ”可引导 CD 的引导映像的位置。此选项接受一个参数，即从要写入 CD 的树的顶部到引导映像的路径。默认情况下， <code>mkisofs</code> 以“软盘仿真”模式创建 ISO 映像，因此期望引导映像的大小为 1200 、 1440 或 2880 KB 。某些引导加载程序（如 FreeBSD 发行版媒体使用的加载程序）不使用仿真模式。在这种情况下，应使用 <code>-no-emul-boot</code> 选项。因此，如果 <code>.filename</code><mark>/tmp/myboot</mark> 中包含一个可引导的 FreeBSD 系统，并且引导映像位于 <code>.filename</code><mark>/tmp/myboot/boot/cdboot</mark> 中，此命令将生成 <code>.filename</code><mark>/tmp/bootable.iso</mark> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkisofs -R -no-emul-boot -b boot/cdboot -o /tmp/bootable.iso /tmp/myboot</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>生成的 ISO 镜像可以通过以下方式挂载为内存磁盘：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mdconfig -a -t vnode -f /tmp/bootable.iso -u 0</span>
+<span class="c"># mount -t cd9660 /dev/md0 /mnt</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后可以验证 <span class="filename">/mnt</span> 和 <span class="filename">/tmp/myboot</span> 是相同的。</p>
+</div>
+<div class="paragraph">
+<p>有许多其他选项可用于细调 <code>mkisofs</code> 的行为。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>可以将数据光盘复制到一个与使用 <code>mkisofs</code> 创建的镜像文件在功能上等效的镜像文件中。要做到这一点，使用 <code>dd</code> 命令，将设备名称作为输入文件，将要创建的 ISO 文件的名称作为输出文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dd if=/dev/cd0 of=file.iso bs=2048</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>生成的图像文件可以按照 <a href="#cdrecord">刻录光盘</a> 中描述的方式刻录到 CD 上。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mounting-cd">20.5.4. 使用数据光盘<a class="anchor" href="#mounting-cd"></a></h3>
+<div class="paragraph">
+<p>一旦 ISO 文件被刻录到光盘上，可以通过指定文件系统类型、包含光盘的设备名称和已存在的挂载点来挂载。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount -t cd9660 /dev/cd0 /mnt</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>由于 <code>mount</code> 假设文件系统的类型是 <code>ufs</code> ，如果在挂载数据光盘时没有包含 <code>-t cd9660</code> ，将会出现 <code>Incorrect super block</code> 错误。</p>
+</div>
+<div class="paragraph">
+<p>虽然任何数据 CD 都可以通过这种方式挂载，但带有特定 ISO 9660 扩展的光盘可能会表现出奇怪的行为。例如， Joliet 光盘将所有文件名存储为两个字节的 Unicode 字符。如果一些非英文字符显示为问号，请使用“ -C ”参数指定本地字符集。有关更多信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_cd9660&amp;sektion=8&amp;format=html">mount_cd9660(8)</a> 。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>为了使用 <code>-C</code> 选项进行字符转换，内核需要加载 <code>.filename#cd9660_iconv.ko#</code> 模块。可以通过将以下行添加到 <code>.filename#loader.conf#</code> 来实现：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>cd9660_iconv_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后重新启动机器，或通过使用 <code>kldload</code> 命令直接加载模块。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在尝试挂载数据光盘时，有时会显示“设备未配置”。这通常意味着光驱没有检测到托盘中的光盘，或者该驱动器在总线上不可见。光驱可能需要几秒钟的时间来检测媒体，请耐心等待。</p>
+</div>
+<div class="paragraph">
+<p>有时候， SCSICD 驱动器可能会被忽略，因为它没有足够的时间来回应总线复位。为了解决这个问题，可以创建一个自定义内核，增加默认的 SCSI 延迟。将以下选项添加到自定义内核配置文件中，并按照 <a href="../kernelconfig/#kernelconfig-building">构建和安装自定义内核</a> 中的说明重新构建内核。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options SCSI_DELAY=15000</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将在启动过程中告诉 SCSI 总线暂停 15 秒，以便给 CD 驱动器尽可能多的机会来响应总线复位。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>可以直接将文件刻录到光盘上，而无需创建 ISO 9660 文件系统。这被称为刻录原始数据光盘，有些人出于备份目的这样做。</p>
+</div>
+<div class="paragraph">
+<p>这种类型的光盘不能像普通数据光盘一样挂载。为了获取烧录到这种光盘上的数据，必须从原始设备节点读取数据。例如，以下命令将从第二个光盘设备中提取一个压缩的 tar 文件到当前工作目录：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tar xzvf /dev/cd1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了挂载数据光盘，数据必须使用 <code>mkisofs</code> 进行写入。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="duplicating-audiocds">20.5.5. 复制音频 CDs<a class="anchor" href="#duplicating-audiocds"></a></h3>
+<div class="paragraph">
+<p>要复制音频 CD ，需要从 CD 中提取音频数据到一系列文件中，然后将这些文件写入空白 CD 。</p>
+</div>
+<div class="paragraph">
+<p><a href="#using-cdrecord">过程：复制音频 CD</a> 描述了如何复制和刻录音频 CD 。如果 FreeBSD 版本小于 10.0 且设备为 ATAPI ，必须首先使用 <a href="#atapicam">支持的设备</a> 中的说明加载 <code>atapicam</code> 模块。</p>
+</div>
+<div id="using-cdrecord" class="olist arabic procedure">
+<div class="title">过程：复制音频 CD</div>
+<ol class="arabic">
+<li>
+<p>包： sysutils/cdrtools[] 包或端口安装了 <code>cdda2wav</code> 。此命令可用于提取所有音轨，每个音轨都会被写入当前工作目录中的单独的 WAV 文件中：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>cdda2wav -vall -B -Owav</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果系统上只有一个 CD 设备，则不需要指定设备名称。请参考 <code>cdda2wav</code> 手册页面，了解如何指定设备以及了解此命令的其他可用选项。</p>
+</div>
+</li>
+<li>
+<p>使用 <code>cdrecord</code> 命令来写入 <span class="filename">.wav</span> 文件：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>cdrecord -v <span class="nv">dev</span><span class="o">=</span>2,0 -dao -useinfo  <span class="k">*</span>.wav</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>请确保按照 <a href="#cdrecord">刻录光盘</a> 中描述的方式适当设置 <em>2 , 0</em>。</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-dvds">20.6. 创建和使用 DVD 媒体<a class="anchor" href="#creating-dvds"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>与 CD 相比， DVD 是下一代光学媒体存储技术。 DVD 可以容纳比任何 CD 更多的数据，并且是视频出版的标准。</p>
+</div>
+<div class="paragraph">
+<p>可为可记录的 DVD 定义五种物理可记录格式：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>DVD-R ：这是第一个可用的 DVD 可记录格式。 DVD-R 标准由 DVD 论坛定义。这种格式只能写入一次。</p>
+</li>
+<li>
+<p>DVD-RW ：这是 DVD-R 标准的可重写版本。一个 DVD-RW 可以重写约 1000 次。</p>
+</li>
+<li>
+<p>DVD-RAM ：这是一种可重写的格式，可以看作是可移动硬盘。然而，这种介质与大多数 DVD-ROM 驱动器和 DVD 视频播放器不兼容，因为只有少数 DVD 刻录机支持 DVD-RAM 格式。有关 DVD-RAM 使用的更多信息，请参阅 <a href="#creating-dvd-ram">使用 DVD-RAM</a> 。</p>
+</li>
+<li>
+<p>DVD + RW ：这是由 DVD + RW 联盟定义的可重写格式。 DVD + RW 可以重写约 1000 次。</p>
+</li>
+<li>
+<p>DVD + R ：这种格式是 DVD + RW 格式的一次写入变体。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>一张单层可记录的 DVD 可以容纳高达 4 , 700 , 000 , 000 字节，实际上相当于 4.38 GB 或 4485 MB ，因为 1 千字节等于 1024 字节。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>必须区分物理介质和应用程序。例如， DVD-Video 是一种特定的文件布局，可以写入任何可记录的 DVD 物理介质，如 DVD-R 、 DVD + R 或 DVD-RW 。在选择介质之前，请确保刻录机和 DVD-Video 播放器与所考虑的介质兼容。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="_配置">20.6.1. 配置<a class="anchor" href="#_配置"></a></h3>
+<div class="paragraph">
+<p>要进行 DVD 录制，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 命令。该命令是 package:sysutils/dvd + rw-tools[] 工具包的一部分，支持所有 DVD 媒体类型。</p>
+</div>
+<div class="paragraph">
+<p>这些工具使用 SCSI 子系统来访问设备，因此必须加载或静态编译 <a href="#atapicam ">ATAPI/CAM 支持 </a> 到内核中。如果刻录机使用 USB 接口，则不需要此支持。有关 USB 设备配置的更多详细信息，请参阅 <a href="#usb-disks">USB 存储设备</a> 。</p>
+</div>
+<div class="paragraph">
+<p>还必须为 ATAPI 设备启用 DMA 访问，方法是在 [/boot/loader.conf] 中添加以下行：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hw.ata.atapi_dma=&#34;1&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在尝试使用 dvd + rw-tools 之前，请参考 <a href="http://fy.chalmers.se/" class="bare">http://fy.chalmers.se/</a> ~ appro/linux/DVD + RW/hcn.html[硬件兼容性说明] 。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>对于图形用户界面，请考虑使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/k3b/">sysutils/k3b</a> ，它提供了一个用户友好的界面来使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 和许多其他刻录工具。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_刻录数据_dvd">20.6.2. 刻录数据 DVD<a class="anchor" href="#_刻录数据_dvd"></a></h3>
+<div class="paragraph">
+<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 是 <a href="#mkisofs ">mkisofs</a> 的前端，它将调用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 来创建文件系统布局并在 DVD 上执行写入操作。这意味着在刻录过程之前不需要创建数据的镜像。</p>
+</div>
+<div class="paragraph">
+<p>要将位于 <span class="filename">/path/to/data</span> 的数据刻录到 DVD + R 或 DVD-R 上，请使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -dvd-compat -Z /dev/cd0 -J -R /path/to/data</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这个例子中， <code>-J -R</code> 被传递给 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 以创建一个带有 Joliet 和 Rock Ridge 扩展的 ISO 9660 文件系统。更多详细信息请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>对于初始会话录制， <code>-Z</code> 用于单个和多个会话。将 <em>/dev/cd0</em> 替换为 DVD 设备的名称。使用 <code>-dvd-compat</code> 表示光盘将被关闭，并且录制将无法追加。这还应该提供更好的与 DVD-ROM 驱动器的媒体兼容性。</p>
+</div>
+<div class="paragraph">
+<p>要烧录预制的镜像，比如_imagefile.iso_，请使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -dvd-compat -Z /dev/cd0=imagefile.iso</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>应该检测并根据使用的媒体和驱动器自动设置写入速度。要强制设置写入速度，请使用 `-speed = ` 。有关示例用法，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>为了支持大于 4.38GB 的工作文件，必须通过在 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 和所有相关程序（如 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> ）中传递&#34;-udf -iso-level 3&#34;来创建一个 UDF/ISO-9660 混合文件系统。只有在创建 ISO 映像文件或直接将文件写入磁盘时才需要这样做。由于以这种方式创建的磁盘必须以 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_udf&amp;sektion=8&amp;format=html">mount_udf(8)</a> 的 UDF 文件系统方式挂载，因此它只能在支持 UDF 的操作系统上使用。否则，它将看起来像包含损坏文件。</p>
+</div>
+<div class="paragraph">
+<p>要创建这种类型的 ISO 文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkisofs -R -J -udf -iso-level 3 -o imagefile.iso /path/to/data</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>直接将文件刻录到光盘：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -dvd-compat -udf -iso-level 3 -Z /dev/cd0 -J -R /path/to/data</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当 ISO 镜像已经包含大文件时， <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 在将该镜像刻录到光盘上时不需要额外的选项。</p>
+</div>
+<div class="paragraph">
+<p>请确保使用最新版本的 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools/">sysutils/cdrtools</a> ，其中包含 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> ，因为旧版本可能不支持大文件。如果最新版本无法工作，请安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools-devel/">sysutils/cdrtools-devel</a> 并阅读其 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_刻录_dvd_视频">20.6.3. 刻录 DVD 视频<a class="anchor" href="#_刻录_dvd_视频"></a></h3>
+<div class="paragraph">
+<p>DVD-Video 是基于 ISO 9660 和微型 UDF （ M-UDF ）规范的特定文件布局。由于 DVD-Video 呈现了特定的数据结构层次，因此需要使用特定的程序，如 <a class="package" href="https://cgit.freebsd.org/ports/tree/multimedia/dvdauthor/">multimedia/dvdauthor</a> 来制作 DVD 。</p>
+</div>
+<div class="paragraph">
+<p>如果已经存在 DVD-Video 文件系统的镜像，可以像其他镜像一样进行刻录。如果使用了 <code>dvdauthor</code> 制作了 DVD ，并且结果保存在 <span class="filename">/path/to/video</span> 中，应使用以下命令来刻录 DVD-Video ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -Z /dev/cd0 -dvd-video /path/to/video</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>-dvd-video</code> 被传递给 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> ，用于指示它创建一个 DVD-Video 文件系统布局。此选项隐含了 <code>-dvd-compat</code> <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 选项。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_使用_dvd_rw">20.6.4. 使用 DVD + RW<a class="anchor" href="#_使用_dvd_rw"></a></h3>
+<div class="paragraph">
+<p>与 CD-RW 不同，未使用过的 DVD + RW 需要在首次使用前进行格式化。强烈建议使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 在适当时自动处理此操作。然而，也可以使用 <code>dvd + rw-format</code> 来格式化 DVD + RW 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dvd+rw-format /dev/cd0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>只需执行此操作一次，并记住只有全新的 DVD + RW 光盘需要进行格式化。一旦格式化完成， DVD + RW 光盘可以像往常一样进行刻录。</p>
+</div>
+<div class="paragraph">
+<p>要烧录一个全新的文件系统，而不仅仅是将一些数据追加到 DVD + RW 上，媒体不需要先进行擦除。相反，可以像这样覆盖之前的记录：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -Z /dev/cd0 -J -R /path/to/newdata</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>DVD + RW 格式支持在之前的记录上追加数据。这个操作包括将新的会话合并到现有的会话中，因为它不被视为多会话写入。 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 将会“增长”媒体上存在的 ISO 9660 文件系统。</p>
+</div>
+<div class="paragraph">
+<p>例如，要将数据追加到 DVD + RW 上，请使用以下方法：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -M /dev/cd0 -J -R /path/to/nextdata</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在进行下一次写入时，应使用与烧录初始会话时相同的 mkisofs[8] 选项。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>使用 <code>-dvd-compat</code> 选项可以提高与 DVD-ROM 驱动器的媒体兼容性。当使用 DVD + RW 时，此选项不会阻止添加数据。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>要清空媒体，请使用以下方法：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -Z /dev/cd0=/dev/zero</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_使用_dvd_rw_2">20.6.5. 使用 DVD-RW<a class="anchor" href="#_使用_dvd_rw_2"></a></h3>
+<div class="paragraph">
+<p>DVD-RW 支持两种光盘格式：增量顺序和受限覆写。默认情况下， DVD-RW 光盘采用顺序格式。</p>
+</div>
+<div class="paragraph">
+<p>一个全新的 DVD-RW 可以直接写入而无需进行格式化。然而，一个已经使用过的顺序格式的 DVD-RW 在写入新的初始会话之前需要进行擦除。</p>
+</div>
+<div class="paragraph">
+<p>要以顺序模式擦除 DVD-RW ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dvd+rw-format -blank=full /dev/cd0</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>使用 <code>-blank = full</code> 进行完全擦除在 1 倍速的媒体上大约需要一个小时。如果要在 Disk-At-Once （ DAO ）模式下记录 DVD-RW ，则可以使用 <code>-blank</code> 进行快速擦除。要以 DAO 模式刻录 DVD-RW ，请使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -use-the-force-luke=dao -Z /dev/cd0=imagefile.iso</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 会自动尝试检测快速擦除的介质并启用 DAO 写入，因此不需要使用 <code>-use-the-force-luke = dao</code> 参数。</p>
+</div>
+<div class="paragraph">
+<p>对于任何 DVD-RW ，应该使用受限覆盖模式，而不是默认的增量顺序模式，因为受限覆盖模式更加灵活。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>要在顺序 DVD-RW 上写入数据，使用与其他 DVD 格式相同的指令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -Z /dev/cd0 -J -R /path/to/data</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要将一些数据追加到先前的录制中，请使用 <code>-M</code> 参数和 <code><a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a></code> 命令。然而，如果在增量顺序模式下在 DVD-RW 上追加数据，将会在光盘上创建一个新的会话，结果将是一个多会话光盘。</p>
+</div>
+<div class="paragraph">
+<p>在受限覆写格式的 DVD-RW 上，不需要在开始新的初始会话之前将其擦除。相反，可以使用 <code>-Z</code> 来覆盖光盘。还可以使用 <code>-M</code> 来扩展已写入光盘上的现有 ISO 9660 文件系统。结果将是一个单会话的 DVD 。</p>
+</div>
+<div class="paragraph">
+<p>要将 DVD-RW 格式化为受限覆写格式，必须使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dvd+rw-format /dev/cd0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要切换回顺序格式，请使用：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dvd+rw-format -blank=full /dev/cd0</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_多会话">20.6.6. 多会话<a class="anchor" href="#_多会话"></a></h3>
+<div class="paragraph">
+<p>很少有 DVD-ROM 驱动器支持多会话 DVD ，并且大多数情况下只能读取第一个会话。 DVD + R 、 DVD-R 和 DVD-RW 以顺序格式可以接受多个会话。对于 DVD + RW 和 DVD-RW 受限覆写格式，不存在多个会话的概念。</p>
+</div>
+<div class="paragraph">
+<p>在使用 DVD + R 、 DVD-R 或 DVD-RW 顺序格式的初始非关闭会话后，使用以下命令将在光盘上添加一个新的会话：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># growisofs -M /dev/cd0 -J -R /path/to/nextdata</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在使用此命令时，如果使用 DVD + RW 或 DVD-RW 处于受限覆写模式，将会在将新会话合并到现有会话时追加数据。结果将是一个单会话光盘。使用此方法在这些类型的介质上进行初始写入后添加数据。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>由于在每个会话之间使用了一些空间来标记会话的结束和开始，因此应该添加大量数据的会话以优化媒体空间。 DVD + R 的会话数量限制为 154 个， DVD-R 约为 2000 个， DVD + R 双层为 127 个。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_更多信息请参考">20.6.7. 更多信息请参考<a class="anchor" href="#_更多信息请参考"></a></h3>
+<div class="paragraph">
+<p>要获取有关 DVD 的更多信息，请在指定的驱动器中使用 <code>dvd + rw-mediainfo <em>/dev/cd0</em></code> 命令，同时光盘在其中。</p>
+</div>
+<div class="paragraph">
+<p>有关 dvd + rw-tools 的更多信息可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 中找到，在 <a href="http://fy.chalmers.se/" class="bare">http://fy.chalmers.se/</a> ~ appro/linux/DVD + RW/[dvd + rw-tools 网站] 上找到，并且在 <a href="http://lists.debian.org/cdwrite/">cdwrite 邮件列表</a> 的存档中也可以找到。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>创建与使用 dvd + rw-tools 相关的问题报告时，始终包括 <code>dvd + rw-mediainfo</code> 的输出。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-dvd-ram">20.6.8. 使用 DVD-RAM<a class="anchor" href="#creating-dvd-ram"></a></h3>
+<div class="paragraph">
+<p>DVD-RAM 写入器可以使用 SCSI 或 ATAPI 接口。对于 ATAPI 设备，必须通过在 [/boot/loader.conf] 中添加以下行来启用 DMA 访问：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hw.ata.atapi_dma=&#34;1&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>DVD-RAM 可以被视为可移动硬盘。与任何其他硬盘一样， DVD-RAM 在使用之前必须进行格式化。在这个例子中，整个磁盘空间将使用标准的 UFS2 文件系统进行格式化：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dd if=/dev/zero of=/dev/acd0 bs=2k count=1</span>
+<span class="c"># bsdlabel -Bw acd0</span>
+<span class="c"># newfs /dev/acd0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>DVD 设备 <span class="filename">acd0</span> 必须根据配置进行更改。</p>
+</div>
+<div class="paragraph">
+<p>一旦 DVD-RAM 被格式化，它可以被挂载为普通硬盘：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount /dev/acd0 /mnt</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦挂载， DVD-RAM 将可读可写。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="floppies">20.7. 创建和使用软盘<a class="anchor" href="#floppies"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本节介绍了如何在 FreeBSD 中格式化 3.5 英寸软盘。</p>
+</div>
+<div class="exampleblock procedure">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>过程：格式化软盘的步骤 *</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在使用软盘之前，需要进行低级格式化。通常由供应商完成，但格式化是检查介质完整性的好方法。在 FreeBSD 上进行软盘的低级格式化，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=fdformat&amp;sektion=1&amp;format=html">fdformat(1)</a> 命令。在使用此实用程序时，请注意任何错误消息，因为它们可以帮助确定软盘是好的还是坏的。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>要格式化软盘，请将一个新的 3.5 英寸软盘插入第一个软盘驱动器，并输入以下命令：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># /usr/sbin/fdformat -f 1440 /dev/fd0</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>在低级格式化磁盘之后，根据系统需要创建磁盘标签，以确定磁盘的大小和几何结构。支持的几何结构值在 [/etc/disktab] 中列出。</p>
+<div class="paragraph">
+<p>要编写磁盘标签，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdlabel&amp;sektion=8&amp;format=html">bsdlabel(8)</a> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># /sbin/bsdlabel -B -w /dev/fd0 fd1440</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>软盘现在可以进行高级格式化，并选择文件系统。软盘的文件系统可以是 UFS 或 FAT ，其中 FAT 通常是软盘的更好选择。</p>
+<div class="paragraph">
+<p>要使用 FAT 格式化软盘，请执行以下操作：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># /sbin/newfs_msdos /dev/fd0</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>磁盘现在已经准备好供使用。要使用软盘，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_msdosfs&amp;sektion=8&amp;format=html">mount_msdosfs(8)</a> 命令进行挂载。也可以从 Ports Collection 安装和使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/emulators/mtools/">emulators/mtools</a> 。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using-ntfs">20.8. 使用 NTFS 磁盘<a class="anchor" href="#using-ntfs"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本节介绍了如何在 FreeBSD 中挂载 NTFS 磁盘。</p>
+</div>
+<div class="paragraph">
+<p>NTFS （新技术文件系统）是由微软开发的专有日志文件系统。多年来，它一直是微软 Windows 操作系统的默认文件系统。 FreeBSD 可以使用 FUSE 文件系统挂载 NTFS 卷。这些文件系统是作为用户空间程序实现的，它们通过一个明确定义的接口与 <a href="https://man.freebsd.org/cgi/man.cgi?query=fusefs&amp;sektion=5&amp;format=html">fusefs(5)</a> 内核模块进行交互。</p>
+</div>
+<div class="exampleblock procedure">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>过程：挂载 NTFS 磁盘的步骤 *</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>在使用 FUSE 文件系统之前，我们需要加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=fusefs&amp;sektion=5&amp;format=html">fusefs(5)</a> 内核模块：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload fusefs</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysrc&amp;sektion=8&amp;format=html">sysrc(8)</a> 命令在启动时加载模块：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc kld_list+=fusefs</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>按照示例中的方式（参见 <a href="../ports/#pkgng-intro">使用 pkg 进行二进制包管理</a> ）或者从 ports （参见 <a href="../ports/#ports-using">使用 Ports Collection</a> ）安装实际的 NTFS 文件系统。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install fusefs-ntfs</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>最后，我们需要创建一个目录，用于挂载文件系统：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /mnt/usb</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>假设插入了一个 USB 磁盘。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 命令查看磁盘分区信息。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gpart show da0</span>
+<span class="o">=</span>&gt;	  63  1953525105  da0 MBR   <span class="o">(</span>932G<span class="o">)</span>
+	  63  1953525105    1 ntfs  <span class="o">(</span>932G<span class="o">)</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>我们可以使用以下命令挂载磁盘：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ntfs-3g /dev/da0s1 /mnt/usb/</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>磁盘现已准备就绪，可以使用。</p>
+</div>
+</li>
+<li>
+<p>此外，还可以将条目添加到 /etc/fstab 文件中：</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/da0s1  /mnt/usb	ntfs mountprog=/usr/local/bin/ntfs-3g,noauto,rw  0 0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在可以使用以下命令挂载磁盘：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount /mnt/usb</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>可以使用以下命令卸载磁盘：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># umount /mnt/usb/</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="backup-basics">20.9. 备份基础知识<a class="anchor" href="#backup-basics"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>实施备份计划是至关重要的，以便能够从磁盘故障、意外文件删除、随机文件损坏或完全机器破坏（包括现场备份的破坏）中恢复。</p>
+</div>
+<div class="paragraph">
+<p>备份类型和计划将根据数据的重要性、文件恢复所需的粒度以及可接受的停机时间而有所不同。一些可能的备份技术包括：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>整个系统的归档备份存储在永久的、离线的介质上。这种方式可以提供对上述所有问题的保护，但是恢复速度慢且不方便，特别是对于非特权用户来说。</p>
+</li>
+<li>
+<p>文件系统快照，用于恢复已删除的文件或文件的先前版本。</p>
+</li>
+<li>
+<p>使用预定的包： net/rsync[] ，将整个文件系统或磁盘的副本与网络上的另一个系统进行同步。</p>
+</li>
+<li>
+<p>硬件或软件 RAID ，可以在磁盘故障时最小化或避免停机时间。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>通常，会使用多种备份技术的组合。例如，可以创建一个定期计划，自动进行每周一次的完整系统备份，并将其存储在离线位置，并通过每小时的 ZFS 快照来补充此备份。此外，在进行文件编辑或删除之前，还可以对单个目录或文件进行手动备份。</p>
+</div>
+<div class="paragraph">
+<p>本节介绍了一些可用于在 FreeBSD 系统上创建和管理备份的实用工具。</p>
+</div>
+<div class="sect2">
+<h3 id="_文件系统备份">20.9.1. 文件系统备份<a class="anchor" href="#_文件系统备份"></a></h3>
+<div class="paragraph">
+<p>传统的 UNIX® 文件系统备份程序是 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> ，用于创建备份，和 <a href="https://man.freebsd.org/cgi/man.cgi?query=restore&amp;sektion=8&amp;format=html">restore(8)</a> ，用于恢复备份。这些工具在文件系统创建的文件、链接和目录的抽象层之下的磁盘块级别上工作。与其他备份软件不同， <code>dump</code> 备份整个文件系统，无法备份部分文件系统或跨多个文件系统的目录树的一部分。 <code>dump</code> 不是写入文件和目录，而是写入组成文件和目录的原始数据块。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果在根目录上使用 <code>dump</code> 命令，它将不会备份 /home 、 /usr 或许多其他目录，因为这些通常是其他文件系统的挂载点或指向这些文件系统的符号链接。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>当用于恢复数据时，默认情况下， <code>restore</code> 将临时文件存储在 <span class="filename">/tmp/</span> 中。如果使用具有较小 <span class="filename">/tmp</span> 的恢复磁盘，请将 <code>TMPDIR</code> 设置为具有更多可用空间的目录，以确保恢复成功。</p>
+</div>
+<div class="paragraph">
+<p>在使用 <code>dump</code> 命令时，请注意一些来自 AT &amp; T UNIX® 6 版本（约 1975 年）早期的怪异行为。默认参数假设备份是备份到 9 轨磁带，而不是备份到其他类型的介质或者今天可用的高密度磁带。这些默认值必须在命令行上进行覆盖。</p>
+</div>
+<div class="paragraph">
+<p>可以通过网络将文件系统备份到另一个系统或连接到另一台计算机的磁带驱动器上。虽然可以使用 rdump[8] 和 rrestore[8] 工具来实现此目的，但它们被认为不安全。</p>
+</div>
+<div class="paragraph">
+<p>相反，可以使用 <code>dump</code> 和 <code>restore</code> 以更安全的方式通过 SSH 连接进行操作。此示例创建了一个对 <code>/usr</code> 目录进行完整压缩备份的文件，并通过 SSH 连接将备份文件发送到指定的主机。</p>
+</div>
+<div class="exampleblock">
+<div class="title">例 1. 通过 ssh 使用 <code>dump</code> 命令</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># /sbin/dump -0uan -f - /usr | gzip -2 | ssh -c blowfish \</span>
+          targetuser@targetmachine.example.com dd <span class="nv">of</span><span class="o">=</span>/mybigfiles/dump-usr-l0.gz</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>这个示例设置 <code>RSH</code> ，以便通过 SSH 连接将备份写入远程系统上的磁带驱动器：</p>
+</div>
+<div class="exampleblock">
+<div class="title">例 2. 使用 <code>RSH</code> 设置通过 ssh 使用 <code>dump</code> 命令</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># env RSH=/usr/bin/ssh /sbin/dump -0uan -f targetuser@targetmachine.example.com:/dev/sa0 /usr</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_目录备份">20.9.2. 目录备份<a class="anchor" href="#_目录备份"></a></h3>
+<div class="paragraph">
+<p>可以根据需要使用几个内置实用程序来备份和恢复指定的文件和目录。</p>
+</div>
+<div class="paragraph">
+<p>备份目录中所有文件的一个好选择是 <a href="https://man.freebsd.org/cgi/man.cgi?query=tar&amp;sektion=1&amp;format=html">tar(1)</a> 。这个实用程序可以追溯到 AT &amp; T UNIX® 的第 6 版，并且默认情况下假定对本地磁带设备进行递归备份。可以使用开关来指定备份文件的名称。</p>
+</div>
+<div class="paragraph">
+<p>这个例子创建了一个压缩的备份文件，将当前目录的内容保存到 [/tmp/mybackup.tgz] 文件中。在创建备份文件时，请确保备份文件不要保存在被备份的目录中。</p>
+</div>
+<div class="exampleblock">
+<div class="title">例 3. 使用 <code>tar</code> 备份当前目录</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tar czvf /tmp/mybackup.tgz .</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>要恢复整个备份，请进入要恢复的目录并指定备份的名称。请注意，这将覆盖恢复目录中的任何更新版本的文件。如果不确定，请恢复到一个临时目录或指定要恢复的备份中的文件名称。</p>
+</div>
+<div class="exampleblock">
+<div class="title">例 4. 使用 <code>tar</code> 命令恢复当前目录</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tar xzvf /tmp/mybackup.tgz</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>有数十个可用的开关，这些开关在 <a href="https://man.freebsd.org/cgi/man.cgi?query=tar&amp;sektion=1&amp;format=html">tar(1)</a> 中有描述。该实用程序还支持使用排除模式来指定在备份指定目录或从备份中恢复文件时不应包括哪些文件。</p>
+</div>
+<div class="paragraph">
+<p>要使用指定的文件和目录列表创建备份， <a href="https://man.freebsd.org/cgi/man.cgi?query=cpio&amp;sektion=1&amp;format=html">cpio(1)</a> 是一个不错的选择。与 <code>tar</code> 不同， <code>cpio</code> 不知道如何遍历目录树，必须提供备份文件的列表。</p>
+</div>
+<div class="paragraph">
+<p>例如，可以使用 <code>ls</code> 或 <code>find</code> 创建文件列表。此示例创建了当前目录的递归列表，然后将其通过管道传输给 <code>cpio</code> ，以创建一个名为 <code>/tmp/mybackup.cpio</code> 的输出备份文件。</p>
+</div>
+<div class="exampleblock">
+<div class="title">例 5. 使用 <code>ls</code> 和 <code>cpio</code> 来对当前目录进行递归备份</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ls -R | cpio -ovF /tmp/mybackup.cpio</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>一种备份工具，试图结合 <code>tar</code> 和 <code>cpio</code> 提供的功能是 <code>pax</code> 。多年来，各个版本的 <code>tar</code> 和 <code>cpio</code> 变得稍微不兼容。 POSIX® 创建了 <code>pax</code> ，它尝试读取和写入许多不同的 <code>cpio</code> 和 <code>tar</code> 格式，以及自己的新格式。</p>
+</div>
+<div class="paragraph">
+<p>前面示例的 <code>pax</code> 等效方式如下：</p>
+</div>
+<div class="exampleblock">
+<div class="title">例 6. 使用 <code>pax</code> 备份当前目录</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pax -wf /tmp/mybackup.pax .</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="backups-tapebackups">20.9.3. 使用数据磁带进行备份<a class="anchor" href="#backups-tapebackups"></a></h3>
+<div class="paragraph">
+<p>尽管磁带技术不断发展，但现代备份系统往往将离线备份与本地可移动介质相结合。 FreeBSD 支持使用 SCSI 的任何磁带驱动器，如 LTO 或 DAT 。对于 SATA 和 USB 磁带驱动器的支持有限。</p>
+</div>
+<div class="paragraph">
+<p>对于 SCSI 磁带设备， FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sa&amp;sektion=4&amp;format=html">sa(4)</a> 驱动程序和 .dev/sa0 、 .dev/nsa0 和 .dev/esa0 设备。物理设备名称是 .dev/sa0 。当使用 .dev/nsa0 时，备份应用程序在写入文件后不会倒回磁带，这允许将多个文件写入磁带。使用 .dev/esa0 在设备关闭后弹出磁带。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 中， <code>mt</code> 用于控制磁带驱动器的操作，例如在磁带上寻找文件或向磁带写入磁带控制标记。例如，在写入新文件之前，可以通过跳过前三个文件来保留磁带上的文件。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mt -f /dev/nsa0 fsf 3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>该实用程序支持许多操作。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mt&amp;sektion=1&amp;format=html">mt(1)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>使用 <code>tar</code> 将单个文件写入磁带，需要指定磁带设备的名称和要备份的文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tar cvf /dev/sa0 file</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将文件从磁带上的 <code>tar</code> 归档恢复到当前目录：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tar xvf /dev/sa0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要备份 UFS 文件系统，请使用 <code>dump</code> 命令。以下示例备份了 <code>/usr</code> 目录，备份完成后不会倒回磁带：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dump -0aL -b64 -f /dev/nsa0 /usr</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要从磁带上的 <code>dump</code> 文件交互式地恢复文件到当前目录：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># restore -i -f /dev/nsa0</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="backups-programs-amanda">20.9.4. 第三方备份工具<a class="anchor" href="#backups-programs-amanda"></a></h3>
+<div class="paragraph">
+<p>FreeBSD Ports Collection 提供了许多第三方工具，可以用于安排备份的创建、简化磁带备份，并使备份更加方便。其中许多应用程序是基于客户端 / 服务器的，可以用于自动化单个系统或网络中所有计算机的备份。</p>
+</div>
+<div class="paragraph">
+<p>常用的工具包括 Amanda 、 Bacula 、 rsync 和 duplicity 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_紧急恢复">20.9.5. 紧急恢复<a class="anchor" href="#_紧急恢复"></a></h3>
+<div class="paragraph">
+<p>除了定期备份外，建议在紧急应急计划中执行以下步骤。</p>
+</div>
+<div class="paragraph">
+<p>创建以下命令的输出的打印副本：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>gpart show</code> 命令用于显示磁盘分区表的信息。</p>
+</li>
+<li>
+<p><code>more /etc/fstab</code> 命令用于在终端中显示 <code>/etc/fstab</code> 文件的内容。</p>
+</li>
+<li>
+<p><code>dmesg</code> 是一个 Linux 命令，用于显示内核环缓冲区的内容。它可以显示系统启动时的内核消息，包括硬件检测、设备驱动程序加载和其他内核相关的信息。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>将这份打印件和安装介质的副本存放在安全的地方。如果需要进行紧急恢复操作，启动安装介质并选择“ Live CD ”以访问救援 Shell 。这个救援模式可以用来查看系统的当前状态，如果需要的话，还可以重新格式化磁盘并从备份中恢复数据。</p>
+</div>
+<div class="paragraph">
+<p>接下来，测试救援 shell 和备份。记录下操作步骤，并将这些记录与介质、打印件和备份一起存储。这些记录可以防止在紧急恢复过程中因压力而意外破坏备份。</p>
+</div>
+<div class="paragraph">
+<p>为了增加安全性，将最新的备份存储在与计算机和磁盘驱动器相隔一定距离的远程位置。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="disks-virtual">20.10. 内存磁盘<a class="anchor" href="#disks-virtual"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>除了物理磁盘外， FreeBSD 还支持创建和使用内存磁盘。内存磁盘的一个可能用途是在不先将其刻录到 CD 或 DVD 上，然后挂载 CD/DVD 媒体的情况下访问 ISO 文件系统的内容。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 中， <a href="https://man.freebsd.org/cgi/man.cgi?query=md&amp;sektion=4&amp;format=html">md(4)</a> 驱动程序用于提供对内存磁盘的支持。 <span class="filename">GENERIC</span> 内核包含了这个驱动程序。当使用自定义内核配置文件时，请确保包含以下行：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>device md</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="disks-mdconfig">20.10.1. 附加和分离现有图片<a class="anchor" href="#disks-mdconfig"></a></h3>
+<div class="paragraph">
+<p>要挂载现有的文件系统镜像，使用 <code>mdconfig</code> 命令指定 ISO 文件的名称和一个空闲的单元号。然后，使用该单元号将其挂载到现有的挂载点上。一旦挂载成功， ISO 中的文件将会出现在挂载点上。以下示例将_diskimage.iso_附加到内存设备 <span class="filename">/dev/md0</span> ，然后将该内存设备挂载到 <span class="filename">/mnt</span> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mdconfig -f diskimage.iso -u 0</span>
+<span class="c"># mount -t cd9660 /dev/md0 /mnt</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>请注意，使用 <code>-t cd9660</code> 来挂载 ISO 格式的文件。如果没有使用 <code>-u</code> 指定单元号， <code>mdconfig</code> 将自动分配一个未使用的内存设备，并输出分配的单元号的名称，例如 <span class="filename">md4</span> 。有关此命令及其选项的更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mdconfig&amp;sektion=8&amp;format=html">mdconfig(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>当内存磁盘不再使用时，应该将其资源释放回系统。首先，卸载文件系统，然后使用 <code>mdconfig</code> 将磁盘从系统中分离并释放其资源。继续本示例：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># umount /mnt</span>
+<span class="c"># mdconfig -d -u 0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要确定系统是否仍连接有任何内存磁盘，请输入 <code>mdconfig -l</code> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="disks-md-freebsd5">20.10.2. 创建一个基于文件或内存的内存磁盘<a class="anchor" href="#disks-md-freebsd5"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 还支持内存磁盘，其中存储空间可以从硬盘或内存区域分配。第一种方法通常称为基于文件的文件系统，第二种方法称为基于内存的文件系统。可以使用 <code>mdconfig</code> 创建这两种类型的磁盘。</p>
+</div>
+<div class="paragraph">
+<p>要创建一个新的基于内存的文件系统，需要指定 <code>swap</code> 类型和要创建的内存磁盘的大小。然后，像通常一样，对内存磁盘进行文件系统格式化和挂载。以下示例在单位 <code>1</code> 上创建了一个大小为 5M 的内存磁盘。然后，在挂载之前，该内存磁盘将被格式化为 UFS 文件系统：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mdconfig -a -t swap -s 5m -u 1</span>
+<span class="c"># newfs -U md1</span>
+/dev/md1: 5.0MB <span class="o">(</span>10240 sectors<span class="o">)</span> block size 16384, fragment size 2048
+        using 4 cylinder groups of 1.27MB, 81 blks, 192 inodes.
+        with soft updates
+super-block backups <span class="o">(</span><span class="k">for </span>fsck -b <span class="c">#) at:</span>
+ 160, 2752, 5344, 7936
+<span class="c"># mount /dev/md1 /mnt</span>
+<span class="c"># df /mnt</span>
+Filesystem 1K-blocks Used Avail Capacity  Mounted on
+/dev/md1        4718    4  4338     0%    /mnt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要创建一个新的基于文件的内存磁盘，首先需要分配一个磁盘区域来使用。以下示例创建一个名为 [newimage] 的空白 5MB 文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dd if=/dev/zero of=newimage bs=1k count=5k</span>
+5120+0 records <span class="k">in
+</span>5120+0 records out</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>接下来，将该文件附加到一个内存磁盘上，为内存磁盘标记名称并使用 UFS 文件系统进行格式化，挂载内存磁盘，并验证文件支持的磁盘的大小。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mdconfig -f newimage -u 0</span>
+<span class="c"># bsdlabel -w md0 auto</span>
+<span class="c"># newfs -U md0a</span>
+/dev/md0a: 5.0MB <span class="o">(</span>10224 sectors<span class="o">)</span> block size 16384, fragment size 2048
+        using 4 cylinder groups of 1.25MB, 80 blks, 192 inodes.
+super-block backups <span class="o">(</span><span class="k">for </span>fsck -b <span class="c">#) at:</span>
+ 160, 2720, 5280, 7840
+<span class="c"># mount /dev/md0a /mnt</span>
+<span class="c"># df /mnt</span>
+Filesystem 1K-blocks Used Avail Capacity  Mounted on
+/dev/md0a       4710    4  4330     0%    /mnt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <code>mdconfig</code> 命令创建一个基于文件或内存的文件系统需要多个命令。 FreeBSD 还提供了 <code>mdmfs</code> 命令，它可以自动配置一个内存磁盘，使用 UFS 文件系统进行格式化，并挂载它。例如，在使用 <code>dd</code> 命令创建了名为_newimage_的文件后，下面这个命令相当于运行上面显示的 <code>bsdlabel</code> 、 <code>newfs</code> 和 <code>mount</code> 命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mdmfs -F newimage -s 5m md0 /mnt</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使用 <code>mdmfs</code> 创建一个新的基于内存的内存磁盘，只需使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mdmfs -s 5m md1 /mnt</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果未指定单元号， <code>mdmfs</code> 将自动选择一个未使用的内存设备。有关 <code>mdmfs</code> 的更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mdmfs&amp;sektion=8&amp;format=html">mdmfs(8)</a> 。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="snapshots">20.11. 文件系统快照<a class="anchor" href="#snapshots"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD 提供了一个与 <a href="../config/#soft-updates">Soft Updates</a> 配合使用的功能：文件系统快照。</p>
+</div>
+<div class="paragraph">
+<p>UFS 快照允许用户创建指定文件系统的镜像，并将其视为文件。 快照文件必须在执行操作的文件系统中创建，并且用户每个文件系统最多可以创建 20 个快照。 活动快照在超级块中记录，因此它们在卸载和重新挂载操作以及系统重新启动时是持久的。 当不再需要快照时，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rm&amp;sektion=1&amp;format=html">rm(1)</a> 命令将其删除。 尽管可以以任何顺序删除快照，但可能无法获取所有已释放块的使用空间，因为另一个快照可能会占用一些已释放的块。</p>
+</div>
+<div class="paragraph">
+<p>在创建快照文件后， <a href="https://man.freebsd.org/cgi/man.cgi?query=mksnap_ffs&amp;sektion=8&amp;format=html">mksnap_ffs(8)</a> 会设置不可更改的 <code>snapshot</code> 文件标志。 <a href="https://man.freebsd.org/cgi/man.cgi?query=unlink&amp;sektion=1&amp;format=html">unlink(1)</a> 对于快照文件有一个例外，因为它允许将其删除。</p>
+</div>
+<div class="paragraph">
+<p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> 创建快照。要将 /var 的快照放置在文件 /var/snapshot/snap 中，请使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount -u -o snapshot /var/snapshot/snap /var</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mksnap_ffs&amp;sektion=8&amp;format=html">mksnap_ffs(8)</a> 命令来创建快照：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mksnap_ffs /var /var/snapshot/snap</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=find&amp;sektion=1&amp;format=html">find(1)</a> 命令在文件系统上找到快照文件，例如 <span class="filename">/var</span> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># find /var -flags snapshot</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦创建了快照，它可以有多种用途：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>一些管理员会使用快照文件进行备份，因为快照可以传输到光盘或磁带上。</p>
+</li>
+<li>
+<p>文件系统完整性检查器 <a href="https://man.freebsd.org/cgi/man.cgi?query=fsck&amp;sektion=8&amp;format=html">fsck(8)</a> 可以在快照上运行。假设文件系统在挂载时是干净的，这应该始终提供一个干净且不变的结果。</p>
+</li>
+<li>
+<p>在快照上运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 将生成一个与文件系统和快照的时间戳一致的转储文件。 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 还可以使用 <code>-L</code> 选项一次性拍摄快照、创建转储镜像并删除快照。</p>
+</li>
+<li>
+<p>快照可以作为文件系统的冻结镜像进行挂载。要挂载快照，请运行： <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> <span class="filename">/var/snapshot/snap</span> 。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mdconfig -a -t vnode -o readonly -f /var/snapshot/snap -u 4</span>
+<span class="c"># mount -r /dev/md4 /mnt</span></code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>冻结的文件 <code>/var</code> 现在可以通过 <code>/mnt</code> 访问。一开始，所有内容都将保持与创建快照时相同的状态。唯一的例外是，任何早期的快照将显示为长度为零的文件。要卸载快照，请使用：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># umount /mnt</span>
+<span class="c"># mdconfig -d -u 4</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关 <code>softupdates</code> 和文件系统快照的更多信息，包括技术论文，请访问马歇尔·柯克·麦库西克的网站： <a href="http://www.mckusick.com/" class="bare">http://www.mckusick.com/</a> 。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quotas">20.12. 磁盘配额<a class="anchor" href="#quotas"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>磁盘配额可以用于限制用户或用户组在每个文件系统上分配的磁盘空间或文件数量。这可以防止某个用户或用户组占用所有可用的磁盘空间。</p>
+</div>
+<div class="paragraph">
+<p>本节介绍了如何配置 UFS 文件系统的磁盘配额。要在 ZFS 文件系统上配置配额，请参考 <a href="../zfs/#zfs-zfs-quota">数据集、用户和组配额</a> 。</p>
+</div>
+<div class="sect2">
+<h3 id="_启用磁盘配额">20.12.1. 启用磁盘配额<a class="anchor" href="#_启用磁盘配额"></a></h3>
+<div class="paragraph">
+<p>要确定 FreeBSD 内核是否支持磁盘配额，请执行以下操作：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl kern.features.ufs_quota
+kern.features.ufs_quota: 1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这个例子中， <code>1</code> 表示支持配额。如果值是 <code>0</code> ，请将以下行添加到自定义内核配置文件中，并按照 <a href="../kernelconfig/#kernelconfig">配置 FreeBSD 内核</a> 中的说明重新构建内核。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options QUOTA</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>接下来，在 [/etc/rc.conf](/etc/rc.conf) 中启用磁盘配额：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>quota_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通常在启动时，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotacheck&amp;sektion=8&amp;format=html">quotacheck(8)</a> 检查每个文件系统的配额完整性。该程序确保配额数据库中的数据正确反映文件系统上的数据。这是一个耗时的过程，会显著影响系统启动所需的时间。要跳过此步骤，请将此变量添加到 <span class="filename">/etc/rc.conf</span> 中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>check_quotas=&#34;NO&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>最后，编辑 [/etc/fstab] 文件以按文件系统启用磁盘配额。要在文件系统上启用每个用户的配额，请在 [/etc/fstab] 文件中的文件系统条目的选项字段中添加&#34;userquota&#34;。例如：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/da1s2g   /home    ufs rw,userquota 1 2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要启用组配额，请使用 <code>groupquota</code> 。要同时启用用户和组配额，请使用逗号分隔选项：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/dev/da1s2g    /home    ufs rw,userquota,groupquota 1 2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>默认情况下，配额文件存储在文件系统的根目录中，文件名为 quota.user 和 quota.group 。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> 。不建议指定配额文件的替代位置。</p>
+</div>
+<div class="paragraph">
+<p>配置完成后，重新启动系统， [/etc/rc] 将自动运行适当的命令，为 [/etc/fstab] 中启用的所有配额创建初始配额文件。</p>
+</div>
+<div class="paragraph">
+<p>在正常的操作过程中，通常不需要手动运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotacheck&amp;sektion=8&amp;format=html">quotacheck(8)</a> 、 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotaon&amp;sektion=8&amp;format=html">quotaon(8)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotaoff&amp;sektion=8&amp;format=html">quotaoff(8)</a> 。然而，应该阅读这些手册页以熟悉它们的操作。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_设置配额限制">20.12.2. 设置配额限制<a class="anchor" href="#_设置配额限制"></a></h3>
+<div class="paragraph">
+<p>要验证配额是否已启用，请运行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># quota -v</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>对于每个启用了配额的文件系统，应该有一个关于磁盘使用情况和当前配额限制的一行摘要。</p>
+</div>
+<div class="paragraph">
+<p>系统现在可以使用 <code>edquota</code> 来分配配额限制。</p>
+</div>
+<div class="paragraph">
+<p>有几种选项可用于限制用户或组分配的磁盘空间量以及他们可以创建的文件数量。分配可以基于磁盘空间（块配额）、文件数量（ inode 配额）或两者的组合进行限制。每个限制进一步分为两个类别：硬限制和软限制。</p>
+</div>
+<div class="paragraph">
+<p>硬限制不能超过。一旦用户达到硬限制，该用户在该文件系统上将无法再进行进一步的分配。例如，如果用户在文件系统上的硬限制是 500 kbytes ，并且当前正在使用 490 kbytes ，那么用户只能再分配额外的 10 kbytes 。尝试分配额外的 11 kbytes 将失败。</p>
+</div>
+<div class="paragraph">
+<p>软限制可以在有限的时间内超过，这被称为宽限期，默认为一周。如果用户超过限制的时间超过宽限期，软限制将变为硬限制，不再允许进一步的分配。当用户再次低于软限制时，宽限期将被重置。</p>
+</div>
+<div class="paragraph">
+<p>在下面的示例中，正在编辑 <code>test</code> 账户的配额。当调用 <code>edquota</code> 时，会打开由 <code>EDITOR</code> 指定的编辑器，以便编辑配额限制。默认编辑器设置为 vi 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># edquota -u test</span>
+Quotas <span class="k">for </span>user <span class="nb">test</span>:
+/usr: kbytes <span class="k">in </span>use: 65, limits <span class="o">(</span>soft <span class="o">=</span> 50, hard <span class="o">=</span> 75<span class="o">)</span>
+        inodes <span class="k">in </span>use: 7, limits <span class="o">(</span>soft <span class="o">=</span> 50, hard <span class="o">=</span> 60<span class="o">)</span>
+/usr/var: kbytes <span class="k">in </span>use: 0, limits <span class="o">(</span>soft <span class="o">=</span> 50, hard <span class="o">=</span> 75<span class="o">)</span>
+        inodes <span class="k">in </span>use: 0, limits <span class="o">(</span>soft <span class="o">=</span> 50, hard <span class="o">=</span> 60<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通常，每个启用了配额的文件系统通常有两行。一行表示块限制，另一行表示 inode 限制。更改值以修改配额限制。例如，要将 <span class="filename">/usr</span> 的块限制提高到软限制 <code>500</code> 和硬限制 <code>600</code> ，请按照以下方式更改该行中的值：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/usr: kbytes in use: 65, limits (soft = 500, hard = 600)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>新的配额限制在退出编辑器后生效。</p>
+</div>
+<div class="paragraph">
+<p>有时候，对一系列用户设置配额限制是可取的。首先，将所需的配额限制分配给一个用户。然后，使用 <code>-p</code> 选项将该配额复制到指定范围的用户 ID （ UID ）。以下命令将复制 UID 为 <code>10 , 000</code> 到 <code>19 , 999</code> 的用户的配额限制：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># edquota -p test 10000-19999</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关更多信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=edquota&amp;sektion=8&amp;format=html">edquota(8)</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_检查配额限制和磁盘使用情况">20.12.3. 检查配额限制和磁盘使用情况<a class="anchor" href="#_检查配额限制和磁盘使用情况"></a></h3>
+<div class="paragraph">
+<p>要检查单个用户或组的配额和磁盘使用情况，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=quota&amp;sektion=1&amp;format=html">quota(1)</a> 。用户只能查看自己的配额和所属组的配额。只有超级用户才能查看所有用户和组的配额。要获取启用了配额的文件系统的所有配额和磁盘使用情况的摘要，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=repquota&amp;sektion=8&amp;format=html">repquota(8)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>通常情况下，用户没有使用任何磁盘空间的文件系统在 <code>quota</code> 命令的输出中不会显示，即使用户对该文件系统有配额限制。使用 <code>-v</code> 选项可以显示这些文件系统。以下是一个用户在两个文件系统上设置了配额限制时，使用 <code>quota -v</code> 命令的示例输出。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>Disk quotas for user test (uid 1002):
+     Filesystem  usage    quota   limit   grace   files   quota   limit   grace
+           /usr      65*     50      75   5days       7      50      60
+       /usr/var       0      50      75               0      50      60</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这个例子中，用户当前超过了在 <code>/usr</code> 目录下的 50 kbytes 的软限制，超出了 15 kbytes ，并且还剩下 5 天的宽限期。星号 <code>*</code> 表示用户当前超过了配额限制。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_nfs_上的配额限制">20.12.4. NFS 上的配额限制<a class="anchor" href="#_nfs_上的配额限制"></a></h3>
+<div class="paragraph">
+<p>配额由 NFS 服务器上的配额子系统强制执行。 <a href="https://man.freebsd.org/cgi/man.cgi?query=rpc.rquotad&amp;sektion=8&amp;format=html">rpc.rquotad(8)</a> 守护进程将配额信息提供给 NFS 客户端上的 <code>quota</code> 命令，使得这些机器上的用户可以查看他们的配额统计信息。</p>
+</div>
+<div class="paragraph">
+<p>在 NFS 服务器上，通过从 <strong class="filename">/etc/inetd.conf</strong> 文件中的这一行中删除 <code>#</code> 来启用 <code>rpc.rquotad</code> 。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>rquotad/1      dgram rpc/udp wait root /usr/libexec/rpc.rquotad rpc.rquotad</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后，重新启动 <code>inetd</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service inetd restart</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="disks-encrypting">20.13. 加密磁盘分区<a class="anchor" href="#disks-encrypting"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD 提供了出色的在线保护措施，防止未经授权的数据访问。文件权限和强制访问控制（ MAC ）可以在操作系统处于活动状态且计算机已经启动时，防止未经授权的用户访问数据。然而，如果攻击者可以物理访问计算机并将计算机的硬盘移动到另一个系统以复制和分析数据，操作系统强制执行的权限就变得无关紧要了。</p>
+</div>
+<div class="paragraph">
+<p>无论攻击者如何获得硬盘或关闭电脑， FreeBSD 中内置的基于 GEOM 的加密子系统能够保护计算机文件系统上的数据，即使是对于拥有大量资源和高度动机的攻击者也是如此。与加密单个文件的加密方法不同，内置的 <code>gbde</code> 和 <code>geli</code> 实用程序可以用于透明地加密整个文件系统。明文永远不会接触到硬盘的盘片。</p>
+</div>
+<div class="paragraph">
+<p>本章介绍了如何在 FreeBSD 上创建加密文件系统。首先使用 <code>gbde</code> 演示了该过程，然后使用 <code>geli</code> 演示了相同的示例。</p>
+</div>
+<div class="sect2">
+<h3 id="_使用_gbde_进行磁盘加密">20.13.1. 使用 gbde 进行磁盘加密<a class="anchor" href="#_使用_gbde_进行磁盘加密"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=4&amp;format=html">gbde(4)</a> 设施的目标是为攻击者提供一个巨大的挑战，以防止其获取冷存储设备的内容。然而，如果计算机在运行时被入侵并且存储设备被主动连接，或者攻击者拥有有效的密码短语，那么它对存储设备的内容提供不了任何保护。因此，在系统运行时提供物理安全性并保护加密机制使用的密码短语非常重要。</p>
+</div>
+<div class="paragraph">
+<p>该设施提供了几个屏障来保护存储在每个磁盘扇区中的数据。它使用 128 位 AES 在 CBC 模式下对磁盘扇区的内容进行加密。磁盘上的每个扇区都使用不同的 AES 密钥进行加密。有关加密设计的更多信息，包括如何从用户提供的密码短语派生扇区密钥，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=4&amp;format=html">gbde(4)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 提供了一个用于 gbde 的内核模块，可以使用以下命令加载：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload geom_bde</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果使用自定义内核配置文件，请确保其中包含以下行：</p>
+</div>
+<div class="paragraph">
+<p><code>options GEOM_BDE</code> 可选项</p>
+</div>
+<div class="paragraph">
+<p>下面的示例演示了向系统添加新的硬盘，该硬盘将容纳一个加密分区，并将其挂载为 <span class="filename">/private</span> 。</p>
+</div>
+<div class="olist arabic procedure">
+<div class="title">过程：使用 gbde 加密分区</div>
+<ol class="arabic">
+<li>
+<p>在计算机上安装并配置 gbde 软件。</p>
+</li>
+<li>
+<p>打开终端或命令提示符，并使用管理员权限登录。</p>
+</li>
+<li>
+<p>使用以下命令创建一个新的 gbde 加密容器：
+<code>`
+gbde init /dev/daX
+</code>`
+其中， /dev/daX 是要加密的分区设备名称。</p>
+</li>
+<li>
+<p>输入一个密码来保护加密容器，并确保密码足够强大和安全。</p>
+</li>
+<li>
+<p>使用以下命令打开加密容器：
+<code>`
+gbde attach /dev/daX
+</code>`</p>
+</li>
+<li>
+<p>输入之前设置的密码来解锁加密容器。</p>
+</li>
+<li>
+<p>现在，您可以像使用普通分区一样使用加密分区了。</p>
+</li>
+<li>
+<p>当您不再需要使用加密分区时，使用以下命令关闭加密容器：
+<code>`
+gbde detach /dev/daX
+</code>`
+这将锁定加密容器并保护您的数据。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>请注意，使用 gbde 加密分区时，请确保备份重要数据，并妥善保管加密容器的密码。
+. 添加新的硬盘</p>
+</div>
+<div class="paragraph">
+<p>+
+按照 <a href="#disks-adding">添加磁盘</a> 中所述的方法将新驱动器安装到系统中。对于本示例，已添加了一个新的硬盘分区，表示为 <span class="filename">/dev/ad4s1c</span> ，而 <span class="filename">/dev/ad0s1*</span> 表示现有的标准 FreeBSD 分区。</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ls /dev/ad*</span>
+/dev/ad0        /dev/ad0s1b     /dev/ad0s1e     /dev/ad4s1
+/dev/ad0s1      /dev/ad0s1c     /dev/ad0s1f     /dev/ad4s1c
+/dev/ad0s1a     /dev/ad0s1d     /dev/ad4</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>创建一个目录来存放 <code>gbde</code> 锁文件。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /etc/gbde</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>gbde 锁定文件包含了 gbde 访问加密分区所需的信息。如果没有访问锁定文件的权限， gbde 将无法解密加密分区中的数据，除非进行大量的手动干预，而该软件不支持此操作。每个加密分区都使用一个单独的锁定文件。</p>
+</div>
+</li>
+<li>
+<p>初始化 <code>gbde</code> 分区</p>
+<div class="paragraph">
+<p>在使用之前，必须初始化 gbde 分区。这个初始化只需要执行一次。该命令将打开默认编辑器，以便在模板中设置各种配置选项。对于与 UFS 文件系统一起使用，请将 sector_size 设置为 2048 ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gbde init /dev/ad4s1c -i -L /etc/gbde/ad4s1c.lock</span>
+<span class="c"># $FreeBSD: src/sbin/gbde/template.txt,v 1.1.36.1 2009/08/03 08:13:06 kensmith Exp $</span>
+<span class="c">#</span>
+<span class="c"># Sector size is the smallest unit of data which can be read or written.</span>
+<span class="c"># Making it too small decreases performance and decreases available space.</span>
+<span class="c"># Making it too large may prevent filesystems from working.  512 is the</span>
+<span class="c"># minimum and always safe.  For UFS, use the fragment size</span>
+<span class="c">#</span>
+sector_size	<span class="o">=</span>	2048
+<span class="o">[</span>...]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>编辑保存后，用户将被要求两次输入用于保护数据的密码短语。两次输入的密码短语必须相同。 Gbde 保护数据的能力完全取决于密码短语的质量。有关如何选择既安全又容易记住的密码短语的提示，请参阅 <a href="http://world.std.com/" class="bare">http://world.std.com/</a> \~ reinhold/diceware.html[<a href="http://world.std.com/" class="bare">http://world.std.com/</a> ~ reinhold/diceware.htm] 。</p>
+</div>
+<div class="paragraph">
+<p>这个初始化操作创建了一个用于 gbde 分区的锁文件。在这个例子中，它被存储为 <span class="filename">/etc/gbde/ad4s1c.lock</span> 。锁文件必须以 &#34;.lock&#34; 结尾，以便被 <span class="filename">/etc/rc.d/gbde</span> 启动脚本正确地检测到。</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>必须将锁定文件与任何加密分区的内容一起备份。如果没有锁定文件，合法的所有者将无法访问加密分区上的数据。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li>
+<p>将加密分区附加到内核上</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gbde attach /dev/ad4s1c -l /etc/gbde/ad4s1c.lock</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这个命令会提示输入在加密分区初始化过程中选择的密码。新的加密设备将出现在 <span class="filename">/dev</span> 中，命名为 <span class="filename">/dev/device_name.bde</span> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ls /dev/ad*</span>
+/dev/ad0        /dev/ad0s1b     /dev/ad0s1e     /dev/ad4s1
+/dev/ad0s1      /dev/ad0s1c     /dev/ad0s1f     /dev/ad4s1c
+/dev/ad0s1a     /dev/ad0s1d     /dev/ad4        /dev/ad4s1c.bde</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>在加密设备上创建文件系统</p>
+<div class="paragraph">
+<p>一旦加密设备已经连接到内核，就可以在设备上创建文件系统。这个示例创建了一个启用了软更新的 UFS 文件系统。请确保指定具有 <span class="filename">*.bde</span> 扩展名的分区：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># newfs -U /dev/ad4s1c.bde</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>挂载加密分区</p>
+<div class="paragraph">
+<p>创建一个挂载点并挂载加密文件系统：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir /private</span>
+<span class="c"># mount /dev/ad4s1c.bde /private</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>验证加密文件系统是否可用</p>
+<div class="paragraph">
+<p>加密文件系统现在应该可见并可供使用：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>df -H
+Filesystem        Size   Used  Avail Capacity  Mounted on
+/dev/ad0s1a      1037M    72M   883M     8%    /
+/devfs            1.0K   1.0K     0B   100%    /dev
+/dev/ad0s1f       8.1G    55K   7.5G     0%    /home
+/dev/ad0s1e      1037M   1.1M   953M     0%    /tmp
+/dev/ad0s1d       6.1G   1.9G   3.7G    35%    /usr
+/dev/ad4s1c.bde   150G   4.1K   138G     0%    /private</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>每次启动后，必须手动重新连接加密文件系统到内核，检查错误并挂载，然后才能使用这些文件系统。要配置这些步骤，请将以下行添加到 <code>/etc/rc.conf</code> 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>gbde_autoattach_all=&#34;YES&#34;
+gbde_devices=&#34;ad4s1c&#34;
+gbde_lockdir=&#34;/etc/gbde&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这要求在启动时在控制台输入密码短语。输入正确的密码短语后，加密分区将自动挂载。还有其他可用的 gbde 启动选项，可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a> 中找到并列出。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>sysinstall 与 gbde 加密设备不兼容。在启动 sysinstall 之前，必须将所有的 .bde 设备从内核中分离，否则在设备的初始探测过程中， sysinstall 会崩溃。要分离示例中使用的加密设备，请使用以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># gbde detach /dev/ad4s1c</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="disks-encrypting-geli">20.13.2. 使用 <code>geli</code> 进行磁盘加密<a class="anchor" href="#disks-encrypting-geli"></a></h3>
+<div class="paragraph">
+<p>可以使用 <code>geli</code> 来使用另一种加密 GEOM 类。这个控制工具添加了一些功能，并使用了不同的加密方案来进行加密工作。它提供以下功能：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>当可用时，利用 <a href="https://man.freebsd.org/cgi/man.cgi?query=crypto&amp;sektion=9&amp;format=html">crypto(9)</a> 框架并自动使用加密硬件。</p>
+</li>
+<li>
+<p>支持多种加密算法，如 AES 、 Blowfish 和 3DES 。</p>
+</li>
+<li>
+<p>允许对根分区进行加密。在系统启动期间，将要求输入用于访问加密根分区的密码短语。</p>
+</li>
+<li>
+<p>允许使用两个独立的键。</p>
+</li>
+<li>
+<p>它之所以快速，是因为它执行简单的扇区级加密。</p>
+</li>
+<li>
+<p>允许备份和恢复主密钥。如果用户销毁了他们的密钥，仍然可以通过从备份中恢复密钥来访问数据。</p>
+</li>
+<li>
+<p>允许磁盘使用随机的一次性密钥进行连接，这对于交换分区和临时文件系统非常有用。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>更多功能和使用示例可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 中找到。</p>
+</div>
+<div class="paragraph">
+<p>下面的示例描述了如何生成一个密钥文件，该文件将作为加密提供者在 <code>/private</code> 下挂载的主密钥的一部分。密钥文件将提供一些用于加密主密钥的随机数据。主密钥还将受到密码短语的保护。提供者的扇区大小将为 4kB 。该示例描述了如何连接到 <code>geli</code> 提供者，创建一个文件系统，挂载它，使用它，并最终如何卸载它。</p>
+</div>
+<div class="olist arabic procedure">
+<div class="title">过程：使用 <code>geli</code> 加密分区</div>
+<ol class="arabic">
+<li>
+<p>在计算机上安装并配置 <code>geli</code> 工具。</p>
+</li>
+<li>
+<p>确保要加密的分区没有被挂载。</p>
+</li>
+<li>
+<p>使用以下命令创建一个新的加密设备：
+<code>`
+# geli init -s 4096 /dev/adaXsY
+</code>`
+其中 <code>/dev/adaXsY</code> 是要加密的分区的路径。</p>
+</li>
+<li>
+<p>设置加密设备的密码：
+<code>`
+# geli configure -b -k /boot/encryption.key /dev/adaXsY
+</code>`
+这将在 <code>/boot/encryption.key</code> 文件中存储加密设备的密钥。</p>
+</li>
+<li>
+<p>使用以下命令将加密设备解锁并挂载到指定的挂载点：
+<code>`
+# geli attach -k /boot/encryption.key /dev/adaXsY
+</code>`
+这将要求您输入之前设置的密码。</p>
+</li>
+<li>
+<p>现在，您可以将加密设备作为普通分区来使用，例如格式化它并将文件系统挂载到指定的挂载点。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>请注意，加密分区的解锁只在当前会话中有效。在重新启动计算机之前，您需要重新执行步骤 5 以重新解锁和挂载加密设备。
+. 加载 <code>geli</code> 支持</p>
+</div>
+<div class="paragraph">
+<p>+
+支持 <code>geli</code> 的功能作为可加载的内核模块提供。要配置系统在启动时自动加载该模块，请将以下行添加到 <span class="filename">/boot/loader.conf</span> 文件中：</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>geom_eli_load=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>+
+现在加载内核模块：</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload geom_eli</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>+
+对于自定义内核，请确保内核配置文件包含以下行：</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options GEOM_ELI
+device crypto</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>生成主密钥</p>
+<div class="paragraph">
+<p>以下命令生成一个主密钥，所有数据都将使用该密钥进行加密。该密钥是不可更改的。与直接使用该密钥不同，它会被一个或多个用户密钥加密。用户密钥由来自文件 <span class="filename">/root/da2.key</span> 的可选随机字节和 / 或口令组成。在这种情况下，密钥文件的数据源是 <span class="filename">/dev/random</span> 。此命令还将提供者 (<span class="filename">/dev/da2.eli</span>) 的扇区大小配置为 4kB ，以提高性能。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dd if=/dev/random of=/root/da2.key bs=64 count=1</span>
+<span class="c"># geli init -K /root/da2.key -s 4096 /dev/da2</span>
+Enter new passphrase:
+Reenter new passphrase:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>不强制同时使用密码短语和密钥文件，因为可以单独使用其中一种方法来保护主密钥。</p>
+</div>
+<div class="paragraph">
+<p>如果密钥文件以&#34;-&#34;表示，则使用标准输入。例如，以下命令将生成三个密钥文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cat keyfile1 keyfile2 keyfile3 | geli init -K - /dev/da2</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>将生成的密钥与提供者关联。</p>
+<div class="paragraph">
+<p>要附加提供者，请指定密钥文件、磁盘名称和密码短语：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># geli attach -k /root/da2.key /dev/da2</span>
+Enter passphrase:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将创建一个带有 <span class="filename">.eli</span> 扩展名的新设备：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ls /dev/da2*</span>
+/dev/da2  /dev/da2.eli</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>创建新的文件系统</p>
+<div class="paragraph">
+<p>接下来，使用 UFS 文件系统对设备进行格式化，并将其挂载到现有的挂载点上：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dd if=/dev/random of=/dev/da2.eli bs=1m</span>
+<span class="c"># newfs /dev/da2.eli</span>
+<span class="c"># mount /dev/da2.eli /private</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>加密文件系统现在可以使用了。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># df -H</span>
+Filesystem     Size   Used  Avail Capacity  Mounted on
+/dev/ad0s1a    248M    89M   139M    38%    /
+/devfs         1.0K   1.0K     0B   100%    /dev
+/dev/ad0s1f    7.7G   2.3G   4.9G    32%    /usr
+/dev/ad0s1d    989M   1.5M   909M     0%    /tmp
+/dev/ad0s1e    3.9G   1.3G   2.3G    35%    /var
+/dev/da2.eli   150G   4.1K   138G     0%    /private</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>一旦加密分区的工作完成，并且不再需要 <span class="filename">/private</span> 分区，为了安全起见，应该将设备放入冷存储中，即卸载并从内核中分离 <code>geli</code> 加密分区：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># umount /private</span>
+<span class="c"># geli detach da2.eli</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了简化启动时 <code>geli</code> 加密设备的挂载，提供了一个 <span class="filename">rc.d</span> 脚本。对于这个示例，请将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>geli_devices=&#34;da2&#34;
+geli_da2_flags=&#34;-k /root/da2.key&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这将 <span class="filename">/dev/da2</span> 配置为具有 <span class="filename">/root/da2.key</span> 作为主密钥的 <code>geli</code> 提供程序。系统将在关闭系统之前自动从内核中分离该提供程序。在启动过程中，脚本将在连接提供程序之前提示输入密码。在密码提示之前和之后可能会显示其他内核消息。如果启动过程似乎停滞不前，请仔细查找其他消息中的密码提示。一旦输入正确的密码，提供程序将被连接。然后文件系统通常会被挂载，通过 <span class="filename">/etc/fstab</span> 中的条目进行。有关如何配置文件系统在启动时挂载的说明，请参阅交叉引用 :basics[mount-unmount ,“挂载和卸载文件系统”] 。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="swap-encrypting">20.14. 加密交换分区<a class="anchor" href="#swap-encrypting"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>像磁盘分区的加密一样，交换空间的加密用于保护敏感信息。考虑一个处理密码的应用程序。只要这些密码保留在物理内存中，它们不会被写入磁盘，并且在重新启动后会被清除。然而，如果 FreeBSD 开始交换内存页面以释放空间，密码可能会以未加密的形式写入磁盘。对交换空间进行加密可以解决这种情况。</p>
+</div>
+<div class="paragraph">
+<p>本节演示如何使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=8&amp;format=html">gbde(8)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 加密配置交换分区。假设 <span class="filename">/dev/ada0s1b</span> 是交换分区。</p>
+</div>
+<div class="sect2">
+<h3 id="_配置加密交换空间">20.14.1. 配置加密交换空间<a class="anchor" href="#_配置加密交换空间"></a></h3>
+<div class="paragraph">
+<p>默认情况下，交换分区不会被加密，应在继续之前清除其中的任何敏感数据。要用随机垃圾覆盖当前的交换分区，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dd if=/dev/random of=/dev/ada0s1b bs=1m</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=8&amp;format=html">gbde(8)</a> 加密交换分区，请在 <span class="filename">/etc/fstab</span> 中的交换行上添加 <code>.bde</code> 后缀。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># Device		Mountpoint	FStype	Options		Dump	Pass#
+/dev/ada0s1b.bde	none		swap	sw		0	0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 来加密交换分区，可以使用 <code>.eli</code> 后缀：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># Device		Mountpoint	FStype	Options		Dump	Pass#
+/dev/ada0s1b.eli	none		swap	sw		0	0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>默认情况下， <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 使用 128 位密钥长度的 AES 算法。通常情况下，默认设置就足够了。如果需要的话，可以在 <span class="filename">/etc/fstab</span> 中的选项字段中更改这些默认值。可能的标志有：</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">aalgo 是一个用于算法学习和实践的在线平台。它提供了一个交互式的编程环境，让用户可以在浏览器中编写和运行算法代码。用户可以通过 aalgo 学习各种常见的算法和数据结构，并通过解决实际问题来提高他们的编程技能。 aalgo 还提供了一系列的练习题和挑战，帮助用户巩固所学的知识并提升他们的算法解决能力。无论是初学者还是有经验的开发者，都可以通过 aalgo 来提升他们的算法和编程能力。</dt>
+<dd>
+<p>数据完整性验证算法用于确保加密数据没有被篡改。请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 以获取支持的算法列表。</p>
+</dd>
+<dt class="hdlist1">ealgo</dt>
+<dd>
+<p>用于保护数据的加密算法。请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 以获取支持的算法列表。</p>
+</dd>
+<dt class="hdlist1">密钥长度</dt>
+<dd>
+<p>用于加密算法的密钥长度。请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 以了解每个加密算法支持的密钥长度。</p>
+</dd>
+<dt class="hdlist1">扇区大小</dt>
+<dd>
+<p>在加密之前，块数据的大小会被分割。较大的扇区大小可以提高性能，但会增加存储开销。推荐的大小是 4096 字节。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>这个示例配置了一个使用 Blowfish 算法的加密交换分区，密钥长度为 128 位，扇区大小为 4 千字节。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre># Device		Mountpoint	FStype	Options				Dump	Pass#
+/dev/ada0s1b.eli	none		swap	sw,ealgo=blowfish,keylen=128,sectorsize=4096	0	0</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_加密交换验证">20.14.2. 加密交换验证<a class="anchor" href="#_加密交换验证"></a></h3>
+<div class="paragraph">
+<p>系统重新启动后，可以使用 <code>swapinfo</code> 命令来验证加密交换空间的正常运行。</p>
+</div>
+<div class="paragraph">
+<p>如果正在使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=8&amp;format=html">gbde(8)</a> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>swapinfo
+Device          1K-blocks     Used    Avail Capacity
+/dev/ada0s1b.bde   542720        0   542720     0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果正在使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>swapinfo
+Device          1K-blocks     Used    Avail Capacity
+/dev/ada0s1b.eli   542720        0   542720     0</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）<a class="anchor" href="#disks-hast"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>高可用性是严肃的商业应用程序的主要要求之一，而高可用性存储是这种环境中的关键组成部分。在 FreeBSD 中，高可用性存储（ HAST ）框架允许通过 TCP/IP 网络在多个物理分离的机器上透明地存储相同的数据。 HAST 可以理解为基于网络的 RAID1 （镜像），类似于在 GNU/Linux 平台上使用的 DRBD® 存储系统。结合 FreeBSD 的其他高可用性功能（如 CARP ）， HAST 使得构建一个抵抗硬件故障的高可用性存储集群成为可能。</p>
+</div>
+<div class="paragraph">
+<p>以下是 HAST 的主要特点：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>可用于掩盖本地硬盘的 I/O 错误。</p>
+</li>
+<li>
+<p>它与 FreeBSD 支持的任何文件系统兼容，与文件系统无关。</p>
+</li>
+<li>
+<p>只有在节点宕机期间被修改的块才会进行同步，从而实现高效快速的重新同步。</p>
+</li>
+<li>
+<p>可以在已部署的环境中使用，以增加额外的冗余性。</p>
+</li>
+<li>
+<p>与 CARP 、 Heartbeat 或其他工具一起，它可以用于构建强大和耐用的存储系统。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>阅读本节后，您将了解：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HAST 是什么，它是如何工作的，以及它提供了哪些功能。</p>
+</li>
+<li>
+<p>如何在 FreeBSD 上设置和使用 HAST 。</p>
+</li>
+<li>
+<p>如何集成 CARP 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 以构建一个强大的存储系统。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在阅读本节之前，您应该：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解 UNIX® 和 FreeBSD 基础知识（参见： basics[basics , FreeBSD Basics] ）。</p>
+</li>
+<li>
+<p>了解如何配置网络接口和其他核心的 FreeBSD 子系统（参见： config[config-tuning , Configuration and Tuning] ）。</p>
+</li>
+<li>
+<p>对 FreeBSD 网络有很好的理解（参考： partiv[network-communication ,&#34;网络通信&#34;] ）。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>HAST 项目由 FreeBSD 基金会赞助，得到了 <a href="http://www.omc.net/">http://www.omc.net/</a> 和 <a href="http://www.transip.nl/">http://www.transip.nl/</a> 的支持。</p>
+</div>
+<div class="sect2">
+<h3 id="_hast_操作">20.15.1. HAST 操作<a class="anchor" href="#_hast_操作"></a></h3>
+<div class="paragraph">
+<p>HAST 提供了两台物理机之间的同步块级复制：<em>主节点_和_备节点</em>。这两台机器一起被称为一个集群。</p>
+</div>
+<div class="paragraph">
+<p>由于 HAST 以主 - 备配置工作，所以在任何给定的时间内只允许集群中的一个节点处于活动状态。主节点，也称为“活动节点”，负责处理所有对 HAST 管理设备的 I/O 请求。备节点会自动从主节点同步。</p>
+</div>
+<div class="paragraph">
+<p>HAST 系统的物理组件包括主节点上的本地磁盘和远程次节点上的磁盘。</p>
+</div>
+<div class="paragraph">
+<p>HAST 在块级别上同步操作，对文件系统和应用程序透明。 HAST 在 [/dev/hast/] 目录下提供常规的 GEOM 提供程序，供其他工具或应用程序使用。使用 HAST 提供的设备和原始磁盘或分区之间没有区别。</p>
+</div>
+<div class="paragraph">
+<p>每个写入、删除或刷新操作都会通过 TCP/IP 同时发送到本地磁盘和远程磁盘。每个读取操作都会从本地磁盘提供，除非本地磁盘不是最新的或发生了 I/O 错误。在这种情况下，读取操作会被发送到辅助节点。</p>
+</div>
+<div class="paragraph">
+<p>HAST 试图提供快速的故障恢复。因此，在节点故障后减少同步时间非常重要。为了提供快速同步， HAST 管理一个磁盘上的脏扩展位图，并且只在定期同步期间同步这些扩展，初始同步除外。</p>
+</div>
+<div class="paragraph">
+<p>处理同步的方法有很多种。 HAST 实现了几种复制模式来处理不同的同步方法：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>_memsync_模式：当本地写操作完成并且远程节点确认数据到达之后，但在实际存储数据之前，该模式将报告写操作已完成。在发送确认之后，远程节点上的数据将直接存储。该模式旨在减少延迟，但仍提供良好的可靠性。该模式是默认模式。</p>
+</li>
+<li>
+<p><em>fullsync</em>：当本地写操作和远程写操作都完成时，该模式将报告写操作已完成。这是最安全但也是最慢的复制模式。</p>
+</li>
+<li>
+<p><em>async</em>：此模式在本地写操作完成时报告写操作完成。这是最快速和最危险的复制模式。只有在复制到远程节点时延迟过高以至于其他模式无法使用时才应使用此模式。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hast_配置">20.15.2. HAST 配置<a class="anchor" href="#_hast_配置"></a></h3>
+<div class="paragraph">
+<p>HAST 框架由几个组件组成：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>这个人 :hastd[8] 守护进程提供数据同步功能。当启动这个守护进程时，它会自动加载 <code>geom_gate.ko</code> 模块。</p>
+</li>
+<li>
+<p>用户空间管理实用程序， <a href="https://man.freebsd.org/cgi/man.cgi?query=hastctl&amp;sektion=8&amp;format=html">hastctl(8)</a> 。</p>
+</li>
+<li>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=hast.conf&amp;sektion=5&amp;format=html">hast.conf(5)</a> 配置文件。在启动 hastd 之前，此文件必须存在。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>喜欢将 <code>GEOM_GATE</code> 支持静态构建到内核中的用户应该将以下行添加到自定义内核配置文件中，然后按照 <a href="../kernelconfig/#kernelconfig">Configuring the FreeBSD Kernel</a> 中的说明重新构建内核。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options	GEOM_GATE</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下示例描述了如何使用 HAST 在两个节点之间配置主备操作来复制数据。节点将被称为 <code>hasta</code> ， IP 地址为 <code>172.16.0.1</code> ，以及 <code>hastb</code> ， IP 地址为 <code>172.16.0.2</code> 。两个节点都将有一个专用硬盘 <span class="filename">/dev/ad6</span> ，大小相同，用于 HAST 操作。 HAST 池，有时也称为资源或 GEOM 提供者，在 <span class="filename">/dev/hast/</span> 中将被称为 <code>test</code> 。</p>
+</div>
+<div class="paragraph">
+<p>HAST 的配置是通过使用 [/etc/hast.conf] 文件完成的。这个文件在两个节点上应该是相同的。最简单的配置如下：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>resource test {
+	on hasta {
+		local /dev/ad6
+		remote 172.16.0.2
+	}
+	on hastb {
+		local /dev/ad6
+		remote 172.16.0.1
+	}
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>有关更高级的配置，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=hast.conf&amp;sektion=5&amp;format=html">hast.conf(5)</a> 。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果主机是可解析的，并且在 /etc/hosts 或本地 DNS 中定义了，也可以在 <code>remote</code> 语句中使用主机名。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>一旦配置在两个节点上存在，就可以创建 HAST 池。在两个节点上运行以下命令，将初始元数据放置在本地磁盘上并启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastd&amp;sektion=8&amp;format=html">hastd(8)</a> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># hastctl create test</span>
+<span class="c"># service hastd onestart</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>无法使用 GEOM 提供程序与现有文件系统一起使用，也无法将现有存储转换为 HAST 管理的池。此过程需要在提供程序上存储一些元数据，而现有提供程序上没有足够的空间可用。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>HAST 节点的“ primary ”或“ secondary ”角色由管理员或像 Heartbeat 这样的软件使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastctl&amp;sektion=8&amp;format=html">hastctl(8)</a> 选择。在主节点上，执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># hastctl role primary test</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在辅助节点上运行以下命令， <code>hastb</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># hastctl role secondary test</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在每个节点上运行 <code>hastctl</code> 来验证结果：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># hastctl status test</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>检查输出中的 <code>status</code> 行。如果它显示为 <code>degraded</code> ，则配置文件存在问题。每个节点上应该显示为 <code>complete</code> ，表示节点之间的同步已经开始。当 <code>hastctl status</code> 报告 0 字节的 <code>dirty</code> extents 时，同步完成。</p>
+</div>
+<div class="paragraph">
+<p>下一步是在 GEOM 提供程序上创建文件系统并挂载它。这必须在“ primary ”节点上完成。根据硬盘的大小，创建文件系统可能需要几分钟的时间。此示例在 <code>/dev/hast/test</code> 上创建了一个 UFS 文件系统。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># newfs -U /dev/hast/test</span>
+<span class="c"># mkdir /hast/test</span>
+<span class="c"># mount /dev/hast/test /hast/test</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一旦 HAST 框架正确配置完成，最后一步是确保在系统启动时自动启动 HAST 。将以下行添加到 <code>/etc/rc.conf</code> 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hastd_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_故障转移配置">20.15.2.1. 故障转移配置<a class="anchor" href="#_故障转移配置"></a></h4>
+<div class="paragraph">
+<p>这个示例的目标是构建一个强大的存储系统，能够抵抗任何给定节点的故障。如果主节点发生故障，备用节点将无缝接管，检查和挂载文件系统，并继续工作，不会丢失任何一位数据。</p>
+</div>
+<div class="paragraph">
+<p>为了完成这个任务，使用 Common Address Redundancy Protocol (CARP) 来提供 IP 层的自动故障转移。 CARP 允许同一网络段上的多个主机共享一个 IP 地址。根据 <a href="../advanced-networking/#carp">“ Common Address Redundancy Protocol (CARP) ”</a> 中提供的文档，在集群的两个节点上设置 CARP 。在这个例子中，每个节点都有自己的管理 IP 地址和一个共享的 IP 地址为_172.16.0.254_。集群的主要 HAST 节点必须是主要的 CARP 节点。</p>
+</div>
+<div class="paragraph">
+<p>在前一节中创建的 HAST 池现在已经准备好导出到网络上的其他主机。可以通过 NFS 或 Samba 将其导出，使用共享的 IP 地址_172.16.0.254_。唯一尚未解决的问题是主节点故障时的自动故障转移。</p>
+</div>
+<div class="paragraph">
+<p>当 CARP 接口上下线时， FreeBSD 操作系统会生成一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 事件，这样就可以监视 CARP 接口的状态变化。 CARP 接口的状态变化表示其中一个节点失败或重新上线。这些状态变化事件使得可以运行一个脚本来自动处理 HAST 故障切换。</p>
+</div>
+<div class="paragraph">
+<p>要捕获 CARP 接口上的状态变化，请在每个节点的 <code>/etc/devd.conf</code> 配置文件中添加以下配置：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>notify 30 {
+	match &#34;system&#34; &#34;IFNET&#34;;
+	match &#34;subsystem&#34; &#34;carp0&#34;;
+	match &#34;type&#34; &#34;LINK_UP&#34;;
+	action &#34;/usr/local/sbin/carp-hast-switch primary&#34;;
+};
+
+notify 30 {
+	match &#34;system&#34; &#34;IFNET&#34;;
+	match &#34;subsystem&#34; &#34;carp0&#34;;
+	match &#34;type&#34; &#34;LINK_DOWN&#34;;
+	action &#34;/usr/local/sbin/carp-hast-switch secondary&#34;;
+};</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果系统运行的是 FreeBSD 10 或更高版本，请将 <span class="filename">carp0</span> 替换为 CARP 配置接口的名称。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在两个节点上重新启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> ，以使新配置生效：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service devd restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当指定的接口状态发生上升或下降变化时，系统会生成一个通知，允许 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 子系统运行指定的自动故障转移脚本 <span class="filename">/usr/local/sbin/carp-hast-switch</span> 。有关此配置的进一步说明，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd.conf&amp;sektion=5&amp;format=html">devd.conf(5)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>这是一个自动故障转移脚本的示例：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+
+# Original script by Freddie Cash &lt;fjwcash@gmail.com&gt;
+# Modified by Michael W. Lucas &lt;mwlucas@BlackHelicopters.org&gt;
+# and Viktor Petersson &lt;vpetersson@wireload.net&gt;
+
+# The names of the HAST resources, as listed in /etc/hast.conf
+resources=&#34;test&#34;
+
+# delay in mounting HAST resource after becoming primary
+# make your best guess
+delay=3
+
+# logging
+log=&#34;local0.debug&#34;
+name=&#34;carp-hast&#34;
+
+# end of user configurable stuff
+
+case &#34;$1&#34; in
+	primary)
+		logger -p $log -t $name &#34;Switching to primary provider for ${resources}.&#34;
+		sleep ${delay}
+
+		# Wait for any &#34;hastd secondary&#34; processes to stop
+		for disk in ${resources}; do
+			while $( pgrep -lf &#34;hastd: ${disk} \(secondary\)&#34; &gt; /dev/null 2&gt;&amp;1 ); do
+				sleep 1
+			done
+
+			# Switch role for each disk
+			hastctl role primary ${disk}
+			if [ $? -ne 0 ]; then
+				logger -p $log -t $name &#34;Unable to change role to primary for resource ${disk}.&#34;
+				exit 1
+			fi
+		done
+
+		# Wait for the /dev/hast/* devices to appear
+		for disk in ${resources}; do
+			for I in $( jot 60 ); do
+				[ -c &#34;/dev/hast/${disk}&#34; ] &amp;&amp; break
+				sleep 0.5
+			done
+
+			if [ ! -c &#34;/dev/hast/${disk}&#34; ]; then
+				logger -p $log -t $name &#34;GEOM provider /dev/hast/${disk} did not appear.&#34;
+				exit 1
+			fi
+		done
+
+		logger -p $log -t $name &#34;Role for HAST resources ${resources} switched to primary.&#34;
+
+		logger -p $log -t $name &#34;Mounting disks.&#34;
+		for disk in ${resources}; do
+			mkdir -p /hast/${disk}
+			fsck -p -y -t ufs /dev/hast/${disk}
+			mount /dev/hast/${disk} /hast/${disk}
+		done
+
+	;;
+
+	secondary)
+		logger -p $log -t $name &#34;Switching to secondary provider for ${resources}.&#34;
+
+		# Switch roles for the HAST resources
+		for disk in ${resources}; do
+			if ! mount | grep -q &#34;^/dev/hast/${disk} on &#34;
+			then
+			else
+				umount -f /hast/${disk}
+			fi
+			sleep $delay
+			hastctl role secondary ${disk} 2&gt;&amp;1
+			if [ $? -ne 0 ]; then
+				logger -p $log -t $name &#34;Unable to switch role to secondary for resource ${disk}.&#34;
+				exit 1
+			fi
+			logger -p $log -t $name &#34;Role switched to secondary for resource ${disk}.&#34;
+		done
+	;;
+esac</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>简而言之，当一个节点成为主节点时，脚本会执行以下操作：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>将 HAST 池提升为另一节点上的主节点。</p>
+</li>
+<li>
+<p>检查 HAST 池下的文件系统。</p>
+</li>
+<li>
+<p>挂载存储池。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>当一个节点变为次要节点时：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>卸载 HAST 池。</p>
+</li>
+<li>
+<p>将 HAST 池降级为辅助池。</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>这只是一个作为概念验证的示例脚本。它并不能处理所有可能的情况，并且可以根据需要进行扩展或修改，例如启动或停止所需的服务。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>对于这个示例，使用了标准的 UFS 文件系统。为了减少恢复所需的时间，可以使用启用了日志的 UFS 或 ZFS 文件系统。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>更详细的信息和额外的示例可以在 <a href="http://wiki.FreeBSD.org/HAST">http://wiki.FreeBSD.org/HAST</a> 找到。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_故障排除">20.15.3. 故障排除<a class="anchor" href="#_故障排除"></a></h3>
+<div class="paragraph">
+<p>HAST 通常应该没有问题。然而，与任何其他软件产品一样，有时候它可能无法按照预期工作。问题的根源可能不同，但经验法则是确保集群节点之间的时间同步。</p>
+</div>
+<div class="paragraph">
+<p>在排除 HAST 问题时，应通过使用 <code>-d</code> 参数启动 <code>hastd</code> 来增加 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastd&amp;sektion=8&amp;format=html">hastd(8)</a> 的调试级别。可以多次指定此参数以进一步增加调试级别。还可以考虑使用 <code>-F</code> ，它会在前台启动 <code>hastd</code> 。</p>
+</div>
+<div class="sect3">
+<h4 id="disks-hast-sb">20.15.3.1. 从分裂脑状态中恢复<a class="anchor" href="#disks-hast-sb"></a></h4>
+<div class="paragraph">
+<p>当集群的节点无法相互通信且都配置为主节点时，会发生“分裂脑”现象。这是一种危险的情况，因为它允许两个节点对数据进行不兼容的更改。系统管理员必须手动纠正这个问题。</p>
+</div>
+<div class="paragraph">
+<p>管理员必须要么决定哪个节点有更重要的更改，要么手动执行合并操作。然后，让 HAST 对具有损坏数据的节点执行完全同步。为此，请在需要重新同步的节点上执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># hastctl role init test</span>
+<span class="c"># hastctl create test</span>
+<span class="c"># hastctl role secondary test</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

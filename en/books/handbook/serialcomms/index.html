@@ -1,0 +1,3194 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="This chapter covers some of the ways serial communications can be used on FreeBSD"/>
+  <meta name="keywords" content="serial, communications, terminal, modem, console"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/en/books/handbook/serialcomms/" />
+
+  <title>Chapter 29. Serial Communications |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="Chapter 29. Serial Communications" />
+    <meta property="og:description" content="This chapter covers some of the ways serial communications can be used on FreeBSD" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="en" />
+    <meta property="og:url" content="https://free.bsd-doc.org/en/books/handbook/serialcomms/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/en\/books\/handbook\/serialcomms\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/preface/">
+              Preface
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-audience">Intended Audience</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from4">Fourth Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from3">Third Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from2">Second Edition (2004)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes">First Edition (2001)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-overview">Organization of This Book</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-conv">Conventions used in this book</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-acknowledgements">Acknowledgments</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/parti/">
+              Part I. Getting Started
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/introduction/">
+              Chapter 1. Introduction
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#introduction-synopsis">1.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#nutshell">1.2. Welcome to FreeBSD!</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#history">1.3. About the FreeBSD Project</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/">
+              Chapter 2. Installing FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. Minimum Hardware Requirements</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-pre">2.3. Pre-Installation Tasks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-start">2.4. Starting the Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#using-bsdinstall">2.5. Using bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. Allocating Disk Space</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. Fetching Distribution Files</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-post">2.8. Network Interfaces, Accounts, Time Zone, Services and Hardening</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. Troubleshooting</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#using-live-cd">2.10. Using the Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/basics/">
+              Chapter 3. FreeBSD Basics
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-synopsis">3.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#consoles">3.2. Virtual Consoles and Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#users-synopsis">3.3. Users and Basic Account Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#permissions">3.4. Permissions</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#dirstructure">3.5. Directory Structure</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#disk-organization">3.6. Disk Organization</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#mount-unmount">3.7. Mounting and Unmounting File Systems</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-processes">3.8. Processes and Daemons</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#editors">3.10. Text Editors</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-devices">3.11. Devices and Device Nodes</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-more-information">3.12. Manual Pages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/ports/">
+              Chapter 4. Installing Applications: Packages and Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-synopsis">4.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-overview">4.2. Overview of Software Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-finding-applications">4.3. Finding Software</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#pkgng-intro">4.4. Using pkg for Binary Package Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-using">4.5. Using the Ports Collection</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-poudriere">4.6. Building Packages with poudriere</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-nextsteps">4.7. Post-Installation Considerations</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-broken">4.8. Dealing with Broken Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/x11/">
+              Chapter 5. The X Window System
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x11-synopsis">5.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-install">5.2. Installing Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-graphic-card-drivers">5.3. Graphic card drivers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-config">5.4. Xorg Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-fonts">5.5. Using Fonts in Xorg</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/wayland/">
+              Chapter 6. Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-synopsis">6.1. Wayland Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-wayfire">6.2. The Wayfire Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-hikari">6.3. The Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-sway">6.4. The Sway Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-xwayland">6.5. Using Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-remotedesktop">6.6. Remote Desktop Using VNC</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-ly">6.7. Wayland Login Manager</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-utilities">6.8. Useful Utilities</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/network/">
+              Chapter 7. Network
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#network-synopsis">7.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#config-network-setup">7.2. Setting up the Network</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#config-network-connection">7.3. Wired Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#network-wireless">7.4. Wireless Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#hostname">7.5. Hostname</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#dns">7.6. DNS</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#troubleshooting">7.7. Troubleshooting</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partii/">
+              Part II. Common Tasks
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/desktop/">
+              Chapter 8. Desktop Environments
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-synopsis">8.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-environments">8.2. Desktop Environments</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-browsers">8.3. Browsers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-development">8.4. Development tools</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-productivity">8.5. Desktop office productivity</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-viewers">8.6. Document Viewers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-finance">8.7. Finance</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/multimedia/">
+              Chapter 9. Multimedia
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#multimedia-synopsis">9.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#sound-setup">9.2. Setting Up the Sound Card</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#audio-ports">9.3. Audio players</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#video-ports">9.4. Video players</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#conferencing-meetings">9.5. Conferencing and Meetings</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#scanners">9.6. Image Scanners</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/">
+              Chapter 10. Configuring the FreeBSD Kernel
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. Why Build a Custom Kernel?</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-devices">10.3. Finding the System Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-config">10.4. The Configuration File</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-building">10.5. Building and Installing a Custom Kernel</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. If Something Goes Wrong</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/printing/">
+              Chapter 11. Printing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-quick-start">11.1. Quick Start</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-connections">11.2. Printer Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-pdls">11.3. Common Page Description Languages</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-direct">11.4. Direct Printing</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-lpd">11.5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-other">11.6. Other Printing Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/">
+              Chapter 12. Linux Binary Compatibility
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-synopsis">12.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. Configuring Linux Binary Compatibility</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linux-userlands">12.3. Linux userlands</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-advanced">12.4. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/wine/">
+              Chapter 13. WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-synopsis">13.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-overview-concepts">13.2. WINE Overview & Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#installing-wine-on-freebsd">13.3. Installing WINE on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#running-first-wine-program">13.4. Running a First WINE Program on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#configuring-wine-installation">13.5. Configuring WINE Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-management-guis">13.6. WINE Management GUIs</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. WINE in Multi-User FreeBSD Installations</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-on-os-faq">13.8. WINE on FreeBSD FAQ</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partiii/">
+              Part III. System Administration
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/config/">
+              Chapter 14. Configuration, Services, Logging and Power Management
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#config-synopsis">14.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-configfiles">14.2. Configuration Files</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-rcd">14.3. Managing Services in FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#cron-periodic">14.4. Cron and Periodic</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-syslog">14.5. Configuring System Logging</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#acpi-overview">14.6. Power and Resource Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#adding-swap-space">14.7. Adding Swap Space</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/boot/">
+              Chapter 15. The FreeBSD Booting Process
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-synopsis">15.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-introduction">15.2. FreeBSD Boot Process</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#device-hints">15.3. Device Hints</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-shutdown">15.4. Shutdown Sequence</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/security/">
+              Chapter 16. Security
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-synopsis">16.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-intro">16.2. Introduction</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#sec-accounts">16.3. Securing Accounts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-ids">16.4. Intrusion Detection System (IDS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-secure-levels">16.5. Secure levels</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-file-flags">16.6. File flags</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#openssh">16.7. OpenSSH</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#openssl">16.8. OpenSSL</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#kerberos5">16.9. Kerberos</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#tcpwrappers">16.10. TCP Wrappers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#fs-acl">16.11. Access Control Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#capsicum">16.12. Capsicum</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-accounting">16.13. Process Accounting</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-resourcelimits">16.14. Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-pkg">16.15. Monitoring Third Party Security Issues</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-advisories">16.16. FreeBSD Security Advisories</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/jails/">
+              Chapter 17. Jails and Containers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jails-synopsis">17.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-types">17.2. Jail Types</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#host-configuration">17.3. Host Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#classic-jail">17.4. Classic Jail (Thick Jail)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#thin-jail">17.5. Thin Jails</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-management">17.6. Jail Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-upgrading">17.7. Jail Upgrading</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-resource-limits">17.8. Jail Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-managers-and-containers">17.9. Jail Managers and Containers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mac/">
+              Chapter 18. Mandatory Access Control
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-synopsis">18.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-inline-glossary">18.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-understandlabel">18.3. Understanding MAC Labels</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-planning">18.4. Planning the Security Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-policies">18.5. Available MAC Policies</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-userlocked">18.6. User Lock Down</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-implementing">18.7. Nagios in a MAC Jail</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-troubleshoot">18.8. Troubleshooting the MAC Framework</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/audit/">
+              Chapter 19. Security Event Auditing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-synopsis">19.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-inline-glossary">19.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-config">19.3. Audit Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-administration">19.4. Working with Audit Trails</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/disks/">
+              Chapter 20. Storage
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-synopsis">20.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-adding">20.2. Adding Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-growing">20.3. Resizing and Growing Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#usb-disks">20.4. USB Storage Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#creating-cds">20.5. Creating and Using CD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#creating-dvds">20.6. Creating and Using DVD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#floppies">20.7. Creating and Using Floppy Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#using-ntfs">20.8. Using NTFS Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#backup-basics">20.9. Backup Basics</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-virtual">20.10. Memory Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#snapshots">20.11. File System Snapshots</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#quotas">20.12. Disk Quotas</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-encrypting">20.13. Encrypting Disk Partitions</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#swap-encrypting">20.14. Encrypting Swap</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-hast">20.15. Highly Available Storage (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/geom/">
+              Chapter 21. GEOM: Modular Disk Transformation Framework
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-synopsis">21.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-striping">21.2. RAID0 - Striping</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-mirror">21.3. RAID1 - Mirroring</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-raid3">21.4. RAID3 - Byte-level Striping with Dedicated Parity</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-graid">21.5. Software RAID Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-glabel">21.7. Labeling Disk Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-gjournal">21.8. UFS Journaling Through GEOM</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/zfs/">
+              Chapter 22. The Z File System (ZFS)
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-differences">22.1. What Makes ZFS Different</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-quickstart">22.2. Quick Start Guide</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zfs-allow">22.5. Delegated Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-advanced">22.6. Advanced Topics</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-links">22.7. Further Resources</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-term">22.8. ZFS Features and Terminology</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/filesystems/">
+              Chapter 23. Other File Systems
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/filesystems/#filesystems-synopsis">23.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/filesystems/#filesystems-linux">23.2. Linux® File Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/virtualization/">
+              Chapter 24. Virtualization
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-synopsis">24.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. FreeBSD as a Guest on Parallels Desktop for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-vmware">24.3. FreeBSD as a Guest on VMware Fusion for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. FreeBSD as a Guest on VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. FreeBSD as a Host with VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-bhyve">24.6. FreeBSD as a Host with bhyve</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD as a Xen™-Host</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/l10n/">
+              Chapter 25. Localization - i18n/L10n Usage and Setup
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#l10n-synopsis">25.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#using-localization">25.2. Using Localization</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#l10n-compiling">25.3. Finding i18n Applications</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#lang-setup">25.4. Locale Configuration for Specific Languages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/">
+              Chapter 26. Updating and Upgrading FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD Update</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-bootcode">26.3. Updating Bootcode</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. Updating the Documentation Set</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#current-stable">26.5. Tracking a Development Branch</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#makeworld">26.6. Updating FreeBSD from Source</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#small-lan">26.7. Tracking for Multiple Machines</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. Building on non-FreeBSD Hosts</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/dtrace/">
+              Chapter 27. DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-synopsis">27.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-implementation">27.2. Implementation Differences</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-enable">27.3. Enabling DTrace Support</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-using">27.4. Using DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/">
+              Chapter 28. USB Device Mode / USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB Virtual Serial Ports</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB Device Mode Network Interfaces</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB Virtual Storage Device</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partiv/">
+              Part IV. Network Communication
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/">
+              Chapter 29. Serial Communications
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serial-synopsis">29.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serial">29.2. Serial Terminology and Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#term">29.3. Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#dialup">29.4. Dial-in Service</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#dialout">29.5. Dial-out Service</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serialconsole-setup">29.6. Setting Up the Serial Console</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/">
+              Chapter 30. PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#userppp">30.2. Configuring PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. Troubleshooting PPP Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#pppoe">30.4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#pppoa">30.5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mail/">
+              Chapter 31. Electronic Mail
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-synopsis">31.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-using">31.2. Mail Components</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#sendmail">31.4. Sendmail</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-changingmta">31.5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-agents">31.6. Mail User Agents</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-advanced">31.7. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/network-servers/">
+              Chapter 32. Network Servers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-servers-synopsis">32.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-inetd">32.2. The inetd Super-Server</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-nfs">32.3. Network File System (NFS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-nis">32.4. Network Information System (NIS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ldap">32.5. Lightweight Directory Access Protocol (LDAP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-dhcp">32.6. Dynamic Host Configuration Protocol (DHCP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-dns">32.7. Domain Name System (DNS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ftp">32.9. File Transfer Protocol (FTP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-samba">32.10. File and Print Services for Microsoft® Windows® Clients (Samba)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ntp">32.11. Clock Synchronization with NTP</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-iscsi">32.12. iSCSI Initiator and Target Configuration</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/firewalls/">
+              Chapter 33. Firewalls
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-intro">33.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-concepts">33.2. Firewall Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-pf">33.3. PF</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER (IPF)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-blacklistd">33.6. Blacklistd</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/">
+              Chapter 34. Advanced Networking
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-routing">34.2. Gateways and Routes</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. Virtual Hosts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-advanced-wireless">34.4. Wireless Advanced Authentication</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. Wireless Ad-hoc Mode</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB Tethering</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-bluetooth">34.7. Bluetooth</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-bridging">34.8. Bridging</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-aggregation">34.9. Link Aggregation and Failover</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-diskless">34.10. Diskless Operation with PXE</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#carp">34.11. Common Address Redundancy Protocol (CARP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-vlan">34.12. VLANs</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partv/">
+              Part V. Appendices
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mirrors/">
+              Appendix A. Obtaining FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#mirrors">A.1. Mirrors</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#git">A.2. Using Git</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#svn">A.3. Using Subversion</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#mirrors-cdrom">A.4. CD and DVD Sets</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/bibliography/">
+              Appendix B. Bibliography
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD Bibliography</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-security">B.2. Security Reference</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-history">B.3. UNIX® History</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-journals">B.4. Periodicals, Journals, and Magazines</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/eresources/">
+              Appendix C. Resources on the Internet
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-www">C.1. Websites</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-mail">C.2. Mailing Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-news">C.3. Usenet Newsgroups</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/pgpkeys/">
+              Appendix D. OpenPGP Keys
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/pgpkeys/#pgpkeys-officers">D.1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/glossary/">
+              FreeBSD Glossary
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/colophon/">
+              Colophon
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">Chapter 29. Serial Communications</h1>
+    
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#serial-synopsis">29.1. Synopsis</a></li>
+    <li><a href="#serial">29.2. Serial Terminology and Hardware</a></li>
+    <li><a href="#term">29.3. Terminals</a></li>
+    <li><a href="#dialup">29.4. Dial-in Service</a></li>
+    <li><a href="#dialout">29.5. Dial-out Service</a></li>
+    <li><a href="#serialconsole-setup">29.6. Setting Up the Serial Console</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="serial-synopsis">29.1. Synopsis<a class="anchor" href="#serial-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>UNIX® has always had support for serial communications as the very first UNIX® machines relied on serial lines for user input and output.
+Things have changed a lot from the days when the average terminal consisted of a 10-character-per-second serial printer and a keyboard.
+This chapter covers some of the ways serial communications can be used on FreeBSD.</p>
+</div>
+<div class="paragraph">
+<p>After reading this chapter, you will know:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>How to connect terminals to a FreeBSD system.</p>
+</li>
+<li>
+<p>How to use a modem to dial out to remote hosts.</p>
+</li>
+<li>
+<p>How to allow remote users to login to a FreeBSD system with a modem.</p>
+</li>
+<li>
+<p>How to boot a FreeBSD system from a serial console.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Before reading this chapter, you should:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Know how to <a href="../kernelconfig/#kernelconfig">configure and install a custom kernel</a>.</p>
+</li>
+<li>
+<p>Understand <a href="../basics/#basics">FreeBSD permissions and processes</a>.</p>
+</li>
+<li>
+<p>Have access to the technical manual for the serial hardware to be used with FreeBSD.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="serial">29.2. Serial Terminology and Hardware<a class="anchor" href="#serial"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following terms are often used in serial communications:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">bps</dt>
+<dd>
+<p>Bits per Second (bps) is the rate at which data is transmitted.</p>
+</dd>
+<dt class="hdlist1">DTE</dt>
+<dd>
+<p>Data Terminal Equipment (DTE) is one of two endpoints in a serial communication.
+An example would be a computer.</p>
+</dd>
+<dt class="hdlist1">DCE</dt>
+<dd>
+<p>Data Communications Equipment (DCE) is the other endpoint in a serial communication.
+Typically, it is a modem or serial terminal.</p>
+</dd>
+<dt class="hdlist1">RS-232</dt>
+<dd>
+<p>The original standard which defined hardware serial communications.
+It has since been renamed to TIA-232.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>When referring to communication data rates, this section does not use the term <em>baud</em>.
+Baud refers to the number of electrical state transitions made in a period of time, while bps is the correct term to use.</p>
+</div>
+<div class="paragraph">
+<p>To connect a serial terminal to a FreeBSD system, a serial port on the computer and the proper cable to connect to the serial device are needed.
+Users who are already familiar with serial hardware and cabling can safely skip this section.</p>
+</div>
+<div class="sect2">
+<h3 id="term-cables-null">29.2.1. Serial Cables and Ports<a class="anchor" href="#term-cables-null"></a></h3>
+<div class="paragraph">
+<p>There are several different kinds of serial cables.
+The two most common types are null-modem cables and standard RS-232 cables.
+The documentation for the hardware should describe the type of cable required.</p>
+</div>
+<div class="paragraph">
+<p>These two types of cables differ in how the wires are connected to the connector.
+Each wire represents a signal, with the defined signals summarized in <a href="#serialcomms-signal-names">RS-232C Signal Names</a>.
+A standard serial cable passes all of the RS-232C signals straight through.
+For example, the &#34;Transmitted Data&#34; pin on one end of the cable goes to the &#34;Transmitted Data&#34; pin on the other end.
+This is the type of cable used to connect a modem to the FreeBSD system, and is also appropriate for some terminals.</p>
+</div>
+<div class="paragraph">
+<p>A null-modem cable switches the &#34;Transmitted Data&#34; pin of the connector on one end with the &#34;Received Data&#34; pin on the other end.
+The connector can be either a DB-25 or a DB-9.</p>
+</div>
+<div class="paragraph">
+<p>A null-modem cable can be constructed using the pin connections summarized in <a href="#nullmodem-db25">DB-25 to DB-25 Null-Modem Cable</a>, <a href="#nullmodem-db9">DB-9 to DB-9 Null-Modem Cable</a>, and <a href="#nullmodem-db9-25">DB-9 to DB-25 Null-Modem Cable</a>.
+While the standard calls for a straight-through pin 1 to pin 1 &#34;Protective Ground&#34; line, it is often omitted.
+Some terminals work using only pins 2, 3, and 7, while others require different configurations.
+When in doubt, refer to the documentation for the hardware.</p>
+</div>
+<table id="serialcomms-signal-names" class="tableblock frame-none grid-all stretch">
+<caption class="title">Table 1. RS-232C Signal Names</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Acronyms</th>
+<th class="tableblock halign-left valign-top">Names</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received Data</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transmitted Data</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data Terminal Ready</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data Set Ready</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data Carrier Detect</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SG</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Signal Ground</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request to Send</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear to Send</p></td>
+</tr>
+</tbody>
+</table>
+<table id="nullmodem-db25" class="tableblock frame-none grid-all stretch">
+<caption class="title">Table 2. DB-25 to DB-25 Null-Modem Cable</caption>
+<colgroup>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Signal</th>
+<th class="tableblock halign-left valign-top">Pin #</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Pin #</th>
+<th class="tableblock halign-left valign-top">Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SG</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SG</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+</tr>
+</tbody>
+</table>
+<table id="nullmodem-db9" class="tableblock frame-none grid-all stretch">
+<caption class="title">Table 3. DB-9 to DB-9 Null-Modem Cable</caption>
+<colgroup>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Signal</th>
+<th class="tableblock halign-left valign-top">Pin #</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Pin #</th>
+<th class="tableblock halign-left valign-top">Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SG</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SG</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTS</p></td>
+</tr>
+</tbody>
+</table>
+<table id="nullmodem-db9-25" class="tableblock frame-none grid-all stretch">
+<caption class="title">Table 4. DB-9 to DB-25 Null-Modem Cable</caption>
+<colgroup>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Signal</th>
+<th class="tableblock halign-left valign-top">Pin #</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Pin #</th>
+<th class="tableblock halign-left valign-top">Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SG</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SG</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connects to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTS</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When one pin at one end connects to a pair of pins at the other end, it is usually implemented with one short wire between the pair of pins in their connector and a long wire to the other single pin.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Serial ports are the devices through which data is transferred between the FreeBSD host computer and the terminal.
+Several kinds of serial ports exist.
+Before purchasing or constructing a cable, make sure it will fit the ports on the terminal and on the FreeBSD system.</p>
+</div>
+<div class="paragraph">
+<p>Most terminals have DB-25 ports.
+Personal computers may have DB-25 or DB-9 ports.
+A multiport serial card may have RJ-12 or RJ-45/ ports.
+See the documentation that accompanied the hardware for specifications on the kind of port or visually verify the type of port.</p>
+</div>
+<div class="paragraph">
+<p>In FreeBSD, each serial port is accessed through an entry in <span class="filename">/dev</span>.
+There are two different kinds of entries:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Call-in ports are named <span class="filename">/dev/ttyuN</span> where <em>N</em> is the port number, starting from zero. If a terminal is connected to the first serial port (<span class="filename">COM1</span>), use <span class="filename">/dev/ttyu0</span> to refer to the terminal. If the terminal is on the second serial port (<span class="filename">COM2</span>), use <span class="filename">/dev/ttyu1</span>, and so forth. Generally, the call-in port is used for terminals. Call-in ports require that the serial line assert the &#34;Data Carrier Detect&#34; signal to work correctly.</p>
+</li>
+<li>
+<p>Call-out ports are named <span class="filename">/dev/cuauN</span> on FreeBSD versions 8.X and higher and <span class="filename">/dev/cuadN</span> on FreeBSD versions 7.X and lower. Call-out ports are usually not used for terminals, but are used for modems. The call-out port can be used if the serial cable or the terminal does not support the &#34;Data Carrier Detect&#34; signal.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>FreeBSD also provides initialization devices (<span class="filename">/dev/ttyuN.init</span> and <span class="filename">/dev/cuauN.init</span> or <span class="filename">/dev/cuadN.init</span>) and locking devices (<span class="filename">/dev/ttyuN.lock</span> and <span class="filename">/dev/cuauN.lock</span> or <span class="filename">/dev/cuadN.lock</span>).
+The initialization devices are used to initialize communications port parameters each time a port is opened, such as <code>crtscts</code> for modems which use <code>RTS/CTS</code> signaling for flow control.
+The locking devices are used to lock flags on ports to prevent users or programs changing certain parameters.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=termios&amp;sektion=4&amp;format=html">termios(4)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=uart&amp;sektion=4&amp;format=html">uart(4)</a>, and <a href="https://man.freebsd.org/cgi/man.cgi?query=stty&amp;sektion=1&amp;format=html">stty(1)</a> for information on terminal settings, locking and initializing devices, and setting terminal options, respectively.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="serial-hw-config">29.2.2. Serial Port Configuration<a class="anchor" href="#serial-hw-config"></a></h3>
+<div class="paragraph">
+<p>By default, FreeBSD supports four serial ports which are commonly known as <span class="filename">COM1</span>, <span class="filename">COM2</span>, <span class="filename">COM3</span>, and <span class="filename">COM4</span>.
+FreeBSD also supports dumb multi-port serial interface cards, such as the BocaBoard 1008 and 2016, as well as more intelligent multi-port cards such as those made by Digiboard.
+However, the default kernel only looks for the standard <span class="filename">COM</span> ports.</p>
+</div>
+<div class="paragraph">
+<p>To see if the system recognizes the serial ports, look for system boot messages that start with <code>uart</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># grep uart /var/run/dmesg.boot</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the system does not recognize all of the needed serial ports, additional entries can be added to <span class="filename">/boot/device.hints</span>.
+This file already contains <code>hint.uart.0.*</code> entries for <span class="filename">COM1</span> and <code>hint.uart.1.*</code> entries for <span class="filename">COM2</span>.
+When adding a port entry for <span class="filename">COM3</span> use <code>0x3E8</code>, and for <span class="filename">COM4</span> use <code>0x2E8</code>.
+Common IRQ addresses are <code>5</code> for <span class="filename">COM3</span> and <code>9</code> for <span class="filename">COM4</span>.</p>
+</div>
+<div class="paragraph">
+<p>To determine the default set of terminal I/O settings used by the port, specify its device name.
+This example determines the settings for the call-in port on <span class="filename">COM2</span>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># stty -a -f /dev/ttyu1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>System-wide initialization of serial devices is controlled by <span class="filename">/etc/rc.d/serial</span>.
+This file affects the default settings of serial devices.
+To change the settings for a device, use <code>stty</code>.
+By default, the changed settings are in effect until the device is closed and when the device is reopened, it goes back to the default set.
+To permanently change the default set, open and adjust the settings of the initialization device.
+For example, to turn on <code>CLOCAL</code> mode, 8 bit communication, and <code>XON/XOFF</code> flow control for <span class="filename">ttyu5</span>, type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># stty -f /dev/ttyu5.init clocal cs8 ixon ixoff</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To prevent certain settings from being changed by an application, make adjustments to the locking device.
+For example, to lock the speed of <span class="filename">ttyu5</span> to 57600 bps, type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># stty -f /dev/ttyu5.lock 57600</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, any application that opens <span class="filename">ttyu5</span> and tries to change the speed of the port will be stuck with 57600 bps.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="term">29.3. Terminals<a class="anchor" href="#term"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Terminals provide a convenient and low-cost way to access a FreeBSD system when not at the computer’s console or on a connected network.
+This section describes how to use terminals with FreeBSD.</p>
+</div>
+<div class="paragraph">
+<p>The original UNIX® systems did not have consoles.
+Instead, users logged in and ran programs through terminals that were connected to the computer’s serial ports.</p>
+</div>
+<div class="paragraph">
+<p>The ability to establish a login session on a serial port still exists in nearly every UNIX®-like operating system today, including FreeBSD.
+By using a terminal attached to an unused serial port, a user can log in and run any text program that can normally be run on the console or in an <code>xterm</code> window.</p>
+</div>
+<div class="paragraph">
+<p>Many terminals can be attached to a FreeBSD system.
+An older spare computer can be used as a terminal wired into a more powerful computer running FreeBSD.
+This can turn what might otherwise be a single-user computer into a powerful multiple-user system.</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD supports three types of terminals:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Dumb terminals</dt>
+<dd>
+<p>Dumb terminals are specialized hardware that connect to computers over serial lines.
+They are called &#34;dumb&#34; because they have only enough computational power to display, send, and receive text.
+No programs can be run on these devices. Instead, dumb terminals connect to a computer that runs the needed programs.</p>
+<div class="paragraph">
+<p>There are hundreds of kinds of dumb terminals made by many manufacturers, and just about any kind will work with FreeBSD.
+Some high-end terminals can even display graphics, but only certain software packages can take advantage of these advanced features.</p>
+</div>
+<div class="paragraph">
+<p>Dumb terminals are popular in work environments where workers do not need access to graphical applications.</p>
+</div>
+</dd>
+<dt class="hdlist1">Computers Acting as Terminals</dt>
+<dd>
+<p>Since a dumb terminal has just enough ability to display, send, and receive text, any spare computer can be a dumb terminal.
+All that is needed is the proper cable and some <em>terminal emulation</em> software to run on the computer.</p>
+<div class="paragraph">
+<p>This configuration can be useful.
+For example, if one user is busy working at the FreeBSD system’s console, another user can do some text-only work at the same time from a less powerful personal computer hooked up as a terminal to the FreeBSD system.</p>
+</div>
+<div class="paragraph">
+<p>There are at least two utilities in the base-system of FreeBSD that can be used to work through a serial connection: <a href="https://man.freebsd.org/cgi/man.cgi?query=cu&amp;sektion=1&amp;format=html">cu(1)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=tip&amp;sektion=1&amp;format=html">tip(1)</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example, to connect from a client system that runs FreeBSD to the serial connection of another system:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cu -l /dev/cuauN</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ports are numbered starting from zero.
+This means that <span class="filename">COM1</span> is <span class="filename">/dev/cuau0</span>.</p>
+</div>
+<div class="paragraph">
+<p>Additional programs are available through the Ports Collection, such as <a class="package" href="https://cgit.freebsd.org/ports/tree/comms/minicom/">comms/minicom</a>.</p>
+</div>
+</dd>
+<dt class="hdlist1">X Terminals</dt>
+<dd>
+<p>X terminals are the most sophisticated kind of terminal available.
+Instead of connecting to a serial port, they usually connect to a network like Ethernet.
+Instead of being relegated to text-only applications, they can display any Xorg application.</p>
+<div class="paragraph">
+<p>This chapter does not cover the setup, configuration, or use of X terminals.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="term-config">29.3.1. Terminal Configuration<a class="anchor" href="#term-config"></a></h3>
+<div class="paragraph">
+<p>This section describes how to configure a FreeBSD system to enable a login session on a serial terminal.
+It assumes that the system recognizes the serial port to which the terminal is connected and that the terminal is connected with the correct cable.</p>
+</div>
+<div class="paragraph">
+<p>In FreeBSD, <code>init</code> reads <span class="filename">/etc/ttys</span> and starts a <code>getty</code> process on the available terminals.
+The <code>getty</code> process is responsible for reading a login name and starting the <code>login</code> program.
+The ports on the FreeBSD system which allow logins are listed in <span class="filename">/etc/ttys</span>.
+For example, the first virtual console, <span class="filename">ttyv0</span>, has an entry in this file, allowing logins on the console.
+This file also contains entries for the other virtual consoles, serial ports, and pseudo-ttys.
+For a hardwired terminal, the serial port’s <span class="filename">/dev</span> entry is listed without the <code>/dev</code> part.
+For example, <span class="filename">/dev/ttyv0</span> is listed as <code>ttyv0</code>.</p>
+</div>
+<div class="paragraph">
+<p>The default <span class="filename">/etc/ttys</span> configures support for the first four serial ports, <span class="filename">ttyu0</span> through <span class="filename">ttyu3</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu0   &#34;/usr/libexec/getty std.9600&#34;   dialup  off secure
+ttyu1   &#34;/usr/libexec/getty std.9600&#34;   dialup  off secure
+ttyu2   &#34;/usr/libexec/getty std.9600&#34;   dialup  off secure
+ttyu3   &#34;/usr/libexec/getty std.9600&#34;   dialup  off secure</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When attaching a terminal to one of those ports, modify the default entry to set the required speed and terminal type, to turn the device <code>on</code> and, if needed, to change the port’s <code>secure</code> setting.
+If the terminal is connected to another port, add an entry for the port.</p>
+</div>
+<div class="paragraph">
+<p><a href="#ex-etc-ttys">Configuring Terminal Entries</a> configures two terminals in <span class="filename">/etc/ttys</span>.
+The first entry configures a Wyse-50 connected to <span class="filename">COM2</span>.
+The second entry configures an old computer running Procomm terminal software emulating a VT-100 terminal.
+The computer is connected to the sixth serial port on a multi-port serial card.</p>
+</div>
+<div id="ex-etc-ttys" class="exampleblock">
+<div class="title">Example 1. Configuring Terminal Entries</div>
+<div class="content">
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu1  &#34;/usr/libexec/getty std.38400&#34;  wy50   on insecure
+ttyu5   &#34;/usr/libexec/getty std.19200&#34;  vt100  on insecure</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first field specifies the device name of the serial terminal.</p>
+</div>
+<div class="paragraph">
+<p>The second field tells <code>getty</code> to initialize and open the line, set the line speed, prompt for a user name, and then execute the <code>login</code> program.
+The optional <em>getty type</em> configures characteristics on the terminal line, like bps rate and parity.
+The available getty types are listed in <span class="filename">/etc/gettytab</span>.
+In almost all cases, the getty types that start with <code>std</code> will work for hardwired terminals as these entries ignore parity.
+There is a <code>std</code> entry for each bps rate from 110 to 115200.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=gettytab&amp;sektion=5&amp;format=html">gettytab(5)</a> for more information.
+When setting the getty type, make sure to match the communications settings used by the terminal.
+For this example, the Wyse-50 uses no parity and connects at 38400 bps.
+The computer uses no parity and connects at 19200 bps.</p>
+</div>
+<div class="paragraph">
+<p>The third field is the type of terminal.
+For dial-up ports, <code>unknown</code> or <code>dialup</code> is typically used since users may dial up with practically any type of terminal or software.
+Since the terminal type does not change for hardwired terminals, a real terminal type from <span class="filename">/etc/termcap</span> can be specified.
+For this example, the Wyse-50 uses the real terminal type while the computer running Procomm is set to emulate a VT-100.</p>
+</div>
+<div class="paragraph">
+<p>The fourth field specifies if the port should be enabled.
+To enable logins on this port, this field must be set to <code>on</code>.</p>
+</div>
+<div class="paragraph">
+<p>The final field is used to specify whether the port is secure.
+Marking a port as <code>secure</code> means that it is trusted enough to allow <code>root</code> to login from that port.
+Insecure ports do not allow <code>root</code> logins.
+On an insecure port, users must login from unprivileged accounts and then use <code>su</code> or a similar mechanism to gain superuser privileges, as described in <a href="../basics/#users-superuser">“The Superuser Account”</a>.
+For security reasons, it is recommended to change this setting to <code>insecure</code>.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>After making any changes to <span class="filename">/etc/ttys</span>, send a SIGHUP (hangup) signal to the <code>init</code> process to force it to re-read its configuration file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kill -HUP 1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since <code>init</code> is always the first process run on a system, it always has a process ID of <code>1</code>.</p>
+</div>
+<div class="paragraph">
+<p>If everything is set up correctly, all cables are in place, and the terminals are powered up, a <code>getty</code> process should now be running on each terminal and login prompts should be available on each terminal.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="term-debug">29.3.2. Troubleshooting the Connection<a class="anchor" href="#term-debug"></a></h3>
+<div class="paragraph">
+<p>Even with the most meticulous attention to detail, something could still go wrong while setting up a terminal.
+Here is a list of common symptoms and some suggested fixes.</p>
+</div>
+<div class="paragraph">
+<p>If no login prompt appears, make sure the terminal is plugged in and powered up.
+If it is a personal computer acting as a terminal, make sure it is running terminal emulation software on the correct serial port.</p>
+</div>
+<div class="paragraph">
+<p>Make sure the cable is connected firmly to both the terminal and the FreeBSD computer.
+Make sure it is the right kind of cable.</p>
+</div>
+<div class="paragraph">
+<p>Make sure the terminal and FreeBSD agree on the bps rate and parity settings.
+For a video display terminal, make sure the contrast and brightness controls are turned up.
+If it is a printing terminal, make sure paper and ink are in good supply.</p>
+</div>
+<div class="paragraph">
+<p>Use <code>ps</code> to make sure that a <code>getty</code> process is running and serving the terminal.
+For example, the following listing shows that a <code>getty</code> is running on the second serial port, <span class="filename">ttyu1</span>, and is using the <code>std.38400</code> entry in <span class="filename">/etc/gettytab</span>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ps -axww|grep ttyu</span>
+22189  d1  Is+    0:00.03 /usr/libexec/getty std.38400 ttyu1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If no <code>getty</code> process is running, make sure the port is enabled in <span class="filename">/etc/ttys</span>.
+Remember to run <code>kill -HUP 1</code> after modifying <span class="filename">/etc/ttys</span>.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>getty</code> process is running but the terminal still does not display a login prompt, or if it displays a prompt but will not accept typed input, the terminal or cable may not support hardware handshaking.
+Try changing the entry in <span class="filename">/etc/ttys</span> from <code>std.38400</code> to <code>3wire.38400</code>, then run <code>kill -HUP 1</code> after modifying <span class="filename">/etc/ttys</span>.
+The <code>3wire</code> entry is similar to <code>std</code>, but ignores hardware handshaking.
+The bps may also need to be reduced or software flow control enabled when using <code>3wire</code> to prevent buffer overflows.</p>
+</div>
+<div class="paragraph">
+<p>If garbage appears instead of a login prompt, make sure the terminal and FreeBSD agree on the bps rate and parity settings.
+Check the <code>getty</code> processes to make sure the correct <em>getty</em> type is in use.
+If not, edit <span class="filename">/etc/ttys</span> and run <code>kill -HUP 1</code>.</p>
+</div>
+<div class="paragraph">
+<p>If characters appear doubled and the password appears when typed, switch the terminal, or the terminal emulation software, from &#34;half duplex&#34; or &#34;local echo&#34; to &#34;full duplex.&#34;</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dialup">29.4. Dial-in Service<a class="anchor" href="#dialup"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Configuring a FreeBSD system for dial-in service is similar to configuring terminals, except that modems are used instead of terminal devices.
+FreeBSD supports both external and internal modems.</p>
+</div>
+<div class="paragraph">
+<p>External modems are more convenient because they often can be configured via parameters stored in non-volatile RAM and they usually provide lighted indicators that display the state of important RS-232 signals, indicating whether the modem is operating properly.</p>
+</div>
+<div class="paragraph">
+<p>Internal modems usually lack non-volatile RAM, so their configuration may be limited to setting DIP switches.
+If the internal modem has any signal indicator lights, they are difficult to view when the system’s cover is in place.</p>
+</div>
+<div class="paragraph">
+<p>When using an external modem, a proper cable is needed.
+A standard RS-232C serial cable should suffice.</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD needs the RTS and CTS signals for flow control at speeds above 2400 bps, the CD signal to detect when a call has been answered or the line has been hung up, and the DTR signal to reset the modem after a session is complete.
+Some cables are wired without all of the needed signals, so if a login session does not go away when the line hangs up, there may be a problem with the cable.
+Refer to <a href="#term-cables-null">Serial Cables and Ports</a> for more information about these signals.</p>
+</div>
+<div class="paragraph">
+<p>Like other UNIX®-like operating systems, FreeBSD uses the hardware signals to find out when a call has been answered or a line has been hung up and to hangup and reset the modem after a call.
+FreeBSD avoids sending commands to the modem or watching for status reports from the modem.</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD supports the NS8250, NS16450, NS16550, and NS16550A-based RS-232C (CCITT V.24) communications interfaces.
+The 8250 and 16450 devices have single-character buffers.
+The 16550 device provides a 16-character buffer, which allows for better system performance.
+Bugs in plain 16550 devices prevent the use of the 16-character buffer, so use 16550A devices if possible.
+As single-character-buffer devices require more work by the operating system than the 16-character-buffer devices, 16550A-based serial interface cards are preferred.
+If the system has many active serial ports or will have a heavy load, 16550A-based cards are better for low-error-rate communications.</p>
+</div>
+<div class="paragraph">
+<p>The rest of this section demonstrates how to configure a modem to receive incoming connections, how to communicate with the modem, and offers some troubleshooting tips.</p>
+</div>
+<div class="sect2">
+<h3 id="dialup-ttys">29.4.1. Modem Configuration<a class="anchor" href="#dialup-ttys"></a></h3>
+<div class="paragraph">
+<p>As with terminals, <code>init</code> spawns a <code>getty</code> process for each configured serial port used for dial-in connections.
+When a user dials the modem’s line and the modems connect, the &#34;Carrier Detect&#34; signal is reported by the modem.
+The kernel notices that the carrier has been detected and instructs <code>getty</code> to open the port and display a <code>login:</code> prompt at the specified initial line speed.
+In a typical configuration, if garbage characters are received, usually due to the modem’s connection speed being different than the configured speed, <code>getty</code> tries adjusting the line speeds until it receives reasonable characters.
+After the user enters their login name, <code>getty</code> executes <code>login</code>, which completes the login process by asking for the user’s password and then starting the user’s shell.</p>
+</div>
+<div class="paragraph">
+<p>There are two schools of thought regarding dial-up modems.
+One configuration method is to set the modems and systems so that no matter at what speed a remote user dials in, the dial-in RS-232 interface runs at a locked speed.
+The benefit of this configuration is that the remote user always sees a system login prompt immediately.
+The downside is that the system does not know what a user’s true data rate is, so full-screen programs like Emacs will not adjust their screen-painting methods to make their response better for slower connections.</p>
+</div>
+<div class="paragraph">
+<p>The second method is to configure the RS-232 interface to vary its speed based on the remote user’s connection speed.
+As <code>getty</code> does not understand any particular modem’s connection speed reporting, it gives a <code>login:</code> message at an initial speed and watches the characters that come back in response.
+If the user sees junk, they should press <kbd>Enter</kbd> until they see a recognizable prompt.
+If the data rates do not match, <code>getty</code> sees anything the user types as junk, tries the next speed, and gives the <code>login:</code> prompt again.
+This procedure normally only takes a keystroke or two before the user sees a good prompt.
+This login sequence does not look as clean as the locked-speed method, but a user on a low-speed connection should receive better interactive response from full-screen programs.</p>
+</div>
+<div class="paragraph">
+<p>When locking a modem’s data communications rate at a particular speed, no changes to <span class="filename">/etc/gettytab</span> should be needed.
+However, for a matching-speed configuration, additional entries may be required in order to define the speeds to use for the modem.
+This example configures a 14.4 Kbps modem with a top interface speed of 19.2 Kbps using 8-bit, no parity connections.
+It configures <code>getty</code> to start the communications rate for a V.32bis connection at 19.2 Kbps, then cycles through 9600 bps, 2400 bps, 1200 bps, 300 bps, and back to 19.2 Kbps.
+Communications rate cycling is implemented with the <code>nx=</code> (next table) capability.
+Each line uses a <code>tc=</code> (table continuation) entry to pick up the rest of the settings for a particular data rate.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#
+# Additions for a V.32bis Modem
+#
+um|V300|High Speed Modem at 300,8-bit:\
+        :nx=V19200:tc=std.300:
+un|V1200|High Speed Modem at 1200,8-bit:\
+        :nx=V300:tc=std.1200:
+uo|V2400|High Speed Modem at 2400,8-bit:\
+        :nx=V1200:tc=std.2400:
+up|V9600|High Speed Modem at 9600,8-bit:\
+        :nx=V2400:tc=std.9600:
+uq|V19200|High Speed Modem at 19200,8-bit:\
+        :nx=V9600:tc=std.19200:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a 28.8 Kbps modem, or to take advantage of compression on a 14.4 Kbps modem, use a higher communications rate, as seen in this example:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#
+# Additions for a V.32bis or V.34 Modem
+# Starting at 57.6 Kbps
+#
+vm|VH300|Very High Speed Modem at 300,8-bit:\
+        :nx=VH57600:tc=std.300:
+vn|VH1200|Very High Speed Modem at 1200,8-bit:\
+        :nx=VH300:tc=std.1200:
+vo|VH2400|Very High Speed Modem at 2400,8-bit:\
+        :nx=VH1200:tc=std.2400:
+vp|VH9600|Very High Speed Modem at 9600,8-bit:\
+        :nx=VH2400:tc=std.9600:
+vq|VH57600|Very High Speed Modem at 57600,8-bit:\
+        :nx=VH9600:tc=std.57600:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a slow CPU or a heavily loaded system without 16550A-based serial ports, this configuration may produce <code>uart</code> &#34;silo&#34; errors at 57.6 Kbps.</p>
+</div>
+<div class="paragraph">
+<p>The configuration of <span class="filename">/etc/ttys</span> is similar to <a href="#ex-etc-ttys">Configuring Terminal Entries</a>, but a different argument is passed to <code>getty</code> and <code>dialup</code> is used for the terminal type.
+Replace <em>xxx</em> with the process <code>init</code> will run on the device:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu0   &#34;/usr/libexec/getty xxx&#34;   dialup on</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>dialup</code> terminal type can be changed.
+For example, setting <code>vt102</code> as the default terminal type allows users to use VT102 emulation on their remote systems.</p>
+</div>
+<div class="paragraph">
+<p>For a locked-speed configuration, specify the speed with a valid type listed in <span class="filename">/etc/gettytab</span>.
+This example is for a modem whose port speed is locked at 19.2 Kbps:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu0   &#34;/usr/libexec/getty std.19200&#34;   dialup on</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In a matching-speed configuration, the entry needs to reference the appropriate beginning &#34;auto-baud&#34; entry in <span class="filename">/etc/gettytab</span>.
+To continue the example for a matching-speed modem that starts at 19.2 Kbps, use this entry:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu0   &#34;/usr/libexec/getty V19200&#34;   dialup on</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After editing <span class="filename">/etc/ttys</span>, wait until the modem is properly configured and connected before signaling <code>init</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kill -HUP 1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>High-speed modems, like V.32, V.32bis, and V.34 modems, use hardware (<code>RTS/CTS</code>) flow control.
+Use <code>stty</code> to set the hardware flow control flag for the modem port.
+This example sets the <code>crtscts</code> flag on <span class="filename">COM2</span>&#39;s dial-in and dial-out initialization devices:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># stty -f /dev/ttyu1.init crtscts</span>
+<span class="c"># stty -f /dev/cuau1.init crtscts</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_troubleshooting">29.4.2. Troubleshooting<a class="anchor" href="#_troubleshooting"></a></h3>
+<div class="paragraph">
+<p>This section provides a few tips for troubleshooting a dial-up modem that will not connect to a FreeBSD system.</p>
+</div>
+<div class="paragraph">
+<p>Hook up the modem to the FreeBSD system and boot the system.
+If the modem has status indication lights, watch to see whether the modem’s DTR indicator lights when the <code>login:</code> prompt appears on the system’s console.
+If it lights up, that should mean that FreeBSD has started a <code>getty</code> process on the appropriate communications port and is waiting for the modem to accept a call.</p>
+</div>
+<div class="paragraph">
+<p>If the DTR indicator does not light, login to the FreeBSD system through the console and type <code>ps ax</code> to see if FreeBSD is running a <code>getty</code> process on the correct port:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">  114 ??  I      0:00.10 /usr/libexec/getty V19200 ttyu0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the second column contains a <code>d0</code> instead of a <code>??</code> and the modem has not accepted a call yet, this means that <code>getty</code> has completed its open on the communications port.
+This could indicate a problem with the cabling or a misconfigured modem because <code>getty</code> should not be able to open the communications port until the carrier detect signal has been asserted by the modem.</p>
+</div>
+<div class="paragraph">
+<p>If no <code>getty</code> processes are waiting to open the port, double-check that the entry for the port is correct in <span class="filename">/etc/ttys</span>.
+Also, check <span class="filename">/var/log/messages</span> to see if there are any log messages from <code>init</code> or <code>getty</code>.</p>
+</div>
+<div class="paragraph">
+<p>Next, try dialing into the system.
+Be sure to use 8 bits, no parity, and 1 stop bit on the remote system.
+If a prompt does not appear right away, or the prompt shows garbage, try pressing <kbd>Enter</kbd> about once per second.
+If there is still no <code>login:</code> prompt, try sending a <code>BREAK</code>.
+When using a high-speed modem, try dialing again after locking the dialing modem’s interface speed.</p>
+</div>
+<div class="paragraph">
+<p>If there is still no <code>login:</code> prompt, check <span class="filename">/etc/gettytab</span> again and double-check that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The initial capability name specified in the entry in <span class="filename">/etc/ttys</span> matches the name of a capability in <span class="filename">/etc/gettytab</span>.</p>
+</li>
+<li>
+<p>Each <code>nx=</code> entry matches another <span class="filename">gettytab</span> capability name.</p>
+</li>
+<li>
+<p>Each <code>tc=</code> entry matches another <span class="filename">gettytab</span> capability name.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the modem on the FreeBSD system will not answer, make sure that the modem is configured to answer the phone when DTR is asserted.
+If the modem seems to be configured correctly, verify that the DTR line is asserted by checking the modem’s indicator lights.</p>
+</div>
+<div class="paragraph">
+<p>If it still does not work, try sending an email to the <a href="https://lists.FreeBSD.org/subscription/freebsd-questions">FreeBSD general questions mailing list</a> describing the modem and the problem.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dialout">29.5. Dial-out Service<a class="anchor" href="#dialout"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following are tips for getting the host to connect over the modem to another computer.
+This is appropriate for establishing a terminal session with a remote host.</p>
+</div>
+<div class="paragraph">
+<p>This kind of connection can be helpful to get a file on the Internet if there are problems using PPP.
+If PPP is not working, use the terminal session to FTP the needed file.
+Then use zmodem to transfer it to the machine.</p>
+</div>
+<div class="sect2">
+<h3 id="hayes-unsupported">29.5.1. Using a Stock Hayes Modem<a class="anchor" href="#hayes-unsupported"></a></h3>
+<div class="paragraph">
+<p>A generic Hayes dialer is built into <code>tip</code>.
+Use <code>at=hayes</code> in <span class="filename">/etc/remote</span>.</p>
+</div>
+<div class="paragraph">
+<p>The Hayes driver is not smart enough to recognize some of the advanced features of newer modems messages like <code>BUSY</code>, <code>NO DIALTONE</code>, or <code>CONNECT 115200</code>.
+Turn those messages off when using <code>tip</code> with <code>ATX0&amp;W</code>.</p>
+</div>
+<div class="paragraph">
+<p>The dial timeout for <code>tip</code> is 60 seconds.
+The modem should use something less, or else <code>tip</code> will think there is a communication problem.
+Try <code>ATS7=45&amp;W</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="direct-at">29.5.2. Using <code>AT</code> Commands<a class="anchor" href="#direct-at"></a></h3>
+<div class="paragraph">
+<p>Create a &#34;direct&#34; entry in <span class="filename">/etc/remote</span>.
+For example, if the modem is hooked up to the first serial port, <span class="filename">/dev/cuau0</span>, use the following line:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>cuau0:dv=/dev/cuau0:br#19200:pa=none</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use the highest bps rate the modem supports in the <code>br</code> capability.
+Then, type <code>tip cuau0</code> to connect to the modem.</p>
+</div>
+<div class="paragraph">
+<p>Or, use <code>cu</code> as <code>root</code> with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cu -lline -sspeed</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>line</em> is the serial port, such as <span class="filename">/dev/cuau0</span>, and <em>speed</em> is the speed, such as <code>57600</code>.
+When finished entering the AT commands, type <code>~.</code> to exit.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="gt-failure">29.5.3. The <code>@</code> Sign Does Not Work<a class="anchor" href="#gt-failure"></a></h3>
+<div class="paragraph">
+<p>The <code>@</code> sign in the phone number capability tells <code>tip</code> to look in <span class="filename">/etc/phones</span> for a phone number.
+But, the <code>@</code> sign is also a special character in capability files like <span class="filename">/etc/remote</span>, so it needs to be escaped with a backslash:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>pn=\@</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dial-command-line">29.5.4. Dialing from the Command Line<a class="anchor" href="#dial-command-line"></a></h3>
+<div class="paragraph">
+<p>Put a &#34;generic&#34; entry in <span class="filename">/etc/remote</span>. For example:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>tip115200|Dial any phone number at 115200 bps:\
+        :dv=/dev/cuau0:br#115200:at=hayes:pa=none:du:
+tip57600|Dial any phone number at 57600 bps:\
+        :dv=/dev/cuau0:br#57600:at=hayes:pa=none:du:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should now work:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tip -115200 5551234</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Users who prefer <code>cu</code> over <code>tip</code>, can use a generic <code>cu</code> entry:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>cu115200|Use cu to dial any number at 115200bps:\
+        :dv=/dev/cuau1:br#57600:at=hayes:pa=none:du:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cu 5551234 -s 115200</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="set-bps">29.5.5. Setting the bps Rate<a class="anchor" href="#set-bps"></a></h3>
+<div class="paragraph">
+<p>Put in an entry for <code>tip1200</code> or <code>cu1200</code>, but go ahead and use whatever bps rate is appropriate with the <code>br</code> capability.
+<code>tip</code> thinks a good default is 1200 bps which is why it looks for a <code>tip1200</code> entry.
+1200 bps does not have to be used, though.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="terminal-server">29.5.6. Accessing a Number of Hosts Through a Terminal Server<a class="anchor" href="#terminal-server"></a></h3>
+<div class="paragraph">
+<p>Rather than waiting until connected and typing <code>CONNECT <em>host</em></code> each time, use <code>tip</code>&#39;s <code>cm</code> capability.
+For example, these entries in <span class="filename">/etc/remote</span> will let you type <code>tip pain</code> or <code>tip muffin</code> to connect to the hosts <code>pain</code> or <code>muffin</code>, and <code>tip deep13</code> to connect to the terminal server.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>pain|pain.deep13.com|Forrester&#39;s machine:\
+        :cm=CONNECT pain\n:tc=deep13:
+muffin|muffin.deep13.com|Frank&#39;s machine:\
+        :cm=CONNECT muffin\n:tc=deep13:
+deep13:Gizmonics Institute terminal server:\
+        :dv=/dev/cuau2:br#38400:at=hayes:du:pa=none:pn=5551234:</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tip-multiline">29.5.7. Using More Than One Line with <code>tip</code><a class="anchor" href="#tip-multiline"></a></h3>
+<div class="paragraph">
+<p>This is often a problem where a university has several modem lines and several thousand students trying to use them.</p>
+</div>
+<div class="paragraph">
+<p>Make an entry in <span class="filename">/etc/remote</span> and use <code>@</code> for the <code>pn</code> capability:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>big-university:\
+        :pn=\@:tc=dialout
+dialout:\
+        :dv=/dev/cuau3:br#9600:at=courier:du:pa=none:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, list the phone numbers in <span class="filename">/etc/phones</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>big-university 5551111
+big-university 5551112
+big-university 5551113
+big-university 5551114</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>tip</code> will try each number in the listed order, then give up.
+To keep retrying, run <code>tip</code> in a <code>while</code> loop.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="multi-controlp">29.5.8. Using the Force Character<a class="anchor" href="#multi-controlp"></a></h3>
+<div class="paragraph">
+<p><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>P</kbd></span> is the default &#34;force&#34; character, used to tell <code>tip</code> that the next character is literal data.
+The force character can be set to any other character with the <code>~s</code> escape, which means &#34;set a variable.&#34;</p>
+</div>
+<div class="paragraph">
+<p>Type <code>~sforce=<em>single-char</em></code> followed by a newline.
+<em>single-char</em> is any single character.
+If <em>single-char</em> is left out, then the force character is the null character, which is accessed by typing <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>2</kbd></span> or <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Space</kbd></span>.
+A pretty good value for <em>single-char</em> is <span class="keyseq"><kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>6</kbd></span>, which is only used on some terminal servers.</p>
+</div>
+<div class="paragraph">
+<p>To change the force character, specify the following in <span class="filename">~/.tiprc</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>force=single-char</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="uppercase">29.5.9. Upper Case Characters<a class="anchor" href="#uppercase"></a></h3>
+<div class="paragraph">
+<p>This happens when <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>A</kbd></span> is pressed, which is <code>tip</code>&#39;s &#34;raise character&#34;, specially designed for people with broken caps-lock keys.
+Use <code>~s</code> to set <code>raisechar</code> to something reasonable.
+It can be set to be the same as the force character, if neither feature is used.</p>
+</div>
+<div class="paragraph">
+<p>Here is a sample <span class="filename">~/.tiprc</span> for Emacs users who need to type <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>2</kbd></span> and <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>A</kbd></span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>force=^^
+raisechar=^^</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>^^</code> is <span class="keyseq"><kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>6</kbd></span>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tip-filetransfer">29.5.10. File Transfers with <code>tip</code><a class="anchor" href="#tip-filetransfer"></a></h3>
+<div class="paragraph">
+<p>When talking to another UNIX®-like operating system, files can be sent and received using <code>~p</code> (put) and <code>~t</code> (take).
+These commands run <code>cat</code> and <code>echo</code> on the remote system to accept and send files. The syntax is:
+<code>~p</code> local-file [ remote-file ]
+<code>~t</code> remote-file [ local-file ]</p>
+</div>
+<div class="paragraph">
+<p>There is no error checking, so another protocol, like zmodem, should probably be used.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="zmodem-tip">29.5.11. Using zmodem with <code>tip</code>?<a class="anchor" href="#zmodem-tip"></a></h3>
+<div class="paragraph">
+<p>To receive files, start the sending program on the remote end.
+Then, type <code>~C rz</code> to begin receiving them locally.</p>
+</div>
+<div class="paragraph">
+<p>To send files, start the receiving program on the remote end.
+Then, type <code>~C sz <em>files</em></code> to send them to the remote system.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="serialconsole-setup">29.6. Setting Up the Serial Console<a class="anchor" href="#serialconsole-setup"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD has the ability to boot a system with a dumb terminal on a serial port as a console.
+This configuration is useful for system administrators who wish to install FreeBSD on machines that have no keyboard or monitor attached, and developers who want to debug the kernel or device drivers.</p>
+</div>
+<div class="paragraph">
+<p>As described in <a href="../boot/#boot">The FreeBSD Booting Process</a>, FreeBSD employs a three stage bootstrap.
+The first two stages are in the boot block code which is stored at the beginning of the FreeBSD slice on the boot disk.
+The boot block then loads and runs the boot loader as the third stage code.</p>
+</div>
+<div class="paragraph">
+<p>In order to set up booting from a serial console, the boot block code, the boot loader code, and the kernel need to be configured.</p>
+</div>
+<div class="sect2">
+<h3 id="serialconsole-howto-fast">29.6.1. Quick Serial Console Configuration<a class="anchor" href="#serialconsole-howto-fast"></a></h3>
+<div class="paragraph">
+<p>This section provides a fast overview of setting up the serial console.
+This procedure can be used when the dumb terminal is connected to <span class="filename">COM1</span>.</p>
+</div>
+<div class="olist arabic procedure">
+<div class="title">Procedure: Configuring a Serial Console on <span class="filename">COM1</span></div>
+<ol class="arabic">
+<li>
+<p>Connect the serial cable to <span class="filename">COM1</span> and the controlling terminal.</p>
+</li>
+<li>
+<p>To configure boot messages to display on the serial console, issue the following command as the superuser:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;console=&#34;comconsole&#34;&#39; &gt;&gt; /boot/loader.conf</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Edit <span class="filename">/etc/ttys</span> and change <code>off</code> to <code>on</code> and <code>dialup</code> to <code>vt100</code> for the <span class="filename">ttyu0</span> entry. Otherwise, a password will not be required to connect via the serial console, resulting in a potential security hole.</p>
+</li>
+<li>
+<p>Reboot the system to see if the changes took effect.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If a different configuration is required, see the next section for a more in-depth configuration explanation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="serialconsole-howto">29.6.2. In-Depth Serial Console Configuration<a class="anchor" href="#serialconsole-howto"></a></h3>
+<div class="paragraph">
+<p>This section provides a more detailed explanation of the steps needed to setup a serial console in FreeBSD.</p>
+</div>
+<div class="olist arabic procedure">
+<div class="title">Procedure: Configuring a Serial Console</div>
+<ol class="arabic">
+<li>
+<p>Prepare a serial cable.</p>
+<div class="paragraph">
+<p>Use either a null-modem cable or a standard serial cable and a null-modem adapter.
+See <a href="#term-cables-null">Serial Cables and Ports</a> for a discussion on serial cables.</p>
+</div>
+</li>
+<li>
+<p>Unplug the keyboard.</p>
+<div class="paragraph">
+<p>Many systems probe for the keyboard during the Power-On Self-Test (POST) and will generate an error if the keyboard is not detected.
+Some machines will refuse to boot until the keyboard is plugged in.</p>
+</div>
+<div class="paragraph">
+<p>If the computer complains about the error, but boots anyway, no further configuration is needed.</p>
+</div>
+<div class="paragraph">
+<p>If the computer refuses to boot without a keyboard attached, configure the BIOS so that it ignores this error.
+Consult the motherboard’s manual for details on how to do this.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Try setting the keyboard to &#34;Not installed&#34; in the BIOS.
+This setting tells the BIOS not to probe for a keyboard at power-on so it should not complain if the keyboard is absent.
+If that option is not present in the BIOS, look for an &#34;Halt on Error&#34; option instead.
+Setting this to &#34;All but Keyboard&#34; or to &#34;No Errors&#34; will have the same effect.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>If the system has a PS/2® mouse, unplug it as well.
+PS/2® mice share some hardware with the keyboard and leaving the mouse plugged in can fool the keyboard probe into thinking the keyboard is still there.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>While most systems will boot without a keyboard, quite a few will not boot without a graphics adapter.
+Some systems can be configured to boot with no graphics adapter by changing the &#34;graphics adapter&#34; setting in the BIOS configuration to &#34;Not installed&#34;.
+Other systems do not support this option and will refuse to boot if there is no display hardware in the system.
+With these machines, leave some kind of graphics card plugged in, even if it is just a junky mono board.
+A monitor does not need to be attached.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li>
+<p>Plug a dumb terminal, an old computer with a modem program, or the serial port on another UNIX® box into the serial port.</p>
+</li>
+<li>
+<p>Add the appropriate <code>hint.uart.*</code> entries to <span class="filename">/boot/device.hints</span> for the serial port. Some multi-port cards also require kernel configuration options. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=uart&amp;sektion=4&amp;format=html">uart(4)</a> for the required options and device hints for each supported serial port.</p>
+</li>
+<li>
+<p>Create <span class="filename">boot.config</span> in the root directory of the <code>a</code> partition on the boot drive.</p>
+<div class="paragraph">
+<p>This file instructs the boot block code how to boot the system.
+In order to activate the serial console, one or more of the following options are needed.
+When using multiple options, include them all on the same line:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>-h</code></dt>
+<dd>
+<p>Toggles between the internal and serial consoles.
+Use this to switch console devices.
+For instance, to boot from the internal (video) console, use <code>-h</code> to direct the boot loader and the kernel to use the serial port as its console device.
+Alternatively, to boot from the serial port, use <code>-h</code> to tell the boot loader and the kernel to use the video display as the console instead.</p>
+</dd>
+<dt class="hdlist1"><code>-D</code></dt>
+<dd>
+<p>Toggles between the single and dual console configurations.
+In the single configuration, the console will be either the internal console (video display) or the serial port, depending on the state of <code>-h</code>.
+In the dual console configuration, both the video display and the serial port will become the console at the same time, regardless of the state of <code>-h</code>.
+However, the dual console configuration takes effect only while the boot block is running.
+Once the boot loader gets control, the console specified by <code>-h</code> becomes the only console.</p>
+</dd>
+<dt class="hdlist1"><code>-P</code></dt>
+<dd>
+<p>Makes the boot block probe the keyboard. If no keyboard is found, the <code>-D</code> and <code>-h</code> options are automatically set.</p>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Due to space constraints in the current version of the boot blocks, <code>-P</code> is capable of detecting extended keyboards only.
+Keyboards with less than 101 keys and without F11 and F12 keys may not be detected.
+Keyboards on some laptops may not be properly found because of this limitation.
+If this is the case, do not use <code>-P</code>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Use either <code>-P</code> to select the console automatically or <code>-h</code> to activate the serial console.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=boot&amp;sektion=8&amp;format=html">boot(8)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=boot.config&amp;sektion=5&amp;format=html">boot.config(5)</a> for more details.</p>
+</div>
+<div class="paragraph">
+<p>The options, except for <code>-P</code>, are passed to the boot loader.
+The boot loader will determine whether the internal video or the serial port should become the console by examining the state of <code>-h</code>.
+This means that if <code>-D</code> is specified but <code>-h</code> is not specified in <span class="filename">/boot.config</span>, the serial port can be used as the console only during the boot block as the boot loader will use the internal video display as the console.</p>
+</div>
+</dd>
+</dl>
+</div>
+</li>
+<li>
+<p>Boot the machine.</p>
+<div class="paragraph">
+<p>When FreeBSD starts, the boot blocks echo the contents of <span class="filename">/boot.config</span> to the console. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">/boot.config: -P
+Keyboard: no</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second line appears only if <code>-P</code> is in <span class="filename">/boot.config</span> and indicates the presence or absence of the keyboard.
+These messages go to either the serial or internal console, or both, depending on the option in <span class="filename">/boot.config</span>:</p>
+</div>
+<table class="tableblock frame-none grid-all stretch informaltable">
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Options</th>
+<th class="tableblock halign-left valign-top">Message goes to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">internal console</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">serial console</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-D</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">serial and internal consoles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-Dh</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">serial and internal consoles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-P</code>, keyboard present</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">internal console</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-P</code>, keyboard absent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">serial console</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>After the message, there will be a small pause before the boot blocks continue loading the boot loader and before any further messages are printed to the console.
+Under normal circumstances, there is no need to interrupt the boot blocks, but one can do so in order to make sure things are set up correctly.</p>
+</div>
+<div class="paragraph">
+<p>Press any key, other than <kbd>Enter</kbd>, at the console to interrupt the boot process.
+The boot blocks will then prompt for further action:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">&gt;&gt; </span>FreeBSD/i386 BOOT
+Default: 0:ad<span class="o">(</span>0,a<span class="o">)</span>/boot/loader
+boot:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Verify that the above message appears on either the serial or internal console, or both, according to the options in <span class="filename">/boot.config</span>.
+If the message appears in the correct console, press <kbd>Enter</kbd> to continue the boot process.</p>
+</div>
+<div class="paragraph">
+<p>If there is no prompt on the serial terminal, something is wrong with the settings.
+Enter <code>-h</code> then <kbd>Enter</kbd> or <kbd>Return</kbd> to tell the boot block (and then the boot loader and the kernel) to choose the serial port for the console.
+Once the system is up, go back and check what went wrong.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>During the third stage of the boot process, one can still switch between the internal console and the serial console by setting appropriate environment variables in the boot loader.
+See <a href="https://man.freebsd.org/cgi/man.cgi?query=loader&amp;sektion=8&amp;format=html">loader(8)</a> for more information.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This line in <span class="filename">/boot/loader.conf</span> or <span class="filename">/boot/loader.conf.local</span> configures the boot loader and the kernel to send their boot messages to the serial console, regardless of the options in <span class="filename">/boot.config</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>console=&#34;comconsole&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That line should be the first line of <span class="filename">/boot/loader.conf</span> so that boot messages are displayed on the serial console as early as possible.</p>
+</div>
+<div class="paragraph">
+<p>If that line does not exist, or if it is set to <code>console=&#34;vidconsole&#34;</code>, the boot loader and the kernel will use whichever console is indicated by <code>-h</code> in the boot block.
+See <a href="https://man.freebsd.org/cgi/man.cgi?query=loader.conf&amp;sektion=5&amp;format=html">loader.conf(5)</a> for more information.</p>
+</div>
+<div class="paragraph">
+<p>At the moment, the boot loader has no option equivalent to <code>-P</code> in the boot block, and there is no provision to automatically select the internal console and the serial console based on the presence of the keyboard.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>While it is not required, it is possible to provide a <code>login</code> prompt over the serial line.
+To configure this, edit the entry for the serial port in <span class="filename">/etc/ttys</span> using the instructions in <a href="#term-config">Terminal Configuration</a>.
+If the speed of the serial port has been changed, change <code>std.9600</code> to match the new setting.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_a_faster_serial_port_speed">29.6.3. Setting a Faster Serial Port Speed<a class="anchor" href="#_setting_a_faster_serial_port_speed"></a></h3>
+<div class="paragraph">
+<p>By default, the serial port settings are 9600 baud, 8 bits, no parity, and 1 stop bit.
+To change the default console speed, use one of the following options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Edit <span class="filename">/etc/make.conf</span> and set <code>BOOT_COMCONSOLE_SPEED</code> to the new console speed.
+Then, recompile and install the boot blocks and the boot loader:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /sys/boot</span>
+<span class="c"># make clean</span>
+<span class="c"># make</span>
+<span class="c"># make install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the serial console is configured in some other way than by booting with <code>-h</code>, or if the serial console used by the kernel is different from the one used by the boot blocks, add the following option, with the desired speed, to a custom kernel configuration file and compile a new kernel:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options CONSPEED=19200</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the <code>-S<em>19200</em></code> boot option to <span class="filename">/boot.config</span>, replacing <code><em>19200</em></code> with the speed to use.</p>
+</li>
+<li>
+<p>Add the following options to <span class="filename">/boot/loader.conf</span>. Replace <code><em>115200</em></code> with the speed to use.</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>boot_multicons=&#34;YES&#34;
+boot_serial=&#34;YES&#34;
+comconsole_speed=&#34;115200&#34;
+console=&#34;comconsole,vidconsole&#34;</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="serialconsole-ddb">29.6.4. Entering the DDB Debugger from the Serial Line<a class="anchor" href="#serialconsole-ddb"></a></h3>
+<div class="paragraph">
+<p>To configure the ability to drop into the kernel debugger from the serial console, add the following options to a custom kernel configuration file and compile the kernel using the instructions in <a href="../kernelconfig/#kernelconfig">Configuring the FreeBSD Kernel</a>.
+Note that while this is useful for remote diagnostics, it is also dangerous if a spurious BREAK is generated on the serial port.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=ddb&amp;sektion=4&amp;format=html">ddb(4)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=ddb&amp;sektion=8&amp;format=html">ddb(8)</a> for more information about the kernel debugger.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options BREAK_TO_DEBUGGER
+options DDB</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/en/books/handbook/partiv class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/en/books/handbook/ppp-and-slip  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#serial-synopsis">29.1. Synopsis</a></li>
+    <li><a href="#serial">29.2. Serial Terminology and Hardware</a></li>
+    <li><a href="#term">29.3. Terminals</a></li>
+    <li><a href="#dialup">29.4. Dial-in Service</a></li>
+    <li><a href="#dialout">29.5. Dial-out Service</a></li>
+    <li><a href="#serialconsole-setup">29.6. Setting Up the Serial Console</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/en/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>English</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

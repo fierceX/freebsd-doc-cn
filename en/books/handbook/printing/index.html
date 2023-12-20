@@ -1,0 +1,2713 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="This chapter covers the printing system in FreeBSD"/>
+  <meta name="keywords" content="printing, CUPS, LPD, PostScript, PDLs, HPLIP, LPRng"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/en/books/handbook/printing/" />
+
+  <title>Chapter 11. Printing |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="Chapter 11. Printing" />
+    <meta property="og:description" content="This chapter covers the printing system in FreeBSD" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="en" />
+    <meta property="og:url" content="https://free.bsd-doc.org/en/books/handbook/printing/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/en\/books\/handbook\/printing\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/preface/">
+              Preface
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-audience">Intended Audience</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from4">Fourth Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from3">Third Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from2">Second Edition (2004)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes">First Edition (2001)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-overview">Organization of This Book</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-conv">Conventions used in this book</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-acknowledgements">Acknowledgments</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/parti/">
+              Part I. Getting Started
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/introduction/">
+              Chapter 1. Introduction
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#introduction-synopsis">1.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#nutshell">1.2. Welcome to FreeBSD!</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#history">1.3. About the FreeBSD Project</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/">
+              Chapter 2. Installing FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. Minimum Hardware Requirements</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-pre">2.3. Pre-Installation Tasks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-start">2.4. Starting the Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#using-bsdinstall">2.5. Using bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. Allocating Disk Space</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. Fetching Distribution Files</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-post">2.8. Network Interfaces, Accounts, Time Zone, Services and Hardening</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. Troubleshooting</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#using-live-cd">2.10. Using the Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/basics/">
+              Chapter 3. FreeBSD Basics
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-synopsis">3.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#consoles">3.2. Virtual Consoles and Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#users-synopsis">3.3. Users and Basic Account Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#permissions">3.4. Permissions</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#dirstructure">3.5. Directory Structure</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#disk-organization">3.6. Disk Organization</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#mount-unmount">3.7. Mounting and Unmounting File Systems</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-processes">3.8. Processes and Daemons</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#editors">3.10. Text Editors</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-devices">3.11. Devices and Device Nodes</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-more-information">3.12. Manual Pages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/ports/">
+              Chapter 4. Installing Applications: Packages and Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-synopsis">4.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-overview">4.2. Overview of Software Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-finding-applications">4.3. Finding Software</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#pkgng-intro">4.4. Using pkg for Binary Package Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-using">4.5. Using the Ports Collection</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-poudriere">4.6. Building Packages with poudriere</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-nextsteps">4.7. Post-Installation Considerations</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-broken">4.8. Dealing with Broken Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/x11/">
+              Chapter 5. The X Window System
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x11-synopsis">5.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-install">5.2. Installing Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-graphic-card-drivers">5.3. Graphic card drivers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-config">5.4. Xorg Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-fonts">5.5. Using Fonts in Xorg</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/wayland/">
+              Chapter 6. Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-synopsis">6.1. Wayland Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-wayfire">6.2. The Wayfire Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-hikari">6.3. The Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-sway">6.4. The Sway Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-xwayland">6.5. Using Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-remotedesktop">6.6. Remote Desktop Using VNC</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-ly">6.7. Wayland Login Manager</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-utilities">6.8. Useful Utilities</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/network/">
+              Chapter 7. Network
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#network-synopsis">7.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#config-network-setup">7.2. Setting up the Network</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#config-network-connection">7.3. Wired Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#network-wireless">7.4. Wireless Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#hostname">7.5. Hostname</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#dns">7.6. DNS</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#troubleshooting">7.7. Troubleshooting</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partii/">
+              Part II. Common Tasks
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/desktop/">
+              Chapter 8. Desktop Environments
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-synopsis">8.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-environments">8.2. Desktop Environments</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-browsers">8.3. Browsers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-development">8.4. Development tools</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-productivity">8.5. Desktop office productivity</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-viewers">8.6. Document Viewers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-finance">8.7. Finance</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/multimedia/">
+              Chapter 9. Multimedia
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#multimedia-synopsis">9.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#sound-setup">9.2. Setting Up the Sound Card</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#audio-ports">9.3. Audio players</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#video-ports">9.4. Video players</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#conferencing-meetings">9.5. Conferencing and Meetings</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#scanners">9.6. Image Scanners</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/">
+              Chapter 10. Configuring the FreeBSD Kernel
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. Why Build a Custom Kernel?</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-devices">10.3. Finding the System Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-config">10.4. The Configuration File</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-building">10.5. Building and Installing a Custom Kernel</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. If Something Goes Wrong</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/printing/">
+              Chapter 11. Printing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-quick-start">11.1. Quick Start</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-connections">11.2. Printer Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-pdls">11.3. Common Page Description Languages</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-direct">11.4. Direct Printing</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-lpd">11.5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-other">11.6. Other Printing Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/">
+              Chapter 12. Linux Binary Compatibility
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-synopsis">12.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. Configuring Linux Binary Compatibility</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linux-userlands">12.3. Linux userlands</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-advanced">12.4. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/wine/">
+              Chapter 13. WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-synopsis">13.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-overview-concepts">13.2. WINE Overview & Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#installing-wine-on-freebsd">13.3. Installing WINE on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#running-first-wine-program">13.4. Running a First WINE Program on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#configuring-wine-installation">13.5. Configuring WINE Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-management-guis">13.6. WINE Management GUIs</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. WINE in Multi-User FreeBSD Installations</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-on-os-faq">13.8. WINE on FreeBSD FAQ</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partiii/">
+              Part III. System Administration
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/config/">
+              Chapter 14. Configuration, Services, Logging and Power Management
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#config-synopsis">14.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-configfiles">14.2. Configuration Files</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-rcd">14.3. Managing Services in FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#cron-periodic">14.4. Cron and Periodic</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-syslog">14.5. Configuring System Logging</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#acpi-overview">14.6. Power and Resource Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#adding-swap-space">14.7. Adding Swap Space</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/boot/">
+              Chapter 15. The FreeBSD Booting Process
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-synopsis">15.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-introduction">15.2. FreeBSD Boot Process</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#device-hints">15.3. Device Hints</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-shutdown">15.4. Shutdown Sequence</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/security/">
+              Chapter 16. Security
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-synopsis">16.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-intro">16.2. Introduction</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#sec-accounts">16.3. Securing Accounts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-ids">16.4. Intrusion Detection System (IDS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-secure-levels">16.5. Secure levels</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-file-flags">16.6. File flags</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#openssh">16.7. OpenSSH</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#openssl">16.8. OpenSSL</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#kerberos5">16.9. Kerberos</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#tcpwrappers">16.10. TCP Wrappers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#fs-acl">16.11. Access Control Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#capsicum">16.12. Capsicum</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-accounting">16.13. Process Accounting</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-resourcelimits">16.14. Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-pkg">16.15. Monitoring Third Party Security Issues</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-advisories">16.16. FreeBSD Security Advisories</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/jails/">
+              Chapter 17. Jails and Containers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jails-synopsis">17.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-types">17.2. Jail Types</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#host-configuration">17.3. Host Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#classic-jail">17.4. Classic Jail (Thick Jail)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#thin-jail">17.5. Thin Jails</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-management">17.6. Jail Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-upgrading">17.7. Jail Upgrading</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-resource-limits">17.8. Jail Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-managers-and-containers">17.9. Jail Managers and Containers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mac/">
+              Chapter 18. Mandatory Access Control
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-synopsis">18.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-inline-glossary">18.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-understandlabel">18.3. Understanding MAC Labels</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-planning">18.4. Planning the Security Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-policies">18.5. Available MAC Policies</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-userlocked">18.6. User Lock Down</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-implementing">18.7. Nagios in a MAC Jail</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-troubleshoot">18.8. Troubleshooting the MAC Framework</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/audit/">
+              Chapter 19. Security Event Auditing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-synopsis">19.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-inline-glossary">19.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-config">19.3. Audit Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-administration">19.4. Working with Audit Trails</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/disks/">
+              Chapter 20. Storage
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-synopsis">20.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-adding">20.2. Adding Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-growing">20.3. Resizing and Growing Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#usb-disks">20.4. USB Storage Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#creating-cds">20.5. Creating and Using CD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#creating-dvds">20.6. Creating and Using DVD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#floppies">20.7. Creating and Using Floppy Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#using-ntfs">20.8. Using NTFS Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#backup-basics">20.9. Backup Basics</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-virtual">20.10. Memory Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#snapshots">20.11. File System Snapshots</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#quotas">20.12. Disk Quotas</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-encrypting">20.13. Encrypting Disk Partitions</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#swap-encrypting">20.14. Encrypting Swap</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-hast">20.15. Highly Available Storage (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/geom/">
+              Chapter 21. GEOM: Modular Disk Transformation Framework
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-synopsis">21.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-striping">21.2. RAID0 - Striping</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-mirror">21.3. RAID1 - Mirroring</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-raid3">21.4. RAID3 - Byte-level Striping with Dedicated Parity</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-graid">21.5. Software RAID Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-glabel">21.7. Labeling Disk Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-gjournal">21.8. UFS Journaling Through GEOM</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/zfs/">
+              Chapter 22. The Z File System (ZFS)
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-differences">22.1. What Makes ZFS Different</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-quickstart">22.2. Quick Start Guide</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zfs-allow">22.5. Delegated Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-advanced">22.6. Advanced Topics</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-links">22.7. Further Resources</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-term">22.8. ZFS Features and Terminology</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/filesystems/">
+              Chapter 23. Other File Systems
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/filesystems/#filesystems-synopsis">23.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/filesystems/#filesystems-linux">23.2. Linux® File Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/virtualization/">
+              Chapter 24. Virtualization
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-synopsis">24.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. FreeBSD as a Guest on Parallels Desktop for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-vmware">24.3. FreeBSD as a Guest on VMware Fusion for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. FreeBSD as a Guest on VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. FreeBSD as a Host with VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-bhyve">24.6. FreeBSD as a Host with bhyve</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD as a Xen™-Host</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/l10n/">
+              Chapter 25. Localization - i18n/L10n Usage and Setup
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#l10n-synopsis">25.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#using-localization">25.2. Using Localization</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#l10n-compiling">25.3. Finding i18n Applications</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#lang-setup">25.4. Locale Configuration for Specific Languages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/">
+              Chapter 26. Updating and Upgrading FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD Update</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-bootcode">26.3. Updating Bootcode</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. Updating the Documentation Set</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#current-stable">26.5. Tracking a Development Branch</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#makeworld">26.6. Updating FreeBSD from Source</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#small-lan">26.7. Tracking for Multiple Machines</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. Building on non-FreeBSD Hosts</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/dtrace/">
+              Chapter 27. DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-synopsis">27.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-implementation">27.2. Implementation Differences</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-enable">27.3. Enabling DTrace Support</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-using">27.4. Using DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/">
+              Chapter 28. USB Device Mode / USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB Virtual Serial Ports</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB Device Mode Network Interfaces</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB Virtual Storage Device</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partiv/">
+              Part IV. Network Communication
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/">
+              Chapter 29. Serial Communications
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serial-synopsis">29.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serial">29.2. Serial Terminology and Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#term">29.3. Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#dialup">29.4. Dial-in Service</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#dialout">29.5. Dial-out Service</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serialconsole-setup">29.6. Setting Up the Serial Console</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/">
+              Chapter 30. PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#userppp">30.2. Configuring PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. Troubleshooting PPP Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#pppoe">30.4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#pppoa">30.5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mail/">
+              Chapter 31. Electronic Mail
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-synopsis">31.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-using">31.2. Mail Components</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#sendmail">31.4. Sendmail</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-changingmta">31.5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-agents">31.6. Mail User Agents</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-advanced">31.7. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/network-servers/">
+              Chapter 32. Network Servers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-servers-synopsis">32.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-inetd">32.2. The inetd Super-Server</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-nfs">32.3. Network File System (NFS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-nis">32.4. Network Information System (NIS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ldap">32.5. Lightweight Directory Access Protocol (LDAP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-dhcp">32.6. Dynamic Host Configuration Protocol (DHCP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-dns">32.7. Domain Name System (DNS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ftp">32.9. File Transfer Protocol (FTP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-samba">32.10. File and Print Services for Microsoft® Windows® Clients (Samba)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ntp">32.11. Clock Synchronization with NTP</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-iscsi">32.12. iSCSI Initiator and Target Configuration</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/firewalls/">
+              Chapter 33. Firewalls
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-intro">33.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-concepts">33.2. Firewall Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-pf">33.3. PF</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER (IPF)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-blacklistd">33.6. Blacklistd</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/">
+              Chapter 34. Advanced Networking
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-routing">34.2. Gateways and Routes</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. Virtual Hosts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-advanced-wireless">34.4. Wireless Advanced Authentication</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. Wireless Ad-hoc Mode</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB Tethering</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-bluetooth">34.7. Bluetooth</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-bridging">34.8. Bridging</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-aggregation">34.9. Link Aggregation and Failover</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-diskless">34.10. Diskless Operation with PXE</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#carp">34.11. Common Address Redundancy Protocol (CARP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-vlan">34.12. VLANs</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partv/">
+              Part V. Appendices
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mirrors/">
+              Appendix A. Obtaining FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#mirrors">A.1. Mirrors</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#git">A.2. Using Git</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#svn">A.3. Using Subversion</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#mirrors-cdrom">A.4. CD and DVD Sets</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/bibliography/">
+              Appendix B. Bibliography
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD Bibliography</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-security">B.2. Security Reference</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-history">B.3. UNIX® History</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-journals">B.4. Periodicals, Journals, and Magazines</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/eresources/">
+              Appendix C. Resources on the Internet
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-www">C.1. Websites</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-mail">C.2. Mailing Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-news">C.3. Usenet Newsgroups</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/pgpkeys/">
+              Appendix D. OpenPGP Keys
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/pgpkeys/#pgpkeys-officers">D.1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/glossary/">
+              FreeBSD Glossary
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/colophon/">
+              Colophon
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">Chapter 11. Printing</h1>
+    
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#printing-quick-start">11.1. Quick Start</a></li>
+    <li><a href="#printing-connections">11.2. Printer Connections</a></li>
+    <li><a href="#printing-pdls">11.3. Common Page Description Languages</a></li>
+    <li><a href="#printing-direct">11.4. Direct Printing</a></li>
+    <li><a href="#printing-lpd">11.5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="#printing-other">11.6. Other Printing Systems</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+<div class="paragraph">
+<p>Putting information on paper is a vital function, despite many attempts to eliminate it.
+Printing has two basic components.
+The data must be delivered to the printer, and must be in a form that the printer can understand.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-quick-start">11.1. Quick Start<a class="anchor" href="#printing-quick-start"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Basic printing can be set up quickly.
+The printer must be capable of printing plain <code>ASCII</code> text.
+For printing to other types of files, see <a href="#printing-lpd-filters">Filters</a>.</p>
+</div>
+<div class="sidebarblock procedure">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a directory to store files while they are being printed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir -p /var/spool/lpd/lp</span>
+<span class="c"># chown daemon:daemon /var/spool/lpd/lp</span>
+<span class="c"># chmod 770 /var/spool/lpd/lp</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>As <code>root</code>, create <span class="filename">/etc/printcap</span> with these contents:</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp:\
+lp=/dev/unlpt0:\  <i class="conum" data-value="1"></i><b>(1)</b>
+sh:\
+mx#0:\
+sd=/var/spool/lpd/lp:\
+lf=/var/log/lpd-errs:</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This line is for a printer connected to a <code>USB</code> port.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>For a printer connected to a parallel or &#34;printer&#34; port, use:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:lp=/dev/lpt0:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a printer connected directly to a network, use:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:lp=:rm=network-printer-name:rp=raw:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Replace <em>network-printer-name</em> with the <code>DNS</code> host name of the network printer.</p>
+</div>
+</li>
+<li>
+<p>Enable LPD by editing <span class="filename">/etc/rc.conf</span>, adding this line:</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lpd_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Start the service:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service lpd start</span>
+Starting lpd.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Print a test:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># printf &#34;1. This printer can print.\n2. This is the second line.\n&#34; | lpr</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If both lines do not start at the left border, but &#34;stairstep&#34; instead, see <a href="#printing-lpd-filters-stairstep">Preventing Stairstepping on Plain Text Printers</a>.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Text files can now be printed with <code>lpr</code>.
+Give the filename on the command line, or pipe output directly into <code>lpr</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr textfile.txt
+<span class="gp">% </span>ls -lh | lpr</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-connections">11.2. Printer Connections<a class="anchor" href="#printing-connections"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Printers are connected to computer systems in a variety of ways.
+Small desktop printers are usually connected directly to a computer’s <code>USB</code> port.
+Older printers are connected to a parallel or &#34;printer&#34; port.
+Some printers are directly connected to a network, making it easy for multiple computers to share them.
+A few printers use a rare serial port connection.</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD can communicate with all of these types of printers.</p>
+</div>
+<div id="printing-connections-usb" class="dlist">
+<dl>
+<dt class="hdlist1"><code>USB</code></dt>
+<dd>
+<p><code>USB</code> printers can be connected to any available <code>USB</code> port on the computer.</p>
+<div class="paragraph">
+<p>When FreeBSD detects a <code>USB</code> printer, two device entries are created: <span class="filename">/dev/ulpt0</span> and <span class="filename">/dev/unlpt0</span>.
+Data sent to either device will be relayed to the printer.
+After each print job, <span class="filename">ulpt0</span> resets the <code>USB</code> port.
+Resetting the port can cause problems with some printers, so the <span class="filename">unlpt0</span> device is usually used instead.
+<span class="filename">unlpt0</span> does not reset the USB port at all.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="printing-connections-parallel" class="dlist">
+<dl>
+<dt class="hdlist1">Parallel (<code>IEEE</code>-1284)</dt>
+<dd>
+<p>The parallel port device is <span class="filename">/dev/lpt0</span>.
+This device appears whether a printer is attached or not, it is not autodetected.</p>
+<div class="paragraph">
+<p>Vendors have largely moved away from these &#34;legacy&#34; ports, and many computers no longer have them.
+Adapters can be used to connect a parallel printer to a <code>USB</code> port.
+With such an adapter, the printer can be treated as if it were actually a <code>USB</code> printer.
+Devices called <em>print servers</em> can also be used to connect parallel printers directly to a network.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="printing-connections-serial" class="dlist">
+<dl>
+<dt class="hdlist1">Serial (RS-232)</dt>
+<dd>
+<p>Serial ports are another legacy port, rarely used for printers except in certain niche applications.
+Cables, connectors, and required wiring vary widely.</p>
+<div class="paragraph">
+<p>For serial ports built into a motherboard, the serial device name is <span class="filename">/dev/cuau0</span> or <span class="filename">/dev/cuau1</span>.
+Serial <code>USB</code> adapters can also be used, and these will appear as <span class="filename">/dev/cuaU0</span>.</p>
+</div>
+<div class="paragraph">
+<p>Several communication parameters must be known to communicate with a serial printer.
+The most important are <em>baud rate</em> or <code>BPS</code> (Bits Per Second) and <em>parity</em>.
+Values vary, but typical serial printers use a baud rate of 9600 and no parity.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="printing-connections-network" class="dlist">
+<dl>
+<dt class="hdlist1">Network</dt>
+<dd>
+<p>Network printers are connected directly to the local computer network.</p>
+<div class="paragraph">
+<p>The <code>DNS</code> hostname of the printer must be known.
+If the printer is assigned a dynamic address by <code>DHCP</code>, <code>DNS</code> should be dynamically updated so that the host name always has the correct <code>IP</code> address.
+Network printers are often given static <code>IP</code> addresses to avoid this problem.</p>
+</div>
+<div class="paragraph">
+<p>Most network printers understand print jobs sent with the LPD protocol.
+A print queue name can also be specified.
+Some printers process data differently depending on which queue is used.
+For example, a <code>raw</code> queue prints the data unchanged, while the <code>text</code> queue adds carriage returns to plain text.</p>
+</div>
+<div class="paragraph">
+<p>Many network printers can also print data sent directly to port 9100.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="printing-connections-summary">11.2.1. Summary<a class="anchor" href="#printing-connections-summary"></a></h3>
+<div class="paragraph">
+<p>Wired network connections are usually the easiest to set up and give the fastest printing.
+For direct connection to the computer, <code>USB</code> is preferred for speed and simplicity.
+Parallel connections work but have limitations on cable length and speed.
+Serial connections are more difficult to configure.
+Cable wiring differs between models, and communication parameters like baud rate and parity bits must add to the complexity.
+Fortunately, serial printers are rare.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-pdls">11.3. Common Page Description Languages<a class="anchor" href="#printing-pdls"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Data sent to a printer must be in a language that the printer can understand.
+These languages are called Page Description Languages, or PDLs.</p>
+</div>
+<div id="print-pdls-ascii" class="dlist">
+<dl>
+<dt class="hdlist1"><code>ASCII</code></dt>
+<dd>
+<p>Plain <code>ASCII</code> text is the simplest way to send data to a printer.
+Characters correspond one to one with what will be printed: an <code>A</code> in the data prints an <code>A</code> on the page.
+Very little formatting is available.
+There is no way to select a font or proportional spacing.
+The forced simplicity of plain <code>ASCII</code> means that text can be printed straight from the computer with little or no encoding or translation.
+The printed output corresponds directly with what was sent.</p>
+<div class="paragraph">
+<p>Some inexpensive printers cannot print plain <code>ASCII</code> text.
+This makes them more difficult to set up, but it is usually still possible.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="print-pdls-postscript" class="dlist">
+<dl>
+<dt class="hdlist1">PostScript®</dt>
+<dd>
+<p>PostScript® is almost the opposite of <code>ASCII</code>.
+Rather than simple text, a PostScript® program is a set of instructions that draw the final document.
+Different fonts and graphics can be used.
+However, this power comes at a price.
+The program that draws the page must be written.
+Usually this program is generated by application software, so the process is invisible to the user.</p>
+<div class="paragraph">
+<p>Inexpensive printers sometimes leave out PostScript® compatibility as a cost-saving measure.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="print-pdls-pcl" class="dlist">
+<dl>
+<dt class="hdlist1"><code>PCL</code> (Printer Command Language)</dt>
+<dd>
+<p><code>PCL</code> is an extension of <code>ASCII</code>, adding escape sequences for formatting, font selection, and printing graphics.
+Many printers provide <code>PCL5</code> support.
+Some support the newer <code>PCL6</code> or <code>PCLXL</code>.
+These later versions are supersets of <code>PCL5</code> and can provide faster printing.</p>
+</dd>
+</dl>
+</div>
+<div id="print-pdls-host-based" class="dlist">
+<dl>
+<dt class="hdlist1">Host-Based</dt>
+<dd>
+<p>Manufacturers can reduce the cost of a printer by giving it a simple processor and very little memory.
+These printers are not capable of printing plain text.
+Instead, bitmaps of text and graphics are drawn by a driver on the host computer and then sent to the printer.
+These are called <em>host-based</em> printers.</p>
+<div class="paragraph">
+<p>Communication between the driver and a host-based printer is often through proprietary or undocumented protocols, making them functional only on the most common operating systems.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="print-pdls-table">11.3.1. Converting PostScript® to Other PDLs<a class="anchor" href="#print-pdls-table"></a></h3>
+<div class="paragraph">
+<p>Many applications from the Ports Collection and FreeBSD utilities produce PostScript® output.
+This table shows the utilities available to convert that into other common PDLs:</p>
+</div>
+<table id="print-pdls-ps-to-other-tbl" class="tableblock frame-none grid-all stretch">
+<caption class="title">Table 1. Output PDLs</caption>
+<colgroup>
+<col style="width: 33.3333%;"/>
+<col style="width: 33.3333%;"/>
+<col style="width: 33.3334%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Output PDL</th>
+<th class="tableblock halign-left valign-top">Generated By</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PCL</code> or <code>PCL5</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/print/ghostscript9-base/">print/ghostscript9-base</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-sDEVICE=ljet4</code> for monochrome, <code>-sDEVICE=cljet5</code> for color</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PCLXL</code> or <code>PCL6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/print/ghostscript9-base/">print/ghostscript9-base</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-sDEVICE=pxlmono</code> for monochrome, <code>-sDEVICE=pxlcolor</code> for color</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ESC/P2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/print/ghostscript9-base/">print/ghostscript9-base</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-sDEVICE=uniprint</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XQX</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/print/foo2zjs/">print/foo2zjs</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="print-pdls-summary">11.3.2. Summary<a class="anchor" href="#print-pdls-summary"></a></h3>
+<div class="paragraph">
+<p>For the easiest printing, choose a printer that supports PostScript®.
+Printers that support <code>PCL</code> are the next preferred.
+With <a class="package" href="https://cgit.freebsd.org/ports/tree/print/ghostscript9-base/">print/ghostscript9-base</a>, these printers can be used as if they understood PostScript® natively.
+Printers that support PostScript® or <code>PCL</code> directly almost always support direct printing of plain <code>ASCII</code> text files also.</p>
+</div>
+<div class="paragraph">
+<p>Line-based printers like typical inkjets usually do not support PostScript® or <code>PCL</code>.
+They often can print plain <code>ASCII</code> text files.
+<a class="package" href="https://cgit.freebsd.org/ports/tree/print/ghostscript9-base/">print/ghostscript9-base</a> supports the PDLs used by some of these printers.
+However, printing an entire graphic-based page on these printers is often very slow due to the large amount of data to be transferred and printed.</p>
+</div>
+<div class="paragraph">
+<p>Host-based printers are often more difficult to set up.
+Some cannot be used at all because of proprietary PDLs.
+Avoid these printers when possible.</p>
+</div>
+<div class="paragraph">
+<p>Descriptions of many PDLs can be found at <a href="http://www.undocprint.org/formats/page_description_languages" class="bare">http://www.undocprint.org/formats/page_description_languages</a>.
+The particular <code>PDL</code> used by various models of printers can be found at <a href="http://www.openprinting.org/printers" class="bare">http://www.openprinting.org/printers</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-direct">11.4. Direct Printing<a class="anchor" href="#printing-direct"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For occasional printing, files can be sent directly to a printer device without any setup.
+For example, a file called <span class="filename">sample.txt</span> can be sent to a <code>USB</code> printer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cp sample.txt /dev/unlpt0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Direct printing to network printers depends on the abilities of the printer, but most accept print jobs on port 9100, and <a href="https://man.freebsd.org/cgi/man.cgi?query=nc&amp;sektion=1&amp;format=html">nc(1)</a> can be used with them. To print the same file to a printer with the <code>DNS</code> hostname of <em>netlaser</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># nc netlaser 9100 &lt; sample.txt</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-lpd">11.5. LPD (Line Printer Daemon)<a class="anchor" href="#printing-lpd"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Printing a file in the background is called <em>spooling</em>.
+A spooler allows the user to continue with other programs on the computer without waiting for the printer to slowly complete the print job.</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD includes a spooler called <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a>.
+Print jobs are submitted with <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-setup">11.5.1. Initial Setup<a class="anchor" href="#printing-lpd-setup"></a></h3>
+<div class="paragraph">
+<p>A directory for storing print jobs is created, ownership is set, and the permissions are set to prevent other users from viewing the contents of those files:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir -p /var/spool/lpd/lp</span>
+<span class="c"># chown daemon:daemon /var/spool/lpd/lp</span>
+<span class="c"># chmod 770 /var/spool/lpd/lp</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Printers are defined in <span class="filename">/etc/printcap</span>.
+An entry for each printer includes details like a name, the port where it is attached, and various other settings.
+Create <span class="filename">/etc/printcap</span> with these contents:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp:\				<i class="conum" data-value="1"></i><b>(1)</b>
+	:lp=/dev/unlpt0:\	<i class="conum" data-value="2"></i><b>(2)</b>
+	:sh:\			<i class="conum" data-value="3"></i><b>(3)</b>
+	:mx#0:\			<i class="conum" data-value="4"></i><b>(4)</b>
+	:sd=/var/spool/lpd/lp:\	<i class="conum" data-value="5"></i><b>(5)</b>
+	:lf=/var/log/lpd-errs:	<i class="conum" data-value="6"></i><b>(6)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The name of this printer. <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a> sends print jobs to the <code>lp</code> printer unless another printer is specified with <code>-P</code>, so the default printer should be named <code>lp</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The device where the printer is connected. Replace this line with the appropriate one for the connection type shown here.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Suppress the printing of a header page at the start of a print job.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Do not limit the maximum size of a print job.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The path to the spooling directory for this printer. Each printer uses its own spooling directory.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The log file where errors on this printer will be reported.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>After creating <span class="filename">/etc/printcap</span>, use <a href="https://man.freebsd.org/cgi/man.cgi?query=chkprintcap&amp;sektion=8&amp;format=html">chkprintcap(8)</a> to test it for errors:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chkprintcap</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Fix any reported problems before continuing.</p>
+</div>
+<div class="paragraph">
+<p>Enable <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a> in <span class="filename">/etc/rc.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lpd_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Start the service:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service lpd start</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-lpr">11.5.2. Printing with <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a><a class="anchor" href="#printing-lpd-lpr"></a></h3>
+<div class="paragraph">
+<p>Documents are sent to the printer with <code>lpr</code>.
+A file to be printed can be named on the command line or piped into <code>lpr</code>.
+These two commands are equivalent, sending the contents of <span class="filename">doc.txt</span> to the default printer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr doc.txt
+<span class="gp">% </span>cat doc.txt | lpr</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Printers can be selected with <code>-P</code>.
+To print to a printer called <em>laser</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr -Plaser doc.txt</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-filters">11.5.3. Filters<a class="anchor" href="#printing-lpd-filters"></a></h3>
+<div class="paragraph">
+<p>The examples shown so far have sent the contents of a text file directly to the printer.
+As long as the printer understands the content of those files, output will be printed correctly.</p>
+</div>
+<div class="paragraph">
+<p>Some printers are not capable of printing plain text, and the input file might not even be plain text.</p>
+</div>
+<div class="paragraph">
+<p><em>Filters</em> allow files to be translated or processed.
+The typical use is to translate one type of input, like plain text, into a form that the printer can understand, like PostScript® or <code>PCL</code>.
+Filters can also be used to provide additional features, like adding page numbers or highlighting source code to make it easier to read.</p>
+</div>
+<div class="paragraph">
+<p>The filters discussed here are <em>input filters</em> or <em>text filters</em>.
+These filters convert the incoming file into different forms.
+Use <a href="https://man.freebsd.org/cgi/man.cgi?query=su&amp;sektion=1&amp;format=html">su(1)</a> to become <code>root</code> before creating the files.</p>
+</div>
+<div class="paragraph">
+<p>Filters are specified in <span class="filename">/etc/printcap</span> with the <code>if=</code> identifier.
+To use <span class="filename">/usr/local/libexec/lf2crlf</span> as a filter, modify <span class="filename">/etc/printcap</span> like this:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp:\
+	:lp=/dev/unlpt0:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/lp:\
+	:if=/usr/local/libexec/lf2crlf:\   <i class="conum" data-value="1"></i><b>(1)</b>
+	:lf=/var/log/lpd-errs:</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>if=</code> identifies the <em>input filter</em> that will be used on incoming text.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The backslash <em>line continuation</em> characters at the end of the lines in <span class="filename">printcap</span> entries reveal that an entry for a printer is really just one long line with entries delimited by colon characters.
+An earlier example can be rewritten as a single less-readable line:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp:lp=/dev/unlpt0:sh:mx#0:sd=/var/spool/lpd/lp:if=/usr/local/libexec/lf2crlf:lf=/var/log/lpd-errs:</pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-stairstep">11.5.3.1. Preventing Stairstepping on Plain Text Printers<a class="anchor" href="#printing-lpd-filters-stairstep"></a></h4>
+<div class="paragraph">
+<p>Typical FreeBSD text files contain only a single line feed character at the end of each line.
+These lines will &#34;stairstep&#34; on a standard printer:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>A printed file looks
+                    like the steps of a staircase
+                                                 scattered by the wind</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A filter can convert the newline characters into carriage returns and newlines.
+The carriage returns make the printer return to the left after each line.
+Create <span class="filename">/usr/local/libexec/lf2crlf</span> with these contents:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+CR=$&#39;\r&#39;
+/usr/bin/sed -e &#34;s/$/${CR}/g&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Set the permissions and make it executable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 555 /usr/local/libexec/lf2crlf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Modify <span class="filename">/etc/printcap</span> to use the new filter:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:if=/usr/local/libexec/lf2crlf:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Test the filter by printing the same plain text file.
+The carriage returns will cause each line to start at the left side of the page.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-enscript">11.5.3.2. Fancy Plain Text on PostScript® Printers with <a class="package" href="https://cgit.freebsd.org/ports/tree/print/enscript/">print/enscript</a><a class="anchor" href="#printing-lpd-filters-enscript"></a></h4>
+<div class="paragraph">
+<p>GNUEnscript converts plain text files into nicely-formatted PostScript® for printing on PostScript® printers.
+It adds page numbers, wraps long lines, and provides numerous other features to make printed text files easier to read.
+Depending on the local paper size, install either <a class="package" href="https://cgit.freebsd.org/ports/tree/print/enscript-letter/">print/enscript-letter</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/print/enscript-a4/">print/enscript-a4</a> from the Ports Collection.</p>
+</div>
+<div class="paragraph">
+<p>Create <span class="filename">/usr/local/libexec/enscript</span> with these contents:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+/usr/local/bin/enscript -o -</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Set the permissions and make it executable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 555 /usr/local/libexec/enscript</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Modify <span class="filename">/etc/printcap</span> to use the new filter:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:if=/usr/local/libexec/enscript:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Test the filter by printing a plain text file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-ps2pcl">11.5.3.3. Printing PostScript® to <code>PCL</code> Printers<a class="anchor" href="#printing-lpd-filters-ps2pcl"></a></h4>
+<div class="paragraph">
+<p>Many programs produce PostScript® documents.
+However, inexpensive printers often only understand plain text or <code>PCL</code>.
+This filter converts PostScript® files to <code>PCL</code> before sending them to the printer.</p>
+</div>
+<div class="paragraph">
+<p>Install the Ghostscript PostScript® interpreter, <a class="package" href="https://cgit.freebsd.org/ports/tree/print/ghostscript9-base/">print/ghostscript9-base</a>, from the Ports Collection.</p>
+</div>
+<div class="paragraph">
+<p>Create <span class="filename">/usr/local/libexec/ps2pcl</span> with these contents:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+/usr/local/bin/gs -dSAFER -dNOPAUSE -dBATCH -q -sDEVICE=ljet4 -sOutputFile=- -</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Set the permissions and make it executable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 555 /usr/local/libexec/ps2pcl</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>PostScript® input sent to this script will be rendered and converted to <code>PCL</code> before being sent on to the printer.</p>
+</div>
+<div class="paragraph">
+<p>Modify <span class="filename">/etc/printcap</span> to use this new input filter:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:if=/usr/local/libexec/ps2pcl:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Test the filter by sending a small PostScript® program to it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nb">printf</span> <span class="s2">&#34;%%</span><span class="se">\!</span><span class="s2">PS </span><span class="se">\n</span><span class="s2"> /Helvetica findfont 18 scalefont setfont </span><span class="se">\</span><span class="s2">
+72 432 moveto (PostScript printing successful.) show showpage </span><span class="se">\0</span><span class="s2">04&#34;</span> | lpr</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-smart">11.5.3.4. Smart Filters<a class="anchor" href="#printing-lpd-filters-smart"></a></h4>
+<div class="paragraph">
+<p>A filter that detects the type of input and automatically converts it to the correct format for the printer can be very convenient.
+The first two characters of a PostScript® file are usually <code>%!</code>.
+A filter can detect those two characters.
+PostScript® files can be sent on to a PostScript® printer unchanged.
+Text files can be converted to PostScript® with Enscript as shown earlier.
+Create <span class="filename">/usr/local/libexec/psif</span> with these contents:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+#
+#  psif - Print PostScript or plain text on a PostScript printer
+#
+IFS=&#34;&#34; read -r first_line
+first_two_chars=`expr &#34;$first_line&#34; : &#39;\(..\)&#39;`
+
+case &#34;$first_two_chars&#34; in
+%!)
+    # %! : PostScript job, print it.
+    echo &#34;$first_line&#34; &amp;&amp; cat &amp;&amp; exit 0
+    exit 2
+    ;;
+*)
+    # otherwise, format with enscript
+    ( echo &#34;$first_line&#34;; cat ) | /usr/local/bin/enscript -o - &amp;&amp; exit 0
+    exit 2
+    ;;
+esac</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Set the permissions and make it executable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 555 /usr/local/libexec/psif</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Modify <span class="filename">/etc/printcap</span> to use this new input filter:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:if=/usr/local/libexec/psif:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Test the filter by printing PostScript® and plain text files.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-othersmart">11.5.3.5. Other Smart Filters<a class="anchor" href="#printing-lpd-filters-othersmart"></a></h4>
+<div class="paragraph">
+<p>Writing a filter that detects many different types of input and formats them correctly is challenging.
+<a class="package" href="https://cgit.freebsd.org/ports/tree/print/apsfilter/">print/apsfilter</a> from the Ports Collection is a smart &#34;magic&#34; filter that detects dozens of file types and automatically converts them to the <code>PDL</code> understood by the printer.
+See <a href="http://www.apsfilter.org" class="bare">http://www.apsfilter.org</a> for more details.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-queues">11.5.4. Multiple Queues<a class="anchor" href="#printing-lpd-queues"></a></h3>
+<div class="paragraph">
+<p>The entries in <span class="filename">/etc/printcap</span> are really definitions of <em>queues</em>.
+There can be more than one queue for a single printer.
+When combined with filters, multiple queues provide users more control over how their jobs are printed.</p>
+</div>
+<div class="paragraph">
+<p>As an example, consider a networked PostScript® laser printer in an office.
+Most users want to print plain text, but a few advanced users want to be able to print PostScript® files directly.
+Two entries can be created for the same printer in <span class="filename">/etc/printcap</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>textprinter:\
+	:lp=9100@officelaser:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/textprinter:\
+	:if=/usr/local/libexec/enscript:\
+	:lf=/var/log/lpd-errs:
+
+psprinter:\
+	:lp=9100@officelaser:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/psprinter:\
+	:lf=/var/log/lpd-errs:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Documents sent to <code>textprinter</code> will be formatted by the <span class="filename">/usr/local/libexec/enscript</span> filter shown in an earlier example.
+Advanced users can print PostScript® files on <code>psprinter</code>, where no filtering is done.</p>
+</div>
+<div class="paragraph">
+<p>This multiple queue technique can be used to provide direct access to all kinds of printer features.
+A printer with a duplexer could use two queues, one for ordinary single-sided printing, and one with a filter that sends the command sequence to enable double-sided printing and then sends the incoming file.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-monitor">11.5.5. Monitoring and Controlling Printing<a class="anchor" href="#printing-lpd-monitor"></a></h3>
+<div class="paragraph">
+<p>Several utilities are available to monitor print jobs and check and control printer operation.</p>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-monitor-lpq">11.5.5.1. <a href="https://man.freebsd.org/cgi/man.cgi?query=lpq&amp;sektion=1&amp;format=html">lpq(1)</a><a class="anchor" href="#printing-lpd-monitor-lpq"></a></h4>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=lpq&amp;sektion=1&amp;format=html">lpq(1)</a> shows the status of a user’s print jobs.
+Print jobs from other users are not shown.</p>
+</div>
+<div class="paragraph">
+<p>Show the current user’s pending jobs on a single printer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpq -Plp
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     0    <span class="o">(</span>standard input<span class="o">)</span>                      12792 bytes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Show the current user’s pending jobs on all printers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpq -a
+lp:
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     1    <span class="o">(</span>standard input<span class="o">)</span>                      27320 bytes
+
+laser:
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     287  <span class="o">(</span>standard input<span class="o">)</span>                      22443 bytes</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-monitor-lprm">11.5.5.2. <a href="https://man.freebsd.org/cgi/man.cgi?query=lprm&amp;sektion=1&amp;format=html">lprm(1)</a><a class="anchor" href="#printing-lpd-monitor-lprm"></a></h4>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=lprm&amp;sektion=1&amp;format=html">lprm(1)</a> is used to remove print jobs.
+Normal users are only allowed to remove their own jobs.
+<code>root</code> can remove any or all jobs.</p>
+</div>
+<div class="paragraph">
+<p>Remove all pending jobs from a printer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lprm -Plp -</span>
+dfA002smithy dequeued
+cfA002smithy dequeued
+dfA003smithy dequeued
+cfA003smithy dequeued
+dfA004smithy dequeued
+cfA004smithy dequeued</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remove a single job from a printer.
+<a href="https://man.freebsd.org/cgi/man.cgi?query=lpq&amp;sektion=1&amp;format=html">lpq(1)</a> is used to find the job number.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpq
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     5    <span class="o">(</span>standard input<span class="o">)</span>                      12188 bytes
+
+<span class="gp">% </span>lprm -Plp 5
+dfA005smithy dequeued
+cfA005smithy dequeued</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-monitor-lpc">11.5.5.3. <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a><a class="anchor" href="#printing-lpd-monitor-lpc"></a></h4>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a> is used to check and modify printer status.
+<code>lpc</code> is followed by a command and an optional printer name.
+<code>all</code> can be used instead of a specific printer name, and the command will be applied to all printers.
+Normal users can view status with <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a>.
+Only <code>root</code> can use commands which modify printer status.</p>
+</div>
+<div class="paragraph">
+<p>Show the status of all printers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpc status all
+lp:
+	queuing is enabled
+	printing is enabled
+	1 entry <span class="k">in </span>spool area
+	printer idle
+laser:
+	queuing is enabled
+	printing is enabled
+	1 entry <span class="k">in </span>spool area
+	waiting <span class="k">for </span>laser to come up</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Prevent a printer from accepting new jobs, then begin accepting new jobs again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc disable lp</span>
+lp:
+	queuing disabled
+<span class="c"># lpc enable lp</span>
+lp:
+	queuing enabled</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Stop printing, but continue to accept new jobs.
+Then begin printing again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc stop lp</span>
+lp:
+	printing disabled
+<span class="c"># lpc start lp</span>
+lp:
+	printing enabled
+	daemon started</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Restart a printer after some error condition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc restart lp</span>
+lp:
+	no daemon to abort
+	printing enabled
+	daemon restarted</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Turn the print queue off and disable printing, with a message to explain the problem to users:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc down lp Repair parts will arrive on Monday</span>
+lp:
+	printer and queuing disabled
+	status message is now: Repair parts will arrive on Monday</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Re-enable a printer that is down:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc up lp</span>
+lp:
+	printing enabled
+	daemon started</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a> for more commands and options.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-shared">11.5.6. Shared Printers<a class="anchor" href="#printing-lpd-shared"></a></h3>
+<div class="paragraph">
+<p>Printers are often shared by multiple users in businesses and schools.
+Additional features are provided to make sharing printers more convenient.</p>
+</div>
+<div class="sect3">
+<h4 id="printing-shared-aliases">11.5.6.1. Aliases<a class="anchor" href="#printing-shared-aliases"></a></h4>
+<div class="paragraph">
+<p>The printer name is set in the first line of the entry in <span class="filename">/etc/printcap</span>.
+Additional names, or <em>aliases</em>, can be added after that name.
+Aliases are separated from the name and each other by vertical bars:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp|repairsprinter|salesprinter:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Aliases can be used in place of the printer name.
+For example, users in the Sales department print to their printer with</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr -Psalesprinter sales-report.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Users in the Repairs department print to <em>their</em> printer with</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr -Prepairsprinter repairs-report.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All of the documents print on that single printer.
+When the Sales department grows enough to need their own printer, the alias can be removed from the shared printer entry and used as the name of a new printer.
+Users in both departments continue to use the same commands, but the Sales documents are sent to the new printer.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-shared-headers">11.5.6.2. Header Pages<a class="anchor" href="#printing-shared-headers"></a></h4>
+<div class="paragraph">
+<p>It can be difficult for users to locate their documents in the stack of pages produced by a busy shared printer.
+<em>Header pages</em> were created to solve this problem.
+A header page with the user name and document name is printed before each print job.
+These pages are also sometimes called <em>banner</em> or <em>separator</em> pages.</p>
+</div>
+<div class="paragraph">
+<p>Enabling header pages differs depending on whether the printer is connected directly to the computer with a <code>USB</code>, parallel, or serial cable, or is connected remotely over a network.</p>
+</div>
+<div class="paragraph">
+<p>Header pages on directly-connected printers are enabled by removing the <code>:sh:\</code> (Suppress Header) line from the entry in <span class="filename">/etc/printcap</span>.
+These header pages only use line feed characters for new lines.
+Some printers will need the <span class="filename">/usr/share/examples/printing/hpif</span> filter to prevent stairstepped text.
+The filter configures <code>PCL</code> printers to print both carriage returns and line feeds when a line feed is received.</p>
+</div>
+<div class="paragraph">
+<p>Header pages for network printers must be configured on the printer itself.
+Header page entries in <span class="filename">/etc/printcap</span> are ignored.
+Settings are usually available from the printer front panel or a configuration web page accessible with a web browser.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-references">11.5.7. References<a class="anchor" href="#printing-lpd-references"></a></h3>
+<div class="paragraph">
+<p>Example files: <span class="filename">/usr/share/examples/printing/</span>.</p>
+</div>
+<div class="paragraph">
+<p>The <em>4.3BSD Line Printer Spooler Manual</em>, <span class="filename">/usr/share/doc/smm/07.lpd/paper.ascii.gz</span>.</p>
+</div>
+<div class="paragraph">
+<p>Manual pages: <a href="https://man.freebsd.org/cgi/man.cgi?query=printcap&amp;sektion=5&amp;format=html">printcap(5)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lprm&amp;sektion=1&amp;format=html">lprm(1)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lpq&amp;sektion=1&amp;format=html">lpq(1)</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-other">11.6. Other Printing Systems<a class="anchor" href="#printing-other"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Several other printing systems are available in addition to the built-in <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a>.
+These systems offer support for other protocols or additional features.</p>
+</div>
+<div class="sect2">
+<h3 id="printing-other-cups">11.6.1. CUPS (Common UNIX® Printing System)<a class="anchor" href="#printing-other-cups"></a></h3>
+<div class="paragraph">
+<p>CUPS is a popular printing system available on many operating systems.
+Using CUPS on FreeBSD is documented in a separate article: <a href="https://docs.freebsd.org/en/articles/cups/">CUPS</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-other-hplip">11.6.2. HPLIP<a class="anchor" href="#printing-other-hplip"></a></h3>
+<div class="paragraph">
+<p>Hewlett Packard provides a printing system that supports many of their inkjet and laser printers.
+The port is <a class="package" href="https://cgit.freebsd.org/ports/tree/print/hplip/">print/hplip</a>.
+The main web page is at <a href="https://developers.hp.com/hp-linux-imaging-and-printing" class="bare">https://developers.hp.com/hp-linux-imaging-and-printing</a>.
+The port handles all the installation details on FreeBSD.
+Configuration information is shown at <a href="https://developers.hp.com/hp-linux-imaging-and-printing/install" class="bare">https://developers.hp.com/hp-linux-imaging-and-printing/install</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-other-lprng">11.6.3. LPRng<a class="anchor" href="#printing-other-lprng"></a></h3>
+<div class="paragraph">
+<p>LPRng was developed as an enhanced alternative to <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a>.
+The port is <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/LPRng/">sysutils/LPRng</a>.
+For details and documentation, see <a href="http://www.lprng.com/" class="bare">http://www.lprng.com/</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/en/books/handbook/kernelconfig class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/en/books/handbook/linuxemu  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#printing-quick-start">11.1. Quick Start</a></li>
+    <li><a href="#printing-connections">11.2. Printer Connections</a></li>
+    <li><a href="#printing-pdls">11.3. Common Page Description Languages</a></li>
+    <li><a href="#printing-direct">11.4. Direct Printing</a></li>
+    <li><a href="#printing-lpd">11.5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="#printing-other">11.6. Other Printing Systems</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/en/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>English</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

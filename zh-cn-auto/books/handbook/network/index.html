@@ -1,0 +1,2924 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本章深入探讨了网络配置和性能的主题，展示了 FreeBSD 操作系统强大的网络能力。"/>
+  <meta name="keywords" content="91, 34, 110, 101, 116, 119, 111, 114, 107, 34, 44, 32, 34, 105, 112, 118, 52, 34, 44, 32, 34, 105, 112, 118, 54, 34, 44, 32, 34, 119, 105, 114, 101, 108, 101, 115, 115, 34, 44, 32, 34, 119, 112, 97, 95, 115, 117, 112, 112, 108, 105, 99, 97, 110, 116, 34, 44, 32, 34, 115, 116, 97, 116, 105, 99, 32, 105, 112, 34, 44, 32, 34, 100, 121, 110, 97, 109, 105, 99, 32, 105, 112, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/" />
+
+  <title>第 7 章 网络 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 7 章 网络" />
+    <meta property="og:description" content="本章深入探讨了网络配置和性能的主题，展示了 FreeBSD 操作系统强大的网络能力。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/network\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 7 章 网络</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#network-synopsis">7.1. 简介</a></li>
+    <li><a href="#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="#hostname">7.5. 主机名</a></li>
+    <li><a href="#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="network-synopsis">7.1. 简介<a class="anchor" href="#network-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本章深入探讨了网络配置和性能的主题，展示了 FreeBSD 操作系统强大的网络能力。无论是使用有线网络还是无线网络，本章提供了一个全面的指南，帮助您在 FreeBSD 中配置和优化网络连接。</p>
+</div>
+<div class="paragraph">
+<p>在深入了解细节之前，读者对网络概念如协议、网络接口和寻址有基本的了解是有益的。</p>
+</div>
+<div class="paragraph">
+<p>本章内容包括：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>在 FreeBSD 中配置有线网络的能力，包括网络接口设置、寻址和定制选项。</p>
+</li>
+<li>
+<p>在 FreeBSD 中配置无线网络的技能，包括无线网络接口设置、安全协议和故障排除技术。</p>
+</li>
+<li>
+<p>FreeBSD 的网络能力以及其在优秀网络性能方面的声誉。</p>
+</li>
+<li>
+<p>对于 FreeBSD 支持的各种网络服务和协议的理解，包括 DNS 、 DHCP 等的配置说明。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>有关如何进行高级网络配置的更多信息，请参阅 <a href="../advanced-networking/#高级网络配置， Advanced Networking"></a> 。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="config-network-setup">7.2. 设置网络<a class="anchor" href="#config-network-setup"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>为 FreeBSD 用户设置有线或无线连接是一个常见的任务。本节将展示如何识别有线和无线网络适配器以及如何配置它们。</p>
+</div>
+<div class="paragraph">
+<p>在开始配置之前，需要了解以下网络数据：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>如果网络使用 DHCP</p>
+</li>
+<li>
+<p>如果网络没有 DHCP ，则使用静态 IP 。</p>
+</li>
+<li>
+<p>子网掩码</p>
+</li>
+<li>
+<p>默认网关的 IP 地址</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>网络连接可能在安装时由 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdinstall&amp;sektion=8&amp;format=html">bsdinstall(8)</a> 进行配置。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="config-identify-network-adapter">7.2.1. 识别网络适配器<a class="anchor" href="#config-identify-network-adapter"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 支持各种有线和无线网络适配器。请查看所使用的 FreeBSD 版本的硬件兼容性列表 (<a href="https://www.freebsd.org/releases/">FreeBSD release</a>) ，以查看网络适配器是否受支持。</p>
+</div>
+<div class="paragraph">
+<p>要获取我们系统使用的网络适配器，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>pciconf -lv | grep -A1 -B3 network</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>em0@pci0:0:25:0:        class=0x020000 rev=0x03 hdr=0x00 vendor=0x8086 device=0x10f5 subvendor=0x17aa subdevice=0x20ee
+    vendor     = &#39;Intel Corporation&#39; <i class="conum" data-value="1"></i><b>(1)</b>
+    device     = &#39;82567LM Gigabit Network Connection&#39; <i class="conum" data-value="2"></i><b>(2)</b>
+    class      = network
+    subclass   = ethernet
+--
+iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x4237 subvendor=0x8086 subdevice=0x1211
+    vendor     = &#39;Intel Corporation&#39; <i class="conum" data-value="1"></i><b>(1)</b>
+    device     = &#39;PRO/Wireless 5100 AGN [Shiloh] Network Connection&#39; <i class="conum" data-value="2"></i><b>(2)</b>
+    class      = networ</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在 &#39; @ &#39; 符号之前的文本是控制设备的驱动程序的名称。在这种情况下，它们是 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=iwn&amp;sektion=4&amp;format=html">iwn(4)</a> 。</p>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>显示供应商的名称</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>显示设备的名称</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>只有在 FreeBSD 没有正确检测到网络接口卡时，才需要加载该模块。</p>
+</div>
+<div class="paragraph">
+<p>例如，要加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=alc&amp;sektion=4&amp;format=html">alc(4)</a> 模块，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kldload if_alc</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者，要在启动时将驱动程序加载为模块，请将以下行放置在 <span class="filename">/boot/loader.conf</span> 中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>if_alc_load=&#34;YES&#34;</pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="config-network-connection">7.3. 有线网络<a class="anchor" href="#config-network-connection"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>一旦正确的驱动程序加载完成，需要配置网络适配器。 FreeBSD 使用驱动程序名称后跟一个单元号来命名网络接口适配器。单元号表示适配器在引导时被检测到的顺序，或者是稍后被发现的顺序。</p>
+</div>
+<div class="paragraph">
+<p>例如， <code>em0</code> 是系统上使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 驱动程序的第一个网络接口卡（ NIC ）。</p>
+</div>
+<div class="paragraph">
+<p>要显示网络接口配置，请输入以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>ifconfig</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>em0: flags=8863&lt;UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST&gt; metric 0 mtu 1500
+        options=481249b&lt;RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,VLAN_HWCSUM,LRO,WOL_MAGIC,VLAN_HWFILTER,NOMAP&gt;
+        ether 00:1f:16:0f:27:5a
+        inet6 fe80::21f:16ff:fe0f:275a%em0 prefixlen 64 scopeid 0x1
+        inet 192.168.1.19 netmask 0xffffff00 broadcast 192.168.1.255
+        media: Ethernet autoselect (1000baseT &lt;full-duplex&gt;)
+        status: active
+        nd6 options=23&lt;PERFORMNUD,ACCEPT_RTADV,AUTO_LINKLOCAL&gt;
+lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
+        options=680003&lt;RXCSUM,TXCSUM,LINKSTATE,RXCSUM_IPV6,TXCSUM_IPV6&gt;
+        inet6 ::1 prefixlen 128
+        inet6 fe80::1%lo0 prefixlen 64 scopeid 0x2
+        inet 127.0.0.1 netmask 0xff000000
+        groups: lo
+        nd6 options=21&lt;PERFORMNUD,AUTO_LINKLOCAL&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这个例子中，显示了以下设备：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>em0</code> ：以太网接口。</p>
+</li>
+<li>
+<p><code>lo0</code> ：循环接口是一种软件环回机制，可用于性能分析、软件测试和 / 或本地通信。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=lo&amp;sektion=4&amp;format=html">lo(4)</a> 。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>这个例子显示 <code>em0</code> 已经启动并运行。</p>
+</div>
+<div class="paragraph">
+<p>关键指标包括：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>UP</code> 表示接口已配置并准备就绪。</p>
+</li>
+<li>
+<p>该接口具有一个 IPv4 Internet （ <code>inet</code> ）地址， <code>192.168.1.19</code> 。</p>
+</li>
+<li>
+<p>该接口具有一个 IPv6 Internet （ <code>inet6</code> ）地址， <code>fe80::21f:16ff:fe0f:275a%em0</code> 。</p>
+</li>
+<li>
+<p>它具有有效的子网掩码（ <code>netmask</code> ），其中 <code>0xffffff00</code> 与 <code>255.255.255.0</code> 相同。</p>
+</li>
+<li>
+<p>它具有有效的广播地址， <code>192.168.1.255</code> 。</p>
+</li>
+<li>
+<p>接口（ <code>ether</code> ）的 MAC 地址是 <code>00:1f:16:0f:27:5a</code> 。</p>
+</li>
+<li>
+<p>物理媒体选择处于自动选择模式（ ` 媒体：以太网自动选择（ 1000baseT &lt; 全双工 &gt; ） ` ）。</p>
+</li>
+<li>
+<p>链接的状态（ <code>status</code> ）为 <code>active</code> ，表示检测到载波信号。对于 <code>em0</code> ，当以太网电缆未插入接口时， <code>status: no carrier</code> 状态是正常的。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>如果 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 命令的输出结果与下面的输出结果类似，那么说明接口尚未配置：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>em0: flags=8822&lt;BROADCAST,SIMPLEX,MULTICAST&gt; metric 0 mtu 1500
+        options=481249b&lt;RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,VLAN_HWCSUM,LRO,WOL_MAGIC,VLAN_HWFILTER,NOMAP&gt;
+        ether 00:1f:16:0f:27:5a
+        media: Ethernet autoselect
+        status: no carrier
+        nd6 options=29&lt;PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL&gt;</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="config-static-ip-v4">7.3.1. 配置静态 IPv4 地址<a class="anchor" href="#config-static-ip-v4"></a></h3>
+<div class="paragraph">
+<p>本节提供了在 FreeBSD 系统上配置静态 IPv4 地址的指南。</p>
+</div>
+<div class="paragraph">
+<p>可以使用命令行的 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 来配置网络接口卡，但是如果不将配置添加到 <span class="filename">/etc/rc.conf</span> 中，配置在重启后将不会保留。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果网络在安装过程中由 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdinstall&amp;sektion=8&amp;format=html">bsdinstall(8)</a> 进行配置，则可能已经存在一些网络接口卡（ NIC ）的条目。在执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysrc&amp;sektion=8&amp;format=html">sysrc(8)</a> 之前，请仔细检查 <span class="filename">/etc/rc.conf</span> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>可以通过执行以下命令来设置 IP 地址：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig em0 inet 192.168.1.150/24</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使更改在重新启动后保持生效，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc ifconfig_em0=&#34;inet 192.168.1.150 netmask 255.255.255.0&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>执行以下命令添加默认路由器：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc defaultrouter=&#34;192.168.1.1&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 DNS 记录添加到 [/etc/resolv.conf] 文件中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>nameserver 8.8.8.8
+nameserver 8.8.4.4</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后执行以下命令重新启动 <code>netif</code> 和 <code>routing</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service netif restart &amp;&amp; service routing restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 来测试连接。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>ping -c2 www.FreeBSD.org</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>PING web.geo.FreeBSD.org (147.28.184.45): 56 data bytes
+64 bytes from 147.28.184.45: icmp_seq=0 ttl=51 time=55.173 ms
+64 bytes from 147.28.184.45: icmp_seq=1 ttl=51 time=53.093 ms
+
+--- web.geo.FreeBSD.org ping statistics ---
+2 packets transmitted, 2 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="config-dynamic-ip-v4">7.3.2. 配置动态 IPv4 地址<a class="anchor" href="#config-dynamic-ip-v4"></a></h3>
+<div class="paragraph">
+<p>如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。 FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 作为 DHCP 客户端。 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 会自动提供 IP 地址、子网掩码和默认路由器。</p>
+</div>
+<div class="paragraph">
+<p>要使接口与 DHCP 配合工作，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc ifconfig_em0=&#34;DHCP&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 可以通过运行以下命令手动使用：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dhclient em0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>DHCPREQUEST on em0 to 255.255.255.255 port 67
+DHCPACK from 192.168.1.1
+unknown dhcp option value 0x7d
+bound to 192.168.1.19 -- renewal in 43200 seconds.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通过这种方式可以验证使用 DHCP 进行地址分配是否正常工作。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 客户端可以在后台启动。这可能会对依赖于正常工作网络的应用程序造成麻烦，但在许多情况下，它将提供更快的启动速度。</p>
+</div>
+<div class="paragraph">
+<p>要在后台执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> ，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc background_dhclient=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>然后执行以下命令重新启动 <code>netif</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service netif restart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 来测试连接。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>ping -c2 www.FreeBSD.org</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>PING web.geo.FreeBSD.org (147.28.184.45): 56 data bytes
+64 bytes from 147.28.184.45: icmp_seq=0 ttl=51 time=55.173 ms
+64 bytes from 147.28.184.45: icmp_seq=1 ttl=51 time=53.093 ms
+
+--- web.geo.FreeBSD.org ping statistics ---
+2 packets transmitted, 2 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="network-ipv6">7.3.3. IPv6 是 Internet Protocol version 6 的缩写，即互联网协议第六版。它是互联网上的一种网络协议，用于为设备在网络中进行唯一标识和定位。 IPv6 是 IPv4 的后继版本，旨在解决 IPv4 地址空间不足的问题。与 IPv4 相比， IPv6 采用 128 位地址，提供了更大的地址空间，可以支持更多的设备连接到互联网。 IPv6 还提供了更好的安全性、可靠性和性能。<a class="anchor" href="#network-ipv6"></a></h3>
+<div class="paragraph">
+<p>IPv6 是广为人知的 IP 协议的新版本，也被称为 IPv4 。</p>
+</div>
+<div class="paragraph">
+<p>IPv6 相比 IPv4 提供了几个优势，以及许多新的功能：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>它的 128 位地址空间允许拥有 340 , 282 , 366 , 920 , 938 , 463 , 463 , 374 , 607 , 431 , 768 , 211 , 456 个地址。这解决了 IPv4 地址短缺和最终的 IPv4 地址耗尽问题。</p>
+</li>
+<li>
+<p>路由器只在其路由表中存储网络聚合地址，从而将路由表的平均空间减少到 8192 个条目。这解决了与 IPv4 相关的可扩展性问题，因为 IPv4 要求每个分配的 IPv4 地址块在互联网路由器之间进行交换，导致它们的路由表变得过大，无法实现高效的路由。</p>
+</li>
+<li>
+<p>地址自动配置（ RFC2462 ）（ <a href="http://www.ietf.org/rfc/rfc2462.txt" class="bare">http://www.ietf.org/rfc/rfc2462.txt</a> ）</p>
+</li>
+<li>
+<p>强制性多播地址。</p>
+</li>
+<li>
+<p>内置 IPsec （ IP 安全）。</p>
+</li>
+<li>
+<p>简化的标题结构。</p>
+</li>
+<li>
+<p>支持移动 IP 。</p>
+</li>
+<li>
+<p>IPv6 到 IPv4 的过渡机制。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>FreeBSD 包含了 <a href="http://www.kame.net/">KAME 项目</a> IPv6 参考实现，并且提供了使用 IPv6 所需的一切。</p>
+</div>
+<div class="paragraph">
+<p>本节重点介绍如何配置和运行 IPv6 。</p>
+</div>
+<div class="paragraph">
+<p>IPv6 地址有三种不同的类型：</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">单播</dt>
+<dd>
+<p>发送到单播地址的数据包到达与该地址相关的接口。</p>
+</dd>
+<dt class="hdlist1">Anycast 是一种网络通信技术，它允许多个服务器共享同一个 IP 地址。当用户发送请求时，网络会将请求路由到最近的可用服务器，以提供更快的响应时间和更好的负载均衡。 Anycast 广泛应用于互联网服务，如域名系统（ DNS ）和内容分发网络（ CDN ），以提高网络性能和可靠性。</dt>
+<dd>
+<p>这些地址在语法上与单播地址无法区分，但它们用于寻址一组接口。发送到任播地址的数据包将到达最近的路由器接口。任播地址只由路由器使用。</p>
+</dd>
+<dt class="hdlist1">多播</dt>
+<dd>
+<p>这些地址标识了一组接口。发送到多播地址的数据包将到达属于多播组的所有接口。 IPv4 广播地址通常为 <code>xxx.xxx.xxx.255</code> ，在 IPv6 中用多播地址表示。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>在阅读 IPv6 地址时，规范形式表示为 <code>x:x:x:x:x:x:x:x</code> ，其中每个 <code>x</code> 表示一个 16 位的十六进制值。一个例子是 <code>FEBC:A574:382B:23C1:AA49:4592:4EFE:9982</code> 。</p>
+</div>
+<div class="paragraph">
+<p>通常，一个地址会有很长的全零子串。一个 <code>::</code> （双冒号）可以用来替换地址中的一个子串。此外，每个十六进制值前面的最多三个 <code>0</code> 可以省略。例如， <code>fe80::1</code> 对应的规范形式是 <code>fe80:0000:0000:0000:0000:0000:0000:0001</code> 。</p>
+</div>
+<div class="paragraph">
+<p>第三种形式是使用众所周知的 IPv4 表示法编写最后 32 位。例如， <code>2002::10.0.0.1</code> 对应于十六进制的规范表示 <code>2002:0000:0000:0000:0000:0000:0a00:0001</code> ，而这又等同于 <code>2002::a00:1</code> 。</p>
+</div>
+<div class="paragraph">
+<p>要查看 FreeBSD 系统的 IPv6 地址，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>em0: flags=8863&lt;UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST&gt; metric 0 mtu 1500
+        options=481249b&lt;RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,VLAN_HWCSUM,LRO,WOL_MAGIC,VLAN_HWFILTER,NOMAP&gt;
+        ether 00:1f:16:0f:27:5a
+        inet 192.168.1.150 netmask 0xffffff00 broadcast 192.168.1.255
+        inet6 fe80::21f:16ff:fe0f:275a%em0 prefixlen 64 scopeid 0x1
+        media: Ethernet autoselect (1000baseT &lt;full-duplex&gt;)
+        status: active
+        nd6 options=23&lt;PERFORMNUD,ACCEPT_RTADV,AUTO_LINKLOCAL&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在这个例子中， <code>em0</code> 接口正在使用 <code>fe80::21f:16ff:fe0f:275a%em0</code> ，这是一个自动配置的链路本地地址，它是根据 MAC 地址自动生成的。</p>
+</div>
+<div class="paragraph">
+<p>一些 IPv6 地址是保留地址。保留地址的列表可以在下表中查看：</p>
+</div>
+<table id="reservedip6" class="tableblock frame-none grid-all stretch">
+<caption class="title">表 1. IPv6 保留地址示例</caption>
+<colgroup>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+<col style="width: 25%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">IPv6 地址</th>
+<th class="tableblock halign-left valign-top">前缀长度（位）</th>
+<th class="tableblock halign-left valign-top">描述</th>
+<th class="tableblock halign-left valign-top">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::</code> 是 asciidoc 中的一个特殊标记，用于表示一个块级元素的开始。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">未指定的</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 中等同于 <code>0.0.0.0</code> 的地址。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::1</code> 是 IPv6 环回地址的表示形式。在 IPv6 中，环回地址用于将数据包发送到本地主机，类似于 IPv4 中的 <code>127.0.0.1</code> 。 <code>::1</code> 表示的是 IPv6 环回地址的最简形式。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">环回地址</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 中等同于 <code>127.0.0.1</code> 的地址。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::00:xx:xx:xx:xx</code> 是一个以双冒号开头的字符串。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">96 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">嵌入式 IPv4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">低 32 位是兼容的 IPv4 地址。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::ff:xx:xx:xx:xx</code> 是一个以双冒号开头的字符串，通常用于表示 MAC 地址。 MAC 地址是用于识别网络设备的唯一标识符。每个 MAC 地址由六个十六进制数字对（每个数字对由两个字符组成）组成，用冒号分隔。在这个例子中，&#34;xx&#34;代表未知的十六进制数字。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">96 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 映射 IPv6 地址</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">低 32 位是不支持 IPv6 的主机的 IPv4 地址。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fe80::/10</code> 是一个 IPv6 地址的网络前缀。它表示一个具有 10 位网络前缀的地址范围，其中 <code>fe80</code> 是网络前缀的起始地址。 IPv6 地址的网络前缀用于标识一个特定的网络或子网。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链路本地</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">在 IPv4 中，等同于 169.254.0.0/16 的地址。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fc00::/7</code> 是一个 IPv6 地址块，它是专门用于私有网络的地址范围。在 IPv6 中，私有网络地址用于在局域网或组织内部使用，不会被路由器转发到公共互联网。这个地址块的前 7 位是固定的，即以 <code>fc</code> 开头，后面的 9 位可以根据需要进行分配和使用。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">唯一本地</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">唯一本地地址用于本地通信，只能在一组合作站点内进行路由。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ff00::</code> 是 IPv6 地址中的一个保留地址，用于多播通信。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">多播</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>2000::-3fff::</code> 是一个 IPv6 地址范围的表示方式。它表示从 2000 到 3fff 之间的所有 IPv6 地址。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">全局单播</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">所有全局单播地址都是从这个地址池中分配的。前 3 位是 <code>001</code> 。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>有关 IPv6 地址结构的更多信息，请参考 <a href="http://www.ietf.org/rfc/rfc3513.txt">RFC3513</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="config-static-ip-v6">7.3.4. 配置静态 IPv6 地址<a class="anchor" href="#config-static-ip-v6"></a></h3>
+<div class="paragraph">
+<p>要将 FreeBSD 系统配置为具有静态 IPv6 地址的 IPv6 客户端，需要设置 IPv6 地址。</p>
+</div>
+<div class="paragraph">
+<p>执行以下命令以满足要求：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc ifconfig_em0_ipv6=&#34;inet6 2001:db8:4672:6565:2026:5043:2d42:5344 prefixlen 64&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要分配一个默认路由器，请执行以下命令指定其地址：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc ipv6_defaultrouter=&#34;2001:db8:4672:6565::1&#34;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="config-dynamic-ip-v6">7.3.5. 配置动态 IPv6 地址<a class="anchor" href="#config-dynamic-ip-v6"></a></h3>
+<div class="paragraph">
+<p>如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 会自动提供 IP 地址、子网掩码和默认路由器。</p>
+</div>
+<div class="paragraph">
+<p>要使接口与 DHCP 配合工作，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc ifconfig_em0_ipv6=&#34;inet6 accept_rtadv&#34;</span>
+<span class="c"># sysrc rtsold_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_路由器通告和主机自动配置">7.3.6. 路由器通告和主机自动配置<a class="anchor" href="#_路由器通告和主机自动配置"></a></h3>
+<div class="paragraph">
+<p>本节演示了如何在 IPv6 路由器上设置 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> ，以广播 IPv6 网络前缀和默认路由。</p>
+</div>
+<div class="paragraph">
+<p>要启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> ，执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc rtadvd_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>指定 IPv6 路由器通告的接口非常重要。例如，要告诉 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> 使用 <code>em0</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc rtadvd_interfaces=&#34;em0&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>接下来，按照以下示例创建配置文件 <span class="filename">/etc/rtadvd.conf</span> ：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>em0:\
+	:addrs#1:addr=&#34;2001:db8:1f11:246::&#34;:prefixlen#64:tc=ether:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 <code>em0</code> 替换为要使用的接口，将 <code>2001:db8:1f11:246::</code> 替换为分配的前缀。</p>
+</div>
+<div class="paragraph">
+<p>对于一个专用的 <code>/64</code> 子网，不需要做任何其他更改。否则，请将 <code>prefixlen#</code> 更改为正确的值。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ipv6_和_ipv4_地址映射">7.3.7. IPv6 和 IPv4 地址映射<a class="anchor" href="#_ipv6_和_ipv4_地址映射"></a></h3>
+<div class="paragraph">
+<p>当服务器启用 IPv6 时，可能需要启用 IPv4 映射的 IPv6 地址通信。这个兼容选项允许将 IPv4 地址表示为 IPv6 地址。允许 IPv6 应用程序与 IPv4 相互通信可能会存在安全问题。</p>
+</div>
+<div class="paragraph">
+<p>在大多数情况下，这个选项可能不是必需的，只是为了兼容性而提供的。这个选项将允许仅支持 IPv6 的应用程序在双栈环境中与 IPv4 一起工作。这对于可能不支持仅 IPv6 环境的第三方应用程序非常有用。</p>
+</div>
+<div class="paragraph">
+<p>要启用此功能，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc ipv6_ipv4mapping=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="network-wireless">7.4. 无线网络<a class="anchor" href="#network-wireless"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>大多数无线网络都基于 IEEE® 802.11 标准。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 支持使用 802.11a 、 802.11b 、 802.11g 和 802.11n 的网络。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在 FreeBSD 上，目前正在开发 [802.11ac] 支持。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>一个基本的无线网络由多个站点组成，这些站点使用广播在 2.4GHz 或 5GHz 频段进行通信，尽管这在不同地区可能有所不同，并且也在不断变化以实现在 2.3GHz 和 4.9GHz 范围内的通信。</p>
+</div>
+<div class="paragraph">
+<p>配置无线网络有三个基本步骤：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>扫描并选择一个接入点</p>
+</li>
+<li>
+<p>验证该站点</p>
+</li>
+<li>
+<p>配置 IP 地址或使用 DHCP 。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>下面的部分讨论了每个步骤。</p>
+</div>
+<div class="sect2">
+<h3 id="network-wireless-quick-start">7.4.1. 连接无线网络的快速入门指南<a class="anchor" href="#network-wireless-quick-start"></a></h3>
+<div class="paragraph">
+<p>将 FreeBSD 连接到现有的无线网络是一种非常常见的情况。</p>
+</div>
+<div class="paragraph">
+<p>该过程显示所需的步骤：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>第一步是从网络管理员那里获取无线网络的 SSID （服务集标识）和 PSK （预共享密钥）。</p>
+</li>
+<li>
+<p>第二步是将此网络添加到 <span class="filename">/etc/wpa_supplicant.conf</span> 的条目中。如果文件不存在，请创建它：</p>
+</li>
+</ul>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>network={
+ ssid=&#34;myssid&#34; <i class="conum" data-value="1"></i><b>(1)</b>
+ psk=&#34;mypsk&#34; <i class="conum" data-value="2"></i><b>(2)</b>
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>是无线网络的 SSID 。请将其替换为无线网络的名称。 &lt;.&gt; 是无线网络的 PSK 。请将其替换为无线网络的密码。
+<div class="ulist">
+<ul>
+<li>
+<p>第三步是添加网络条目以在启动时配置网络：</p>
+</li>
+</ul>
+</div></td>
+</tr>
+</tbody></table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc wlans_iwn0=&#34;wlan0&#34;</span>
+<span class="c"># sysrc ifconfig_wlan0=&#34;WPA DHCP&#34;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>最后一步将是重新启动 <code>netif</code> 服务，执行以下命令：</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service netif restart</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="basic-wireless-configuration">7.4.2. 基本无线配置<a class="anchor" href="#basic-wireless-configuration"></a></h3>
+<div class="paragraph">
+<p>第一步是将无线网络卡配置到一个接口上。要查看系统中有哪些无线网络卡，请参考 <a href="#config-identify-network-adapter">识别网络适配器</a> 部分。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig wlan0 create wlandevice iwm0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使更改在重新启动后保持生效，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc wlans_iwn0=&#34;wlan0&#34;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>由于世界各地的监管情况不同，因此有必要正确设置适用于您所在地区的域名，以获取关于可以使用哪些频道的正确信息。</p>
+</div>
+<div class="paragraph">
+<p>可用的区域定义可以在 <span class="filename">/etc/regdomain.xml</span> 中找到。要在运行时设置数据，请使用 <code>ifconfig</code> 命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig wlan0 regdomain etsi2 country AT</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要持久保存设置，请将其添加到 [/etc/rc.conf] 文件中：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc create_args_wlan0=&#34;country AT regdomain etsi2&#34;</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="scan-wireless-networks">7.4.3. 扫描无线网络<a class="anchor" href="#scan-wireless-networks"></a></h3>
+<div class="paragraph">
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 命令扫描可用的无线网络。</p>
+</div>
+<div class="paragraph">
+<p>要列出无线网络，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig wlan0 up list scan</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>SSID/MESH ID                      BSSID              CHAN RATE    S:N     INT CAPS
+FreeBSD                           e8:d1:1b:1b:58:ae    1   54M  -47:-96   100 EP   RSN BSSLOAD HTCAP WPS WME
+NetBSD                            d4:b9:2f:35:fe:08    1   54M  -80:-96   100 EP   RSN BSSLOAD HTCAP WPS WME
+OpenBSD                           fc:40:09:c6:31:bd   36   54M  -94:-96   100 EPS  VHTPWRENV APCHANREP RSN WPS BSSLOAD HTCAP VHTCAP VHTOPMODE WME
+GNU-Linux                         dc:f8:b9:a0:a8:e0   44   54M  -95:-96   100 EP   WPA RSN WPS HTCAP VHTCAP VHTOPMODE WME VHTPWRENV
+Windows                           44:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP   BSSLOAD VHTPWRENV HTCAP WME RSN VHTCAP VHTOPMODE WPS
+MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP   BSSLOAD VHTPWRENV HTCAP WME RSN VHTCAP VHTOPMODE WPS</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>SSID/MESH ID 标识网络的名称。</p>
+</li>
+<li>
+<p>BSSID 标识了接入点的 MAC 地址。</p>
+</li>
+<li>
+<p>CAPS 字段标识了每个网络的类型以及在该网络上运行的站点的能力（有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 中“ list scan ”的定义）。</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="wireless-authentication">7.4.4. 连接和认证无线网络<a class="anchor" href="#wireless-authentication"></a></h3>
+<div class="paragraph">
+<p>一旦从扫描到的网络列表中选择了一个无线网络，就需要进行连接和认证。在绝大多数无线网络中，认证是通过路由器中配置的密码来完成的。其他方案要求在数据流量可以流动之前完成加密握手，可以使用预共享密钥或密钥，也可以使用涉及后端服务（如 RADIUS ）的更复杂的方案。</p>
+</div>
+<div class="sect3">
+<h4 id="authenticate-wpa2-wpa-personal">7.4.4.1. 使用 WPA2/WPA/ 个人身份验证进行认证<a class="anchor" href="#authenticate-wpa2-wpa-personal"></a></h4>
+<div class="paragraph">
+<p>无线网络中的身份验证过程由 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> 管理。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> 配置将在 <span class="filename">/etc/wpa_supplicant.conf</span> 文件中进行。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant.conf&amp;sektion=5&amp;format=html">wpa_supplicant.conf(5)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>一旦完成了对无线网络的扫描，选择了一个网络并获得了密码（ PSK ），那么这些信息将被添加到文件 <span class="filename">/etc/wpa_supplicant.conf</span> 中，如下所示的示例：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>network={
+        scan_ssid=1 <i class="conum" data-value="1"></i><b>(1)</b>
+        ssid=&#34;FreeBSD&#34; <i class="conum" data-value="2"></i><b>(2)</b>
+        psk=&#34;12345678&#34; <i class="conum" data-value="3"></i><b>(3)</b>
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>SSID 扫描技术。只有在网络隐藏时才需要使用此选项。 &lt;.&gt; 网络名称。 &lt;.&gt; 无线网络的密码。</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>下一步将是在文件 <span class="filename">/etc/rc.conf</span> 中配置无线连接。</p>
+</div>
+<div class="paragraph">
+<p>要使用静态地址，需要执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc ifconfig_wlan0=&#34;inet 192.168.1.20 netmask 255.255.255.0&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要使用动态地址，需要执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig_wlan0=&#34;WPA DHCP&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后执行以下命令重新启动网络：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service netif restart</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>可以在 <a href="../advanced-networking/#network-advanced-wireless">无线高级认证</a> 获取有关如何执行更高级身份验证方法的更多信息。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="authenticate-open-networks">7.4.4.2. 使用开放网络进行身份验证<a class="anchor" href="#authenticate-open-networks"></a></h4>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>当用户连接到没有任何身份验证方式的开放网络时，非常重要的是用户要非常小心。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>完成无线网络扫描并选择无线网络的 SSID 后，执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig wlan0 ssid SSID</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 来获取配置的地址：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dhclient wlan0</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_同时使用有线和无线连接">7.4.5. 同时使用有线和无线连接<a class="anchor" href="#_同时使用有线和无线连接"></a></h3>
+<div class="paragraph">
+<p>有线连接提供更好的性能和可靠性，而无线连接提供灵活性和移动性。笔记本电脑用户通常希望在这两种连接类型之间无缝切换。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 上，可以以“故障转移”的方式将两个甚至更多的网络接口组合在一起。这种配置类型使用一组网络接口中最优先和可用的连接，并且当链路状态发生变化时，操作系统会自动切换。</p>
+</div>
+<div class="paragraph">
+<p>链路聚合和故障转移在 <a href="../advanced-networking/#network-aggregation">链路聚合和故障转移</a> 中有详细介绍，并且在 <a href="../advanced-networking/#networking-lagg-wired-and-wireless">以太网和无线接口之间的故障转移模式</a> 中提供了同时使用有线和无线连接的示例。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hostname">7.5. 主机名<a class="anchor" href="#hostname"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>主机名表示网络上主机的完全限定域名（ FQDN ）。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果主机没有设置主机名， FreeBSD 将分配值 <code>Amnesiac</code> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="get-hostname">7.5.1. 检查当前主机名<a class="anchor" href="#get-hostname"></a></h3>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=hostname&amp;sektion=1&amp;format=html">hostname(1)</a> 可以用来检查当前的主机名：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">$ </span>hostname</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>输出应该类似于以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>freebsdhostname.example.com</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="change-hostname">7.5.2. 更改主机名<a class="anchor" href="#change-hostname"></a></h3>
+<div class="paragraph">
+<p>要更改主机的主机名并在重新启动后保持不变，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc hostname=&#34;freebsdhostname.example.com&#34;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。<a class="anchor" href="#dns"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>DNS 可以被理解为一个链接： [电话簿](<a href="https://en.wikipedia.org/wiki/Telephone_directory" class="bare">https://en.wikipedia.org/wiki/Telephone_directory</a>) ，其中将 IP 地址与主机名进行互相识别。</p>
+</div>
+<div class="paragraph">
+<p>有三个文件处理 FreeBSD 系统与 DNS 的交互。这三个文件是 <a href="https://man.freebsd.org/cgi/man.cgi?query=hosts&amp;sektion=5&amp;format=html">hosts(5)</a> 、 <a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>除非在 <span class="filename">/etc/nsswitch.conf</span> 文件中另有说明，否则 FreeBSD 将首先查看 <span class="filename">/etc/hosts</span> 文件中的地址，然后再查看 <span class="filename">/etc/resolv.conf</span> 文件中的 DNS 信息。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a> 文件指定了 nsdispatch （名称服务切换调度程序）的操作方式。</p>
+</div>
+<div class="paragraph">
+<p>默认情况下， [/etc/nsswitch.conf](文件) 文件的 hosts 部分将如下所示：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hosts: files dns</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>例如，在使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=nscd&amp;sektion=8&amp;format=html">nscd(8)</a> 服务的情况下，可以通过将该行保持如下来更改优先顺序：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hosts: files cache dns</pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="local-addresses">7.6.1. 本地地址<a class="anchor" href="#local-addresses"></a></h3>
+<div class="paragraph">
+<p><span class="filename">/etc/hosts</span> 文件是一个简单的文本数据库，用于提供主机名到 IP 地址的映射。可以将连接到局域网的本地计算机的条目添加到此文件中，以简化命名，而不是设置 DNS 服务器。此外， <span class="filename">/etc/hosts</span> 还可以用于提供互联网名称的本地记录，减少查询外部 DNS 服务器以获取常用名称的需求。</p>
+</div>
+<div class="paragraph">
+<p>例如，在本地环境中有一个名为 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/gitlab-ce/">www/gitlab-ce</a> 的本地实例的情况下，可以将其添加到文件 <span class="filename">/etc/hosts</span> 中，如下所示：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>192.168.1.150 git.example.com git</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuring-nameserver">7.6.2. 配置域名服务器<a class="anchor" href="#configuring-nameserver"></a></h3>
+<div class="paragraph">
+<p>FreeBSD 系统如何访问互联网域名系统（ DNS ）由 <a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> 控制。</p>
+</div>
+<div class="paragraph">
+<p>最常见的条目是 <span class="filename">/etc/resolv.conf</span> ：</p>
+</div>
+<table class="tableblock frame-none grid-all stretch informaltable">
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nameserver</code> 是一个计算机网络术语，指的是域名系统（ DNS ）服务器的地址。 DNS 服务器用于将域名转换为相应的 IP 地址，以便在互联网上进行通信。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">解析器应查询的名称服务器的 IP 地址。按照列出的顺序查询服务器，最多查询三个。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>search</code> 搜索</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">搜索列表用于主机名查找。通常由本地主机名的域确定。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domain</code> 的中文翻译是 ` 域 ` 。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">本地域名。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>一个典型的 /etc/resolv.conf 文件如下所示：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>search example.com
+nameserver 147.11.1.11
+nameserver 147.11.100.30</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>只能使用 <code>search</code> 和 <code>domain</code> 选项中的一个。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>在使用 DHCP 时， <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 通常会使用从 DHCP 服务器接收到的信息重写 .filename#/etc/resolv.conf# 文件。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果进行配置的机器 * 不是 *DNS 服务器，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=local-unbound&amp;sektion=8&amp;format=html">local-unbound(8)</a> 来提高 DNS 查找性能。</p>
+</div>
+<div class="paragraph">
+<p>要在启动时启用它，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc local_unbound_enable=&#34;YES&#34;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=local-unbound&amp;sektion=8&amp;format=html">local-unbound(8)</a> 服务，请执行以下命令：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service local_unbound start</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="troubleshooting">7.7. 故障排除<a class="anchor" href="#troubleshooting"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在排除硬件和软件配置问题时，首先检查简单的事情。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>网络电缆已插好吗？</p>
+</li>
+<li>
+<p>网络服务是否已正确配置？</p>
+</li>
+<li>
+<p>防火墙配置正确吗？</p>
+</li>
+<li>
+<p>FreeBSD 是否支持该网卡？</p>
+</li>
+<li>
+<p>路由器是否正常工作？</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在发送错误报告之前，始终要检查链接中的硬件说明： <a href="https://www.freebsd.org/releases/">FreeBSD 发布页面</a> ，将 FreeBSD 版本更新到最新的 STABLE 版本，检查邮件列表存档，并在互联网上进行搜索。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="wired-troubleshooting">7.7.1. 有线网络故障排除<a class="anchor" href="#wired-troubleshooting"></a></h3>
+<div class="paragraph">
+<p>如果卡可以正常工作，但性能较差，请阅读 <a href="https://man.freebsd.org/cgi/man.cgi?query=tuning&amp;sektion=7&amp;format=html">tuning(7)</a> 。此外，请检查网络配置，因为不正确的网络设置可能会导致连接变慢。</p>
+</div>
+<div class="paragraph">
+<p>如果系统无法将数据包路由到目标主机，则会出现“无法到达主机”的消息。如果没有指定默认路由或者电缆未插好，就会发生这种情况。检查 <code>netstat -rn</code> 的输出，并确保存在到目标主机的有效路由。如果不存在有效路由，请阅读交叉引用：高级网络 [network-routing ,&#34;Gateways and Routes&#34;] 。</p>
+</div>
+<div class="paragraph">
+<p><code>ping: sendto: Permission denied</code> 错误消息通常是由于配置错误的防火墙引起的。如果在 FreeBSD 上启用了防火墙但没有定义规则，那么默认策略是拒绝所有流量，甚至是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 。有关更多信息，请参考 <a href="../firewalls/#firewalls">Firewalls</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="wireless-troubleshooting">7.7.2. 无线网络故障排除<a class="anchor" href="#wireless-troubleshooting"></a></h3>
+<div class="paragraph">
+<p>本节描述了一些步骤，以帮助解决常见的无线网络问题。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>如果在扫描时未列出访问点，请检查配置是否限制了无线设备的频道范围。</p>
+</li>
+<li>
+<p>如果设备无法与接入点关联，请验证配置是否与接入点上的设置匹配。这包括认证方案和任何安全协议。尽量简化配置。如果使用 WPA2 或 WPA 等安全协议，请将接入点配置为开放认证和无安全性，以查看是否可以传输流量。</p>
+</li>
+<li>
+<p>一旦系统能够与接入点建立关联，可以使用诸如 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 之类的工具来诊断网络配置。</p>
+</li>
+<li>
+<p>有许多低级调试工具。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=wlandebug&amp;sektion=8&amp;format=html">wlandebug(8)</a> 在 802.11 协议支持层启用调试消息。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#network-synopsis">7.1. 简介</a></li>
+    <li><a href="#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="#hostname">7.5. 主机名</a></li>
+    <li><a href="#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

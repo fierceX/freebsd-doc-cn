@@ -1,0 +1,3056 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本章介绍了在 FreeBSD 上使用串行通信的一些方法。"/>
+  <meta name="keywords" content="91, 34, 115, 101, 114, 105, 97, 108, 34, 44, 32, 34, 99, 111, 109, 109, 117, 110, 105, 99, 97, 116, 105, 111, 110, 115, 34, 44, 32, 34, 116, 101, 114, 109, 105, 110, 97, 108, 34, 44, 32, 34, 109, 111, 100, 101, 109, 34, 44, 32, 34, 99, 111, 110, 115, 111, 108, 101, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/" />
+
+  <title>第 29 章 串行通信 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 29 章 串行通信" />
+    <meta property="og:description" content="本章介绍了在 FreeBSD 上使用串行通信的一些方法。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/serialcomms\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 29 章 串行通信</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="#term">29.3. 终端</a></li>
+    <li><a href="#dialup">29.4. 拨入服务</a></li>
+    <li><a href="#dialout">29.5. 拨出服务</a></li>
+    <li><a href="#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="serial-synopsis">29.1. 概要<a class="anchor" href="#serial-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>UNIX® 一直以来都支持串行通信，因为最早的 UNIX® 机器依赖串行线路进行用户输入和输出。从平均终端只包含一个每秒 10 个字符的串行打印机和一个键盘的时代以来，情况发生了很大变化。本章介绍了在 FreeBSD 上使用串行通信的一些方法。</p>
+</div>
+<div class="paragraph">
+<p>阅读完本章后，您将了解：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>如何将终端连接到 FreeBSD 系统。</p>
+</li>
+<li>
+<p>如何使用调制解调器拨打远程主机。</p>
+</li>
+<li>
+<p>如何允许远程用户通过调制解调器登录到 FreeBSD 系统。</p>
+</li>
+<li>
+<p>如何从串行控制台启动 FreeBSD 系统。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>在阅读本章之前，你应该：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>了解如何交叉引用： kernelconfig[kernelconfig ，配置和安装自定义内核] 。</p>
+</li>
+<li>
+<p>了解 <a href="../basics/#基础知识， FreeBSD 的权限和进程"></a> 。</p>
+</li>
+<li>
+<p>可以访问与 FreeBSD 一起使用的串行硬件的技术手册。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="serial">29.2. 串行术语和硬件<a class="anchor" href="#serial"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下术语常用于串行通信：</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">bps 是&#34;每秒位数&#34;的缩写，是衡量数据传输速度的单位。它表示每秒传输的位数或比特数。</dt>
+<dd>
+<p>每秒比特数（ bps ）是数据传输的速率。</p>
+</dd>
+<dt class="hdlist1">DTE 是数据终端设备（ Data Terminal Equipment ）的缩写，指的是计算机系统中与用户进行交互的设备，如计算机终端、打印机、键盘等。</dt>
+<dd>
+<p>数据终端设备（ DTE ）是串行通信中的两个端点之一。一个例子就是计算机。</p>
+</dd>
+<dt class="hdlist1">DCE 是分布式计算环境（ Distributed Computing Environment ）的缩写，它是一种用于构建分布式计算系统的软件架构。 DCE 提供了一组标准的接口和协议，使得不同的计算机和操作系统能够互相通信和协同工作。 DCE 可以实现分布式计算资源的共享和管理，提高计算效率和可靠性。 DCE 还提供了安全认证和访问控制机制，保护分布式系统的安全性和隐私。 DCE 广泛应用于企业级计算环境中，例如大型网络和云计算平台。</dt>
+<dd>
+<p>数据通信设备（ DCE ）是串行通信中的另一端点。通常情况下，它是一个调制解调器或串行终端。</p>
+</dd>
+<dt class="hdlist1">RS-232 是一种常见的串行通信接口标准，用于在计算机和外部设备之间传输数据。它定义了数据传输的电气特性、信号线的功能和连接方式。 RS-232 接口通常用于连接调制解调器、打印机、串行鼠标和其他外部设备。它是一种简单而可靠的通信方式，但由于其传输速率较低和信号距离限制，现在已经被更先进的接口标准所取代。</dt>
+<dd>
+<p>最初定义硬件串行通信的标准。后来更名为 TIA-232 。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>在涉及通信数据速率时，本节不使用术语“波特（ baud ）”。波特是指在一段时间内进行的电气状态转换的数量，而 bps 是正确的术语。</p>
+</div>
+<div class="paragraph">
+<p>要将串行终端连接到 FreeBSD 系统，需要计算机上的串行端口和连接到串行设备的适当电缆。已经熟悉串行硬件和电缆的用户可以安全地跳过本节。</p>
+</div>
+<div class="sect2">
+<h3 id="term-cables-null">29.2.1. 串行电缆和端口<a class="anchor" href="#term-cables-null"></a></h3>
+<div class="paragraph">
+<p>有几种不同类型的串行电缆。其中最常见的两种类型是空模拟电缆和标准 RS-232 电缆。硬件的文档应该描述所需的电缆类型。</p>
+</div>
+<div class="paragraph">
+<p>这两种类型的电缆在连接线缆到连接器的方式上有所不同。每根线代表一个信号，定义的信号总结在 <a href="#serialcomms-signal-names">RS-232C 信号名称</a> 中。标准的串行电缆直接传递所有的 RS-232C 信号。例如，电缆一端的“传输数据”引脚连接到另一端的“传输数据”引脚。这种类型的电缆用于将调制解调器连接到 FreeBSD 系统，并且也适用于某些终端。</p>
+</div>
+<div class="paragraph">
+<p>空模拟电缆将一个端口上的“传输数据”引脚与另一个端口上的“接收数据”引脚进行切换。连接器可以是 DB-25 或 DB-9 。</p>
+</div>
+<div class="paragraph">
+<p>可以使用在 <a href="#nullmodem-db25">DB-25 到 DB-25 空调制模电缆</a> 、 <a href="#nullmodem-db9">DB-9 到 DB-9 的空模线缆</a> 和 <a href="#nullmodem-db9-25">DB-9 到 DB-25 空模拟电缆</a> 中总结的引脚连接来构建一个空调制电缆。虽然标准要求使用直通的引脚 1 到引脚 1 的“保护地”线，但通常会省略。一些终端只使用引脚 2 、 3 和 7 ，而其他终端则需要不同的配置。如果有疑问，请参考硬件的文档。</p>
+</div>
+<table id="serialcomms-signal-names" class="tableblock frame-none grid-all stretch">
+<caption class="title">表 1. RS-232C 信号名称</caption>
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">首字母缩略词</th>
+<th class="tableblock halign-left valign-top">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">研发部门</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">接收到的数据</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">传输的数据</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">数据终端就绪</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR 是指动态频谱分配（ Dynamic Spectrum Allocation ）的缩写。它是一种无线通信技术，通过动态地分配可用的频谱资源，以提高频谱利用效率和网络性能。 DSR 可以根据实时需求和环境条件，自动调整频谱资源的分配，以满足不同用户和应用的需求。这种技术在无线通信领域具有重要的应用价值，可以有效地解决频谱资源稀缺和频谱管理的问题。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">数据集准备完毕</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD 是指设计类图（ Design Class Diagram ），它是一种用于描述软件系统中类和类之间关系的图形表示方法。在软件设计过程中， DCD 被广泛应用于分析和设计阶段，用于展示系统的结构和组成部分之间的关系。通过 DCD ，开发人员可以更好地理解系统的架构和设计，并在开发过程中进行有效的沟通和协作。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">数据载波检测</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">新加坡</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">信号地线</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">实时战略游戏（ RTS ）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">请求发送</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS 是指 Compatibility Test Suite ，即兼容性测试套件。它是用于 Android 操作系统的一种测试工具，用于验证设备是否符合 Android 兼容性标准。 CTS 包含一系列的测试用例，用于检测设备的功能和性能是否符合 Android 的要求。通过运行 CTS ，开发者可以确保他们的应用程序在不同的 Android 设备上能够正常运行。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">发送准备</p></td>
+</tr>
+</tbody>
+</table>
+<table id="nullmodem-db25" class="tableblock frame-none grid-all stretch">
+<caption class="title">表 2. DB-25 到 DB-25 空调制模电缆</caption>
+<colgroup>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">信号</th>
+<th class="tableblock halign-left valign-top">引脚号码</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">引脚号码</th>
+<th class="tableblock halign-left valign-top">信号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">新加坡</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">新加坡</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">研发部门</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">研发部门</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">实时战略游戏（ RTS ）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS 是指 Compatibility Test Suite ，即兼容性测试套件。它是用于 Android 操作系统的一种测试工具，用于验证设备是否符合 Android 兼容性标准。 CTS 包含一系列的测试用例，用于检测设备的功能和性能是否符合 Android 的要求。通过运行 CTS ，开发者可以确保他们的应用程序在不同的 Android 设备上能够正常运行。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS 是指 Compatibility Test Suite ，即兼容性测试套件。它是用于 Android 操作系统的一种测试工具，用于验证设备是否符合 Android 兼容性标准。 CTS 包含一系列的测试用例，用于检测设备的功能和性能是否符合 Android 的要求。通过运行 CTS ，开发者可以确保他们的应用程序在不同的 Android 设备上能够正常运行。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">实时战略游戏（ RTS ）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">二十</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR 是指动态频谱分配（ Dynamic Spectrum Allocation ）的缩写。它是一种无线通信技术，通过动态地分配可用的频谱资源，以提高频谱利用效率和网络性能。 DSR 可以根据实时需求和环境条件，自动调整频谱资源的分配，以满足不同用户和应用的需求。这种技术在无线通信领域具有重要的应用价值，可以有效地解决频谱资源稀缺和频谱管理的问题。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">二十</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD 是指设计类图（ Design Class Diagram ），它是一种用于描述软件系统中类和类之间关系的图形表示方法。在软件设计过程中， DCD 被广泛应用于分析和设计阶段，用于展示系统的结构和组成部分之间的关系。通过 DCD ，开发人员可以更好地理解系统的架构和设计，并在开发过程中进行有效的沟通和协作。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR 是指动态频谱分配（ Dynamic Spectrum Allocation ）的缩写。它是一种无线通信技术，通过动态地分配可用的频谱资源，以提高频谱利用效率和网络性能。 DSR 可以根据实时需求和环境条件，自动调整频谱资源的分配，以满足不同用户和应用的需求。这种技术在无线通信领域具有重要的应用价值，可以有效地解决频谱资源稀缺和频谱管理的问题。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">二十</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD 是指设计类图（ Design Class Diagram ），它是一种用于描述软件系统中类和类之间关系的图形表示方法。在软件设计过程中， DCD 被广泛应用于分析和设计阶段，用于展示系统的结构和组成部分之间的关系。通过 DCD ，开发人员可以更好地理解系统的架构和设计，并在开发过程中进行有效的沟通和协作。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">二十</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+</tr>
+</tbody>
+</table>
+<table id="nullmodem-db9" class="tableblock frame-none grid-all stretch">
+<caption class="title">表 3. DB-9 到 DB-9 的空模线缆</caption>
+<colgroup>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">信号</th>
+<th class="tableblock halign-left valign-top">引脚号码</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">引脚号码</th>
+<th class="tableblock halign-left valign-top">信号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">研发部门</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">研发部门</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR 是指动态频谱分配（ Dynamic Spectrum Allocation ）的缩写。它是一种无线通信技术，通过动态地分配可用的频谱资源，以提高频谱利用效率和网络性能。 DSR 可以根据实时需求和环境条件，自动调整频谱资源的分配，以满足不同用户和应用的需求。这种技术在无线通信领域具有重要的应用价值，可以有效地解决频谱资源稀缺和频谱管理的问题。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD 是指设计类图（ Design Class Diagram ），它是一种用于描述软件系统中类和类之间关系的图形表示方法。在软件设计过程中， DCD 被广泛应用于分析和设计阶段，用于展示系统的结构和组成部分之间的关系。通过 DCD ，开发人员可以更好地理解系统的架构和设计，并在开发过程中进行有效的沟通和协作。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">新加坡</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">新加坡</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR 是指动态频谱分配（ Dynamic Spectrum Allocation ）的缩写。它是一种无线通信技术，通过动态地分配可用的频谱资源，以提高频谱利用效率和网络性能。 DSR 可以根据实时需求和环境条件，自动调整频谱资源的分配，以满足不同用户和应用的需求。这种技术在无线通信领域具有重要的应用价值，可以有效地解决频谱资源稀缺和频谱管理的问题。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD 是指设计类图（ Design Class Diagram ），它是一种用于描述软件系统中类和类之间关系的图形表示方法。在软件设计过程中， DCD 被广泛应用于分析和设计阶段，用于展示系统的结构和组成部分之间的关系。通过 DCD ，开发人员可以更好地理解系统的架构和设计，并在开发过程中进行有效的沟通和协作。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">实时战略游戏（ RTS ）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS 是指 Compatibility Test Suite ，即兼容性测试套件。它是用于 Android 操作系统的一种测试工具，用于验证设备是否符合 Android 兼容性标准。 CTS 包含一系列的测试用例，用于检测设备的功能和性能是否符合 Android 的要求。通过运行 CTS ，开发者可以确保他们的应用程序在不同的 Android 设备上能够正常运行。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS 是指 Compatibility Test Suite ，即兼容性测试套件。它是用于 Android 操作系统的一种测试工具，用于验证设备是否符合 Android 兼容性标准。 CTS 包含一系列的测试用例，用于检测设备的功能和性能是否符合 Android 的要求。通过运行 CTS ，开发者可以确保他们的应用程序在不同的 Android 设备上能够正常运行。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">实时战略游戏（ RTS ）</p></td>
+</tr>
+</tbody>
+</table>
+<table id="nullmodem-db9-25" class="tableblock frame-none grid-all stretch">
+<caption class="title">表 4. DB-9 到 DB-25 空模拟电缆</caption>
+<colgroup>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+<col style="width: 20%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">信号</th>
+<th class="tableblock halign-left valign-top">引脚号码</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">引脚号码</th>
+<th class="tableblock halign-left valign-top">信号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">研发部门</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">研发部门</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR 是指动态频谱分配（ Dynamic Spectrum Allocation ）的缩写。它是一种无线通信技术，通过动态地分配可用的频谱资源，以提高频谱利用效率和网络性能。 DSR 可以根据实时需求和环境条件，自动调整频谱资源的分配，以满足不同用户和应用的需求。这种技术在无线通信领域具有重要的应用价值，可以有效地解决频谱资源稀缺和频谱管理的问题。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD 是指设计类图（ Design Class Diagram ），它是一种用于描述软件系统中类和类之间关系的图形表示方法。在软件设计过程中， DCD 被广泛应用于分析和设计阶段，用于展示系统的结构和组成部分之间的关系。通过 DCD ，开发人员可以更好地理解系统的架构和设计，并在开发过程中进行有效的沟通和协作。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">新加坡</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">新加坡</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DSR 是指动态频谱分配（ Dynamic Spectrum Allocation ）的缩写。它是一种无线通信技术，通过动态地分配可用的频谱资源，以提高频谱利用效率和网络性能。 DSR 可以根据实时需求和环境条件，自动调整频谱资源的分配，以满足不同用户和应用的需求。这种技术在无线通信领域具有重要的应用价值，可以有效地解决频谱资源稀缺和频谱管理的问题。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">二十</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DCD 是指设计类图（ Design Class Diagram ），它是一种用于描述软件系统中类和类之间关系的图形表示方法。在软件设计过程中， DCD 被广泛应用于分析和设计阶段，用于展示系统的结构和组成部分之间的关系。通过 DCD ，开发人员可以更好地理解系统的架构和设计，并在开发过程中进行有效的沟通和协作。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">二十</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DTR 的全称是“定义测试关系（ Defect Tracking and Reporting ）”，它是一种用于跟踪和报告软件缺陷的方法。 DTR 通常由一个工具或系统来支持，它可以帮助开发团队记录和管理发现的缺陷，并跟踪它们的解决进度。通过使用 DTR ，团队可以更好地组织和协调缺陷修复工作，提高软件质量和开发效率。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">实时战略游戏（ RTS ）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS 是指 Compatibility Test Suite ，即兼容性测试套件。它是用于 Android 操作系统的一种测试工具，用于验证设备是否符合 Android 兼容性标准。 CTS 包含一系列的测试用例，用于检测设备的功能和性能是否符合 Android 的要求。通过运行 CTS ，开发者可以确保他们的应用程序在不同的 Android 设备上能够正常运行。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTS 是指 Compatibility Test Suite ，即兼容性测试套件。它是用于 Android 操作系统的一种测试工具，用于验证设备是否符合 Android 兼容性标准。 CTS 包含一系列的测试用例，用于检测设备的功能和性能是否符合 Android 的要求。通过运行 CTS ，开发者可以确保他们的应用程序在不同的 Android 设备上能够正常运行。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">连接到</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">实时战略游戏（ RTS ）</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>当一个端口的一根引脚连接到另一个端口的一对引脚时，通常会使用一根短线连接这对引脚的连接器，以及一根长线连接到另一个单独的引脚。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>串口是在 FreeBSD 主机和终端之间传输数据的设备。存在几种类型的串口。在购买或制作电缆之前，请确保它适配终端和 FreeBSD 系统上的串口。</p>
+</div>
+<div class="paragraph">
+<p>大多数终端设备都有 DB-25 端口。个人电脑可能有 DB-25 或 DB-9 端口。多端口串行卡可能有 RJ-12 或 RJ-45 端口。请查看随附硬件的文档，以了解端口类型的规格，或者通过目视确认端口类型。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 中，每个串口通过 [/dev] 中的一个条目进行访问。有两种不同类型的条目：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>呼叫端口的命名方式为 <span class="filename">/dev/ttyuN</span> ，其中_N_为端口号，从零开始计数。如果终端连接到第一个串口（ <span class="filename">COM1</span> ），则使用 <span class="filename">/dev/ttyu0</span> 来引用该终端。如果终端连接到第二个串口（ <span class="filename">COM2</span> ），则使用 <span class="filename">/dev/ttyu1</span> ，依此类推。通常，呼叫端口用于终端。呼叫端口要求串行线路正确工作时要断言“数据载波检测”信号。</p>
+</li>
+<li>
+<p>在 FreeBSD 8.X 及更高版本上，呼叫输出端口被命名为 <code>/dev/cuauN</code> ，而在 FreeBSD 7.X 及更低版本上被命名为 <code>/dev/cuadN</code> 。呼叫输出端口通常不用于终端，而是用于调制解调器。如果串行电缆或终端不支持“数据载波检测”信号，可以使用呼叫输出端口。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>FreeBSD 还提供了初始化设备（ <span class="filename">/dev/ttyuN.init</span> 和 <span class="filename">/dev/cuauN.init</span> 或 <span class="filename">/dev/cuadN.init</span> ）和锁定设备（ <span class="filename">/dev/ttyuN.lock</span> 和 <span class="filename">/dev/cuauN.lock</span> 或 <span class="filename">/dev/cuadN.lock</span> ）。初始化设备用于在每次打开端口时初始化通信端口参数，例如对于使用 <code>RTS/CTS</code> 信号进行流量控制的调制解调器，可以使用 <code>crtscts</code> 。锁定设备用于锁定端口上的标志，以防止用户或程序更改某些参数。有关终端设置、锁定和初始化设备以及设置终端选项的信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=termios&amp;sektion=4&amp;format=html">termios(4)</a> 、 <a href="https://man.freebsd.org/cgi/man.cgi?query=uart&amp;sektion=4&amp;format=html">uart(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=stty&amp;sektion=1&amp;format=html">stty(1)</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="serial-hw-config">29.2.2. 串口配置<a class="anchor" href="#serial-hw-config"></a></h3>
+<div class="paragraph">
+<p>默认情况下， FreeBSD 支持四个串口，通常被称为 COM1 、 COM2 、 COM3 和 COM4 。 FreeBSD 还支持一些简单的多串口接口卡，如 BocaBoard 1008 和 2016 ，以及一些更智能的多串口卡，如 Digiboard 制造的卡。然而，默认内核只会寻找标准的 COM 端口。</p>
+</div>
+<div class="paragraph">
+<p>要查看系统是否识别串口，请查找以 <code>uart</code> 开头的系统引导消息。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># grep uart /var/run/dmesg.boot</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果系统无法识别所有所需的串口，可以将其他条目添加到 <code>/boot/device.hints</code> 文件中。该文件已经包含了针对 COM1 的 <code>hint.uart.0.<strong></strong></code><strong> 条目和针对 COM2 的 <code>hint.uart.1.</code></strong> 条目。当为 COM3 添加串口条目时，请使用 <code>0x3E8</code> ，而对于 COM4 ，请使用 <code>0x2E8</code> 。常见的 IRQ 地址是 COM3 的 <code>5</code> 和 COM4 的 <code>9</code> 。</p>
+</div>
+<div class="paragraph">
+<p>要确定端口使用的默认终端 I/O 设置集，请指定其设备名称。此示例确定了 <span class="filename">COM2</span> 上呼入端口的设置。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># stty -a -f /dev/ttyu1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>系统范围内的串行设备初始化由 <span class="filename">/etc/rc.d/serial</span> 控制。该文件影响串行设备的默认设置。要更改设备的设置，请使用 <code>stty</code> 命令。默认情况下，更改的设置在设备关闭之前有效，当设备重新打开时，它会恢复到默认设置。要永久更改默认设置，请打开并调整初始化设备的设置。例如，要为 <span class="filename">ttyu5</span> 打开 <code>CLOCAL</code> 模式、 8 位通信和 <code>XON/XOFF</code> 流控制，请输入：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># stty -f /dev/ttyu5.init clocal cs8 ixon ixoff</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了防止应用程序更改某些设置，请对锁定设备进行调整。例如，要将 <span class="filename">ttyu5</span> 的速度锁定为 57600 bps ，请输入：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># stty -f /dev/ttyu5.lock 57600</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在，任何打开 <span class="filename">ttyu5</span> 并尝试更改端口速度的应用程序都将被困在 57600 bps 。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="term">29.3. 终端<a class="anchor" href="#term"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>终端提供了一种方便且低成本的方式，用于在未连接到计算机控制台或网络的情况下访问 FreeBSD 系统。本节介绍了如何在 FreeBSD 中使用终端。</p>
+</div>
+<div class="paragraph">
+<p>最初的 UNIX® 系统没有控制台。相反，用户通过连接到计算机的串口登录并运行程序。</p>
+</div>
+<div class="paragraph">
+<p>在几乎所有类 UNIX® 操作系统中，包括 FreeBSD ，仍然存在在串行端口上建立登录会话的能力。通过使用连接到未使用的串行端口的终端，用户可以登录并运行任何通常可以在控制台或 <code>xterm</code> 窗口中运行的文本程序。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 系统可以连接多个终端。可以使用一台旧的备用计算机作为终端，通过有线连接到运行 FreeBSD 的更强大的计算机上。这可以将原本可能是单用户计算机转变为功能强大的多用户系统。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 支持三种类型的终端：</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">哑终端</dt>
+<dd>
+<p>哑终端是一种专门通过串行线连接到计算机的硬件。它们被称为“哑终端”，是因为它们只有足够的计算能力来显示、发送和接收文本。这些设备上无法运行任何程序。相反，哑终端连接到运行所需程序的计算机上。</p>
+<div class="paragraph">
+<p>有许多制造商生产的数百种愚蠢终端，几乎任何一种终端都可以与 FreeBSD 配合使用。一些高端终端甚至可以显示图形，但只有特定的软件包才能利用这些高级功能。</p>
+</div>
+<div class="paragraph">
+<p>在工作环境中，工人不需要访问图形应用程序时，哑终端非常受欢迎。</p>
+</div>
+</dd>
+<dt class="hdlist1">计算机作为终端的角色</dt>
+<dd>
+<p>由于哑终端只具备足够的能力来显示、发送和接收文本，任何多余的计算机都可以成为哑终端。所需的只是正确的电缆和一些在计算机上运行的“终端仿真”软件。</p>
+<div class="paragraph">
+<p>这个配置非常有用。例如，如果一个用户正在忙于在 FreeBSD 系统的控制台上工作，另一个用户可以同时使用一台性能较弱的个人电脑作为终端连接到 FreeBSD 系统上进行纯文本工作。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 的基本系统中，至少有两个工具可以通过串行连接进行使用： <a href="https://man.freebsd.org/cgi/man.cgi?query=cu&amp;sektion=1&amp;format=html">cu(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=tip&amp;sektion=1&amp;format=html">tip(1)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>例如，要从运行 FreeBSD 的客户端系统连接到另一个系统的串行连接：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cu -l /dev/cuauN</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>端口从零开始编号。这意味着 <span class="filename">COM1</span> 对应的是 <span class="filename">/dev/cuau0</span> 。</p>
+</div>
+<div class="paragraph">
+<p>通过 Ports Collection 可以获得其他的程序，例如 <a class="package" href="https://cgit.freebsd.org/ports/tree/comms/minicom/">comms/minicom</a> 。</p>
+</div>
+</dd>
+<dt class="hdlist1">X 终端</dt>
+<dd>
+<p>X 终端是最复杂的终端类型。它们通常不连接串行端口，而是连接到像以太网这样的网络。它们不仅仅局限于纯文本应用程序，还可以显示任何 Xorg 应用程序。</p>
+<div class="paragraph">
+<p>本章不涵盖 X 终端的设置、配置或使用。</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="term-config">29.3.1. 终端配置<a class="anchor" href="#term-config"></a></h3>
+<div class="paragraph">
+<p>本节介绍了如何配置 FreeBSD 系统以在串行终端上启用登录会话。它假设系统能够识别终端所连接的串行端口，并且终端使用了正确的连接线缆。</p>
+</div>
+<div class="paragraph">
+<p>在 FreeBSD 中， <code>init</code> 读取 [/etc/ttys] 文件并在可用的终端上启动一个 <code>getty</code> 进程。 <code>getty</code> 进程负责读取登录名并启动 <code>login</code> 程序。允许登录的 FreeBSD 系统上的端口在 [/etc/ttys] 文件中列出。例如，第一个虚拟控制台 [ttyv0] 在该文件中有一个条目，允许在控制台上登录。该文件还包含其他虚拟控制台、串口和伪终端的条目。对于硬连线终端，串口的 [/dev] 条目被列为不带 <code>/dev</code> 部分的形式。例如， [/dev/ttyv0] 被列为 <code>ttyv0</code> 。</p>
+</div>
+<div class="paragraph">
+<p>默认的 <span class="filename">/etc/ttys</span> 配置支持前四个串口，即 <span class="filename">ttyu0</span> 到 <span class="filename">ttyu3</span> 。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu0   &#34;/usr/libexec/getty std.9600&#34;   dialup  off secure
+ttyu1   &#34;/usr/libexec/getty std.9600&#34;   dialup  off secure
+ttyu2   &#34;/usr/libexec/getty std.9600&#34;   dialup  off secure
+ttyu3   &#34;/usr/libexec/getty std.9600&#34;   dialup  off secure</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当连接终端到其中一个端口时，修改默认条目以设置所需的速度和终端类型，打开设备，并且如果需要，更改端口的安全设置。如果终端连接到另一个端口，添加一个端口的条目。</p>
+</div>
+<div class="paragraph">
+<p><a href="#ex-etc-ttys">配置终端条目</a> 配置了两个终端在 [/etc/ttys] 中。第一个条目配置了一个连接到 [COM2] 的 Wyse-50 终端。第二个条目配置了一台运行 Procomm 终端软件模拟 VT-100 终端的旧计算机。该计算机连接到多端口串行卡的第六个串行端口。</p>
+</div>
+<div id="ex-etc-ttys" class="exampleblock">
+<div class="title">例 1. 配置终端条目</div>
+<div class="content">
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu1  &#34;/usr/libexec/getty std.38400&#34;  wy50   on insecure
+ttyu5   &#34;/usr/libexec/getty std.19200&#34;  vt100  on insecure</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>第一个字段指定了串行终端的设备名称。</p>
+</div>
+<div class="paragraph">
+<p>第二个字段告诉 <code>getty</code> 初始化并打开线路，设置线路速度，提示用户输入用户名，然后执行 <code>login</code> 程序。可选的_getty 类型_配置终端线路的特性，如 bps 速率和奇偶校验。可用的 getty 类型在 [/etc/gettytab](/etc/gettytab) 中列出。在几乎所有情况下，以 <code>std</code> 开头的 getty 类型适用于硬连线终端，因为这些条目忽略奇偶校验。每个 bps 速率从 110 到 115200 都有一个 <code>std</code> 条目。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gettytab&amp;sektion=5&amp;format=html">gettytab(5)</a> 。在设置 getty 类型时，请确保与终端使用的通信设置匹配。对于此示例， Wyse-50 不使用奇偶校验，并以 38400 bps 连接。计算机不使用奇偶校验，并以 19200 bps 连接。</p>
+</div>
+<div class="paragraph">
+<p>第三个字段是终端的类型。对于拨号端口，通常使用 <code>unknown</code> 或 <code>dialup</code> ，因为用户可以使用几乎任何类型的终端或软件进行拨号。由于有线终端的终端类型不会改变，可以指定来自 <span class="filename">/etc/termcap</span> 的真实终端类型。在这个例子中， Wyse-50 使用真实的终端类型，而运行 Procomm 的计算机设置为模拟 VT-100 。</p>
+</div>
+<div class="paragraph">
+<p>第四个字段指定端口是否应该被启用。要在该端口上启用登录，此字段必须设置为 <code>on</code> 。</p>
+</div>
+<div class="paragraph">
+<p>最后一个字段用于指定端口是否安全。将端口标记为“ secure ”表示该端口足够可信，允许“ root ”从该端口登录。不安全的端口不允许“ root ”登录。在不安全的端口上，用户必须从非特权帐户登录，然后使用“ su ”或类似的机制获取超级用户权限，如 <a href="../basics/#users-superuser ，“超级用户帐户”"></a> 中所述。出于安全原因，建议将此设置更改为“ insecure ”。</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>在对 [/etc/ttys] 文件进行任何更改后，向 <code>init</code> 进程发送 SIGHUP （挂断）信号，强制其重新读取配置文件。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kill -HUP 1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>由于 <code>init</code> 始终是系统上运行的第一个进程，因此它的进程 ID 始终为 <code>1</code> 。</p>
+</div>
+<div class="paragraph">
+<p>如果一切设置正确，所有电缆都已连接好，终端已经启动，那么每个终端现在应该运行着一个 <code>getty</code> 进程，并且每个终端上都应该有登录提示符可用。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="term-debug">29.3.2. 连接故障排除<a class="anchor" href="#term-debug"></a></h3>
+<div class="paragraph">
+<p>即使在对细节极为细致入微的情况下，设置终端时仍然可能出现问题。以下是一些常见症状和一些建议的解决方法。</p>
+</div>
+<div class="paragraph">
+<p>如果没有出现登录提示，请确保终端已插好并已开机。如果终端是个人电脑充当的，确保它在正确的串口上运行终端仿真软件。</p>
+</div>
+<div class="paragraph">
+<p>确保电缆牢固地连接到终端和 FreeBSD 计算机上。确保它是正确类型的电缆。</p>
+</div>
+<div class="paragraph">
+<p>确保终端和 FreeBSD 在波特率和奇偶校验设置上达成一致。对于视频显示终端，请确保对比度和亮度控制已调高。如果是打印终端，请确保纸张和墨水充足。</p>
+</div>
+<div class="paragraph">
+<p>使用 <code>ps</code> 命令确保 <code>getty</code> 进程正在运行并为终端提供服务。例如，以下列表显示 <code>getty</code> 正在第二个串口（ .filename]<mark>ttyu1</mark> ）上运行，并且正在使用 <span class="filename">/etc/gettytab</span> 中的 <code>std.38400</code> 条目：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ps -axww|grep ttyu</span>
+22189  d1  Is+    0:00.03 /usr/libexec/getty std.38400 ttyu1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果没有运行 <code>getty</code> 进程，请确保端口在 [/etc/ttys](/etc/ttys) 中已启用。在修改 [/etc/ttys](/etc/ttys) 后记得运行 <code>kill -HUP 1</code> 命令。</p>
+</div>
+<div class="paragraph">
+<p>如果 <code>getty</code> 进程正在运行，但终端仍然没有显示登录提示符，或者显示了提示符但无法接受键入的输入，那么终端或电缆可能不支持硬件握手。尝试将 <span class="filename">/etc/ttys</span> 中的条目从 <code>std.38400</code> 更改为 <code>3wire.38400</code> ，然后在修改 <span class="filename">/etc/ttys</span> 后运行 <code>kill -HUP 1</code> 命令。 <code>3wire</code> 条目类似于 <code>std</code> ，但忽略了硬件握手。当使用 <code>3wire</code> 时，可能还需要降低波特率或启用软件流控制以防止缓冲区溢出。</p>
+</div>
+<div class="paragraph">
+<p>如果登录提示符显示垃圾字符，请确保终端和 FreeBSD 在波特率和奇偶校验设置上达成一致。检查 <code>getty</code> 进程，确保使用了正确的_getty_类型。如果没有，请编辑 <span class="filename">/etc/ttys</span> 并运行 <code>kill -HUP 1</code> 。</p>
+</div>
+<div class="paragraph">
+<p>如果字符出现重复，并且在键入时密码出现，请将终端或终端仿真软件从“半双工”或“本地回显”切换到“全双工”。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dialup">29.4. 拨入服务<a class="anchor" href="#dialup"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>为了配置一个用于拨入服务的 FreeBSD 系统，与配置终端类似，只是使用调制解调器而不是终端设备。 FreeBSD 支持外部和内部调制解调器。</p>
+</div>
+<div class="paragraph">
+<p>外部调制解调器更方便，因为它们通常可以通过存储在非易失性 RAM 中的参数进行配置，并且它们通常提供带有指示灯的指示器，显示重要的 RS-232 信号的状态，以指示调制解调器是否正常运行。</p>
+</div>
+<div class="paragraph">
+<p>内置调制解调器通常缺乏非易失性 RAM ，因此它们的配置可能仅限于设置 DIP 开关。如果内置调制解调器有任何信号指示灯，当系统的盖子放在位时很难查看。</p>
+</div>
+<div class="paragraph">
+<p>使用外部调制解调器时，需要使用适当的电缆。标准的 RS-232C 串行电缆应该足够。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 在超过 2400 bps 的速度下需要 RTS 和 CTS 信号进行流控制，需要 CD 信号来检测呼叫是否已接听或线路是否已挂断，并且需要 DTR 信号在会话结束后重置调制解调器。有些电缆没有连接所有必需的信号，所以如果登录会话在线路挂断后仍然存在，可能是电缆存在问题。有关这些信号的更多信息，请参考 <a href="#term-cables-null">串行电缆和端口</a> 。</p>
+</div>
+<div class="paragraph">
+<p>与其他类 UNIX® 操作系统一样， FreeBSD 使用硬件信号来判断呼叫是否已接听或线路是否已挂断，并在呼叫结束后挂断和重置调制解调器。 FreeBSD 避免向调制解调器发送命令或监视调制解调器的状态报告。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 支持 NS8250 、 NS16450 、 NS16550 和 NS16550A 基于 RS-232C （ CCITT V.24 ）通信接口。 8250 和 16450 设备具有单字符缓冲区。 16550 设备提供了一个 16 字符缓冲区，可以提高系统性能。普通的 16550 设备存在缺陷，无法使用 16 字符缓冲区，因此如果可能的话，请使用 16550A 设备。由于单字符缓冲区设备需要操作系统进行更多的工作，所以更倾向于使用基于 16550A 的串行接口卡。如果系统有许多活动的串行端口或将承受重负载，基于 16550A 的卡对于低误码率通信更好。</p>
+</div>
+<div class="paragraph">
+<p>本节的其余部分演示了如何配置调制解调器以接收传入连接，如何与调制解调器通信，并提供一些故障排除技巧。</p>
+</div>
+<div class="sect2">
+<h3 id="dialup-ttys">29.4.1. 调制解调器配置<a class="anchor" href="#dialup-ttys"></a></h3>
+<div class="paragraph">
+<p>与终端一样， <code>init</code> 为每个配置的串口生成一个 <code>getty</code> 进程，用于拨入连接。当用户拨号并且调制解调器连接成功时，调制解调器会报告“载波检测”信号。内核注意到已检测到载波，并指示 <code>getty</code> 打开端口并在指定的初始线速度下显示一个 <code>login:</code> 提示符。在典型的配置中，如果接收到垃圾字符，通常是由于调制解调器的连接速度与配置的速度不同， <code>getty</code> 会尝试调整线速度，直到接收到合理的字符为止。用户输入登录名后， <code>getty</code> 执行 <code>login</code> ，通过询问用户的密码，然后启动用户的 shell 来完成登录过程。</p>
+</div>
+<div class="paragraph">
+<p>关于拨号调制解调器有两种观点。一种配置方法是设置调制解调器和系统，以便无论远程用户以何种速度拨入，拨入的 RS-232 接口都以固定速度运行。这种配置的好处是远程用户总是能立即看到系统登录提示。缺点是系统不知道用户的真实数据速率，因此像 Emacs 这样的全屏程序不会调整其屏幕绘制方法，以使其在较慢的连接下响应更好。</p>
+</div>
+<div class="paragraph">
+<p>第二种方法是配置 RS-232 接口，根据远程用户的连接速度来变化速度。由于 <code>getty</code> 不了解任何特定调制解调器的连接速度报告，它会以初始速度发送 <code>login:</code> 消息，并监视响应中返回的字符。如果用户看到乱码，他们应该按下 <kbd>Enter</kbd> 直到看到一个可识别的提示符。如果数据速率不匹配， <code>getty</code> 会将用户输入的任何内容视为乱码，尝试下一个速度，并再次给出 <code>login:</code> 提示符。在用户看到一个良好的提示符之前，这个过程通常只需要按下一个或两个按键。这个登录序列看起来不像锁定速度的方法那样干净，但是低速连接的用户应该能够从全屏程序中获得更好的交互响应。</p>
+</div>
+<div class="paragraph">
+<p>在锁定调制解调器的数据通信速率时，不需要对 [/etc/gettytab] 进行任何更改。然而，对于匹配速度的配置，可能需要添加额外的条目来定义调制解调器使用的速率。此示例配置了一个速率为 14.4 Kbps 的调制解调器，顶部接口速率为 19.2 Kbps ，使用 8 位，无奇偶校验连接。它配置 <code>getty</code> 以 19.2 Kbps 启动 V.32bis 连接的通信速率，然后循环使用 9600 bps 、 2400 bps 、 1200 bps 、 300 bps ，最后回到 19.2 Kbps 。通信速率循环是通过 `nx = ` （下一个表）功能实现的。每行使用 `tc = ` （表继续）条目来获取特定数据速率的其余设置。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#
+# Additions for a V.32bis Modem
+#
+um|V300|High Speed Modem at 300,8-bit:\
+        :nx=V19200:tc=std.300:
+un|V1200|High Speed Modem at 1200,8-bit:\
+        :nx=V300:tc=std.1200:
+uo|V2400|High Speed Modem at 2400,8-bit:\
+        :nx=V1200:tc=std.2400:
+up|V9600|High Speed Modem at 9600,8-bit:\
+        :nx=V2400:tc=std.9600:
+uq|V19200|High Speed Modem at 19200,8-bit:\
+        :nx=V9600:tc=std.19200:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>对于一个 28.8 Kbps 的调制解调器，或者为了利用 14.4 Kbps 调制解调器上的压缩功能，可以使用更高的通信速率，如下面的示例所示：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#
+# Additions for a V.32bis or V.34 Modem
+# Starting at 57.6 Kbps
+#
+vm|VH300|Very High Speed Modem at 300,8-bit:\
+        :nx=VH57600:tc=std.300:
+vn|VH1200|Very High Speed Modem at 1200,8-bit:\
+        :nx=VH300:tc=std.1200:
+vo|VH2400|Very High Speed Modem at 2400,8-bit:\
+        :nx=VH1200:tc=std.2400:
+vp|VH9600|Very High Speed Modem at 9600,8-bit:\
+        :nx=VH2400:tc=std.9600:
+vq|VH57600|Very High Speed Modem at 57600,8-bit:\
+        :nx=VH9600:tc=std.57600:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>对于 CPU 速度较慢或负载较重的系统，如果没有基于 16550A 的串口，这种配置可能会在 57.6 Kbps 时产生“ uart ”“ silo ”错误。</p>
+</div>
+<div class="paragraph">
+<p><span class="filename">/etc/ttys</span> 的配置与 <a href="#ex-etc-ttys">配置终端条目</a> 类似，但是传递给 <code>getty</code> 的参数不同，并且使用 <code>dialup</code> 作为终端类型。将 <em>xxx</em> 替换为 <code>init</code> 将在设备上运行的进程。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu0   &#34;/usr/libexec/getty xxx&#34;   dialup on</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>dialup</code> 终端类型可以进行更改。例如，将 <code>vt102</code> 设置为默认终端类型，允许用户在远程系统上使用 VT102 仿真。</p>
+</div>
+<div class="paragraph">
+<p>对于锁定速度的配置，请使用 <span class="filename">/etc/gettytab</span> 中列出的有效类型指定速度。以下示例是针对一个端口速度锁定在 19.2 Kbps 的调制解调器：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu0   &#34;/usr/libexec/getty std.19200&#34;   dialup on</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在匹配速度配置中，该条目需要引用 <span class="filename">/etc/gettytab</span> 中适当的起始 &#34;auto-baud&#34; 条目。继续以一个以 19.2 Kbps 启动的匹配速度调制解调器为例，使用以下条目：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ttyu0   &#34;/usr/libexec/getty V19200&#34;   dialup on</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在编辑 [/etc/ttys] 文件后，在向 <code>init</code> 发送信号之前，请等待调制解调器正确配置并连接。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># kill -HUP 1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>高速调制解调器，如 V.32 、 V.32bis 和 V.34 调制解调器，使用硬件（ <code>RTS/CTS</code> ）流控制。使用 <code>stty</code> 命令为调制解调器端口设置硬件流控制标志。以下示例在 <span class="filename">COM2</span> 的拨入和拨出初始化设备上设置了 <code>crtscts</code> 标志：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># stty -f /dev/ttyu1.init crtscts</span>
+<span class="c"># stty -f /dev/cuau1.init crtscts</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_故障排除">29.4.2. 故障排除<a class="anchor" href="#_故障排除"></a></h3>
+<div class="paragraph">
+<p>本节提供了一些解决无法连接到 FreeBSD 系统的拨号调制解调器的技巧。</p>
+</div>
+<div class="paragraph">
+<p>将调制解调器连接到 FreeBSD 系统并启动系统。如果调制解调器具有状态指示灯，请观察当系统控制台上出现“ login: ”提示时，调制解调器的 DTR 指示灯是否亮起。如果它亮起，那应该意味着 FreeBSD 已经在适当的通信端口上启动了一个“ getty ”进程，并且正在等待调制解调器接受呼叫。</p>
+</div>
+<div class="paragraph">
+<p>如果 DTR 指示灯没有亮起，请通过控制台登录 FreeBSD 系统，并输入 <code>ps ax</code> 命令查看 FreeBSD 是否在正确的端口上运行了 <code>getty</code> 进程：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">  114 ??  I      0:00.10 /usr/libexec/getty V19200 ttyu0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果第二列包含的是 <code>d0</code> 而不是 ` ?? ` ，并且调制解调器尚未接受呼叫，这意味着 <code>getty</code> 已经完成了对通信端口的打开。这可能表明存在电缆问题或调制解调器配置错误，因为在调制解调器断开检测信号被断言之前， <code>getty</code> 不应该能够打开通信端口。</p>
+</div>
+<div class="paragraph">
+<p>如果没有 <code>getty</code> 进程等待打开端口，请再次检查在 <span class="filename">/etc/ttys</span> 中端口的条目是否正确。此外，请检查 <span class="filename">/var/log/messages</span> 以查看是否有来自 <code>init</code> 或 <code>getty</code> 的日志消息。</p>
+</div>
+<div class="paragraph">
+<p>接下来，请尝试拨入系统。确保在远程系统上使用 8 位、无奇偶校验和 1 个停止位。如果没有立即出现提示符，或者提示符显示乱码，请尝试每秒按下 <kbd>Enter</kbd> 键一次。如果仍然没有出现 <code>login:</code> 提示符，请尝试发送 <code>BREAK</code> 信号。当使用高速调制解调器时，在锁定拨号调制解调器的接口速度后再次拨号。</p>
+</div>
+<div class="paragraph">
+<p>如果仍然没有出现 <code>login:</code> 提示符，请再次检查 <span class="filename">/etc/gettytab</span> ，并仔细确认以下内容：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>在 [/etc/ttys] 文件中指定的初始能力名称与 [/etc/gettytab] 文件中的能力名称匹配。</p>
+</li>
+<li>
+<p>每个 `nx = ` 条目都与 <span class="filename">gettytab</span> 的能力名称相匹配。</p>
+</li>
+<li>
+<p>每个 `tc = ` 条目都与另一个 <span class="filename">gettytab</span> 能力名称匹配。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>如果 FreeBSD 系统上的调制解调器不会应答，请确保调制解调器配置为在 DTR 被断开时接听电话。如果调制解调器似乎已正确配置，请通过检查调制解调器的指示灯来验证 DTR 线是否被断开。</p>
+</div>
+<div class="paragraph">
+<p>如果仍然无法解决问题，请尝试发送电子邮件到 {freebsd-questions} ，描述调制解调器和问题。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dialout">29.5. 拨出服务<a class="anchor" href="#dialout"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下是通过调制解调器将主机连接到另一台计算机的提示。这适用于与远程主机建立终端会话。</p>
+</div>
+<div class="paragraph">
+<p>如果使用 PPP 存在问题，这种连接方式可以帮助获取互联网上的文件。如果 PPP 无法正常工作，可以使用终端会话来通过 FTP 获取所需文件。然后使用 zmodem 将其传输到计算机上。</p>
+</div>
+<div class="sect2">
+<h3 id="hayes-unsupported">29.5.1. 使用一台斯托克海斯调制解调器<a class="anchor" href="#hayes-unsupported"></a></h3>
+<div class="paragraph">
+<p><code>tip</code> 内置了一个通用的 Hayes 拨号器。在 <code>/etc/remote</code> 文件中使用 <code>at = hayes</code> 。</p>
+</div>
+<div class="paragraph">
+<p>Hayes 驱动程序不够智能，无法识别一些较新调制解调器消息的高级功能，例如“ BUSY ”、“ NO DIALTONE ”或“ CONNECT 115200 ”。在使用“ tip ”和“ ATX0 &amp; W ”时，请关闭这些消息。</p>
+</div>
+<div class="paragraph">
+<p><code>tip</code> 的拨号超时时间为 60 秒。调制解调器应该使用更短的时间，否则 <code>tip</code> 会认为存在通信问题。尝试使用 <code>ATS7 = 45 &amp; W</code> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="direct-at">29.5.2. 使用 <code>AT</code> 命令<a class="anchor" href="#direct-at"></a></h3>
+<div class="paragraph">
+<p>在 <span class="filename">/etc/remote</span> 中创建一个&#34;direct&#34;条目。例如，如果调制解调器连接到第一个串口， <span class="filename">/dev/cuau0</span> ，请使用以下行：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>cuau0:dv=/dev/cuau0:br#19200:pa=none</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在 <code>br</code> 功能中使用调制解调器支持的最高 bps 速率。然后，键入 <code>tip cuau0</code> 以连接到调制解调器。</p>
+</div>
+<div class="paragraph">
+<p>或者，使用以下命令将 <code>cu</code> 作为 <code>root</code> 使用：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cu -lline -sspeed</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>line</em> 是串口，例如 <span class="filename">/dev/cuau0</span> ，而 <em>speed</em> 是速度，例如 <code>57600</code> 。输入完 AT 命令后，输入 ` ~ .` 退出。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="gt-failure">29.5.3. ` @ ` 符号不起作用<a class="anchor" href="#gt-failure"></a></h3>
+<div class="paragraph">
+<p>电话号码能力中的 ` @ ` 符号告诉 <code>tip</code> 在 <code>/etc/phones</code> 文件中查找电话号码。但是，在像 <code>/etc/remote</code> 这样的能力文件中， ` @ ` 符号也是一个特殊字符，因此需要用反斜杠进行转义：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>pn=\@</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dial-command-line">29.5.4. 从命令行拨号<a class="anchor" href="#dial-command-line"></a></h3>
+<div class="paragraph">
+<p>在 <span class="filename">/etc/remote</span> 中添加一个“通用”条目。例如：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>tip115200|Dial any phone number at 115200 bps:\
+        :dv=/dev/cuau0:br#115200:at=hayes:pa=none:du:
+tip57600|Dial any phone number at 57600 bps:\
+        :dv=/dev/cuau0:br#57600:at=hayes:pa=none:du:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>现在应该可以工作了。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># tip -115200 5551234</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>喜欢使用 <code>cu</code> 而不是 <code>tip</code> 的用户可以使用通用的 <code>cu</code> 条目：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>cu115200|Use cu to dial any number at 115200bps:\
+        :dv=/dev/cuau1:br#57600:at=hayes:pa=none:du:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>并且类型：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cu 5551234 -s 115200</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="set-bps">29.5.5. 设置波特率<a class="anchor" href="#set-bps"></a></h3>
+<div class="paragraph">
+<p>为 <code>tip1200</code> 或 <code>cu1200</code> 添加一个条目，但请根据 <code>br</code> 功能使用适当的 bps 速率。 <code>tip</code> 认为默认的速率是 1200 bps ，这就是为什么它会寻找 <code>tip1200</code> 条目的原因。然而，并不一定非要使用 1200 bps 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="terminal-server">29.5.6. 通过终端服务器访问多台主机<a class="anchor" href="#terminal-server"></a></h3>
+<div class="paragraph">
+<p>不必每次等待连接并输入 <code>CONNECT <em>host</em></code> ，可以使用 <code>tip</code> 的 <code>cm</code> 功能。例如，在 <span class="filename">/etc/remote</span> 中添加以下条目，可以通过输入 <code>tip pain</code> 或 <code>tip muffin</code> 连接到主机 <code>pain</code> 或 <code>muffin</code> ，以及通过输入 <code>tip deep13</code> 连接到终端服务器。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>pain|pain.deep13.com|Forrester&#39;s machine:\
+        :cm=CONNECT pain\n:tc=deep13:
+muffin|muffin.deep13.com|Frank&#39;s machine:\
+        :cm=CONNECT muffin\n:tc=deep13:
+deep13:Gizmonics Institute terminal server:\
+        :dv=/dev/cuau2:br#38400:at=hayes:du:pa=none:pn=5551234:</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tip-multiline">29.5.7. 使用多行显示 <code>tip</code> 提示信息<a class="anchor" href="#tip-multiline"></a></h3>
+<div class="paragraph">
+<p>这通常是一个问题，当一所大学拥有多条调制解调器线路，并有几千名学生试图使用它们时。</p>
+</div>
+<div class="paragraph">
+<p>在 <span class="filename">/etc/remote</span> 中添加一条条目，并使用 ` @ ` 作为 <code>pn</code> 功能的标识符：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>big-university:\
+        :pn=\@:tc=dialout
+dialout:\
+        :dv=/dev/cuau3:br#9600:at=courier:du:pa=none:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后，在 <span class="filename">/etc/phones</span> 中列出电话号码：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>big-university 5551111
+big-university 5551112
+big-university 5551113
+big-university 5551114</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>tip</code> 会按照列表中的顺序尝试每个数字，然后放弃。要保持重试，可以在一个 <code>while</code> 循环中运行 <code>tip</code> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="multi-controlp">29.5.8. 使用 Force 字符<a class="anchor" href="#multi-controlp"></a></h3>
+<div class="paragraph">
+<p><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>P</kbd></span> 是默认的“强制”字符，用于告诉 <code>tip</code> 下一个字符是字面数据。可以使用 ` ~ s` 转义将强制字符设置为任何其他字符，该转义意味着“设置变量”。</p>
+</div>
+<div class="paragraph">
+<p>在新行后面输入 ` ~ sforce =<em>single-char</em>` 。<em>single-char_是任意一个字符。如果省略_single-char</em>，则强制字符为空字符，可以通过键入 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>2</kbd></span> 或 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Space</kbd></span> 来访问。一个很好的_single-char_值是 <span class="keyseq"><kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>6</kbd></span> ，这只在某些终端服务器上使用。</p>
+</div>
+<div class="paragraph">
+<p>要更改力字符，请在 [.filename]# ~ /.tiprc# 中指定以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>force=single-char</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="uppercase">29.5.9. 大写字母<a class="anchor" href="#uppercase"></a></h3>
+<div class="paragraph">
+<p>当按下 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>A</kbd></span> 时，会发生这种情况，这是 <code>tip</code> 的“提升字符”，专为那些键盘上的大写锁定键损坏的人设计的。使用 ` ~ s` 来设置 <code>raisechar</code> 为合理的值。如果两个特性都没有使用，它可以被设置为与强制字符相同。</p>
+</div>
+<div class="paragraph">
+<p>这是一个给需要在 Emacs 中输入 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>2</kbd></span> 和 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>A</kbd></span> 的用户的示例 [.filename]# ~ /.tiprc# 文件：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>force=^^
+raisechar=^^</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>` ^^ ` 是 <span class="keyseq"><kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>6</kbd></span> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tip-filetransfer">29.5.10. 使用 <code>tip</code> 进行文件传输<a class="anchor" href="#tip-filetransfer"></a></h3>
+<div class="paragraph">
+<p>当与另一个类 UNIX® 操作系统进行通信时，可以使用 ` ~ p` （ put ）和 ` ~ t` （ take ）命令发送和接收文件。这些命令在远程系统上运行 <code>cat</code> 和 <code>echo</code> 命令来接受和发送文件。语法如下： ` ~ p` 本地文件 [ 远程文件 ] ` ~ t` 远程文件 [ 本地文件 ] 。</p>
+</div>
+<div class="paragraph">
+<p>没有错误检查，所以可能应该使用另一种协议，比如 zmodem 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="zmodem-tip">29.5.11. 使用 <code>tip</code> 与 zmodem 一起使用？<a class="anchor" href="#zmodem-tip"></a></h3>
+<div class="paragraph">
+<p>要接收文件，请在远程端启动发送程序。然后，输入 ` ~ C rz` 以开始在本地接收文件。</p>
+</div>
+<div class="paragraph">
+<p>要发送文件，请在远程端启动接收程序。然后，输入 ` ~ C sz <em>files</em>` 将文件发送到远程系统。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="serialconsole-setup">29.6. 设置串行控制台<a class="anchor" href="#serialconsole-setup"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD 具有通过串口作为控制台来启动系统的能力。这种配置对于希望在没有键盘或显示器连接的机器上安装 FreeBSD 的系统管理员以及希望调试内核或设备驱动程序的开发人员非常有用。</p>
+</div>
+<div class="paragraph">
+<p>如 <a href="../boot/#boot">FreeBSD 引导过程</a> 中所描述的， FreeBSD 采用了三阶段的引导过程。前两个阶段是存储在引导磁盘上 FreeBSD 分区的开头的引导块代码。然后，引导块加载并运行引导加载程序作为第三阶段的代码。</p>
+</div>
+<div class="paragraph">
+<p>为了设置从串行控制台启动，需要配置引导块代码、引导加载程序代码和内核。</p>
+</div>
+<div class="sect2">
+<h3 id="serialconsole-howto-fast">29.6.1. 快速串行控制台配置<a class="anchor" href="#serialconsole-howto-fast"></a></h3>
+<div class="paragraph">
+<p>本节提供了设置串行控制台的快速概述。当哑终端连接到 COM1 时，可以使用此过程。</p>
+</div>
+<div class="olist arabic procedure">
+<div class="title">过程：在 <span class="filename">COM1</span> 上配置串行控制台</div>
+<ol class="arabic">
+<li>
+<p>将串行电缆连接到 <span class="filename">COM1</span> 和控制终端。</p>
+</li>
+<li>
+<p>要配置启动消息在串行控制台上显示，以超级用户身份执行以下命令：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># echo &#39;console=&#34;comconsole&#34;&#39; &gt;&gt; /boot/loader.conf</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>编辑 <span class="filename">/etc/ttys</span> 文件，将 <code>off</code> 改为 <code>on</code> ，将 <code>dialup</code> 改为 <code>vt100</code> ，针对 <span class="filename">ttyu0</span> 条目。否则，通过串行控制台连接时将不需要密码，可能导致安全漏洞。</p>
+</li>
+<li>
+<p>重新启动系统以查看更改是否生效。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>如果需要不同的配置，请参阅下一节以获取更详细的配置说明。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="serialconsole-howto">29.6.2. 深入的串行控制台配置<a class="anchor" href="#serialconsole-howto"></a></h3>
+<div class="paragraph">
+<p>本节提供了在 FreeBSD 中设置串行控制台所需步骤的更详细解释。</p>
+</div>
+<div class="olist arabic procedure">
+<div class="title">过程：配置串行控制台</div>
+<ol class="arabic">
+<li>
+<p>Connect a serial cable from your computer to the serial console port on the device.</p>
+</li>
+<li>
+<p>Open a terminal emulator program on your computer.</p>
+</li>
+<li>
+<p>Configure the terminal emulator program to use the appropriate serial port settings (baud rate , data bits , parity , stop bits).</p>
+</li>
+<li>
+<p>Power on the device.</p>
+</li>
+<li>
+<p>In the terminal emulator program , press Enter to display the device’s login prompt.</p>
+</li>
+<li>
+<p>Enter the login credentials for the device.</p>
+</li>
+<li>
+<p>Once logged in , you can access the device’s command-line interface (CLI) through the terminal emulator program.</p>
+</li>
+<li>
+<p>To exit the CLI , type &#34;exit&#34; or use the appropriate command.</p>
+</li>
+<li>
+<p>To disconnect the serial console , power off the device and remove the serial cable from the computer and the device.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>过程：配置串行控制台</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>将一根串行电缆从计算机连接到设备上的串行控制台端口。</p>
+</li>
+<li>
+<p>在计算机上打开一个终端仿真程序。</p>
+</li>
+<li>
+<p>配置终端仿真程序以使用适当的串行端口设置（波特率、数据位、奇偶校验、停止位）。</p>
+</li>
+<li>
+<p>打开设备的电源。</p>
+</li>
+<li>
+<p>在终端仿真程序中，按 Enter 键显示设备的登录提示符。</p>
+</li>
+<li>
+<p>输入设备的登录凭据。</p>
+</li>
+<li>
+<p>登录后，您可以通过终端仿真程序访问设备的命令行界面（ CLI ）。</p>
+</li>
+<li>
+<p>要退出 CLI ，请键入&#34;exit&#34;或使用适当的命令。</p>
+</li>
+<li>
+<p>要断开串行控制台，请关闭设备的电源，并将串行电缆从计算机和设备上拔出。</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>准备一根串行电缆。</p>
+<div class="paragraph">
+<p>使用空模拟电缆或标准串行电缆和空模拟适配器。有关串行电缆的讨论，请参见 <a href="#term-cables-null">串行电缆和端口</a> 。</p>
+</div>
+</li>
+<li>
+<p>拔下键盘。</p>
+<div class="paragraph">
+<p>许多系统在开机自检（ POST ）期间会检测键盘，并且如果未检测到键盘，将生成错误。一些机器在键盘未连接时将拒绝启动。</p>
+</div>
+<div class="paragraph">
+<p>如果计算机在出现错误时抱怨，但仍能正常启动，那么无需进行进一步配置。</p>
+</div>
+<div class="paragraph">
+<p>如果计算机在没有连接键盘的情况下拒绝启动，请配置 BIOS 以忽略此错误。请参考主板的手册以获取详细信息。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>尝试在 BIOS 中将键盘设置为“未安装”。该设置告诉 BIOS 在开机时不要探测键盘，因此如果键盘不存在，它就不会发出警告。如果 BIOS 中没有这个选项，请寻找一个名为“错误停止”（ Halt on Error ）的选项。将其设置为“除键盘外的所有错误”或“无错误”将产生相同的效果。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>如果系统上有 PS/2® 鼠标，请将其拔出。 PS/2® 鼠标与键盘共享一些硬件，如果鼠标仍然插着，可能会让键盘探测程序误以为键盘仍然存在。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>虽然大多数系统可以在没有键盘的情况下启动，但有些系统在没有图形适配器的情况下无法启动。一些系统可以通过在 BIOS 配置中将“图形适配器”设置为“未安装”来配置为无图形适配器启动。其他系统不支持此选项，如果系统中没有显示硬件，将拒绝启动。对于这些机器，即使只是一个糟糕的单色板，也要插入某种图形卡。不需要连接显示器。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li>
+<p>将一个哑终端、一个带有调制解调器程序的旧计算机，或者另一台 UNIX® 系统的串行端口插入串行端口。</p>
+</li>
+<li>
+<p>在串口上，向 <span class="filename">/boot/device.hints</span> 添加适当的 <code>hint.uart.*</code> 条目。一些多串口卡还需要内核配置选项。请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=uart&amp;sektion=4&amp;format=html">uart(4)</a> 获取所需的选项和每个支持的串口的设备提示。</p>
+</li>
+<li>
+<p>在引导驱动器的 <code>a</code> 分区的根目录中创建名为 <code>boot.config</code> 的文件。</p>
+<div class="paragraph">
+<p>这个文件指示引导块代码如何引导系统。为了激活串行控制台，需要一个或多个以下选项。当使用多个选项时，请将它们都包含在同一行中：</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>-h</code> 是一个常见的命令行选项，用于显示帮助信息。</dt>
+<dd>
+<p>在内部和串行控制台之间切换。使用此选项来切换控制台设备。例如，要从内部（视频）控制台启动，请使用 <code>-h</code> 将引导加载程序和内核指定使用串行端口作为控制台设备。或者，要从串行端口启动，请使用 <code>-h</code> 告诉引导加载程序和内核使用视频显示作为控制台。</p>
+</dd>
+<dt class="hdlist1"><code>-D</code> 是一个命令行选项，用于指定程序运行时的系统属性。</dt>
+<dd>
+<p>在单一和双重控制台配置之间切换。在单一配置中，控制台将根据 <code>-h</code> 的状态，选择内部控制台（视频显示）或串口。在双重控制台配置中，无论 <code>-h</code> 的状态如何，视频显示和串口将同时成为控制台。然而，双重控制台配置仅在引导块运行时生效。一旦引导加载程序获得控制权，由 <code>-h</code> 指定的控制台将成为唯一的控制台。</p>
+</dd>
+<dt class="hdlist1"><code>-P</code> 是一个命令行选项，用于指定要传递给程序的参数。</dt>
+<dd>
+<p>使引导块探测键盘。如果未找到键盘，则自动设置 <code>-D</code> 和 <code>-h</code> 选项。</p>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>由于当前版本的引导块空间限制， <code>-P</code> 只能检测到扩展键盘。少于 101 个键且没有 F11 和 F12 键的键盘可能无法被检测到。由于这个限制，某些笔记本电脑上的键盘可能无法正确识别。如果是这种情况，请不要使用 <code>-P</code> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>使用 <code>-P</code> 来自动选择控制台，或者使用 <code>-h</code> 来激活串行控制台。更多详细信息请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=boot&amp;sektion=8&amp;format=html">boot(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=boot.config&amp;sektion=5&amp;format=html">boot.config(5)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>除了 <code>-P</code> 之外的选项都会传递给引导加载程序。引导加载程序将通过检查 <code>-h</code> 的状态来确定内部视频还是串口应该成为控制台。这意味着如果在 <code>/boot.config</code> 中指定了 <code>-D</code> 但未指定 <code>-h</code> ，则串口只能在引导块期间用作控制台，因为引导加载程序将使用内部视频显示作为控制台。</p>
+</div>
+</dd>
+</dl>
+</div>
+</li>
+<li>
+<p>启动机器。</p>
+<div class="paragraph">
+<p>当 FreeBSD 启动时，引导块会将 <span class="filename">/boot.config</span> 的内容回显到控制台。例如：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">/boot.config: -P
+Keyboard: no</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果在 <span class="filename">/boot.config</span> 中存在 <code>-P</code> ，则第二行才会出现，并指示键盘的存在或不存在。这些消息会发送到串行或内部控制台，或者两者都会发送，具体取决于 <span class="filename">/boot.config</span> 中的选项。</p>
+</div>
+<table class="tableblock frame-none grid-all stretch informaltable">
+<colgroup>
+<col style="width: 50%;"/>
+<col style="width: 50%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">选项</th>
+<th class="tableblock halign-left valign-top">消息发送至</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">内部控制台</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-h</code> 是一个常见的命令行选项，用于显示帮助信息。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">串行控制台</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-D</code> 是一个命令行选项，用于指定程序运行时的系统属性。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">串行和内部控制台</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-Dh</code> 是一个命令行选项，用于在运行程序时设置 Java 虚拟机的堆大小。在 Java 中，堆是用于存储对象实例的内存区域。通过使用 <code>-Dh</code> 选项，可以指定堆的最大大小。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">串行和内部控制台</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-P</code> ，键盘存在</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">内部控制台</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-P</code> ，键盘缺失</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">串行控制台</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>在消息之后，启动块将会有一个小的暂停，然后继续加载引导加载程序，并在打印任何进一步的消息到控制台之前。在正常情况下，没有必要中断启动块，但可以这样做以确保设置正确。</p>
+</div>
+<div class="paragraph">
+<p>在控制台上按下除 <kbd>Enter</kbd> 键以外的任意键，以中断引导过程。然后引导块将提示进一步的操作：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">&gt;&gt; </span>FreeBSD/i386 BOOT
+Default: 0:ad<span class="o">(</span>0,a<span class="o">)</span>/boot/loader
+boot:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>根据 <span class="filename">/boot.config</span> 中的选项，验证上述消息是否出现在串行或内部控制台上，或者两者都有。如果消息出现在正确的控制台上，请按下 <kbd>Enter</kbd> 键继续引导过程。</p>
+</div>
+<div class="paragraph">
+<p>如果串行终端上没有提示符，说明设置有问题。输入 <code>-h</code> 然后按下键盘上的 <kbd>Enter</kbd> 或 <kbd>Return</kbd> 键，告诉引导块（然后是引导加载程序和内核）选择串行端口作为控制台。系统启动后，返回并检查出了什么问题。</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>在引导过程的第三阶段，可以通过在引导加载程序中设置适当的环境变量来在内部控制台和串行控制台之间切换。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=loader&amp;sektion=8&amp;format=html">loader(8)</a> 。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>无论 <span class="filename">/boot.config</span> 中的选项如何，此行在 <span class="filename">/boot/loader.conf</span> 或 <span class="filename">/boot/loader.conf.local</span> 中配置引导加载程序和内核将其引导消息发送到串行控制台。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>console=&#34;comconsole&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这行应该是 <span class="filename">/boot/loader.conf</span> 的第一行，以便尽早在串行控制台上显示引导消息。</p>
+</div>
+<div class="paragraph">
+<p>如果该行不存在，或者设置为 <code>console =&#34;vidconsole&#34;</code> ，引导加载程序和内核将使用引导块中通过 <code>-h</code> 指定的控制台。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=loader.conf&amp;sektion=5&amp;format=html">loader.conf(5)</a> 。</p>
+</div>
+<div class="paragraph">
+<p>目前，引导加载程序没有与引导块中的 <code>-P</code> 选项相当的选项，并且没有根据键盘的存在自动选择内部控制台和串行控制台的功能。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>虽然不是必需的，但可以通过串行线提供“登录”提示。要配置此功能，请按照 <a href="#term-config">终端配置</a> 中的说明编辑 <span class="filename">/etc/ttys</span> 中串行端口的条目。如果串行端口的速度已更改，请将 <code>std.9600</code> 更改为与新设置匹配的值。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_设置更快的串口速度">29.6.3. 设置更快的串口速度<a class="anchor" href="#_设置更快的串口速度"></a></h3>
+<div class="paragraph">
+<p>默认情况下，串口设置为 9600 波特率， 8 位数据位，无奇偶校验， 1 个停止位。要更改默认控制台速度，请使用以下选项之一：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>编辑 <span class="filename">/etc/make.conf</span> 文件，并将 <code>BOOT_COMCONSOLE_SPEED</code> 设置为新的控制台速度。然后，重新编译并安装引导块和引导加载程序：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /sys/boot</span>
+<span class="c"># make clean</span>
+<span class="c"># make</span>
+<span class="c"># make install</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果串行控制台的配置方式与使用 <code>-h</code> 引导不同，或者内核使用的串行控制台与引导块使用的不同，可以将以下选项添加到自定义内核配置文件中，并编译一个新的内核，以设置所需的速度：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options CONSPEED=19200</pre>
+</div>
+</div>
+</li>
+<li>
+<p>将 <code>-S<em>19200</em></code> 引导选项添加到 <span class="filename">/boot.config</span> 文件中，将 <code><em>19200</em></code> 替换为要使用的速度。</p>
+</li>
+<li>
+<p>将以下选项添加到 <code>/boot/loader.conf</code> 文件中。将 <code><em>115200</em></code> 替换为要使用的速度。</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>boot_multicons=&#34;YES&#34;
+boot_serial=&#34;YES&#34;
+comconsole_speed=&#34;115200&#34;
+console=&#34;comconsole,vidconsole&#34;</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="serialconsole-ddb">29.6.4. 通过串行线进入 DDB 调试器<a class="anchor" href="#serialconsole-ddb"></a></h3>
+<div class="paragraph">
+<p>要配置从串行控制台进入内核调试器的能力，请将以下选项添加到自定义内核配置文件中，并按照 <a href="../kernelconfig/#kernelconfig">Configuring the FreeBSD Kernel</a> 中的说明编译内核。请注意，虽然这对于远程诊断很有用，但如果串口上生成了一个虚假的 BREAK 信号，也是很危险的。有关内核调试器的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ddb&amp;sektion=4&amp;format=html">ddb(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=ddb&amp;sektion=8&amp;format=html">ddb(8)</a> 。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>options BREAK_TO_DEBUGGER
+options DDB</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="#term">29.3. 终端</a></li>
+    <li><a href="#dialup">29.4. 拨入服务</a></li>
+    <li><a href="#dialout">29.5. 拨出服务</a></li>
+    <li><a href="#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

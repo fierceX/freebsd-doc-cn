@@ -1,0 +1,2803 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FreeBSD supports the Point-to-Point (PPP) protocol which can be used to establish a network or Internet connection using a dial-up modem"/>
+  <meta name="keywords" content="PPP, PPPoE, PPPoA, modem"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/" />
+
+  <title>Chapter 30. PPP |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="Chapter 30. PPP" />
+    <meta property="og:description" content="FreeBSD supports the Point-to-Point (PPP) protocol which can be used to establish a network or Internet connection using a dial-up modem" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="en" />
+    <meta property="og:url" content="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/en\/books\/handbook\/ppp-and-slip\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/preface/">
+              Preface
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-audience">Intended Audience</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from4">Fourth Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from3">Third Edition</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes-from2">Second Edition (2004)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-changes">First Edition (2001)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-overview">Organization of This Book</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-conv">Conventions used in this book</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/preface/#preface-acknowledgements">Acknowledgments</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/parti/">
+              Part I. Getting Started
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/introduction/">
+              Chapter 1. Introduction
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#introduction-synopsis">1.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#nutshell">1.2. Welcome to FreeBSD!</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/introduction/#history">1.3. About the FreeBSD Project</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/">
+              Chapter 2. Installing FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. Minimum Hardware Requirements</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-pre">2.3. Pre-Installation Tasks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-start">2.4. Starting the Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#using-bsdinstall">2.5. Using bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. Allocating Disk Space</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. Fetching Distribution Files</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-post">2.8. Network Interfaces, Accounts, Time Zone, Services and Hardening</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. Troubleshooting</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bsdinstall/#using-live-cd">2.10. Using the Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/basics/">
+              Chapter 3. FreeBSD Basics
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-synopsis">3.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#consoles">3.2. Virtual Consoles and Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#users-synopsis">3.3. Users and Basic Account Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#permissions">3.4. Permissions</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#dirstructure">3.5. Directory Structure</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#disk-organization">3.6. Disk Organization</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#mount-unmount">3.7. Mounting and Unmounting File Systems</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-processes">3.8. Processes and Daemons</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#editors">3.10. Text Editors</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-devices">3.11. Devices and Device Nodes</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/basics/#basics-more-information">3.12. Manual Pages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/ports/">
+              Chapter 4. Installing Applications: Packages and Ports
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-synopsis">4.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-overview">4.2. Overview of Software Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-finding-applications">4.3. Finding Software</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#pkgng-intro">4.4. Using pkg for Binary Package Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-using">4.5. Using the Ports Collection</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-poudriere">4.6. Building Packages with poudriere</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-nextsteps">4.7. Post-Installation Considerations</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ports/#ports-broken">4.8. Dealing with Broken Ports</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/x11/">
+              Chapter 5. The X Window System
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x11-synopsis">5.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-install">5.2. Installing Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-graphic-card-drivers">5.3. Graphic card drivers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-config">5.4. Xorg Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/x11/#x-fonts">5.5. Using Fonts in Xorg</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/wayland/">
+              Chapter 6. Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-synopsis">6.1. Wayland Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-wayfire">6.2. The Wayfire Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-hikari">6.3. The Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-sway">6.4. The Sway Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-xwayland">6.5. Using Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-remotedesktop">6.6. Remote Desktop Using VNC</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-ly">6.7. Wayland Login Manager</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wayland/#wayland-utilities">6.8. Useful Utilities</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/network/">
+              Chapter 7. Network
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#network-synopsis">7.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#config-network-setup">7.2. Setting up the Network</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#config-network-connection">7.3. Wired Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#network-wireless">7.4. Wireless Networks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#hostname">7.5. Hostname</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#dns">7.6. DNS</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network/#troubleshooting">7.7. Troubleshooting</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partii/">
+              Part II. Common Tasks
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/desktop/">
+              Chapter 8. Desktop Environments
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-synopsis">8.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-environments">8.2. Desktop Environments</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-browsers">8.3. Browsers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-development">8.4. Development tools</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-productivity">8.5. Desktop office productivity</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-viewers">8.6. Document Viewers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/desktop/#desktop-finance">8.7. Finance</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/multimedia/">
+              Chapter 9. Multimedia
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#multimedia-synopsis">9.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#sound-setup">9.2. Setting Up the Sound Card</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#audio-ports">9.3. Audio players</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#video-ports">9.4. Video players</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#conferencing-meetings">9.5. Conferencing and Meetings</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/multimedia/#scanners">9.6. Image Scanners</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/">
+              Chapter 10. Configuring the FreeBSD Kernel
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. Why Build a Custom Kernel?</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-devices">10.3. Finding the System Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-config">10.4. The Configuration File</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-building">10.5. Building and Installing a Custom Kernel</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. If Something Goes Wrong</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/printing/">
+              Chapter 11. Printing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-quick-start">11.1. Quick Start</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-connections">11.2. Printer Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-pdls">11.3. Common Page Description Languages</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-direct">11.4. Direct Printing</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-lpd">11.5. LPD (Line Printer Daemon)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/printing/#printing-other">11.6. Other Printing Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/">
+              Chapter 12. Linux Binary Compatibility
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-synopsis">12.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. Configuring Linux Binary Compatibility</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linux-userlands">12.3. Linux userlands</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/linuxemu/#linuxemu-advanced">12.4. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/wine/">
+              Chapter 13. WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-synopsis">13.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-overview-concepts">13.2. WINE Overview & Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#installing-wine-on-freebsd">13.3. Installing WINE on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#running-first-wine-program">13.4. Running a First WINE Program on FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#configuring-wine-installation">13.5. Configuring WINE Installation</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-management-guis">13.6. WINE Management GUIs</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. WINE in Multi-User FreeBSD Installations</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/wine/#wine-on-os-faq">13.8. WINE on FreeBSD FAQ</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partiii/">
+              Part III. System Administration
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/config/">
+              Chapter 14. Configuration, Services, Logging and Power Management
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#config-synopsis">14.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-configfiles">14.2. Configuration Files</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-rcd">14.3. Managing Services in FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#cron-periodic">14.4. Cron and Periodic</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#configtuning-syslog">14.5. Configuring System Logging</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#acpi-overview">14.6. Power and Resource Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/config/#adding-swap-space">14.7. Adding Swap Space</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/boot/">
+              Chapter 15. The FreeBSD Booting Process
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-synopsis">15.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-introduction">15.2. FreeBSD Boot Process</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#device-hints">15.3. Device Hints</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/boot/#boot-shutdown">15.4. Shutdown Sequence</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/security/">
+              Chapter 16. Security
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-synopsis">16.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-intro">16.2. Introduction</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#sec-accounts">16.3. Securing Accounts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-ids">16.4. Intrusion Detection System (IDS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-secure-levels">16.5. Secure levels</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-file-flags">16.6. File flags</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#openssh">16.7. OpenSSH</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#openssl">16.8. OpenSSL</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#kerberos5">16.9. Kerberos</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#tcpwrappers">16.10. TCP Wrappers</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#fs-acl">16.11. Access Control Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#capsicum">16.12. Capsicum</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-accounting">16.13. Process Accounting</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-resourcelimits">16.14. Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-pkg">16.15. Monitoring Third Party Security Issues</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/security/#security-advisories">16.16. FreeBSD Security Advisories</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/jails/">
+              Chapter 17. Jails and Containers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jails-synopsis">17.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-types">17.2. Jail Types</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#host-configuration">17.3. Host Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#classic-jail">17.4. Classic Jail (Thick Jail)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#thin-jail">17.5. Thin Jails</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-management">17.6. Jail Management</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-upgrading">17.7. Jail Upgrading</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-resource-limits">17.8. Jail Resource Limits</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/jails/#jail-managers-and-containers">17.9. Jail Managers and Containers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mac/">
+              Chapter 18. Mandatory Access Control
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-synopsis">18.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-inline-glossary">18.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-understandlabel">18.3. Understanding MAC Labels</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-planning">18.4. Planning the Security Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-policies">18.5. Available MAC Policies</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-userlocked">18.6. User Lock Down</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-implementing">18.7. Nagios in a MAC Jail</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mac/#mac-troubleshoot">18.8. Troubleshooting the MAC Framework</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/audit/">
+              Chapter 19. Security Event Auditing
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-synopsis">19.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-inline-glossary">19.2. Key Terms</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-config">19.3. Audit Configuration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/audit/#audit-administration">19.4. Working with Audit Trails</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/disks/">
+              Chapter 20. Storage
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-synopsis">20.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-adding">20.2. Adding Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-growing">20.3. Resizing and Growing Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#usb-disks">20.4. USB Storage Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#creating-cds">20.5. Creating and Using CD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#creating-dvds">20.6. Creating and Using DVD Media</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#floppies">20.7. Creating and Using Floppy Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#using-ntfs">20.8. Using NTFS Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#backup-basics">20.9. Backup Basics</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-virtual">20.10. Memory Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#snapshots">20.11. File System Snapshots</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#quotas">20.12. Disk Quotas</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-encrypting">20.13. Encrypting Disk Partitions</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#swap-encrypting">20.14. Encrypting Swap</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/disks/#disks-hast">20.15. Highly Available Storage (HAST)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/geom/">
+              Chapter 21. GEOM: Modular Disk Transformation Framework
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-synopsis">21.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-striping">21.2. RAID0 - Striping</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-mirror">21.3. RAID1 - Mirroring</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-raid3">21.4. RAID3 - Byte-level Striping with Dedicated Parity</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-graid">21.5. Software RAID Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-glabel">21.7. Labeling Disk Devices</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/geom/#geom-gjournal">21.8. UFS Journaling Through GEOM</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/zfs/">
+              Chapter 22. The Z File System (ZFS)
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-differences">22.1. What Makes ZFS Different</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-quickstart">22.2. Quick Start Guide</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-zfs-allow">22.5. Delegated Administration</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-advanced">22.6. Advanced Topics</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-links">22.7. Further Resources</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/zfs/#zfs-term">22.8. ZFS Features and Terminology</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/filesystems/">
+              Chapter 23. Other File Systems
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/filesystems/#filesystems-synopsis">23.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/filesystems/#filesystems-linux">23.2. Linux® File Systems</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/virtualization/">
+              Chapter 24. Virtualization
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-synopsis">24.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. FreeBSD as a Guest on Parallels Desktop for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-vmware">24.3. FreeBSD as a Guest on VMware Fusion for macOS®</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. FreeBSD as a Guest on VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. FreeBSD as a Host with VirtualBox™</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-bhyve">24.6. FreeBSD as a Host with bhyve</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD as a Xen™-Host</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/l10n/">
+              Chapter 25. Localization - i18n/L10n Usage and Setup
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#l10n-synopsis">25.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#using-localization">25.2. Using Localization</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#l10n-compiling">25.3. Finding i18n Applications</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/l10n/#lang-setup">25.4. Locale Configuration for Specific Languages</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/">
+              Chapter 26. Updating and Upgrading FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD Update</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-bootcode">26.3. Updating Bootcode</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. Updating the Documentation Set</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#current-stable">26.5. Tracking a Development Branch</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#makeworld">26.6. Updating FreeBSD from Source</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#small-lan">26.7. Tracking for Multiple Machines</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. Building on non-FreeBSD Hosts</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/dtrace/">
+              Chapter 27. DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-synopsis">27.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-implementation">27.2. Implementation Differences</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-enable">27.3. Enabling DTrace Support</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/dtrace/#dtrace-using">27.4. Using DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/">
+              Chapter 28. USB Device Mode / USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB Virtual Serial Ports</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB Device Mode Network Interfaces</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB Virtual Storage Device</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partiv/">
+              Part IV. Network Communication
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/">
+              Chapter 29. Serial Communications
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serial-synopsis">29.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serial">29.2. Serial Terminology and Hardware</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#term">29.3. Terminals</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#dialup">29.4. Dial-in Service</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#dialout">29.5. Dial-out Service</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/serialcomms/#serialconsole-setup">29.6. Setting Up the Serial Console</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/">
+              Chapter 30. PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#userppp">30.2. Configuring PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. Troubleshooting PPP Connections</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#pppoe">30.4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/ppp-and-slip/#pppoa">30.5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mail/">
+              Chapter 31. Electronic Mail
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-synopsis">31.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-using">31.2. Mail Components</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent (DMA)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#sendmail">31.4. Sendmail</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-changingmta">31.5. Changing the Mail Transfer Agent</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-agents">31.6. Mail User Agents</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mail/#mail-advanced">31.7. Advanced Topics</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/network-servers/">
+              Chapter 32. Network Servers
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-servers-synopsis">32.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-inetd">32.2. The inetd Super-Server</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-nfs">32.3. Network File System (NFS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-nis">32.4. Network Information System (NIS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ldap">32.5. Lightweight Directory Access Protocol (LDAP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-dhcp">32.6. Dynamic Host Configuration Protocol (DHCP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-dns">32.7. Domain Name System (DNS)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ftp">32.9. File Transfer Protocol (FTP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-samba">32.10. File and Print Services for Microsoft® Windows® Clients (Samba)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-ntp">32.11. Clock Synchronization with NTP</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/network-servers/#network-iscsi">32.12. iSCSI Initiator and Target Configuration</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/firewalls/">
+              Chapter 33. Firewalls
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-intro">33.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-concepts">33.2. Firewall Concepts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-pf">33.3. PF</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER (IPF)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/firewalls/#firewalls-blacklistd">33.6. Blacklistd</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/">
+              Chapter 34. Advanced Networking
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. Synopsis</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-routing">34.2. Gateways and Routes</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. Virtual Hosts</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-advanced-wireless">34.4. Wireless Advanced Authentication</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. Wireless Ad-hoc Mode</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB Tethering</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-bluetooth">34.7. Bluetooth</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-bridging">34.8. Bridging</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-aggregation">34.9. Link Aggregation and Failover</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-diskless">34.10. Diskless Operation with PXE</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#carp">34.11. Common Address Redundancy Protocol (CARP)</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/advanced-networking/#network-vlan">34.12. VLANs</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/partv/">
+              Part V. Appendices
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/mirrors/">
+              Appendix A. Obtaining FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#mirrors">A.1. Mirrors</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#git">A.2. Using Git</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#svn">A.3. Using Subversion</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/mirrors/#mirrors-cdrom">A.4. CD and DVD Sets</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/bibliography/">
+              Appendix B. Bibliography
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD Bibliography</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-security">B.2. Security Reference</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-history">B.3. UNIX® History</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/bibliography/#bibliography-journals">B.4. Periodicals, Journals, and Magazines</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/eresources/">
+              Appendix C. Resources on the Internet
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-www">C.1. Websites</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-mail">C.2. Mailing Lists</a></li>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/eresources/#eresources-news">C.3. Usenet Newsgroups</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/pgpkeys/">
+              Appendix D. OpenPGP Keys
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/en/books/handbook/pgpkeys/#pgpkeys-officers">D.1. Officers</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/glossary/">
+              FreeBSD Glossary
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/colophon/">
+              Colophon
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/en/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">Chapter 30. PPP</h1>
+    
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ppp-and-slip-synopsis">30.1. Synopsis</a></li>
+    <li><a href="#userppp">30.2. Configuring PPP</a></li>
+    <li><a href="#ppp-troubleshoot">30.3. Troubleshooting PPP Connections</a></li>
+    <li><a href="#pppoe">30.4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="#pppoa">30.5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="ppp-and-slip-synopsis">30.1. Synopsis<a class="anchor" href="#ppp-and-slip-synopsis"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD supports the Point-to-Point (PPP) protocol which can be used to establish a network or Internet connection using a dial-up modem.
+This chapter describes how to configure modem-based communication services in FreeBSD.</p>
+</div>
+<div class="paragraph">
+<p>After reading this chapter, you will know:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>How to configure, use, and troubleshoot a PPP connection.</p>
+</li>
+<li>
+<p>How to set up PPP over Ethernet (PPPoE).</p>
+</li>
+<li>
+<p>How to set up PPP over ATM (PPPoA).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Before reading this chapter, you should:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Be familiar with basic network terminology.</p>
+</li>
+<li>
+<p>Understand the basics and purpose of a dial-up connection and PPP.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="userppp">30.2. Configuring PPP<a class="anchor" href="#userppp"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FreeBSD provides built-in support for managing dial-up PPP connections using <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a>.
+The default FreeBSD kernel provides support for <span class="filename">tun</span> which is used to interact with a modem hardware.
+Configuration is performed by editing at least one configuration file, and configuration files containing examples are provided.
+Finally, <code>ppp</code> is used to start and manage connections.</p>
+</div>
+<div class="paragraph">
+<p>In order to use a PPP connection, the following items are needed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A dial-up account with an Internet Service Provider (ISP).</p>
+</li>
+<li>
+<p>A dial-up modem.</p>
+</li>
+<li>
+<p>The dial-up number for the ISP.</p>
+</li>
+<li>
+<p>The login name and password assigned by the ISP.</p>
+</li>
+<li>
+<p>The IP address of one or more DNS servers. Normally, the ISP provides these addresses. If it did not, FreeBSD can be configured to use DNS negotiation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If any of the required information is missing, contact the ISP.</p>
+</div>
+<div class="paragraph">
+<p>The following information may be supplied by the ISP, but is not necessary:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The IP address of the default gateway. If this information is unknown, the ISP will automatically provide the correct value during connection setup. When configuring PPP on FreeBSD, this address is referred to as <code>HISADDR</code>.</p>
+</li>
+<li>
+<p>The subnet mask. If the ISP has not provided one, <code>255.255.255.255</code> will be used in the <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> configuration file.
+*</p>
+<div class="paragraph">
+<p>If the ISP has assigned a static IP address and hostname, it should be input into the configuration file. Otherwise, this information will be automatically provided during connection setup.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The rest of this section demonstrates how to configure FreeBSD for common PPP connection scenarios.
+The required configuration file is <span class="filename">/etc/ppp/ppp.conf</span> and additional files and examples are available in <span class="filename">/usr/share/examples/ppp/</span>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Throughout this section, many of the file examples display line numbers.
+These line numbers have been added to make it easier to follow the discussion and are not meant to be placed in the actual file.</p>
+</div>
+<div class="paragraph">
+<p>When editing a configuration file, proper indentation is important.
+Lines that end in a <code>:</code> start in the first column (beginning of the line) while all other lines should be indented as shown using spaces or tabs.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect2">
+<h3 id="userppp-staticIP">30.2.1. Basic Configuration<a class="anchor" href="#userppp-staticIP"></a></h3>
+<div class="paragraph">
+<p>In order to configure a PPP connection, first edit <span class="filename">/etc/ppp/ppp.conf</span> with the dial-in information for the ISP.
+This file is described as follows:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>1     default:
+2       set log Phase Chat LCP IPCP CCP tun command
+3       ident user-ppp VERSION
+4       set device /dev/cuau0
+5       set speed 115200
+6       set dial &#34;ABORT BUSY ABORT NO\\sCARRIER TIMEOUT 5 \
+7                 \&#34;\&#34; AT OK-AT-OK ATE1Q0 OK \\dATDT\\T TIMEOUT 40 CONNECT&#34;
+8       set timeout 180
+9       enable dns
+10
+11    provider:
+12      set phone &#34;(123) 456 7890&#34;
+13      set authname foo
+14      set authkey bar
+15      set timeout 300
+16      set ifaddr x.x.x.x/0 y.y.y.y/0 255.255.255.255 0.0.0.0
+17      add default HISADDR</pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Line 1</dt>
+<dd>
+<p>Identifies the <code>default</code> entry.
+Commands in this entry (lines 2 through 9) are executed automatically when <code>ppp</code> is run.</p>
+</dd>
+<dt class="hdlist1">Line 2</dt>
+<dd>
+<p>Enables verbose logging parameters for testing the connection.
+Once the configuration is working satisfactorily, this line should be reduced to:</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>set log phase tun</pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Line 3</dt>
+<dd>
+<p>Displays the version of <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> to the PPP software running on the other side of the connection.</p>
+</dd>
+<dt class="hdlist1">Line 4</dt>
+<dd>
+<p>Identifies the device to which the modem is connected, where <span class="filename">COM1</span> is <span class="filename">/dev/cuau0</span> and <span class="filename">COM2</span> is <span class="filename">/dev/cuau1</span>.</p>
+</dd>
+<dt class="hdlist1">Line 5</dt>
+<dd>
+<p>Sets the connection speed.
+If <code>115200</code> does not work on an older modem, try <code>38400</code> instead.</p>
+</dd>
+<dt class="hdlist1">Lines 6 &amp; 7</dt>
+<dd>
+<p>The dial string written as an expect-send syntax.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=chat&amp;sektion=8&amp;format=html">chat(8)</a> for more information.</p>
+<div class="paragraph">
+<p>Note that this command continues onto the next line for readability.
+Any command in <span class="filename">ppp.conf</span> may do this if the last character on the line is <code>\</code>.</p>
+</div>
+</dd>
+<dt class="hdlist1">Line 8</dt>
+<dd>
+<p>Sets the idle timeout for the link in seconds.</p>
+</dd>
+<dt class="hdlist1">Line 9</dt>
+<dd>
+<p>Instructs the peer to confirm the DNS settings.
+If the local network is running its own DNS server, this line should be commented out, by adding a <code>#</code> at the beginning of the line, or removed.</p>
+</dd>
+<dt class="hdlist1">Line 10</dt>
+<dd>
+<p>A blank line for readability. Blank lines are ignored by <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a>.</p>
+</dd>
+<dt class="hdlist1">Line 11</dt>
+<dd>
+<p>Identifies an entry called <code>provider</code>.
+This could be changed to the name of the ISP so that <code>load <em>ISP</em></code> can be used to start the connection.</p>
+</dd>
+<dt class="hdlist1">Line 12</dt>
+<dd>
+<p>Use the phone number for the ISP.
+Multiple phone numbers may be specified using the colon (<code>:</code>) or pipe character (<code>|</code>) as a separator.
+To rotate through the numbers, use a colon.
+To always attempt to dial the first number first and only use the other numbers if the first number fails, use the pipe character.
+Always enclose the entire set of phone numbers between quotation marks (<code>&#34;</code>) to prevent dialing failures.</p>
+</dd>
+<dt class="hdlist1">Lines 13 &amp; 14</dt>
+<dd>
+<p>Use the user name and password for the ISP.</p>
+</dd>
+<dt class="hdlist1">Line 15</dt>
+<dd>
+<p>Sets the default idle timeout in seconds for the connection.
+In this example, the connection will be closed automatically after 300 seconds of inactivity.
+To prevent a timeout, set this value to zero.</p>
+</dd>
+<dt class="hdlist1">Line 16</dt>
+<dd>
+<p>Sets the interface addresses.
+The values used depend upon whether a static IP address has been obtained from the ISP or if it instead negotiates a dynamic IP address during connection.</p>
+<div class="paragraph">
+<p>If the ISP has allocated a static IP address and default gateway, replace <em>x.x.x.x</em> with the static IP address and replace <em>y.y.y.y</em> with the IP address of the default gateway.
+If the ISP has only provided a static IP address without a gateway address, replace <em>y.y.y.y</em> with <code>10.0.0.2/0</code>.</p>
+</div>
+<div class="paragraph">
+<p>If the IP address changes whenever a connection is made, change this line to the following value.
+This tells <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> to use the IP Configuration Protocol (IPCP) to negotiate a dynamic IP address:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>set ifaddr 10.0.0.1/0 10.0.0.2/0 255.255.255.255 0.0.0.0</pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Line 17</dt>
+<dd>
+<p>Keep this line as-is as it adds a default route to the gateway.
+The <code>HISADDR</code> will automatically be replaced with the gateway address specified on line 16.
+It is important that this line appears after line 16.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Depending upon whether <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> is started manually or automatically, a <span class="filename">/etc/ppp/ppp.linkup</span> may also need to be created which contains the following lines.
+This file is required when running <code>ppp</code> in <code>-auto</code> mode.
+This file is used after the connection has been established.
+At this point, the IP address will have been assigned and it is now possible to add the routing table entries.
+When creating this file, make sure that <em>provider</em> matches the value demonstrated in line 11 of <span class="filename">ppp.conf</span>.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>provider:
+      add default HISADDR</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file is also needed when the default gateway address is &#34;guessed&#34; in a static IP address configuration.
+In this case, remove line 17 from <span class="filename">ppp.conf</span> and create <span class="filename">/etc/ppp/ppp.linkup</span> with the above two lines.
+More examples for this file can be found in <span class="filename">/usr/share/examples/ppp/</span>.</p>
+</div>
+<div class="paragraph">
+<p>By default, <code>ppp</code> must be run as <code>root</code>.
+To change this default, add the account of the user who should run <code>ppp</code> to the <code>network</code> group in <span class="filename">/etc/group</span>.</p>
+</div>
+<div class="paragraph">
+<p>Then, give the user access to one or more entries in <span class="filename">/etc/ppp/ppp.conf</span> with <code>allow</code>.
+For example, to give <code>fred</code> and <code>mary</code> permission to only the <code>provider:</code> entry, add this line to the <code>provider:</code> section:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>allow users fred mary</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To give the specified users access to all entries, put that line in the <code>default</code> section instead.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_advanced_configuration">30.2.2. Advanced Configuration<a class="anchor" href="#_advanced_configuration"></a></h3>
+<div class="paragraph">
+<p>It is possible to configure PPP to supply DNS and NetBIOS nameserver addresses on demand.</p>
+</div>
+<div class="paragraph">
+<p>To enable these extensions with PPP version 1.x, the following lines might be added to the relevant section of <span class="filename">/etc/ppp/ppp.conf</span>.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>enable msext
+set ns 203.14.100.1 203.14.100.2
+set nbns 203.14.100.5</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And for PPP version 2 and above:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>accept dns
+set dns 203.14.100.1 203.14.100.2
+set nbns 203.14.100.5</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will tell the clients the primary and secondary name server addresses, and a NetBIOS nameserver host.</p>
+</div>
+<div class="paragraph">
+<p>In version 2 and above, if the <code>set dns</code> line is omitted, PPP will use the values found in <span class="filename">/etc/resolv.conf</span>.</p>
+</div>
+<div class="sect3">
+<h4 id="userppp-PAPnCHAP">30.2.2.1. PAP and CHAP Authentication<a class="anchor" href="#userppp-PAPnCHAP"></a></h4>
+<div class="paragraph">
+<p>Some ISPs set their system up so that the authentication part of the connection is done using either of the PAP or CHAP authentication mechanisms.
+If this is the case, the ISP will not give a <code>login:</code> prompt at connection, but will start talking PPP immediately.</p>
+</div>
+<div class="paragraph">
+<p>PAP is less secure than CHAP, but security is not normally an issue here as passwords, although being sent as plain text with PAP, are being transmitted down a serial line only.
+There is not much room for crackers to &#34;eavesdrop&#34;.</p>
+</div>
+<div class="paragraph">
+<p>The following alterations must be made:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>13      set authname MyUserName
+14      set authkey MyPassword
+15      set login</pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Line 13</dt>
+<dd>
+<p>This line specifies the PAP/CHAP user name.Insert the correct value for <em>MyUserName</em>.</p>
+</dd>
+<dt class="hdlist1">Line 14</dt>
+<dd>
+<p>This line specifies the PAP/CHAP password.
+Insert the correct value for <em>MyPassword</em>.
+You may want to add an additional line, such as:</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>16      accept PAP</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>16      accept CHAP</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to make it obvious that this is the intention, but PAP and CHAP are both accepted by default.</p>
+</div>
+</dd>
+<dt class="hdlist1">Line 15</dt>
+<dd>
+<p>The ISP will not normally require a login to the server when using PAP or CHAP.
+Therefore, disable the &#34;set login&#34; string.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="userppp-nat">30.2.2.2. Using PPP Network Address Translation Capability<a class="anchor" href="#userppp-nat"></a></h4>
+<div class="paragraph">
+<p>PPP has ability to use internal NAT without kernel diverting capabilities.
+This functionality may be enabled by the following line in <span class="filename">/etc/ppp/ppp.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>nat enable yes</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, NAT may be enabled by command-line option <code>-nat</code>.
+There is also <span class="filename">/etc/rc.conf</span> knob named <code>ppp_nat</code>, which is enabled by default.</p>
+</div>
+<div class="paragraph">
+<p>When using this feature, it may be useful to include the following <span class="filename">/etc/ppp/ppp.conf</span> options to enable incoming connections forwarding:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>nat port tcp 10.0.0.2:ftp ftp
+nat port tcp 10.0.0.2:http http</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or do not trust the outside at all</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>nat deny_incoming yes</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="userppp-final">30.2.3. Final System Configuration<a class="anchor" href="#userppp-final"></a></h3>
+<div class="paragraph">
+<p>While <code>ppp</code> is now configured, some edits still need to be made to <span class="filename">/etc/rc.conf</span>.</p>
+</div>
+<div class="paragraph">
+<p>Working from the top down in this file, make sure the <code>hostname=</code> line is set:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>hostname=&#34;foo.example.com&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the ISP has supplied a static IP address and name, use this name as the host name.</p>
+</div>
+<div class="paragraph">
+<p>Look for the <code>network_interfaces</code> variable.
+To configure the system to dial the ISP on demand, make sure the <span class="filename">tun0</span> device is added to the list, otherwise remove it.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>network_interfaces=&#34;lo0 tun0&#34;
+ifconfig_tun0=</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>ifconfig_tun0</code> variable should be empty, and a file called <span class="filename">/etc/start_if.tun0</span> should be created.
+This file should contain the line:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ppp -auto mysystem</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This script is executed at network configuration time, starting the ppp daemon in automatic mode.
+If this machine acts as a gateway, consider including <code>-alias</code>. Refer to the manual page for further details.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Make sure that the router program is set to <code>NO</code> with the following line in <span class="filename">/etc/rc.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>router_enable=&#34;NO&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is important that the <code>routed</code> daemon is not started, as <code>routed</code> tends to delete the default routing table entries created by <code>ppp</code>.</p>
+</div>
+<div class="paragraph">
+<p>It is probably a good idea to ensure that the <code>sendmail_flags</code> line does not include the <code>-q</code> option, otherwise <code>sendmail</code> will attempt to do a network lookup every now and then, possibly causing your machine to dial out.
+You may try:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>sendmail_flags=&#34;-bd&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The downside is that <code>sendmail</code> is forced to re-examine the mail queue whenever the ppp link.
+To automate this, include <code>!bg</code> in <span class="filename">ppp.linkup</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>1     provider:
+2       delete ALL
+3       add 0 0 HISADDR
+4       !bg sendmail -bd -q30m</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An alternative is to set up a &#34;dfilter&#34; to block SMTP traffic.
+Refer to the sample files for further details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_ppp">30.2.4. Using <code>ppp</code><a class="anchor" href="#_using_ppp"></a></h3>
+<div class="paragraph">
+<p>All that is left is to reboot the machine.
+After rebooting, either type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ppp</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and then <code>dial provider</code> to start the PPP session, or, to configure <code>ppp</code> to establish sessions automatically when there is outbound traffic and <span class="filename">start_if.tun0</span> does not exist, type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ppp -auto provider</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is possible to talk to the <code>ppp</code> program while it is running in the background, but only if a suitable diagnostic port has been set up.
+To do this, add the following line to the configuration:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>set server /var/run/ppp-tun%d DiagnosticPassword 0177</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will tell PPP to listen to the specified UNIX® domain socket, asking clients for the specified password before allowing access.
+The <code>%d</code> in the name is replaced with the <span class="filename">tun</span> device number that is in use.</p>
+</div>
+<div class="paragraph">
+<p>Once a socket has been set up, the <a href="https://man.freebsd.org/cgi/man.cgi?query=pppctl&amp;sektion=8&amp;format=html">pppctl(8)</a> program may be used in scripts that wish to manipulate the running program.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="userppp-mgetty">30.2.5. Configuring Dial-in Services<a class="anchor" href="#userppp-mgetty"></a></h3>
+<div class="paragraph">
+<p><a href="../serialcomms/#dialup">“Dial-in Service”</a> provides a good description on enabling dial-up services using <a href="https://man.freebsd.org/cgi/man.cgi?query=getty&amp;sektion=8&amp;format=html">getty(8)</a>.</p>
+</div>
+<div class="paragraph">
+<p>An alternative to <code>getty</code> is <a class="package" href="https://cgit.freebsd.org/ports/tree/comms/mgetty+sendfax/">comms/mgetty+sendfax</a> port), a smarter version of <code>getty</code> designed with dial-up lines in mind.</p>
+</div>
+<div class="paragraph">
+<p>The advantages of using <code>mgetty</code> is that it actively <em>talks</em> to modems, meaning if port is turned off in <span class="filename">/etc/ttys</span> then the modem will not answer the phone.</p>
+</div>
+<div class="paragraph">
+<p>Later versions of <code>mgetty</code> (from 0.99beta onwards) also support the automatic detection of PPP streams, allowing clients scriptless access to the server.</p>
+</div>
+<div class="paragraph">
+<p>Refer to <a href="http://mgetty.greenie.net/doc/mgetty_toc.html">http://mgetty.greenie.net/doc/mgetty_toc.html</a> for more information on <code>mgetty</code>.</p>
+</div>
+<div class="paragraph">
+<p>By default the <a class="package" href="https://cgit.freebsd.org/ports/tree/comms/mgetty+sendfax/">comms/mgetty+sendfax</a> port comes with the <code>AUTO_PPP</code> option enabled allowing <code>mgetty</code> to detect the LCP phase of PPP connections and automatically spawn off a ppp shell.
+However, since the default login/password sequence does not occur it is necessary to authenticate users using either PAP or CHAP.</p>
+</div>
+<div class="paragraph">
+<p>This section assumes the user has successfully compiled, and installed the <a class="package" href="https://cgit.freebsd.org/ports/tree/comms/mgetty+sendfax/">comms/mgetty+sendfax</a> port on his system.</p>
+</div>
+<div class="paragraph">
+<p>Ensure that <span class="filename">/usr/local/etc/mgetty+sendfax/login.config</span> has the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>/AutoPPP/ -     - /etc/ppp/ppp-pap-dialup</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This tells <code>mgetty</code> to run <span class="filename">ppp-pap-dialup</span> for detected PPP connections.</p>
+</div>
+<div class="paragraph">
+<p>Create an executable file called <span class="filename">/etc/ppp/ppp-pap-dialup</span> containing the following:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+exec /usr/sbin/ppp -direct pap$IDENT</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For each dial-up line enabled in <span class="filename">/etc/ttys</span>, create a corresponding entry in <span class="filename">/etc/ppp/ppp.conf</span>.
+This will happily co-exist with the definitions we created above.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>pap:
+  enable pap
+  set ifaddr 203.14.100.1 203.14.100.20-203.14.100.40
+  enable proxy</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each user logging in with this method will need to have a username/password in <span class="filename">/etc/ppp/ppp.secret</span>, or alternatively add the following option to authenticate users via PAP from <span class="filename">/etc/passwd</span>.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>enable passwdauth</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To assign some users a static IP number, specify the number as the third argument in <span class="filename">/etc/ppp/ppp.secret</span>.
+See <span class="filename">/usr/share/examples/ppp/ppp.secret.sample</span> for examples.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ppp-troubleshoot">30.3. Troubleshooting PPP Connections<a class="anchor" href="#ppp-troubleshoot"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section covers a few issues which may arise when using PPP over a modem connection.
+Some ISPs present the <code>ssword</code> prompt while others present <code>password</code>.
+If the <code>ppp</code> script is not written accordingly, the login attempt will fail.
+The most common way to debug <code>ppp</code> connections is by connecting manually as described in this section.</p>
+</div>
+<div class="sect2">
+<h3 id="_check_the_device_nodes">30.3.1. Check the Device Nodes<a class="anchor" href="#_check_the_device_nodes"></a></h3>
+<div class="paragraph">
+<p>When using a custom kernel, make sure to include the following line in the kernel configuration file:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>device   uart</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <span class="filename">uart</span> device is already included in the <code>GENERIC</code> kernel, so no additional steps are necessary in this case.
+Just check the <code>dmesg</code> output for the modem device with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># dmesg | grep uart</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should display some pertinent output about the <span class="filename">uart</span> devices.
+These are the COM ports we need.
+If the modem acts like a standard serial port, it should be listed on <span class="filename">uart1</span>, or <span class="filename">COM2</span>.
+If so, a kernel rebuild is not required.
+When matching up, if the modem is on <span class="filename">uart1</span>, the modem device would be <span class="filename">/dev/cuau1</span>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_connecting_manually">30.3.2. Connecting Manually<a class="anchor" href="#_connecting_manually"></a></h3>
+<div class="paragraph">
+<p>Connecting to the Internet by manually controlling <code>ppp</code> is quick, easy, and a great way to debug a connection or just get information on how the ISP treats <code>ppp</code> client connections.
+Lets start PPP from the command line.
+Note that in all of our examples we will use <em>example</em> as the hostname of the machine running PPP.
+To start <code>ppp</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ppp</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">ppp ON example&gt; <span class="nb">set </span>device /dev/cuau1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This second command sets the modem device to <span class="filename">cuau1</span>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">ppp ON example&gt; <span class="nb">set </span>speed 115200</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This sets the connection speed to 115,200 kbps.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">ppp ON example&gt; <span class="nb">enable </span>dns</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This tells <code>ppp</code> to configure the resolver and add the nameserver lines to <span class="filename">/etc/resolv.conf</span>.
+If <code>ppp</code> cannot determine the hostname, it can manually be set later.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">ppp ON example&gt; term</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This switches to &#34;terminal&#34; mode in order to manually control the modem.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>deflink: Entering terminal mode on /dev/cuau1
+type &#39;~h&#39; for help</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">at
+OK
+atdt123456789</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use <code>at</code> to initialize the modem, then use <code>atdt</code> and the number for the ISP to begin the dial in process.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">CONNECT</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Confirmation of the connection, if we are going to have any connection problems, unrelated to hardware, here is where we will attempt to resolve them.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">ISP Login:myusername</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At this prompt, return the prompt with the username that was provided by the ISP.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">ISP Pass:mypassword</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At this prompt, reply with the password that was provided by the ISP.
+Just like logging into FreeBSD, the password will not echo.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">Shell or PPP:ppp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Depending on the ISP, this prompt might not appear.
+If it does, it is asking whether to use a shell on the provider or to start <code>ppp</code>.
+In this example, <code>ppp</code> was selected in order to establish an Internet connection.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">Ppp ON example&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that in this example the first <code>p</code> has been capitalized.
+This shows that we have successfully connected to the ISP.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">Ppp ON example&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We have successfully authenticated with our ISP and are waiting for the assigned IP address.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">PPP ON example&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We have made an agreement on an IP address and successfully completed our connection.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">PPP ON example&gt;add default HISADDR</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here we add our default route, we need to do this before we can talk to the outside world as currently the only established connection is with the peer.
+If this fails due to existing routes, put a bang character <code>!</code> in front of the <code>add</code>.
+Alternatively, set this before making the actual connection and it will negotiate a new route accordingly.</p>
+</div>
+<div class="paragraph">
+<p>If everything went good we should now have an active connection to the Internet, which could be thrown into the background using <span class="keyseq"><kbd>CTRL</kbd>+<kbd>z</kbd></span>.
+If <code>PPP</code> returns to <code>ppp</code> the connection has been lost.
+This is good to know because it shows the connection status.
+Capital P’s represent a connection to the ISP and lowercase p’s show that the connection has been lost.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_debugging">30.3.3. Debugging<a class="anchor" href="#_debugging"></a></h3>
+<div class="paragraph">
+<p>If a connection cannot be established, turn hardware flow CTS/RTS to off using <code>set ctsrts off</code>.
+This is mainly the case when connected to some PPP-capable terminal servers, where PPP hangs when it tries to write data to the communication link, and waits for a Clear To Send (CTS) signal which may never come.
+When using this option, include <code>set accmap</code> as it may be required to defeat hardware dependent on passing certain characters from end to end, most of the time XON/XOFF.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> for more information on this option and how it is used.</p>
+</div>
+<div class="paragraph">
+<p>An older modem may need <code>set parity even</code>.
+Parity is set at none be default, but is used for error checking with a large increase in traffic, on older modems.</p>
+</div>
+<div class="paragraph">
+<p>PPP may not return to the command mode, which is usually a negotiation error where the ISP is waiting for negotiating to begin.
+At this point, using <code>~p</code> will force ppp to start sending the configuration information.</p>
+</div>
+<div class="paragraph">
+<p>If a login prompt never appears, PAP or CHAP authentication is most likely required.
+To use PAP or CHAP, add the following options to PPP before going into terminal mode:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">ppp ON example&gt; <span class="nb">set </span>authname myusername</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where <em>myusername</em> should be replaced with the username that was assigned by the ISP.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">ppp ON example&gt; <span class="nb">set </span>authkey mypassword</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where <em>mypassword</em> should be replaced with the password that was assigned by the ISP.</p>
+</div>
+<div class="paragraph">
+<p>If a connection is established, but cannot seem to find any domain name, try to <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> an IP address.
+If there is 100 percent (100%) packet loss, it is likely that a default route was not assigned.
+Double check that <code>add default HISADDR</code> was set during the connection.
+If a connection can be made to a remote IP address, it is possible that a resolver address has not been added to <span class="filename">/etc/resolv.conf</span>.
+This file should look like:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>domain example.com
+nameserver x.x.x.x
+nameserver y.y.y.y</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where <em>x.x.x.x</em> and <em>y.y.y.y</em> should be replaced with the IP address of the ISP’s DNS servers.</p>
+</div>
+<div class="paragraph">
+<p>To configure <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=3&amp;format=html">syslog(3)</a> to provide logging for the PPP connection, make sure this line exists in <span class="filename">/etc/syslog.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>!ppp
+*.*     /var/log/ppp.log</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pppoe">30.4. Using PPP over Ethernet (PPPoE)<a class="anchor" href="#pppoe"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes how to set up PPP over Ethernet (PPPoE).</p>
+</div>
+<div class="paragraph">
+<p>Here is an example of a working <span class="filename">ppp.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>default:
+  set log Phase tun command # you can add more detailed logging if you wish
+  set ifaddr 10.0.0.1/0 10.0.0.2/0
+
+name_of_service_provider:
+  set device PPPoE:xl1 # replace xl1 with your Ethernet device
+  set authname YOURLOGINNAME
+  set authkey YOURPASSWORD
+  set dial
+  set login
+  add default HISADDR</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As <code>root</code>, run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># ppp -ddial name_of_service_provider</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add the following to <span class="filename">/etc/rc.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>ppp_enable=&#34;YES&#34;
+ppp_mode=&#34;ddial&#34;
+ppp_nat=&#34;YES&#34;	# if you want to enable nat for your local network, otherwise NO
+ppp_profile=&#34;name_of_service_provider&#34;</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_a_pppoe_service_tag">30.4.1. Using a PPPoE Service Tag<a class="anchor" href="#_using_a_pppoe_service_tag"></a></h3>
+<div class="paragraph">
+<p>Sometimes it will be necessary to use a service tag to establish the connection.
+Service tags are used to distinguish between different PPPoE servers attached to a given network.</p>
+</div>
+<div class="paragraph">
+<p>Any required service tag information should be in the documentation provided by the ISP.</p>
+</div>
+<div class="paragraph">
+<p>As a last resort, one could try installing the <a class="package" href="https://cgit.freebsd.org/ports/tree/net/rr-pppoe/">net/rr-pppoe</a> package or port.
+Bear in mind however, this may de-program your modem and render it useless, so think twice before doing it.
+Simply install the program shipped with the modem.
+Then, access the <b class="menuref">System</b> menu from the program.
+The name of the profile should be listed there.
+It is usually <em>ISP</em>.</p>
+</div>
+<div class="paragraph">
+<p>The profile name (service tag) will be used in the PPPoE configuration entry in <span class="filename">ppp.conf</span> as the provider part for <code>set device</code>.
+Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> for full details. It should look like this:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>set device PPPoE:xl1:ISP</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Do not forget to change <em>xl1</em> to the proper device for the Ethernet card.</p>
+</div>
+<div class="paragraph">
+<p>Do not forget to change <em>ISP</em> to the profile.</p>
+</div>
+<div class="paragraph">
+<p>For additional information, refer to <a href="http://renaud.waldura.com/doc/freebsd/pppoe/">Cheaper Broadband with FreeBSD on DSL</a> by Renaud Waldura.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ppp-3com">30.4.2. PPPoE with a 3Com® HomeConnect™ ADSL Modem Dual Link<a class="anchor" href="#ppp-3com"></a></h3>
+<div class="paragraph">
+<p>This modem does not follow the PPPoE specification defined in <a href="http://www.faqs.org/rfcs/rfc2516.html">RFC 2516</a>.</p>
+</div>
+<div class="paragraph">
+<p>In order to make FreeBSD capable of communicating with this device, a sysctl must be set.
+This can be done automatically at boot time by updating <span class="filename">/etc/sysctl.conf</span>:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>net.graph.nonstandard_pppoe=1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or can be done immediately with the command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysctl net.graph.nonstandard_pppoe=1</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unfortunately, because this is a system-wide setting, it is not possible to talk to a normal PPPoE client or server and a 3Com® HomeConnect™ ADSL Modem at the same time.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pppoa">30.5. Using PPP over ATM (PPPoA)<a class="anchor" href="#pppoa"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following describes how to set up PPP over ATM (PPPoA).
+PPPoA is a popular choice among European DSL providers.</p>
+</div>
+<div class="sect2">
+<h3 id="_using_mpd">30.5.1. Using mpd<a class="anchor" href="#_using_mpd"></a></h3>
+<div class="paragraph">
+<p>The mpd application can be used to connect to a variety of services, in particular PPTP services.
+It can be installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/net/mpd5/">net/mpd5</a> package or port.
+Many ADSL modems require that a PPTP tunnel is created between the modem and computer.</p>
+</div>
+<div class="paragraph">
+<p>Once installed, configure mpd to suit the provider’s settings.
+The port places a set of sample configuration files which are well documented in <span class="filename">/usr/local/etc/mpd/</span>.
+A complete guide to configure mpd is available in HTML format in <span class="filename">/usr/ports/shared/doc/mpd/</span>.
+Here is a sample configuration for connecting to an ADSL service with mpd.
+The configuration is spread over two files, first the <span class="filename">mpd.conf</span>:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This example <span class="filename">mpd.conf</span> only works with mpd 4.x.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>default:
+    load adsl
+
+adsl:
+    new -i ng0 adsl adsl
+    set bundle authname username <i class="conum" data-value="1"></i><b>(1)</b>
+    set bundle password password <i class="conum" data-value="2"></i><b>(2)</b>
+    set bundle disable multilink
+
+    set link no pap acfcomp protocomp
+    set link disable chap
+    set link accept chap
+    set link keep-alive 30 10
+
+    set ipcp no vjcomp
+    set ipcp ranges 0.0.0.0/0 0.0.0.0/0
+
+    set iface route default
+    set iface disable on-demand
+    set iface enable proxy-arp
+    set iface idle 0
+
+    open</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The username used to authenticate with your ISP.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The password used to authenticate with your ISP.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Information about the link, or links, to establish is found in <span class="filename">mpd.links</span>.
+An example <span class="filename">mpd.links</span> to accompany the above example is given beneath:</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>adsl:
+    set link type pptp
+    set pptp mode active
+    set pptp enable originate outcall
+    set pptp self 10.0.0.1 <i class="conum" data-value="1"></i><b>(1)</b>
+    set pptp peer 10.0.0.138 <i class="conum" data-value="2"></i><b>(2)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The IP address of FreeBSD computer running mpd.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The IP address of the ADSL modem. The Alcatel SpeedTouch™ Home defaults to <code>10.0.0.138</code>.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>It is possible to initialize the connection easily by issuing the following command as <code>root</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mpd -b adsl</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To view the status of the connection:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>ifconfig ng0
+ng0: <span class="nv">flags</span><span class="o">=</span>88d1&lt;UP,POINTOPOINT,RUNNING,NOARP,SIMPLEX,MULTICAST&gt; mtu 1500
+     inet 216.136.204.117 --&gt; 204.152.186.171 netmask 0xffffffff</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using mpd is the recommended way to connect to an ADSL service with FreeBSD.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_pptpclient">30.5.2. Using pptpclient<a class="anchor" href="#_using_pptpclient"></a></h3>
+<div class="paragraph">
+<p>It is also possible to use FreeBSD to connect to other PPPoA services using <a class="package" href="https://cgit.freebsd.org/ports/tree/net/pptpclient/">net/pptpclient</a>.</p>
+</div>
+<div class="paragraph">
+<p>To use <a class="package" href="https://cgit.freebsd.org/ports/tree/net/pptpclient/">net/pptpclient</a> to connect to a DSL service, install the port or package, then edit <span class="filename">/etc/ppp/ppp.conf</span>.
+An example section of <span class="filename">ppp.conf</span> is given below.
+For further information on <span class="filename">ppp.conf</span> options consult <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a>.</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>adsl:
+ set log phase chat lcp ipcp ccp tun command
+ set timeout 0
+ enable dns
+ set authname username <i class="conum" data-value="1"></i><b>(1)</b>
+ set authkey password <i class="conum" data-value="2"></i><b>(2)</b>
+ set ifaddr 0 0
+ add default HISADDR</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The username for the DSL provider.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The password for your account.</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Since the account’s password is added to <span class="filename">ppp.conf</span> in plain text form, make sure nobody can read the contents of this file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chown root:wheel /etc/ppp/ppp.conf</span>
+<span class="c"># chmod 600 /etc/ppp/ppp.conf</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>This will open a tunnel for a PPP session to the DSL router.
+Ethernet DSL modems have a preconfigured LAN IP address to connect to.
+In the case of the Alcatel SpeedTouch™ Home, this address is <code>10.0.0.138</code>.
+The router’s documentation should list the address the device uses.
+To open the tunnel and start a PPP session:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pptp address adsl</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If an ampersand (&#34;&amp;&#34;) is added to the end of this command, pptp will return the prompt.</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>A <span class="filename">tun</span> virtual tunnel device will be created for interaction between the pptp and ppp processes.
+Once the prompt is returned, or the pptp process has confirmed a connection, examine the tunnel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>ifconfig tun0
+tun0: <span class="nv">flags</span><span class="o">=</span>8051&lt;UP,POINTOPOINT,RUNNING,MULTICAST&gt; mtu 1500
+        inet 216.136.204.21 --&gt; 204.152.186.171 netmask 0xffffff00
+	Opened by PID 918</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the connection fails, check the configuration of the router, which is usually accessible using a web browser.
+Also, examine the output of <code>pptp</code> and the contents of the log file, <span class="filename">/var/log/ppp.log</span> for clues.</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/en/books/handbook/serialcomms class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/en/books/handbook/mail  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ppp-and-slip-synopsis">30.1. Synopsis</a></li>
+    <li><a href="#userppp">30.2. Configuring PPP</a></li>
+    <li><a href="#ppp-troubleshoot">30.3. Troubleshooting PPP Connections</a></li>
+    <li><a href="#pppoe">30.4. Using PPP over Ethernet (PPPoE)</a></li>
+    <li><a href="#pppoa">30.5. Using PPP over ATM (PPPoA)</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/en/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>English</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>

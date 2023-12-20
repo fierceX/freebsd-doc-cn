@@ -1,0 +1,2587 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn-auto">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本章介绍了 FreeBSD 中的打印系统。"/>
+  <meta name="keywords" content="91, 34, 112, 114, 105, 110, 116, 105, 110, 103, 34, 44, 32, 34, 67, 85, 80, 83, 34, 44, 32, 34, 76, 80, 68, 34, 44, 32, 34, 80, 111, 115, 116, 83, 99, 114, 105, 112, 116, 34, 44, 32, 34, 80, 68, 76, 115, 34, 44, 32, 34, 72, 80, 76, 73, 80, 34, 44, 32, 34, 76, 80, 82, 110, 103, 34, 93"/>
+  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/" />
+
+  <title>第 11 章 打印 |  FreeBSD Documentation Portal</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+
+  
+  
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:domain" content="docs.FreeBSD.org"/>
+    <meta name="twitter:site" content="@freebsd"/>
+    <meta name="twitter:url" content="https://twitter.com/freebsd"/>
+    <meta property="og:title" content="第 11 章 打印" />
+    <meta property="og:description" content="本章介绍了 FreeBSD 中的打印系统。" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn-auto" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/" />
+    <meta property="og:site_name" content="FreeBSD Documentation Portal" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn-auto\/books\/handbook\/printing\/",
+        "name": "FreeBSD Documentation Portal",
+        "headline": "FreeBSD Documentation Portal",
+        "description": "FreeBSD Documentation Portal"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      
+    </div>
+  </div>
+</header>
+
+    
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="Search" aria-label="Search" maxlength="128" />
+      <nav id="MenuContents">
+        
+  <ul>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ada319c45e780947f82b569049480cc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-8ada319c45e780947f82b569049480cc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/">
+              前言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-audience">预期读者</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from4">第四版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from3">第三版</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes-from2">第二版（ 2004 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-changes">第一版（ 2001 年）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-overview">本书的组织结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-conv">本书中使用的约定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/preface/#preface-acknowledgements">致谢</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-32a83d18a326852a8d9ae2582360bbc8" class="toggle"  />
+          <label  for="chapter-32a83d18a326852a8d9ae2582360bbc8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/parti/">
+              第一部分：入门指南
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a4909db05d872d16d5be86a57cbc2dc7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a4909db05d872d16d5be86a57cbc2dc7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              第一章 引言
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#introduction-synopsis">1.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#nutshell">1.2. 欢迎来到 FreeBSD ！</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/#history">1.3. 关于 FreeBSD 项目</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3c2455cadf89eadd3f6e77461085d5e9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3c2455cadf89eadd3f6e77461085d5e9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
+              第二章 安装 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-synopsis">2.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-hardware">2.2. 最低硬件要求</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-pre">2.3. 安装前的任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-start">2.4. 开始安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-bsdinstall">2.5. 使用 bsdinstall</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-partitioning">2.6. 分配磁盘空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-fetching-distribution">2.7. 获取分发文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-post">2.8. 网络接口，账户，时区，服务和加固</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#bsdinstall-install-trouble">2.9. 故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/#using-live-cd">2.10. 使用 Live CD</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-709481b75d22ad36960f7ac166b3306c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-709481b75d22ad36960f7ac166b3306c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
+              第三章. FreeBSD 基础知识
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-synopsis">3.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#consoles">3.2. 虚拟控制台和终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#users-synopsis">3.3. 用户和基本账户管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#permissions">3.4. 权限</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#dirstructure">3.5. 目录结构</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#disk-organization">3.6. 磁盘组织</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#mount-unmount">3.7. 挂载和卸载文件系统</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-processes">3.8. 进程和守护进程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#shells">3.9. Shells</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#editors">3.10. 文本编辑器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-devices">3.11. 设备和设备节点</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/#basics-more-information">3.12. 手册页</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-58c050d31a1fbecd859248dacefeb567" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-58c050d31a1fbecd859248dacefeb567"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
+              第四章 安装应用程序：软件包和端口
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-synopsis">4.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-overview">4.2. 软件安装概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-finding-applications">4.3. 寻找软件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#pkgng-intro">4.4. 使用 pkg 进行二进制包管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-using">4.5. 使用 Ports 集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-poudriere">4.6. 使用 poudriere 构建软件包</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-nextsteps">4.7. 安装后的考虑事项</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/#ports-broken">4.8. 处理损坏的端口</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e5a000ce7f50680a180e2c1b83c121bc" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e5a000ce7f50680a180e2c1b83c121bc"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
+              第五章 X Window 系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-fonts">5.5. 在 Xorg 中使用字体</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-235af08fb87fd7a58003348706d2111d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-235af08fb87fd7a58003348706d2111d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
+              第六章 Wayland
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-ly">6.7. Wayland 登录管理器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-utilities">6.8. 有用的工具</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4de18483dde20bf9ed0024176afd09da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4de18483dde20bf9ed0024176afd09da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/">
+              第 7 章 网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-synopsis">7.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-setup">7.2. 设置网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-5eb30759c3a2873e716dc31d7760054c" class="toggle"  />
+          <label  for="chapter-5eb30759c3a2873e716dc31d7760054c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partii/">
+              第二部分：常见任务
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-c96504f017c56f4bc7f71548cccf5382" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-c96504f017c56f4bc7f71548cccf5382"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/">
+              第 8 章 桌面环境
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-synopsis">8.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-environments">8.2. 桌面环境</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-browsers">8.3. 浏览器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-development">8.4. 开发工具</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-productivity">8.5. 桌面办公生产力</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-viewers">8.6. 文档查看器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/desktop/#desktop-finance">8.7. 金融</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-e1898af36aaacc168e13b673d25b908f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-e1898af36aaacc168e13b673d25b908f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/">
+              第 9 章 多媒体
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#multimedia-synopsis">9.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#sound-setup">9.2. 设置声卡</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#audio-ports">9.3. 音频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#video-ports">9.4. 视频播放器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#conferencing-meetings">9.5. 会议和会议</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/multimedia/#scanners">9.6. 图像扫描仪</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6926664836e63c5cae4b2fa60855f91d" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-6926664836e63c5cae4b2fa60855f91d"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/">
+              第 10 章 配置 FreeBSD 内核
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-synopsis">10.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-devices">10.3. 查找系统硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-config">10.4. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-building">10.5. 构建和安装自定义内核</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig/#kernelconfig-trouble">10.6. 如果出现问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-19d36bd70a320268f0ea1f66e4f3e224" class="toggle"  checked  />
+          <label  class="icon cursor"  for="chapter-19d36bd70a320268f0ea1f66e4f3e224"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/">
+              第 11 章 打印
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/printing/#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-a07f539e6c18f2db4da5dbb2b5bb1e79"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
+              第 12 章 . Linux 二进制兼容性
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-synopsis">12.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-lbc-install">12.2. 配置 Linux 二进制兼容性</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linux-userlands">12.3. Linux 用户空间</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/#linuxemu-advanced">12.4. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-af234c193ce95c480af0ff5ec3f32f5c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-af234c193ce95c480af0ff5ec3f32f5c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/">
+              第 13 章 WINE
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-synopsis">13.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-overview-concepts">13.2. WINE 概述与概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#installing-wine-on-freebsd">13.3. 在 FreeBSD 上安装 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#running-first-wine-program">13.4. 在 FreeBSD 上运行第一个 WINE 程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#configuring-wine-installation">13.5. 配置 WINE 安装</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-management-guis">13.6. WINE 管理图形界面</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-in-multi-user-os-installations">13.7. 在多用户的 FreeBSD 安装中使用 WINE</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wine/#wine-on-os-faq">13.8. 在 FreeBSD 上使用 WINE 的常见问题解答</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-51416fdea9d5a1dfa1c2718cd825213a" class="toggle"  />
+          <label  for="chapter-51416fdea9d5a1dfa1c2718cd825213a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiii/">
+              第三部分：系统管理
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-532d0380ba66d66e033765a0b6930ee7" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-532d0380ba66d66e033765a0b6930ee7"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/">
+              第 14 章 配置、服务、日志和电源管理
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#config-synopsis">14.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-configfiles">14.2. 配置文件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-rcd">14.3. 在 FreeBSD 中管理服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#cron-periodic">14.4. Cron 和周期性任务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#configtuning-syslog">14.5. 配置系统日志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#acpi-overview">14.6. 功耗和资源管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/config/#adding-swap-space">14.7. 添加交换空间</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-d05f41680fb7e3d68b354ae03de368b1" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-d05f41680fb7e3d68b354ae03de368b1"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
+              第 15 章 . FreeBSD 的启动过程
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-synopsis">15.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-introduction">15.2. FreeBSD 引导过程</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#device-hints">15.3. 设备提示</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/#boot-shutdown">15.4. 关机序列</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-513e8e407c57354df334059688e9b60a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-513e8e407c57354df334059688e9b60a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/">
+              第 16 章 安全
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-synopsis">16.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-intro">16.2. 介绍</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#sec-accounts">16.3. 保护账户安全</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-ids">16.4. 入侵检测系统（ IDS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-secure-levels">16.5. 安全级别</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-file-flags">16.6. 文件标志</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssh">16.7. OpenSSH 是一个用于安全远程登录和文件传输的开源软件套件。它提供了加密的通信通道，以防止未经授权的访问和数据泄露。 OpenSSH 支持 SSH 协议，可以在不同的操作系统上运行，并且具有强大的身份验证和加密功能。它被广泛用于管理远程服务器和保护敏感数据的传输。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#openssl">16.8. OpenSSL 是一个开源的软件库，提供了一套用于安全通信的加密工具。它支持多种加密算法和协议，包括 SSL 和 TLS 。 OpenSSL 广泛用于网络通信、数字证书管理和数据加密等领域。它是一个功能强大且可靠的工具，被广泛应用于各种计算机系统和应用程序中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#kerberos5">16.9. Kerberos 是一种网络身份验证协议，用于在计算机网络中验证用户的身份。它使用加密技术来确保通信的安全性，并防止身份伪造和中间人攻击。 Kerberos 还提供了单点登录功能，允许用户在一次身份验证后访问多个网络服务。它是计算机领域中常用的身份验证解决方案之一。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#tcpwrappers">16.10. TCP 包装器（ TCP Wrappers ）是一种网络访问控制工具，用于在 TCP/IP 网络上限制对特定服务的访问。它通过检查远程主机的 IP 地址和主机名来决定是否允许连接到受保护的服务。 TCP 包装器可以用于增强网络安全性，防止未经授权的访问和恶意活动。它通常与网络服务（如 SSH 、 FTP 和 Telnet ）一起使用，以提供对这些服务的访问控制。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#fs-acl">16.11. 访问控制列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#capsicum">16.12. Capsicum 是一种辣椒植物，属于茄科。它的果实通常被用作调味品和食材，具有辛辣的味道。 Capsicum 也被用于药用目的，具有抗氧化和抗炎作用。它含有丰富的维生素 C 和维生素 A ，对于保持健康非常重要。 Capsicum 在烹饪中被广泛使用，可以用于制作各种菜肴和调味品。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-accounting">16.13. 进程账户</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-resourcelimits">16.14. 资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-pkg">16.15. 监控第三方安全问题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/security/#security-advisories">16.16. FreeBSD 安全公告</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0f7d2858504c83a029928c048d394e2a" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-0f7d2858504c83a029928c048d394e2a"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
+              第 17 章 监狱和容器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jails-synopsis">17.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-types">17.2. 监狱类型</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#host-configuration">17.3. 主机配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#classic-jail">17.4. 经典监狱（厚重监狱）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#thin-jail">17.5. 薄型监狱</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-management">17.6. 监狱管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-upgrading">17.7. 监狱升级</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-resource-limits">17.8. 监狱资源限制</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/#jail-managers-and-containers">17.9. 监狱管理员和容器</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-15be125ce5997f51c5499e3a0dee6c2c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-15be125ce5997f51c5499e3a0dee6c2c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/">
+              第 18 章 强制访问控制
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-synopsis">18.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-inline-glossary">18.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-understandlabel">18.3. 理解 MAC 标签</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-planning">18.4. 规划安全配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-policies">18.5. 可用的 MAC 策略</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-userlocked">18.6. 用户锁定</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-implementing">18.7. 在 MAC 监狱中的 Nagios</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mac/#mac-troubleshoot">18.8. 解决 MAC 框架的问题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3f7e8d763b17c7d0c44c60505cf0feea" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3f7e8d763b17c7d0c44c60505cf0feea"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/">
+              第 19 章 安全事件审计
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-synopsis">19.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-inline-glossary">19.2. 关键术语</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-config">19.3. 审计配置</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/audit/#audit-administration">19.4. 使用审计跟踪功能</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7bb1cb2287cd08a3672cc878e604f0d0" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7bb1cb2287cd08a3672cc878e604f0d0"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/">
+              第 20 章 存储
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-synopsis">20.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#usb-disks">20.4. USB 存储设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-cds">20.5. 创建和使用 CD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#creating-dvds">20.6. 创建和使用 DVD 媒体</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#floppies">20.7. 创建和使用软盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#using-ntfs">20.8. 使用 NTFS 磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#backup-basics">20.9. 备份基础知识</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-virtual">20.10. 内存磁盘</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#snapshots">20.11. 文件系统快照</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#quotas">20.12. 磁盘配额</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-encrypting">20.13. 加密磁盘分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#swap-encrypting">20.14. 加密交换分区</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/disks/#disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-dec5fc4f0100e5030db0fb188d8d4b2f" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-dec5fc4f0100e5030db0fb188d8d4b2f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/">
+              第 21 章 GEOM ：模块化磁盘转换框架
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-synopsis">21.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-striping">21.2. RAID0 - 条带化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-mirror">21.3. RAID1 - 镜像</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-raid3">21.4. RAID3 - 以字节为单位的条带化和专用奇偶校验</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-graid">21.5. 软件 RAID 设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-ggate">21.6. GEOM Gate Network 是一种计算机网络技术。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-glabel">21.7. 标记磁盘设备</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/geom/#geom-gjournal">21.8. 通过 GEOM 实现的 UFS 日志记录</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f1657a05627dd16bad31d4c7f675604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f1657a05627dd16bad31d4c7f675604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/">
+              第 22 章 Z 文件系统（ ZFS ）
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-differences">22.1. ZFS 有何不同之处</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-quickstart">22.2. 快速入门指南</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zpool">22.3. <code>zpool</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs">22.4. <code>zfs</code> 管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-zfs-allow">22.5. 委派管理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-advanced">22.6. 高级主题</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-links">22.7. 进一步资源</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/zfs/#zfs-term">22.8. ZFS 功能和术语</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-4c6bf6828e601b79edb2813329ac6604" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-4c6bf6828e601b79edb2813329ac6604"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/">
+              第 23 章 其他文件系统
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-synopsis">23.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-ae23289d4b6415f3f878893f9d3ef9b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-ae23289d4b6415f3f878893f9d3ef9b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/">
+              第 24 章 虚拟化
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-synopsis">24.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-parallelsdesktop">24.2. 在 Parallels Desktop for macOS® 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-vmware">24.3. 在 macOS 上使用 VMware Fusion 作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-guest-virtualbox">24.4. 在 VirtualBox™ 上作为客户机的 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-virtualbox">24.5. 使用 VirtualBox™ 将 FreeBSD 作为主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-bhyve">24.6. 使用 bhyve 作为 FreeBSD 主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/virtualization/#virtualization-host-xen">24.7. FreeBSD 作为 Xen™ 主机</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-b279d2b738963a45a059268d2fae00d5" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-b279d2b738963a45a059268d2fae00d5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/">
+              第 25 章 本地化 - i18n/L10n 的使用和设置
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-synopsis">25.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#using-localization">25.2. 使用本地化</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#l10n-compiling">25.3. 寻找国际化应用程序</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/l10n/#lang-setup">25.4. 特定语言的区域配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9e3f99bd76c861ab2e9a5f31ac421842" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9e3f99bd76c861ab2e9a5f31ac421842"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/">
+              第 26 章 更新和升级 FreeBSD
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-synopsis">26.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-freebsdupdate">26.2. FreeBSD 更新</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-bootcode">26.3. 更新引导代码</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#updating-upgrading-documentation">26.4. 更新文档集合</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#current-stable">26.5. 跟踪开发分支</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#makeworld">26.6. 从源代码更新 FreeBSD</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#small-lan">26.7. 多台机器的追踪</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/cutting-edge/#building-on-non-freebsd-hosts">26.8. 在非 FreeBSD 主机上构建</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-3ba999091575eb04ae88235cd0fb1afa" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-3ba999091575eb04ae88235cd0fb1afa"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/">
+              第 27 章 DTrace
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bdb217202a0a3eef4571dd1fcd50863c" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bdb217202a0a3eef4571dd1fcd50863c"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/">
+              第 28 章 USB 设备模式 /USB OTG
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-synopsis">28.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-terminals">28.2. USB 虚拟串口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-network">28.3. USB 设备模式网络接口</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/usb-device-mode/#usb-device-mode-storage">28.4. USB 虚拟存储设备</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-6d4439926bb106ac084ecc88cfd3cfa4" class="toggle"  />
+          <label  for="chapter-6d4439926bb106ac084ecc88cfd3cfa4"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partiv/">
+              第四部分：网络通信
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-05a353fcb61d8e035f7c43e14725766e" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-05a353fcb61d8e035f7c43e14725766e"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/">
+              第 29 章 串行通信
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial-synopsis">29.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serial">29.2. 串行术语和硬件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#term">29.3. 终端</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialup">29.4. 拨入服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#dialout">29.5. 拨出服务</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/serialcomms/#serialconsole-setup">29.6. 设置串行控制台</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-7f0cbcbf6701b86eba3bbd6fc829f1b8"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/">
+              第 30 章 PPP
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-and-slip-synopsis">30.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#userppp">30.2. 配置 PPP</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#ppp-troubleshoot">30.3. PPP 连接故障排除</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoe">30.4. 使用以太网上的点对点协议（ PPP over Ethernet ， PPPoE ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ppp-and-slip/#pppoa">30.5. 使用 ATM 上的 PPP （ PPPoA ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9d023b545804f197d195dd9412749943" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9d023b545804f197d195dd9412749943"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/">
+              第 31 章 电子邮件
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-synopsis">31.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-using">31.2. 邮件组件</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#dragonFly-mail-agent">31.3. DragonFly Mail Agent （ DMA ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#sendmail">31.4. Sendmail 是一种用于电子邮件传输的开源软件。它是一种邮件传输代理（ MTA ），用于将电子邮件从发送者的计算机发送到接收者的计算机。 Sendmail 具有广泛的功能和灵活性，可以在各种操作系统上运行，并且被广泛用于互联网上的电子邮件传输。它支持多种邮件协议和格式，并提供了丰富的配置选项，使用户能够根据自己的需求进行定制。 Sendmail 是互联网上最早的邮件传输代理之一，至今仍然被广泛使用。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-changingmta">31.5. 更改邮件传输代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-agents">31.6. 邮件用户代理</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mail/#mail-advanced">31.7. 高级主题</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-42b19e05d30c4135c74b9878818747a9" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-42b19e05d30c4135c74b9878818747a9"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/">
+              第 32 章 网络服务器
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-servers-synopsis">32.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-inetd">32.2. inetd 超级服务器</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nfs">32.3. 网络文件系统（ NFS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-nis">32.4. 网络信息系统（ NIS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ldap">32.5. 轻量级目录访问协议（ LDAP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dhcp">32.6. 动态主机配置协议（ DHCP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-dns">32.7. 域名系统（ DNS ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-apache">32.8. Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ftp">32.9. 文件传输协议（ FTP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-samba">32.10. 适用于 Microsoft® Windows® 客户端的文件和打印服务（ Samba ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-ntp">32.11. 使用 NTP 进行时钟同步</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network-servers/#network-iscsi">32.12. iSCSI 发起者和目标配置</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9554a5177d00d0e87ada408809a1fc67" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9554a5177d00d0e87ada408809a1fc67"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/">
+              第 33 章 防火墙
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-9903a1d844ed803a436595e93ec33572" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-9903a1d844ed803a436595e93ec33572"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/">
+              第 34 章 . 高级网络
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#advanced-networking-synopsis">34.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-routing">34.2. 网关和路由</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#configtuning-virtual-hosts">34.3. 虚拟主机</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-advanced-wireless">34.4. 无线高级认证</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#wireless-ad-hoc-mode">34.5. 无线自组网模式</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-usb-tethering">34.6. USB 网络共享</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bluetooth">34.7. 蓝牙</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-bridging">34.8. 桥接</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-aggregation">34.9. 链路聚合和故障转移</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-diskless">34.10. 使用 PXE 进行无盘操作</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#carp">34.11. 常见地址冗余协议（ CARP ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/advanced-networking/#network-vlan">34.12. 虚拟局域网（ VLANs ）</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-8ca29f99c249993ee9234cb4632af7a5" class="toggle"  />
+          <label  for="chapter-8ca29f99c249993ee9234cb4632af7a5"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/partv/">
+              第五部分. 附录
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-0229d553ebf23ffeb945be6f32836221" class="toggle"  />
+          <label  for="chapter-0229d553ebf23ffeb945be6f32836221"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/mirrors/">
+              附录 A. 获取 FreeBSD
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-743c99fa278b8138914ff018e40c9231" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-743c99fa278b8138914ff018e40c9231"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/">
+              附录 B. 参考文献
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-freebsd">B.1. FreeBSD 参考文献</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-security">B.2. 安全参考</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-history">B.3. UNIX® 历史</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bibliography/#bibliography-journals">B.4. 期刊、杂志和期刊</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-de7eade4b8b64f298c0cbac44c2278da" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-de7eade4b8b64f298c0cbac44c2278da"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/">
+              附录 C. 互联网资源
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-www">C.1. 网站</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-mail">C.2. 邮件列表</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/eresources/#eresources-news">C.3. Usenet 新闻组</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26" class="toggle"  />
+          <label  class="icon cursor"  for="chapter-bfb0d4e71c3c1a18a8b75e03f4b48e26"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/">
+              附录 D. OpenPGP 密钥
+            </a>
+            
+            
+  <ul>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/pgpkeys/#pgpkeys-officers">D.1. 官员们</a></li>
+  </ul>
+
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-2a8deedf14429128049622ec007c9d3f" class="toggle"  />
+          <label  for="chapter-2a8deedf14429128049622ec007c9d3f"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/glossary/">
+              FreeBSD 词汇表
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-110dbb242491bf200e51e76db171f670" class="toggle"  />
+          <label  for="chapter-110dbb242491bf200e51e76db171f670"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/colophon/">
+              后记
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+
+          
+          
+          
+
+          <input type="checkbox" id="chapter-caffbcba74982e4b26b9263ac0232bc3" class="toggle"  />
+          <label  for="chapter-caffbcba74982e4b26b9263ac0232bc3"><a role="button"></a></label>
+
+          
+            
+            <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
+              
+            </a>
+            
+            
+          
+
+        
+      </li>
+    
+      <li>
+        
+      </li>
+    
+  </ul>
+
+
+      </nav>
+    </div>
+  </aside>
+  
+  <div class="book">
+    
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="Book menu"></i>
+          Book menu
+        </span>
+      </label>
+    </div>
+    
+    <h1 class="title">第 11 章 打印</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          This translation may be out of date. To help with the translations please access the <a href="https://translate-dev.freebsd.org/" target="_blank">FreeBSD translations instance</a>.
+        </p>
+      </div>
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+</nav>
+    </div>
+    
+      
+      
+    
+    <div class="book-content">
+      <div id="preamble">
+<div class="sectionbody">
+
+<div class="paragraph">
+<p>将信息记录在纸上是一项重要的功能，尽管有许多试图消除它的尝试。打印有两个基本组成部分。数据必须传递给打印机，并且必须以打印机能够理解的形式呈现。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-quick-start">11.1. 快速入门<a class="anchor" href="#printing-quick-start"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>基本的打印设置可以很快完成。打印机必须能够打印纯文本的 ASCII 字符。如需打印其他类型的文件，请参阅 <a href="#printing-lpd-filters">过滤器</a> 。</p>
+</div>
+<div class="sidebarblock procedure">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>创建一个目录来存储正在打印的文件：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir -p /var/spool/lpd/lp</span>
+<span class="c"># chown daemon:daemon /var/spool/lpd/lp</span>
+<span class="c"># chmod 770 /var/spool/lpd/lp</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>以 <code>root</code> 身份创建 <span class="filename">/etc/printcap</span> 文件，并使用以下内容：</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp:\
+lp=/dev/unlpt0:\  <i class="conum" data-value="1"></i><b>(1)</b>
+sh:\
+mx#0:\
+sd=/var/spool/lpd/lp:\
+lf=/var/log/lpd-errs:</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>这行是为连接到 <code>USB</code> 端口的打印机准备的。</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>对于连接到并行或“打印机”端口的打印机，请使用：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:lp=/dev/lpt0:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>对于直接连接到网络的打印机，请使用以下方法：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:lp=:rm=network-printer-name:rp=raw:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将_network-printer-name_替换为网络打印机的 <code>DNS</code> 主机名。</p>
+</div>
+</li>
+<li>
+<p>通过编辑 <span class="filename">/etc/rc.conf</span> 文件，添加以下行来启用 LPD ：</p>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lpd_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>启动服务：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service lpd start</span>
+Starting lpd.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>打印一个测试：</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># printf &#34;1. This printer can print.\n2. This is the second line.\n&#34; | lpr</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果两条线都不从左边界开始，而是“阶梯状”开始，请参见 <a href="#printing-lpd-filters-stairstep">防止普通文本打印机上的阶梯状输出</a> 。</p>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>现在可以使用 <code>lpr</code> 命令打印文本文件。在命令行上给出文件名，或直接将输出通过管道传递给 <code>lpr</code> 。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr textfile.txt
+<span class="gp">% </span>ls -lh | lpr</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-connections">11.2. 打印机连接<a class="anchor" href="#printing-connections"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>打印机可以通过多种方式连接到计算机系统。小型台式打印机通常直接连接到计算机的 <code>USB</code> 端口。旧式打印机则连接到并行或“打印机”端口。有些打印机直接连接到网络，方便多台计算机共享使用。少数打印机使用罕见的串行端口连接。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 可以与所有这些类型的打印机进行通信。</p>
+</div>
+<div id="printing-connections-usb" class="dlist">
+<dl>
+<dt class="hdlist1"><code>USB</code> 是一种通用串行总线（ Universal Serial Bus ）的缩写，它是一种用于连接计算机和外部设备的标准接口。 USB 接口可以用于连接各种设备，包括打印机、键盘、鼠标、摄像头、移动存储设备等。 USB 接口具有热插拔功能，可以在计算机运行时插入或拔出设备，而无需重新启动计算机。 USB 接口还可以提供电力供应，使连接的设备可以通过 USB 接口获得电力。 USB 接口有多个版本，包括 USB 1.0 、 USB 2.0 、 USB 3.0 和 USB 4.0 ，每个版本都有不同的传输速度和功能。</dt>
+<dd>
+<p>USB 打印机可以连接到计算机上的任何可用的 USB 端口。</p>
+<div class="paragraph">
+<p>当 FreeBSD 检测到一个 <code>USB</code> 打印机时，会创建两个设备条目： <span class="filename">/dev/ulpt0</span> 和 <span class="filename">/dev/unlpt0</span> 。发送到任何一个设备的数据都会传递给打印机。在每个打印作业之后， <span class="filename">ulpt0</span> 会重置 <code>USB</code> 端口。重置端口可能会导致一些打印机出现问题，所以通常使用 <span class="filename">unlpt0</span> 设备代替。 <span class="filename">unlpt0</span> 根本不会重置 USB 端口。</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="printing-connections-parallel" class="dlist">
+<dl>
+<dt class="hdlist1">并行（ IEEE-1284 ）</dt>
+<dd>
+<p>并行端口设备是 [/dev/lpt0] 。无论是否连接打印机，该设备都会出现，不会自动检测。</p>
+<div class="paragraph">
+<p>供应商们大多已经放弃了这些“传统”端口，许多计算机不再配备这些端口。可以使用适配器将并行打印机连接到 <code>USB</code> 端口。通过这样的适配器，打印机可以被视为实际上是一台 <code>USB</code> 打印机。还可以使用称为“打印服务器”的设备将并行打印机直接连接到网络。</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="printing-connections-serial" class="dlist">
+<dl>
+<dt class="hdlist1">串行（ RS-232 ）</dt>
+<dd>
+<p>串口是另一种遗留端口，在某些特定的利基应用中除外，很少用于打印机。电缆、连接器和所需的布线各不相同。</p>
+<div class="paragraph">
+<p>对于集成在主板上的串口，串口设备名称是 [/dev/cuau0] 或 [/dev/cuau1] 。串口 USB 适配器也可以使用，它们将显示为 [/dev/cuaU0] 。</p>
+</div>
+<div class="paragraph">
+<p>与串行打印机通信需要了解几个通信参数。其中最重要的是波特率（ Baud Rate ）或 BPS （每秒比特数）和奇偶校验（ Parity ）。具体数值可能有所不同，但典型的串行打印机使用波特率为 9600 ，无奇偶校验。</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="printing-connections-network" class="dlist">
+<dl>
+<dt class="hdlist1">网络</dt>
+<dd>
+<p>网络打印机直接连接到本地计算机网络。</p>
+<div class="paragraph">
+<p>必须知道打印机的 <code>DNS</code> 主机名。如果打印机通过 <code>DHCP</code> 分配动态地址，则应动态更新 <code>DNS</code> ，以便主机名始终具有正确的 <code>IP</code> 地址。为了避免这个问题，通常给网络打印机分配静态 <code>IP</code> 地址。</p>
+</div>
+<div class="paragraph">
+<p>大多数网络打印机都能理解使用 LPD 协议发送的打印作业。还可以指定打印队列名称。根据使用的队列不同，一些打印机会以不同的方式处理数据。例如， <code>raw</code> 队列会原样打印数据，而 <code>text</code> 队列会在纯文本中添加回车符。</p>
+</div>
+<div class="paragraph">
+<p>许多网络打印机还可以打印直接发送到端口 9100 的数据。</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="printing-connections-summary">11.2.1. 摘要<a class="anchor" href="#printing-connections-summary"></a></h3>
+<div class="paragraph">
+<p>有线网络连接通常是最容易设置并且打印速度最快的。对于直接连接到计算机， <code>USB</code> 是首选，因为速度快且简单。并行连接也可以工作，但是在电缆长度和速度方面有一些限制。串行连接更难配置。电缆布线在不同的型号之间有所不同，通信参数如波特率和奇偶校验位增加了复杂性。幸运的是，串行打印机很少见。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-pdls">11.3. 常见的页面描述语言<a class="anchor" href="#printing-pdls"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>发送给打印机的数据必须使用打印机能够理解的语言。这些语言被称为页面描述语言（ Page Description Languages ，简称 PDLs ）。</p>
+</div>
+<div id="print-pdls-ascii" class="dlist">
+<dl>
+<dt class="hdlist1"><code>ASCII</code> 是一种用于表示文本字符的编码标准。它使用 7 位二进制数来表示 128 个字符，包括英文字母、数字、标点符号和一些特殊字符。 ASCII 编码是计算机系统中最常用的字符编码之一，它使得不同计算机之间可以互相交换和处理文本数据。</dt>
+<dd>
+<p>纯文本是将数据发送到打印机的最简单方式。字符与将要打印的内容一一对应：数据中的一个“ A ”会在页面上打印出一个“ A ”。几乎没有可用的格式设置。无法选择字体或比例间距。纯文本的强制简洁性意味着文本可以直接从计算机打印，几乎不需要编码或翻译。打印输出与发送的内容直接对应。</p>
+<div class="paragraph">
+<p>一些廉价的打印机无法打印纯文本的 <code>ASCII</code> 字符。这使得它们更难设置，但通常仍然是可能的。</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="print-pdls-postscript" class="dlist">
+<dl>
+<dt class="hdlist1">PostScript （ R ）</dt>
+<dd>
+<p>PostScript® 几乎是 <code>ASCII</code> 的反义词。与简单的文本不同， PostScript® 程序是一组绘制最终文档的指令。可以使用不同的字体和图形。然而，这种强大的功能是有代价的。绘制页面的程序必须编写。通常，这个程序是由应用软件生成的，所以对用户来说是不可见的。</p>
+<div class="paragraph">
+<p>为了节省成本，廉价打印机有时会省略 PostScript® 兼容性。</p>
+</div>
+</dd>
+</dl>
+</div>
+<div id="print-pdls-pcl" class="dlist">
+<dl>
+<dt class="hdlist1"><code>PCL</code> （打印机命令语言）</dt>
+<dd>
+<p><code>PCL</code> 是 <code>ASCII</code> 的扩展，添加了用于格式化、字体选择和打印图形的转义序列。许多打印机支持 <code>PCL5</code> 。一些支持更新的 <code>PCL6</code> 或 <code>PCLXL</code> 。这些较新的版本是 <code>PCL5</code> 的超集，可以提供更快的打印速度。</p>
+</dd>
+</dl>
+</div>
+<div id="print-pdls-host-based" class="dlist">
+<dl>
+<dt class="hdlist1">基于主机的</dt>
+<dd>
+<p>制造商可以通过给打印机配备简单的处理器和很少的内存来降低成本。这些打印机无法打印纯文本。相反，文本和图形的位图由主机计算机上的驱动程序绘制，然后发送到打印机。这些被称为“基于主机”的打印机。</p>
+<div class="paragraph">
+<p>驱动程序与基于主机的打印机之间的通信通常通过专有或未记录的协议进行，这使它们只能在最常见的操作系统上运行。</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="print-pdls-table">11.3.1. 将 PostScript® 转换为其他 PDLs<a class="anchor" href="#print-pdls-table"></a></h3>
+<div class="paragraph">
+<p>Ports Collection 中的许多应用程序和 FreeBSD 实用程序会生成 PostScript® 输出。下表显示了可用于将其转换为其他常见 PDL 的实用程序：</p>
+</div>
+<table id="print-pdls-ps-to-other-tbl" class="tableblock frame-none grid-all stretch">
+<caption class="title">表 1. 输出 PDLs</caption>
+<colgroup>
+<col style="width: 33.3333%;"/>
+<col style="width: 33.3333%;"/>
+<col style="width: 33.3334%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">输出 PDL</th>
+<th class="tableblock halign-left valign-top">生成者：</th>
+<th class="tableblock halign-left valign-top">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PCL</code> 或 <code>PCL5</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包： print/ghostscript9-base[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-sDEVICE = ljet4</code> 用于黑白打印， <code>-sDEVICE = cljet5</code> 用于彩色打印。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PCLXL</code> 或 <code>PCL6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包： print/ghostscript9-base[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-sDEVICE = pxlmono</code> 用于黑白打印， <code>-sDEVICE = pxlcolor</code> 用于彩色打印。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ESC/P2</code> 是一种打印机控制语言，它是 Epson 公司开发的一种标准。它可以用于控制 Epson 打印机的各种功能和设置，包括打印模式、字体选择、页面布局等。 <code>ESC/P2</code> 广泛应用于各种类型的打印机，包括喷墨打印机、针式打印机等。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包： print/ghostscript9-base[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-sDEVICE = uniprint</code> 表示使用 <code>uniprint</code> 设备。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XQX</code> 是一个没有具体含义的字符串。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包： print/foo2zjs[]</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="print-pdls-summary">11.3.2. 摘要<a class="anchor" href="#print-pdls-summary"></a></h3>
+<div class="paragraph">
+<p>为了实现最简单的打印，选择支持 PostScript® 的打印机是最好的选择。其次是支持 PCL 的打印机。使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/print/ghostscript9-base/">print/ghostscript9-base</a> 软件包，这些打印机可以像本地支持 PostScript® 一样使用。几乎所有直接支持 PostScript® 或 PCL 的打印机也支持直接打印纯 ASCII 文本文件。</p>
+</div>
+<div class="paragraph">
+<p>像典型的喷墨打印机一样，基于行的打印机通常不支持 PostScript® 或 <code>PCL</code> 。它们通常可以打印纯文本文件。 <a class="package" href="https://cgit.freebsd.org/ports/tree/print/ghostscript9-base/">print/ghostscript9-base</a> 支持一些这些打印机使用的页面描述语言（ PDL ）。然而，由于需要传输和打印的数据量很大，使用这些打印机打印整个基于图形的页面通常非常慢。</p>
+</div>
+<div class="paragraph">
+<p>基于主机的打印机通常更难设置。由于专有的页面描述语言（ PDL ），有些打印机根本无法使用。尽量避免使用这些打印机。</p>
+</div>
+<div class="paragraph">
+<p>许多页面描述语言（ PDL ）的描述可以在 <a href="http://www.undocprint.org/formats/page_description_languages" class="bare">http://www.undocprint.org/formats/page_description_languages</a> 找到。各种型号打印机使用的特定 PDL 可以在 <a href="http://www.openprinting.org/printers" class="bare">http://www.openprinting.org/printers</a> 找到。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-direct">11.4. 直接打印<a class="anchor" href="#printing-direct"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>对于偶尔打印的情况，可以直接将文件发送到打印机设备，无需进行任何设置。例如，可以将名为 <code>sample.txt</code> 的文件发送到一个 USB 打印机。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># cp sample.txt /dev/unlpt0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>直接打印到网络打印机取决于打印机的功能，但大多数打印机可以在端口 9100 上接受打印作业，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=nc&amp;sektion=1&amp;format=html">nc(1)</a> 与它们一起使用。要将同一文件打印到名为_netlaser_的打印机上：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># nc netlaser 9100 &lt; sample.txt</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。<a class="anchor" href="#printing-lpd"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在后台打印文件被称为“<em>spooling</em>”。一个打印机缓冲程序允许用户在打印作业慢慢完成的过程中继续使用计算机上的其他程序，而无需等待打印机完成。</p>
+</div>
+<div class="paragraph">
+<p>FreeBSD 包含一个名为 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a> 的打印队列管理器。打印作业可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a> 提交。</p>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-setup">11.5.1. 初始设置<a class="anchor" href="#printing-lpd-setup"></a></h3>
+<div class="paragraph">
+<p>创建了一个用于存储打印作业的目录，设置了所有权，并设置了权限，以防止其他用户查看这些文件的内容：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># mkdir -p /var/spool/lpd/lp</span>
+<span class="c"># chown daemon:daemon /var/spool/lpd/lp</span>
+<span class="c"># chmod 770 /var/spool/lpd/lp</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>打印机在 /etc/printcap 中定义。每个打印机的条目包括名称、连接端口和其他各种设置。使用以下内容创建 /etc/printcap 文件：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp:\				<i class="conum" data-value="1"></i><b>(1)</b>
+	:lp=/dev/unlpt0:\	<i class="conum" data-value="2"></i><b>(2)</b>
+	:sh:\			<i class="conum" data-value="3"></i><b>(3)</b>
+	:mx#0:\			<i class="conum" data-value="4"></i><b>(4)</b>
+	:sd=/var/spool/lpd/lp:\	<i class="conum" data-value="5"></i><b>(5)</b>
+	:lf=/var/log/lpd-errs:	<i class="conum" data-value="6"></i><b>(6)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>这台打印机的名称。 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a> 命令将打印作业发送到 <code>lp</code> 打印机，除非使用 <code>-P</code> 指定了其他打印机，因此默认打印机应该被命名为 <code>lp</code> 。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>打印机连接的设备。将此行替换为适用于此处显示的连接类型的正确行。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>在打印作业开始时禁止打印页眉。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>不要限制打印作业的最大大小。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>这台打印机的排队目录路径。每台打印机都使用自己的排队目录。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>这台打印机报告错误的日志文件。</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>创建 <span class="filename">/etc/printcap</span> 后，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=chkprintcap&amp;sektion=8&amp;format=html">chkprintcap(8)</a> 来测试是否存在错误：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chkprintcap</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在继续之前，请修复所有报告的问题。</p>
+</div>
+<div class="paragraph">
+<p>在 <code>/etc/rc.conf</code> 文件中启用 <code><a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a></code> 。</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lpd_enable=&#34;YES&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>启动服务：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># service lpd start</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-lpr">11.5.2. 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a> 打印<a class="anchor" href="#printing-lpd-lpr"></a></h3>
+<div class="paragraph">
+<p>使用 <code>lpr</code> 命令将文档发送到打印机。要打印的文件可以在命令行上指定名称，也可以通过管道传递给 <code>lpr</code> 。以下两个命令是等效的，将 <span class="filename">doc.txt</span> 的内容发送到默认打印机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr doc.txt
+<span class="gp">% </span>cat doc.txt | lpr</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以使用 <code>-P</code> 选项选择打印机。要打印到名为_laser_的打印机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr -Plaser doc.txt</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-filters">11.5.3. 过滤器<a class="anchor" href="#printing-lpd-filters"></a></h3>
+<div class="paragraph">
+<p>到目前为止展示的示例已经直接将文本文件的内容发送到打印机。只要打印机能理解这些文件的内容，输出就会正确打印。</p>
+</div>
+<div class="paragraph">
+<p>有些打印机无法打印纯文本，而输入文件甚至可能不是纯文本。</p>
+</div>
+<div class="paragraph">
+<p><em>过滤器</em> 允许文件进行翻译或处理。典型的用法是将一种类型的输入（如纯文本）转换为打印机可以理解的形式，如 PostScript® 或 <code>PCL</code> 。过滤器还可以用于提供额外的功能，如添加页码或突出显示源代码以便更容易阅读。</p>
+</div>
+<div class="paragraph">
+<p>这里讨论的过滤器是“输入过滤器”或“文本过滤器”。这些过滤器将输入的文件转换为不同的形式。在创建文件之前，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=su&amp;sektion=1&amp;format=html">su(1)</a> 命令切换为“ root ”用户。</p>
+</div>
+<div class="paragraph">
+<p>过滤器在 <span class="filename">/etc/printcap</span> 中使用 `if = ` 标识符进行指定。要使用 <span class="filename">/usr/local/libexec/lf2crlf</span> 作为过滤器，修改 <span class="filename">/etc/printcap</span> 如下：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp:\
+	:lp=/dev/unlpt0:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/lp:\
+	:if=/usr/local/libexec/lf2crlf:\   <i class="conum" data-value="1"></i><b>(1)</b>
+	:lf=/var/log/lpd-errs:</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tbody><tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>`if = ` 标识了将用于处理传入文本的 <em>输入过滤器</em>。</td>
+</tr>
+</tbody></table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>在 <span class="filename">printcap</span> 条目的行尾处使用反斜杠 <em>line continuation</em> 字符，揭示了打印机条目实际上只是一行长字符串，其中条目由冒号字符分隔。一个早期的示例可以重写为一行不易读的字符串：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp:lp=/dev/unlpt0:sh:mx#0:sd=/var/spool/lpd/lp:if=/usr/local/libexec/lf2crlf:lf=/var/log/lpd-errs:</pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-stairstep">11.5.3.1. 防止普通文本打印机上的阶梯状输出<a class="anchor" href="#printing-lpd-filters-stairstep"></a></h4>
+<div class="paragraph">
+<p>典型的 FreeBSD 文本文件每行末尾只包含一个换行符。这些行在标准打印机上会呈“阶梯状”排列：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>A printed file looks
+                    like the steps of a staircase
+                                                 scattered by the wind</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一个过滤器可以将换行符转换为回车和换行符。回车使打印机在每行结束后返回到左侧。创建名为 <code>/usr/local/libexec/lf2crlf</code> 的文件，并将以下内容写入该文件：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+CR=$&#39;\r&#39;
+/usr/bin/sed -e &#34;s/$/${CR}/g&#34;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>设置权限并使其可执行：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 555 /usr/local/libexec/lf2crlf</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 <span class="filename">/etc/printcap</span> 修改为使用新的过滤器：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:if=/usr/local/libexec/lf2crlf:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通过打印相同的纯文本文件来测试过滤器。回车符将导致每行从页面的左侧开始。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-enscript">11.5.3.2. 使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/print/enscript/">print/enscript</a> 在 PostScript® 打印机上打印时，可以得到漂亮的纯文本输出。<a class="anchor" href="#printing-lpd-filters-enscript"></a></h4>
+<div class="paragraph">
+<p>GNUEnscript 将纯文本文件转换为适合在 PostScript 打印机上打印的格式良好的 PostScript 文件。它添加页码，换行长行，并提供许多其他功能，使打印的文本文件更易于阅读。根据本地纸张尺寸，从 Ports Collection 安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/print/enscript-letter/">print/enscript-letter</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/print/enscript-a4/">print/enscript-a4</a> 。</p>
+</div>
+<div class="paragraph">
+<p>创建 <span class="filename">/usr/local/libexec/enscript</span> 文件，并使用以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+/usr/local/bin/enscript -o -</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>设置权限并使其可执行：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 555 /usr/local/libexec/enscript</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 <span class="filename">/etc/printcap</span> 修改为使用新的过滤器：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:if=/usr/local/libexec/enscript:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通过打印一个纯文本文件来测试过滤器。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-ps2pcl">11.5.3.3. 将 PostScript® 打印到 <code>PCL</code> 打印机<a class="anchor" href="#printing-lpd-filters-ps2pcl"></a></h4>
+<div class="paragraph">
+<p>许多程序生成 PostScript® 文档。然而，廉价打印机通常只能理解纯文本或 <code>PCL</code> 格式。该过滤器将 PostScript® 文件转换为 <code>PCL</code> 格式，然后发送给打印机。</p>
+</div>
+<div class="paragraph">
+<p>从 Ports Collection 安装 Ghostscript PostScript® 解释器，包名为： print/ghostscript9-base[] 。</p>
+</div>
+<div class="paragraph">
+<p>创建 <span class="filename">/usr/local/libexec/ps2pcl</span> 文件，并使用以下内容：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+/usr/local/bin/gs -dSAFER -dNOPAUSE -dBATCH -q -sDEVICE=ljet4 -sOutputFile=- -</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>设置权限并使其可执行：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 555 /usr/local/libexec/ps2pcl</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将发送给此脚本的 PostScript® 输入将在发送到打印机之前被渲染并转换为 <code>PCL</code> 格式。</p>
+</div>
+<div class="paragraph">
+<p>将 <span class="filename">/etc/printcap</span> 修改为使用这个新的输入过滤器：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:if=/usr/local/libexec/ps2pcl:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通过向过滤器发送一个小的 PostScript® 程序来测试过滤器：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nb">printf</span> <span class="s2">&#34;%%</span><span class="se">\!</span><span class="s2">PS </span><span class="se">\n</span><span class="s2"> /Helvetica findfont 18 scalefont setfont </span><span class="se">\</span><span class="s2">
+72 432 moveto (PostScript printing successful.) show showpage </span><span class="se">\0</span><span class="s2">04&#34;</span> | lpr</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-smart">11.5.3.4. 智能过滤器<a class="anchor" href="#printing-lpd-filters-smart"></a></h4>
+<div class="paragraph">
+<p>一个能够检测输入类型并自动将其转换为打印机正确格式的过滤器非常方便。 PostScript® 文件的前两个字符通常是 <code>% ! ` 。过滤器可以检测到这两个字符。 PostScript® 文件可以直接发送到 PostScript® 打印机进行打印。文本文件可以使用之前展示的 Enscript 工具转换为 PostScript® 格式。请创建一个名为 `/usr/local/libexec/psif</code> 的文件，并将以下内容添加到其中：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>#!/bin/sh
+#
+#  psif - Print PostScript or plain text on a PostScript printer
+#
+IFS=&#34;&#34; read -r first_line
+first_two_chars=`expr &#34;$first_line&#34; : &#39;\(..\)&#39;`
+
+case &#34;$first_two_chars&#34; in
+%!)
+    # %! : PostScript job, print it.
+    echo &#34;$first_line&#34; &amp;&amp; cat &amp;&amp; exit 0
+    exit 2
+    ;;
+*)
+    # otherwise, format with enscript
+    ( echo &#34;$first_line&#34;; cat ) | /usr/local/bin/enscript -o - &amp;&amp; exit 0
+    exit 2
+    ;;
+esac</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>设置权限并使其可执行：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># chmod 555 /usr/local/libexec/psif</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 <span class="filename">/etc/printcap</span> 修改为使用这个新的输入过滤器：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>:if=/usr/local/libexec/psif:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通过打印 PostScript® 和纯文本文件来测试过滤器。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-filters-othersmart">11.5.3.5. 其他智能过滤器<a class="anchor" href="#printing-lpd-filters-othersmart"></a></h4>
+<div class="paragraph">
+<p>编写一个能够检测多种不同类型输入并正确格式化的过滤器是具有挑战性的。 Ports Collection 中的 <a class="package" href="https://cgit.freebsd.org/ports/tree/print/apsfilter/">print/apsfilter</a> 是一个智能的“魔法”过滤器，它可以检测数十种文件类型，并自动将它们转换为打印机理解的 <code>PDL</code> 格式。更多详情请参考 <a href="http://www.apsfilter.org" class="bare">http://www.apsfilter.org</a> 。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-queues">11.5.4. 多个队列<a class="anchor" href="#printing-lpd-queues"></a></h3>
+<div class="paragraph">
+<p><span class="filename">/etc/printcap</span> 中的条目实际上是对_队列_的定义。一个打印机可以有多个队列。与过滤器结合使用时，多个队列可以使用户更好地控制他们的作业如何打印。</p>
+</div>
+<div class="paragraph">
+<p>以一个办公室中的网络化 PostScript® 激光打印机为例。大多数用户希望打印纯文本，但是少数高级用户希望能够直接打印 PostScript® 文件。可以在 [/etc/printcap] 中为同一台打印机创建两个条目：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>textprinter:\
+	:lp=9100@officelaser:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/textprinter:\
+	:if=/usr/local/libexec/enscript:\
+	:lf=/var/log/lpd-errs:
+
+psprinter:\
+	:lp=9100@officelaser:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/psprinter:\
+	:lf=/var/log/lpd-errs:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>发送给 <code>textprinter</code> 的文档将由之前示例中显示的 <span class="filename">/usr/local/libexec/enscript</span> 过滤器进行格式化。高级用户可以在 <code>psprinter</code> 上打印 PostScript® 文件，不进行任何过滤。</p>
+</div>
+<div class="paragraph">
+<p>这种多队列技术可以用来提供对各种打印机功能的直接访问。具有双面打印功能的打印机可以使用两个队列，一个用于普通的单面打印，另一个使用过滤器发送命令序列以启用双面打印，然后发送传入的文件。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-monitor">11.5.5. 监控和控制打印<a class="anchor" href="#printing-lpd-monitor"></a></h3>
+<div class="paragraph">
+<p>有几种实用工具可用于监控打印作业、检查和控制打印机操作。</p>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-monitor-lpq">11.5.5.1. <a href="https://man.freebsd.org/cgi/man.cgi?query=lpq&amp;sektion=1&amp;format=html">lpq(1)</a> 是一个命令，用于查看打印队列的状态。<a class="anchor" href="#printing-lpd-monitor-lpq"></a></h4>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=lpq&amp;sektion=1&amp;format=html">lpq(1)</a> 显示用户打印作业的状态。不显示其他用户的打印作业。</p>
+</div>
+<div class="paragraph">
+<p>显示当前用户在单个打印机上的待处理作业。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpq -Plp
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     0    <span class="o">(</span>standard input<span class="o">)</span>                      12792 bytes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>显示当前用户在所有打印机上的待处理作业。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpq -a
+lp:
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     1    <span class="o">(</span>standard input<span class="o">)</span>                      27320 bytes
+
+laser:
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     287  <span class="o">(</span>standard input<span class="o">)</span>                      22443 bytes</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-monitor-lprm">11.5.5.2. <a href="https://man.freebsd.org/cgi/man.cgi?query=lprm&amp;sektion=1&amp;format=html">lprm(1)</a><a class="anchor" href="#printing-lpd-monitor-lprm"></a></h4>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=lprm&amp;sektion=1&amp;format=html">lprm(1)</a> 用于删除打印作业。普通用户只能删除自己的作业。 <code>root</code> 可以删除任何或所有作业。</p>
+</div>
+<div class="paragraph">
+<p>从打印机中删除所有待处理作业。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lprm -Plp -</span>
+dfA002smithy dequeued
+cfA002smithy dequeued
+dfA003smithy dequeued
+cfA003smithy dequeued
+dfA004smithy dequeued
+cfA004smithy dequeued</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>从打印机中删除一个作业。使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpq&amp;sektion=1&amp;format=html">lpq(1)</a> 命令查找作业编号。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpq
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     5    <span class="o">(</span>standard input<span class="o">)</span>                      12188 bytes
+
+<span class="gp">% </span>lprm -Plp 5
+dfA005smithy dequeued
+cfA005smithy dequeued</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-lpd-monitor-lpc">11.5.5.3. <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a><a class="anchor" href="#printing-lpd-monitor-lpc"></a></h4>
+<div class="paragraph">
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a> 用于检查和修改打印机的状态。 <code>lpc</code> 后面跟着一个命令和一个可选的打印机名称。可以使用 <code>all</code> 代替特定的打印机名称，命令将应用于所有打印机。普通用户可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a> 查看状态。只有 <code>root</code> 用户可以使用修改打印机状态的命令。</p>
+</div>
+<div class="paragraph">
+<p>显示所有打印机的状态：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpc status all
+lp:
+	queuing is enabled
+	printing is enabled
+	1 entry <span class="k">in </span>spool area
+	printer idle
+laser:
+	queuing is enabled
+	printing is enabled
+	1 entry <span class="k">in </span>spool area
+	waiting <span class="k">for </span>laser to come up</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>阻止打印机接受新的任务，然后再次开始接受新的任务：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc disable lp</span>
+lp:
+	queuing disabled
+<span class="c"># lpc enable lp</span>
+lp:
+	queuing enabled</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>停止打印，但继续接受新的任务。然后再次开始打印：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc stop lp</span>
+lp:
+	printing disabled
+<span class="c"># lpc start lp</span>
+lp:
+	printing enabled
+	daemon started</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在发生错误情况后重新启动打印机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc restart lp</span>
+lp:
+	no daemon to abort
+	printing enabled
+	daemon restarted</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>关闭打印队列并禁用打印功能，并附带一条消息向用户解释问题原因：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc down lp Repair parts will arrive on Monday</span>
+lp:
+	printer and queuing disabled
+	status message is now: Repair parts will arrive on Monday</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>重新启用处于离线状态的打印机：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># lpc up lp</span>
+lp:
+	printing enabled
+	daemon started</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>更多的命令和选项请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a> 。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-shared">11.5.6. 共享打印机<a class="anchor" href="#printing-lpd-shared"></a></h3>
+<div class="paragraph">
+<p>打印机在企业和学校中通常由多个用户共享。为了更方便地共享打印机，还提供了额外的功能。</p>
+</div>
+<div class="sect3">
+<h4 id="printing-shared-aliases">11.5.6.1. 别名<a class="anchor" href="#printing-shared-aliases"></a></h4>
+<div class="paragraph">
+<p>打印机名称设置在 [/etc/printcap] 文件的第一行中。在该名称之后可以添加其他名称，也称为“别名”。别名之间和与名称之间用竖线分隔：</p>
+</div>
+<div class="literalblock programlisting">
+<div class="content">
+<pre>lp|repairsprinter|salesprinter:\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>别名可以用来替代打印机名称。例如，销售部门的用户可以使用别名来打印到他们的打印机。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr -Psalesprinter sales-report.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>维修部门的用户使用他们自己的打印机进行打印。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>lpr -Prepairsprinter repairs-report.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>所有的文件都打印在同一台打印机上。当销售部门发展到需要自己的打印机时，可以从共享打印机条目中删除别名，并将其用作新打印机的名称。两个部门的用户继续使用相同的命令，但销售文件将被发送到新的打印机。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="printing-shared-headers">11.5.6.2. 页眉页<a class="anchor" href="#printing-shared-headers"></a></h4>
+<div class="paragraph">
+<p>对于用户来说，在繁忙的共享打印机产生的一堆页面中定位他们的文档可能很困难。为了解决这个问题，创建了“页眉页”。在每个打印作业之前，会打印一个包含用户姓名和文档名称的页眉页。这些页面有时也被称为“横幅”或“分隔符”页面。</p>
+</div>
+<div class="paragraph">
+<p>启用页眉页面的方法取决于打印机是通过 USB 、并行或串行电缆直接连接到计算机，还是通过网络远程连接。</p>
+</div>
+<div class="paragraph">
+<p>直接连接的打印机上的页眉页面可以通过从 <span class="filename">/etc/printcap</span> 文件中的条目中删除 <code>:sh: \ ` （ Suppress Header ）行来启用。这些页眉页面只使用换行字符作为换行符。一些打印机需要 <span class="filename">/usr/share/examples/printing/hpif</span> 过滤器来防止文本出现阶梯状。该过滤器配置 `PCL</code> 打印机在接收到换行符时同时打印回车和换行符。</p>
+</div>
+<div class="paragraph">
+<p>网络打印机的页眉页面必须在打印机本身上进行配置。 <span class="filename">/etc/printcap</span> 中的页眉页面条目将被忽略。通常可以通过打印机前面板或使用 Web 浏览器访问的配置网页来进行设置。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-lpd-references">11.5.7. 参考文献<a class="anchor" href="#printing-lpd-references"></a></h3>
+<div class="paragraph">
+<p>示例文件： [/usr/share/examples/printing/](/usr/share/examples/printing/) 。</p>
+</div>
+<div class="paragraph">
+<p>《 4.3BSD 行打印机排队程序手册》， <span class="filename">/usr/share/doc/smm/07.lpd/paper.ascii.gz</span> 。</p>
+</div>
+<div class="paragraph">
+<p>手册页面： <a href="https://man.freebsd.org/cgi/man.cgi?query=printcap&amp;sektion=5&amp;format=html">printcap(5)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=lprm&amp;sektion=1&amp;format=html">lprm(1)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=lpq&amp;sektion=1&amp;format=html">lpq(1)</a> 。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="printing-other">11.6. 其他打印系统<a class="anchor" href="#printing-other"></a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>除了内置的 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a> 之外，还有几个其他的打印系统可供选择。这些系统提供对其他协议或附加功能的支持。</p>
+</div>
+<div class="sect2">
+<h3 id="printing-other-cups">11.6.1. CUPS （ Common UNIX® Printing System ）<a class="anchor" href="#printing-other-cups"></a></h3>
+<div class="paragraph">
+<p>CUPS 是一个在许多操作系统上可用的流行打印系统。在 FreeBSD 上使用 CUPS 的方法在一个单独的文章中有详细说明： <a href="{cups}">CUPS</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-other-hplip">11.6.2. HPLIP 是一种用于 Linux 操作系统的开源打印机和扫描仪驱动程序。它提供了与 HP 打印机和扫描仪的通信接口，使用户能够轻松地配置和使用这些设备。 HPLIP 支持各种 HP 打印机和扫描仪的功能，包括打印、扫描、复印和传真等。它还提供了一些额外的功能，如墨水和墨盒状态监测、打印机设置和网络打印等。 HPLIP 是一个非常有用的工具，可以帮助用户更好地管理和使用他们的 HP 打印机和扫描仪。<a class="anchor" href="#printing-other-hplip"></a></h3>
+<div class="paragraph">
+<p>惠普公司提供了一个支持他们的喷墨和激光打印机的打印系统。该端口是 <a class="package" href="https://cgit.freebsd.org/ports/tree/print/hplip/">print/hplip</a> 。主要网页位于 <a href="https://developers.hp.com/hp-linux-imaging-and-printing" class="bare">https://developers.hp.com/hp-linux-imaging-and-printing</a> 。该端口在 FreeBSD 上处理所有安装细节。配置信息显示在 <a href="https://developers.hp.com/hp-linux-imaging-and-printing/install" class="bare">https://developers.hp.com/hp-linux-imaging-and-printing/install</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="printing-other-lprng">11.6.3. LPRng 是一个用于打印管理的软件系统，它是 LPD （ Line Printer Daemon ）的一个增强版本。 LPRng 提供了更多的功能和灵活性，可以在 UNIX 和类 UNIX 系统上运行。它支持多种打印机和打印队列，并提供了高级的打印作业控制和管理功能。 LPRng 还支持通过网络打印，并提供了安全性和权限控制机制。它是一个强大而可靠的打印管理解决方案。<a class="anchor" href="#printing-other-lprng"></a></h3>
+<div class="paragraph">
+<p>LPRng 是作为 <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a> 的增强替代品开发的。该端口是 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/LPRng/">sysutils/LPRng</a> 。有关详细信息和文档，请参阅 <a href="http://www.lprng.com/" class="bare">http://www.lprng.com/</a> 。</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+    </div>
+    
+    <div class="buttons">
+      
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="Prev"></i>
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/kernelconfig class="direction">Prev</a>
+          
+        </div>
+      </div>
+      
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="Home"></i>
+        <div class="container">
+          
+            <a href="../" class="direction">Home</a>
+          
+        </div>
+      </div>
+      
+      <div class="next">
+        <div class="container">
+          
+            <a href=https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu  class="direction">Next</a>
+          
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="Next"></i>
+      </div>
+      
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>Table of Contents</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#printing-quick-start">11.1. 快速入门</a></li>
+    <li><a href="#printing-connections">11.2. 打印机连接</a></li>
+    <li><a href="#printing-pdls">11.3. 常见的页面描述语言</a></li>
+    <li><a href="#printing-direct">11.4. 直接打印</a></li>
+    <li><a href="#printing-lpd">11.5. LPD （ Line Printer Daemon ）是一种用于打印机的网络协议。</a></li>
+    <li><a href="#printing-other">11.6. 其他打印系统</a></li>
+  </ul>
+</nav>
+      <hr />
+      
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn-auto/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文-自动翻译</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>
