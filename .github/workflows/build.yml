@@ -41,9 +41,17 @@ jobs:
         with: 
           python-version: '3.9'
       
-      - name: install python pkg
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: install pkg
         run:
           pip install OpenAI msgpack deepl polib
+          gem install rouge
+      - name: set build env
+        run: |
+              sudo apt install asciidoctor
+              sudo apt install hugo
       - name: up tmx
         run: bash tools/up_tmx.sh
       - name: push tmx
@@ -77,11 +85,6 @@ jobs:
               git remote -v
               git push
               set -e
-      - name: set build env
-        run: |
-              sudo apt install asciidoctor
-              sudo apt install hugo
-              gem install rouge
       - name: build
         run: |
               export RUBYLIB=$GITHUB_WORKSPACE/website/shared/lib
