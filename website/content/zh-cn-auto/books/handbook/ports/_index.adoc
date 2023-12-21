@@ -1,17 +1,17 @@
 ---
-description: 'FreeBSD 提供了两种互补的技术来安装第三方软件： FreeBSD Ports Collection 用于从源代码安装，而包（ packages ）用于从预编译的二进制文件安装。'
+description: 'FreeBSD 提供了两种互补的技术来安装第三方软件：FreeBSD Ports Collection 用于从源代码安装，而包（packages）用于从预编译的二进制文件安装。'
 next: books/handbook/x11
 part: 第一部分：入门指南
 path: /books/handbook/
 prev: books/handbook/basics
 showBookMenu: true
 tags: '["ports", "collection", "pkg", "poudriere", "management"]'
-title: '第四章 安装应用程序：软件包和端口'
+title: 'Chapter 4. Installing Applications: Packages and Ports'
 weight: 6
 ---
 
 [[ports]]
-= 安装应用程序：软件包和端口
+= 安装应用程序：软件包和 Ports
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -48,11 +48,11 @@ endif::[]
 [[ports-synopsis]]
 == 简介
 
-FreeBSD 捆绑了丰富的系统工具作为基本系统的一部分。此外， FreeBSD 还提供了两种互补的技术来安装第三方软件： FreeBSD Ports Collection 用于从源代码安装，而软件包则用于从预编译的二进制文件安装。可以使用任一方法从本地媒体或网络安装软件。
+FreeBSD 捆绑了丰富的系统工具作为基本系统的一部分。此外，FreeBSD 还提供了两种互补的技术来安装第三方软件：FreeBSD Ports Collection 用于从源代码安装，而软件包则用于从预编译的二进制文件安装。可以使用任一方法从本地媒体或网络安装软件。
 
 阅读完本章后，您将了解：
 
-* 二进制包和端口之间的区别。
+* 二进制包和 ports 之间的区别。
 * 如何找到已经移植到 FreeBSD 的第三方软件。
 * 如何使用 pkg 管理二进制软件包。
 * 如何使用 Ports Collection 从源代码构建第三方软件。
@@ -62,54 +62,54 @@ FreeBSD 捆绑了丰富的系统工具作为基本系统的一部分。此外，
 [[ports-overview]]
 == 软件安装概述
 
-FreeBSD 的“端口”是一组文件，旨在自动化从源代码编译应用程序的过程。组成端口的文件包含了自动下载、提取、打补丁、编译和安装应用程序所需的所有必要信息。
+FreeBSD 的 `ports` 是一组文件，旨在自动化从源代码编译应用程序的过程。组成 ports 的文件包含了自动下载、提取、打补丁、编译和安装应用程序所需的所有必要信息。
 
 如果软件尚未在 FreeBSD 上进行适配和测试，源代码可能需要进行编辑，以便正确安装和运行。
 
-然而，在 link:https://www.FreeBSD.org/ports/[{numports}] 上已经有许多第三方应用程序被移植到了 FreeBSD 。在可行的情况下，这些应用程序会以预编译的软件包形式提供下载。
+然而，在 link:https://www.FreeBSD.org/ports/[{numports}] 上已经有许多第三方应用程序被移植到了 FreeBSD。在可行的情况下，这些应用程序会以预编译的软件包形式提供下载。
 
 可以使用 FreeBSD 软件包管理命令来操作软件包。
 
-包和端口都能理解依赖关系。如果使用包或端口来安装一个应用程序，并且所依赖的库尚未安装，那么该库将会自动被先安装。
+包和 ports 都能理解依赖关系。如果使用包或 ports 来安装一个应用程序，并且所依赖的库尚未安装，那么该库将会自动被先安装。
 
-一个 FreeBSD 软件包包含了一个应用程序的预编译副本，以及任何配置文件和文档。可以使用 man:pkg[8] 命令来操作软件包，例如 `pkg install` 。
+一个 FreeBSD 软件包包含了一个应用程序的预编译副本，以及任何配置文件和文档。可以使用 man:pkg[8] 命令来操作软件包，例如 `pkg install`。
 
-虽然这两种技术相似，但软件包和端口各有各的优势。选择符合您安装特定应用程序需求的技术。
+虽然这两种技术相似，但软件包和 ports 各有各的优势。选择符合您安装特定应用程序需求的技术。
 
-.包裹的好处
+.包的好处
 * 通常，压缩的软件包 tarball 比包含应用程序源代码的压缩 tarball 要小。
-* 包不需要编译时间。对于大型应用程序，如 Firefox 、 KDE Plasma 或 GNOME ，在慢速系统上这一点可能很重要。
+* 包不需要编译时间。对于大型应用程序，如 Firefox 、KDE Plasma 或 GNOME，在慢速系统上这一点可能很重要。
 * 在 FreeBSD 上编译软件的过程中，包不需要任何理解。
 
-.港口的好处
-* 通常情况下，软件包会使用保守的选项进行编译，因为它们需要在尽可能多的系统上运行。通过从端口进行编译，可以更改编译选项。
-* 一些应用程序具有与安装的功能相关的编译时选项。例如， NGINX(R) 可以配置多种不同的内置选项。
+.Port 的好处
+* 通常情况下，软件包会使用保守的选项进行编译，因为它们需要在尽可能多的系统上运行。通过从 ports 进行编译，可以更改编译选项。
+* 一些应用程序具有与安装的功能相关的编译时选项。例如，NGINX(R) 可以配置多种不同的内置选项。
 +
-在某些情况下，为了指定特定的设置，同一个应用程序可能会存在多个软件包。例如， NGINX(R) 有一个 `nginx` 软件包和一个 `nginx-lite` 软件包，取决于是否安装了 Xorg 。如果一个应用程序有超过一两个不同的编译选项，创建多个软件包将很快变得不可能。
+在某些情况下，为了指定特定的设置，同一个应用程序可能会存在多个软件包。例如，NGINX(R) 有一个 `nginx` 软件包和一个 `nginx-lite` 软件包，取决于是否安装了 Xorg。如果一个应用程序有超过一两个不同的编译选项，创建多个软件包将很快变得不可能。
 * 一些软件的许可条件禁止二进制分发。这类软件必须以源代码的形式分发，并由最终用户进行编译。
 * 有些人不信任二进制发行版，或者更喜欢阅读源代码以寻找潜在问题。
 * 为了应用自定义补丁，需要提供源代码。
 
-要跟踪更新的端口，请订阅 {freebsd-ports} 和 {freebsd-ports-bugs} 。
+要跟踪更新的 ports ，请订阅 {freebsd-ports} 和 {freebsd-ports-bugs} 。
 
 [WARNING]
 ====
 在安装应用程序之前，请检查 https://vuxml.freebsd.org/[] 是否存在相关的安全问题。
 
-要对已安装的软件包进行已知漏洞的审计，请运行 `pkg audit -F` 。
+要对已安装的软件包进行已知漏洞的审计，请运行 `pkg audit -F`。
 ====
 
-本章的其余部分将解释如何使用软件包和端口在 FreeBSD 上安装和管理第三方软件。
+本章的其余部分将解释如何使用软件包和 ports 在 FreeBSD 上安装和管理第三方软件。
 
 [[ports-finding-applications]]
 == 寻找软件
 
 FreeBSD 的可用应用程序列表不断增长。有多种方法可以找到要安装的软件：
 
-* FreeBSD 网站维护着一个最新的可搜索的应用程序列表，位于链接： https://www.FreeBSD.org/ports/[Ports Portal] 。可以通过应用程序名称或软件类别来搜索端口。
-* Dan Langille 维护着 https://www.freshports.org/[FreshPorts] ，该网站提供了一个全面的搜索工具，并跟踪 Ports Collection 中应用程序的变化。注册用户可以创建一个定制的监视列表，以便在所监视的端口更新时收到自动邮件通知。
-* 如果找到一个特定的应用程序变得困难，可以尝试在 https://sourceforge.net/[SourceForge] 或者 https://github.com/[GitHub] 这样的网站上进行搜索，然后再回到链接： https://www.FreeBSD.org/ports/[Ports Portal] 查看该应用程序是否已经被移植。
-* 使用 man:pkg[8] 命令在二进制软件包仓库中搜索一个应用程序。
+* FreeBSD 网站维护着一个最新的可搜索的应用程序列表，位于 link:https://www.FreeBSD.org/ports/[Ports Portal]。可以通过应用程序名称或软件类别来搜索 ports。
+* Dan Langille 维护着 https://www.freshports.org/[FreshPorts]，该网站提供了一个全面的搜索工具，并跟踪 Ports Collection 中应用程序的变化。注册用户可以创建一个定制的监视列表，以便在所监视的 ports 更新时收到自动邮件通知。
+* 如果找到一个特定的应用程序变得困难，可以尝试在 https://sourceforge.net/[SourceForge] 或者 https://github.com/[GitHub] 这样的网站上进行搜索，然后再回到 link:https://www.FreeBSD.org/ports/[Ports Portal] 查看该应用程序是否已经被移植。
+* 使用 man:pkg[8] 命令在二进制软件包仓库中搜索一个应用程序
 
 [[pkgng-intro]]
 == 使用 pkg 进行二进制包管理
@@ -118,14 +118,14 @@ man:pkg[8] 提供了一个用于操作软件包的接口：注册、添加、删
 
 对于只希望使用 FreeBSD 镜像站点提供的预编译二进制包的网站，使用 man:pkg[8] 来管理软件包可能已经足够了。
 
-然而，对于那些从源代码构建网站的用户，将需要使用单独的端口管理工具。
+然而，对于那些从源代码构建网站的用户，将需要使用单独的 ports 管理工具。
 
 由于 man:pkg[8] 只能用于二进制软件包，它并不能替代这些工具。这些工具可以用于安装来自二进制软件包和 Ports Collection 的软件，而 man:pkg[8] 只能安装二进制软件包。
 
 [[pkgng-initial-setup]]
 === 开始使用 pkg
 
-所有支持的 FreeBSD 版本现在都包含 `/usr/sbin/pkg` ，也被称为 man:pkg[7] 。这是一个小的占位符，只包含安装真正的 man:pkg[8] 所需的最小功能。
+所有支持的 FreeBSD 版本现在都包含 `/usr/sbin/pkg`，也被称为 man:pkg[7] 。这是一个小的占位符，只包含安装真正的 man:pkg[8] 所需的最小功能。
 
 [NOTE]
 ====
@@ -147,9 +147,9 @@ The package management tool is not yet installed on your system.
 Do you want to fetch and install it now? [y/N]
 ....
 
-man:pkg[7] 将拦截该命令，如果您确认这是您的意图，将下载 man:pkg[8] tarball ，并从中安装 man:pkg[8] ，引导本地软件包数据库，然后继续运行您最初请求的命令。
+man:pkg[7] 将拦截该命令，如果您确认这是您的意图，将下载 man:pkg[8] tarball ，并从中安装 man:pkg[8]，引导本地软件包数据库，然后继续运行您最初请求的命令。
 
-较新版本的 man:pkg[7] 可以理解 `pkg -N` 作为一种测试，用于检查是否安装了 man:pkg[8] ，而不触发安装操作。相反， pkg bootstrap[-f] 用于安装 man:pkg[8] （或强制重新安装），而不执行任何其他操作。
+较新版本的 man:pkg[7] 可以理解 `pkg -N` 作为一种测试，用于检查是否安装了 man:pkg[8]，而不触发安装操作。相反，pkg bootstrap[-f] 用于安装 man:pkg[8]（或强制重新安装），而不执行任何其他操作。
 
 可以通过查看 man:pkg[8] 手册页面或者在运行 `pkg` 命令时不添加额外参数来获取 pkg 的使用信息。有关其他 pkg 配置选项的描述，请参阅 man:pkg.conf[5] 。
 
@@ -165,9 +165,9 @@ man:pkg[7] 将拦截该命令，如果您确认这是您的意图，将下载 ma
 本节的其余部分演示了使用 man:pkg[8] 执行的常见二进制包管理任务。每个演示的命令都提供了许多开关来自定义其使用方式。有关详细信息和更多示例，请参阅命令的帮助或 man 页面。
 
 [[quarterly-latest-branch]]
-=== 季度和最新的端口分支
+=== 季度和最新的 ports 分支
 
-`Quarterly` 分支为用户提供了更可预测和稳定的端口和软件包安装和升级体验。这主要通过只允许非功能性更新来实现。季度分支旨在接收安全修复（可能是版本更新或提交的回溯）、错误修复和端口合规性或框架更改。季度分支在每年的一月、四月、七月和十月的季度初从 HEAD 中切出。分支的命名方式根据它们创建的年份（ YYYY ）和季度（ Q1-4 ）。例如， 2023 年 1 月创建的季度分支被命名为 2023Q1 。而 `Latest` 分支为用户提供了软件包的最新版本。
+`Quarterly` 分支为用户提供了更可预测和稳定的 ports 和软件包安装和升级体验。这主要通过只允许非功能性更新来实现。季度分支旨在接收安全修复（可能是版本更新或提交的回溯）、错误修复和 ports 合规性或框架更改。季度分支在每年的一月、四月、七月和十月的季度初从 HEAD 中切出。分支的命名方式根据它们创建的年份（YYYY）和季度（Q1-4）。例如， 2023 年 1 月创建的季度分支被命名为 2023Q1。而 `Latest` 分支为用户提供了软件包的最新版本。
 
 要将 man:pkg[8] 从季度版切换到最新版，请运行以下命令：
 
@@ -187,7 +187,7 @@ man:pkg[7] 将拦截该命令，如果您确认这是您的意图，将下载 ma
 [[pkg-configuration]]
 === 配置 pkg
 
-man:pkg.conf[5] 是 man:pkg[8] 工具使用的系统级配置文件。该文件的默认位置是 `/usr/local/etc/pkg.conf` 。
+man:pkg.conf[5] 是 man:pkg[8] 工具使用的系统级配置文件。该文件的默认位置是 `/usr/local/etc/pkg.conf`。
 
 [NOTE]
 ====
@@ -196,11 +196,11 @@ FreeBSD 不需要有 `pkg.conf` 文件。许多安装可以在没有任何 `pkg.
 
 以"#"开头的行是注释，会被忽略。
 
-该文件采用 UCL 格式。有关 man:libucl[3] 语法的更多信息，请访问链接： https://github.com/vstakhov/libucl[official UCL website] 。
+该文件采用 UCL 格式。有关 man:libucl[3] 语法的更多信息，请访问 link:https://github.com/vstakhov/libucl[official UCL website] 。
 
 识别以下类型的选项 - 布尔型、字符串型和列表型选项。
 
-如果在配置文件中指定了以下值之一 - YES 、 TRUE 和 ON ，则将布尔选项标记为已启用。
+如果在配置文件中指定了以下值之一 - YES 、TRUE 和 ON，则将布尔选项标记为已启用。
 
 [[pkg-search]]
 === 搜索软件包
@@ -293,15 +293,15 @@ libunistring-1.0               Unicode string library
 pkg-1.18.4                     Package manager
 ....
 
-要获取一个软件包并稍后安装它或在另一个地方安装，请使用 man:pkg-fetch[8] 。例如，要下载 `nginx-lite` ：
+要获取一个软件包并稍后安装它或在另一个地方安装，请使用 man:pkg-fetch[8]。例如，要下载 `nginx-lite`：
 
 [source, shell]
 ....
 # pkg fetch -d -o /usr/home/user/packages/ nginx-lite
 ....
 
-* `-d` ：用于获取所有的依赖项
-* `-o` ：用于指定下载目录
+* `-d`：用于获取所有的依赖项
+* `-o`：用于指定下载目录
 
 输出应该类似于以下内容：
 
@@ -394,7 +394,7 @@ WWW: https://github.com/freebsd/pkg
 [[pkgng-auditing]]
 === 审核已安装的软件包
 
-第三方应用程序经常会发现软件漏洞。为了解决这个问题， pkg 包含了一个内置的审计机制。要确定系统上安装的软件是否存在已知的漏洞，请使用 man:pkg-audit[8] 命令。
+第三方应用程序经常会发现软件漏洞。为了解决这个问题，pkg 包含了一个内置的审计机制。要确定系统上安装的软件是否存在已知的漏洞，请使用 man:pkg-audit[8] 命令。
 
 [source, shell]
 ....
@@ -474,7 +474,7 @@ The operation will free 723 KiB.
 Proceed with deinstalling packages? [y/N]:
 ....
 
-作为依赖安装的软件包被称为“自动”软件包。非自动软件包，即明确安装而不是作为其他软件包的依赖项安装的软件包，可以使用以下命令列出：
+作为依赖安装的软件包被称为 _自动_ 软件包。非自动软件包，即明确安装而不是作为其他软件包的依赖项安装的软件包，可以使用以下命令列出：
 
 [source, shell]
 ....
@@ -490,7 +490,7 @@ openvpn
 sudo
 ....
 
-`pkg prime-list` 是在 `/usr/local/etc/pkg.conf` 中声明的一个别名命令。系统中还有许多其他命令可以用来查询软件包数据库。例如，命令 `pkg prime-origins` 可以用来获取上述列表的源端口目录。
+`pkg prime-list` 是在 `/usr/local/etc/pkg.conf` 中声明的一个别名命令。系统中还有许多其他命令可以用来查询软件包数据库。例如，命令 `pkg prime-origins` 可以用来获取上述列表的源 ports 目录。
 
 [source, shell]
 ....
@@ -506,7 +506,7 @@ security/openvpn
 security/sudo
 ....
 
-这个列表可以用于使用构建工具（如 package:ports-mgmt/poudriere[] 或 package:ports-mgmt/synth[] ）重新构建系统上安装的所有软件包。
+这个列表可以用于使用构建工具（如 package:ports-mgmt/poudriere[] 或 package:ports-mgmt/synth[]）重新构建系统上安装的所有软件包。
 
 将已安装的软件包标记为自动安装可以使用以下方法：
 
@@ -517,7 +517,7 @@ security/sudo
 
 一旦一个包是一个叶子包并且被标记为自动安装，它将被 `pkg autoremove` 命令选择删除。
 
-将已安装的软件包标记为_非_自动安装可以使用以下方法：
+将已安装的软件包标记为 _非_ 自动安装可以使用以下方法：
 
 [source, shell]
 ....
@@ -527,7 +527,7 @@ security/sudo
 [[pkgng-clean]]
 === 移除过期的软件包
 
-默认情况下， pkg 将二进制软件包存储在由 man:pkg.conf[5] 中的 `PKG_CACHEDIR` 定义的缓存目录中。只保留最新安装的软件包的副本。旧版本的 pkg 会保留所有先前的软件包。要删除这些过时的二进制软件包，请运行：
+默认情况下，pkg 将二进制软件包存储在由 man:pkg.conf[5] 中的 `PKG_CACHEDIR` 定义的缓存目录中。只保留最新安装的软件包的副本。旧版本的 pkg 会保留所有先前的软件包。要删除这些过时的二进制软件包，请运行：
 
 [source, shell]
 ....
@@ -544,16 +544,16 @@ security/sudo
 [[pkg-locking-unlocking]]
 === 锁定和解锁软件包
 
-man:pkg-lock[8] 用于锁定包，防止重新安装、修改或删除。 man:pkg-unlock[8] 用于解锁指定的包。无论哪种变体，都只对当前已安装的包产生影响。因此，除非安装新包意味着更新已锁定的包，否则无法通过此机制阻止新包的安装。
+man:pkg-lock[8] is used to lock packages against reinstallation, modification or deletion. man:pkg-unlock[8] unlocks the named packages. Either variant only has an effect on currently installed packages. Consequently it is impossible to block installation of a new package by using this mechanism, unless such an installation implies updating a locked package.
 
-例如，要锁定 `nginx-lite` ：
+例如，要锁定 `nginx-lite`：
 
 [source, shell]
 ....
 # pkg lock nginx-lite
 ....
 
-并且解锁 `nginx-lite` ：
+要解锁 `nginx-lite`：
 
 [source, shell]
 ....
@@ -563,7 +563,7 @@ man:pkg-lock[8] 用于锁定包，防止重新安装、修改或删除。 man:pk
 [[pkgng-set]]
 === 修改软件包元数据
 
-FreeBSD Ports Collection 中的软件可能会经历主版本号的更改。为了解决这个问题， pkg 有一个内置命令来更新软件包的来源。这在某些情况下非常有用，例如，如果 package:lang/python3[] 被重命名为 package:lang/python311[] ，那么 package:lang/python3[] 现在可以表示版本 `3.11` 。
+FreeBSD Ports Collection 中的软件可能会经历主版本号的更改。为了解决这个问题，pkg 有一个内置命令来更新软件包的来源。这在某些情况下非常有用，例如，如果 package:lang/python3[] 被重命名为 package:lang/python311[] ，那么 package:lang/python3[] 现在可以表示版本 `3.11`。
 
 要更改上面示例的软件包来源，请运行以下命令：
 
@@ -572,7 +572,7 @@ FreeBSD Ports Collection 中的软件可能会经历主版本号的更改。为�
 # pkg set -o lang/python3:lang/python311
 ....
 
-另一个例子是，要将 package:lang/ruby31[] 更新为 package:lang/ruby32[] ，运行以下命令：
+另一个例子是，要将 package:lang/ruby31[] 更新为 package:lang/ruby32[]，运行以下命令：
 
 [source, shell]
 ....
@@ -592,40 +592,40 @@ FreeBSD Ports Collection 中的软件可能会经历主版本号的更改。为�
 [[ports-using]]
 == 使用 Ports 集合
 
-Ports Collection 是一组 `Makefiles` 、补丁和描述文件。每组这些文件用于在 FreeBSD 上编译和安装单个应用程序，被称为一个_端口_。
+Ports Collection 是一组 `Makefiles`、补丁和描述文件。每组这些文件用于在 FreeBSD 上编译和安装单个应用程序，被称为一个 _ports_。
 
-默认情况下， Ports Collection 本身存储在 `/usr/ports` 的子目录中。
+默认情况下，Ports Collection 本身存储在 `/usr/ports` 的子目录中。
 
 [WARNING]
 ====
-在安装和使用 Ports Collection 之前，请注意通常不建议使用 Ports Collection 与通过 pkg 提供的二进制软件包一起安装软件。 pkg 默认跟踪 ports 树的季度分支发布，而不是 HEAD 。与季度分支发布中的对应端口相比， HEAD 中的端口的依赖关系可能不同，这可能导致 pkg 安装的依赖关系与 Ports Collection 中的依赖关系发生冲突。如果必须同时使用 Ports Collection 和 pkg ，请确保您的 Ports Collection 和 pkg 位于相同的 ports 树分支发布上。
+在安装和使用 Ports Collection 之前，请注意通常不建议使用 Ports Collection 与通过 pkg 提供的二进制软件包一起安装软件。 pkg 默认跟踪 ports 树的季度分支发布，而不是 HEAD 。与季度分支发布中的对应 ports 相比， HEAD 中的 ports 的依赖关系可能不同，这可能导致 pkg 安装的依赖关系与 Ports Collection 中的依赖关系发生冲突。如果必须同时使用 Ports Collection 和 pkg ，请确保您的 Ports Collection 和 pkg 位于相同的 ports 树分支发布上。
 ====
 
-Ports 集合包含了软件类别的目录。每个类别中都有针对个别应用程序的子目录。每个应用程序子目录包含一组文件，告诉 FreeBSD 如何编译和安装该程序，称为_ports skeleton_。每个端口骨架包括以下文件和目录：
+Ports 集合包含了软件类别的目录。每个类别中都有针对个别应用程序的子目录。每个应用程序子目录包含一组文件，告诉 FreeBSD 如何编译和安装该程序，称为 _ports skeleton_。每个 ports 骨架包括以下文件和目录：
 
-* *Makefile* ：包含指定应用程序如何编译以及其组件应安装在何处的语句。
-* *distinfo* ：包含构建端口所需下载的文件的名称和校验和。
-* *files/* ：这个目录包含了在 FreeBSD 上编译和安装程序所需的补丁文件。这个目录也可能包含其他用于构建端口的文件。
-* *pkg-descr* ：提供程序的更详细描述。
-* *pkg-plist* ：一个包含所有将由端口安装的文件的列表。它还告诉端口系统在卸载时要删除哪些文件。
+* *Makefile*：包含指定应用程序如何编译以及其组件应安装在何处的语句。
+* *distinfo*：包含构建 ports 所需下载的文件的名称和校验和。
+* *files/*：这个目录包含了在 FreeBSD 上编译和安装程序所需的补丁文件。这个目录也可能包含其他用于构建 ports 的文件。
+* *pkg-descr*：提供程序的更详细描述。
+* *pkg-plist*：一个包含所有将由 ports 安装的文件的列表。它还告诉 ports 系统在卸载时要删除哪些文件。
 
-一些端口包括 `pkg-message` 或其他文件来处理特殊情况。有关这些文件以及端口的更多详细信息，请参考 extref:{porters-handbook}[FreeBSD Porter's Handbook] 。
+一些 ports 包括 `pkg-message` 或其他文件来处理特殊情况。有关这些文件以及 ports 的更多详细信息，请参考 extref:{porters-handbook}[FreeBSD Porter's Handbook]。
 
-端口不包含实际的源代码，也称为“ distfile ”。构建端口的提取部分将自动将下载的源代码保存到 `/usr/ports/distfiles` 。
+ ports 不包含实际的源代码，也称为 `distfile` 。构建 ports 的提取部分将自动将下载的源代码保存到 `/usr/ports/distfiles`。
 
 [[ports-using-installation-methods]]
 === 安装 Ports 集合
 
-在使用端口编译应用程序之前，必须先安装端口集合。如果在安装 FreeBSD 时没有安装它，请使用以下方法之一进行安装：
+在使用 ports 编译应用程序之前，必须先安装 ports 集合。如果在安装 FreeBSD 时没有安装它，请使用以下方法之一进行安装：
 
 [[ports-using-git-method]]
 [.procedure]
 ****
-* 过程： Git 方法 * 
+*过程：Git 方法*
 
-如果需要对端口树进行更多的控制，或者需要维护本地更改，或者正在运行 FreeBSD-CURRENT ，可以使用 Git 来获取 Ports Collection 。有关 Git 的详细描述，请参阅 extref:{committers-guide}[Git Primer , git-primer] 。
+如果需要对 ports 树进行更多的控制，或者需要维护本地更改，或者正在运行 FreeBSD-CURRENT，可以使用 Git 来获取 Ports Collection。有关 Git 的详细描述，请参阅 extref:{committers-guide}[Git Primer,git-primer]。
 
-. 在使用 Git 检出端口树之前，必须先安装 Git 。如果已经存在一个端口树的副本，请按照以下方式安装 Git ：
+. 在使用 Git 检出 ports 树之前，必须先安装 Git 。如果已经存在一个 ports 树的副本，请按照以下方式安装 Git ：
 +
 [source, shell]
 ....
@@ -633,7 +633,7 @@ Ports 集合包含了软件类别的目录。每个类别中都有针对个别�
 # make install clean
 ....
 +
-如果端口树不可用，或者正在使用 pkg 来管理软件包，可以将 Git 作为一个软件包安装：
+如果 ports 树不可用，或者正在使用 pkg 来管理软件包，可以将 Git 作为一个软件包安装：
 +
 [source, shell]
 ....
@@ -654,7 +654,7 @@ Ports 集合包含了软件类别的目录。每个类别中都有针对个别�
 # git clone https://git.FreeBSD.org/ports.git -b 2023Q1 /usr/ports
 ....
 +
-. 在初始的 Git 检出之后，根据需要更新 `/usr/ports` 。
+. 在初始的 Git 检出之后，根据需要更新 `/usr/ports`。
 +
 [source, shell]
 ....
@@ -671,17 +671,17 @@ Ports 集合包含了软件类别的目录。每个类别中都有针对个别�
 
 === 安装 Ports
 
-本节提供了使用 Ports Collection 安装或删除软件的基本说明。有关可用的 `make` 目标和环境变量的详细描述，请参阅 man:ports[7] 。
+This section provides basic instructions on using the Ports Collection to install or remove software. The detailed description of available `make` targets and environment variables is available in man:ports[7].
 
 [WARNING]
 ====
 
-在编译任何端口之前，请确保按照前一节中的描述更新 Ports Collection 。由于安装任何第三方软件都可能引入安全漏洞，建议首先在 https://vuxml.freebsd.org/[] 上检查与该端口相关的已知安全问题。或者，在安装新端口之前运行 `pkg audit -F` 。此命令可以配置为在每日安全系统检查期间自动执行安全审计和漏洞数据库的更新。有关更多信息，请参阅 man:pkg-audit[8] 和 man:periodic[8] 。
+Before compiling any port, be sure to update the Ports Collection as described in the previous section. Since the installation of any third-party software can introduce security vulnerabilities, it is recommended to first check https://vuxml.freebsd.org/[] for known security issues related to the port. Alternatively, run `pkg audit -F` before installing a new port. This command can be configured to automatically perform a security audit and an update of the vulnerability database during the daily security system check. For more information, refer to man:pkg-audit[8] and man:periodic[8].
 ====
 
-使用 Ports 集合需要一个正常的互联网连接。它还需要超级用户权限。
+Using the Ports Collection assumes a working Internet connection. It also requires superuser privilege.
 
-要编译和安装端口，请切换到要安装的端口的目录，然后在提示符下键入 `make install` 。消息将指示进度：
+To compile and install the port, change to the directory of the port to be installed, then type `make install` at the prompt. Messages will indicate the progress:
 
 [source, shell]
 ....
@@ -719,11 +719,11 @@ Ports 集合包含了软件类别的目录。每个类别中都有针对个别�
 #
 ....
 
-由于 `lsof` 是一个以增加权限运行的程序，因此在安装时会显示一个安全警告。安装完成后，提示符将会返回。
+Since `lsof` is a program that runs with increased privileges, a security warning is displayed as it is installed. Once the installation is complete, the prompt will be returned.
 
-一些 shell 会在 `PATH` 环境变量所列目录中保留一个命令缓存，以加快对这些命令可执行文件的查找操作。使用 `tcsh` shell 的用户应该输入 `rehash` 命令，以便可以在不指定完整路径的情况下使用新安装的命令。对于 `sh` shell ，请使用 `hash -r` 命令。有关更多信息，请参阅 shell 的文档。
+Some shells keep a cache of the commands that are available in the directories listed in the `PATH` environment variable, to speed up lookup operations for the executable file of these commands. Users of the `tcsh` shell should type `rehash` so that a newly installed command can be used without specifying its full path. Use `hash -r` instead for the `sh` shell. Refer to the documentation for the shell for more information.
 
-在安装过程中，会创建一个工作子目录，其中包含编译过程中使用的所有临时文件。删除此目录可以节省磁盘空间，并在以后升级到新版本的端口时最大程度地减少问题的可能性。
+During installation, a working subdirectory is created which contains all the temporary files used during compilation. Removing this directory saves disk space and minimizes the chance of problems later when upgrading to the newer version of the port:
 
 [source, shell]
 ....
@@ -734,25 +734,25 @@ Ports 集合包含了软件类别的目录。每个类别中都有针对个别�
 
 [NOTE]
 ====
-为了避免这个额外的步骤，编译端口时可以使用 `make install clean` 。
+To save this extra step, instead use `make install clean` when compiling the port.
 ====
 
-==== 自定义端口安装
+==== Customizing Ports Installation
 
-一些端口提供构建选项，可以用于启用或禁用应用程序组件，提供安全选项或允许其他自定义。示例包括 package:www/firefox[] 和 package:security/gpgme[] 。如果该端口依赖于具有可配置选项的其他端口，则默认行为是提示用户从菜单中选择选项，因此可能会多次暂停以进行用户交互。为了避免这种情况，并在一个批处理中进行所有配置，请在端口骨架中运行 `make config-recursive` 。然后，运行 `make install [clean]` 来编译和安装该端口。
+Some ports provide build options which can be used to enable or disable application components, provide security options, or allow for other customizations. Examples include package:www/firefox[] and package:security/gpgme[]. If the port depends upon other ports which have configurable options, it may pause several times for user interaction as the default behavior is to prompt the user to select options from a menu. To avoid this and do all of the configuration in one batch, run `make config-recursive` within the port skeleton. Then, run `make install [clean]` to compile and install the port.
 
 [TIP]
 ====
-当使用 `config-recursive` 时，要配置的端口列表是通过 `all-depends-list` 目标收集的。建议运行 `make config-recursive` 直到所有依赖端口选项都被定义，并且端口选项屏幕不再出现，以确保所有依赖选项都已配置。
+When using `config-recursive`, the list of ports to configure are gathered by the `all-depends-list` target. It is recommended to run `make config-recursive` until all dependent ports options have been defined, and ports options screens no longer appear, to be certain that all dependency options have been configured.
 ====
 
-在构建端口后，有几种方法可以重新访问端口的构建选项菜单，以添加、删除或更改这些选项。一种方法是进入包含端口的目录，然后输入 `make config` 命令。另一种选择是使用 `make showconfig` 命令。还可以执行 `make rmconfig` 命令，该命令将删除所有已选择的选项，并允许您重新开始。所有这些选项以及其他选项都在 man:ports[7] 中详细解释。
+There are several ways to revisit a port's build options menu in order to add, remove, or change these options after a port has been built. One method is to `cd` into the directory containing the port and type `make config`. Another option is to use `make showconfig`. Another option is to execute `make rmconfig` which will remove all selected options and allow you to start over. All of these options, and others, are explained in great detail in man:ports[7].
 
-端口系统使用 man:fetch[1] 来下载源文件，该工具支持各种环境变量。如果 FreeBSD 系统位于防火墙或 FTP/HTTP 代理后面，可能需要设置 `FTP_PASSIVE_MODE` 、 `FTP_PROXY` 和 `FTP_PASSWORD` 变量。有关支持的变量的完整列表，请参阅 man:fetch[3] 。
+The ports system uses man:fetch[1] to download the source files, which supports various environment variables. The `FTP_PASSIVE_MODE`, `FTP_PROXY`, and `FTP_PASSWORD` variables may need to be set if the FreeBSD system is behind a firewall or FTP/HTTP proxy. See man:fetch[3] for the complete list of supported variables.
 
-对于不能始终连接到互联网的用户，可以在 `/usr/ports` 目录下运行 `make fetch` 命令，以获取所有的 distfiles ，或者在某个分类目录（例如 `/usr/ports/net` ）或特定的端口骨架中运行。请注意，如果一个端口有任何依赖项，那么在分类目录或端口骨架中运行此命令将不会获取来自其他分类的端口的 distfiles 。相反，使用 `make fetch-recursive` 命令也可以获取端口的所有依赖项的 distfiles 。
+For users who cannot be connected to the Internet all the time, `make fetch` can be run within `/usr/ports`, to fetch all distfiles, or within a category, such as `/usr/ports/net`, or within the specific port skeleton. Note that if a port has any dependencies, running this command in a category or ports skeleton will _not_ fetch the distfiles of ports from another category. Instead, use `make fetch-recursive` to also fetch the distfiles for all the dependencies of a port.
 
-在极少数情况下，例如当组织拥有本地的 distfiles 仓库时， `MASTER_SITES` 变量可以用于覆盖 `Makefile` 中指定的下载位置。在使用时，请指定替代位置：
+In rare cases, such as when an organization has a local distfiles repository, the `MASTER_SITES` variable can be used to override the download locations specified in the `Makefile`. When using, specify the alternate location:
 
 [source, shell]
 ....
@@ -761,37 +761,37 @@ Ports 集合包含了软件类别的目录。每个类别中都有针对个别�
 ftp://ftp.organization.org/pub/FreeBSD/ports/distfiles/ fetch
 ....
 
-`WRKDIRPREFIX` 和 `PREFIX` 变量可以覆盖默认的工作目录和目标目录。例如：
+The `WRKDIRPREFIX` and `PREFIX` variables can override the default working and target directories. For example:
 
 [source, shell]
 ....
 # make WRKDIRPREFIX=/usr/home/example/ports install
 ....
 
-将端口编译在 `/usr/home/example/ports` 目录下，并将所有内容安装在 `/usr/local` 目录下。
+will compile the port in `/usr/home/example/ports` and install everything under `/usr/local`.
 
 [source, shell]
 ....
 # make PREFIX=/usr/home/example/local install
 ....
 
-将端口编译在 `/usr/ports` 中，并将其安装在 `/usr/home/example/local` 中。并且：
+will compile the port in `/usr/ports` and install it in `/usr/home/example/local`. And:
 
 [source, shell]
 ....
 # make WRKDIRPREFIX=../ports PREFIX=../local install
 ....
 
-将两者合并。
+will combine the two.
 
-这些也可以设置为环境变量。请参考您所使用的 shell 的手册页面，了解如何设置环境变量的指令。
+These can also be set as environmental variables. Refer to the manual page for your shell for instructions on how to set an environmental variable.
 
 [[ports-removing]]
-=== 移除已安装的端口
+=== Removing Installed Ports
 
-使用 `pkg delete` 命令可以卸载已安装的端口。有关使用此命令的示例，请参阅 man:pkg-delete[8] 手册页。
+Installed ports can be uninstalled using `pkg delete`. Examples for using this command can be found in the man:pkg-delete[8] manual page.
 
-或者，可以在端口的目录中运行 `make deinstall` 命令：
+Alternately, `make deinstall` can be run in the port\'s directory:
 
 [source, shell]
 ....
@@ -807,14 +807,14 @@ The deinstallation will free 229 kB
 [1/1] Deleting lsof-4.88.d,8... done
 ....
 
-建议在卸载端口之前阅读消息。如果该端口有任何依赖于它的应用程序，这些信息将被显示，但卸载将继续进行。在这种情况下，重新安装应用程序可能更好，以防止依赖关系破裂。
+It is recommended to read the messages as the port is uninstalled. If the port has any applications that depend upon it, this information will be displayed but the uninstallation will proceed. In such cases, it may be better to reinstall the application in order to prevent broken dependencies.
 
 [[ports-upgrading]]
-=== 升级端口
+=== Upgrading Ports
 
-随着时间的推移， Ports Collection 中会有更新版本的软件可用。本节介绍了如何确定可以升级的软件以及如何执行升级操作。
+Over time, newer versions of software become available in the Ports Collection. This section describes how to determine which software can be upgraded and how to perform the upgrade.
 
-要确定已安装的端口是否有更新版本可用，请确保安装了最新版本的端口树，使用在 <<ports-using-git-method , "Git Method">> 中描述的更新命令。以下命令将列出已过时的已安装端口：
+To determine if newer versions of installed ports are available, ensure that the latest version of the ports tree is installed, using the updating command described in <<ports-using-git-method, "Git Method">>. The following command will list the installed ports which are out of date:
 
 [source, shell]
 ....
@@ -823,25 +823,25 @@ The deinstallation will free 229 kB
 
 [IMPORTANT]
 ====
-在尝试升级之前，请从文件顶部开始阅读 `/usr/ports/UPDATING` ，直到最接近上次升级端口或安装系统的日期。该文件描述了在更新端口时用户可能遇到的各种问题和需要执行的额外步骤，包括文件格式更改、配置文件位置更改或与先前版本不兼容的任何问题。请注意任何与需要升级的端口匹配的说明，并在执行升级时遵循这些说明。
+Before attempting an upgrade, read `/usr/ports/UPDATING` from the top of the file to the date closest to the last time ports were upgraded or the system was installed. This file describes various issues and additional steps users may encounter and need to perform when updating a port, including such things as file format changes, changes in locations of configuration files, or any incompatibilities with previous versions. Make note of any instructions which match any of the ports that need upgrading and follow these instructions when performing the upgrade.
 ====
 
 [[ports-upgrading-tools]]
-==== 升级和管理端口的工具
+==== Tools to Upgrade and Manage Ports
 
-Ports Collection 包含多个实际执行升级的实用工具。每个工具都有其优点和缺点。
+The Ports Collection contains several utilities to perform the actual upgrade. Each has its strengths and weaknesses.
 
-从历史上看，大多数安装使用的是 Portmaster 或 Portupgrade 。 Synth 是一种较新的替代方案。
+Historically, most installations used either Portmaster or Portupgrade. Synth is a newer alternative.
 
 [NOTE]
 ====
-选择哪种工具最适合特定系统是由系统管理员决定的。在使用这些工具之前，建议先备份数据。
+The choice of which tool is best for a particular system is up to the system administrator. It is recommended practice to back up your data before using any of these tools.
 ====
 
 [[portmaster]]
-==== 使用 Portmaster 升级 Ports
+==== Upgrading Ports Using Portmaster
 
-package:ports-mgmt/portmaster[] 是一个非常小的工具，用于升级已安装的端口。它旨在使用安装在 FreeBSD 基本系统中的工具，而不依赖其他端口或数据库。要将此实用程序安装为一个端口：
+package:ports-mgmt/portmaster[] is a very small utility for upgrading installed ports. It is designed to use the tools installed with the FreeBSD base system without depending on other ports or databases. To install this utility as a port:
 
 [source, shell]
 ....
@@ -849,14 +849,14 @@ package:ports-mgmt/portmaster[] 是一个非常小的工具，用于升级已安
 # make install clean
 ....
 
-Portmaster 定义了四个端口的分类：
+Portmaster defines four categories of ports:
 
-* 根端口：没有依赖项，也不是任何其他端口的依赖项。
-* 主干端口：没有依赖项，但其他端口依赖于它。
-* 分支端口：具有依赖关系，其他端口依赖于它。
-* 叶子端口：具有依赖关系，但没有其他端口依赖于它。
+* Root port: has no dependencies and is not a dependency of any other ports.
+* Trunk port: has no dependencies, but other ports depend upon it.
+* Branch port: has dependencies and other ports depend upon it.
+* Leaf port: has dependencies but no other ports depend upon it.
 
-要列出这些类别并搜索更新：
+To list these categories and search for updates:
 
 [source, shell]
 ....
@@ -883,7 +883,7 @@ Portmaster 定义了四个端口的分类：
         ===>>> 83 have new versions available
 ....
 
-这个命令用于升级所有过时的端口：
+This command is used to upgrade all outdated ports:
 
 [source, shell]
 ....
@@ -892,29 +892,29 @@ Portmaster 定义了四个端口的分类：
 
 [NOTE]
 ====
-默认情况下， Portmaster 在删除现有端口之前会创建一个备份包。如果新版本的安装成功， Portmaster 会删除备份。使用 `-b` 指令可以让 Portmaster 不自动删除备份。添加 `-i` 可以启动 Portmaster 的交互模式，在升级每个端口之前提示确认。还有许多其他选项可用。请阅读 man:portmaster[8] 的手册页面，了解有关它们使用的详细信息。
+By default, Portmaster makes a backup package before deleting the existing port. If the installation of the new version is successful, Portmaster deletes the backup. Using `-b` instructs Portmaster not to automatically delete the backup. Adding `-i` starts Portmaster in interactive mode, prompting for confirmation before upgrading each port. Many other options are available. Read through the manual page for man:portmaster[8] for details regarding their usage.
 ====
 
-如果在升级过程中遇到错误，请在升级和重建所有端口时添加 `-f` 。
+If errors are encountered during the upgrade process, add `-f` to upgrade and rebuild all ports:
 
 [source, shell]
 ....
 # portmaster -af
 ....
 
-Portmaster 还可以用于在系统上安装新的端口，在构建和安装新的端口之前升级所有依赖项。要使用此功能，请指定 Ports Collection 中端口的位置：
+Portmaster can also be used to install new ports on the system, upgrading all dependencies before building and installing the new port. To use this function, specify the location of the port in the Ports Collection:
 
 [source, shell]
 ....
 # portmaster shells/bash
 ....
 
-有关 package:ports-mgmt/portmaster[] 的更多信息可以在其 `pkg-descr` 中找到。
+More information about package:ports-mgmt/portmaster[] may be found in its `pkg-descr`.
 
 [[portupgrade]]
-==== 使用 Portupgrade 升级端口
+==== Upgrading Ports Using Portupgrade
 
-package:ports-mgmt/portupgrade[] 是另一个可以用来升级端口的实用工具。它安装了一套可以用来管理端口的应用程序。然而，它依赖于 Ruby 。要安装该端口：
+package:ports-mgmt/portupgrade[] is another utility that can be used to upgrade ports. It installs a suite of applications which can be used to manage ports. However, it is dependent upon Ruby. To install the port:
 
 [source, shell]
 ....
@@ -922,83 +922,83 @@ package:ports-mgmt/portupgrade[] 是另一个可以用来升级端口的实用�
 # make install clean
 ....
 
-在使用此工具进行升级之前，建议使用 `pkgdb -F` 扫描已安装的端口列表，并修复它报告的所有不一致性。
+Before performing an upgrade using this utility, it is recommended to scan the list of installed ports using `pkgdb -F` and to fix all the inconsistencies it reports.
 
-要升级系统上安装的所有过时端口，请使用 `portupgrade -a` 。或者，加入 `-i` 以便在每次单独升级时要求确认：
+To upgrade all the outdated ports installed on the system, use `portupgrade -a`. Alternately, include `-i` to be asked for confirmation of every individual upgrade:
 
 [source, shell]
 ....
 # portupgrade -ai
 ....
 
-要升级指定的应用程序而不是所有可用的端口，请使用 `portupgrade _pkgname_` 。非常重要的是要包括 `-R` 选项，以先升级给定应用程序所需的所有端口：
+To upgrade only a specified application instead of all available ports, use `portupgrade _pkgname_`. It is very important to include `-R` to first upgrade all the ports required by the given application:
 
 [source, shell]
 ....
 # portupgrade -R firefox
 ....
 
-如果包含了 `-P` 选项， Portupgrade 会在 `PKG_PATH` 列出的本地目录中搜索可用的软件包。如果本地没有可用的软件包，它会从远程站点获取软件包。如果无法在本地或远程获取软件包， Portupgrade 将使用 ports 。为了完全避免使用 ports ，可以指定 `-PP` 选项。最后一组选项告诉 Portupgrade 如果没有可用的软件包则中止操作。
+If `-P` is included, Portupgrade searches for available packages in the local directories listed in `PKG_PATH`. If none are available locally, it then fetches packages from a remote site. If packages can not be found locally or fetched remotely, Portupgrade will use ports. To avoid using ports entirely, specify `-PP`. This last set of options tells Portupgrade to abort if no packages are available:
 
 [source, shell]
 ....
 # portupgrade -PP gnome3
 ....
 
-如果指定了 `-P` ，只需获取端口 distfiles 或软件包，而不需要构建或安装任何内容，请使用 `-F` 。有关所有可用开关的更多信息，请参阅 `portupgrade` 的手册页。
+To just fetch the port distfiles, or packages, if `-P` is specified, without building or installing anything, use `-F`. For further information on all of the available switches, refer to the manual page for `portupgrade`.
 
-有关 package:ports-mgmt/portupgrade[] 的更多信息可以在其 `pkg-descr` 中找到。
+More information about package:ports-mgmt/portupgrade[] may be found in its `pkg-descr`.
 
 [[ports-disk-space]]
-=== 端口和磁盘空间
+=== Ports and Disk Space
 
-使用 Ports Collection 会随着时间的推移占用磁盘空间。在构建和安装端口之后，在端口骨架中运行 `make clean` 将清理临时的 `work` 目录。如果使用 Portmaster 安装端口，它会自动删除此目录，除非指定了 `-K` 选项。如果安装了 Portupgrade ，此命令将删除在本地 Ports Collection 副本中找到的所有 `work` 目录：
+Using the Ports Collection will use up disk space over time. After building and installing a port, running `make clean` within the ports skeleton will clean up the temporary `work` directory. If Portmaster is used to install a port, it will automatically remove this directory unless `-K` is specified. If Portupgrade is installed, this command will remove all `work` directories found within the local copy of the Ports Collection:
 
 [source, shell]
 ....
 # portsclean -C
 ....
 
-此外，随着时间的推移，过时的源代码分发文件会在 `/usr/ports/distfiles` 中累积。要使用 Portupgrade 删除所有不再被任何端口引用的分发文件：
+In addition, outdated source distribution files accumulate in `/usr/ports/distfiles` over time. To use Portupgrade to delete all the distfiles that are no longer referenced by any ports:
 
 [source, shell]
 ....
 # portsclean -D
 ....
 
-Portupgrade 可以删除系统上当前未安装任何端口引用的所有 distfiles 文件。
+Portupgrade can remove all distfiles not referenced by any port currently installed on the system:
 
 [source, shell]
 ....
 # portsclean -DD
 ....
 
-如果已安装 Portmaster ，请使用：
+If Portmaster is installed, use:
 
 [source, shell]
 ....
 # portmaster --clean-distfiles
 ....
 
-默认情况下，该命令是交互式的，并提示用户确认是否删除 distfile 。
+By default, this command is interactive and prompts the user to confirm if a distfile should be deleted.
 
-除了这些命令之外， package:ports-mgmt/pkg_cutleaves[] 还可以自动化删除不再需要的已安装端口的任务。
+In addition to these commands, package:ports-mgmt/pkg_cutleaves[] automates the task of removing installed ports that are no longer needed.
 
 [[ports-poudriere]]
-== 使用 poudriere 构建软件包
+== Building Packages with poudriere
 
-poudriere 是一个使用 BSD 许可证的实用工具，用于创建和测试 FreeBSD 软件包。它使用 FreeBSD jails 来设置隔离的编译环境。这些 jails 可以用于为与安装它的系统不同的 FreeBSD 版本构建软件包，也可以用于在主机是 amd64 系统的情况下构建 i386 的软件包。一旦软件包构建完成，它们的布局与官方镜像完全相同。这些软件包可以被 man:pkg[8] 和其他软件包管理工具使用。
+poudriere is a `BSD`-licensed utility for creating and testing FreeBSD packages. It uses FreeBSD jails to set up isolated compilation environments. These jails can be used to build packages for versions of FreeBSD that are different from the system on which it is installed, and also to build packages for i386 if the host is an amd64 system. Once the packages are built, they are in a layout identical to the official mirrors. These packages are usable by man:pkg[8] and other package management tools.
 
-poudriere 是使用 package:ports-mgmt/poudriere[] 包或端口进行安装的。安装过程中包含一个示例配置文件 `/usr/local/etc/poudriere.conf.sample` 。将此文件复制到 `/usr/local/etc/poudriere.conf` 。编辑复制的文件以适应本地配置。
+poudriere is installed using the package:ports-mgmt/poudriere[] package or port. The installation includes a sample configuration file `/usr/local/etc/poudriere.conf.sample`. Copy this file to `/usr/local/etc/poudriere.conf`. Edit the copied file to suit the local configuration.
 
-虽然在运行 poudriere 的系统上不需要 `ZFS` ，但它是有益的。当使用 `ZFS` 时，必须在 `/usr/local/etc/poudriere.conf` 中指定 `ZPOOL` ，并将 `FREEBSD_HOST` 设置为附近的镜像。定义 `CCACHE_DIR` 可以启用 `package:devel/ccache[]` 来缓存编译并减少频繁编译代码的构建时间。将 poudriere 数据集放在挂载在 `/poudriere` 的隔离树中可能很方便。其他配置值的默认设置是足够的。
+While `ZFS` is not required on the system running poudriere, it is beneficial. When `ZFS` is used, `ZPOOL` must be specified in `/usr/local/etc/poudriere.conf` and `FREEBSD_HOST` should be set to a nearby mirror. Defining `CCACHE_DIR` enables the use of package:devel/ccache[] to cache compilation and reduce build times for frequently-compiled code. It may be convenient to put poudriere datasets in an isolated tree mounted at `/poudriere`. Defaults for the other configuration values are adequate.
 
-检测到的处理器核心数量用于定义并行运行的构建数量。请提供足够的虚拟内存，可以是 RAM 或者交换空间。如果虚拟内存耗尽，编译环境将停止并被销毁，导致出现奇怪的错误信息。
+The number of processor cores detected is used to define how many builds will run in parallel. Supply enough virtual memory, either with `RAM` or swap space. If virtual memory runs out, the compilation jails will stop and be torn down, resulting in weird error messages.
 
 [[poudriere-initialization]]
-=== 初始化 Jails 和 Port Trees
+=== Initialize Jails and Port Trees
 
-配置完成后，初始化 poudriere ，以便安装一个包含所需 FreeBSD 树和 ports 树的 jail 。使用 `-j` 指定 jail 的名称，并使用 `-v` 指定 FreeBSD 版本。在运行 FreeBSD/amd64 的系统上，可以使用 `-a` 将架构设置为 `i386` 或 `amd64` 。默认架构为 `uname` 显示的架构。
+After configuration, initialize poudriere so that it installs a jail with the required FreeBSD tree and a ports tree. Specify a name for the jail using `-j` and the FreeBSD version with `-v`. On systems running FreeBSD/amd64, the architecture can be set with `-a` to either `i386` or `amd64`. The default is the architecture shown by `uname`.
 
 [source, shell]
 ....
@@ -1055,11 +1055,11 @@ Scanning //usr/share/certs/trusted for certificates...
 [00:00:00] Checking out the ports tree... done
 ....
 
-在一台计算机上， poudriere 可以使用多个配置，在多个 jail 中，从不同的端口树构建端口。这些组合的自定义配置被称为“集合”。在安装了 package:ports-mgmt/poudriere[] 或 package:ports-mgmt/poudriere-devel[] 之后，可以查看 man:poudriere[8] 的 CUSTOMIZATION 部分获取详细信息。
+On a single computer, poudriere can build ports with multiple configurations, in multiple jails, and from different port trees. Custom configurations for these combinations are called _sets_. See the CUSTOMIZATION section of man:poudriere[8] for details after package:ports-mgmt/poudriere[] or package:ports-mgmt/poudriere-devel[] is installed.
 
-这里显示的基本配置将一个单独的 jail 、 port 和 set 特定的 `make.conf` 放置在 `/usr/local/etc/poudriere.d` 目录下。在这个示例中，文件名是通过组合 jail 名称、 port 名称和 set 名称创建的： `13amd64-local-workstation-make.conf` 。系统的 `make.conf` 和这个新文件在构建时会合并，以创建构建 jail 使用的 `make.conf` 文件。
+The basic configuration shown here puts a single jail-, port-, and set-specific `make.conf` in `/usr/local/etc/poudriere.d`. The filename in this example is created by combining the jail name, port name, and set name: `13amd64-local-workstation-make.conf`. The system `make.conf` and this new file are combined at build time to create the `make.conf` used by the build jail.
 
-要构建的软件包应该在 `13amd64-local-workstation-pkglist` 文件中输入（具有 ` @ FLAVOR` 的 `extref:{porters-handbook}flavors[FLAVORS]` 的端口可以定义）。
+Packages to be built are entered in `13amd64-local-workstation-pkglist` (ports with extref:{porters-handbook}flavors[FLAVORS] can be defined with @FLAVOR):
 
 [.programlisting]
 ....
@@ -1070,29 +1070,29 @@ ports-mgmt/pkg
 ...
 ....
 
-已配置指定端口的选项和依赖项：
+Options and dependencies for the specified ports are configured:
 
 [source, shell]
 ....
 # poudriere options -j 13amd64 -p local -z workstation -f 13amd64-local-workstation-pkglist
 ....
 
-最后，构建软件包并创建软件包仓库：
+Finally, packages are built and a package repository is created:
 
 [source, shell]
 ....
 # poudriere bulk -j 13amd64 -p local -z workstation -f 13amd64-local-workstation-pkglist
 ....
 
-在运行过程中，按下 kbd:[Ctrl + t] 键可以显示构建的当前状态。 poudriere 还会在 `/poudriere/logs/bulk/jailname` 目录中构建文件，可以与 Web 服务器一起使用以显示构建信息。
+While running, pressing kbd:[Ctrl+t] displays the current state of the build. poudriere also builds files in `/poudriere/logs/bulk/jailname` that can be used with a web server to display build information.
 
-完成后，新的软件包现在可以从 poudriere 仓库进行安装。
+After completion, the new packages are now available for installation from the poudriere repository.
 
-有关使用 poudriere 的更多信息，请参阅 man:poudriere[8] 和主要网站 https://github.com/freebsd/poudriere/wiki[] 。
+For more information on using poudriere, see man:poudriere[8] and the main web site, https://github.com/freebsd/poudriere/wiki[].
 
-=== 配置 pkg 客户端以使用 poudriere 仓库
+=== Configuring pkg Clients to Use a poudriere Repository
 
-虽然可以同时使用自定义仓库和官方仓库，但有时禁用官方仓库是有用的。这可以通过创建一个配置文件来覆盖和禁用官方配置文件来实现。创建 `/usr/local/etc/pkg/repos/FreeBSD.conf` 文件，其中包含以下内容：
+While it is possible to use both a custom repository along side of the official repository, sometimes it is useful to disable the official repository. This is done by creating a configuration file that overrides and disables the official configuration file. Create `/usr/local/etc/pkg/repos/FreeBSD.conf` that contains the following:
 
 [.programlisting]
 ....
@@ -1101,9 +1101,9 @@ FreeBSD: {
 }
 ....
 
-通常，通过 HTTP 将 poudriere 仓库提供给客户机最为简单。设置一个 web 服务器来提供软件包目录，例如： `/usr/local/poudriere/data/packages/13amd64` ，其中 `13amd64` 是构建的名称。
+Usually it is easiest to serve a poudriere repository to the client machines via HTTP. Set up a webserver to serve up the package directory, for instance: `/usr/local/poudriere/data/packages/13amd64`, where `13amd64` is the name of the build.
 
-如果软件包仓库的 URL 是： `http://pkg.example.com/13amd64` ，那么位于 `/usr/local/etc/pkg/repos/custom.conf` 的仓库配置文件将如下所示：
+If the URL to the package repository is: `http://pkg.example.com/13amd64`, then the repository configuration file in `/usr/local/etc/pkg/repos/custom.conf` would look like:
 
 [.programlisting]
 ....
@@ -1113,7 +1113,7 @@ custom: {
 }
 ....
 
-如果不希望将软件包仓库暴露在互联网上，可以使用 `file://` 协议直接指向仓库：
+If exposing the package repository to the internet is not desired, the `file://` protocol can be used to point to the repository directly:
 
 [.programlisting]
 ....
@@ -1124,37 +1124,37 @@ custom: {
 ....
 
 [[ports-nextsteps]]
-== 安装后的考虑事项
+== Post-Installation Considerations
 
-无论软件是从二进制包还是端口安装的，大多数第三方应用程序在安装后都需要进行一定程度的配置。以下命令和位置可用于帮助确定应用程序安装了什么。
+Regardless of whether the software was installed from a binary package or port, most third-party applications require some level of configuration after installation. The following commands and locations can be used to help determine what was installed with the application.
 
-* 大多数应用程序都会在 `/usr/local/etc` 目录下安装至少一个默认配置文件。在应用程序有大量配置文件的情况下，会创建一个子目录来存放它们。通常，会安装一些以 `.sample` 后缀结尾的示例配置文件。应该审查并可能编辑这些配置文件以满足系统的需求。要编辑示例文件，首先将其复制并去掉 `.sample` 扩展名。
-* 提供文档的应用程序将其安装在 `/usr/local/share/doc` 目录下，许多应用程序还会安装手册页。在继续之前，应该先查阅这些文档。
-* 一些应用程序运行的服务在启动应用程序之前必须添加到 `/etc/rc.conf` 中。这些应用程序通常会在 `/usr/local/etc/rc.d` 中安装一个启动脚本。有关更多信息，请参阅 crossref:config[configtuning-starting-services ,启动服务] 。
+* Most applications install at least one default configuration file in `/usr/local/etc`. In cases where an application has a large number of configuration files, a subdirectory will be created to hold them. Often, sample configuration files are installed which end with a suffix such as `.sample`. The configuration files should be reviewed and possibly edited to meet the system's needs. To edit a sample file, first copy it without the `.sample` extension.
+* Applications which provide documentation will install it into `/usr/local/share/doc` and many applications also install manual pages. This documentation should be consulted before continuing.
+* Some applications run services which must be added to `/etc/rc.conf` before starting the application. These applications usually install a startup script in `/usr/local/etc/rc.d`. See crossref:config[configtuning-starting-services,Starting Services] for more information.
 +
 [NOTE]
 ====
-根据设计，应用程序在安装时不会运行启动脚本，也不会在卸载或升级时运行停止脚本。这个决定留给了个别系统管理员来决定。
+By design, applications do not run their startup script upon installation, nor do they run their stop script upon deinstallation or upgrade. This decision is left to the individual system administrator.
 ====
 
-* 使用 man:csh[1] 的用户应该运行 `rehash` 命令来重新构建 shell 的 `PATH` 中已知的二进制文件列表。
-* 使用 `pkg info` 命令来确定应用程序安装了哪些文件、 man 页面和二进制文件。
+* Users of man:csh[1] should run `rehash` to rebuild the known binary list in the shells `PATH`.
+* Use `pkg info` to determine which files, man pages, and binaries were installed with the application.
 
 [[ports-broken]]
-== 处理损坏的端口
+== Dealing with Broken Ports
 
-当端口无法构建或安装时，请尝试以下操作：
+When a port does not build or install, try the following:
 
-. 搜索一下链接 https://www.FreeBSD.org/support/ 中的端口是否有待修复的问题报告。如果有的话，实施建议的修复可能会解决这个问题。
-. 向端口的维护者寻求帮助。在端口骨架中键入 `make maintainer` ，或者阅读端口的 `Makefile` 以找到维护者的电子邮件地址。记得在发送给维护者的电子邮件中包含错误之前的输出。
+. Search to see if there is a fix pending for the port in the link:https://www.FreeBSD.org/support/[Problem Report database]. If so, implementing the proposed fix may fix the issue.
+. Ask the maintainer of the port for help. Type `make maintainer` in the ports skeleton or read the port's `Makefile` to find the maintainer's email address. Remember to include the output leading up to the error in the email to the maintainer.
 +
 [NOTE]
 ====
-一些端口不是由个人维护，而是由一个由邮件列表表示的团队维护者维护。其中许多（但不是全部）地址看起来像 mailto:freebsd-listname @ FreeBSD.org[freebsd-listname @ FreeBSD.org] 。在发送电子邮件时，请考虑这一点。
+Some ports are not maintained by an individual but instead by a group maintainer represented by a extref:{mailing-list-faq}[mailing list]. Many, but not all, of these addresses look like mailto:freebsd-listname@FreeBSD.org[freebsd-listname@FreeBSD.org]. Please take this into account when sending an email.
 
-特别是，由 mailto:ports @ FreeBSD.org[ports @ FreeBSD.org] 维护的端口不由特定个人维护。相反，任何修复和支持都来自订阅该邮件列表的广大社区。我们始终需要更多的志愿者！
+In particular, ports maintained by mailto:ports@FreeBSD.org[ports@FreeBSD.org] are not maintained by a specific individual. Instead, any fixes and support come from the general community who subscribe to that mailing list. More volunteers are always needed!
 ====
 +
-如果没有收到邮件回复，请按照 extref:{problem-reports}[编写 FreeBSD 问题报告] 中的说明，使用 Bugzilla 提交错误报告。
-. 修复它！ extref:{porters-handbook}[Porter's Handbook] 包含了有关端口基础设施的详细信息，以便您可以修复偶尔出现的损坏端口，甚至提交您自己的端口！
-. 按照 <<pkgng-intro>> 中的说明安装软件包，而不是使用端口。
+If there is no response to the email, use Bugzilla to submit a bug report using the instructions in extref:{problem-reports}[Writing FreeBSD Problem Reports].
+. Fix it! The extref:{porters-handbook}[Porter's Handbook] includes detailed information on the ports infrastructure so that you can fix the occasional broken port or even submit your own!
+. Install the package instead of the port using the instructions in <<pkgng-intro>>.

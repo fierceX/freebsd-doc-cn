@@ -1,7 +1,7 @@
 ---
-description: 'FreeBSD provides two complementary technologies for installing third-party software: the FreeBSD Ports Collection, for installing from source, and packages, for installing from pre-built binaries'
+description: 'FreeBSD 提供了两种互补的技术来安装第三方软件：FreeBSD Ports Collection 用于从源代码安装，而包（packages）用于从预编译的二进制文件安装。'
 next: books/handbook/x11
-part: 'Part I. Getting Started'
+part: 第一部分：入门指南
 path: /books/handbook/
 prev: books/handbook/basics
 showBookMenu: true
@@ -11,7 +11,7 @@ weight: 6
 ---
 
 [[ports]]
-= Installing Applications: Packages and Ports
+= 安装应用程序：软件包和 Ports
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,100 +46,100 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[ports-synopsis]]
-== Synopsis
+== 简介
 
-FreeBSD is bundled with a rich collection of system tools as part of the base system. In addition, FreeBSD provides two complementary technologies for installing third-party software: the FreeBSD Ports Collection, for installing from source, and packages, for installing from pre-built binaries. Either method may be used to install software from local media or from the network.
+FreeBSD 捆绑了丰富的系统工具作为基本系统的一部分。此外，FreeBSD 还提供了两种互补的技术来安装第三方软件：FreeBSD Ports Collection 用于从源代码安装，而软件包则用于从预编译的二进制文件安装。可以使用任一方法从本地媒体或网络安装软件。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* The difference between binary packages and ports.
-* How to find third-party software that has been ported to FreeBSD.
-* How to manage binary packages using pkg.
-* How to build third-party software from source using the Ports Collection.
-* How to find the files installed with the application for post-installation configuration.
-* What to do if a software installation fails.
+* 二进制包和 ports 之间的区别。
+* 如何找到已经移植到 FreeBSD 的第三方软件。
+* 如何使用 pkg 管理二进制软件包。
+* 如何使用 Ports Collection 从源代码构建第三方软件。
+* 如何找到应用程序安装后的文件，以进行后续配置。
+* 如果软件安装失败，应该怎么办。
 
 [[ports-overview]]
-== Overview of Software Installation
+== 软件安装概述
 
-A FreeBSD _port_ is a collection of files designed to automate the process of compiling an application from source code. The files that comprise a port contain all the necessary information to automatically download, extract, patch, compile, and install the application.
+FreeBSD 的 `ports` 是一组文件，旨在自动化从源代码编译应用程序的过程。组成 ports 的文件包含了自动下载、提取、打补丁、编译和安装应用程序所需的所有必要信息。
 
-If the software has not already been adapted and tested on FreeBSD, the source code might need editing in order for it to install and run properly.
+如果软件尚未在 FreeBSD 上进行适配和测试，源代码可能需要进行编辑，以便正确安装和运行。
 
-However, over link:https://www.FreeBSD.org/ports/[{numports}] third-party applications have already been ported to FreeBSD. When feasible, these applications are made available for download as pre-compiled _packages_.
+然而，在 link:https://www.FreeBSD.org/ports/[{numports}] 上已经有许多第三方应用程序被移植到了 FreeBSD。在可行的情况下，这些应用程序会以预编译的软件包形式提供下载。
 
-Packages can be manipulated with the FreeBSD package management commands.
+可以使用 FreeBSD 软件包管理命令来操作软件包。
 
-Both packages and ports understand dependencies. If a package or port is used to install an application and a dependent library is not already installed, the library will automatically be installed first.
+包和 ports 都能理解依赖关系。如果使用包或 ports 来安装一个应用程序，并且所依赖的库尚未安装，那么该库将会自动被先安装。
 
-A FreeBSD package contains pre-compiled copies of all the commands for an application, as well as any configuration files and documentation. A package can be manipulated with the man:pkg[8] commands, such as `pkg install`.
+一个 FreeBSD 软件包包含了一个应用程序的预编译副本，以及任何配置文件和文档。可以使用 man:pkg[8] 命令来操作软件包，例如 `pkg install`。
 
-While the two technologies are similar, packages and ports each have their own strengths. Select the technology that meets your requirements for installing a particular application.
+虽然这两种技术相似，但软件包和 ports 各有各的优势。选择符合您安装特定应用程序需求的技术。
 
-.Package Benefits
-* A compressed package tarball is typically smaller than the compressed tarball containing the source code for the application.
-* Packages do not require compilation time. For large applications, such as Firefox, KDE Plasma, or GNOME, this can be important on a slow system.
-* Packages do not require any understanding of the process involved in compiling software on FreeBSD.
+.包的好处
+* 通常，压缩的软件包 tarball 比包含应用程序源代码的压缩 tarball 要小。
+* 包不需要编译时间。对于大型应用程序，如 Firefox 、KDE Plasma 或 GNOME，在慢速系统上这一点可能很重要。
+* 在 FreeBSD 上编译软件的过程中，包不需要任何理解。
 
-.Port Benefits
-* Packages are normally compiled with conservative options because they have to run on the maximum number of systems. By compiling from the port, one can change the compilation options.
-* Some applications have compile-time options relating to which features are installed. For example, NGINX(R) can be configured with a wide variety of different built-in options.
+.Port 的好处
+* 通常情况下，软件包会使用保守的选项进行编译，因为它们需要在尽可能多的系统上运行。通过从 ports 进行编译，可以更改编译选项。
+* 一些应用程序具有与安装的功能相关的编译时选项。例如，NGINX(R) 可以配置多种不同的内置选项。
 +
-In some cases, multiple packages will exist for the same application to specify certain settings. For example, NGINX(R) is available as a `nginx` package and a `nginx-lite` package, depending on whether or not Xorg is installed. Creating multiple packages rapidly becomes impossible if an application has more than one or two different compile-time options.
-* The licensing conditions of some software forbid binary distribution. Such software must be distributed as source code which must be compiled by the end-user.
-* Some people do not trust binary distributions or prefer to read through source code in order to look for potential problems.
-* Source code is needed in order to apply custom patches.
+在某些情况下，为了指定特定的设置，同一个应用程序可能会存在多个软件包。例如，NGINX(R) 有一个 `nginx` 软件包和一个 `nginx-lite` 软件包，取决于是否安装了 Xorg。如果一个应用程序有超过一两个不同的编译选项，创建多个软件包将很快变得不可能。
+* 一些软件的许可条件禁止二进制分发。这类软件必须以源代码的形式分发，并由最终用户进行编译。
+* 有些人不信任二进制发行版，或者更喜欢阅读源代码以寻找潜在问题。
+* 为了应用自定义补丁，需要提供源代码。
 
-To keep track of updated ports, subscribe to the {freebsd-ports} and the {freebsd-ports-bugs}.
+要跟踪更新的 ports ，请订阅 {freebsd-ports} 和 {freebsd-ports-bugs} 。
 
 [WARNING]
 ====
-Before installing an application, check https://vuxml.freebsd.org/[] for related security issues.
+在安装应用程序之前，请检查 https://vuxml.freebsd.org/[] 是否存在相关的安全问题。
 
-To audit installed packages against known vulnerabilities, run `pkg audit -F`.
+要对已安装的软件包进行已知漏洞的审计，请运行 `pkg audit -F`。
 ====
 
-The remainder of this chapter explains how to use packages and ports to install and manage third-party software on FreeBSD.
+本章的其余部分将解释如何使用软件包和 ports 在 FreeBSD 上安装和管理第三方软件。
 
 [[ports-finding-applications]]
-== Finding Software
+== 寻找软件
 
-FreeBSD's list of available applications is growing all the time. There are a number of ways to find software to install:
+FreeBSD 的可用应用程序列表不断增长。有多种方法可以找到要安装的软件：
 
-* The FreeBSD web site maintains an up-to-date searchable list of all the available applications, at link:https://www.FreeBSD.org/ports/[Ports Portal]. The ports can be searched by application name or by software category.
-* Dan Langille maintains https://www.freshports.org/[FreshPorts] which provides a comprehensive search utility and also tracks changes to the applications in the Ports Collection. Registered users can create a customized watch list in order to receive an automated email when their watched ports are updated.
-* If finding a particular application becomes challenging, try searching a site like https://sourceforge.net/[SourceForge] or https://github.com/[GitHub] then check back at the link:https://www.FreeBSD.org/ports/[Ports Portal] to see if the application has been ported.
-* Search the binary package repository for an application using the man:pkg[8] command
+* FreeBSD 网站维护着一个最新的可搜索的应用程序列表，位于 link:https://www.FreeBSD.org/ports/[Ports Portal]。可以通过应用程序名称或软件类别来搜索 ports。
+* Dan Langille 维护着 https://www.freshports.org/[FreshPorts]，该网站提供了一个全面的搜索工具，并跟踪 Ports Collection 中应用程序的变化。注册用户可以创建一个定制的监视列表，以便在所监视的 ports 更新时收到自动邮件通知。
+* 如果找到一个特定的应用程序变得困难，可以尝试在 https://sourceforge.net/[SourceForge] 或者 https://github.com/[GitHub] 这样的网站上进行搜索，然后再回到 link:https://www.FreeBSD.org/ports/[Ports Portal] 查看该应用程序是否已经被移植。
+* 使用 man:pkg[8] 命令在二进制软件包仓库中搜索一个应用程序
 
 [[pkgng-intro]]
-== Using pkg for Binary Package Management
+== 使用 pkg 进行二进制包管理
 
-man:pkg[8] provides an interface for manipulating	packages: registering, adding, removing and upgrading packages.
+man:pkg[8] 提供了一个用于操作软件包的接口：注册、添加、删除和升级软件包。
 
-For sites wishing to only use prebuilt binary packages from the FreeBSD mirrors, managing packages with man:pkg[8] can be sufficient.
+对于只希望使用 FreeBSD 镜像站点提供的预编译二进制包的网站，使用 man:pkg[8] 来管理软件包可能已经足够了。
 
-However, for those sites building from source a separate <<ports-upgrading-tools, port management tool>> will be needed.
+然而，对于那些从源代码构建网站的用户，将需要使用单独的 ports 管理工具。
 
-Since man:pkg[8] only works with binary packages, it is not a replacement for such tools. Those tools can be used to install software from both binary packages and the Ports Collection, while man:pkg[8] installs only binary packages.
+由于 man:pkg[8] 只能用于二进制软件包，它并不能替代这些工具。这些工具可以用于安装来自二进制软件包和 Ports Collection 的软件，而 man:pkg[8] 只能安装二进制软件包。
 
 [[pkgng-initial-setup]]
-=== Getting Started with pkg
+=== 开始使用 pkg
 
-All supported versions of FreeBSD now contain `/usr/sbin/pkg` a.k.a man:pkg[7]. This is a small placeholder that has just the minimum functionality required to install the real man:pkg[8].
+所有支持的 FreeBSD 版本现在都包含 `/usr/sbin/pkg`，也被称为 man:pkg[7] 。这是一个小的占位符，只包含安装真正的 man:pkg[8] 所需的最小功能。
 
 [NOTE]
 ====
-An Internet working connection is required for the bootstrap process to succeed.
+在引导过程中，需要一个互联网连接才能成功。
 ====
 
-Run man:pkg[8] command line:
+运行 man:pkg[8] 命令行：
 
 [source, shell]
 ....
 # pkg
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -147,29 +147,29 @@ The package management tool is not yet installed on your system.
 Do you want to fetch and install it now? [y/N]
 ....
 
-man:pkg[7] will intercept the command, and if you confirm that is your intention, download the man:pkg[8] tarball, install man:pkg[8] from it, bootstrap the local package database and then proceed to run the command you originally requested.
+man:pkg[7] 将拦截该命令，如果您确认这是您的意图，将下载 man:pkg[8] tarball ，并从中安装 man:pkg[8]，引导本地软件包数据库，然后继续运行您最初请求的命令。
 
-More recent versions of man:pkg[7] understand `pkg -N` as a test to see if man:pkg[8] is installed without triggering the installation, and conversely, pkg bootstrap[-f] to install man:pkg[8] (or force it to be reinstalled) without performing any other actions.
+较新版本的 man:pkg[7] 可以理解 `pkg -N` 作为一种测试，用于检查是否安装了 man:pkg[8]，而不触发安装操作。相反，pkg bootstrap[-f] 用于安装 man:pkg[8]（或强制重新安装），而不执行任何其他操作。
 
-Usage information for pkg is available in the man:pkg[8] manual page or by running `pkg` without additional arguments. Additional pkg configuration options are described in man:pkg.conf[5].
+可以通过查看 man:pkg[8] 手册页面或者在运行 `pkg` 命令时不添加额外参数来获取 pkg 的使用信息。有关其他 pkg 配置选项的描述，请参阅 man:pkg.conf[5] 。
 
-Each pkg command argument is documented in a command-specific manual page.
+每个 pkg 命令参数都在特定命令的手册页中有详细说明。
 
-To read the manual page for `pkg install`, for example, run this command:
+例如，要阅读 `pkg install` 的手册页，请运行以下命令：
 
 [source, shell]
 ....
 # pkg help install
 ....
 
-The rest of this section demonstrates common binary package management tasks which can be performed using man:pkg[8]. Each demonstrated command provides many switches to customize its use. Refer to a command's help or man page for details and more examples.
+本节的其余部分演示了使用 man:pkg[8] 执行的常见二进制包管理任务。每个演示的命令都提供了许多开关来自定义其使用方式。有关详细信息和更多示例，请参阅命令的帮助或 man 页面。
 
 [[quarterly-latest-branch]]
-=== Quarterly and Latest Ports Branches
+=== 季度和最新的 ports 分支
 
-The `Quarterly` branch provides users with a more predictable and stable experience for port and package installation and upgrades. This is done essentially by only allowing non-feature updates. Quarterly branches aim to receive security fixes (that may be version updates, or backports of commits), bug fixes and ports compliance or framework changes. The Quarterly branch is cut from HEAD at the beginning of every (yearly) quarter in January, April, July, and October. Branches are named according to the year (YYYY) and quarter (Q1-4) they are created in. For example, the quarterly branch created in January 2023, is named 2023Q1. And the `Latest` branch provides the latest versions of the packages to the users.
+`Quarterly` 分支为用户提供了更可预测和稳定的 ports 和软件包安装和升级体验。这主要通过只允许非功能性更新来实现。季度分支旨在接收安全修复（可能是版本更新或提交的回溯）、错误修复和 ports 合规性或框架更改。季度分支在每年的一月、四月、七月和十月的季度初从 HEAD 中切出。分支的命名方式根据它们创建的年份（YYYY）和季度（Q1-4）。例如， 2023 年 1 月创建的季度分支被命名为 2023Q1。而 `Latest` 分支为用户提供了软件包的最新版本。
 
-To switch man:pkg[8] from Quarterly to Latest run the following commands:
+要将 man:pkg[8] 从季度版切换到最新版，请运行以下命令：
 
 [source, shell]
 ....
@@ -177,7 +177,7 @@ To switch man:pkg[8] from Quarterly to Latest run the following commands:
 # echo 'FreeBSD: { url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
 ....
 
-Then run this command to update the local package repositories catalogues for the Latest branch:
+然后运行以下命令来更新本地软件包仓库目录，以获取最新分支的内容：
 
 [source, shell]
 ....
@@ -185,34 +185,34 @@ Then run this command to update the local package repositories catalogues for th
 ....
 
 [[pkg-configuration]]
-=== Configure pkg
+=== 配置 pkg
 
-man:pkg.conf[5] is the system-wide configuration file used by the man:pkg[8] tools. The default location of this file is `/usr/local/etc/pkg.conf`.
+man:pkg.conf[5] 是 man:pkg[8] 工具使用的系统级配置文件。该文件的默认位置是 `/usr/local/etc/pkg.conf`。
 
 [NOTE]
 ====
-FreeBSD does not need to have a `pkg.conf` file. Many installations will work well with no `pkg.conf` at all or with an empty `pkg.conf` (other than comment lines).
+FreeBSD 不需要有 `pkg.conf` 文件。许多安装可以在没有任何 `pkg.conf` 文件或只有空的 `pkg.conf` 文件（除了注释行）的情况下正常工作。
 ====
 
-Lines in the file beginning with a "#" are	comments and are ignored.
+以"#"开头的行是注释，会被忽略。
 
-The file is in UCL format. For more information on the syntax of man:libucl[3], please visit the link:https://github.com/vstakhov/libucl[official UCL website].
+该文件采用 UCL 格式。有关 man:libucl[3] 语法的更多信息，请访问 link:https://github.com/vstakhov/libucl[official UCL website] 。
 
-The following types of options are recognized - boolean, string and list options.
+识别以下类型的选项 - 布尔型、字符串型和列表型选项。
 
-A boolean option is marked as enabled if one of the following values is specified in the configuration file - YES, TRUE and ON.
+如果在配置文件中指定了以下值之一 - YES 、TRUE 和 ON，则将布尔选项标记为已启用。
 
 [[pkg-search]]
-=== Searching Packages
+=== 搜索软件包
 
-To search a package man:pkg-search[8] can be used:
+要搜索一个软件包，可以使用 man:pkg-search[8] 命令：
 
 [source, shell]
 ....
 # pkg search nginx
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -233,16 +233,16 @@ rubygem-passenger-nginx-6.0.15 Modules for running Ruby on Rails and Rack applic
 ....
 
 [[pkg-installing-fetching]]
-=== Installing and Fetching Packages
+=== 安装和获取软件包
 
-To install a binary package man:pkg-install[8] can be used. This command uses repository data to determine which version of the software to install and if it has any uninstalled dependencies. For example, to install curl:
+要安装一个二进制软件包，可以使用 man:pkg-install[8] 命令。该命令使用存储库数据来确定要安装的软件的版本以及是否有未安装的依赖项。例如，要安装 curl ：
 
 [source, shell]
 ....
 # pkg install curl
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -270,14 +270,14 @@ The process will require 11 MiB more space.
 Proceed with this action? [y/N]
 ....
 
-The new package and any additional packages that were installed as dependencies can be seen in the installed packages list:
+新的软件包以及作为依赖项安装的任何其他软件包都可以在已安装软件包列表中看到：
 
 [source, shell]
 ....
 # pkg info
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -293,17 +293,17 @@ libunistring-1.0               Unicode string library
 pkg-1.18.4                     Package manager
 ....
 
-To fetch a package and install it later or in another place use man:pkg-fetch[8]. For example, to download `nginx-lite`:
+要获取一个软件包并稍后安装它或在另一个地方安装，请使用 man:pkg-fetch[8]。例如，要下载 `nginx-lite`：
 
 [source, shell]
 ....
 # pkg fetch -d -o /usr/home/user/packages/ nginx-lite
 ....
 
-* `-d`: used to fetch all the dependencies
-* `-o`: used to specify the download directory
+* `-d`：用于获取所有的依赖项
+* `-o`：用于指定下载目录
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -324,7 +324,7 @@ The process will require 2 MiB more space.
 Proceed with fetching packages? [y/N]:
 ....
 
-To install the downloaded packages man:pkg-install[8] can be used as follows:
+要安装下载的软件包，可以使用 man:pkg-install[8] 命令，具体操作如下：
 
 [source, shell]
 ....
@@ -337,18 +337,18 @@ To install the downloaded packages man:pkg-install[8] can be used as follows:
 ....
 
 [[pkgng-pkg-info]]
-=== Obtaining Information About Installed Packages
+=== 获取已安装软件包的信息
 
-Information about the packages installed on a system can be viewed by running man:pkg-info[8] which, when run without any switches, will list the package version for either all installed packages or the specified package.
+可以通过运行 man:pkg-info[8] 来查看系统上安装的软件包的信息。当不带任何开关运行时，它将列出所有已安装软件包或指定软件包的版本信息。
 
-For example, to see which version of pkg is installed, run:
+例如，要查看已安装的 pkg 版本，请运行：
 
 [source, shell]
 ....
 # pkg info pkg
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -380,28 +380,28 @@ WWW: https://github.com/freebsd/pkg
 ....
 
 [[pkgng-upgrading]]
-=== Upgrading Installed Packages
+=== 升级已安装的软件包
 
-Installed packages can be upgraded to their latest versions using man:pkg-upgrade[8]:
+已安装的软件包可以使用 man:pkg-upgrade[8] 命令升级到最新版本。
 
 [source, shell]
 ....
 # pkg upgrade
 ....
 
-This command will compare the installed versions with those available in the repository catalogue and upgrade them from the repository.
+该命令将比较已安装的版本与存储库目录中可用的版本，并从存储库中升级它们。
 
 [[pkgng-auditing]]
-=== Auditing Installed Packages
+=== 审核已安装的软件包
 
-Software vulnerabilities are regularly discovered in third-party applications. To address this, pkg includes a built-in auditing mechanism. To determine if there are any known vulnerabilities for the software installed on the system, use man:pkg-audit[8]:
+第三方应用程序经常会发现软件漏洞。为了解决这个问题，pkg 包含了一个内置的审计机制。要确定系统上安装的软件是否存在已知的漏洞，请使用 man:pkg-audit[8] 命令。
 
 [source, shell]
 ....
 # pkg audit -F
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -417,18 +417,18 @@ chromium-108.0.5359.98 is vulnerable:
 ....
 
 [[pkg-delete]]
-=== Removing Packages
+=== 移除软件包
 
-Packages that are no longer needed can be removed with man:pkg-delete[8].
+不再需要的软件包可以使用 man:pkg-delete[8] 命令进行删除。
 
-For example:
+例如：
 
 [source, shell]
 ....
 # pkg delete curl
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -448,16 +448,16 @@ Proceed with deinstallation packages? [y/N]: y
 ....
 
 [[pkgng-autoremove]]
-=== Automatically Removing Unused Packages
+=== 自动删除未使用的软件包
 
-Removing a package may leave behind dependencies which are no longer required. Unneeded packages that were installed as dependencies (leaf packages) can be automatically detected and removed using man:pkg-autoremove[8]:
+删除一个软件包可能会留下不再需要的依赖项。可以使用 man:pkg-autoremove[8] 自动检测和删除作为依赖项安装的不需要的软件包（叶子软件包）。
 
 [source, shell]
 ....
 # pkg autoremove
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -474,14 +474,14 @@ The operation will free 723 KiB.
 Proceed with deinstalling packages? [y/N]:
 ....
 
-Packages installed as dependencies are called _automatic_ packages. Non-automatic packages, i.e the packages that were explicity installed not as a dependency to another package, can be listed using:
+作为依赖安装的软件包被称为 _自动_ 软件包。非自动软件包，即明确安装而不是作为其他软件包的依赖项安装的软件包，可以使用以下命令列出：
 
 [source, shell]
 ....
 # pkg prime-list
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -490,14 +490,14 @@ openvpn
 sudo
 ....
 
-`pkg prime-list` is an alias command declared in `/usr/local/etc/pkg.conf`. There are many others that can be used to query the package database of the system. For instance, command `pkg prime-origins` can be used to get the origin port directory of the list mentioned above:
+`pkg prime-list` 是在 `/usr/local/etc/pkg.conf` 中声明的一个别名命令。系统中还有许多其他命令可以用来查询软件包数据库。例如，命令 `pkg prime-origins` 可以用来获取上述列表的源 ports 目录。
 
 [source, shell]
 ....
 # pkg prime-origins
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -506,18 +506,18 @@ security/openvpn
 security/sudo
 ....
 
-This list can be used to rebuild all packages installed on a system using build tools such as package:ports-mgmt/poudriere[] or package:ports-mgmt/synth[].
+这个列表可以用于使用构建工具（如 package:ports-mgmt/poudriere[] 或 package:ports-mgmt/synth[]）重新构建系统上安装的所有软件包。
 
-Marking an installed package as automatic can be done using:
+将已安装的软件包标记为自动安装可以使用以下方法：
 
 [source, shell]
 ....
 # pkg set -A 1 devel/cmake
 ....
 
-Once a package is a leaf package and is marked as automatic, it gets selected by `pkg autoremove`.
+一旦一个包是一个叶子包并且被标记为自动安装，它将被 `pkg autoremove` 命令选择删除。
 
-Marking an installed package as _not_ automatic can be done using:
+将已安装的软件包标记为 _非_ 自动安装可以使用以下方法：
 
 [source, shell]
 ....
@@ -525,16 +525,16 @@ Marking an installed package as _not_ automatic can be done using:
 ....
 
 [[pkgng-clean]]
-=== Removing Stale Packages
+=== 移除过期的软件包
 
-By default, pkg stores binary packages in a cache directory defined by `PKG_CACHEDIR` in man:pkg.conf[5]. Only copies of the latest installed packages are kept. Older versions of pkg kept all previous packages. To remove these outdated binary packages, run:
+默认情况下，pkg 将二进制软件包存储在由 man:pkg.conf[5] 中的 `PKG_CACHEDIR` 定义的缓存目录中。只保留最新安装的软件包的副本。旧版本的 pkg 会保留所有先前的软件包。要删除这些过时的二进制软件包，请运行：
 
 [source, shell]
 ....
 # pkg clean
 ....
 
-The entire cache may be cleared by running:
+可以通过运行以下命令来清除整个缓存：
 
 [source, shell]
 ....
@@ -542,18 +542,18 @@ The entire cache may be cleared by running:
 ....
 
 [[pkg-locking-unlocking]]
-=== Locking and Unlocking Packages
+=== 锁定和解锁软件包
 
 man:pkg-lock[8] is used to lock packages against reinstallation, modification or deletion. man:pkg-unlock[8] unlocks the named packages. Either variant only has an effect on currently installed packages. Consequently it is impossible to block installation of a new package by using this mechanism, unless such an installation implies updating a locked package.
 
-For example, to lock `nginx-lite`:
+例如，要锁定 `nginx-lite`：
 
 [source, shell]
 ....
 # pkg lock nginx-lite
 ....
 
-And to unlock `nginx-lite`:
+要解锁 `nginx-lite`：
 
 [source, shell]
 ....
@@ -561,18 +561,18 @@ And to unlock `nginx-lite`:
 ....
 
 [[pkgng-set]]
-=== Modifying Package Metadata
+=== 修改软件包元数据
 
-Software within the FreeBSD Ports Collection can undergo major version number changes. To address this, pkg has a built-in command to update package origins. This can be useful, for example, if package:lang/python3[] is renamed to package:lang/python311[] so that package:lang/python3[] can now represent version `3.11`.
+FreeBSD Ports Collection 中的软件可能会经历主版本号的更改。为了解决这个问题，pkg 有一个内置命令来更新软件包的来源。这在某些情况下非常有用，例如，如果 package:lang/python3[] 被重命名为 package:lang/python311[] ，那么 package:lang/python3[] 现在可以表示版本 `3.11`。
 
-To change the package origin for the above example, run:
+要更改上面示例的软件包来源，请运行以下命令：
 
 [source, shell]
 ....
 # pkg set -o lang/python3:lang/python311
 ....
 
-As another example, to update package:lang/ruby31[] to package:lang/ruby32[], run:
+另一个例子是，要将 package:lang/ruby31[] 更新为 package:lang/ruby32[]，运行以下命令：
 
 [source, shell]
 ....
@@ -581,7 +581,7 @@ As another example, to update package:lang/ruby31[] to package:lang/ruby32[], ru
 
 [NOTE]
 ====
-When changing package origins, it is important to reinstall packages that are dependent on the package with the modified origin. To force a reinstallation of dependent packages, run:
+在更改软件包来源时，重要的是重新安装依赖于已修改来源的软件包。要强制重新安装依赖软件包，请运行：
 
 [source, shell]
 ....
@@ -590,42 +590,42 @@ When changing package origins, it is important to reinstall packages that are de
 ====
 
 [[ports-using]]
-== Using the Ports Collection
+== 使用 Ports 集合
 
-The Ports Collection is a set of `Makefiles`, patches, and description files. Each set of these files is used to compile and install an individual application on FreeBSD, and is called a _port_.
+Ports Collection 是一组 `Makefiles`、补丁和描述文件。每组这些文件用于在 FreeBSD 上编译和安装单个应用程序，被称为一个 _ports_。
 
-By default, the Ports Collection itself is stored as a subdirectory of `/usr/ports`.
+默认情况下，Ports Collection 本身存储在 `/usr/ports` 的子目录中。
 
 [WARNING]
 ====
-Before installing and using the Ports Collection, please be aware that it is generally ill-advised to use the Ports Collection in conjunction with the binary packages provided via pkg to install software. pkg, by default, tracks quarterly branch-releases of the ports tree and not HEAD. Dependencies could be different for a port in HEAD compared to its counterpart in a quarterly branch release and this could result in conflicts between dependencies installed by pkg and those from the Ports Collection. If the Ports Collection and pkg must be used in conjunction, then be sure that your Ports Collection and pkg are on the same branch release of the ports tree.
+在安装和使用 Ports Collection 之前，请注意通常不建议使用 Ports Collection 与通过 pkg 提供的二进制软件包一起安装软件。 pkg 默认跟踪 ports 树的季度分支发布，而不是 HEAD 。与季度分支发布中的对应 ports 相比， HEAD 中的 ports 的依赖关系可能不同，这可能导致 pkg 安装的依赖关系与 Ports Collection 中的依赖关系发生冲突。如果必须同时使用 Ports Collection 和 pkg ，请确保您的 Ports Collection 和 pkg 位于相同的 ports 树分支发布上。
 ====
 
-The Ports Collection contains directories for software categories. Inside each category are subdirectories for individual applications. Each application subdirectory contains a set of files that tells FreeBSD how to compile and install that program, called a _ports skeleton_. Each port skeleton includes these files and directories:
+Ports 集合包含了软件类别的目录。每个类别中都有针对个别应用程序的子目录。每个应用程序子目录包含一组文件，告诉 FreeBSD 如何编译和安装该程序，称为 _ports skeleton_。每个 ports 骨架包括以下文件和目录：
 
-* *Makefile*: contains statements that specify how the application should be compiled and where its components should be installed.
-* *distinfo*: contains the names and checksums of the files that must be downloaded to build the port.
-* *files/*: this directory contains any patches needed for the program to compile and install on FreeBSD. This directory may also contain other files used to build the port.
-* *pkg-descr*: provides a more detailed description of the program.
-* *pkg-plist*: a list of all the files that will be installed by the port. It also tells the ports system which files to remove upon deinstallation.
+* *Makefile*：包含指定应用程序如何编译以及其组件应安装在何处的语句。
+* *distinfo*：包含构建 ports 所需下载的文件的名称和校验和。
+* *files/*：这个目录包含了在 FreeBSD 上编译和安装程序所需的补丁文件。这个目录也可能包含其他用于构建 ports 的文件。
+* *pkg-descr*：提供程序的更详细描述。
+* *pkg-plist*：一个包含所有将由 ports 安装的文件的列表。它还告诉 ports 系统在卸载时要删除哪些文件。
 
-Some ports include `pkg-message` or other files to handle special situations. For more details on these files, and on ports in general, refer to the extref:{porters-handbook}[FreeBSD Porter's Handbook].
+一些 ports 包括 `pkg-message` 或其他文件来处理特殊情况。有关这些文件以及 ports 的更多详细信息，请参考 extref:{porters-handbook}[FreeBSD Porter's Handbook]。
 
-The port does not include the actual source code, also known as a `distfile`. The extract portion of building a port will automatically save the downloaded source to `/usr/ports/distfiles`.
+ ports 不包含实际的源代码，也称为 `distfile` 。构建 ports 的提取部分将自动将下载的源代码保存到 `/usr/ports/distfiles`。
 
 [[ports-using-installation-methods]]
-=== Installing the Ports Collection
+=== 安装 Ports 集合
 
-Before an application can be compiled using a port, the Ports Collection must first be installed. If it was not installed during the installation of FreeBSD, use one of the following methods to install it:
+在使用 ports 编译应用程序之前，必须先安装 ports 集合。如果在安装 FreeBSD 时没有安装它，请使用以下方法之一进行安装：
 
 [[ports-using-git-method]]
 [.procedure]
 ****
-*Procedure: Git Method*
+*过程：Git 方法*
 
-If more control over the ports tree is needed or if local changes need to be maintained, or if running FreeBSD-CURRENT, Git can be used to obtain the Ports Collection. Refer to extref:{committers-guide}[the Git Primer, git-primer] for a detailed description of Git.
+如果需要对 ports 树进行更多的控制，或者需要维护本地更改，或者正在运行 FreeBSD-CURRENT，可以使用 Git 来获取 Ports Collection。有关 Git 的详细描述，请参阅 extref:{committers-guide}[Git Primer,git-primer]。
 
-. Git must be installed before it can be used to check out the ports tree. If a copy of the ports tree is already present, install Git like this:
+. 在使用 Git 检出 ports 树之前，必须先安装 Git 。如果已经存在一个 ports 树的副本，请按照以下方式安装 Git ：
 +
 [source, shell]
 ....
@@ -633,35 +633,35 @@ If more control over the ports tree is needed or if local changes need to be mai
 # make install clean
 ....
 +
-If the ports tree is not available, or pkg is being used to manage packages, Git can be installed as a package:
+如果 ports 树不可用，或者正在使用 pkg 来管理软件包，可以将 Git 作为一个软件包安装：
 +
 [source, shell]
 ....
 # pkg install git
 ....
 +
-. Check out a copy of the HEAD branch of the ports tree:
+. 检出 ports 树的 HEAD 分支的副本：
 +
 [source, shell]
 ....
 # git clone https://git.FreeBSD.org/ports.git /usr/ports
 ....
 +
-. Or, check out a copy of a quarterly branch:
+. 或者，检出一个季度分支的副本：
 +
 [source, shell]
 ....
 # git clone https://git.FreeBSD.org/ports.git -b 2023Q1 /usr/ports
 ....
 +
-. As needed, update `/usr/ports` after the initial Git checkout:
+. 在初始的 Git 检出之后，根据需要更新 `/usr/ports`。
 +
 [source, shell]
 ....
 # git -C /usr/ports pull
 ....
 +
-. As needed, switch `/usr/ports` to a different quarterly branch:
+. 根据需要，将 `/usr/ports` 切换到不同的季度分支：
 +
 [source, shell]
 ....
@@ -669,7 +669,7 @@ If the ports tree is not available, or pkg is being used to manage packages, Git
 ....
 ****
 
-=== Installing Ports
+=== 安装 Ports
 
 This section provides basic instructions on using the Ports Collection to install or remove software. The detailed description of available `make` targets and environment variables is available in man:ports[7].
 
