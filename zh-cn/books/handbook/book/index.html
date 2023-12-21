@@ -267,7 +267,7 @@
         <li><a href="#introduction">Chapter 1. 介绍</a></li>
         <li><a href="#bsdinstall">Chapter 2. 安装 FreeBSD</a></li>
         <li><a href="#basics">Chapter 3. FreeBSD 基础知识</a></li>
-        <li><a href="#ports">Chapter 4. Installing Applications: Packages and Ports</a></li>
+        <li><a href="#ports">Chapter 4. 安装应用程序：软件包和 Ports</a></li>
         <li><a href="#x11">Chapter 5. The X Window System</a></li>
         <li><a href="#wayland">Chapter 6. Wayland on FreeBSD</a></li>
         <li><a href="#network">Chapter 7. Network</a></li>
@@ -4971,101 +4971,101 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="sect1">
-<h2 id="ports">Chapter 4. Installing Applications: Packages and Ports<a class="anchor" href="#ports"></a></h2>
+<h2 id="ports">Chapter 4. 安装应用程序：软件包和 Ports<a class="anchor" href="#ports"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="ports-synopsis">4.1. Synopsis<a class="anchor" href="#ports-synopsis"></a></h3>
+<h3 id="ports-synopsis">4.1. 简介<a class="anchor" href="#ports-synopsis"></a></h3>
 <div class="paragraph">
-<p>FreeBSD is bundled with a rich collection of system tools as part of the base system. In addition, FreeBSD provides two complementary technologies for installing third-party software: the FreeBSD Ports Collection, for installing from source, and packages, for installing from pre-built binaries. Either method may be used to install software from local media or from the network.</p>
+<p>FreeBSD 捆绑了丰富的系统工具作为基本系统的一部分。此外，FreeBSD 还提供了两种互补的技术来安装第三方软件：FreeBSD Ports Collection 用于从源代码安装，而软件包则用于从预编译的二进制文件安装。可以使用任一方法从本地媒体或网络安装软件。</p>
 </div>
 <div class="paragraph">
-<p>After reading this chapter, you will know:</p>
+<p>阅读完本章后，您将了解：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The difference between binary packages and ports.</p>
+<p>二进制包和 ports 之间的区别。</p>
 </li>
 <li>
-<p>How to find third-party software that has been ported to FreeBSD.</p>
+<p>如何找到已经移植到 FreeBSD 的第三方软件。</p>
 </li>
 <li>
-<p>How to manage binary packages using pkg.</p>
+<p>如何使用 pkg 管理二进制软件包。</p>
 </li>
 <li>
-<p>How to build third-party software from source using the Ports Collection.</p>
+<p>如何使用 Ports Collection 从源代码构建第三方软件。</p>
 </li>
 <li>
-<p>How to find the files installed with the application for post-installation configuration.</p>
+<p>如何找到应用程序安装后的文件，以进行后续配置。</p>
 </li>
 <li>
-<p>What to do if a software installation fails.</p>
+<p>如果软件安装失败，应该怎么办。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ports-overview">4.2. Overview of Software Installation<a class="anchor" href="#ports-overview"></a></h3>
+<h3 id="ports-overview">4.2. 软件安装概述<a class="anchor" href="#ports-overview"></a></h3>
 <div class="paragraph">
-<p>A FreeBSD <em>port</em> is a collection of files designed to automate the process of compiling an application from source code. The files that comprise a port contain all the necessary information to automatically download, extract, patch, compile, and install the application.</p>
+<p>FreeBSD 的 <code>ports</code> 是一组文件，旨在自动化从源代码编译应用程序的过程。组成 ports 的文件包含了自动下载、提取、打补丁、编译和安装应用程序所需的所有必要信息。</p>
 </div>
 <div class="paragraph">
-<p>If the software has not already been adapted and tested on FreeBSD, the source code might need editing in order for it to install and run properly.</p>
+<p>如果软件尚未在 FreeBSD 上进行适配和测试，源代码可能需要进行编辑，以便正确安装和运行。</p>
 </div>
 <div class="paragraph">
-<p>However, over <a href="https://www.FreeBSD.org/ports/">36000</a> third-party applications have already been ported to FreeBSD. When feasible, these applications are made available for download as pre-compiled <em>packages</em>.</p>
+<p>然而，在 <a href="https://www.FreeBSD.org/ports/">36000</a> 上已经有许多第三方应用程序被移植到了 FreeBSD。在可行的情况下，这些应用程序会以预编译的软件包形式提供下载。</p>
 </div>
 <div class="paragraph">
-<p>Packages can be manipulated with the FreeBSD package management commands.</p>
+<p>可以使用 FreeBSD 软件包管理命令来操作软件包。</p>
 </div>
 <div class="paragraph">
-<p>Both packages and ports understand dependencies. If a package or port is used to install an application and a dependent library is not already installed, the library will automatically be installed first.</p>
+<p>包和 ports 都能理解依赖关系。如果使用包或 ports 来安装一个应用程序，并且所依赖的库尚未安装，那么该库将会自动被先安装。</p>
 </div>
 <div class="paragraph">
-<p>A FreeBSD package contains pre-compiled copies of all the commands for an application, as well as any configuration files and documentation. A package can be manipulated with the <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> commands, such as <code>pkg install</code>.</p>
+<p>一个 FreeBSD 软件包包含了一个应用程序的预编译副本，以及任何配置文件和文档。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 命令来操作软件包，例如 <code>pkg install</code>。</p>
 </div>
 <div class="paragraph">
-<p>While the two technologies are similar, packages and ports each have their own strengths. Select the technology that meets your requirements for installing a particular application.</p>
+<p>虽然这两种技术相似，但软件包和 ports 各有各的优势。选择符合您安装特定应用程序需求的技术。</p>
 </div>
 <div class="ulist">
-<div class="title">Package Benefits</div>
+<div class="title">包的好处</div>
 <ul>
 <li>
-<p>A compressed package tarball is typically smaller than the compressed tarball containing the source code for the application.</p>
+<p>通常，压缩的软件包 tarball 比包含应用程序源代码的压缩 tarball 要小。</p>
 </li>
 <li>
-<p>Packages do not require compilation time. For large applications, such as Firefox, KDE Plasma, or GNOME, this can be important on a slow system.</p>
+<p>包不需要编译时间。对于大型应用程序，如 Firefox 、KDE Plasma 或 GNOME，在慢速系统上这一点可能很重要。</p>
 </li>
 <li>
-<p>Packages do not require any understanding of the process involved in compiling software on FreeBSD.</p>
+<p>在 FreeBSD 上编译软件的过程中，包不需要任何理解。</p>
 </li>
 </ul>
 </div>
 <div class="ulist">
-<div class="title">Port Benefits</div>
+<div class="title">Port 的好处</div>
 <ul>
 <li>
-<p>Packages are normally compiled with conservative options because they have to run on the maximum number of systems. By compiling from the port, one can change the compilation options.</p>
+<p>通常情况下，软件包会使用保守的选项进行编译，因为它们需要在尽可能多的系统上运行。通过从 ports 进行编译，可以更改编译选项。</p>
 </li>
 <li>
-<p>Some applications have compile-time options relating to which features are installed. For example, NGINX® can be configured with a wide variety of different built-in options.</p>
+<p>一些应用程序具有与安装的功能相关的编译时选项。例如，NGINX® 可以配置多种不同的内置选项。</p>
 <div class="paragraph">
-<p>In some cases, multiple packages will exist for the same application to specify certain settings. For example, NGINX® is available as a <code>nginx</code> package and a <code>nginx-lite</code> package, depending on whether or not Xorg is installed. Creating multiple packages rapidly becomes impossible if an application has more than one or two different compile-time options.</p>
+<p>在某些情况下，为了指定特定的设置，同一个应用程序可能会存在多个软件包。例如，NGINX® 有一个 <code>nginx</code> 软件包和一个 <code>nginx-lite</code> 软件包，取决于是否安装了 Xorg。如果一个应用程序有超过一两个不同的编译选项，创建多个软件包将很快变得不可能。</p>
 </div>
 </li>
 <li>
-<p>The licensing conditions of some software forbid binary distribution. Such software must be distributed as source code which must be compiled by the end-user.</p>
+<p>一些软件的许可条件禁止二进制分发。这类软件必须以源代码的形式分发，并由最终用户进行编译。</p>
 </li>
 <li>
-<p>Some people do not trust binary distributions or prefer to read through source code in order to look for potential problems.</p>
+<p>有些人不信任二进制发行版，或者更喜欢阅读源代码以寻找潜在问题。</p>
 </li>
 <li>
-<p>Source code is needed in order to apply custom patches.</p>
+<p>为了应用自定义补丁，需要提供源代码。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>To keep track of updated ports, subscribe to the {freebsd-ports} and the {freebsd-ports-bugs}.</p>
+<p>要跟踪更新的 ports ，请订阅 {freebsd-ports} 和 {freebsd-ports-bugs} 。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -5075,59 +5075,59 @@ Swap: 2048M Total, 2048M Free
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Before installing an application, check <a href="https://vuxml.freebsd.org/" class="bare">https://vuxml.freebsd.org/</a> for related security issues.</p>
+<p>在安装应用程序之前，请检查 <a href="https://vuxml.freebsd.org/" class="bare">https://vuxml.freebsd.org/</a> 是否存在相关的安全问题。</p>
 </div>
 <div class="paragraph">
-<p>To audit installed packages against known vulnerabilities, run <code>pkg audit -F</code>.</p>
+<p>要对已安装的软件包进行已知漏洞的审计，请运行 <code>pkg audit -F</code>。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The remainder of this chapter explains how to use packages and ports to install and manage third-party software on FreeBSD.</p>
+<p>本章的其余部分将解释如何使用软件包和 ports 在 FreeBSD 上安装和管理第三方软件。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ports-finding-applications">4.3. Finding Software<a class="anchor" href="#ports-finding-applications"></a></h3>
+<h3 id="ports-finding-applications">4.3. 寻找软件<a class="anchor" href="#ports-finding-applications"></a></h3>
 <div class="paragraph">
-<p>FreeBSD’s list of available applications is growing all the time. There are a number of ways to find software to install:</p>
+<p>FreeBSD 的可用应用程序列表不断增长。有多种方法可以找到要安装的软件：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The FreeBSD web site maintains an up-to-date searchable list of all the available applications, at <a href="https://www.FreeBSD.org/ports/">Ports Portal</a>. The ports can be searched by application name or by software category.</p>
+<p>FreeBSD 网站维护着一个最新的可搜索的应用程序列表，位于 <a href="https://www.FreeBSD.org/ports/">Ports Portal</a>。可以通过应用程序名称或软件类别来搜索 ports。</p>
 </li>
 <li>
-<p>Dan Langille maintains <a href="https://www.freshports.org/">FreshPorts</a> which provides a comprehensive search utility and also tracks changes to the applications in the Ports Collection. Registered users can create a customized watch list in order to receive an automated email when their watched ports are updated.</p>
+<p>Dan Langille 维护着 <a href="https://www.freshports.org/">FreshPorts</a>，该网站提供了一个全面的搜索工具，并跟踪 Ports Collection 中应用程序的变化。注册用户可以创建一个定制的监视列表，以便在所监视的 ports 更新时收到自动邮件通知。</p>
 </li>
 <li>
-<p>If finding a particular application becomes challenging, try searching a site like <a href="https://sourceforge.net/">SourceForge</a> or <a href="https://github.com/">GitHub</a> then check back at the <a href="https://www.FreeBSD.org/ports/">Ports Portal</a> to see if the application has been ported.</p>
+<p>如果找到一个特定的应用程序变得困难，可以尝试在 <a href="https://sourceforge.net/">SourceForge</a> 或者 <a href="https://github.com/">GitHub</a> 这样的网站上进行搜索，然后再回到 <a href="https://www.FreeBSD.org/ports/">Ports Portal</a> 查看该应用程序是否已经被移植。</p>
 </li>
 <li>
-<p>Search the binary package repository for an application using the <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> command</p>
+<p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 命令在二进制软件包仓库中搜索一个应用程序</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="pkgng-intro">4.4. Using pkg for Binary Package Management<a class="anchor" href="#pkgng-intro"></a></h3>
+<h3 id="pkgng-intro">4.4. 使用 pkg 进行二进制包管理<a class="anchor" href="#pkgng-intro"></a></h3>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> provides an interface for manipulating	packages: registering, adding, removing and upgrading packages.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 提供了一个用于操作软件包的接口：注册、添加、删除和升级软件包。</p>
 </div>
 <div class="paragraph">
-<p>For sites wishing to only use prebuilt binary packages from the FreeBSD mirrors, managing packages with <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> can be sufficient.</p>
+<p>对于只希望使用 FreeBSD 镜像站点提供的预编译二进制包的网站，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 来管理软件包可能已经足够了。</p>
 </div>
 <div class="paragraph">
-<p>However, for those sites building from source a separate <a href="#ports-upgrading-tools">port management tool</a> will be needed.</p>
+<p>然而，对于那些从源代码构建网站的用户，将需要使用单独的 ports 管理工具。</p>
 </div>
 <div class="paragraph">
-<p>Since <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> only works with binary packages, it is not a replacement for such tools. Those tools can be used to install software from both binary packages and the Ports Collection, while <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> installs only binary packages.</p>
+<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 只能用于二进制软件包，它并不能替代这些工具。这些工具可以用于安装来自二进制软件包和 Ports Collection 的软件，而 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 只能安装二进制软件包。</p>
 </div>
 <div class="sect3">
-<h4 id="pkgng-initial-setup">4.4.1. Getting Started with pkg<a class="anchor" href="#pkgng-initial-setup"></a></h4>
+<h4 id="pkgng-initial-setup">4.4.1. 开始使用 pkg<a class="anchor" href="#pkgng-initial-setup"></a></h4>
 <div class="paragraph">
-<p>All supported versions of FreeBSD now contain <code>/usr/sbin/pkg</code> a.k.a <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a>. This is a small placeholder that has just the minimum functionality required to install the real <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>.</p>
+<p>所有支持的 FreeBSD 版本现在都包含 <code>/usr/sbin/pkg</code>，也被称为 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 。这是一个小的占位符，只包含安装真正的 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 所需的最小功能。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -5137,14 +5137,14 @@ Swap: 2048M Total, 2048M Free
 </td>
 <td class="content">
 <div class="paragraph">
-<p>An Internet working connection is required for the bootstrap process to succeed.</p>
+<p>在引导过程中，需要一个互联网连接才能成功。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Run <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> command line:</p>
+<p>运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 命令行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5152,7 +5152,7 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5161,19 +5161,19 @@ Do you want to fetch and install it now? [y/N]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> will intercept the command, and if you confirm that is your intention, download the <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> tarball, install <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> from it, bootstrap the local package database and then proceed to run the command you originally requested.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 将拦截该命令，如果您确认这是您的意图，将下载 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> tarball ，并从中安装 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>，引导本地软件包数据库，然后继续运行您最初请求的命令。</p>
 </div>
 <div class="paragraph">
-<p>More recent versions of <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> understand <code>pkg -N</code> as a test to see if <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> is installed without triggering the installation, and conversely, pkg bootstrap[-f] to install <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> (or force it to be reinstalled) without performing any other actions.</p>
+<p>较新版本的 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 可以理解 <code>pkg -N</code> 作为一种测试，用于检查是否安装了 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>，而不触发安装操作。相反，pkg bootstrap[-f] 用于安装 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>（或强制重新安装），而不执行任何其他操作。</p>
 </div>
 <div class="paragraph">
-<p>Usage information for pkg is available in the <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> manual page or by running <code>pkg</code> without additional arguments. Additional pkg configuration options are described in <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a>.</p>
+<p>可以通过查看 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 手册页面或者在运行 <code>pkg</code> 命令时不添加额外参数来获取 pkg 的使用信息。有关其他 pkg 配置选项的描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> 。</p>
 </div>
 <div class="paragraph">
-<p>Each pkg command argument is documented in a command-specific manual page.</p>
+<p>每个 pkg 命令参数都在特定命令的手册页中有详细说明。</p>
 </div>
 <div class="paragraph">
-<p>To read the manual page for <code>pkg install</code>, for example, run this command:</p>
+<p>例如，要阅读 <code>pkg install</code> 的手册页，请运行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5181,16 +5181,16 @@ Do you want to fetch and install it now? [y/N]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The rest of this section demonstrates common binary package management tasks which can be performed using <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>. Each demonstrated command provides many switches to customize its use. Refer to a command’s help or man page for details and more examples.</p>
+<p>本节的其余部分演示了使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 执行的常见二进制包管理任务。每个演示的命令都提供了许多开关来自定义其使用方式。有关详细信息和更多示例，请参阅命令的帮助或 man 页面。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="quarterly-latest-branch">4.4.2. Quarterly and Latest Ports Branches<a class="anchor" href="#quarterly-latest-branch"></a></h4>
+<h4 id="quarterly-latest-branch">4.4.2. 季度和最新的 ports 分支<a class="anchor" href="#quarterly-latest-branch"></a></h4>
 <div class="paragraph">
-<p>The <code>Quarterly</code> branch provides users with a more predictable and stable experience for port and package installation and upgrades. This is done essentially by only allowing non-feature updates. Quarterly branches aim to receive security fixes (that may be version updates, or backports of commits), bug fixes and ports compliance or framework changes. The Quarterly branch is cut from HEAD at the beginning of every (yearly) quarter in January, April, July, and October. Branches are named according to the year (YYYY) and quarter (Q1-4) they are created in. For example, the quarterly branch created in January 2023, is named 2023Q1. And the <code>Latest</code> branch provides the latest versions of the packages to the users.</p>
+<p><code>Quarterly</code> 分支为用户提供了更可预测和稳定的 ports 和软件包安装和升级体验。这主要通过只允许非功能性更新来实现。季度分支旨在接收安全修复（可能是版本更新或提交的回溯）、错误修复和 ports 合规性或框架更改。季度分支在每年的一月、四月、七月和十月的季度初从 HEAD 中切出。分支的命名方式根据它们创建的年份（YYYY）和季度（Q1-4）。例如， 2023 年 1 月创建的季度分支被命名为 2023Q1。而 <code>Latest</code> 分支为用户提供了软件包的最新版本。</p>
 </div>
 <div class="paragraph">
-<p>To switch <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> from Quarterly to Latest run the following commands:</p>
+<p>要将 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 从季度版切换到最新版，请运行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5199,7 +5199,7 @@ Do you want to fetch and install it now? [y/N]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then run this command to update the local package repositories catalogues for the Latest branch:</p>
+<p>然后运行以下命令来更新本地软件包仓库目录，以获取最新分支的内容：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5208,9 +5208,9 @@ Do you want to fetch and install it now? [y/N]</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkg-configuration">4.4.3. Configure pkg<a class="anchor" href="#pkg-configuration"></a></h4>
+<h4 id="pkg-configuration">4.4.3. 配置 pkg<a class="anchor" href="#pkg-configuration"></a></h4>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> is the system-wide configuration file used by the <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> tools. The default location of this file is <code>/usr/local/etc/pkg.conf</code>.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> 是 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 工具使用的系统级配置文件。该文件的默认位置是 <code>/usr/local/etc/pkg.conf</code>。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -5220,29 +5220,29 @@ Do you want to fetch and install it now? [y/N]</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>FreeBSD does not need to have a <code>pkg.conf</code> file. Many installations will work well with no <code>pkg.conf</code> at all or with an empty <code>pkg.conf</code> (other than comment lines).</p>
+<p>FreeBSD 不需要有 <code>pkg.conf</code> 文件。许多安装可以在没有任何 <code>pkg.conf</code> 文件或只有空的 <code>pkg.conf</code> 文件（除了注释行）的情况下正常工作。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Lines in the file beginning with a &#34;#&#34; are	comments and are ignored.</p>
+<p>以&#34;#&#34;开头的行是注释，会被忽略。</p>
 </div>
 <div class="paragraph">
-<p>The file is in UCL format. For more information on the syntax of <a href="https://man.freebsd.org/cgi/man.cgi?query=libucl&amp;sektion=3&amp;format=html">libucl(3)</a>, please visit the <a href="https://github.com/vstakhov/libucl">official UCL website</a>.</p>
+<p>该文件采用 UCL 格式。有关 <a href="https://man.freebsd.org/cgi/man.cgi?query=libucl&amp;sektion=3&amp;format=html">libucl(3)</a> 语法的更多信息，请访问 <a href="https://github.com/vstakhov/libucl">official UCL website</a> 。</p>
 </div>
 <div class="paragraph">
-<p>The following types of options are recognized - boolean, string and list options.</p>
+<p>识别以下类型的选项 - 布尔型、字符串型和列表型选项。</p>
 </div>
 <div class="paragraph">
-<p>A boolean option is marked as enabled if one of the following values is specified in the configuration file - YES, TRUE and ON.</p>
+<p>如果在配置文件中指定了以下值之一 - YES 、TRUE 和 ON，则将布尔选项标记为已启用。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkg-search">4.4.4. Searching Packages<a class="anchor" href="#pkg-search"></a></h4>
+<h4 id="pkg-search">4.4.4. 搜索软件包<a class="anchor" href="#pkg-search"></a></h4>
 <div class="paragraph">
-<p>To search a package <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-search&amp;sektion=8&amp;format=html">pkg-search(8)</a> can be used:</p>
+<p>要搜索一个软件包，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-search&amp;sektion=8&amp;format=html">pkg-search(8)</a> 命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5250,7 +5250,7 @@ Do you want to fetch and install it now? [y/N]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5272,9 +5272,9 @@ rubygem-passenger-nginx-6.0.15 Modules for running Ruby on Rails and Rack applic
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkg-installing-fetching">4.4.5. Installing and Fetching Packages<a class="anchor" href="#pkg-installing-fetching"></a></h4>
+<h4 id="pkg-installing-fetching">4.4.5. 安装和获取软件包<a class="anchor" href="#pkg-installing-fetching"></a></h4>
 <div class="paragraph">
-<p>To install a binary package <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-install&amp;sektion=8&amp;format=html">pkg-install(8)</a> can be used. This command uses repository data to determine which version of the software to install and if it has any uninstalled dependencies. For example, to install curl:</p>
+<p>要安装一个二进制软件包，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-install&amp;sektion=8&amp;format=html">pkg-install(8)</a> 命令。该命令使用存储库数据来确定要安装的软件的版本以及是否有未安装的依赖项。例如，要安装 curl ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5282,7 +5282,7 @@ rubygem-passenger-nginx-6.0.15 Modules for running Ruby on Rails and Rack applic
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5311,7 +5311,7 @@ Proceed with this action? [y/N]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The new package and any additional packages that were installed as dependencies can be seen in the installed packages list:</p>
+<p>新的软件包以及作为依赖项安装的任何其他软件包都可以在已安装软件包列表中看到：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5319,7 +5319,7 @@ Proceed with this action? [y/N]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5336,7 +5336,7 @@ pkg-1.18.4                     Package manager</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To fetch a package and install it later or in another place use <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-fetch&amp;sektion=8&amp;format=html">pkg-fetch(8)</a>. For example, to download <code>nginx-lite</code>:</p>
+<p>要获取一个软件包并稍后安装它或在另一个地方安装，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-fetch&amp;sektion=8&amp;format=html">pkg-fetch(8)</a>。例如，要下载 <code>nginx-lite</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5346,15 +5346,15 @@ pkg-1.18.4                     Package manager</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><code>-d</code>: used to fetch all the dependencies</p>
+<p><code>-d</code>：用于获取所有的依赖项</p>
 </li>
 <li>
-<p><code>-o</code>: used to specify the download directory</p>
+<p><code>-o</code>：用于指定下载目录</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5376,7 +5376,7 @@ Proceed with fetching packages? [y/N]:</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To install the downloaded packages <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-install&amp;sektion=8&amp;format=html">pkg-install(8)</a> can be used as follows:</p>
+<p>要安装下载的软件包，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-install&amp;sektion=8&amp;format=html">pkg-install(8)</a> 命令，具体操作如下：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5390,12 +5390,12 @@ Proceed with fetching packages? [y/N]:</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkgng-pkg-info">4.4.6. Obtaining Information About Installed Packages<a class="anchor" href="#pkgng-pkg-info"></a></h4>
+<h4 id="pkgng-pkg-info">4.4.6. 获取已安装软件包的信息<a class="anchor" href="#pkgng-pkg-info"></a></h4>
 <div class="paragraph">
-<p>Information about the packages installed on a system can be viewed by running <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-info&amp;sektion=8&amp;format=html">pkg-info(8)</a> which, when run without any switches, will list the package version for either all installed packages or the specified package.</p>
+<p>可以通过运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-info&amp;sektion=8&amp;format=html">pkg-info(8)</a> 来查看系统上安装的软件包的信息。当不带任何开关运行时，它将列出所有已安装软件包或指定软件包的版本信息。</p>
 </div>
 <div class="paragraph">
-<p>For example, to see which version of pkg is installed, run:</p>
+<p>例如，要查看已安装的 pkg 版本，请运行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5403,7 +5403,7 @@ Proceed with fetching packages? [y/N]:</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5436,9 +5436,9 @@ WWW: https://github.com/freebsd/pkg</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkgng-upgrading">4.4.7. Upgrading Installed Packages<a class="anchor" href="#pkgng-upgrading"></a></h4>
+<h4 id="pkgng-upgrading">4.4.7. 升级已安装的软件包<a class="anchor" href="#pkgng-upgrading"></a></h4>
 <div class="paragraph">
-<p>Installed packages can be upgraded to their latest versions using <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-upgrade&amp;sektion=8&amp;format=html">pkg-upgrade(8)</a>:</p>
+<p>已安装的软件包可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-upgrade&amp;sektion=8&amp;format=html">pkg-upgrade(8)</a> 命令升级到最新版本。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5446,13 +5446,13 @@ WWW: https://github.com/freebsd/pkg</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This command will compare the installed versions with those available in the repository catalogue and upgrade them from the repository.</p>
+<p>该命令将比较已安装的版本与存储库目录中可用的版本，并从存储库中升级它们。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkgng-auditing">4.4.8. Auditing Installed Packages<a class="anchor" href="#pkgng-auditing"></a></h4>
+<h4 id="pkgng-auditing">4.4.8. 审核已安装的软件包<a class="anchor" href="#pkgng-auditing"></a></h4>
 <div class="paragraph">
-<p>Software vulnerabilities are regularly discovered in third-party applications. To address this, pkg includes a built-in auditing mechanism. To determine if there are any known vulnerabilities for the software installed on the system, use <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-audit&amp;sektion=8&amp;format=html">pkg-audit(8)</a>:</p>
+<p>第三方应用程序经常会发现软件漏洞。为了解决这个问题，pkg 包含了一个内置的审计机制。要确定系统上安装的软件是否存在已知的漏洞，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-audit&amp;sektion=8&amp;format=html">pkg-audit(8)</a> 命令。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5460,7 +5460,7 @@ WWW: https://github.com/freebsd/pkg</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5477,12 +5477,12 @@ chromium-108.0.5359.98 is vulnerable:
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkg-delete">4.4.9. Removing Packages<a class="anchor" href="#pkg-delete"></a></h4>
+<h4 id="pkg-delete">4.4.9. 移除软件包<a class="anchor" href="#pkg-delete"></a></h4>
 <div class="paragraph">
-<p>Packages that are no longer needed can be removed with <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-delete&amp;sektion=8&amp;format=html">pkg-delete(8)</a>.</p>
+<p>不再需要的软件包可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-delete&amp;sektion=8&amp;format=html">pkg-delete(8)</a> 命令进行删除。</p>
 </div>
 <div class="paragraph">
-<p>For example:</p>
+<p>例如：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5490,7 +5490,7 @@ chromium-108.0.5359.98 is vulnerable:
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5511,9 +5511,9 @@ Proceed with deinstallation packages? [y/N]: y
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkgng-autoremove">4.4.10. Automatically Removing Unused Packages<a class="anchor" href="#pkgng-autoremove"></a></h4>
+<h4 id="pkgng-autoremove">4.4.10. 自动删除未使用的软件包<a class="anchor" href="#pkgng-autoremove"></a></h4>
 <div class="paragraph">
-<p>Removing a package may leave behind dependencies which are no longer required. Unneeded packages that were installed as dependencies (leaf packages) can be automatically detected and removed using <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-autoremove&amp;sektion=8&amp;format=html">pkg-autoremove(8)</a>:</p>
+<p>删除一个软件包可能会留下不再需要的依赖项。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-autoremove&amp;sektion=8&amp;format=html">pkg-autoremove(8)</a> 自动检测和删除作为依赖项安装的不需要的软件包（叶子软件包）。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5521,7 +5521,7 @@ Proceed with deinstallation packages? [y/N]: y
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5539,7 +5539,7 @@ Proceed with deinstalling packages? [y/N]:</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Packages installed as dependencies are called <em>automatic</em> packages. Non-automatic packages, i.e the packages that were explicity installed not as a dependency to another package, can be listed using:</p>
+<p>作为依赖安装的软件包被称为 <em>自动</em> 软件包。非自动软件包，即明确安装而不是作为其他软件包的依赖项安装的软件包，可以使用以下命令列出：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5547,7 +5547,7 @@ Proceed with deinstalling packages? [y/N]:</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5557,7 +5557,7 @@ sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>pkg prime-list</code> is an alias command declared in <code>/usr/local/etc/pkg.conf</code>. There are many others that can be used to query the package database of the system. For instance, command <code>pkg prime-origins</code> can be used to get the origin port directory of the list mentioned above:</p>
+<p><code>pkg prime-list</code> 是在 <code>/usr/local/etc/pkg.conf</code> 中声明的一个别名命令。系统中还有许多其他命令可以用来查询软件包数据库。例如，命令 <code>pkg prime-origins</code> 可以用来获取上述列表的源 ports 目录。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5565,7 +5565,7 @@ sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -5575,10 +5575,10 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This list can be used to rebuild all packages installed on a system using build tools such as <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere/">ports-mgmt/poudriere</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/synth/">ports-mgmt/synth</a>.</p>
+<p>这个列表可以用于使用构建工具（如 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere/">ports-mgmt/poudriere</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/synth/">ports-mgmt/synth</a>）重新构建系统上安装的所有软件包。</p>
 </div>
 <div class="paragraph">
-<p>Marking an installed package as automatic can be done using:</p>
+<p>将已安装的软件包标记为自动安装可以使用以下方法：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5586,10 +5586,10 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once a package is a leaf package and is marked as automatic, it gets selected by <code>pkg autoremove</code>.</p>
+<p>一旦一个包是一个叶子包并且被标记为自动安装，它将被 <code>pkg autoremove</code> 命令选择删除。</p>
 </div>
 <div class="paragraph">
-<p>Marking an installed package as <em>not</em> automatic can be done using:</p>
+<p>将已安装的软件包标记为 <em>非</em> 自动安装可以使用以下方法：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5598,9 +5598,9 @@ security/sudo</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkgng-clean">4.4.11. Removing Stale Packages<a class="anchor" href="#pkgng-clean"></a></h4>
+<h4 id="pkgng-clean">4.4.11. 移除过期的软件包<a class="anchor" href="#pkgng-clean"></a></h4>
 <div class="paragraph">
-<p>By default, pkg stores binary packages in a cache directory defined by <code>PKG_CACHEDIR</code> in <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a>. Only copies of the latest installed packages are kept. Older versions of pkg kept all previous packages. To remove these outdated binary packages, run:</p>
+<p>默认情况下，pkg 将二进制软件包存储在由 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> 中的 <code>PKG_CACHEDIR</code> 定义的缓存目录中。只保留最新安装的软件包的副本。旧版本的 pkg 会保留所有先前的软件包。要删除这些过时的二进制软件包，请运行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5608,7 +5608,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The entire cache may be cleared by running:</p>
+<p>可以通过运行以下命令来清除整个缓存：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5617,12 +5617,12 @@ security/sudo</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkg-locking-unlocking">4.4.12. Locking and Unlocking Packages<a class="anchor" href="#pkg-locking-unlocking"></a></h4>
+<h4 id="pkg-locking-unlocking">4.4.12. 锁定和解锁软件包<a class="anchor" href="#pkg-locking-unlocking"></a></h4>
 <div class="paragraph">
 <p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-lock&amp;sektion=8&amp;format=html">pkg-lock(8)</a> is used to lock packages against reinstallation, modification or deletion. <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-unlock&amp;sektion=8&amp;format=html">pkg-unlock(8)</a> unlocks the named packages. Either variant only has an effect on currently installed packages. Consequently it is impossible to block installation of a new package by using this mechanism, unless such an installation implies updating a locked package.</p>
 </div>
 <div class="paragraph">
-<p>For example, to lock <code>nginx-lite</code>:</p>
+<p>例如，要锁定 <code>nginx-lite</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5630,7 +5630,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And to unlock <code>nginx-lite</code>:</p>
+<p>要解锁 <code>nginx-lite</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5639,12 +5639,12 @@ security/sudo</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pkgng-set">4.4.13. Modifying Package Metadata<a class="anchor" href="#pkgng-set"></a></h4>
+<h4 id="pkgng-set">4.4.13. 修改软件包元数据<a class="anchor" href="#pkgng-set"></a></h4>
 <div class="paragraph">
-<p>Software within the FreeBSD Ports Collection can undergo major version number changes. To address this, pkg has a built-in command to update package origins. This can be useful, for example, if <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python3/">lang/python3</a> is renamed to <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python311/">lang/python311</a> so that <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python3/">lang/python3</a> can now represent version <code>3.11</code>.</p>
+<p>FreeBSD Ports Collection 中的软件可能会经历主版本号的更改。为了解决这个问题，pkg 有一个内置命令来更新软件包的来源。这在某些情况下非常有用，例如，如果 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python3/">lang/python3</a> 被重命名为 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python311/">lang/python311</a> ，那么 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python3/">lang/python3</a> 现在可以表示版本 <code>3.11</code>。</p>
 </div>
 <div class="paragraph">
-<p>To change the package origin for the above example, run:</p>
+<p>要更改上面示例的软件包来源，请运行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5652,7 +5652,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As another example, to update <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/ruby31/">lang/ruby31</a> to <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/ruby32/">lang/ruby32</a>, run:</p>
+<p>另一个例子是，要将 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/ruby31/">lang/ruby31</a> 更新为 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/ruby32/">lang/ruby32</a>，运行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5667,7 +5667,7 @@ security/sudo</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>When changing package origins, it is important to reinstall packages that are dependent on the package with the modified origin. To force a reinstallation of dependent packages, run:</p>
+<p>在更改软件包来源时，重要的是重新安装依赖于已修改来源的软件包。要强制重新安装依赖软件包，请运行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5681,12 +5681,12 @@ security/sudo</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ports-using">4.5. Using the Ports Collection<a class="anchor" href="#ports-using"></a></h3>
+<h3 id="ports-using">4.5. 使用 Ports 集合<a class="anchor" href="#ports-using"></a></h3>
 <div class="paragraph">
-<p>The Ports Collection is a set of <code>Makefiles</code>, patches, and description files. Each set of these files is used to compile and install an individual application on FreeBSD, and is called a <em>port</em>.</p>
+<p>Ports Collection 是一组 <code>Makefiles</code>、补丁和描述文件。每组这些文件用于在 FreeBSD 上编译和安装单个应用程序，被称为一个 <em>ports</em>。</p>
 </div>
 <div class="paragraph">
-<p>By default, the Ports Collection itself is stored as a subdirectory of <code>/usr/ports</code>.</p>
+<p>默认情况下，Ports Collection 本身存储在 <code>/usr/ports</code> 的子目录中。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -5696,57 +5696,59 @@ security/sudo</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Before installing and using the Ports Collection, please be aware that it is generally ill-advised to use the Ports Collection in conjunction with the binary packages provided via pkg to install software. pkg, by default, tracks quarterly branch-releases of the ports tree and not HEAD. Dependencies could be different for a port in HEAD compared to its counterpart in a quarterly branch release and this could result in conflicts between dependencies installed by pkg and those from the Ports Collection. If the Ports Collection and pkg must be used in conjunction, then be sure that your Ports Collection and pkg are on the same branch release of the ports tree.</p>
+<p>在安装和使用 Ports Collection 之前，请注意通常不建议使用 Ports Collection 与通过 pkg 提供的二进制软件包一起安装软件。 pkg 默认跟踪 ports 树的季度分支发布，而不是 HEAD 。与季度分支发布中的对应 ports 相比， HEAD 中的 ports 的依赖关系可能不同，这可能导致 pkg 安装的依赖关系与 Ports Collection 中的依赖关系发生冲突。如果必须同时使用 Ports Collection 和 pkg ，请确保您的 Ports Collection 和 pkg 位于相同的 ports 树分支发布上。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The Ports Collection contains directories for software categories. Inside each category are subdirectories for individual applications. Each application subdirectory contains a set of files that tells FreeBSD how to compile and install that program, called a <em>ports skeleton</em>. Each port skeleton includes these files and directories:</p>
+<p>Ports 集合包含了软件类别的目录。每个类别中都有针对个别应用程序的子目录。每个应用程序子目录包含一组文件，告诉 FreeBSD 如何编译和安装该程序，称为 <em>ports skeleton</em>。每个 ports 骨架包括以下文件和目录：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Makefile</strong>: contains statements that specify how the application should be compiled and where its components should be installed.</p>
+<p><strong>Makefile</strong>：包含指定应用程序如何编译以及其组件应安装在何处的语句。</p>
 </li>
 <li>
-<p><strong>distinfo</strong>: contains the names and checksums of the files that must be downloaded to build the port.</p>
+<p><strong>distinfo</strong>：包含构建 ports 所需下载的文件的名称和校验和。</p>
 </li>
 <li>
-<p><strong>files/</strong>: this directory contains any patches needed for the program to compile and install on FreeBSD. This directory may also contain other files used to build the port.</p>
+<p><strong>files/</strong>：这个目录包含了在 FreeBSD 上编译和安装程序所需的补丁文件。这个目录也可能包含其他用于构建 ports 的文件。</p>
 </li>
 <li>
-<p><strong>pkg-descr</strong>: provides a more detailed description of the program.</p>
+<p><strong>pkg-descr</strong>：提供程序的更详细描述。</p>
 </li>
 <li>
-<p><strong>pkg-plist</strong>: a list of all the files that will be installed by the port. It also tells the ports system which files to remove upon deinstallation.</p>
+<p><strong>pkg-plist</strong>：一个包含所有将由 ports 安装的文件的列表。它还告诉 ports 系统在卸载时要删除哪些文件。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Some ports include <code>pkg-message</code> or other files to handle special situations. For more details on these files, and on ports in general, refer to the <a href="{porters-handbook}">FreeBSD Porter’s Handbook</a>.</p>
+<p>一些 ports 包括 <code>pkg-message</code> 或其他文件来处理特殊情况。有关这些文件以及 ports 的更多详细信息，请参考 <a href="{porters-handbook}">FreeBSD Porter’s Handbook</a>。</p>
 </div>
-<div class="paragraph">
-<p>The port does not include the actual source code, also known as a <code>distfile</code>. The extract portion of building a port will automatically save the downloaded source to <code>/usr/ports/distfiles</code>.</p>
+<div class="literalblock">
+<div class="content">
+<pre>ports 不包含实际的源代码，也称为 `distfile` 。构建 ports 的提取部分将自动将下载的源代码保存到 `/usr/ports/distfiles`。</pre>
+</div>
 </div>
 <div class="sect3">
-<h4 id="ports-using-installation-methods">4.5.1. Installing the Ports Collection<a class="anchor" href="#ports-using-installation-methods"></a></h4>
+<h4 id="ports-using-installation-methods">4.5.1. 安装 Ports 集合<a class="anchor" href="#ports-using-installation-methods"></a></h4>
 <div class="paragraph">
-<p>Before an application can be compiled using a port, the Ports Collection must first be installed. If it was not installed during the installation of FreeBSD, use one of the following methods to install it:</p>
+<p>在使用 ports 编译应用程序之前，必须先安装 ports 集合。如果在安装 FreeBSD 时没有安装它，请使用以下方法之一进行安装：</p>
 </div>
 <div id="ports-using-git-method" class="sidebarblock procedure">
 <div class="content">
 <div class="paragraph">
-<p><strong>Procedure: Git Method</strong></p>
+<p><strong>过程：Git 方法</strong></p>
 </div>
 <div class="paragraph">
-<p>If more control over the ports tree is needed or if local changes need to be maintained, or if running FreeBSD-CURRENT, Git can be used to obtain the Ports Collection. Refer to <a href="{committers-guide}#git-primer">the Git Primer</a> for a detailed description of Git.</p>
+<p>如果需要对 ports 树进行更多的控制，或者需要维护本地更改，或者正在运行 FreeBSD-CURRENT，可以使用 Git 来获取 Ports Collection。有关 Git 的详细描述，请参阅 <a href="{committers-guide}#git-primer">Git Primer</a>。</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Git must be installed before it can be used to check out the ports tree. If a copy of the ports tree is already present, install Git like this:</p>
+<p>在使用 Git 检出 ports 树之前，必须先安装 Git 。如果已经存在一个 ports 树的副本，请按照以下方式安装 Git ：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/devel/git</span>
@@ -5754,7 +5756,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If the ports tree is not available, or pkg is being used to manage packages, Git can be installed as a package:</p>
+<p>如果 ports 树不可用，或者正在使用 pkg 来管理软件包，可以将 Git 作为一个软件包安装：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5763,7 +5765,7 @@ security/sudo</pre>
 </div>
 </li>
 <li>
-<p>Check out a copy of the HEAD branch of the ports tree:</p>
+<p>检出 ports 树的 HEAD 分支的副本：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># git clone https://git.FreeBSD.org/ports.git /usr/ports</span></code></pre>
@@ -5771,7 +5773,7 @@ security/sudo</pre>
 </div>
 </li>
 <li>
-<p>Or, check out a copy of a quarterly branch:</p>
+<p>或者，检出一个季度分支的副本：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># git clone https://git.FreeBSD.org/ports.git -b 2023Q1 /usr/ports</span></code></pre>
@@ -5779,7 +5781,7 @@ security/sudo</pre>
 </div>
 </li>
 <li>
-<p>As needed, update <code>/usr/ports</code> after the initial Git checkout:</p>
+<p>在初始的 Git 检出之后，根据需要更新 <code>/usr/ports</code>。</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># git -C /usr/ports pull</span></code></pre>
@@ -5787,7 +5789,7 @@ security/sudo</pre>
 </div>
 </li>
 <li>
-<p>As needed, switch <code>/usr/ports</code> to a different quarterly branch:</p>
+<p>根据需要，将 <code>/usr/ports</code> 切换到不同的季度分支：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># git -C /usr/ports switch 2023Q1</span></code></pre>
@@ -5800,7 +5802,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_installing_ports">4.5.2. Installing Ports<a class="anchor" href="#_installing_ports"></a></h4>
+<h4 id="_安装_ports">4.5.2. 安装 Ports<a class="anchor" href="#_安装_ports"></a></h4>
 <div class="paragraph">
 <p>This section provides basic instructions on using the Ports Collection to install or remove software. The detailed description of available <code>make</code> targets and environment variables is available in <a href="https://man.freebsd.org/cgi/man.cgi?query=ports&amp;sektion=7&amp;format=html">ports(7)</a>.</p>
 </div>
@@ -6457,7 +6459,7 @@ ports-mgmt/pkg
 <p>Fix it! The <a href="{porters-handbook}">Porter’s Handbook</a> includes detailed information on the ports infrastructure so that you can fix the occasional broken port or even submit your own!</p>
 </li>
 <li>
-<p>Install the package instead of the port using the instructions in <a href="#pkgng-intro">Using pkg for Binary Package Management</a>.</p>
+<p>Install the package instead of the port using the instructions in <a href="#pkgng-intro">使用 pkg 进行二进制包管理</a>.</p>
 </li>
 </ol>
 </div>
@@ -49248,7 +49250,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: December 21, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=0503c8e" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: December 21, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=22d22a1" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
@@ -49287,7 +49289,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
         <li><a href="#introduction">Chapter 1. 介绍</a></li>
         <li><a href="#bsdinstall">Chapter 2. 安装 FreeBSD</a></li>
         <li><a href="#basics">Chapter 3. FreeBSD 基础知识</a></li>
-        <li><a href="#ports">Chapter 4. Installing Applications: Packages and Ports</a></li>
+        <li><a href="#ports">Chapter 4. 安装应用程序：软件包和 Ports</a></li>
         <li><a href="#x11">Chapter 5. The X Window System</a></li>
         <li><a href="#wayland">Chapter 6. Wayland on FreeBSD</a></li>
         <li><a href="#network">Chapter 7. Network</a></li>

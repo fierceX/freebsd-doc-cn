@@ -267,7 +267,7 @@
         <li><a href="#introduction">Chapter 1. 介绍</a></li>
         <li><a href="#bsdinstall">Chapter 2. 安装 FreeBSD</a></li>
         <li><a href="#basics">Chapter 3. FreeBSD 基础知识</a></li>
-        <li><a href="#ports">Chapter 4. 安装应用程序：软件包和端口</a></li>
+        <li><a href="#ports">Chapter 4. 安装应用程序：软件包和 Ports</a></li>
         <li><a href="#x11">Chapter 5. X Window System （ X 窗口系统）</a></li>
         <li><a href="#wayland">Chapter 6. 在 FreeBSD 上的 Wayland</a></li>
         <li><a href="#network">Chapter 7. 网络</a></li>
@@ -5042,12 +5042,12 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="sect1">
-<h2 id="ports">Chapter 4. 安装应用程序：软件包和端口<a class="anchor" href="#ports"></a></h2>
+<h2 id="ports">Chapter 4. 安装应用程序：软件包和 Ports<a class="anchor" href="#ports"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="ports-synopsis">4.1. 简介<a class="anchor" href="#ports-synopsis"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 捆绑了丰富的系统工具作为基本系统的一部分。此外， FreeBSD 还提供了两种互补的技术来安装第三方软件： FreeBSD Ports Collection 用于从源代码安装，而软件包则用于从预编译的二进制文件安装。可以使用任一方法从本地媒体或网络安装软件。</p>
+<p>FreeBSD 捆绑了丰富的系统工具作为基本系统的一部分。此外，FreeBSD 还提供了两种互补的技术来安装第三方软件：FreeBSD Ports Collection 用于从源代码安装，而软件包则用于从预编译的二进制文件安装。可以使用任一方法从本地媒体或网络安装软件。</p>
 </div>
 <div class="paragraph">
 <p>阅读完本章后，您将了解：</p>
@@ -5055,7 +5055,7 @@ Swap: 2048M Total, 2048M Free
 <div class="ulist">
 <ul>
 <li>
-<p>二进制包和端口之间的区别。</p>
+<p>二进制包和 ports 之间的区别。</p>
 </li>
 <li>
 <p>如何找到已经移植到 FreeBSD 的第三方软件。</p>
@@ -5078,34 +5078,34 @@ Swap: 2048M Total, 2048M Free
 <div class="sect2">
 <h3 id="ports-overview">4.2. 软件安装概述<a class="anchor" href="#ports-overview"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 的“端口”是一组文件，旨在自动化从源代码编译应用程序的过程。组成端口的文件包含了自动下载、提取、打补丁、编译和安装应用程序所需的所有必要信息。</p>
+<p>FreeBSD 的 <code>ports</code> 是一组文件，旨在自动化从源代码编译应用程序的过程。组成 ports 的文件包含了自动下载、提取、打补丁、编译和安装应用程序所需的所有必要信息。</p>
 </div>
 <div class="paragraph">
 <p>如果软件尚未在 FreeBSD 上进行适配和测试，源代码可能需要进行编辑，以便正确安装和运行。</p>
 </div>
 <div class="paragraph">
-<p>然而，在 <a href="https://www.FreeBSD.org/ports/">36000</a> 上已经有许多第三方应用程序被移植到了 FreeBSD 。在可行的情况下，这些应用程序会以预编译的软件包形式提供下载。</p>
+<p>然而，在 <a href="https://www.FreeBSD.org/ports/">36000</a> 上已经有许多第三方应用程序被移植到了 FreeBSD。在可行的情况下，这些应用程序会以预编译的软件包形式提供下载。</p>
 </div>
 <div class="paragraph">
 <p>可以使用 FreeBSD 软件包管理命令来操作软件包。</p>
 </div>
 <div class="paragraph">
-<p>包和端口都能理解依赖关系。如果使用包或端口来安装一个应用程序，并且所依赖的库尚未安装，那么该库将会自动被先安装。</p>
+<p>包和 ports 都能理解依赖关系。如果使用包或 ports 来安装一个应用程序，并且所依赖的库尚未安装，那么该库将会自动被先安装。</p>
 </div>
 <div class="paragraph">
-<p>一个 FreeBSD 软件包包含了一个应用程序的预编译副本，以及任何配置文件和文档。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 命令来操作软件包，例如 <code>pkg install</code> 。</p>
+<p>一个 FreeBSD 软件包包含了一个应用程序的预编译副本，以及任何配置文件和文档。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 命令来操作软件包，例如 <code>pkg install</code>。</p>
 </div>
 <div class="paragraph">
-<p>虽然这两种技术相似，但软件包和端口各有各的优势。选择符合您安装特定应用程序需求的技术。</p>
+<p>虽然这两种技术相似，但软件包和 ports 各有各的优势。选择符合您安装特定应用程序需求的技术。</p>
 </div>
 <div class="ulist">
-<div class="title">包裹的好处</div>
+<div class="title">包的好处</div>
 <ul>
 <li>
 <p>通常，压缩的软件包 tarball 比包含应用程序源代码的压缩 tarball 要小。</p>
 </li>
 <li>
-<p>包不需要编译时间。对于大型应用程序，如 Firefox 、 KDE Plasma 或 GNOME ，在慢速系统上这一点可能很重要。</p>
+<p>包不需要编译时间。对于大型应用程序，如 Firefox 、KDE Plasma 或 GNOME，在慢速系统上这一点可能很重要。</p>
 </li>
 <li>
 <p>在 FreeBSD 上编译软件的过程中，包不需要任何理解。</p>
@@ -5113,15 +5113,15 @@ Swap: 2048M Total, 2048M Free
 </ul>
 </div>
 <div class="ulist">
-<div class="title">港口的好处</div>
+<div class="title">Port 的好处</div>
 <ul>
 <li>
-<p>通常情况下，软件包会使用保守的选项进行编译，因为它们需要在尽可能多的系统上运行。通过从端口进行编译，可以更改编译选项。</p>
+<p>通常情况下，软件包会使用保守的选项进行编译，因为它们需要在尽可能多的系统上运行。通过从 ports 进行编译，可以更改编译选项。</p>
 </li>
 <li>
-<p>一些应用程序具有与安装的功能相关的编译时选项。例如， NGINX® 可以配置多种不同的内置选项。</p>
+<p>一些应用程序具有与安装的功能相关的编译时选项。例如，NGINX® 可以配置多种不同的内置选项。</p>
 <div class="paragraph">
-<p>在某些情况下，为了指定特定的设置，同一个应用程序可能会存在多个软件包。例如， NGINX® 有一个 <code>nginx</code> 软件包和一个 <code>nginx-lite</code> 软件包，取决于是否安装了 Xorg 。如果一个应用程序有超过一两个不同的编译选项，创建多个软件包将很快变得不可能。</p>
+<p>在某些情况下，为了指定特定的设置，同一个应用程序可能会存在多个软件包。例如，NGINX® 有一个 <code>nginx</code> 软件包和一个 <code>nginx-lite</code> 软件包，取决于是否安装了 Xorg。如果一个应用程序有超过一两个不同的编译选项，创建多个软件包将很快变得不可能。</p>
 </div>
 </li>
 <li>
@@ -5136,7 +5136,7 @@ Swap: 2048M Total, 2048M Free
 </ul>
 </div>
 <div class="paragraph">
-<p>要跟踪更新的端口，请订阅 {freebsd-ports} 和 {freebsd-ports-bugs} 。</p>
+<p>要跟踪更新的 ports ，请订阅 {freebsd-ports} 和 {freebsd-ports-bugs} 。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -5149,14 +5149,14 @@ Swap: 2048M Total, 2048M Free
 <p>在安装应用程序之前，请检查 <a href="https://vuxml.freebsd.org/" class="bare">https://vuxml.freebsd.org/</a> 是否存在相关的安全问题。</p>
 </div>
 <div class="paragraph">
-<p>要对已安装的软件包进行已知漏洞的审计，请运行 <code>pkg audit -F</code> 。</p>
+<p>要对已安装的软件包进行已知漏洞的审计，请运行 <code>pkg audit -F</code>。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>本章的其余部分将解释如何使用软件包和端口在 FreeBSD 上安装和管理第三方软件。</p>
+<p>本章的其余部分将解释如何使用软件包和 ports 在 FreeBSD 上安装和管理第三方软件。</p>
 </div>
 </div>
 <div class="sect2">
@@ -5167,16 +5167,16 @@ Swap: 2048M Total, 2048M Free
 <div class="ulist">
 <ul>
 <li>
-<p>FreeBSD 网站维护着一个最新的可搜索的应用程序列表，位于链接： <a href="https://www.FreeBSD.org/ports/">Ports Portal</a> 。可以通过应用程序名称或软件类别来搜索端口。</p>
+<p>FreeBSD 网站维护着一个最新的可搜索的应用程序列表，位于 <a href="https://www.FreeBSD.org/ports/">Ports Portal</a>。可以通过应用程序名称或软件类别来搜索 ports。</p>
 </li>
 <li>
-<p>Dan Langille 维护着 <a href="https://www.freshports.org/">FreshPorts</a> ，该网站提供了一个全面的搜索工具，并跟踪 Ports Collection 中应用程序的变化。注册用户可以创建一个定制的监视列表，以便在所监视的端口更新时收到自动邮件通知。</p>
+<p>Dan Langille 维护着 <a href="https://www.freshports.org/">FreshPorts</a>，该网站提供了一个全面的搜索工具，并跟踪 Ports Collection 中应用程序的变化。注册用户可以创建一个定制的监视列表，以便在所监视的 ports 更新时收到自动邮件通知。</p>
 </li>
 <li>
-<p>如果找到一个特定的应用程序变得困难，可以尝试在 <a href="https://sourceforge.net/">SourceForge</a> 或者 <a href="https://github.com/">GitHub</a> 这样的网站上进行搜索，然后再回到链接： <a href="https://www.FreeBSD.org/ports/">Ports Portal</a> 查看该应用程序是否已经被移植。</p>
+<p>如果找到一个特定的应用程序变得困难，可以尝试在 <a href="https://sourceforge.net/">SourceForge</a> 或者 <a href="https://github.com/">GitHub</a> 这样的网站上进行搜索，然后再回到 <a href="https://www.FreeBSD.org/ports/">Ports Portal</a> 查看该应用程序是否已经被移植。</p>
 </li>
 <li>
-<p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 命令在二进制软件包仓库中搜索一个应用程序。</p>
+<p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 命令在二进制软件包仓库中搜索一个应用程序</p>
 </li>
 </ul>
 </div>
@@ -5190,7 +5190,7 @@ Swap: 2048M Total, 2048M Free
 <p>对于只希望使用 FreeBSD 镜像站点提供的预编译二进制包的网站，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 来管理软件包可能已经足够了。</p>
 </div>
 <div class="paragraph">
-<p>然而，对于那些从源代码构建网站的用户，将需要使用单独的端口管理工具。</p>
+<p>然而，对于那些从源代码构建网站的用户，将需要使用单独的 ports 管理工具。</p>
 </div>
 <div class="paragraph">
 <p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 只能用于二进制软件包，它并不能替代这些工具。这些工具可以用于安装来自二进制软件包和 Ports Collection 的软件，而 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 只能安装二进制软件包。</p>
@@ -5198,7 +5198,7 @@ Swap: 2048M Total, 2048M Free
 <div class="sect3">
 <h4 id="pkgng-initial-setup">4.4.1. 开始使用 pkg<a class="anchor" href="#pkgng-initial-setup"></a></h4>
 <div class="paragraph">
-<p>所有支持的 FreeBSD 版本现在都包含 <code>/usr/sbin/pkg</code> ，也被称为 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 。这是一个小的占位符，只包含安装真正的 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 所需的最小功能。</p>
+<p>所有支持的 FreeBSD 版本现在都包含 <code>/usr/sbin/pkg</code>，也被称为 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 。这是一个小的占位符，只包含安装真正的 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 所需的最小功能。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -5232,10 +5232,10 @@ Do you want to fetch and install it now? [y/N]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 将拦截该命令，如果您确认这是您的意图，将下载 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> tarball ，并从中安装 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> ，引导本地软件包数据库，然后继续运行您最初请求的命令。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 将拦截该命令，如果您确认这是您的意图，将下载 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> tarball ，并从中安装 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>，引导本地软件包数据库，然后继续运行您最初请求的命令。</p>
 </div>
 <div class="paragraph">
-<p>较新版本的 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 可以理解 <code>pkg -N</code> 作为一种测试，用于检查是否安装了 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> ，而不触发安装操作。相反， pkg bootstrap[-f] 用于安装 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> （或强制重新安装），而不执行任何其他操作。</p>
+<p>较新版本的 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=7&amp;format=html">pkg(7)</a> 可以理解 <code>pkg -N</code> 作为一种测试，用于检查是否安装了 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>，而不触发安装操作。相反，pkg bootstrap[-f] 用于安装 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>（或强制重新安装），而不执行任何其他操作。</p>
 </div>
 <div class="paragraph">
 <p>可以通过查看 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 手册页面或者在运行 <code>pkg</code> 命令时不添加额外参数来获取 pkg 的使用信息。有关其他 pkg 配置选项的描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> 。</p>
@@ -5256,9 +5256,9 @@ Do you want to fetch and install it now? [y/N]</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="quarterly-latest-branch">4.4.2. 季度和最新的端口分支<a class="anchor" href="#quarterly-latest-branch"></a></h4>
+<h4 id="quarterly-latest-branch">4.4.2. 季度和最新的 ports 分支<a class="anchor" href="#quarterly-latest-branch"></a></h4>
 <div class="paragraph">
-<p><code>Quarterly</code> 分支为用户提供了更可预测和稳定的端口和软件包安装和升级体验。这主要通过只允许非功能性更新来实现。季度分支旨在接收安全修复（可能是版本更新或提交的回溯）、错误修复和端口合规性或框架更改。季度分支在每年的一月、四月、七月和十月的季度初从 HEAD 中切出。分支的命名方式根据它们创建的年份（ YYYY ）和季度（ Q1-4 ）。例如， 2023 年 1 月创建的季度分支被命名为 2023Q1 。而 <code>Latest</code> 分支为用户提供了软件包的最新版本。</p>
+<p><code>Quarterly</code> 分支为用户提供了更可预测和稳定的 ports 和软件包安装和升级体验。这主要通过只允许非功能性更新来实现。季度分支旨在接收安全修复（可能是版本更新或提交的回溯）、错误修复和 ports 合规性或框架更改。季度分支在每年的一月、四月、七月和十月的季度初从 HEAD 中切出。分支的命名方式根据它们创建的年份（YYYY）和季度（Q1-4）。例如， 2023 年 1 月创建的季度分支被命名为 2023Q1。而 <code>Latest</code> 分支为用户提供了软件包的最新版本。</p>
 </div>
 <div class="paragraph">
 <p>要将 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 从季度版切换到最新版，请运行以下命令：</p>
@@ -5281,7 +5281,7 @@ Do you want to fetch and install it now? [y/N]</pre>
 <div class="sect3">
 <h4 id="pkg-configuration">4.4.3. 配置 pkg<a class="anchor" href="#pkg-configuration"></a></h4>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> 是 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 工具使用的系统级配置文件。该文件的默认位置是 <code>/usr/local/etc/pkg.conf</code> 。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> 是 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 工具使用的系统级配置文件。该文件的默认位置是 <code>/usr/local/etc/pkg.conf</code>。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -5301,13 +5301,13 @@ Do you want to fetch and install it now? [y/N]</pre>
 <p>以&#34;#&#34;开头的行是注释，会被忽略。</p>
 </div>
 <div class="paragraph">
-<p>该文件采用 UCL 格式。有关 <a href="https://man.freebsd.org/cgi/man.cgi?query=libucl&amp;sektion=3&amp;format=html">libucl(3)</a> 语法的更多信息，请访问链接： <a href="https://github.com/vstakhov/libucl">official UCL website</a> 。</p>
+<p>该文件采用 UCL 格式。有关 <a href="https://man.freebsd.org/cgi/man.cgi?query=libucl&amp;sektion=3&amp;format=html">libucl(3)</a> 语法的更多信息，请访问 <a href="https://github.com/vstakhov/libucl">official UCL website</a> 。</p>
 </div>
 <div class="paragraph">
 <p>识别以下类型的选项 - 布尔型、字符串型和列表型选项。</p>
 </div>
 <div class="paragraph">
-<p>如果在配置文件中指定了以下值之一 - YES 、 TRUE 和 ON ，则将布尔选项标记为已启用。</p>
+<p>如果在配置文件中指定了以下值之一 - YES 、TRUE 和 ON，则将布尔选项标记为已启用。</p>
 </div>
 </div>
 <div class="sect3">
@@ -5407,7 +5407,7 @@ pkg-1.18.4                     Package manager</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>要获取一个软件包并稍后安装它或在另一个地方安装，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-fetch&amp;sektion=8&amp;format=html">pkg-fetch(8)</a> 。例如，要下载 <code>nginx-lite</code> ：</p>
+<p>要获取一个软件包并稍后安装它或在另一个地方安装，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-fetch&amp;sektion=8&amp;format=html">pkg-fetch(8)</a>。例如，要下载 <code>nginx-lite</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5417,10 +5417,10 @@ pkg-1.18.4                     Package manager</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><code>-d</code> ：用于获取所有的依赖项</p>
+<p><code>-d</code>：用于获取所有的依赖项</p>
 </li>
 <li>
-<p><code>-o</code> ：用于指定下载目录</p>
+<p><code>-o</code>：用于指定下载目录</p>
 </li>
 </ul>
 </div>
@@ -5523,7 +5523,7 @@ WWW: https://github.com/freebsd/pkg</pre>
 <div class="sect3">
 <h4 id="pkgng-auditing">4.4.8. 审核已安装的软件包<a class="anchor" href="#pkgng-auditing"></a></h4>
 <div class="paragraph">
-<p>第三方应用程序经常会发现软件漏洞。为了解决这个问题， pkg 包含了一个内置的审计机制。要确定系统上安装的软件是否存在已知的漏洞，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-audit&amp;sektion=8&amp;format=html">pkg-audit(8)</a> 命令。</p>
+<p>第三方应用程序经常会发现软件漏洞。为了解决这个问题，pkg 包含了一个内置的审计机制。要确定系统上安装的软件是否存在已知的漏洞，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-audit&amp;sektion=8&amp;format=html">pkg-audit(8)</a> 命令。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5610,7 +5610,7 @@ Proceed with deinstalling packages? [y/N]:</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>作为依赖安装的软件包被称为“自动”软件包。非自动软件包，即明确安装而不是作为其他软件包的依赖项安装的软件包，可以使用以下命令列出：</p>
+<p>作为依赖安装的软件包被称为 <em>自动</em> 软件包。非自动软件包，即明确安装而不是作为其他软件包的依赖项安装的软件包，可以使用以下命令列出：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5628,7 +5628,7 @@ sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>pkg prime-list</code> 是在 <code>/usr/local/etc/pkg.conf</code> 中声明的一个别名命令。系统中还有许多其他命令可以用来查询软件包数据库。例如，命令 <code>pkg prime-origins</code> 可以用来获取上述列表的源端口目录。</p>
+<p><code>pkg prime-list</code> 是在 <code>/usr/local/etc/pkg.conf</code> 中声明的一个别名命令。系统中还有许多其他命令可以用来查询软件包数据库。例如，命令 <code>pkg prime-origins</code> 可以用来获取上述列表的源 ports 目录。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5646,7 +5646,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>这个列表可以用于使用构建工具（如 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere/">ports-mgmt/poudriere</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/synth/">ports-mgmt/synth</a> ）重新构建系统上安装的所有软件包。</p>
+<p>这个列表可以用于使用构建工具（如 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere/">ports-mgmt/poudriere</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/synth/">ports-mgmt/synth</a>）重新构建系统上安装的所有软件包。</p>
 </div>
 <div class="paragraph">
 <p>将已安装的软件包标记为自动安装可以使用以下方法：</p>
@@ -5660,7 +5660,7 @@ security/sudo</pre>
 <p>一旦一个包是一个叶子包并且被标记为自动安装，它将被 <code>pkg autoremove</code> 命令选择删除。</p>
 </div>
 <div class="paragraph">
-<p>将已安装的软件包标记为_非_自动安装可以使用以下方法：</p>
+<p>将已安装的软件包标记为 <em>非</em> 自动安装可以使用以下方法：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5671,7 +5671,7 @@ security/sudo</pre>
 <div class="sect3">
 <h4 id="pkgng-clean">4.4.11. 移除过期的软件包<a class="anchor" href="#pkgng-clean"></a></h4>
 <div class="paragraph">
-<p>默认情况下， pkg 将二进制软件包存储在由 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> 中的 <code>PKG_CACHEDIR</code> 定义的缓存目录中。只保留最新安装的软件包的副本。旧版本的 pkg 会保留所有先前的软件包。要删除这些过时的二进制软件包，请运行：</p>
+<p>默认情况下，pkg 将二进制软件包存储在由 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg.conf&amp;sektion=5&amp;format=html">pkg.conf(5)</a> 中的 <code>PKG_CACHEDIR</code> 定义的缓存目录中。只保留最新安装的软件包的副本。旧版本的 pkg 会保留所有先前的软件包。要删除这些过时的二进制软件包，请运行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5690,10 +5690,10 @@ security/sudo</pre>
 <div class="sect3">
 <h4 id="pkg-locking-unlocking">4.4.12. 锁定和解锁软件包<a class="anchor" href="#pkg-locking-unlocking"></a></h4>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-lock&amp;sektion=8&amp;format=html">pkg-lock(8)</a> 用于锁定包，防止重新安装、修改或删除。 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-unlock&amp;sektion=8&amp;format=html">pkg-unlock(8)</a> 用于解锁指定的包。无论哪种变体，都只对当前已安装的包产生影响。因此，除非安装新包意味着更新已锁定的包，否则无法通过此机制阻止新包的安装。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-lock&amp;sektion=8&amp;format=html">pkg-lock(8)</a> is used to lock packages against reinstallation, modification or deletion. <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-unlock&amp;sektion=8&amp;format=html">pkg-unlock(8)</a> unlocks the named packages. Either variant only has an effect on currently installed packages. Consequently it is impossible to block installation of a new package by using this mechanism, unless such an installation implies updating a locked package.</p>
 </div>
 <div class="paragraph">
-<p>例如，要锁定 <code>nginx-lite</code> ：</p>
+<p>例如，要锁定 <code>nginx-lite</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5701,7 +5701,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>并且解锁 <code>nginx-lite</code> ：</p>
+<p>要解锁 <code>nginx-lite</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5712,7 +5712,7 @@ security/sudo</pre>
 <div class="sect3">
 <h4 id="pkgng-set">4.4.13. 修改软件包元数据<a class="anchor" href="#pkgng-set"></a></h4>
 <div class="paragraph">
-<p>FreeBSD Ports Collection 中的软件可能会经历主版本号的更改。为了解决这个问题， pkg 有一个内置命令来更新软件包的来源。这在某些情况下非常有用，例如，如果 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python3/">lang/python3</a> 被重命名为 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python311/">lang/python311</a> ，那么 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python3/">lang/python3</a> 现在可以表示版本 <code>3.11</code> 。</p>
+<p>FreeBSD Ports Collection 中的软件可能会经历主版本号的更改。为了解决这个问题，pkg 有一个内置命令来更新软件包的来源。这在某些情况下非常有用，例如，如果 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python3/">lang/python3</a> 被重命名为 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python311/">lang/python311</a> ，那么 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/python3/">lang/python3</a> 现在可以表示版本 <code>3.11</code>。</p>
 </div>
 <div class="paragraph">
 <p>要更改上面示例的软件包来源，请运行以下命令：</p>
@@ -5723,7 +5723,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>另一个例子是，要将 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/ruby31/">lang/ruby31</a> 更新为 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/ruby32/">lang/ruby32</a> ，运行以下命令：</p>
+<p>另一个例子是，要将 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/ruby31/">lang/ruby31</a> 更新为 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/ruby32/">lang/ruby32</a>，运行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5754,10 +5754,10 @@ security/sudo</pre>
 <div class="sect2">
 <h3 id="ports-using">4.5. 使用 Ports 集合<a class="anchor" href="#ports-using"></a></h3>
 <div class="paragraph">
-<p>Ports Collection 是一组 <code>Makefiles</code> 、补丁和描述文件。每组这些文件用于在 FreeBSD 上编译和安装单个应用程序，被称为一个_端口_。</p>
+<p>Ports Collection 是一组 <code>Makefiles</code>、补丁和描述文件。每组这些文件用于在 FreeBSD 上编译和安装单个应用程序，被称为一个 <em>ports</em>。</p>
 </div>
 <div class="paragraph">
-<p>默认情况下， Ports Collection 本身存储在 <code>/usr/ports</code> 的子目录中。</p>
+<p>默认情况下，Ports Collection 本身存储在 <code>/usr/ports</code> 的子目录中。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -5767,61 +5767,59 @@ security/sudo</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在安装和使用 Ports Collection 之前，请注意通常不建议使用 Ports Collection 与通过 pkg 提供的二进制软件包一起安装软件。 pkg 默认跟踪 ports 树的季度分支发布，而不是 HEAD 。与季度分支发布中的对应端口相比， HEAD 中的端口的依赖关系可能不同，这可能导致 pkg 安装的依赖关系与 Ports Collection 中的依赖关系发生冲突。如果必须同时使用 Ports Collection 和 pkg ，请确保您的 Ports Collection 和 pkg 位于相同的 ports 树分支发布上。</p>
+<p>在安装和使用 Ports Collection 之前，请注意通常不建议使用 Ports Collection 与通过 pkg 提供的二进制软件包一起安装软件。 pkg 默认跟踪 ports 树的季度分支发布，而不是 HEAD 。与季度分支发布中的对应 ports 相比， HEAD 中的 ports 的依赖关系可能不同，这可能导致 pkg 安装的依赖关系与 Ports Collection 中的依赖关系发生冲突。如果必须同时使用 Ports Collection 和 pkg ，请确保您的 Ports Collection 和 pkg 位于相同的 ports 树分支发布上。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Ports 集合包含了软件类别的目录。每个类别中都有针对个别应用程序的子目录。每个应用程序子目录包含一组文件，告诉 FreeBSD 如何编译和安装该程序，称为_ports skeleton_。每个端口骨架包括以下文件和目录：</p>
+<p>Ports 集合包含了软件类别的目录。每个类别中都有针对个别应用程序的子目录。每个应用程序子目录包含一组文件，告诉 FreeBSD 如何编译和安装该程序，称为 <em>ports skeleton</em>。每个 ports 骨架包括以下文件和目录：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Makefile</strong> ：包含指定应用程序如何编译以及其组件应安装在何处的语句。</p>
+<p><strong>Makefile</strong>：包含指定应用程序如何编译以及其组件应安装在何处的语句。</p>
 </li>
 <li>
-<p><strong>distinfo</strong> ：包含构建端口所需下载的文件的名称和校验和。</p>
+<p><strong>distinfo</strong>：包含构建 ports 所需下载的文件的名称和校验和。</p>
 </li>
 <li>
-<p><strong>files/</strong> ：这个目录包含了在 FreeBSD 上编译和安装程序所需的补丁文件。这个目录也可能包含其他用于构建端口的文件。</p>
+<p><strong>files/</strong>：这个目录包含了在 FreeBSD 上编译和安装程序所需的补丁文件。这个目录也可能包含其他用于构建 ports 的文件。</p>
 </li>
 <li>
-<p><strong>pkg-descr</strong> ：提供程序的更详细描述。</p>
+<p><strong>pkg-descr</strong>：提供程序的更详细描述。</p>
 </li>
 <li>
-<p><strong>pkg-plist</strong> ：一个包含所有将由端口安装的文件的列表。它还告诉端口系统在卸载时要删除哪些文件。</p>
+<p><strong>pkg-plist</strong>：一个包含所有将由 ports 安装的文件的列表。它还告诉 ports 系统在卸载时要删除哪些文件。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>一些端口包括 <code>pkg-message</code> 或其他文件来处理特殊情况。有关这些文件以及端口的更多详细信息，请参考 <a href="{porters-handbook}">FreeBSD Porter’s Handbook</a> 。</p>
+<p>一些 ports 包括 <code>pkg-message</code> 或其他文件来处理特殊情况。有关这些文件以及 ports 的更多详细信息，请参考 <a href="{porters-handbook}">FreeBSD Porter’s Handbook</a>。</p>
 </div>
-<div class="paragraph">
-<p>端口不包含实际的源代码，也称为“ distfile ”。构建端口的提取部分将自动将下载的源代码保存到 <code>/usr/ports/distfiles</code> 。</p>
+<div class="literalblock">
+<div class="content">
+<pre>ports 不包含实际的源代码，也称为 `distfile` 。构建 ports 的提取部分将自动将下载的源代码保存到 `/usr/ports/distfiles`。</pre>
+</div>
 </div>
 <div class="sect3">
 <h4 id="ports-using-installation-methods">4.5.1. 安装 Ports 集合<a class="anchor" href="#ports-using-installation-methods"></a></h4>
 <div class="paragraph">
-<p>在使用端口编译应用程序之前，必须先安装端口集合。如果在安装 FreeBSD 时没有安装它，请使用以下方法之一进行安装：</p>
+<p>在使用 ports 编译应用程序之前，必须先安装 ports 集合。如果在安装 FreeBSD 时没有安装它，请使用以下方法之一进行安装：</p>
 </div>
 <div id="ports-using-git-method" class="sidebarblock procedure">
 <div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>过程： Git 方法 *</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>过程：Git 方法</strong></p>
 </div>
 <div class="paragraph">
-<p>如果需要对端口树进行更多的控制，或者需要维护本地更改，或者正在运行 FreeBSD-CURRENT ，可以使用 Git 来获取 Ports Collection 。有关 Git 的详细描述，请参阅 <a href="{committers-guide}#git-primer">Git Primer</a> 。</p>
+<p>如果需要对 ports 树进行更多的控制，或者需要维护本地更改，或者正在运行 FreeBSD-CURRENT，可以使用 Git 来获取 Ports Collection。有关 Git 的详细描述，请参阅 <a href="{committers-guide}#git-primer">Git Primer</a>。</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>在使用 Git 检出端口树之前，必须先安装 Git 。如果已经存在一个端口树的副本，请按照以下方式安装 Git ：</p>
+<p>在使用 Git 检出 ports 树之前，必须先安装 Git 。如果已经存在一个 ports 树的副本，请按照以下方式安装 Git ：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># cd /usr/ports/devel/git</span>
@@ -5829,7 +5827,7 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>如果端口树不可用，或者正在使用 pkg 来管理软件包，可以将 Git 作为一个软件包安装：</p>
+<p>如果 ports 树不可用，或者正在使用 pkg 来管理软件包，可以将 Git 作为一个软件包安装：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5854,7 +5852,7 @@ security/sudo</pre>
 </div>
 </li>
 <li>
-<p>在初始的 Git 检出之后，根据需要更新 <code>/usr/ports</code> 。</p>
+<p>在初始的 Git 检出之后，根据需要更新 <code>/usr/ports</code>。</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># git -C /usr/ports pull</span></code></pre>
@@ -5877,7 +5875,7 @@ security/sudo</pre>
 <div class="sect3">
 <h4 id="_安装_ports">4.5.2. 安装 Ports<a class="anchor" href="#_安装_ports"></a></h4>
 <div class="paragraph">
-<p>本节提供了使用 Ports Collection 安装或删除软件的基本说明。有关可用的 <code>make</code> 目标和环境变量的详细描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ports&amp;sektion=7&amp;format=html">ports(7)</a> 。</p>
+<p>This section provides basic instructions on using the Ports Collection to install or remove software. The detailed description of available <code>make</code> targets and environment variables is available in <a href="https://man.freebsd.org/cgi/man.cgi?query=ports&amp;sektion=7&amp;format=html">ports(7)</a>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -5887,17 +5885,17 @@ security/sudo</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在编译任何端口之前，请确保按照前一节中的描述更新 Ports Collection 。由于安装任何第三方软件都可能引入安全漏洞，建议首先在 <a href="https://vuxml.freebsd.org/" class="bare">https://vuxml.freebsd.org/</a> 上检查与该端口相关的已知安全问题。或者，在安装新端口之前运行 <code>pkg audit -F</code> 。此命令可以配置为在每日安全系统检查期间自动执行安全审计和漏洞数据库的更新。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-audit&amp;sektion=8&amp;format=html">pkg-audit(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 。</p>
+<p>Before compiling any port, be sure to update the Ports Collection as described in the previous section. Since the installation of any third-party software can introduce security vulnerabilities, it is recommended to first check <a href="https://vuxml.freebsd.org/" class="bare">https://vuxml.freebsd.org/</a> for known security issues related to the port. Alternatively, run <code>pkg audit -F</code> before installing a new port. This command can be configured to automatically perform a security audit and an update of the vulnerability database during the daily security system check. For more information, refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-audit&amp;sektion=8&amp;format=html">pkg-audit(8)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a>.</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>使用 Ports 集合需要一个正常的互联网连接。它还需要超级用户权限。</p>
+<p>Using the Ports Collection assumes a working Internet connection. It also requires superuser privilege.</p>
 </div>
 <div class="paragraph">
-<p>要编译和安装端口，请切换到要安装的端口的目录，然后在提示符下键入 <code>make install</code> 。消息将指示进度：</p>
+<p>To compile and install the port, change to the directory of the port to be installed, then type <code>make install</code> at the prompt. Messages will indicate the progress:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5936,13 +5934,13 @@ security/sudo</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>由于 <code>lsof</code> 是一个以增加权限运行的程序，因此在安装时会显示一个安全警告。安装完成后，提示符将会返回。</p>
+<p>Since <code>lsof</code> is a program that runs with increased privileges, a security warning is displayed as it is installed. Once the installation is complete, the prompt will be returned.</p>
 </div>
 <div class="paragraph">
-<p>一些 shell 会在 <code>PATH</code> 环境变量所列目录中保留一个命令缓存，以加快对这些命令可执行文件的查找操作。使用 <code>tcsh</code> shell 的用户应该输入 <code>rehash</code> 命令，以便可以在不指定完整路径的情况下使用新安装的命令。对于 <code>sh</code> shell ，请使用 <code>hash -r</code> 命令。有关更多信息，请参阅 shell 的文档。</p>
+<p>Some shells keep a cache of the commands that are available in the directories listed in the <code>PATH</code> environment variable, to speed up lookup operations for the executable file of these commands. Users of the <code>tcsh</code> shell should type <code>rehash</code> so that a newly installed command can be used without specifying its full path. Use <code>hash -r</code> instead for the <code>sh</code> shell. Refer to the documentation for the shell for more information.</p>
 </div>
 <div class="paragraph">
-<p>在安装过程中，会创建一个工作子目录，其中包含编译过程中使用的所有临时文件。删除此目录可以节省磁盘空间，并在以后升级到新版本的端口时最大程度地减少问题的可能性。</p>
+<p>During installation, a working subdirectory is created which contains all the temporary files used during compilation. Removing this directory saves disk space and minimizes the chance of problems later when upgrading to the newer version of the port:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5959,16 +5957,16 @@ security/sudo</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>为了避免这个额外的步骤，编译端口时可以使用 <code>make install clean</code> 。</p>
+<p>To save this extra step, instead use <code>make install clean</code> when compiling the port.</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect4">
-<h5 id="_自定义端口安装">4.5.2.1. 自定义端口安装<a class="anchor" href="#_自定义端口安装"></a></h5>
+<h5 id="_customizing_ports_installation">4.5.2.1. Customizing Ports Installation<a class="anchor" href="#_customizing_ports_installation"></a></h5>
 <div class="paragraph">
-<p>一些端口提供构建选项，可以用于启用或禁用应用程序组件，提供安全选项或允许其他自定义。示例包括 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/firefox/">www/firefox</a> 和 <a class="package" href="https://cgit.freebsd.org/ports/tree/security/gpgme/">security/gpgme</a> 。如果该端口依赖于具有可配置选项的其他端口，则默认行为是提示用户从菜单中选择选项，因此可能会多次暂停以进行用户交互。为了避免这种情况，并在一个批处理中进行所有配置，请在端口骨架中运行 <code>make config-recursive</code> 。然后，运行 <code>make install [clean]</code> 来编译和安装该端口。</p>
+<p>Some ports provide build options which can be used to enable or disable application components, provide security options, or allow for other customizations. Examples include <a class="package" href="https://cgit.freebsd.org/ports/tree/www/firefox/">www/firefox</a> and <a class="package" href="https://cgit.freebsd.org/ports/tree/security/gpgme/">security/gpgme</a>. If the port depends upon other ports which have configurable options, it may pause several times for user interaction as the default behavior is to prompt the user to select options from a menu. To avoid this and do all of the configuration in one batch, run <code>make config-recursive</code> within the port skeleton. Then, run <code>make install [clean]</code> to compile and install the port.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -5978,23 +5976,23 @@ security/sudo</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>当使用 <code>config-recursive</code> 时，要配置的端口列表是通过 <code>all-depends-list</code> 目标收集的。建议运行 <code>make config-recursive</code> 直到所有依赖端口选项都被定义，并且端口选项屏幕不再出现，以确保所有依赖选项都已配置。</p>
+<p>When using <code>config-recursive</code>, the list of ports to configure are gathered by the <code>all-depends-list</code> target. It is recommended to run <code>make config-recursive</code> until all dependent ports options have been defined, and ports options screens no longer appear, to be certain that all dependency options have been configured.</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>在构建端口后，有几种方法可以重新访问端口的构建选项菜单，以添加、删除或更改这些选项。一种方法是进入包含端口的目录，然后输入 <code>make config</code> 命令。另一种选择是使用 <code>make showconfig</code> 命令。还可以执行 <code>make rmconfig</code> 命令，该命令将删除所有已选择的选项，并允许您重新开始。所有这些选项以及其他选项都在 <a href="https://man.freebsd.org/cgi/man.cgi?query=ports&amp;sektion=7&amp;format=html">ports(7)</a> 中详细解释。</p>
+<p>There are several ways to revisit a port’s build options menu in order to add, remove, or change these options after a port has been built. One method is to <code>cd</code> into the directory containing the port and type <code>make config</code>. Another option is to use <code>make showconfig</code>. Another option is to execute <code>make rmconfig</code> which will remove all selected options and allow you to start over. All of these options, and others, are explained in great detail in <a href="https://man.freebsd.org/cgi/man.cgi?query=ports&amp;sektion=7&amp;format=html">ports(7)</a>.</p>
 </div>
 <div class="paragraph">
-<p>端口系统使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=fetch&amp;sektion=1&amp;format=html">fetch(1)</a> 来下载源文件，该工具支持各种环境变量。如果 FreeBSD 系统位于防火墙或 FTP/HTTP 代理后面，可能需要设置 <code>FTP_PASSIVE_MODE</code> 、 <code>FTP_PROXY</code> 和 <code>FTP_PASSWORD</code> 变量。有关支持的变量的完整列表，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=fetch&amp;sektion=3&amp;format=html">fetch(3)</a> 。</p>
+<p>The ports system uses <a href="https://man.freebsd.org/cgi/man.cgi?query=fetch&amp;sektion=1&amp;format=html">fetch(1)</a> to download the source files, which supports various environment variables. The <code>FTP_PASSIVE_MODE</code>, <code>FTP_PROXY</code>, and <code>FTP_PASSWORD</code> variables may need to be set if the FreeBSD system is behind a firewall or FTP/HTTP proxy. See <a href="https://man.freebsd.org/cgi/man.cgi?query=fetch&amp;sektion=3&amp;format=html">fetch(3)</a> for the complete list of supported variables.</p>
 </div>
 <div class="paragraph">
-<p>对于不能始终连接到互联网的用户，可以在 <code>/usr/ports</code> 目录下运行 <code>make fetch</code> 命令，以获取所有的 distfiles ，或者在某个分类目录（例如 <code>/usr/ports/net</code> ）或特定的端口骨架中运行。请注意，如果一个端口有任何依赖项，那么在分类目录或端口骨架中运行此命令将不会获取来自其他分类的端口的 distfiles 。相反，使用 <code>make fetch-recursive</code> 命令也可以获取端口的所有依赖项的 distfiles 。</p>
+<p>For users who cannot be connected to the Internet all the time, <code>make fetch</code> can be run within <code>/usr/ports</code>, to fetch all distfiles, or within a category, such as <code>/usr/ports/net</code>, or within the specific port skeleton. Note that if a port has any dependencies, running this command in a category or ports skeleton will <em>not</em> fetch the distfiles of ports from another category. Instead, use <code>make fetch-recursive</code> to also fetch the distfiles for all the dependencies of a port.</p>
 </div>
 <div class="paragraph">
-<p>在极少数情况下，例如当组织拥有本地的 distfiles 仓库时， <code>MASTER_SITES</code> 变量可以用于覆盖 <code>Makefile</code> 中指定的下载位置。在使用时，请指定替代位置：</p>
+<p>In rare cases, such as when an organization has a local distfiles repository, the <code>MASTER_SITES</code> variable can be used to override the download locations specified in the <code>Makefile</code>. When using, specify the alternate location:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6004,7 +6002,7 @@ ftp://ftp.organization.org/pub/FreeBSD/ports/distfiles/ fetch</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>WRKDIRPREFIX</code> 和 <code>PREFIX</code> 变量可以覆盖默认的工作目录和目标目录。例如：</p>
+<p>The <code>WRKDIRPREFIX</code> and <code>PREFIX</code> variables can override the default working and target directories. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6012,7 +6010,7 @@ ftp://ftp.organization.org/pub/FreeBSD/ports/distfiles/ fetch</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>将端口编译在 <code>/usr/home/example/ports</code> 目录下，并将所有内容安装在 <code>/usr/local</code> 目录下。</p>
+<p>will compile the port in <code>/usr/home/example/ports</code> and install everything under <code>/usr/local</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6020,7 +6018,7 @@ ftp://ftp.organization.org/pub/FreeBSD/ports/distfiles/ fetch</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>将端口编译在 <code>/usr/ports</code> 中，并将其安装在 <code>/usr/home/example/local</code> 中。并且：</p>
+<p>will compile the port in <code>/usr/ports</code> and install it in <code>/usr/home/example/local</code>. And:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6028,20 +6026,20 @@ ftp://ftp.organization.org/pub/FreeBSD/ports/distfiles/ fetch</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>将两者合并。</p>
+<p>will combine the two.</p>
 </div>
 <div class="paragraph">
-<p>这些也可以设置为环境变量。请参考您所使用的 shell 的手册页面，了解如何设置环境变量的指令。</p>
+<p>These can also be set as environmental variables. Refer to the manual page for your shell for instructions on how to set an environmental variable.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ports-removing">4.5.3. 移除已安装的端口<a class="anchor" href="#ports-removing"></a></h4>
+<h4 id="ports-removing">4.5.3. Removing Installed Ports<a class="anchor" href="#ports-removing"></a></h4>
 <div class="paragraph">
-<p>使用 <code>pkg delete</code> 命令可以卸载已安装的端口。有关使用此命令的示例，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-delete&amp;sektion=8&amp;format=html">pkg-delete(8)</a> 手册页。</p>
+<p>Installed ports can be uninstalled using <code>pkg delete</code>. Examples for using this command can be found in the <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg-delete&amp;sektion=8&amp;format=html">pkg-delete(8)</a> manual page.</p>
 </div>
 <div class="paragraph">
-<p>或者，可以在端口的目录中运行 <code>make deinstall</code> 命令：</p>
+<p>Alternately, <code>make deinstall</code> can be run in the port&#39;s directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6058,16 +6056,16 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>建议在卸载端口之前阅读消息。如果该端口有任何依赖于它的应用程序，这些信息将被显示，但卸载将继续进行。在这种情况下，重新安装应用程序可能更好，以防止依赖关系破裂。</p>
+<p>It is recommended to read the messages as the port is uninstalled. If the port has any applications that depend upon it, this information will be displayed but the uninstallation will proceed. In such cases, it may be better to reinstall the application in order to prevent broken dependencies.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ports-upgrading">4.5.4. 升级端口<a class="anchor" href="#ports-upgrading"></a></h4>
+<h4 id="ports-upgrading">4.5.4. Upgrading Ports<a class="anchor" href="#ports-upgrading"></a></h4>
 <div class="paragraph">
-<p>随着时间的推移， Ports Collection 中会有更新版本的软件可用。本节介绍了如何确定可以升级的软件以及如何执行升级操作。</p>
+<p>Over time, newer versions of software become available in the Ports Collection. This section describes how to determine which software can be upgraded and how to perform the upgrade.</p>
 </div>
 <div class="paragraph">
-<p>要确定已安装的端口是否有更新版本可用，请确保安装了最新版本的端口树，使用在 <a href="#ports-using-git-method ">&#34;Git Method&#34;</a> 中描述的更新命令。以下命令将列出已过时的已安装端口：</p>
+<p>To determine if newer versions of installed ports are available, ensure that the latest version of the ports tree is installed, using the updating command described in <a href="#ports-using-git-method">&#34;Git Method&#34;</a>. The following command will list the installed ports which are out of date:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6082,19 +6080,19 @@ The deinstallation will free 229 kB
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在尝试升级之前，请从文件顶部开始阅读 <code>/usr/ports/UPDATING</code> ，直到最接近上次升级端口或安装系统的日期。该文件描述了在更新端口时用户可能遇到的各种问题和需要执行的额外步骤，包括文件格式更改、配置文件位置更改或与先前版本不兼容的任何问题。请注意任何与需要升级的端口匹配的说明，并在执行升级时遵循这些说明。</p>
+<p>Before attempting an upgrade, read <code>/usr/ports/UPDATING</code> from the top of the file to the date closest to the last time ports were upgraded or the system was installed. This file describes various issues and additional steps users may encounter and need to perform when updating a port, including such things as file format changes, changes in locations of configuration files, or any incompatibilities with previous versions. Make note of any instructions which match any of the ports that need upgrading and follow these instructions when performing the upgrade.</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect4">
-<h5 id="ports-upgrading-tools">4.5.4.1. 升级和管理端口的工具<a class="anchor" href="#ports-upgrading-tools"></a></h5>
+<h5 id="ports-upgrading-tools">4.5.4.1. Tools to Upgrade and Manage Ports<a class="anchor" href="#ports-upgrading-tools"></a></h5>
 <div class="paragraph">
-<p>Ports Collection 包含多个实际执行升级的实用工具。每个工具都有其优点和缺点。</p>
+<p>The Ports Collection contains several utilities to perform the actual upgrade. Each has its strengths and weaknesses.</p>
 </div>
 <div class="paragraph">
-<p>从历史上看，大多数安装使用的是 Portmaster 或 Portupgrade 。 Synth 是一种较新的替代方案。</p>
+<p>Historically, most installations used either Portmaster or Portupgrade. Synth is a newer alternative.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -6104,7 +6102,7 @@ The deinstallation will free 229 kB
 </td>
 <td class="content">
 <div class="paragraph">
-<p>选择哪种工具最适合特定系统是由系统管理员决定的。在使用这些工具之前，建议先备份数据。</p>
+<p>The choice of which tool is best for a particular system is up to the system administrator. It is recommended practice to back up your data before using any of these tools.</p>
 </div>
 </td>
 </tr>
@@ -6112,9 +6110,9 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="sect4">
-<h5 id="portmaster">4.5.4.2. 使用 Portmaster 升级 Ports<a class="anchor" href="#portmaster"></a></h5>
+<h5 id="portmaster">4.5.4.2. Upgrading Ports Using Portmaster<a class="anchor" href="#portmaster"></a></h5>
 <div class="paragraph">
-<p><a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/portmaster/">ports-mgmt/portmaster</a> 是一个非常小的工具，用于升级已安装的端口。它旨在使用安装在 FreeBSD 基本系统中的工具，而不依赖其他端口或数据库。要将此实用程序安装为一个端口：</p>
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/portmaster/">ports-mgmt/portmaster</a> is a very small utility for upgrading installed ports. It is designed to use the tools installed with the FreeBSD base system without depending on other ports or databases. To install this utility as a port:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6123,26 +6121,26 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>Portmaster 定义了四个端口的分类：</p>
+<p>Portmaster defines four categories of ports:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>根端口：没有依赖项，也不是任何其他端口的依赖项。</p>
+<p>Root port: has no dependencies and is not a dependency of any other ports.</p>
 </li>
 <li>
-<p>主干端口：没有依赖项，但其他端口依赖于它。</p>
+<p>Trunk port: has no dependencies, but other ports depend upon it.</p>
 </li>
 <li>
-<p>分支端口：具有依赖关系，其他端口依赖于它。</p>
+<p>Branch port: has dependencies and other ports depend upon it.</p>
 </li>
 <li>
-<p>叶子端口：具有依赖关系，但没有其他端口依赖于它。</p>
+<p>Leaf port: has dependencies but no other ports depend upon it.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>要列出这些类别并搜索更新：</p>
+<p>To list these categories and search for updates:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6170,7 +6168,7 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>这个命令用于升级所有过时的端口：</p>
+<p>This command is used to upgrade all outdated ports:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6185,14 +6183,14 @@ The deinstallation will free 229 kB
 </td>
 <td class="content">
 <div class="paragraph">
-<p>默认情况下， Portmaster 在删除现有端口之前会创建一个备份包。如果新版本的安装成功， Portmaster 会删除备份。使用 <code>-b</code> 指令可以让 Portmaster 不自动删除备份。添加 <code>-i</code> 可以启动 Portmaster 的交互模式，在升级每个端口之前提示确认。还有许多其他选项可用。请阅读 <a href="https://man.freebsd.org/cgi/man.cgi?query=portmaster&amp;sektion=8&amp;format=html">portmaster(8)</a> 的手册页面，了解有关它们使用的详细信息。</p>
+<p>By default, Portmaster makes a backup package before deleting the existing port. If the installation of the new version is successful, Portmaster deletes the backup. Using <code>-b</code> instructs Portmaster not to automatically delete the backup. Adding <code>-i</code> starts Portmaster in interactive mode, prompting for confirmation before upgrading each port. Many other options are available. Read through the manual page for <a href="https://man.freebsd.org/cgi/man.cgi?query=portmaster&amp;sektion=8&amp;format=html">portmaster(8)</a> for details regarding their usage.</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>如果在升级过程中遇到错误，请在升级和重建所有端口时添加 <code>-f</code> 。</p>
+<p>If errors are encountered during the upgrade process, add <code>-f</code> to upgrade and rebuild all ports:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6200,7 +6198,7 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>Portmaster 还可以用于在系统上安装新的端口，在构建和安装新的端口之前升级所有依赖项。要使用此功能，请指定 Ports Collection 中端口的位置：</p>
+<p>Portmaster can also be used to install new ports on the system, upgrading all dependencies before building and installing the new port. To use this function, specify the location of the port in the Ports Collection:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6208,13 +6206,13 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>有关 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/portmaster/">ports-mgmt/portmaster</a> 的更多信息可以在其 <code>pkg-descr</code> 中找到。</p>
+<p>More information about <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/portmaster/">ports-mgmt/portmaster</a> may be found in its <code>pkg-descr</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="portupgrade">4.5.4.3. 使用 Portupgrade 升级端口<a class="anchor" href="#portupgrade"></a></h5>
+<h5 id="portupgrade">4.5.4.3. Upgrading Ports Using Portupgrade<a class="anchor" href="#portupgrade"></a></h5>
 <div class="paragraph">
-<p><a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/portupgrade/">ports-mgmt/portupgrade</a> 是另一个可以用来升级端口的实用工具。它安装了一套可以用来管理端口的应用程序。然而，它依赖于 Ruby 。要安装该端口：</p>
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/portupgrade/">ports-mgmt/portupgrade</a> is another utility that can be used to upgrade ports. It installs a suite of applications which can be used to manage ports. However, it is dependent upon Ruby. To install the port:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6223,10 +6221,10 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>在使用此工具进行升级之前，建议使用 <code>pkgdb -F</code> 扫描已安装的端口列表，并修复它报告的所有不一致性。</p>
+<p>Before performing an upgrade using this utility, it is recommended to scan the list of installed ports using <code>pkgdb -F</code> and to fix all the inconsistencies it reports.</p>
 </div>
 <div class="paragraph">
-<p>要升级系统上安装的所有过时端口，请使用 <code>portupgrade -a</code> 。或者，加入 <code>-i</code> 以便在每次单独升级时要求确认：</p>
+<p>To upgrade all the outdated ports installed on the system, use <code>portupgrade -a</code>. Alternately, include <code>-i</code> to be asked for confirmation of every individual upgrade:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6234,7 +6232,7 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>要升级指定的应用程序而不是所有可用的端口，请使用 <code>portupgrade <em>pkgname</em></code> 。非常重要的是要包括 <code>-R</code> 选项，以先升级给定应用程序所需的所有端口：</p>
+<p>To upgrade only a specified application instead of all available ports, use <code>portupgrade <em>pkgname</em></code>. It is very important to include <code>-R</code> to first upgrade all the ports required by the given application:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6242,7 +6240,7 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>如果包含了 <code>-P</code> 选项， Portupgrade 会在 <code>PKG_PATH</code> 列出的本地目录中搜索可用的软件包。如果本地没有可用的软件包，它会从远程站点获取软件包。如果无法在本地或远程获取软件包， Portupgrade 将使用 ports 。为了完全避免使用 ports ，可以指定 <code>-PP</code> 选项。最后一组选项告诉 Portupgrade 如果没有可用的软件包则中止操作。</p>
+<p>If <code>-P</code> is included, Portupgrade searches for available packages in the local directories listed in <code>PKG_PATH</code>. If none are available locally, it then fetches packages from a remote site. If packages can not be found locally or fetched remotely, Portupgrade will use ports. To avoid using ports entirely, specify <code>-PP</code>. This last set of options tells Portupgrade to abort if no packages are available:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6250,17 +6248,17 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>如果指定了 <code>-P</code> ，只需获取端口 distfiles 或软件包，而不需要构建或安装任何内容，请使用 <code>-F</code> 。有关所有可用开关的更多信息，请参阅 <code>portupgrade</code> 的手册页。</p>
+<p>To just fetch the port distfiles, or packages, if <code>-P</code> is specified, without building or installing anything, use <code>-F</code>. For further information on all of the available switches, refer to the manual page for <code>portupgrade</code>.</p>
 </div>
 <div class="paragraph">
-<p>有关 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/portupgrade/">ports-mgmt/portupgrade</a> 的更多信息可以在其 <code>pkg-descr</code> 中找到。</p>
+<p>More information about <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/portupgrade/">ports-mgmt/portupgrade</a> may be found in its <code>pkg-descr</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ports-disk-space">4.5.5. 端口和磁盘空间<a class="anchor" href="#ports-disk-space"></a></h4>
+<h4 id="ports-disk-space">4.5.5. Ports and Disk Space<a class="anchor" href="#ports-disk-space"></a></h4>
 <div class="paragraph">
-<p>使用 Ports Collection 会随着时间的推移占用磁盘空间。在构建和安装端口之后，在端口骨架中运行 <code>make clean</code> 将清理临时的 <code>work</code> 目录。如果使用 Portmaster 安装端口，它会自动删除此目录，除非指定了 <code>-K</code> 选项。如果安装了 Portupgrade ，此命令将删除在本地 Ports Collection 副本中找到的所有 <code>work</code> 目录：</p>
+<p>Using the Ports Collection will use up disk space over time. After building and installing a port, running <code>make clean</code> within the ports skeleton will clean up the temporary <code>work</code> directory. If Portmaster is used to install a port, it will automatically remove this directory unless <code>-K</code> is specified. If Portupgrade is installed, this command will remove all <code>work</code> directories found within the local copy of the Ports Collection:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6268,7 +6266,7 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>此外，随着时间的推移，过时的源代码分发文件会在 <code>/usr/ports/distfiles</code> 中累积。要使用 Portupgrade 删除所有不再被任何端口引用的分发文件：</p>
+<p>In addition, outdated source distribution files accumulate in <code>/usr/ports/distfiles</code> over time. To use Portupgrade to delete all the distfiles that are no longer referenced by any ports:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6276,7 +6274,7 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>Portupgrade 可以删除系统上当前未安装任何端口引用的所有 distfiles 文件。</p>
+<p>Portupgrade can remove all distfiles not referenced by any port currently installed on the system:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6284,7 +6282,7 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>如果已安装 Portmaster ，请使用：</p>
+<p>If Portmaster is installed, use:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6292,31 +6290,31 @@ The deinstallation will free 229 kB
 </div>
 </div>
 <div class="paragraph">
-<p>默认情况下，该命令是交互式的，并提示用户确认是否删除 distfile 。</p>
+<p>By default, this command is interactive and prompts the user to confirm if a distfile should be deleted.</p>
 </div>
 <div class="paragraph">
-<p>除了这些命令之外， <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/pkg_cutleaves/">ports-mgmt/pkg_cutleaves</a> 还可以自动化删除不再需要的已安装端口的任务。</p>
+<p>In addition to these commands, <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/pkg_cutleaves/">ports-mgmt/pkg_cutleaves</a> automates the task of removing installed ports that are no longer needed.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ports-poudriere">4.6. 使用 poudriere 构建软件包<a class="anchor" href="#ports-poudriere"></a></h3>
+<h3 id="ports-poudriere">4.6. Building Packages with poudriere<a class="anchor" href="#ports-poudriere"></a></h3>
 <div class="paragraph">
-<p>poudriere 是一个使用 BSD 许可证的实用工具，用于创建和测试 FreeBSD 软件包。它使用 FreeBSD jails 来设置隔离的编译环境。这些 jails 可以用于为与安装它的系统不同的 FreeBSD 版本构建软件包，也可以用于在主机是 amd64 系统的情况下构建 i386 的软件包。一旦软件包构建完成，它们的布局与官方镜像完全相同。这些软件包可以被 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 和其他软件包管理工具使用。</p>
+<p>poudriere is a <code>BSD</code>-licensed utility for creating and testing FreeBSD packages. It uses FreeBSD jails to set up isolated compilation environments. These jails can be used to build packages for versions of FreeBSD that are different from the system on which it is installed, and also to build packages for i386 if the host is an amd64 system. Once the packages are built, they are in a layout identical to the official mirrors. These packages are usable by <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> and other package management tools.</p>
 </div>
 <div class="paragraph">
-<p>poudriere 是使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere/">ports-mgmt/poudriere</a> 包或端口进行安装的。安装过程中包含一个示例配置文件 <code>/usr/local/etc/poudriere.conf.sample</code> 。将此文件复制到 <code>/usr/local/etc/poudriere.conf</code> 。编辑复制的文件以适应本地配置。</p>
+<p>poudriere is installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere/">ports-mgmt/poudriere</a> package or port. The installation includes a sample configuration file <code>/usr/local/etc/poudriere.conf.sample</code>. Copy this file to <code>/usr/local/etc/poudriere.conf</code>. Edit the copied file to suit the local configuration.</p>
 </div>
 <div class="paragraph">
-<p>虽然在运行 poudriere 的系统上不需要 <code>ZFS</code> ，但它是有益的。当使用 <code>ZFS</code> 时，必须在 <code>/usr/local/etc/poudriere.conf</code> 中指定 <code>ZPOOL</code> ，并将 <code>FREEBSD_HOST</code> 设置为附近的镜像。定义 <code>CCACHE_DIR</code> 可以启用 <code><a class="package" href="https://cgit.freebsd.org/ports/tree/devel/ccache/">devel/ccache</a></code> 来缓存编译并减少频繁编译代码的构建时间。将 poudriere 数据集放在挂载在 <code>/poudriere</code> 的隔离树中可能很方便。其他配置值的默认设置是足够的。</p>
+<p>While <code>ZFS</code> is not required on the system running poudriere, it is beneficial. When <code>ZFS</code> is used, <code>ZPOOL</code> must be specified in <code>/usr/local/etc/poudriere.conf</code> and <code>FREEBSD_HOST</code> should be set to a nearby mirror. Defining <code>CCACHE_DIR</code> enables the use of <a class="package" href="https://cgit.freebsd.org/ports/tree/devel/ccache/">devel/ccache</a> to cache compilation and reduce build times for frequently-compiled code. It may be convenient to put poudriere datasets in an isolated tree mounted at <code>/poudriere</code>. Defaults for the other configuration values are adequate.</p>
 </div>
 <div class="paragraph">
-<p>检测到的处理器核心数量用于定义并行运行的构建数量。请提供足够的虚拟内存，可以是 RAM 或者交换空间。如果虚拟内存耗尽，编译环境将停止并被销毁，导致出现奇怪的错误信息。</p>
+<p>The number of processor cores detected is used to define how many builds will run in parallel. Supply enough virtual memory, either with <code>RAM</code> or swap space. If virtual memory runs out, the compilation jails will stop and be torn down, resulting in weird error messages.</p>
 </div>
 <div class="sect3">
-<h4 id="poudriere-initialization">4.6.1. 初始化 Jails 和 Port Trees<a class="anchor" href="#poudriere-initialization"></a></h4>
+<h4 id="poudriere-initialization">4.6.1. Initialize Jails and Port Trees<a class="anchor" href="#poudriere-initialization"></a></h4>
 <div class="paragraph">
-<p>配置完成后，初始化 poudriere ，以便安装一个包含所需 FreeBSD 树和 ports 树的 jail 。使用 <code>-j</code> 指定 jail 的名称，并使用 <code>-v</code> 指定 FreeBSD 版本。在运行 FreeBSD/amd64 的系统上，可以使用 <code>-a</code> 将架构设置为 <code>i386</code> 或 <code>amd64</code> 。默认架构为 <code>uname</code> 显示的架构。</p>
+<p>After configuration, initialize poudriere so that it installs a jail with the required FreeBSD tree and a ports tree. Specify a name for the jail using <code>-j</code> and the FreeBSD version with <code>-v</code>. On systems running FreeBSD/amd64, the architecture can be set with <code>-a</code> to either <code>i386</code> or <code>amd64</code>. The default is the architecture shown by <code>uname</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6374,13 +6372,13 @@ Scanning //usr/share/certs/trusted <span class="k">for </span>certificates...
 </div>
 </div>
 <div class="paragraph">
-<p>在一台计算机上， poudriere 可以使用多个配置，在多个 jail 中，从不同的端口树构建端口。这些组合的自定义配置被称为“集合”。在安装了 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere/">ports-mgmt/poudriere</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere-devel/">ports-mgmt/poudriere-devel</a> 之后，可以查看 <a href="https://man.freebsd.org/cgi/man.cgi?query=poudriere&amp;sektion=8&amp;format=html">poudriere(8)</a> 的 CUSTOMIZATION 部分获取详细信息。</p>
+<p>On a single computer, poudriere can build ports with multiple configurations, in multiple jails, and from different port trees. Custom configurations for these combinations are called <em>sets</em>. See the CUSTOMIZATION section of <a href="https://man.freebsd.org/cgi/man.cgi?query=poudriere&amp;sektion=8&amp;format=html">poudriere(8)</a> for details after <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere/">ports-mgmt/poudriere</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/ports-mgmt/poudriere-devel/">ports-mgmt/poudriere-devel</a> is installed.</p>
 </div>
 <div class="paragraph">
-<p>这里显示的基本配置将一个单独的 jail 、 port 和 set 特定的 <code>make.conf</code> 放置在 <code>/usr/local/etc/poudriere.d</code> 目录下。在这个示例中，文件名是通过组合 jail 名称、 port 名称和 set 名称创建的： <code>13amd64-local-workstation-make.conf</code> 。系统的 <code>make.conf</code> 和这个新文件在构建时会合并，以创建构建 jail 使用的 <code>make.conf</code> 文件。</p>
+<p>The basic configuration shown here puts a single jail-, port-, and set-specific <code>make.conf</code> in <code>/usr/local/etc/poudriere.d</code>. The filename in this example is created by combining the jail name, port name, and set name: <code>13amd64-local-workstation-make.conf</code>. The system <code>make.conf</code> and this new file are combined at build time to create the <code>make.conf</code> used by the build jail.</p>
 </div>
 <div class="paragraph">
-<p>要构建的软件包应该在 <code>13amd64-local-workstation-pkglist</code> 文件中输入（具有 ` @ FLAVOR` 的 <code><a href="{porters-handbook}flavors">FLAVORS</a></code> 的端口可以定义）。</p>
+<p>Packages to be built are entered in <code>13amd64-local-workstation-pkglist</code> (ports with <a href="{porters-handbook}flavors">FLAVORS</a> can be defined with @FLAVOR):</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -6392,7 +6390,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>已配置指定端口的选项和依赖项：</p>
+<p>Options and dependencies for the specified ports are configured:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6400,7 +6398,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>最后，构建软件包并创建软件包仓库：</p>
+<p>Finally, packages are built and a package repository is created:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6408,19 +6406,19 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>在运行过程中，按下 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>t</kbd></span> 键可以显示构建的当前状态。 poudriere 还会在 <code>/poudriere/logs/bulk/jailname</code> 目录中构建文件，可以与 Web 服务器一起使用以显示构建信息。</p>
+<p>While running, pressing <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>t</kbd></span> displays the current state of the build. poudriere also builds files in <code>/poudriere/logs/bulk/jailname</code> that can be used with a web server to display build information.</p>
 </div>
 <div class="paragraph">
-<p>完成后，新的软件包现在可以从 poudriere 仓库进行安装。</p>
+<p>After completion, the new packages are now available for installation from the poudriere repository.</p>
 </div>
 <div class="paragraph">
-<p>有关使用 poudriere 的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=poudriere&amp;sektion=8&amp;format=html">poudriere(8)</a> 和主要网站 <a href="https://github.com/freebsd/poudriere/wiki" class="bare">https://github.com/freebsd/poudriere/wiki</a> 。</p>
+<p>For more information on using poudriere, see <a href="https://man.freebsd.org/cgi/man.cgi?query=poudriere&amp;sektion=8&amp;format=html">poudriere(8)</a> and the main web site, <a href="https://github.com/freebsd/poudriere/wiki" class="bare">https://github.com/freebsd/poudriere/wiki</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_配置_pkg_客户端以使用_poudriere_仓库">4.6.2. 配置 pkg 客户端以使用 poudriere 仓库<a class="anchor" href="#_配置_pkg_客户端以使用_poudriere_仓库"></a></h4>
+<h4 id="_configuring_pkg_clients_to_use_a_poudriere_repository">4.6.2. Configuring pkg Clients to Use a poudriere Repository<a class="anchor" href="#_configuring_pkg_clients_to_use_a_poudriere_repository"></a></h4>
 <div class="paragraph">
-<p>虽然可以同时使用自定义仓库和官方仓库，但有时禁用官方仓库是有用的。这可以通过创建一个配置文件来覆盖和禁用官方配置文件来实现。创建 <code>/usr/local/etc/pkg/repos/FreeBSD.conf</code> 文件，其中包含以下内容：</p>
+<p>While it is possible to use both a custom repository along side of the official repository, sometimes it is useful to disable the official repository. This is done by creating a configuration file that overrides and disables the official configuration file. Create <code>/usr/local/etc/pkg/repos/FreeBSD.conf</code> that contains the following:</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -6430,10 +6428,10 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>通常，通过 HTTP 将 poudriere 仓库提供给客户机最为简单。设置一个 web 服务器来提供软件包目录，例如： <code>/usr/local/poudriere/data/packages/13amd64</code> ，其中 <code>13amd64</code> 是构建的名称。</p>
+<p>Usually it is easiest to serve a poudriere repository to the client machines via HTTP. Set up a webserver to serve up the package directory, for instance: <code>/usr/local/poudriere/data/packages/13amd64</code>, where <code>13amd64</code> is the name of the build.</p>
 </div>
 <div class="paragraph">
-<p>如果软件包仓库的 URL 是： <code><a href="http://pkg.example.com/13amd64" class="bare">http://pkg.example.com/13amd64</a></code> ，那么位于 <code>/usr/local/etc/pkg/repos/custom.conf</code> 的仓库配置文件将如下所示：</p>
+<p>If the URL to the package repository is: <code><a href="http://pkg.example.com/13amd64" class="bare">http://pkg.example.com/13amd64</a></code>, then the repository configuration file in <code>/usr/local/etc/pkg/repos/custom.conf</code> would look like:</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -6444,7 +6442,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>如果不希望将软件包仓库暴露在互联网上，可以使用 <code>file://</code> 协议直接指向仓库：</p>
+<p>If exposing the package repository to the internet is not desired, the <code>file://</code> protocol can be used to point to the repository directly:</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -6457,20 +6455,20 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="sect2">
-<h3 id="ports-nextsteps">4.7. 安装后的考虑事项<a class="anchor" href="#ports-nextsteps"></a></h3>
+<h3 id="ports-nextsteps">4.7. Post-Installation Considerations<a class="anchor" href="#ports-nextsteps"></a></h3>
 <div class="paragraph">
-<p>无论软件是从二进制包还是端口安装的，大多数第三方应用程序在安装后都需要进行一定程度的配置。以下命令和位置可用于帮助确定应用程序安装了什么。</p>
+<p>Regardless of whether the software was installed from a binary package or port, most third-party applications require some level of configuration after installation. The following commands and locations can be used to help determine what was installed with the application.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>大多数应用程序都会在 <code>/usr/local/etc</code> 目录下安装至少一个默认配置文件。在应用程序有大量配置文件的情况下，会创建一个子目录来存放它们。通常，会安装一些以 <code>.sample</code> 后缀结尾的示例配置文件。应该审查并可能编辑这些配置文件以满足系统的需求。要编辑示例文件，首先将其复制并去掉 <code>.sample</code> 扩展名。</p>
+<p>Most applications install at least one default configuration file in <code>/usr/local/etc</code>. In cases where an application has a large number of configuration files, a subdirectory will be created to hold them. Often, sample configuration files are installed which end with a suffix such as <code>.sample</code>. The configuration files should be reviewed and possibly edited to meet the system’s needs. To edit a sample file, first copy it without the <code>.sample</code> extension.</p>
 </li>
 <li>
-<p>提供文档的应用程序将其安装在 <code>/usr/local/share/doc</code> 目录下，许多应用程序还会安装手册页。在继续之前，应该先查阅这些文档。</p>
+<p>Applications which provide documentation will install it into <code>/usr/local/share/doc</code> and many applications also install manual pages. This documentation should be consulted before continuing.</p>
 </li>
 <li>
-<p>一些应用程序运行的服务在启动应用程序之前必须添加到 <code>/etc/rc.conf</code> 中。这些应用程序通常会在 <code>/usr/local/etc/rc.d</code> 中安装一个启动脚本。有关更多信息，请参阅 <a href="./#configtuning-starting-services">启动服务</a> 。</p>
+<p>Some applications run services which must be added to <code>/etc/rc.conf</code> before starting the application. These applications usually install a startup script in <code>/usr/local/etc/rc.d</code>. See <a href="./#configtuning-starting-services">Starting Services</a> for more information.</p>
 <div class="admonitionblock note">
 <table>
 <tbody><tr>
@@ -6479,7 +6477,7 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>根据设计，应用程序在安装时不会运行启动脚本，也不会在卸载或升级时运行停止脚本。这个决定留给了个别系统管理员来决定。</p>
+<p>By design, applications do not run their startup script upon installation, nor do they run their stop script upon deinstallation or upgrade. This decision is left to the individual system administrator.</p>
 </div>
 </td>
 </tr>
@@ -6487,26 +6485,26 @@ ports-mgmt/pkg
 </div>
 </li>
 <li>
-<p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> 的用户应该运行 <code>rehash</code> 命令来重新构建 shell 的 <code>PATH</code> 中已知的二进制文件列表。</p>
+<p>Users of <a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> should run <code>rehash</code> to rebuild the known binary list in the shells <code>PATH</code>.</p>
 </li>
 <li>
-<p>使用 <code>pkg info</code> 命令来确定应用程序安装了哪些文件、 man 页面和二进制文件。</p>
+<p>Use <code>pkg info</code> to determine which files, man pages, and binaries were installed with the application.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ports-broken">4.8. 处理损坏的端口<a class="anchor" href="#ports-broken"></a></h3>
+<h3 id="ports-broken">4.8. Dealing with Broken Ports<a class="anchor" href="#ports-broken"></a></h3>
 <div class="paragraph">
-<p>当端口无法构建或安装时，请尝试以下操作：</p>
+<p>When a port does not build or install, try the following:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>搜索一下链接 <a href="https://www.FreeBSD.org/support/" class="bare">https://www.FreeBSD.org/support/</a> 中的端口是否有待修复的问题报告。如果有的话，实施建议的修复可能会解决这个问题。</p>
+<p>Search to see if there is a fix pending for the port in the <a href="https://www.FreeBSD.org/support/">Problem Report database</a>. If so, implementing the proposed fix may fix the issue.</p>
 </li>
 <li>
-<p>向端口的维护者寻求帮助。在端口骨架中键入 <code>make maintainer</code> ，或者阅读端口的 <code>Makefile</code> 以找到维护者的电子邮件地址。记得在发送给维护者的电子邮件中包含错误之前的输出。</p>
+<p>Ask the maintainer of the port for help. Type <code>make maintainer</code> in the ports skeleton or read the port’s <code>Makefile</code> to find the maintainer’s email address. Remember to include the output leading up to the error in the email to the maintainer.</p>
 <div class="admonitionblock note">
 <table>
 <tbody><tr>
@@ -6515,24 +6513,24 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>一些端口不是由个人维护，而是由一个由邮件列表表示的团队维护者维护。其中许多（但不是全部）地址看起来像 mailto:freebsd-listname @ FreeBSD.org[freebsd-listname @ FreeBSD.org] 。在发送电子邮件时，请考虑这一点。</p>
+<p>Some ports are not maintained by an individual but instead by a group maintainer represented by a <a href="{mailing-list-faq}">mailing list</a>. Many, but not all, of these addresses look like <a href="mailto:freebsd-listname@FreeBSD.org">freebsd-listname@FreeBSD.org</a>. Please take this into account when sending an email.</p>
 </div>
 <div class="paragraph">
-<p>特别是，由 mailto:ports @ FreeBSD.org[ports @ FreeBSD.org] 维护的端口不由特定个人维护。相反，任何修复和支持都来自订阅该邮件列表的广大社区。我们始终需要更多的志愿者！</p>
+<p>In particular, ports maintained by <a href="mailto:ports@FreeBSD.org">ports@FreeBSD.org</a> are not maintained by a specific individual. Instead, any fixes and support come from the general community who subscribe to that mailing list. More volunteers are always needed!</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>如果没有收到邮件回复，请按照 <a href="{problem-reports}">编写 FreeBSD 问题报告</a> 中的说明，使用 Bugzilla 提交错误报告。</p>
+<p>If there is no response to the email, use Bugzilla to submit a bug report using the instructions in <a href="{problem-reports}">Writing FreeBSD Problem Reports</a>.</p>
 </div>
 </li>
 <li>
-<p>修复它！ <a href="{porters-handbook}">Porter’s Handbook</a> 包含了有关端口基础设施的详细信息，以便您可以修复偶尔出现的损坏端口，甚至提交您自己的端口！</p>
+<p>Fix it! The <a href="{porters-handbook}">Porter’s Handbook</a> includes detailed information on the ports infrastructure so that you can fix the occasional broken port or even submit your own!</p>
 </li>
 <li>
-<p>按照 <a href="#pkgng-intro">使用 pkg 进行二进制包管理</a> 中的说明安装软件包，而不是使用端口。</p>
+<p>Install the package instead of the port using the instructions in <a href="#pkgng-intro">使用 pkg 进行二进制包管理</a>.</p>
 </li>
 </ol>
 </div>
@@ -50020,7 +50018,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: December 21, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=0503c8e" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: December 21, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=22d22a1" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
@@ -50059,7 +50057,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
         <li><a href="#introduction">Chapter 1. 介绍</a></li>
         <li><a href="#bsdinstall">Chapter 2. 安装 FreeBSD</a></li>
         <li><a href="#basics">Chapter 3. FreeBSD 基础知识</a></li>
-        <li><a href="#ports">Chapter 4. 安装应用程序：软件包和端口</a></li>
+        <li><a href="#ports">Chapter 4. 安装应用程序：软件包和 Ports</a></li>
         <li><a href="#x11">Chapter 5. X Window System （ X 窗口系统）</a></li>
         <li><a href="#wayland">Chapter 6. 在 FreeBSD 上的 Wayland</a></li>
         <li><a href="#network">Chapter 7. 网络</a></li>
