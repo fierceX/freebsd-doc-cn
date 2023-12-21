@@ -48,12 +48,12 @@ endif::[]
 [[bsdinstall-synopsis]]
 == 简介
 
-FreeBSD 支持多种架构，包括 amd64 、 ARM(R) 、 RISC-V(R) 和 PowerPC(R) 。根据不同的架构和平台，可以下载不同的镜像来安装或直接运行 FreeBSD 。
+FreeBSD 支持多种架构，包括 amd64 、 ARM(R) 、 RISC-V(R) 和 PowerPC(R) 。根据不同的架构和平台，可以 link:https://www.freebsd.org/where/[下载] 不同的镜像来安装或直接运行 FreeBSD 。
 
-图像类型有：
+镜像类型有：
 
-* 虚拟机磁盘镜像，例如 `qcow2` 、 `vmdk` 、 `vhd` 和原始设备镜像。这些不是安装镜像，而是已经预装了 FreeBSD 并准备好进行后安装任务的镜像。虚拟机镜像在云环境中也被广泛使用。
-* SD 卡镜像，用于树莓派等嵌入式系统。这些文件必须解压缩并以原始镜像的形式写入 SD 卡，从中启动板子。
+* 虚拟机磁盘镜像，例如 `qcow2`、`vmdk`、`vhd` 和原始设备镜像。这些不是安装镜像，而是已经预装了 FreeBSD 并准备好进行后安装任务的镜像。虚拟机镜像在云环境中也被广泛使用。
+* SD 卡镜像，用于树莓派等嵌入式系统。这些文件必须解压缩并以原始镜像的形式写入 SD 卡，主板将从 SD 卡启动。
 * 安装镜像用于从 ISO 或 USB 设备引导，以在常见的台式机、笔记本电脑或服务器系统上安装 FreeBSD 到驱动器。
 
 本章的其余部分描述了第三种情况，解释了如何使用名为 bsdinstall 的基于文本的安装程序安装 FreeBSD 。安装程序与此处显示的内容可能存在细微差异，因此请将本章作为一份通用指南，而不是一组字面指令。
@@ -64,12 +64,12 @@ FreeBSD 支持多种架构，包括 amd64 、 ARM(R) 、 RISC-V(R) 和 PowerPC(R
 * 如何启动 bsdinstall 。
 * bsdinstall 将会询问的问题，它们的含义以及如何回答。
 * 如何排除安装失败的问题。
-* 在进行安装之前，如何访问 FreeBSD 的实时版本。
+* 在进行安装之前，如何访问 FreeBSD 的活动版本。
 
 [[bsdinstall-hardware]]
 == 最低硬件要求
 
-安装 FreeBSD 的硬件要求因架构和版本而异。支持 FreeBSD 发布的硬件架构和设备可以在链接： https://www.FreeBSD.org/releases/[FreeBSD 发布信息] 页面上找到。链接： https://www.FreeBSD.org/where/[FreeBSD 下载页面] 还提供了选择不同架构的正确镜像的建议。
+安装 FreeBSD 的硬件要求因架构和版本而异。支持 FreeBSD 发布的硬件架构和设备可以在 link:https://www.FreeBSD.org/releases/[FreeBSD 发布信息] 页面上找到。link:https://www.FreeBSD.org/where/[FreeBSD 下载页面] 还提供了选择不同架构的正确镜像的建议。
 
 [[bsdinstall-pre]]
 == 安装前的任务
@@ -78,14 +78,14 @@ FreeBSD 支持多种架构，包括 amd64 、 ARM(R) 、 RISC-V(R) 和 PowerPC(R
 
 [.procedure]
 ====
-. * 备份重要数据 * 
+. *备份重要数据* 
 +
-在安装任何操作系统之前， * 一定要 * 首先备份所有重要数据。不要将备份存储在正在安装的系统上。而是将数据保存到可移动的磁盘，如 USB 驱动器、网络上的另一个系统或在线备份服务中。在开始安装之前，测试备份以确保它包含所有所需的文件。一旦安装程序格式化了系统的磁盘，该磁盘上存储的所有数据都将丢失。
-. * 决定在哪里安装 FreeBSD* 
+在安装任何操作系统之前， *一定要* 首先备份所有重要数据。不要将备份存储在正在安装的系统上。而是将数据保存到可移动的磁盘，如 USB 驱动器、网络上的另一个系统或在线备份服务中。在开始安装之前，测试备份以确保它包含所有所需的文件。一旦安装程序格式化了系统的磁盘，该磁盘上存储的所有数据都将丢失。
+. *决定在哪里安装 FreeBSD* 
 +
 如果只安装 FreeBSD 作为唯一的操作系统，可以跳过这一步。但如果 FreeBSD 将与其他操作系统共享磁盘，则需要决定哪个磁盘或分区将用于 FreeBSD 。
 +
-在 i386 和 amd64 架构中，可以使用两种分区方案将磁盘分成多个分区。传统的主引导记录（ MBR ）保存了一个包含最多四个主分区的分区表。出于历史原因， FreeBSD 将这些主分区称为切片。其中一个主分区可以成为包含多个逻辑分区的扩展分区。 GUID 分区表（ GPT ）是一种较新且更简单的磁盘分区方法。常见的 GPT 实现允许每个磁盘最多有 128 个分区，消除了逻辑分区的需要。
+在 i386 和 amd64 架构中，可以使用两种分区方案将磁盘分成多个分区。传统的 _主引导记录（MBR）_ 保存了一个包含最多四个 _主分区_ 的分区表。出于历史原因，FreeBSD 将这些主分区称为 _slices_。其中一个主分区可以成为包含多个 _逻辑分区_ 的 _扩展分区_。 _GUID 分区表（GPT）_ 是一种较新且更简单的磁盘分区方法。常见的 GPT 实现允许每个磁盘最多有 128 个分区，消除了逻辑分区的需要。
 +
 FreeBSD 引导加载程序需要一个主分区或 GPT 分区。如果所有的主分区或 GPT 分区已经被使用，就必须释放一个分区给 FreeBSD 使用。为了在不删除现有数据的情况下创建一个分区，可以使用分区调整工具来缩小一个现有分区，并使用释放出的空间创建一个新的分区。
 +
@@ -228,7 +228,7 @@ commit your changes?
 
 [[bsdinstall-newboot-loader-menu]]
 .FreeBSD 引导加载程序菜单
-image::bsdinstall-newboot-loader-menu.png%20是一个文件名，无法直接翻译。["FreeBSD 引导加载程序菜单"]
+image::bsdinstall-newboot-loader-menu.png["FreeBSD 引导加载程序菜单"]
 
 默认情况下，菜单将在启动 FreeBSD 安装程序之前等待十秒钟以等待用户输入，或者如果 FreeBSD 已经安装，则在启动 FreeBSD 之前等待十秒钟。要暂停启动计时器以查看选择项，请按下空格键。要选择一个选项，请按下其突出显示的数字、字符或键。以下选项可用。
 
@@ -246,24 +246,24 @@ image::bsdinstall-boot-options-menu.png["显示支持的不同启动选项的菜
 
 启动选项菜单分为两个部分。第一部分可以用于返回主启动菜单或将任何切换选项重置为默认值。
 
-下一节用于通过按下选项的突出显示的数字或字符来切换可用选项的状态为“开启”或“关闭”。系统将始终使用这些选项的设置进行引导，直到它们被修改。可以使用此菜单切换多个选项的状态。
+下一节用于通过按下选项的突出显示的数字或字符来切换可用选项的状态为 `On` 或 `Off`。系统将始终使用这些选项的设置进行引导，直到它们被修改。可以使用此菜单切换多个选项的状态。
 
-* `ACPI 支持 `: 如果系统在启动过程中出现卡死的情况，请尝试将此选项切换为 ` 关闭 ` 。
-* ` 安全模式 ` ：如果系统在启动时即使将 `ACPI 支持 ` 设置为 ` 关闭 ` 仍然出现卡顿的情况，请尝试将此选项设置为 ` 开启 ` 。
-* `Single User` ：将此选项切换为 `On` ，以修复现有的 FreeBSD 安装，如 crossref:boot[boot-singleuser ,“单用户模式”] 中所述。一旦问题解决，将其设置为 `Off` 。
-* `Verbose` ：将此选项切换为 `On` 以在启动过程中显示更详细的消息。在排除硬件问题时，这可能会很有用。
+* `ACPI 支持（ACPI Support）`: 如果系统在启动过程中出现卡死的情况，请尝试将此选项切换为 `Off`。
+* `安全模式（Safe Mode）`：如果系统在启动时即使将 `ACPI Support` 设置为 `Off` 仍然出现卡顿的情况，请尝试将此选项设置为 `On`。
+* `单用户模式（Single User）`：将此选项切换为 `On`，以修复现有的 FreeBSD 安装，如 crossref:boot[boot-singleuser ,“单用户模式”] 中所述。一旦问题解决，将其设置为 `Off`。
+* `Verbose`：将此选项切换为 `On` 以在启动过程中显示更详细的消息。在排除硬件问题时，这可能会很有用。
 
-在进行所需的选择后，按下 kbd:[1] 或 kbd:[Backspace] 返回到主引导菜单，然后按下 kbd:[Enter] 继续引导进入 FreeBSD 。 FreeBSD 将执行其硬件设备探测和加载安装程序时，一系列引导消息将出现。 引导完成后，将显示在 <<bsdinstall-choose-mode>> 中显示的欢迎菜单。
+在进行所需的选择后，按下 kbd:[1] 或 kbd:[Backspace] 返回到主引导菜单，然后按下 kbd:[Enter] 继续引导进入 FreeBSD。FreeBSD 将执行其硬件设备探测和加载安装程序时，一系列引导消息将出现。引导完成后，将显示在 <<bsdinstall-choose-mode>> 中显示的欢迎菜单。
 
 [[bsdinstall-choose-mode]]
 .欢迎菜单
-image::bsdinstall-choose-mode.png%20是一个图片文件的名称，无法直接翻译。["FreeBSD 安装欢迎菜单"]
+image::bsdinstall-choose-mode.png["FreeBSD 安装欢迎菜单"]
 
-按下 kbd:[Enter] 键选择默认的 btn:[Install] 按钮进入安装程序。本章的其余部分将描述如何使用此安装程序。否则，使用右箭头、左箭头或带颜色的字母选择所需的菜单项。 btn:[Shell] 可用于访问 FreeBSD shell ，以便在安装之前使用命令行实用程序准备磁盘。 btn:[Live CD] 选项可用于在安装之前尝试 FreeBSD 。有关 live 版本的详细信息，请参阅 <<using-live-cd>> 。
+按下 kbd:[Enter] 键选择默认的 btn:[Install] 按钮进入安装程序。本章的其余部分将描述如何使用此安装程序。否则，使用右箭头、左箭头或带颜色的字母选择所需的菜单项。btn:[Shell] 可用于访问 FreeBSD shell，以便在安装之前使用命令行实用程序准备磁盘。btn:[Live CD] 选项可用于在安装之前尝试 FreeBSD。有关 live 版本的详细信息，请参阅 <<using-live-cd>> 。
 
 [TIP]
 ====
-要查看启动消息，包括硬件设备探测，请按下大写或小写的键盘： [S] ，然后按下键盘： [Enter] 以访问 shell 。在 shell 提示符下，键入 `more /var/run/dmesg.boot` ，使用空格键滚动浏览消息。完成后，键入 `exit` 返回欢迎菜单。
+要查看启动消息，包括硬件设备探测，请按下大写或小写的 kbd:[S]，然后按下 kbd:[Enter] 以访问 shell。在 shell 提示符下，键入 `more /var/run/dmesg.boot`，使用空格键滚动浏览消息。完成后，键入 `exit` 返回欢迎菜单。
 ====
 
 [[using-bsdinstall]]
@@ -284,7 +284,7 @@ image::bsdinstall-keymap-loading.png["键位映射加载中"]
 
 [[bsdinstall-keymap-10]]
 .按键映射选择菜单
-image::bsdinstall-keymap-10.png%20是一个图片文件的名称。["显示所有支持的键盘的按键映射选择菜单"]
+image::bsdinstall-keymap-10.png["显示所有支持的键盘的按键映射选择菜单"]
 
 [NOTE]
 ====
@@ -295,7 +295,7 @@ image::bsdinstall-keymap-10.png%20是一个图片文件的名称。["显示所�
 
 [[bsdinstall-keymap-testing]]
 .按键映射测试菜单
-image::bsdinstall-keymap-testing.png%20是一个图片文件的名称。["按键映射测试菜单"]
+image::bsdinstall-keymap-testing.png["按键映射测试菜单"]
 
 [[bsdinstall-hostname]]
 === 设置主机名
@@ -304,7 +304,7 @@ image::bsdinstall-keymap-testing.png%20是一个图片文件的名称。["按键
 
 [[bsdinstall-config-hostname]]
 .设置主机名
-image::bsdinstall-config-hostname.png%20是一个文件名，无法直接翻译。["设置主机名"]
+image::bsdinstall-config-hostname.png["设置主机名"]
 
 输入一个在网络中唯一的主机名。它应该是一个完全合格的主机名，例如 `machine3.example.com` 。
 
@@ -315,7 +315,7 @@ image::bsdinstall-config-hostname.png%20是一个文件名，无法直接翻译�
 
 [[bsdinstall-config-components]]
 .选择要安装的组件
-image::bsdinstall-config-components.png%20是一个图片文件的名称。["可以安装的不同组件。示例： base-dbg", lib32, ports, etc.]
+image::bsdinstall-config-components.png["可以安装的不同组件。示例： base-dbg", lib32, ports, etc.]
 
 决定安装哪些组件将主要取决于系统的预期用途和可用的磁盘空间。 FreeBSD 内核和用户空间，统称为“基本系统”，始终会被安装。根据架构的不同，其中一些组件可能不会出现：
 
@@ -362,7 +362,7 @@ image::bsdinstall-config-components.png%20是一个图片文件的名称。["可
  6. 安装完成后，您可以在计算机上找到并打开新安装的软件。
 
 请注意，从网络安装软件时，确保下载和安装的软件来自可信赖的来源，以避免安全风险。
-image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译。["表示某些组件未找到，并将使用网络进行下载。"]
+image::bsdinstall-netinstall-files.png["表示某些组件未找到，并将使用网络进行下载。"]
 
 [[bsdinstall-partitioning]]
 == 分配磁盘空间
@@ -371,7 +371,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 
 [[bsdinstall-zfs-partmenu]]
 .分区选择
-image::bsdinstall-zfs-partmenu.png%20是一个文件名，无法直接翻译。["显示不同的分区选项。示例：手动", Shell, etc.]
+image::bsdinstall-zfs-partmenu.png["显示不同的分区选项。示例：手动", Shell, etc.]
 
 bsdinstall 为用户提供了四种分配磁盘空间的方法：
 
@@ -411,13 +411,13 @@ bsdinstall 为用户提供了四种分配磁盘空间的方法：
 
 [[bsdinstall-part-guided-disk]]
 .从多个磁盘中进行选择
-image::bsdinstall-part-guided-disk.png%20是一个文件名，无法直接翻译。["显示可以安装 FreeBSD 的磁盘列表"]
+image::bsdinstall-part-guided-disk.png["显示可以安装 FreeBSD 的磁盘列表"]
 
 选择磁盘后，下一个菜单会提示选择是将整个磁盘安装，还是使用可用空间创建分区。如果选择 btn:[整个磁盘] ，将自动创建一个填满整个磁盘的通用分区布局。选择 btn:[分区] 将从磁盘上未使用的空间创建一个分区布局。
 
 [[bsdinstall-part-entire-part]]
 .选择整个磁盘或分区
-image::bsdinstall-part-entire-part.png%20是一个图片文件的名称。["菜单询问用户是否想要使用磁盘上的所有可用空间，还是想要进行分区。"]
+image::bsdinstall-part-entire-part.png["菜单询问用户是否想要使用磁盘上的所有可用空间，还是想要进行分区。"]
 
 选择 btn:[Entire Disk] 选项后， bsdinstall 会显示一个对话框，指示将擦除磁盘。
 
@@ -429,19 +429,19 @@ image::bsdinstall-ufs-warning.png["菜单提示用户所有磁盘上的数据将
 
 [[bsdinstall-ufs-scheme]]
 .选择分区方案
-image::bsdinstall-part-manual-partscheme.png%20是一个图片文件的名称。["菜单显示用户存在的不同类型的分区，并要求选择其中之一。"]
+image::bsdinstall-part-manual-partscheme.png["菜单显示用户存在的不同类型的分区，并要求选择其中之一。"]
 
 在创建分区布局之后，请进行审核以确保它满足安装的需求。选择 btn:[Revert] 将重置分区为其原始值。按下 btn:[Auto] 将重新创建自动的 FreeBSD 分区。分区也可以手动创建、修改或删除。当分区设置正确时，请选择 btn:[Finish] 继续进行安装。
 
 [[bsdinstall-part-review]]
 .审查已创建的分区
-image::bsdinstall-part-review.png%20是一个文件名，无法直接翻译。["显示已创建分区的菜单"]
+image::bsdinstall-part-review.png["显示已创建分区的菜单"]
 
 一旦磁盘配置完成，下一个菜单提供了在选择的驱动器格式化之前进行更改的最后机会。如果需要进行更改，请选择 btn:[返回] 返回到主分区菜单。 btn:[还原和退出] 退出安装程序，不对驱动器进行任何更改。否则，选择 btn:[提交] 开始安装过程。
 
 [[bsdinstall-ufs-final-confirmation]]
 .最终确认
-image::bsdinstall-final-confirmation.png%20是一个文件名，无法直接翻译。["菜单向用户指示所有更改将被写入磁盘，并告知如果用户决定继续，现有数据将被永久删除。"]
+image::bsdinstall-final-confirmation.png["菜单向用户指示所有更改将被写入磁盘，并告知如果用户决定继续，现有数据将被永久删除。"]
 
 要继续安装过程，请转到 <<bsdinstall-fetching-distribution>> 。
 
@@ -452,13 +452,13 @@ image::bsdinstall-final-confirmation.png%20是一个文件名，无法直接翻�
 
 [[bsdinstall-part-manual-create]]
 .手动创建分区
-image::bsdinstall-part-manual-create.png%20是一个图片文件的名称。["显示分区编辑器的菜单。"]
+image::bsdinstall-part-manual-create.png["显示分区编辑器的菜单。"]
 
 高亮显示安装驱动器（在此示例中为 `ada0` ），然后选择 btn:[Create] 以显示可用分区方案的菜单：
 
 [[bsdinstall-part-manual-partscheme]]
 .手动创建分区
-image::bsdinstall-part-manual-partscheme.png%20是一个图片文件的名称。["菜单显示了不同类型的分区方案"]
+image::bsdinstall-part-manual-partscheme.png["菜单显示了不同类型的分区方案"]
 
 GPT 通常是 amd64 计算机的最合适选择。不兼容 GPT 的旧计算机应使用 MBR 。其他分区方案通常用于不常见或较旧的计算机。
 
@@ -486,7 +486,7 @@ GPT 通常是 amd64 计算机的最合适选择。不兼容 GPT 的旧计算机�
 
 [[bsdinstall-part-manual-addpart]]
 .手动创建分区
-image::bsdinstall-part-manual-addpart.png%20是一个图片文件的名称。["请求类型菜单", size, mountpoint and label for the new partition.]
+image::bsdinstall-part-manual-addpart.png["请求类型菜单", size, mountpoint and label for the new partition.]
 
 标准的 FreeBSD GPT 安装至少使用三个分区，其中包括 UFS 或 ZFS 之一：
 
@@ -599,7 +599,7 @@ image::bsdinstall-zfs-menu.png["显示配置 ZFS 池的不同选项的菜单"]
 
 [[bsdinstall-zfs-vdev_type]]
 .ZFS 池类型
-image::bsdinstall-zfs-vdev_type.png%20是一个图片文件的名称。["请求虚拟设备类型的菜单。例如：条纹", mirror, raidz1]
+image::bsdinstall-zfs-vdev_type.png["请求虚拟设备类型的菜单。例如：条纹", mirror, raidz1]
 
 这是一个关于此菜单中可选择的“池类型”的摘要：
 
@@ -614,7 +614,7 @@ image::bsdinstall-zfs-vdev_type.png%20是一个图片文件的名称。["请求�
 
 [[bsdinstall-zfs-disk_select]]
 .磁盘选择
-image::bsdinstall-zfs-disk_select.png%20是一个文件名，无法直接翻译。["菜单请求添加多少个磁盘到池中"]
+image::bsdinstall-zfs-disk_select.png["菜单请求添加多少个磁盘到池中"]
 
 [[bsdinstall-zfs-vdev_invalid]]
 .选择无效
@@ -654,7 +654,7 @@ image::bsdinstall-zfs-warning.png["菜单提示用户数据将会丢失。"]
 
 [[bsdinstall-zfs-geli_password]]
 .磁盘加密密码
-image::bsdinstall-zfs-geli_password.png%20是一个文件名，无法直接翻译。["要求输入密码以加密设备的菜单。"]
+image::bsdinstall-zfs-geli_password.png["要求输入密码以加密设备的菜单。"]
 
 [[bsdinstall-zfs-init-encription]]
 .初始化加密
@@ -717,19 +717,19 @@ image::bsdinstall-configure-network-interface.png["显示不同网络接口以�
 
 [[bsdinstall-wireless-scan]]
 .扫描无线接入点
-image::bsdinstall-configure-wireless-scan.png%20是一个图片文件的名称。["显示无线网络扫描的菜单。"]
+image::bsdinstall-configure-wireless-scan.png["显示无线网络扫描的菜单。"]
 
 无线网络通过服务集标识符（ SSID ）进行识别，每个网络都有一个短而独特的名称。扫描期间找到的 SSID 将列出，然后是该网络可用的加密类型的描述。如果所需的 SSID 在列表中未出现，请选择 btn:[重新扫描] 进行再次扫描。如果所需的网络仍未出现，请检查天线连接是否有问题，或尝试将计算机移动到接入点附近。每次更改后都要重新扫描。
 
 [[bsdinstall-wireless-accesspoints]]
 .选择无线网络
-image::bsdinstall-configure-wireless-accesspoints.png%20是一个图片文件的名称。["显示可连接的不同无线网络的菜单。"]
+image::bsdinstall-configure-wireless-accesspoints.png["显示可连接的不同无线网络的菜单。"]
 
 接下来，请输入连接到所选无线网络的加密信息。强烈建议使用 WPA2 加密，而不是较旧的加密类型，如 WEP ，因为 WEP 提供的安全性很低。如果网络使用 WPA2 ，请输入密码，也称为预共享密钥（ PSK ）。出于安全原因，输入框中键入的字符将显示为星号。
 
 [[bsdinstall-wireless-wpa2]]
 .WPA2 设置
-image::bsdinstall-configure-wireless-wpa2setup.png%20是一个图片文件的名称。["请求无线网络密码的菜单。"]
+image::bsdinstall-configure-wireless-wpa2setup.png["请求无线网络密码的菜单。"]
 
 接下来，选择是否在以太网或无线接口上配置 IPv4 地址：
 
@@ -748,7 +748,7 @@ IPv4 配置有两种方法。如果网络提供了 DHCP 服务器， DHCP 将自
 
 [[bsdinstall-net-ipv4-dhcp]]
 .选择 IPv4 DHCP 配置
-image::bsdinstall-configure-network-interface-ipv4-dhcp.png%20是一个图像文件的名称。["菜单指示是否要为所选接口配置 DHCP 。"]
+image::bsdinstall-configure-network-interface-ipv4-dhcp.png["菜单指示是否要为所选接口配置 DHCP 。"]
 
 如果没有可用的 DHCP 服务器，请选择 btn:[No] ，并在此菜单中输入以下寻址信息：
 
@@ -764,7 +764,7 @@ image::bsdinstall-configure-network-interface-ipv4-static.png["请求配置 IPv4
 
 [[bsdinstall-net-ipv6]]
 .选择 IPv6 网络
-image::bsdinstall-configure-network-interface-ipv6.png%20是一个网络界面%20IPv6%20配置的截图。["菜单指示是否要为所选接口配置 IPv6 。"]
+image::bsdinstall-configure-network-interface-ipv6.png["菜单指示是否要为所选接口配置 IPv6 。"]
 
 IPv6 还有两种配置方法。无状态地址自动配置（ SLAAC ）将自动从本地路由器请求正确的配置信息。有关更多信息，请参阅 http://tools.ietf.org/html/rfc4862[rfc4862] 。静态配置需要手动输入网络信息。
 
@@ -778,7 +778,7 @@ image::bsdinstall-configure-network-interface-slaac.png["菜单指示是否要�
 
 [[bsdinstall-net-ipv6-static]]
 .IPv6 静态配置
-image::bsdinstall-configure-network-interface-ipv6-static.png%20是一个图片文件的名称。["菜单请求配置 IPv6 网络的数据。"]
+image::bsdinstall-configure-network-interface-ipv6-static.png["菜单请求配置 IPv6 网络的数据。"]
 
 * `IPv6 地址 ` - 分配给此计算机的 IPv6 地址。该地址必须是唯一的，并且在本地网络中没有被其他设备使用。
 * ` 默认路由器 ` - 网络的默认网关的 IPv6 地址。
@@ -787,7 +787,7 @@ image::bsdinstall-configure-network-interface-ipv6-static.png%20是一个图片�
 
 [[bsdinstall-net-dns-config]]
 .DNS 配置
-image::bsdinstall-configure-network-ipv4-dns.png%20是一个图片文件的名称。["菜单请求数据以配置网络的 DNS 。"]
+image::bsdinstall-configure-network-ipv4-dns.png["菜单请求数据以配置网络的 DNS 。"]
 
 一旦配置了接口，选择一个位于与安装 FreeBSD 的计算机相同地区的镜像站点。当镜像站点靠近目标计算机时，可以更快地检索文件，从而减少安装时间。
 
@@ -808,7 +808,7 @@ image::bsdinstall-configure-network-ipv4-dns.png%20是一个图片文件的名�
 一旦你选择了合适的镜像源，你可以在下载软件或操作系统镜像时使用它。大多数下载工具都提供了选择镜像源的选项，你只需在设置中选择你所选的镜像源即可。
 
 选择一个合适的镜像源可以提高下载速度和连接的稳定性，从而更快地获取所需的软件和操作系统镜像。因此，在下载之前，确保选择一个合适的镜像源是非常重要的。
-image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称。["请求网络镜像的菜单。"]
+image::bsdinstall-netinstall-mirrorselect.png["请求网络镜像的菜单。"]
 
 [[bsdinstall-timezone]]
 === 设置时区
@@ -831,13 +831,13 @@ image::bsdinstall-timezone-country.png["请求时区国家的菜单。"]
 
 [[bsdinstall-timezone-zone]]
 .选择一个时区
-image::bsdinstall-timezone-zone.png%20是一个图片文件的名称。["请求时区的菜单。"]
+image::bsdinstall-timezone-zone.png["请求时区的菜单。"]
 
 使用箭头键选择适当的时区，然后按下 kbd:[Enter] 键确认。
 
 [[bsdinstall-timezone-confirmation]]
 .确认时区
-image::bsdinstall-timezone-confirm.png%20是一个图片文件，无法直接翻译为中文。["菜单请求确认所选时区。"]
+image::bsdinstall-timezone-confirm.png["菜单请求确认所选时区。"]
 
 请确认时区的缩写是否正确。
 
@@ -849,7 +849,7 @@ image::bsdinstall-timezone-date.png["请求系统日期的菜单。"]
 
 [[bsdinstall-timezone-time]]
 .选择时间
-image::bsdinstall-timezone-time.png%20是一个图片文件名，无法直接翻译。["请求系统时间的菜单。"]
+image::bsdinstall-timezone-time.png["请求系统时间的菜单。"]
 
 使用箭头键选择适当的时间，然后按下 btn:[设置时间] 。否则，可以通过按下 btn:[跳过] 来跳过时间选择。
 
@@ -860,7 +860,7 @@ image::bsdinstall-timezone-time.png%20是一个图片文件名，无法直接翻
 
 [[bsdinstall-config-serv]]
 .选择启用附加服务
-image::bsdinstall-config-services.png%20是一个图片文件的名称。["显示不同服务的菜单。"]
+image::bsdinstall-config-services.png["显示不同服务的菜单。"]
 
 这里是可以在此菜单中启用的服务的摘要：
 
@@ -879,7 +879,7 @@ image::bsdinstall-config-services.png%20是一个图片文件的名称。["显�
 
 [[bsdinstall-hardening-options]]
 .选择加固安全选项
-image::bsdinstall-hardening.png%20是一个图片文件的名称。["显示不同的加固安全选项的菜单。"]
+image::bsdinstall-hardening.png["显示不同的加固安全选项的菜单。"]
 
 这里是可以在此菜单中启用的选项摘要：
 
@@ -911,7 +911,7 @@ image::bsdinstall-adduser1.png["菜单询问用户是否要添加到系统中。
 
 [[bsdinstall-add-user2]]
 .输入用户信息
-image::bsdinstall-adduser2.png%20是一个图片文件名，无法翻译。["菜单请求新用户的不同信息。"]
+image::bsdinstall-adduser2.png["菜单请求新用户的不同信息。"]
 
 这是输入信息的摘要：
 
@@ -935,7 +935,7 @@ image::bsdinstall-adduser2.png%20是一个图片文件名，无法翻译。["菜
 
 [[bsdinstall-add-user3]]
 .退出用户和组管理
-image::bsdinstall-adduser3.png%20是一个图片文件名，无法直接翻译为中文。["菜单显示新用户的信息，并询问是否一切正确。"]
+image::bsdinstall-adduser3.png["菜单显示新用户的信息，并询问是否一切正确。"]
 
 如果还有更多用户需要添加，请用“ yes ”回答“是否添加另一个用户？”的问题。输入“ no ”以完成添加用户并继续安装。
 
@@ -948,7 +948,7 @@ image::bsdinstall-adduser3.png%20是一个图片文件名，无法直接翻译�
 
 [[bsdinstall-final-config]]
 .最终配置
-image::bsdinstall-finalconfiguration.png%20是一个文件名，无法直接翻译。["在完成安装之前显示不同选项的菜单。例如：添加用户", Time Zone, etc.]
+image::bsdinstall-finalconfiguration.png["在完成安装之前显示不同选项的菜单。例如：添加用户", Time Zone, etc.]
 
 在完成安装之前，使用此菜单进行任何更改或进行任何额外的配置。
 
@@ -971,7 +971,7 @@ bsdinstall 将提示进行任何在重启进入新系统之前需要完成的额
 
 [[bsdinstall-final-main]]
 .完成安装
-image::bsdinstall-mainexit.png%20是一个文件名，无法直接翻译。["菜单显示安装已完成，并询问是否重新启动系统或访问 Live CD 。"]
+image::bsdinstall-mainexit.png["菜单显示安装已完成，并询问是否重新启动系统或访问 Live CD 。"]
 
 如果需要进一步配置或特殊设置，请选择 btn:[Live CD] 以将安装介质引导到 Live CD 模式。
 

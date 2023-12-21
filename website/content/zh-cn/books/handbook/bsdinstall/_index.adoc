@@ -1,17 +1,17 @@
 ---
-description: 'Guide about how to install FreeBSD, the minimum hardware requirements and supported architectures, how to create the installation media, etc'
+description: '关于如何安装 FreeBSD 的指南，包括最低硬件要求和支持的架构，以及如何创建安装介质等。'
 next: books/handbook/basics
-part: 'Part I. Getting Started'
+part: 第一部分：入门指南
 path: /books/handbook/
 prev: books/handbook/introduction
 showBookMenu: true
 tags: '["bsdinstall", "installing FreeBSD", "requirements", "tutorial", "guide"]'
-title: 'Chapter 2. Installing FreeBSD'
+title: '第二章 安装 FreeBSD'
 weight: 4
 ---
 
 [[bsdinstall]]
-= Installing FreeBSD
+= 安装 FreeBSD
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,48 +46,48 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[bsdinstall-synopsis]]
-== Synopsis
+== 简介
 
-FreeBSD supports different architectures including amd64, ARM(R), RISC-V(R), and PowerPC(R). Depending on the architecture and platform, different images can be link:https://www.freebsd.org/where/[downloaded] to install or directly run FreeBSD.
+FreeBSD 支持多种架构，包括 amd64 、 ARM(R) 、 RISC-V(R) 和 PowerPC(R) 。根据不同的架构和平台，可以 link:https://www.freebsd.org/where/[下载] 不同的镜像来安装或直接运行 FreeBSD 。
 
-The image types are:
+镜像类型有：
 
-* Virtual Machine disk images, such as `qcow2`, `vmdk`, `vhd`, and raw device images. These are not installation images, but images that have FreeBSD preinstalled and ready for post-installation tasks. Virtual machine images are also commonly used in cloud environments.
-* SD card images, for embedded systems such as Raspberry Pi. These files must be uncompressed and written as a raw image to an SD card, from which the board will boot.
-* Installation images to boot from an ISO or USB device to install FreeBSD on a drive for the usual desktop, laptop, or server system.
+* 虚拟机磁盘镜像，例如 `qcow2`、`vmdk`、`vhd` 和原始设备镜像。这些不是安装镜像，而是已经预装了 FreeBSD 并准备好进行后安装任务的镜像。虚拟机镜像在云环境中也被广泛使用。
+* SD 卡镜像，用于树莓派等嵌入式系统。这些文件必须解压缩并以原始镜像的形式写入 SD 卡，主板将从 SD 卡启动。
+* 安装镜像用于从 ISO 或 USB 设备引导，以在常见的台式机、笔记本电脑或服务器系统上安装 FreeBSD 到驱动器。
 
-The rest of this chapter describes the third case, explaining how to install FreeBSD using the text-based installation program named bsdinstall. There may be minor differences between the installer and what is shown here, so use this chapter as a general guide rather than as a set of literal instructions.
+本章的其余部分描述了第三种情况，解释了如何使用名为 bsdinstall 的基于文本的安装程序安装 FreeBSD 。安装程序与此处显示的内容可能存在细微差异，因此请将本章作为一份通用指南，而不是一组字面指令。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* How to obtain FreeBSD images and create FreeBSD installation media.
-* How to start bsdinstall.
-* The questions bsdinstall will ask, what they mean, and how to answer them.
-* How to troubleshoot a failed installation.
-* How to access a live version of FreeBSD before committing to an installation.
+* 如何获取 FreeBSD 镜像并创建 FreeBSD 安装介质。
+* 如何启动 bsdinstall 。
+* bsdinstall 将会询问的问题，它们的含义以及如何回答。
+* 如何排除安装失败的问题。
+* 在进行安装之前，如何访问 FreeBSD 的活动版本。
 
 [[bsdinstall-hardware]]
-== Minimum Hardware Requirements
+== 最低硬件要求
 
-The hardware requirements to install FreeBSD vary by architecture and version. Hardware architectures and devices supported by a FreeBSD release are listed on the link:https://www.FreeBSD.org/releases/[FreeBSD Release Information] page. The link:https://www.FreeBSD.org/where/[FreeBSD download page] also has recommendations for choosing the correct image for different architectures.
+安装 FreeBSD 的硬件要求因架构和版本而异。支持 FreeBSD 发布的硬件架构和设备可以在 link:https://www.FreeBSD.org/releases/[FreeBSD 发布信息] 页面上找到。link:https://www.FreeBSD.org/where/[FreeBSD 下载页面] 还提供了选择不同架构的正确镜像的建议。
 
 [[bsdinstall-pre]]
-== Pre-Installation Tasks
+== 安装前的任务
 
-Once it has been determined that the system meets the minimum hardware requirements for installing FreeBSD, the installation file should be downloaded and the installation media prepared. Before doing this, check that the system is ready for an installation by verifying the items in this checklist:
+一旦确定系统满足安装 FreeBSD 的最低硬件要求，就应该下载安装文件并准备安装介质。在此之前，请通过验证以下清单中的项目，确保系统已准备好进行安装：
 
 [.procedure]
 ====
-. *Back Up Important Data*
+. *备份重要数据* 
 +
-Before installing any operating system, *always* backup all important data first. Do not store the backup on the system being installed. Instead, save the data to a removable disk such as a USB drive, another system on the network, or an online backup service. Test the backup before starting the installation to make sure it contains all of the needed files. Once the installer formats the system's disk, all data stored on that disk will be lost.
-. *Decide Where to Install FreeBSD*
+在安装任何操作系统之前， *一定要* 首先备份所有重要数据。不要将备份存储在正在安装的系统上。而是将数据保存到可移动的磁盘，如 USB 驱动器、网络上的另一个系统或在线备份服务中。在开始安装之前，测试备份以确保它包含所有所需的文件。一旦安装程序格式化了系统的磁盘，该磁盘上存储的所有数据都将丢失。
+. *决定在哪里安装 FreeBSD* 
 +
-If FreeBSD will be the only operating system installed, this step can be skipped. But if FreeBSD will share the disk with another operating system, decide which disk or partition will be used for FreeBSD.
+如果只安装 FreeBSD 作为唯一的操作系统，可以跳过这一步。但如果 FreeBSD 将与其他操作系统共享磁盘，则需要决定哪个磁盘或分区将用于 FreeBSD 。
 +
-In the i386 and amd64 architectures, disks can be divided into multiple partitions using one of two partitioning schemes. A traditional _Master Boot Record_ (MBR) holds a partition table defining up to four _primary partitions_. For historical reasons, FreeBSD calls these primary partition _slices_. One of these primary partitions can be made into an _extended partition_ containing multiple _logical partitions_. The _GUID Partition Table_ (GPT) is a newer and simpler method of partitioning a disk. Common GPT implementations allow up to 128 partitions per disk, eliminating the need for logical partitions.
+在 i386 和 amd64 架构中，可以使用两种分区方案将磁盘分成多个分区。传统的 _主引导记录（MBR）_ 保存了一个包含最多四个 _主分区_ 的分区表。出于历史原因，FreeBSD 将这些主分区称为 _slices_。其中一个主分区可以成为包含多个 _逻辑分区_ 的 _扩展分区_。 _GUID 分区表（GPT）_ 是一种较新且更简单的磁盘分区方法。常见的 GPT 实现允许每个磁盘最多有 128 个分区，消除了逻辑分区的需要。
 +
-The FreeBSD boot loader requires either a primary or GPT partition. If all of the primary or GPT partitions are already in use, one must be freed for FreeBSD. To create a partition without deleting existing data, use a partition resizing tool to shrink an existing partition and create a new partition using the freed space.
+FreeBSD 引导加载程序需要一个主分区或 GPT 分区。如果所有的主分区或 GPT 分区已经被使用，就必须释放一个分区给 FreeBSD 使用。为了在不删除现有数据的情况下创建一个分区，可以使用分区调整工具来缩小一个现有分区，并使用释放出的空间创建一个新的分区。
 +
 A variety of free and commercial partition resizing tools are listed at link:https://en.wikipedia.org/wiki/List_of_disk_partitioning_software[List of disk partitioning software wikipedia entry]. link:https://gparted.org/livecd.php[GParted Live] is a free live CD which includes the GParted partition editor.
 +
@@ -243,41 +243,41 @@ By default, the menu will wait ten seconds for user input before booting into th
 .FreeBSD Boot Options Menu
 image::bsdinstall-boot-options-menu.png["Menu showing the different boot options supported"]
 
-The boot options menu is divided into two sections. The first section can be used to either return to the main boot menu or to reset any toggled options back to their defaults.
+启动选项菜单分为两个部分。第一部分可以用于返回主启动菜单或将任何切换选项重置为默认值。
 
-The next section is used to toggle the available options to `On` or `Off` by pressing the option's highlighted number or character. The system will always boot using the settings for these options until they are modified. Several options can be toggled using this menu:
+下一节用于通过按下选项的突出显示的数字或字符来切换可用选项的状态为 `On` 或 `Off`。系统将始终使用这些选项的设置进行引导，直到它们被修改。可以使用此菜单切换多个选项的状态。
 
-* `ACPI Support`: If the system hangs during boot, try toggling this option to `Off`.
-* `Safe Mode`: If the system still hangs during boot even with `ACPI Support` set to `Off`, try setting this option to `On`.
-* `Single User`: Toggle this option to `On` to fix an existing FreeBSD installation as described in crossref:boot[boot-singleuser,“Single-User Mode”]. Once the problem is fixed, set it back to `Off`.
-* `Verbose`: Toggle this option to `On` to see more detailed messages during the boot process. This can be useful when troubleshooting a piece of hardware.
+* `ACPI 支持（ACPI Support）`: 如果系统在启动过程中出现卡死的情况，请尝试将此选项切换为 `Off`。
+* `安全模式（Safe Mode）`：如果系统在启动时即使将 `ACPI Support` 设置为 `Off` 仍然出现卡顿的情况，请尝试将此选项设置为 `On`。
+* `单用户模式（Single User）`：将此选项切换为 `On`，以修复现有的 FreeBSD 安装，如 crossref:boot[boot-singleuser ,“单用户模式”] 中所述。一旦问题解决，将其设置为 `Off`。
+* `Verbose`：将此选项切换为 `On` 以在启动过程中显示更详细的消息。在排除硬件问题时，这可能会很有用。
 
-After making the needed selections, press kbd:[1] or kbd:[Backspace] to return to the main boot menu, then press kbd:[Enter] to continue booting into FreeBSD. A series of boot messages will appear as FreeBSD carries out its hardware device probes and loads the installation program. Once the boot is complete, the welcome menu shown in <<bsdinstall-choose-mode>> will be displayed.
+在进行所需的选择后，按下 kbd:[1] 或 kbd:[Backspace] 返回到主引导菜单，然后按下 kbd:[Enter] 继续引导进入 FreeBSD。FreeBSD 将执行其硬件设备探测和加载安装程序时，一系列引导消息将出现。引导完成后，将显示在 <<bsdinstall-choose-mode>> 中显示的欢迎菜单。
 
 [[bsdinstall-choose-mode]]
-.Welcome Menu
-image::bsdinstall-choose-mode.png["FreeBSD installation welcome menu"]
+.欢迎菜单
+image::bsdinstall-choose-mode.png["FreeBSD 安装欢迎菜单"]
 
-Press kbd:[Enter] to select the default of btn:[Install] to enter the installer. The rest of this chapter describes how to use this installer. Otherwise, use the right or left arrows or the colorized letter to select the desired menu item. The btn:[Shell] can be used to access a FreeBSD shell in order to use command line utilities to prepare the disks before installation. The btn:[Live CD] option can be used to try out FreeBSD before installing it. The live version is described in <<using-live-cd>>.
+按下 kbd:[Enter] 键选择默认的 btn:[Install] 按钮进入安装程序。本章的其余部分将描述如何使用此安装程序。否则，使用右箭头、左箭头或带颜色的字母选择所需的菜单项。btn:[Shell] 可用于访问 FreeBSD shell，以便在安装之前使用命令行实用程序准备磁盘。btn:[Live CD] 选项可用于在安装之前尝试 FreeBSD。有关 live 版本的详细信息，请参阅 <<using-live-cd>> 。
 
 [TIP]
 ====
-To review the boot messages, including the hardware device probe, press the upper- or lower-case kbd:[S] and then kbd:[Enter] to access a shell. At the shell prompt, type `more /var/run/dmesg.boot` and use the space bar to scroll through the messages. When finished, type `exit` to return to the welcome menu.
+要查看启动消息，包括硬件设备探测，请按下大写或小写的 kbd:[S]，然后按下 kbd:[Enter] 以访问 shell。在 shell 提示符下，键入 `more /var/run/dmesg.boot`，使用空格键滚动浏览消息。完成后，键入 `exit` 返回欢迎菜单。
 ====
 
 [[using-bsdinstall]]
-== Using bsdinstall
+== 使用 bsdinstall
 
-This section shows the order of the bsdinstall menus and the type of information that will be asked before the system is installed. Use the arrow keys to highlight a menu option, then kbd:[Space] to select or deselect that menu item. When finished, press kbd:[Enter] to save the selection and move onto the next screen.
+本节展示了 bsdinstall 菜单的顺序以及在系统安装之前将要询问的信息类型。使用箭头键来突出显示菜单选项，然后使用 kbd:[Space] 来选择或取消选择该菜单项。完成后，按下 kbd:[Enter] 保存选择并进入下一个屏幕。
 
 [[bsdinstall-keymap]]
-=== Selecting the Keymap Menu
+=== 选择键映射菜单
 
-Before starting the process, bsdinstall will load the keymap files as shown in <<bsdinstall-keymap-loading>>.
+在开始过程之前， bsdinstall 将加载键盘映射文件，如 <<bsdinstall-keymap-loading>> 所示。
 
 [[bsdinstall-keymap-loading]]
-.Keymap Loading
-image::bsdinstall-keymap-loading.png["Keymap loading"]
+.按键映射加载中
+image::bsdinstall-keymap-loading.png["键位映射加载中"]
 
 After the keymaps have been loaded, bsdinstall displays the menu shown in <<bsdinstall-keymap-10>>. Use the up and down arrows to select the keymap that most closely represents the mapping of the keyboard attached to the system. Press kbd:[Enter] to save the selection.
 
