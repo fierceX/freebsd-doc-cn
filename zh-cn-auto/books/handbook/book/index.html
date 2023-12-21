@@ -1077,18 +1077,18 @@
 <div class="sect2">
 <h3 id="bsdinstall-synopsis">2.1. 简介<a class="anchor" href="#bsdinstall-synopsis"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 支持多种架构，包括 amd64 、 ARM® 、 RISC-V® 和 PowerPC® 。根据不同的架构和平台，可以下载不同的镜像来安装或直接运行 FreeBSD 。</p>
+<p>FreeBSD 支持多种架构，包括 amd64 、 ARM® 、 RISC-V® 和 PowerPC® 。根据不同的架构和平台，可以 <a href="https://www.freebsd.org/where/">下载</a> 不同的镜像来安装或直接运行 FreeBSD 。</p>
 </div>
 <div class="paragraph">
-<p>图像类型有：</p>
+<p>镜像类型有：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>虚拟机磁盘镜像，例如 <code>qcow2</code> 、 <code>vmdk</code> 、 <code>vhd</code> 和原始设备镜像。这些不是安装镜像，而是已经预装了 FreeBSD 并准备好进行后安装任务的镜像。虚拟机镜像在云环境中也被广泛使用。</p>
+<p>虚拟机磁盘镜像，例如 <code>qcow2</code>、<code>vmdk</code>、<code>vhd</code> 和原始设备镜像。这些不是安装镜像，而是已经预装了 FreeBSD 并准备好进行后安装任务的镜像。虚拟机镜像在云环境中也被广泛使用。</p>
 </li>
 <li>
-<p>SD 卡镜像，用于树莓派等嵌入式系统。这些文件必须解压缩并以原始镜像的形式写入 SD 卡，从中启动板子。</p>
+<p>SD 卡镜像，用于树莓派等嵌入式系统。这些文件必须解压缩并以原始镜像的形式写入 SD 卡，主板将从 SD 卡启动。</p>
 </li>
 <li>
 <p>安装镜像用于从 ISO 或 USB 设备引导，以在常见的台式机、笔记本电脑或服务器系统上安装 FreeBSD 到驱动器。</p>
@@ -1116,7 +1116,7 @@
 <p>如何排除安装失败的问题。</p>
 </li>
 <li>
-<p>在进行安装之前，如何访问 FreeBSD 的实时版本。</p>
+<p>在进行安装之前，如何访问 FreeBSD 的活动版本。</p>
 </li>
 </ul>
 </div>
@@ -1124,7 +1124,7 @@
 <div class="sect2">
 <h3 id="bsdinstall-hardware">2.2. 最低硬件要求<a class="anchor" href="#bsdinstall-hardware"></a></h3>
 <div class="paragraph">
-<p>安装 FreeBSD 的硬件要求因架构和版本而异。支持 FreeBSD 发布的硬件架构和设备可以在链接： <a href="https://www.FreeBSD.org/releases/">FreeBSD 发布信息</a> 页面上找到。链接： <a href="https://www.FreeBSD.org/where/">FreeBSD 下载页面</a> 还提供了选择不同架构的正确镜像的建议。</p>
+<p>安装 FreeBSD 的硬件要求因架构和版本而异。支持 FreeBSD 发布的硬件架构和设备可以在 <a href="https://www.FreeBSD.org/releases/">FreeBSD 发布信息</a> 页面上找到。<a href="https://www.FreeBSD.org/where/">FreeBSD 下载页面</a> 还提供了选择不同架构的正确镜像的建议。</p>
 </div>
 </div>
 <div class="sect2">
@@ -1137,18 +1137,18 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>* 备份重要数据 *</p>
+<p><strong>备份重要数据</strong></p>
 <div class="paragraph">
-<p>在安装任何操作系统之前， * 一定要 * 首先备份所有重要数据。不要将备份存储在正在安装的系统上。而是将数据保存到可移动的磁盘，如 USB 驱动器、网络上的另一个系统或在线备份服务中。在开始安装之前，测试备份以确保它包含所有所需的文件。一旦安装程序格式化了系统的磁盘，该磁盘上存储的所有数据都将丢失。</p>
+<p>在安装任何操作系统之前， <strong>一定要</strong> 首先备份所有重要数据。不要将备份存储在正在安装的系统上。而是将数据保存到可移动的磁盘，如 USB 驱动器、网络上的另一个系统或在线备份服务中。在开始安装之前，测试备份以确保它包含所有所需的文件。一旦安装程序格式化了系统的磁盘，该磁盘上存储的所有数据都将丢失。</p>
 </div>
 </li>
 <li>
-<p>* 决定在哪里安装 FreeBSD*</p>
+<p><strong>决定在哪里安装 FreeBSD</strong></p>
 <div class="paragraph">
 <p>如果只安装 FreeBSD 作为唯一的操作系统，可以跳过这一步。但如果 FreeBSD 将与其他操作系统共享磁盘，则需要决定哪个磁盘或分区将用于 FreeBSD 。</p>
 </div>
 <div class="paragraph">
-<p>在 i386 和 amd64 架构中，可以使用两种分区方案将磁盘分成多个分区。传统的主引导记录（ MBR ）保存了一个包含最多四个主分区的分区表。出于历史原因， FreeBSD 将这些主分区称为切片。其中一个主分区可以成为包含多个逻辑分区的扩展分区。 GUID 分区表（ GPT ）是一种较新且更简单的磁盘分区方法。常见的 GPT 实现允许每个磁盘最多有 128 个分区，消除了逻辑分区的需要。</p>
+<p>在 i386 和 amd64 架构中，可以使用两种分区方案将磁盘分成多个分区。传统的 <em>主引导记录（MBR）</em> 保存了一个包含最多四个 <em>主分区</em> 的分区表。出于历史原因，FreeBSD 将这些主分区称为 <em>slices</em>。其中一个主分区可以成为包含多个 <em>逻辑分区</em> 的 <em>扩展分区</em>。 <em>GUID 分区表（GPT）</em> 是一种较新且更简单的磁盘分区方法。常见的 GPT 实现允许每个磁盘最多有 128 个分区，消除了逻辑分区的需要。</p>
 </div>
 <div class="paragraph">
 <p>FreeBSD 引导加载程序需要一个主分区或 GPT 分区。如果所有的主分区或 GPT 分区已经被使用，就必须释放一个分区给 FreeBSD 使用。为了在不删除现有数据的情况下创建一个分区，可以使用分区调整工具来缩小一个现有分区，并使用释放出的空间创建一个新的分区。</p>
@@ -1412,7 +1412,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-newboot-loader-menu" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-newboot-loader-menu.png%20是一个文件名，无法直接翻译。" alt="FreeBSD 引导加载程序菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-newboot-loader-menu.png" alt="FreeBSD 引导加载程序菜单"/>
 </div>
 <div class="title">图 1. FreeBSD 引导加载程序菜单</div>
 </div>
@@ -1454,35 +1454,35 @@ commit your changes?</pre>
 <p>启动选项菜单分为两个部分。第一部分可以用于返回主启动菜单或将任何切换选项重置为默认值。</p>
 </div>
 <div class="paragraph">
-<p>下一节用于通过按下选项的突出显示的数字或字符来切换可用选项的状态为“开启”或“关闭”。系统将始终使用这些选项的设置进行引导，直到它们被修改。可以使用此菜单切换多个选项的状态。</p>
+<p>下一节用于通过按下选项的突出显示的数字或字符来切换可用选项的状态为 <code>On</code> 或 <code>Off</code>。系统将始终使用这些选项的设置进行引导，直到它们被修改。可以使用此菜单切换多个选项的状态。</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>`ACPI 支持 `: 如果系统在启动过程中出现卡死的情况，请尝试将此选项切换为 ` 关闭 ` 。</p>
+<p><code>ACPI 支持（ACPI Support）</code>: 如果系统在启动过程中出现卡死的情况，请尝试将此选项切换为 <code>Off</code>。</p>
 </li>
 <li>
-<p>` 安全模式 ` ：如果系统在启动时即使将 `ACPI 支持 ` 设置为 ` 关闭 ` 仍然出现卡顿的情况，请尝试将此选项设置为 ` 开启 ` 。</p>
+<p><code>安全模式（Safe Mode）</code>：如果系统在启动时即使将 <code>ACPI Support</code> 设置为 <code>Off</code> 仍然出现卡顿的情况，请尝试将此选项设置为 <code>On</code>。</p>
 </li>
 <li>
-<p><code>Single User</code> ：将此选项切换为 <code>On</code> ，以修复现有的 FreeBSD 安装，如 <a href="./#boot-singleuser">“单用户模式”</a> 中所述。一旦问题解决，将其设置为 <code>Off</code> 。</p>
+<p><code>单用户模式（Single User）</code>：将此选项切换为 <code>On</code>，以修复现有的 FreeBSD 安装，如 <a href="./#boot-singleuser">“单用户模式”</a> 中所述。一旦问题解决，将其设置为 <code>Off</code>。</p>
 </li>
 <li>
-<p><code>Verbose</code> ：将此选项切换为 <code>On</code> 以在启动过程中显示更详细的消息。在排除硬件问题时，这可能会很有用。</p>
+<p><code>Verbose</code>：将此选项切换为 <code>On</code> 以在启动过程中显示更详细的消息。在排除硬件问题时，这可能会很有用。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>在进行所需的选择后，按下 <kbd>1</kbd> 或 <kbd>Backspace</kbd> 返回到主引导菜单，然后按下 <kbd>Enter</kbd> 继续引导进入 FreeBSD 。 FreeBSD 将执行其硬件设备探测和加载安装程序时，一系列引导消息将出现。 引导完成后，将显示在 <a href="#bsdinstall-choose-mode">欢迎菜单</a> 中显示的欢迎菜单。</p>
+<p>在进行所需的选择后，按下 <kbd>1</kbd> 或 <kbd>Backspace</kbd> 返回到主引导菜单，然后按下 <kbd>Enter</kbd> 继续引导进入 FreeBSD。FreeBSD 将执行其硬件设备探测和加载安装程序时，一系列引导消息将出现。引导完成后，将显示在 <a href="#bsdinstall-choose-mode">欢迎菜单</a> 中显示的欢迎菜单。</p>
 </div>
 <div id="bsdinstall-choose-mode" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-choose-mode.png%20是一个图片文件的名称，无法直接翻译。" alt="FreeBSD 安装欢迎菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-choose-mode.png" alt="FreeBSD 安装欢迎菜单"/>
 </div>
 <div class="title">图 3. 欢迎菜单</div>
 </div>
 <div class="paragraph">
-<p>按下 <kbd>Enter</kbd> 键选择默认的 <b class="button">Install</b> 按钮进入安装程序。本章的其余部分将描述如何使用此安装程序。否则，使用右箭头、左箭头或带颜色的字母选择所需的菜单项。 <b class="button">Shell</b> 可用于访问 FreeBSD shell ，以便在安装之前使用命令行实用程序准备磁盘。 <b class="button">Live CD</b> 选项可用于在安装之前尝试 FreeBSD 。有关 live 版本的详细信息，请参阅 <a href="#using-live-cd">使用 Live CD</a> 。</p>
+<p>按下 <kbd>Enter</kbd> 键选择默认的 <b class="button">Install</b> 按钮进入安装程序。本章的其余部分将描述如何使用此安装程序。否则，使用右箭头、左箭头或带颜色的字母选择所需的菜单项。<b class="button">Shell</b> 可用于访问 FreeBSD shell，以便在安装之前使用命令行实用程序准备磁盘。<b class="button">Live CD</b> 选项可用于在安装之前尝试 FreeBSD。有关 live 版本的详细信息，请参阅 <a href="#using-live-cd">使用 Live CD</a> 。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1492,7 +1492,7 @@ commit your changes?</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>要查看启动消息，包括硬件设备探测，请按下大写或小写的键盘： [S] ，然后按下键盘： [Enter] 以访问 shell 。在 shell 提示符下，键入 <code>more /var/run/dmesg.boot</code> ，使用空格键滚动浏览消息。完成后，键入 <code>exit</code> 返回欢迎菜单。</p>
+<p>要查看启动消息，包括硬件设备探测，请按下大写或小写的 <kbd>S</kbd>，然后按下 <kbd>Enter</kbd> 以访问 shell。在 shell 提示符下，键入 <code>more /var/run/dmesg.boot</code>，使用空格键滚动浏览消息。完成后，键入 <code>exit</code> 返回欢迎菜单。</p>
 </div>
 </td>
 </tr>
@@ -1521,7 +1521,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-keymap-10" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-keymap-10.png%20是一个图片文件的名称。" alt="显示所有支持的键盘的按键映射选择菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-keymap-10.png" alt="显示所有支持的键盘的按键映射选择菜单"/>
 </div>
 <div class="title">图 5. 按键映射选择菜单</div>
 </div>
@@ -1544,7 +1544,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-keymap-testing" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-keymap-testing.png%20是一个图片文件的名称。" alt="按键映射测试菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-keymap-testing.png" alt="按键映射测试菜单"/>
 </div>
 <div class="title">图 6. 按键映射测试菜单</div>
 </div>
@@ -1556,7 +1556,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-config-hostname" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-hostname.png%20是一个文件名，无法直接翻译。" alt="设置主机名"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-hostname.png" alt="设置主机名"/>
 </div>
 <div class="title">图 7. 设置主机名</div>
 </div>
@@ -1571,7 +1571,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-config-components" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-components.png%20是一个图片文件的名称。" alt="可以安装的不同组件。示例： base-dbg" width="lib32" height="ports"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-components.png" alt="可以安装的不同组件。示例： base-dbg" width="lib32" height="ports"/>
 </div>
 <div class="title">图 8. 选择要安装的组件</div>
 </div>
@@ -1679,7 +1679,7 @@ commit your changes?</pre>
 </div>
 <div class="paragraph">
 <p>请注意，从网络安装软件时，确保下载和安装的软件来自可信赖的来源，以避免安全风险。
-image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译。[&#34;表示某些组件未找到，并将使用网络进行下载。&#34;]</p>
+image::bsdinstall-netinstall-files.png[&#34;表示某些组件未找到，并将使用网络进行下载。&#34;]</p>
 </div>
 </div>
 </div>
@@ -1690,7 +1690,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-zfs-partmenu" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-partmenu.png%20是一个文件名，无法直接翻译。" alt="显示不同的分区选项。示例：手动" width="Shell" height="etc."/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-partmenu.png" alt="显示不同的分区选项。示例：手动" width="Shell" height="etc."/>
 </div>
 <div class="title">图 9. 分区选择</div>
 </div>
@@ -1761,7 +1761,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-guided-disk" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-guided-disk.png%20是一个文件名，无法直接翻译。" alt="显示可以安装 FreeBSD 的磁盘列表"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-guided-disk.png" alt="显示可以安装 FreeBSD 的磁盘列表"/>
 </div>
 <div class="title">图 10. 从多个磁盘中进行选择</div>
 </div>
@@ -1770,7 +1770,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-entire-part" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-entire-part.png%20是一个图片文件的名称。" alt="菜单询问用户是否想要使用磁盘上的所有可用空间，还是想要进行分区。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-entire-part.png" alt="菜单询问用户是否想要使用磁盘上的所有可用空间，还是想要进行分区。"/>
 </div>
 <div class="title">图 11. 选择整个磁盘或分区</div>
 </div>
@@ -1788,7 +1788,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-ufs-scheme" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-partscheme.png%20是一个图片文件的名称。" alt="菜单显示用户存在的不同类型的分区，并要求选择其中之一。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-partscheme.png" alt="菜单显示用户存在的不同类型的分区，并要求选择其中之一。"/>
 </div>
 <div class="title">图 13. 选择分区方案</div>
 </div>
@@ -1797,7 +1797,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-review" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-review.png%20是一个文件名，无法直接翻译。" alt="显示已创建分区的菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-review.png" alt="显示已创建分区的菜单"/>
 </div>
 <div class="title">图 14. 审查已创建的分区</div>
 </div>
@@ -1806,7 +1806,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-ufs-final-confirmation" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-final-confirmation.png%20是一个文件名，无法直接翻译。" alt="菜单向用户指示所有更改将被写入磁盘，并告知如果用户决定继续，现有数据将被永久删除。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-final-confirmation.png" alt="菜单向用户指示所有更改将被写入磁盘，并告知如果用户决定继续，现有数据将被永久删除。"/>
 </div>
 <div class="title">图 15. 最终确认</div>
 </div>
@@ -1821,7 +1821,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-manual-create" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-create.png%20是一个图片文件的名称。" alt="显示分区编辑器的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-create.png" alt="显示分区编辑器的菜单。"/>
 </div>
 <div class="title">图 16. 手动创建分区</div>
 </div>
@@ -1830,7 +1830,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-manual-partscheme" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-partscheme.png%20是一个图片文件的名称。" alt="菜单显示了不同类型的分区方案"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-partscheme.png" alt="菜单显示了不同类型的分区方案"/>
 </div>
 <div class="title">图 17. 手动创建分区</div>
 </div>
@@ -1873,7 +1873,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-manual-addpart" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-addpart.png%20是一个图片文件的名称。" alt="请求类型菜单" width="size" height="mountpoint and label for the new partition."/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-addpart.png" alt="请求类型菜单" width="size" height="mountpoint and label for the new partition."/>
 </div>
 <div class="title">图 18. 手动创建分区</div>
 </div>
@@ -2081,7 +2081,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-zfs-vdev_type" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-vdev_type.png%20是一个图片文件的名称。" alt="请求虚拟设备类型的菜单。例如：条纹" width="mirror" height="raidz1"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-vdev_type.png" alt="请求虚拟设备类型的菜单。例如：条纹" width="mirror" height="raidz1"/>
 </div>
 <div class="title">图 20. ZFS 池类型</div>
 </div>
@@ -2115,7 +2115,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-zfs-disk_select" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-disk_select.png%20是一个文件名，无法直接翻译。" alt="菜单请求添加多少个磁盘到池中"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-disk_select.png" alt="菜单请求添加多少个磁盘到池中"/>
 </div>
 <div class="title">图 21. 磁盘选择</div>
 </div>
@@ -2175,7 +2175,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-zfs-geli_password" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-geli_password.png%20是一个文件名，无法直接翻译。" alt="要求输入密码以加密设备的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-geli_password.png" alt="要求输入密码以加密设备的菜单。"/>
 </div>
 <div class="title">图 28. 磁盘加密密码</div>
 </div>
@@ -2262,7 +2262,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-wireless-scan" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-scan.png%20是一个图片文件的名称。" alt="显示无线网络扫描的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-scan.png" alt="显示无线网络扫描的菜单。"/>
 </div>
 <div class="title">图 35. 扫描无线接入点</div>
 </div>
@@ -2271,7 +2271,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-wireless-accesspoints" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-accesspoints.png%20是一个图片文件的名称。" alt="显示可连接的不同无线网络的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-accesspoints.png" alt="显示可连接的不同无线网络的菜单。"/>
 </div>
 <div class="title">图 36. 选择无线网络</div>
 </div>
@@ -2280,7 +2280,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-wireless-wpa2" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-wpa2setup.png%20是一个图片文件的名称。" alt="请求无线网络密码的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-wpa2setup.png" alt="请求无线网络密码的菜单。"/>
 </div>
 <div class="title">图 37. WPA2 设置</div>
 </div>
@@ -2315,7 +2315,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-net-ipv4-dhcp" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv4-dhcp.png%20是一个图像文件的名称。" alt="菜单指示是否要为所选接口配置 DHCP 。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv4-dhcp.png" alt="菜单指示是否要为所选接口配置 DHCP 。"/>
 </div>
 <div class="title">图 39. 选择 IPv4 DHCP 配置</div>
 </div>
@@ -2346,7 +2346,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-net-ipv6" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv6.png%20是一个网络界面%20IPv6%20配置的截图。" alt="菜单指示是否要为所选接口配置 IPv6 。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv6.png" alt="菜单指示是否要为所选接口配置 IPv6 。"/>
 </div>
 <div class="title">图 41. 选择 IPv6 网络</div>
 </div>
@@ -2367,7 +2367,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-net-ipv6-static" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv6-static.png%20是一个图片文件的名称。" alt="菜单请求配置 IPv6 网络的数据。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv6-static.png" alt="菜单请求配置 IPv6 网络的数据。"/>
 </div>
 <div class="title">图 43. IPv6 静态配置</div>
 </div>
@@ -2386,7 +2386,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-net-dns-config" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-ipv4-dns.png%20是一个图片文件的名称。" alt="菜单请求数据以配置网络的 DNS 。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-ipv4-dns.png" alt="菜单请求数据以配置网络的 DNS 。"/>
 </div>
 <div class="title">图 44. DNS 配置</div>
 </div>
@@ -2422,7 +2422,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div class="paragraph">
 <p>选择一个合适的镜像源可以提高下载速度和连接的稳定性，从而更快地获取所需的软件和操作系统镜像。因此，在下载之前，确保选择一个合适的镜像源是非常重要的。
-image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称。[&#34;请求网络镜像的菜单。&#34;]</p>
+image::bsdinstall-netinstall-mirrorselect.png[&#34;请求网络镜像的菜单。&#34;]</p>
 </div>
 </div>
 <div class="sect3">
@@ -2453,7 +2453,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-timezone-zone" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-zone.png%20是一个图片文件的名称。" alt="请求时区的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-zone.png" alt="请求时区的菜单。"/>
 </div>
 <div class="title">图 47. 选择一个时区</div>
 </div>
@@ -2462,7 +2462,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-timezone-confirmation" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-confirm.png%20是一个图片文件，无法直接翻译为中文。" alt="菜单请求确认所选时区。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-confirm.png" alt="菜单请求确认所选时区。"/>
 </div>
 <div class="title">图 48. 确认时区</div>
 </div>
@@ -2480,7 +2480,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-timezone-time" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-time.png%20是一个图片文件名，无法直接翻译。" alt="请求系统时间的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-time.png" alt="请求系统时间的菜单。"/>
 </div>
 <div class="title">图 50. 选择时间</div>
 </div>
@@ -2495,7 +2495,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-config-serv" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-services.png%20是一个图片文件的名称。" alt="显示不同服务的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-services.png" alt="显示不同服务的菜单。"/>
 </div>
 <div class="title">图 51. 选择启用附加服务</div>
 </div>
@@ -2535,7 +2535,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-hardening-options" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-hardening.png%20是一个图片文件的名称。" alt="显示不同的加固安全选项的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-hardening.png" alt="显示不同的加固安全选项的菜单。"/>
 </div>
 <div class="title">图 52. 选择加固安全选项</div>
 </div>
@@ -2602,7 +2602,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-add-user2" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-adduser2.png%20是一个图片文件名，无法翻译。" alt="菜单请求新用户的不同信息。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-adduser2.png" alt="菜单请求新用户的不同信息。"/>
 </div>
 <div class="title">图 54. 输入用户信息</div>
 </div>
@@ -2663,7 +2663,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-add-user3" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-adduser3.png%20是一个图片文件名，无法直接翻译为中文。" alt="菜单显示新用户的信息，并询问是否一切正确。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-adduser3.png" alt="菜单显示新用户的信息，并询问是否一切正确。"/>
 </div>
 <div class="title">图 55. 退出用户和组管理</div>
 </div>
@@ -2681,7 +2681,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-final-config" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-finalconfiguration.png%20是一个文件名，无法直接翻译。" alt="在完成安装之前显示不同选项的菜单。例如：添加用户" width="Time Zone" height="etc."/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-finalconfiguration.png" alt="在完成安装之前显示不同选项的菜单。例如：添加用户" width="Time Zone" height="etc."/>
 </div>
 <div class="title">图 56. 最终配置</div>
 </div>
@@ -2730,7 +2730,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-final-main" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-mainexit.png%20是一个文件名，无法直接翻译。" alt="菜单显示安装已完成，并询问是否重新启动系统或访问 Live CD 。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-mainexit.png" alt="菜单显示安装已完成，并询问是否重新启动系统或访问 Live CD 。"/>
 </div>
 <div class="title">图 58. 完成安装</div>
 </div>
@@ -3533,7 +3533,7 @@ passwd: done</pre>
 <div class="sect3">
 <h4 id="users-groups">3.3.3. 管理群组<a class="anchor" href="#users-groups"></a></h4>
 <div class="paragraph">
-<p>一个组是用户的列表。组通过其组名和 GID 来标识。在 FreeBSD 中，内核使用进程的 UID 和其所属的组列表来确定该进程被允许做什么。大多数情况下，用户或进程的 GID 通常表示列表中的第一个组。</p>
+<p>组是一个用户列表。组由组名称和 GID 标识。在 FreeBSD 中，内核使用进程的 UID 和其所属的组列表来确定该进程被允许做什么。大多数情况下，用户或进程的 GID 通常表示列表中的第一个组。</p>
 </div>
 <div class="paragraph">
 <p>组名到 GID 的映射在 <code>/etc/group</code> 中列出。这是一个纯文本文件，包含四个由冒号分隔的字段。第一个字段是组名，第二个字段是加密密码，第三个字段是 GID ，第四个字段是逗号分隔的成员列表。有关语法的更完整描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=group&amp;sektion=5&amp;format=html">group(5)</a> 。</p>
@@ -3575,7 +3575,7 @@ passwd: done</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中， <code>1100</code> 是 <code>teamtwo</code> 的 GID 。目前， <code>teamtwo</code> 没有成员。这个命令将会把 <code>jru</code> 添加为 <code>teamtwo</code> 的成员。</p>
+<p>在这个例子中，<code>1100</code> 是 <code>teamtwo</code> 的 GID 。目前，<code>teamtwo</code> 没有成员。这个命令将会把 <code>jru</code> 添加为 <code>teamtwo</code> 的成员。</p>
 </div>
 <div class="exampleblock">
 <div class="title">例 10. 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pw&amp;sektion=8&amp;format=html">pw(8)</a> 将用户账户添加到新组中</div>
@@ -3640,7 +3640,7 @@ passwd: done</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中， <code>jru</code> 是 <code>jru</code> 和 <code>teamtwo</code> 组的成员。</p>
+<p>在这个例子中，<code>jru</code> 是 <code>jru</code> 和 <code>teamtwo</code> 组的成员。</p>
 </div>
 <div class="paragraph">
 <p>有关此命令和 <code>/etc/group</code> 文件的格式的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=pw&amp;sektion=8&amp;format=html">pw(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=group&amp;sektion=5&amp;format=html">group(5)</a> 。</p>
@@ -3650,16 +3650,16 @@ passwd: done</pre>
 <div class="sect2">
 <h3 id="permissions">3.4. 权限<a class="anchor" href="#permissions"></a></h3>
 <div class="paragraph">
-<p>在 FreeBSD 中，每个文件和目录都有一组关联的权限，并且有几个实用程序可用于查看和修改这些权限。了解权限如何工作是必要的，以确保用户能够访问他们所需的文件，并且无法不当地访问操作系统使用的文件或其他用户拥有的文件。</p>
+<p>在 FreeBSD 中，每个文件和目录都有一组关联的权限，并且有几个实用程序可用于查看和修改这些权限。要确保用户能够访问所需的文件，并且不能不正当地访问操作系统使用的文件或其他用户拥有的文件，就必须了解权限的工作原理。</p>
 </div>
 <div class="paragraph">
 <p>本节讨论了在 FreeBSD 中使用的传统 UNIX® 权限。要进行更精细的文件系统访问控制，请参考 <a href="./#fs-acl">访问控制列表</a> 。</p>
 </div>
 <div class="paragraph">
-<p>在 UNIX® 中，基本权限使用三种类型的访问进行分配：读取、写入和执行。这些访问类型用于确定文件的所有者、组和其他人（其他所有人）对文件的访问。读取、写入和执行权限可以用字母 <code>r</code> 、 <code>w</code> 和 <code>x</code> 表示。它们也可以表示为二进制数字，因为每个权限都是打开或关闭的（ <code>0</code> ）。当表示为数字时，顺序总是按照 <code>rwx</code> 读取，其中 <code>r</code> 的打开值为 <code>4</code> ， <code>w</code> 的打开值为 <code>2</code> ， <code>x</code> 的打开值为 <code>1</code> 。</p>
+<p>在 UNIX® 中，基本权限使用三种类型的访问进行分配：读取、写入和执行。这些访问类型用于确定文件的所有者、组和其他人（其他所有人）对文件的访问。读取、写入和执行权限可以用字母 <code>r</code>、<code>w</code> 和 <code>x</code> 表示。它们也可以表示为二进制数字，因为每个权限都是打开或关闭的（<code>0</code>）。当表示为数字时，顺序总是按照 <code>rwx</code> 读取，其中 <code>r</code> 的打开值为 <code>4</code> ， <code>w</code> 的打开值为 <code>2</code> ， <code>x</code> 的打开值为 <code>1</code> 。</p>
 </div>
 <div class="paragraph">
-<p>表 4.1 总结了可能的数字和字母组合。在阅读“目录列表”列时，使用“ - ”表示权限关闭。</p>
+<p>表 4.1 总结了可能的数字和字母组合。在阅读“目录列表”列时，使用 <code>-</code> 表示权限关闭。</p>
 </div>
 <table class="tableblock frame-none grid-all stretch">
 <caption class="title">表 3. UNIX® 权限</caption>
@@ -3678,42 +3678,42 @@ passwd: done</pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">无读取，无写入，无执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">禁止读取，禁止写入，禁止执行</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>---</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">不读，不写，只执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">禁止读取，禁止写入，可执行</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--x</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">不可读取、写入，不可执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">禁止读取，可写入，禁止执行</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-w-</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">不可读取、写入、执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">禁止读取，可写入，可执行</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-wx</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">读取，无写入，无执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">可读取，禁止写入，禁止执行</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>r--</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">读取，无写入，执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">可读取，禁止写入，可执行</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>r-x</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">读取、写入，不执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">可读取、可写入，禁止执行</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>rw-</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">读取，写入，执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">可读取，可写入，可执行</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>rwx</code></p></td>
 </tr>
 </tbody>
@@ -3772,22 +3772,22 @@ passwd: done</pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(用户)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">（用户）</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">u</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">用户</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(用户)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">（用户）</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">g</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">组所有者</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(用户)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">（用户）</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">o</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">其他</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(用户)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">（用户）</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">a</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">所有（&#34;全部&#34;）</p></td>
 </tr>
@@ -3834,7 +3834,7 @@ passwd: done</pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>这些值与 <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=1&amp;format=html">chmod(1)</a> 一起使用，但使用字母而不是数字。例如，以下命令将阻止与_FILE_关联的组的所有成员以及所有其他用户访问_FILE_。</p>
+<p>这些值与 <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=1&amp;format=html">chmod(1)</a> 一起使用，但使用字母而不是数字。例如，以下命令将阻止与 <em>FILE</em> 关联的组的所有成员以及所有其他用户访问 <em>FILE</em>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3842,7 +3842,7 @@ passwd: done</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>当需要对文件进行多组更改时，可以提供逗号分隔的列表。例如，以下命令会移除文件_FILE_的组和&#34;world&#34;的写权限，并为所有人添加执行权限：</p>
+<p>当需要对文件进行多组更改时，可以提供逗号分隔的列表。例如，以下命令会移除文件 <em>FILE</em> 的组和 &#34;world&#34; 的写权限，并为所有人添加执行权限：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3853,7 +3853,7 @@ passwd: done</pre>
 <div class="sect3">
 <h4 id="_freebsd_文件标志">3.4.2. FreeBSD 文件标志<a class="anchor" href="#_freebsd_文件标志"></a></h4>
 <div class="paragraph">
-<p>除了文件权限之外， FreeBSD 还支持使用“文件标志”。这些标志为文件提供了额外的安全性和控制，但不适用于目录。通过文件标志，即使是“ root ”也可以被阻止删除或更改文件。</p>
+<p>除了文件权限之外，FreeBSD 还支持使用“文件标志”。这些标志为文件提供了额外的安全性和控制，但不适用于目录。通过文件标志，即使是 <code>root</code> 也可以被阻止删除或更改文件。</p>
 </div>
 <div class="paragraph">
 <p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 命令可以修改文件标志。例如，要在文件 <code>file1</code> 上启用系统不可删除标志，执行以下命令：</p>
@@ -3872,7 +3872,7 @@ passwd: done</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>要查看文件的标志，可以使用 <code>-lo</code> 与 <a href="https://man.freebsd.org/cgi/man.cgi?query=ls&amp;sektion=1&amp;format=html">ls(1)</a> 一起使用。</p>
+<p>要查看文件的标志，可以使用 <code>-lo</code> 与 <a href="https://man.freebsd.org/cgi/man.cgi?query=ls&amp;sektion=1&amp;format=html">ls(1)</a> 一起使用：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3885,19 +3885,19 @@ passwd: done</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>只有 <code>root</code> 用户才能添加或删除一些文件标志。在其他情况下，文件所有者可以设置其文件标志。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=2&amp;format=html">chflags(2)</a> 。</p>
+<p>只有 <code>root</code> 用户才能添加或删除一些文件标志。在其他情况下，文件所有者可以设置其文件标志。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=2&amp;format=html">chflags(2)</a>。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setuid_setgid_和_sticky_权限">3.4.3. setuid 、 setgid 和 sticky 权限<a class="anchor" href="#_setuid_setgid_和_sticky_权限"></a></h4>
+<h4 id="_setuid_setgid_和_sticky_权限">3.4.3. setuid 、setgid 和 sticky 权限<a class="anchor" href="#_setuid_setgid_和_sticky_权限"></a></h4>
 <div class="paragraph">
-<p>除了已经讨论过的权限之外，还有三个其他特定的设置，所有管理员都应该了解。它们是 <code>setuid</code> 、 <code>setgid</code> 和 <code>sticky</code> 权限。</p>
+<p>除了已经讨论过的权限之外，还有三个其他特定的设置，所有管理员都应该了解。它们是 <code>setuid</code>、<code>setgid</code> 和 <code>sticky</code> 权限。</p>
 </div>
 <div class="paragraph">
 <p>这些设置对于某些 UNIX® 操作非常重要，因为它们提供了通常不授予普通用户的功能。要理解它们，必须注意实际用户 ID 和有效用户 ID 之间的区别。</p>
 </div>
 <div class="paragraph">
-<p>真实用户 ID 是拥有或启动进程的 UID 。有效 UID 是进程运行的用户 ID 。例如，当用户更改密码时， <a href="https://man.freebsd.org/cgi/man.cgi?query=passwd&amp;sektion=1&amp;format=html">passwd(1)</a> 以真实用户 ID 运行。然而，为了更新密码数据库，该命令以“ root ”用户的有效 ID 运行。这使得用户可以在不看到“权限被拒绝”错误的情况下更改密码。</p>
+<p>真实用户 ID 是拥有或启动进程的 UID 。有效 UID 是进程运行的用户 ID 。例如，当用户更改密码时， <a href="https://man.freebsd.org/cgi/man.cgi?query=passwd&amp;sektion=1&amp;format=html">passwd(1)</a> 以真实用户 ID 运行。然而，为了更新密码数据库，该命令以 <code>root</code> 用户的有效 ID 运行。这使得用户可以在不看到 <code>权限被拒绝</code> 错误的情况下更改密码。</p>
 </div>
 <div class="paragraph">
 <p>可以通过为用户添加 <code>s</code> 权限来以符号方式添加 setuid 权限，示例如下：</p>
@@ -3908,7 +3908,7 @@ passwd: done</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在下面的示例中，也可以通过在权限集前加上数字四（ 4 ）来设置 setuid 权限：</p>
+<p>在下面的示例中，也可以通过在权限集前加上数字四（4）来设置 setuid 权限：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3924,7 +3924,7 @@ passwd: done</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>请注意，现在文件所有者的权限集中包含了一个 <code>s</code> ，取代了可执行位。这允许需要提升权限的实用工具，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=passwd&amp;sektion=1&amp;format=html">passwd(1)</a> 。</p>
+<p>请注意，现在文件所有者的权限集中包含了一个 <code>s</code>，取代了可执行位。这允许使用需要提升权限的实用程序，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=passwd&amp;sektion=1&amp;format=html">passwd(1)</a> 。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3981,7 +3981,7 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 </div>
 </div>
 <div class="paragraph">
-<p>或者，给 <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=1&amp;format=html">chmod(1)</a> 命令提供一个前导的数字 2 ：</p>
+<p>或者，给 <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=1&amp;format=html">chmod(1)</a> 命令提供一个前缀的数字 2 ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4014,7 +4014,7 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <p><code>setuid</code> 和 <code>setgid</code> 权限位可能会降低系统安全性，因为它们允许提升权限。而第三个特殊权限位，即 <code>sticky bit</code> ，可以增强系统的安全性。</p>
 </div>
 <div class="paragraph">
-<p>当目录上设置了 ` 粘着位（ sticky bit ） ` 时，只允许文件所有者删除文件。这对于防止非文件所有者在公共目录（如 <code>/tmp</code> ）中删除文件非常有用。要使用此权限，请将 <code>t</code> 模式添加到文件中：</p>
+<p>当目录上设置了 <code>粘着位（sticky bit）</code> 时，只允许文件所有者删除文件。这对于防止非文件所有者在公共目录（如 <code>/tmp</code>）中删除文件非常有用。要使用此权限，请将 <code>t</code> 模式添加到文件中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4047,10 +4047,10 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="sect2">
 <h3 id="dirstructure">3.5. 目录结构<a class="anchor" href="#dirstructure"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 目录层次结构对于全面了解系统至关重要。最重要的目录是根目录或者“ / ”。这个目录是在启动时首先挂载的，它包含了准备操作系统进行多用户操作所需的基本系统。根目录还包含其他文件系统的挂载点，在切换到多用户操作时会挂载这些文件系统。</p>
+<p>FreeBSD 目录层次结构对于全面了解系统至关重要。最重要的目录是根目录或者“/”。这个目录是在启动时首先挂载的，它包含了准备操作系统进行多用户操作所需的基本系统。根目录还包含其他文件系统的挂载点，在切换到多用户操作时会挂载这些文件系统。</p>
 </div>
 <div class="paragraph">
-<p>挂载点是一个目录，可以将额外的文件系统嵌入到父文件系统（通常是根文件系统）上。这在 <a href="#disk-organization">磁盘组织</a> 中有进一步描述。标准的挂载点包括 <code>/usr/</code> 、 <code>/var/</code> 、 <code>/tmp/</code> 、 <code>/mnt/</code> 和 <code>/cdrom/</code> 。这些目录通常在 <code>/etc/fstab</code> 中引用。这个文件是一个包含各种文件系统和挂载点的表格，并由系统读取。除非它们的条目包含 <code>noauto</code> ，否则 <code>/etc/fstab</code> 中的大多数文件系统会在启动时自动从脚本 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 挂载。详细信息可以在 <a href="#disks-fstab">fstab 文件</a> 中找到。</p>
+<p>挂载点是一个目录，可以将额外的文件系统嵌入到父文件系统（通常是根文件系统）上。这在 <a href="#disk-organization">磁盘组织</a> 中有进一步描述。标准的挂载点包括 <code>/usr/</code>、<code>/var/</code>、<code>/tmp/</code>、<code>/mnt/</code> 和 <code>/cdrom/</code> 。这些目录通常在 <code>/etc/fstab</code> 中引用。这个文件是一个包含各种文件系统和挂载点的表格，并由系统读取。除非它们的条目包含 <code>noauto</code>，否则 <code>/etc/fstab</code> 中的大多数文件系统会在启动时自动从脚本 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 挂载。详细信息可以在 <a href="#disks-fstab">fstab 文件</a> 中找到。</p>
 </div>
 <div class="paragraph">
 <p>文件系统层次结构的完整描述可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=hier&amp;sektion=7&amp;format=html">hier(7)</a> 中找到。下表提供了最常见目录的简要概述。</p>
@@ -4163,7 +4163,7 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/local/</code></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">本地可执行文件和库。也被用作 FreeBSD ports 框架的默认目的地。在 <code>/usr/local</code> 中，应使用 <code><a href="https://man.freebsd.org/cgi/man.cgi?query=hier&amp;sektion=7&amp;format=html">hier(7)</a></code> 为 <code>/usr</code> 预设的一般布局。man 目录例外，它直接位于 <code>/usr/local</code> 而不是 <code>/usr/local/share</code> 下，而 ports 文档位于 <code>share/doc/port</code> 中。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">本地可执行文件和库。也被用作 FreeBSD ports 框架的默认目的地。在 <code>/usr/local</code> 中，应使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=hier&amp;sektion=7&amp;format=html">hier(7)</a> 为 <code>/usr</code> 预设的一般布局。man 目录例外，它直接位于 <code>/usr/local</code> 而不是 <code>/usr/local/share</code> 下，而 ports 文档位于 <code>share/doc/port</code> 中。</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/ports/</code></p></th>
@@ -4205,7 +4205,7 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <p>文件存储在目录中。一个目录可以不包含任何文件，也可以包含数百个文件。一个目录还可以包含其他目录，从而允许在彼此之间建立目录层次结构以组织数据。</p>
 </div>
 <div class="paragraph">
-<p>文件和目录的引用是通过给出文件或目录名称，后跟一个斜杠 <code>/</code> ，再跟上其他必要的目录名称来完成的。例如，如果目录 <code>foo</code> 包含一个目录 <code>bar</code> ，该目录又包含文件 <code>readme.txt</code> ，那么文件的完整名称，或者路径，就是 <code>foo/bar/readme.txt</code> 。请注意，这与 Windows® 不同， Windows 使用反斜杠 ` \ ` 来分隔文件和目录名称。 FreeBSD 在路径中不使用驱动器号或其他驱动器名称。例如，在 FreeBSD 上，不会输入 <code>c: \ foo \ bar \ readme.txt</code> 。</p>
+<p>文件和目录的引用是通过给出文件或目录名称，后跟一个斜杠 <code>/</code> ，再跟上其他必要的目录名称来完成的。例如，如果目录 <code>foo</code> 包含一个目录 <code>bar</code>，该目录又包含文件 <code>readme.txt</code> ，那么文件的完整名称，或者路径，就是 <code>foo/bar/readme.txt</code>。请注意，这与 Windows® 不同，Windows 使用反斜杠 <code>\</code> 来分隔文件和目录名称。 FreeBSD 在路径中不使用驱动器号或其他驱动器名称。例如，在 FreeBSD 上，不会输入 <code>c:\foo\bar\readme.txt</code>。</p>
 </div>
 <div class="sect3">
 <h4 id="disks-file-systems">3.6.1. 文件系统<a class="anchor" href="#disks-file-systems"></a></h4>
@@ -4213,44 +4213,44 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <p>目录和文件存储在文件系统中。每个文件系统在最顶层都包含一个目录，称为该文件系统的根目录。这个根目录可以包含其他目录。一个文件系统被指定为根文件系统或 <code>/</code> 。其他所有文件系统都被挂载在根文件系统下。无论 FreeBSD 系统上有多少个磁盘，每个目录都看起来是同一个磁盘的一部分。</p>
 </div>
 <div class="paragraph">
-<p>考虑三个文件系统，分别称为 <code>A</code> 、 <code>B</code> 和 <code>C</code> 。每个文件系统都有一个根目录，其中包含两个其他目录，分别称为 <code>A1</code> 、 <code>A2</code> （同样也有 <code>B1</code> 、 <code>B2</code> 和 <code>C1</code> 、 <code>C2</code> ）。</p>
+<p>考虑三个文件系统，分别称为 <code>A</code>、<code>B</code> 和 <code>C</code>。每个文件系统都有一个根目录，其中包含两个其他目录，分别称为 <code>A1</code>、<code>A2</code> （同样也有 <code>B1</code>、<code>B2</code> 和 <code>C1</code>、<code>C2</code>）。</p>
 </div>
 <div class="paragraph">
-<p>将 <code>A</code> 称为根文件系统。如果使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ls&amp;sektion=1&amp;format=html">ls(1)</a> 命令查看该目录的内容，将显示两个子目录， <code>A1</code> 和 <code>A2</code> 。目录树如下所示：</p>
+<p>将 <code>A</code> 称为根文件系统。如果使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ls&amp;sektion=1&amp;format=html">ls(1)</a> 命令查看该目录的内容，将显示两个子目录，<code>A1</code> 和 <code>A2</code>。目录树如下所示：</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/basics/示例%20-%20目录%201.png" alt="带有根目录和两个子目录的目录树" width="A1 and A2"/>
+<img src="../../../../images/books/handbook/basics/example-dir1.png" alt="带有根目录和两个子目录的目录树" width="A1 and A2"/>
 </div>
 </div>
 <div class="paragraph">
-<p>一个文件系统必须被挂载到另一个文件系统的目录上。当将文件系统 B 挂载到目录 A1 上时， B 的根目录将替换 A1 ，并且 B 中的目录会相应地显示出来：</p>
+<p>一个文件系统必须被挂载到另一个文件系统的目录上。当将文件系统 <code>B</code> 挂载到目录 <code>A1</code> 上时，<code>B</code> 的根目录将替换 <code>A1</code>，并且 <code>B</code> 中的目录会相应地显示出来：</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/basics/示例目录%202.png" alt="带有根目录和两个子目录的目录树" width="A1 and A2. And more subdirectories" height="B1 and B2 hanging from A1"/>
+<img src="../../../../images/books/handbook/basics/example-dir2.png" alt="带有根目录和两个子目录的目录树" width="A1 and A2. And more subdirectories" height="B1 and B2 hanging from A1"/>
 </div>
 </div>
 <div class="paragraph">
-<p>任何位于 <code>B1</code> 或 <code>B2</code> 目录中的文件可以通过路径 <code>/A1/B1</code> 或 <code>/A1/B2</code> 访问。任何位于 <code>/A1</code> 中的文件都被临时隐藏了。如果从 <code>A</code> 卸载 <code>B</code> ，它们将重新出现。</p>
+<p>任何位于 <code>B1</code> 或 <code>B2</code> 目录中的文件可以通过路径 <code>/A1/B1</code> 或 <code>/A1/B2</code> 访问。任何位于 <code>/A1</code> 中的文件都被临时隐藏了。如果从 <code>A</code> 卸载 <code>B</code>，它们将重新出现。</p>
 </div>
 <div class="paragraph">
 <p>如果 <code>B</code> 被安装在 <code>A2</code> 上，那么图表将如下所示：</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/basics/示例目录%203.png" alt="带有根目录和两个子目录的目录树" width="A1 and A2. And more subdirectories" height="B1 and B2 hanging from A2"/>
+<img src="../../../../images/books/handbook/basics/example-dir3.png" alt="带有根目录和两个子目录的目录树" width="A1 and A2. And more subdirectories" height="B1 and B2 hanging from A2"/>
 </div>
 </div>
 <div class="paragraph">
-<p>路径分别为 <code>/A2/B1</code> 和 <code>/A2/B2</code> 。</p>
+<p>路径分别为 <code>/A2/B1</code> 和 <code>/A2/B2</code>。</p>
 </div>
 <div class="paragraph">
-<p>文件系统可以相互叠加挂载。继续上一个例子， <code>C</code> 文件系统可以被挂载在 <code>B</code> 文件系统中的 <code>B1</code> 目录上方，形成以下的安排：</p>
+<p>文件系统可以相互叠加挂载。继续上一个例子，<code>C</code> 文件系统可以被挂载在 <code>B</code> 文件系统中的 <code>B1</code> 目录上方，形成以下的安排：</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/basics/示例目录%204.png" alt="一个复杂的目录树。根目录下有不同的子目录。"/>
+<img src="../../../../images/books/handbook/basics/example-dir4.png" alt="一个复杂的目录树。根目录下有不同的子目录。"/>
 </div>
 </div>
 <div class="paragraph">
@@ -4258,7 +4258,7 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/basics/示例目录%205.png" alt="一个复杂的目录树。根目录下有不同的子目录。"/>
+<img src="../../../../images/books/handbook/basics/example-dir5.png" alt="一个复杂的目录树。根目录下有不同的子目录。"/>
 </div>
 </div>
 <div class="paragraph">
@@ -4268,13 +4268,13 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="title">多个文件系统的好处</div>
 <ul>
 <li>
-<p>不同的文件系统可以有不同的挂载选项。例如，根文件系统可以以只读方式挂载，这样用户就无法意外删除或编辑关键文件。将可由用户写入的文件系统（如 <code>/home</code> ）与其他文件系统分离，可以将它们挂载为_nosuid_。此选项可以防止文件系统上存储的可执行文件的_suid_/_guid_位生效，从而可能提高安全性。</p>
+<p>不同的文件系统可以有不同的挂载选项。例如，根文件系统可以以只读方式挂载，这样用户就无法意外删除或编辑关键文件。将可由用户写入的文件系统（如 <code>/home</code>）与其他文件系统分离，可以将它们挂载为 <em>nosuid</em> 。此选项可以防止文件系统上存储的可执行文件的_ suid_/<em>guid</em> 位生效，从而可能提高安全性。</p>
 </li>
 <li>
 <p>FreeBSD 会根据文件系统的使用情况自动优化文件的布局。因此，包含许多频繁写入的小文件的文件系统将与包含较少且较大的文件的文件系统有所不同的优化方式。如果只有一个大文件系统，这种优化将失效。</p>
 </li>
 <li>
-<p>如果断电， FreeBSD 的文件系统是健壮的。然而，在关键时刻断电仍然可能损坏文件系统的结构。通过将数据分散在多个文件系统上，系统更有可能重新启动，从而更容易根据需要进行备份恢复。</p>
+<p>如果断电，FreeBSD 的文件系统是健壮的。然而，在关键时刻断电仍然可能损坏文件系统的结构。通过将数据分散在多个文件系统上，系统更有可能重新启动，从而更容易根据需要进行备份恢复。</p>
 </li>
 </ul>
 </div>
@@ -4291,7 +4291,7 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 </td>
 <td class="content">
 <div class="paragraph">
-<p>FreeBSD 具有 <a href="https://man.freebsd.org/cgi/man.cgi?query=growfs&amp;sektion=8&amp;format=html">growfs(8)</a> 命令，可以在运行时增加文件系统的大小，消除了这个限制。文件系统只能扩展到所在分区的可用空间中。如果分区后面有空间，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 来扩展分区。如果分区是虚拟磁盘上的最后一个分区，并且磁盘被扩展了，那么可以扩展该分区。</p>
+<p>FreeBSD 具有 <a href="https://man.freebsd.org/cgi/man.cgi?query=growfs&amp;sektion=8&amp;format=html">growfs(8)</a> 命令，可以在运行时增加文件系统的大小，从而消除了这一限制。文件系统只能扩展到所在分区的可用空间中。如果分区后面有空间，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 来扩展分区。如果分区是虚拟磁盘上的最后一个分区，并且磁盘被扩展了，那么可以扩展该分区。</p>
 </div>
 </td>
 </tr>
@@ -4304,16 +4304,16 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="sect3">
 <h4 id="disks-partitions">3.6.2. 磁盘分区<a class="anchor" href="#disks-partitions"></a></h4>
 <div class="paragraph">
-<p>文件系统包含在_分区_中。使用多种分区方案将磁盘划分为分区；参见 <a href="#bsdinstall-part-manual">手动分区</a> 。较新的方案是 GPT ；旧的基于 BIOS 的计算机使用 MBR 。 GPT 支持将磁盘划分为具有大小、偏移和类型的分区。它支持大量的分区和分区类型，并且在可能的情况下推荐使用。 GPT 分区使用磁盘名称加后缀，后缀为 <code>p1</code> 表示第一个分区， <code>p2</code> 表示第二个分区，依此类推。然而， MBR 仅支持少量的分区。在 FreeBSD 中， MBR 分区被称为 <code>slices</code> 。 Slices 可以用于不同的操作系统。 FreeBSD slices 使用 BSD 标签进行分区细分（参见 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdlabel&amp;sektion=8&amp;format=html">bsdlabel(8)</a> ）。</p>
+<p>文件系统包含在 <em>分区</em> 中。使用多种分区方案将磁盘划分为分区；参见 <a href="#bsdinstall-part-manual">手动分区</a>。较新的方案是 GPT ；旧的基于 BIOS 的计算机使用 MBR。GPT 支持将磁盘划分为具有大小、偏移和类型的分区。它支持大量的分区和分区类型，并且在可能的情况下推荐使用。GPT 分区使用磁盘名称加后缀，后缀为 <code>p1</code> 表示第一个分区，<code>p2</code> 表示第二个分区，依此类推。然而，MBR 仅支持少量的分区。在 FreeBSD 中，MBR 分区被称为 <code>slices</code>。 Slices 可以用于不同的操作系统。 FreeBSD slices 使用 BSD 标签进行分区细分（参见 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdlabel&amp;sektion=8&amp;format=html">bsdlabel(8)</a>）。</p>
 </div>
 <div class="paragraph">
-<p>切片号码遵循设备名称，以 <code>s</code> 为前缀，从 1 开始。因此，“ da0<em>s1</em>”是第一个 SCSI 驱动器上的第一个切片。一个磁盘上只能有四个物理切片，但是在适当类型的物理切片内可以有逻辑切片。这些扩展切片从 5 开始编号，因此“ ada0<em>s5</em>”是第一个 SATA 磁盘上的第一个扩展切片。这些设备用于期望占用一个切片的文件系统。</p>
+<p>Slice 号码遵循设备名称，以 <code>s</code> 为前缀，从 1 开始。因此，“da0<em>s1</em>”是第一个 SCSI 驱动器上的第一个 slice。一个磁盘上只能有四个物理 slice，但是在适当类型的物理切片内可以有逻辑 slice。这些扩展 slice 从 5 开始编号，因此“ada0<em>s5</em>”是第一个 SATA 磁盘上的第一个扩展 slice。这些设备由希望占用一个 slice 的文件系统使用。</p>
 </div>
 <div class="paragraph">
 <p>每个 GPT 或 BSD 分区只能包含一个文件系统，这意味着文件系统通常通过其在文件系统层次结构中的典型挂载点或它们所包含的分区的名称来描述。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD 还使用磁盘空间作为“交换空间”来提供“虚拟内存”。这使得您的计算机可以表现得好像它拥有比实际更多的内存。当 FreeBSD 内存不足时，它将一些当前未使用的数据移动到交换空间，并在需要时将其移回（将其他数据移出）。这被称为“分页”。</p>
+<p>FreeBSD 还使用磁盘空间作为 <em>交换空间</em> 来提供 <em>虚拟内存</em>。这使得您的计算机可以表现得好像它拥有比实际更多的内存。当 FreeBSD 内存不足时，它将一些当前未使用的数据移动到交换空间，并在需要时将其移回（将其他数据移出）。这被称为 <em>分页</em>。</p>
 </div>
 <div class="paragraph">
 <p>一些 BSD 分区与特定的约定相关联。</p>
@@ -4338,28 +4338,28 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock"><code>c</code></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">通常与包含的切片大小相同。这样可以使需要在整个切片上工作的实用程序（例如坏块扫描器）能够在 <code>c</code> 分区上工作。通常不会在此分区上创建文件系统。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">通常与包含的 slice 大小相同。这样可以使需要在整个 slice 上工作的实用程序（例如坏块扫描器）能够在 <code>c</code> 分区上工作。通常不会在此分区上创建文件系统。</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock"><code>d</code></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">分区 <code>d</code> 曾经有一个特殊的含义，但现在已经消失了， <code>d</code> 可以像任何普通分区一样工作。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">分区 <code>d</code> 曾经有一个特殊的含义，但现在已经消失了，<code>d</code> 可以像任何普通分区一样工作。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>切片和“危险专用”物理驱动器包含 BSD 分区，这些分区用字母 <code>a</code> 到 <code>h</code> 表示。这个字母被附加到设备名称上，所以“ da0<em>a</em>”是第一个“ da ”驱动器上的 <code>a</code> 分区，该驱动器是“危险专用”的。&#34;ada1s3<em>e</em>&#34;是第二个 SATA 磁盘驱动器的第三个切片中的第五个分区。</p>
+<p>Slices 和“危险专用”物理驱动器包含 BSD 分区，这些分区用字母 <code>a</code> 到 <code>h</code> 表示。这个字母被附加到设备名称上，所以“ da0<em>a</em>”是第一个 <code>da</code> 驱动器上的 <code>a</code> 分区，该驱动器是“危险专用”的。“ada1s3<em>e</em>”是第二个 SATA 磁盘驱动器的第三个 slice 中的第五个分区。</p>
 </div>
 <div class="paragraph">
 <p>最后，系统上的每个磁盘都有一个标识。磁盘名称以表示磁盘类型的代码开头，然后是一个数字，表示它是第几个磁盘。与分区和切片不同，磁盘编号从 0 开始。常见的代码列在 <a href="#disks-naming">磁盘设备名称</a> 中。</p>
 </div>
 <div class="paragraph">
-<p>在引用切片中的分区时，请包括磁盘名称、 <code>s</code> 、切片编号，然后是分区字母。示例见 <a href="#basics-disk-slice-part">示例磁盘、分片和分区名称</a> 。 GPT 分区包括磁盘名称、 <code>p</code> ，然后是分区编号。</p>
+<p>在引用 slice 中的分区时，请包括磁盘名称、<code>s</code> 、切片编号，然后是分区字母。示例见 <a href="#basics-disk-slice-part">示例磁盘、Slice 和分区名称</a> 。 GPT 分区包括磁盘名称、<code>p</code>，然后是分区编号。</p>
 </div>
 <div class="paragraph">
 <p><a href="#basics-concept-disk-model">磁盘的概念模型</a> 展示了使用 MBR 分区的磁盘布局的概念模型。</p>
 </div>
 <div class="paragraph">
-<p>在安装 FreeBSD 时，如果使用 MBR ，请配置磁盘切片，并在切片内创建用于 FreeBSD 的分区。如果使用 GPT ，请为每个文件系统配置分区。无论哪种情况，都要在每个分区中创建文件系统或交换空间，并决定每个文件系统将被挂载到哪里。有关操作分区的信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 。</p>
+<p>在安装 FreeBSD 时，如果使用 MBR，请配置磁盘 slice，并在 slice 内创建用于 FreeBSD 的分区。如果使用 GPT ，请为每个文件系统配置分区。无论哪种情况，都要在每个分区中创建文件系统或交换空间，并决定每个文件系统将被挂载到哪里。有关操作分区的信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> 。</p>
 </div>
 <table id="disks-naming" class="tableblock frame-none grid-all stretch">
 <caption class="title">表 4. 磁盘设备名称</caption>
@@ -4411,7 +4411,7 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="exampleblock">
 <div class="content">
 <table id="basics-disk-slice-part" class="tableblock frame-none grid-all stretch informaltable">
-<caption class="title">表 5. 示例磁盘、分片和分区名称</caption>
+<caption class="title">表 5. 示例磁盘、Slice 和分区名称</caption>
 <colgroup>
 <col style="width: 50%;"/>
 <col style="width: 50%;"/>
@@ -4425,11 +4425,11 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ada0s1a</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">第一个 SATA 磁盘（<code>ada0</code>）上的第一个分片（<code>s1</code>）上第一个分区（<code>a</code>）。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">第一个 SATA 磁盘（<code>ada0</code>）上的第一个 slice（<code>s1</code>）上第一个分区（<code>a</code>）。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>da1s2e</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">第二个 SCSI 磁盘（<code>da1</code>）上第二个分片（<code>s2</code>）上的第五个分区（<code>e</code>）。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">第二个 SCSI 磁盘（<code>da1</code>）上第二个 slice（<code>s2</code>）上的第五个分区（<code>e</code>）。</p></td>
 </tr>
 </tbody>
 </table>
@@ -4439,14 +4439,14 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="title">例 13. 磁盘的概念模型</div>
 <div class="content">
 <div class="paragraph">
-<p>这个图示展示了 FreeBSD 对系统上连接的第一个 SATA 硬盘的视图。假设该硬盘的容量为 250GB ，包含一个 80GB 的分区和一个 170GB 的分区（MS-DOS® 分区）。第一个分区包含一个 Windows® NTFS 文件系统，即 <code>C:</code> ，而第二个分区包含一个 FreeBSD 安装。这个示例的 FreeBSD 安装有四个数据分区和一个交换分区。</p>
+<p>这个图示展示了 FreeBSD 对系统上连接的第一个 SATA 硬盘的视图。假设该硬盘的容量为 250GB ，包含一个 80GB 的分区和一个 170GB 的分区（MS-DOS® 分区）。第一个分区包含一个 Windows® NTFS 文件系统，即 <code>C:</code>，而第二个分区包含一个 FreeBSD 安装。这个示例的 FreeBSD 安装有四个数据分区和一个交换分区。</p>
 </div>
 <div class="paragraph">
-<p>四个分区分别持有一个文件系统。分区 <code>a</code> 用于根文件系统， <code>d</code> 用于 <code>/var/</code> ， <code>e</code> 用于 <code>/tmp/</code> ， <code>f</code> 用于 <code>/usr/</code> 。分区字母 <code>c</code> 指的是整个切片，因此不用于普通分区。</p>
+<p>四个分区分别持有一个文件系统。分区 <code>a</code> 用于根文件系统，<code>d</code> 用于 <code>/var/</code>，<code>e</code> 用于 <code>/tmp/</code>，<code>f</code> 用于 <code>/usr/</code>。分区字母 <code>c</code> 指的是整个 slice，因此不用于普通分区。</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/basics/磁盘布局%20.png" alt="Windows 和 FreeBSD 之间共享驱动器的布局"/>
+<img src="../../../../images/books/handbook/basics/disk-layout.png" alt="Windows 和 FreeBSD 之间共享驱动器的布局"/>
 </div>
 </div>
 </div>
@@ -4456,18 +4456,18 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="sect2">
 <h3 id="mount-unmount">3.7. 挂载和卸载文件系统<a class="anchor" href="#mount-unmount"></a></h3>
 <div class="paragraph">
-<p>文件系统最好被视为一棵树，以 <code>/</code> 作为根节点。根目录中的 <code>/dev</code> 、 <code>/usr</code> 和其他目录是分支，它们可能有自己的分支，比如 <code>/usr/local</code> 等等。</p>
+<p>文件系统最好被视为一棵树，以 <code>/</code> 作为根节点。根目录中的 <code>/dev</code>、<code>/usr</code> 和其他目录是分支，它们可能有自己的分支，比如 <code>/usr/local</code> 等等。</p>
 </div>
 <div class="paragraph">
-<p>将一些目录放在单独的文件系统上有各种原因。 <code>/var</code> 包含了 <code>log/</code> 、 <code>spool/</code> 以及各种类型的临时文件，因此可能会被填满。填满根文件系统是不明智的，所以将 <code>/var</code> 与 <code>/</code> 分离通常是可取的。</p>
+<p>将一些目录放在单独的文件系统上有各种原因。<code>/var</code> 包含了 <code>log/</code>、<code>spool/</code> 以及各种类型的临时文件，因此可能会被填满。填满根文件系统是不明智的，所以将 <code>/var</code> 与 <code>/</code> 分离通常是可取的。</p>
 </div>
 <div class="paragraph">
-<p>将某些目录树包含在其他文件系统中的另一个常见原因是它们将被放置在单独的物理磁盘上，或者是单独的虚拟磁盘，例如网络文件系统挂载（在 <a href="./#network-nfs">“网络文件系统（ NFS ）”</a> 中描述），或者 CDROM 驱动器。</p>
+<p>将某些目录树包含在其他文件系统中的另一个常见原因是它们将被放置在单独的物理磁盘上，或者是单独的虚拟磁盘，例如网络文件系统挂载，如 <a href="./#network-nfs">“网络文件系统（ NFS ）”</a> 描述的，或者 CDROM 驱动器。</p>
 </div>
 <div class="sect3">
 <h4 id="disks-fstab">3.7.1. fstab 文件<a class="anchor" href="#disks-fstab"></a></h4>
 <div class="paragraph">
-<p>在引导过程中 (<a href="./#boot">FreeBSD 引导过程</a>) ，除了包含 <code>noauto</code> 条目的条目外，<code>/etc/fstab</code> 中列出的文件系统会自动挂载。该文件以以下格式包含条目：</p>
+<p>在引导过程中（<a href="./#boot">FreeBSD 引导过程</a>），除了包含 <code>noauto</code> 条目的条目外，<code>/etc/fstab</code> 中列出的文件系统会自动挂载。该文件以以下格式包含条目：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4498,7 +4498,7 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 </dd>
 <dt class="hdlist1"><code>passno</code></dt>
 <dd>
-<p>确定在重新启动后， <a href="https://man.freebsd.org/cgi/man.cgi?query=fsck&amp;sektion=8&amp;format=html">fsck(8)</a> 应该按照什么顺序检查 UFS 文件系统。应该跳过的文件系统应该将其 <code>passno</code> 设置为零。根文件系统需要在其他所有文件系统之前进行检查，并且其 <code>passno</code> 应该设置为一。其他文件系统的 <code>passno</code> 应该设置为大于一的值。如果有多个文件系统具有相同的 <code>passno</code> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=fsck&amp;sektion=8&amp;format=html">fsck(8)</a> 将尝试在可能的情况下并行检查文件系统。</p>
+<p>确定在重新启动后，<a href="https://man.freebsd.org/cgi/man.cgi?query=fsck&amp;sektion=8&amp;format=html">fsck(8)</a> 应该按照什么顺序检查 UFS 文件系统。应该跳过的文件系统应该将其 <code>passno</code> 设置为零。根文件系统需要在其他所有文件系统之前进行检查，并且其 <code>passno</code> 应该设置为一。其他文件系统的 <code>passno</code> 应该设置为大于一的值。如果有多个文件系统具有相同的 <code>passno</code>，<a href="https://man.freebsd.org/cgi/man.cgi?query=fsck&amp;sektion=8&amp;format=html">fsck(8)</a> 将尝试在可能的情况下并行检查文件系统。</p>
 </dd>
 </dl>
 </div>
@@ -4529,33 +4529,33 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="dlist">
 <div class="title">挂载选项</div>
 <dl>
-<dt class="hdlist1"><code>-a</code> 是一个命令行选项，用于指定附加参数。</dt>
+<dt class="hdlist1"><code>-a</code></dt>
 <dd>
-<p>挂载 <code>/etc/fstab</code> 中列出的所有文件系统，除了那些标记为&#34;noauto&#34;、被 <code>-t</code> 标志排除的文件系统，以及已经挂载的文件系统。</p>
+<p>挂载 <code>/etc/fstab</code> 中列出的所有文件系统，除了那些标记为“noauto”、被 <code>-t</code> 标志排除的文件系统，以及已经挂载的文件系统。</p>
 </dd>
-<dt class="hdlist1"><code>-d</code> 是一个命令行选项，用于指定程序的调试模式。</dt>
+<dt class="hdlist1">`</dt>
 <dd>
-<p>除了实际的挂载系统调用之外，做任何事情。这个选项与 <code>-v</code> 标志一起使用非常有用，可以确定 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> 实际上正在尝试做什么。</p>
+<p>执行除实际挂载系统调用之外的所有操作。这个选项与 <code>-v</code> 标志一起使用非常有用，可以确定 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> 实际上正在尝试做什么。</p>
 </dd>
 <dt class="hdlist1"><code>-f</code></dt>
 <dd>
 <p>强制挂载一个不干净的文件系统（危险操作），或者在将文件系统的挂载状态从读写改为只读时，撤销写访问权限。</p>
 </dd>
-<dt class="hdlist1"><code>-r</code> 是一个命令行选项，通常用于指定一个目录或文件的递归操作。在计算机领域中， <code>-r</code> 通常表示递归（ recursive ）操作，用于对目录及其子目录中的所有文件进行操作。</dt>
+<dt class="hdlist1"><code>-r</code></dt>
 <dd>
 <p>将文件系统挂载为只读模式。这与使用 <code>-o ro</code> 参数完全相同。</p>
 </dd>
-<dt class="hdlist1"><code>-t <em>fstype</em></code> 表示指定文件系统类型。</dt>
+<dt class="hdlist1"><code>-t <em>fstype</em></code></dt>
 <dd>
-<p>如果包含 <code>-a</code> 选项，则挂载指定的文件系统类型或仅挂载给定类型的文件系统。 &#34;ufs&#34;是默认的文件系统类型。</p>
+<p>如果包含 <code>-a</code> 选项，则挂载指定的文件系统类型或仅挂载给定类型的文件系统。“ufs”是默认的文件系统类型。</p>
 </dd>
-<dt class="hdlist1"><code>-u</code> 是一个命令行选项，用于指定用户。</dt>
+<dt class="hdlist1"><code>-u</code></dt>
 <dd>
 <p>更新文件系统的挂载选项。</p>
 </dd>
-<dt class="hdlist1"><code>-v</code> 是一个命令行选项，用于在执行某个命令时显示详细的输出信息。</dt>
+<dt class="hdlist1"><code>-v</code></dt>
 <dd>
-<p>请提供详细信息。</p>
+<p>提供详细信息。</p>
 </dd>
 <dt class="hdlist1"><code>-w</code></dt>
 <dd>
@@ -4564,13 +4564,13 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 </dl>
 </div>
 <div class="paragraph">
-<p>可以将以下选项作为逗号分隔的列表传递给 <code>-o</code> ：</p>
+<p>可以将以下选项作为逗号分隔的列表传递给 <code>-o</code>：</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">nosuid 表示在挂载文件系统时禁止设置 setuid 和 setgid 权限。</dt>
+<dt class="hdlist1">nosuid</dt>
 <dd>
-<p>不要解释文件系统上的 setuid 或 setgid 标志。这也是一个有用的安全选项。</p>
+<p>不要读取文件系统上的 <code>setuid</code> 或 <code>setgid</code> 标志。这也是一个有用的安全选项。</p>
 </dd>
 </dl>
 </div>
@@ -4578,13 +4578,13 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="sect3">
 <h4 id="disks-umount">3.7.3. 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=umount&amp;sektion=8&amp;format=html">umount(8)</a><a class="anchor" href="#disks-umount"></a></h4>
 <div class="paragraph">
-<p>要卸载文件系统，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=umount&amp;sektion=8&amp;format=html">umount(8)</a> 命令。该命令接受一个参数，可以是挂载点、设备名称、 <code>-a</code> 或 <code>-A</code> 。</p>
+<p>要卸载文件系统，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=umount&amp;sektion=8&amp;format=html">umount(8)</a> 命令。该命令接受一个参数，可以是挂载点、设备名称、<code>-a</code> 或 <code>-A</code>。</p>
 </div>
 <div class="paragraph">
-<p>所有的表单都可以使用 <code>-f</code> 来强制卸载，并且使用 <code>-v</code> 来显示详细信息。请注意，一般情况下不建议使用 <code>-f</code> ，因为它可能会导致计算机崩溃或者损坏文件系统上的数据。</p>
+<p>所有的表单都可以使用 <code>-f</code> 来强制卸载，并且使用 <code>-v</code> 来显示详细信息。请注意，一般情况下不建议使用 <code>-f</code>，因为它可能会导致计算机崩溃或者损坏文件系统上的数据。</p>
 </div>
 <div class="paragraph">
-<p>要卸载所有已挂载的文件系统，或者只卸载在 <code>-t</code> 后面列出的文件系统类型，请使用 <code>-a</code> 或 <code>-A</code> 选项。请注意， <code>-A</code> 选项不会尝试卸载根文件系统。</p>
+<p>要卸载所有已挂载的文件系统，或者只卸载在 <code>-t</code> 后面列出的文件系统类型，请使用 <code>-a</code> 或 <code>-A</code> 选项。请注意，<code>-A</code> 选项不会尝试卸载根文件系统。</p>
 </div>
 </div>
 </div>
@@ -13910,7 +13910,7 @@ multi on</pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/wine/wine-run-np%20++%20-1.png" alt="wine run np%20++%20 1"/>
+<img src="../../../../images/books/handbook/wine/wine-run-np++-1.png" alt="wine run np++ 1"/>
 </div>
 </div>
 <div class="paragraph">
@@ -46349,7 +46349,7 @@ myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro      
 <p>使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/net/wireshark/">net/wireshark</a> 包或端口来调试 PXE 引导过程中涉及的网络流量，如下图所示。</p>
 <div class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/advanced-networking/pxe-nfs.png%20是一个文件名，无法直接翻译。" alt="pxe nfs"/>
+<img src="../../../../images/books/handbook/advanced-networking/pxe-nfs.png" alt="pxe nfs"/>
 </div>
 <div class="title">图 59. PXE 引导过程与 NFS 根目录挂载</div>
 </div>
@@ -50015,7 +50015,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: December 21, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=3a8487c" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">

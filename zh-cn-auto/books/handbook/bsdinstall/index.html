@@ -1557,18 +1557,18 @@
 <h2 id="bsdinstall-synopsis">2.1. 简介<a class="anchor" href="#bsdinstall-synopsis"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>FreeBSD 支持多种架构，包括 amd64 、 ARM® 、 RISC-V® 和 PowerPC® 。根据不同的架构和平台，可以下载不同的镜像来安装或直接运行 FreeBSD 。</p>
+<p>FreeBSD 支持多种架构，包括 amd64 、 ARM® 、 RISC-V® 和 PowerPC® 。根据不同的架构和平台，可以 <a href="https://www.freebsd.org/where/">下载</a> 不同的镜像来安装或直接运行 FreeBSD 。</p>
 </div>
 <div class="paragraph">
-<p>图像类型有：</p>
+<p>镜像类型有：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>虚拟机磁盘镜像，例如 <code>qcow2</code> 、 <code>vmdk</code> 、 <code>vhd</code> 和原始设备镜像。这些不是安装镜像，而是已经预装了 FreeBSD 并准备好进行后安装任务的镜像。虚拟机镜像在云环境中也被广泛使用。</p>
+<p>虚拟机磁盘镜像，例如 <code>qcow2</code>、<code>vmdk</code>、<code>vhd</code> 和原始设备镜像。这些不是安装镜像，而是已经预装了 FreeBSD 并准备好进行后安装任务的镜像。虚拟机镜像在云环境中也被广泛使用。</p>
 </li>
 <li>
-<p>SD 卡镜像，用于树莓派等嵌入式系统。这些文件必须解压缩并以原始镜像的形式写入 SD 卡，从中启动板子。</p>
+<p>SD 卡镜像，用于树莓派等嵌入式系统。这些文件必须解压缩并以原始镜像的形式写入 SD 卡，主板将从 SD 卡启动。</p>
 </li>
 <li>
 <p>安装镜像用于从 ISO 或 USB 设备引导，以在常见的台式机、笔记本电脑或服务器系统上安装 FreeBSD 到驱动器。</p>
@@ -1596,7 +1596,7 @@
 <p>如何排除安装失败的问题。</p>
 </li>
 <li>
-<p>在进行安装之前，如何访问 FreeBSD 的实时版本。</p>
+<p>在进行安装之前，如何访问 FreeBSD 的活动版本。</p>
 </li>
 </ul>
 </div>
@@ -1606,7 +1606,7 @@
 <h2 id="bsdinstall-hardware">2.2. 最低硬件要求<a class="anchor" href="#bsdinstall-hardware"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>安装 FreeBSD 的硬件要求因架构和版本而异。支持 FreeBSD 发布的硬件架构和设备可以在链接： <a href="https://www.FreeBSD.org/releases/">FreeBSD 发布信息</a> 页面上找到。链接： <a href="https://www.FreeBSD.org/where/">FreeBSD 下载页面</a> 还提供了选择不同架构的正确镜像的建议。</p>
+<p>安装 FreeBSD 的硬件要求因架构和版本而异。支持 FreeBSD 发布的硬件架构和设备可以在 <a href="https://www.FreeBSD.org/releases/">FreeBSD 发布信息</a> 页面上找到。<a href="https://www.FreeBSD.org/where/">FreeBSD 下载页面</a> 还提供了选择不同架构的正确镜像的建议。</p>
 </div>
 </div>
 </div>
@@ -1621,18 +1621,18 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>* 备份重要数据 *</p>
+<p><strong>备份重要数据</strong></p>
 <div class="paragraph">
-<p>在安装任何操作系统之前， * 一定要 * 首先备份所有重要数据。不要将备份存储在正在安装的系统上。而是将数据保存到可移动的磁盘，如 USB 驱动器、网络上的另一个系统或在线备份服务中。在开始安装之前，测试备份以确保它包含所有所需的文件。一旦安装程序格式化了系统的磁盘，该磁盘上存储的所有数据都将丢失。</p>
+<p>在安装任何操作系统之前， <strong>一定要</strong> 首先备份所有重要数据。不要将备份存储在正在安装的系统上。而是将数据保存到可移动的磁盘，如 USB 驱动器、网络上的另一个系统或在线备份服务中。在开始安装之前，测试备份以确保它包含所有所需的文件。一旦安装程序格式化了系统的磁盘，该磁盘上存储的所有数据都将丢失。</p>
 </div>
 </li>
 <li>
-<p>* 决定在哪里安装 FreeBSD*</p>
+<p><strong>决定在哪里安装 FreeBSD</strong></p>
 <div class="paragraph">
 <p>如果只安装 FreeBSD 作为唯一的操作系统，可以跳过这一步。但如果 FreeBSD 将与其他操作系统共享磁盘，则需要决定哪个磁盘或分区将用于 FreeBSD 。</p>
 </div>
 <div class="paragraph">
-<p>在 i386 和 amd64 架构中，可以使用两种分区方案将磁盘分成多个分区。传统的主引导记录（ MBR ）保存了一个包含最多四个主分区的分区表。出于历史原因， FreeBSD 将这些主分区称为切片。其中一个主分区可以成为包含多个逻辑分区的扩展分区。 GUID 分区表（ GPT ）是一种较新且更简单的磁盘分区方法。常见的 GPT 实现允许每个磁盘最多有 128 个分区，消除了逻辑分区的需要。</p>
+<p>在 i386 和 amd64 架构中，可以使用两种分区方案将磁盘分成多个分区。传统的 <em>主引导记录（MBR）</em> 保存了一个包含最多四个 <em>主分区</em> 的分区表。出于历史原因，FreeBSD 将这些主分区称为 <em>slices</em>。其中一个主分区可以成为包含多个 <em>逻辑分区</em> 的 <em>扩展分区</em>。 <em>GUID 分区表（GPT）</em> 是一种较新且更简单的磁盘分区方法。常见的 GPT 实现允许每个磁盘最多有 128 个分区，消除了逻辑分区的需要。</p>
 </div>
 <div class="paragraph">
 <p>FreeBSD 引导加载程序需要一个主分区或 GPT 分区。如果所有的主分区或 GPT 分区已经被使用，就必须释放一个分区给 FreeBSD 使用。为了在不删除现有数据的情况下创建一个分区，可以使用分区调整工具来缩小一个现有分区，并使用释放出的空间创建一个新的分区。</p>
@@ -1898,7 +1898,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-newboot-loader-menu" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-newboot-loader-menu.png%20是一个文件名，无法直接翻译。" alt="FreeBSD 引导加载程序菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-newboot-loader-menu.png" alt="FreeBSD 引导加载程序菜单"/>
 </div>
 <div class="title">图 1. FreeBSD 引导加载程序菜单</div>
 </div>
@@ -1940,35 +1940,35 @@ commit your changes?</pre>
 <p>启动选项菜单分为两个部分。第一部分可以用于返回主启动菜单或将任何切换选项重置为默认值。</p>
 </div>
 <div class="paragraph">
-<p>下一节用于通过按下选项的突出显示的数字或字符来切换可用选项的状态为“开启”或“关闭”。系统将始终使用这些选项的设置进行引导，直到它们被修改。可以使用此菜单切换多个选项的状态。</p>
+<p>下一节用于通过按下选项的突出显示的数字或字符来切换可用选项的状态为 <code>On</code> 或 <code>Off</code>。系统将始终使用这些选项的设置进行引导，直到它们被修改。可以使用此菜单切换多个选项的状态。</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>`ACPI 支持 `: 如果系统在启动过程中出现卡死的情况，请尝试将此选项切换为 ` 关闭 ` 。</p>
+<p><code>ACPI 支持（ACPI Support）</code>: 如果系统在启动过程中出现卡死的情况，请尝试将此选项切换为 <code>Off</code>。</p>
 </li>
 <li>
-<p>` 安全模式 ` ：如果系统在启动时即使将 `ACPI 支持 ` 设置为 ` 关闭 ` 仍然出现卡顿的情况，请尝试将此选项设置为 ` 开启 ` 。</p>
+<p><code>安全模式（Safe Mode）</code>：如果系统在启动时即使将 <code>ACPI Support</code> 设置为 <code>Off</code> 仍然出现卡顿的情况，请尝试将此选项设置为 <code>On</code>。</p>
 </li>
 <li>
-<p><code>Single User</code> ：将此选项切换为 <code>On</code> ，以修复现有的 FreeBSD 安装，如 <a href="../boot/#boot-singleuser">“单用户模式”</a> 中所述。一旦问题解决，将其设置为 <code>Off</code> 。</p>
+<p><code>单用户模式（Single User）</code>：将此选项切换为 <code>On</code>，以修复现有的 FreeBSD 安装，如 <a href="../boot/#boot-singleuser">“单用户模式”</a> 中所述。一旦问题解决，将其设置为 <code>Off</code>。</p>
 </li>
 <li>
-<p><code>Verbose</code> ：将此选项切换为 <code>On</code> 以在启动过程中显示更详细的消息。在排除硬件问题时，这可能会很有用。</p>
+<p><code>Verbose</code>：将此选项切换为 <code>On</code> 以在启动过程中显示更详细的消息。在排除硬件问题时，这可能会很有用。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>在进行所需的选择后，按下 <kbd>1</kbd> 或 <kbd>Backspace</kbd> 返回到主引导菜单，然后按下 <kbd>Enter</kbd> 继续引导进入 FreeBSD 。 FreeBSD 将执行其硬件设备探测和加载安装程序时，一系列引导消息将出现。 引导完成后，将显示在 <a href="#bsdinstall-choose-mode">欢迎菜单</a> 中显示的欢迎菜单。</p>
+<p>在进行所需的选择后，按下 <kbd>1</kbd> 或 <kbd>Backspace</kbd> 返回到主引导菜单，然后按下 <kbd>Enter</kbd> 继续引导进入 FreeBSD。FreeBSD 将执行其硬件设备探测和加载安装程序时，一系列引导消息将出现。引导完成后，将显示在 <a href="#bsdinstall-choose-mode">欢迎菜单</a> 中显示的欢迎菜单。</p>
 </div>
 <div id="bsdinstall-choose-mode" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-choose-mode.png%20是一个图片文件的名称，无法直接翻译。" alt="FreeBSD 安装欢迎菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-choose-mode.png" alt="FreeBSD 安装欢迎菜单"/>
 </div>
 <div class="title">图 3. 欢迎菜单</div>
 </div>
 <div class="paragraph">
-<p>按下 <kbd>Enter</kbd> 键选择默认的 <b class="button">Install</b> 按钮进入安装程序。本章的其余部分将描述如何使用此安装程序。否则，使用右箭头、左箭头或带颜色的字母选择所需的菜单项。 <b class="button">Shell</b> 可用于访问 FreeBSD shell ，以便在安装之前使用命令行实用程序准备磁盘。 <b class="button">Live CD</b> 选项可用于在安装之前尝试 FreeBSD 。有关 live 版本的详细信息，请参阅 <a href="#using-live-cd">使用 Live CD</a> 。</p>
+<p>按下 <kbd>Enter</kbd> 键选择默认的 <b class="button">Install</b> 按钮进入安装程序。本章的其余部分将描述如何使用此安装程序。否则，使用右箭头、左箭头或带颜色的字母选择所需的菜单项。<b class="button">Shell</b> 可用于访问 FreeBSD shell，以便在安装之前使用命令行实用程序准备磁盘。<b class="button">Live CD</b> 选项可用于在安装之前尝试 FreeBSD。有关 live 版本的详细信息，请参阅 <a href="#using-live-cd">使用 Live CD</a> 。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1978,7 +1978,7 @@ commit your changes?</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>要查看启动消息，包括硬件设备探测，请按下大写或小写的键盘： [S] ，然后按下键盘： [Enter] 以访问 shell 。在 shell 提示符下，键入 <code>more /var/run/dmesg.boot</code> ，使用空格键滚动浏览消息。完成后，键入 <code>exit</code> 返回欢迎菜单。</p>
+<p>要查看启动消息，包括硬件设备探测，请按下大写或小写的 <kbd>S</kbd>，然后按下 <kbd>Enter</kbd> 以访问 shell。在 shell 提示符下，键入 <code>more /var/run/dmesg.boot</code>，使用空格键滚动浏览消息。完成后，键入 <code>exit</code> 返回欢迎菜单。</p>
 </div>
 </td>
 </tr>
@@ -2009,7 +2009,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-keymap-10" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-keymap-10.png%20是一个图片文件的名称。" alt="显示所有支持的键盘的按键映射选择菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-keymap-10.png" alt="显示所有支持的键盘的按键映射选择菜单"/>
 </div>
 <div class="title">图 5. 按键映射选择菜单</div>
 </div>
@@ -2032,7 +2032,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-keymap-testing" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-keymap-testing.png%20是一个图片文件的名称。" alt="按键映射测试菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-keymap-testing.png" alt="按键映射测试菜单"/>
 </div>
 <div class="title">图 6. 按键映射测试菜单</div>
 </div>
@@ -2044,7 +2044,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-config-hostname" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-hostname.png%20是一个文件名，无法直接翻译。" alt="设置主机名"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-hostname.png" alt="设置主机名"/>
 </div>
 <div class="title">图 7. 设置主机名</div>
 </div>
@@ -2059,7 +2059,7 @@ commit your changes?</pre>
 </div>
 <div id="bsdinstall-config-components" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-components.png%20是一个图片文件的名称。" alt="可以安装的不同组件。示例： base-dbg" width="lib32" height="ports"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-components.png" alt="可以安装的不同组件。示例： base-dbg" width="lib32" height="ports"/>
 </div>
 <div class="title">图 8. 选择要安装的组件</div>
 </div>
@@ -2167,7 +2167,7 @@ commit your changes?</pre>
 </div>
 <div class="paragraph">
 <p>请注意，从网络安装软件时，确保下载和安装的软件来自可信赖的来源，以避免安全风险。
-image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译。[&#34;表示某些组件未找到，并将使用网络进行下载。&#34;]</p>
+image::bsdinstall-netinstall-files.png[&#34;表示某些组件未找到，并将使用网络进行下载。&#34;]</p>
 </div>
 </div>
 </div>
@@ -2180,7 +2180,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-zfs-partmenu" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-partmenu.png%20是一个文件名，无法直接翻译。" alt="显示不同的分区选项。示例：手动" width="Shell" height="etc."/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-partmenu.png" alt="显示不同的分区选项。示例：手动" width="Shell" height="etc."/>
 </div>
 <div class="title">图 9. 分区选择</div>
 </div>
@@ -2251,7 +2251,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-guided-disk" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-guided-disk.png%20是一个文件名，无法直接翻译。" alt="显示可以安装 FreeBSD 的磁盘列表"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-guided-disk.png" alt="显示可以安装 FreeBSD 的磁盘列表"/>
 </div>
 <div class="title">图 10. 从多个磁盘中进行选择</div>
 </div>
@@ -2260,7 +2260,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-entire-part" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-entire-part.png%20是一个图片文件的名称。" alt="菜单询问用户是否想要使用磁盘上的所有可用空间，还是想要进行分区。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-entire-part.png" alt="菜单询问用户是否想要使用磁盘上的所有可用空间，还是想要进行分区。"/>
 </div>
 <div class="title">图 11. 选择整个磁盘或分区</div>
 </div>
@@ -2278,7 +2278,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-ufs-scheme" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-partscheme.png%20是一个图片文件的名称。" alt="菜单显示用户存在的不同类型的分区，并要求选择其中之一。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-partscheme.png" alt="菜单显示用户存在的不同类型的分区，并要求选择其中之一。"/>
 </div>
 <div class="title">图 13. 选择分区方案</div>
 </div>
@@ -2287,7 +2287,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-review" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-review.png%20是一个文件名，无法直接翻译。" alt="显示已创建分区的菜单"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-review.png" alt="显示已创建分区的菜单"/>
 </div>
 <div class="title">图 14. 审查已创建的分区</div>
 </div>
@@ -2296,7 +2296,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-ufs-final-confirmation" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-final-confirmation.png%20是一个文件名，无法直接翻译。" alt="菜单向用户指示所有更改将被写入磁盘，并告知如果用户决定继续，现有数据将被永久删除。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-final-confirmation.png" alt="菜单向用户指示所有更改将被写入磁盘，并告知如果用户决定继续，现有数据将被永久删除。"/>
 </div>
 <div class="title">图 15. 最终确认</div>
 </div>
@@ -2311,7 +2311,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-manual-create" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-create.png%20是一个图片文件的名称。" alt="显示分区编辑器的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-create.png" alt="显示分区编辑器的菜单。"/>
 </div>
 <div class="title">图 16. 手动创建分区</div>
 </div>
@@ -2320,7 +2320,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-manual-partscheme" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-partscheme.png%20是一个图片文件的名称。" alt="菜单显示了不同类型的分区方案"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-partscheme.png" alt="菜单显示了不同类型的分区方案"/>
 </div>
 <div class="title">图 17. 手动创建分区</div>
 </div>
@@ -2363,7 +2363,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-part-manual-addpart" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-addpart.png%20是一个图片文件的名称。" alt="请求类型菜单" width="size" height="mountpoint and label for the new partition."/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-part-manual-addpart.png" alt="请求类型菜单" width="size" height="mountpoint and label for the new partition."/>
 </div>
 <div class="title">图 18. 手动创建分区</div>
 </div>
@@ -2571,7 +2571,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-zfs-vdev_type" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-vdev_type.png%20是一个图片文件的名称。" alt="请求虚拟设备类型的菜单。例如：条纹" width="mirror" height="raidz1"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-vdev_type.png" alt="请求虚拟设备类型的菜单。例如：条纹" width="mirror" height="raidz1"/>
 </div>
 <div class="title">图 20. ZFS 池类型</div>
 </div>
@@ -2605,7 +2605,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-zfs-disk_select" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-disk_select.png%20是一个文件名，无法直接翻译。" alt="菜单请求添加多少个磁盘到池中"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-disk_select.png" alt="菜单请求添加多少个磁盘到池中"/>
 </div>
 <div class="title">图 21. 磁盘选择</div>
 </div>
@@ -2665,7 +2665,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-zfs-geli_password" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-geli_password.png%20是一个文件名，无法直接翻译。" alt="要求输入密码以加密设备的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-zfs-geli_password.png" alt="要求输入密码以加密设备的菜单。"/>
 </div>
 <div class="title">图 28. 磁盘加密密码</div>
 </div>
@@ -2756,7 +2756,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-wireless-scan" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-scan.png%20是一个图片文件的名称。" alt="显示无线网络扫描的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-scan.png" alt="显示无线网络扫描的菜单。"/>
 </div>
 <div class="title">图 35. 扫描无线接入点</div>
 </div>
@@ -2765,7 +2765,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-wireless-accesspoints" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-accesspoints.png%20是一个图片文件的名称。" alt="显示可连接的不同无线网络的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-accesspoints.png" alt="显示可连接的不同无线网络的菜单。"/>
 </div>
 <div class="title">图 36. 选择无线网络</div>
 </div>
@@ -2774,7 +2774,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-wireless-wpa2" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-wpa2setup.png%20是一个图片文件的名称。" alt="请求无线网络密码的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-wireless-wpa2setup.png" alt="请求无线网络密码的菜单。"/>
 </div>
 <div class="title">图 37. WPA2 设置</div>
 </div>
@@ -2809,7 +2809,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-net-ipv4-dhcp" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv4-dhcp.png%20是一个图像文件的名称。" alt="菜单指示是否要为所选接口配置 DHCP 。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv4-dhcp.png" alt="菜单指示是否要为所选接口配置 DHCP 。"/>
 </div>
 <div class="title">图 39. 选择 IPv4 DHCP 配置</div>
 </div>
@@ -2840,7 +2840,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-net-ipv6" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv6.png%20是一个网络界面%20IPv6%20配置的截图。" alt="菜单指示是否要为所选接口配置 IPv6 。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv6.png" alt="菜单指示是否要为所选接口配置 IPv6 。"/>
 </div>
 <div class="title">图 41. 选择 IPv6 网络</div>
 </div>
@@ -2861,7 +2861,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-net-ipv6-static" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv6-static.png%20是一个图片文件的名称。" alt="菜单请求配置 IPv6 网络的数据。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-interface-ipv6-static.png" alt="菜单请求配置 IPv6 网络的数据。"/>
 </div>
 <div class="title">图 43. IPv6 静态配置</div>
 </div>
@@ -2880,7 +2880,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div id="bsdinstall-net-dns-config" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-ipv4-dns.png%20是一个图片文件的名称。" alt="菜单请求数据以配置网络的 DNS 。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-configure-network-ipv4-dns.png" alt="菜单请求数据以配置网络的 DNS 。"/>
 </div>
 <div class="title">图 44. DNS 配置</div>
 </div>
@@ -2916,7 +2916,7 @@ image::bsdinstall-netinstall-files.png%20是一个文件名，无法直接翻译
 </div>
 <div class="paragraph">
 <p>选择一个合适的镜像源可以提高下载速度和连接的稳定性，从而更快地获取所需的软件和操作系统镜像。因此，在下载之前，确保选择一个合适的镜像源是非常重要的。
-image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称。[&#34;请求网络镜像的菜单。&#34;]</p>
+image::bsdinstall-netinstall-mirrorselect.png[&#34;请求网络镜像的菜单。&#34;]</p>
 </div>
 </div>
 <div class="sect2">
@@ -2947,7 +2947,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-timezone-zone" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-zone.png%20是一个图片文件的名称。" alt="请求时区的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-zone.png" alt="请求时区的菜单。"/>
 </div>
 <div class="title">图 47. 选择一个时区</div>
 </div>
@@ -2956,7 +2956,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-timezone-confirmation" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-confirm.png%20是一个图片文件，无法直接翻译为中文。" alt="菜单请求确认所选时区。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-confirm.png" alt="菜单请求确认所选时区。"/>
 </div>
 <div class="title">图 48. 确认时区</div>
 </div>
@@ -2974,7 +2974,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-timezone-time" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-time.png%20是一个图片文件名，无法直接翻译。" alt="请求系统时间的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-timezone-time.png" alt="请求系统时间的菜单。"/>
 </div>
 <div class="title">图 50. 选择时间</div>
 </div>
@@ -2989,7 +2989,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-config-serv" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-services.png%20是一个图片文件的名称。" alt="显示不同服务的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-config-services.png" alt="显示不同服务的菜单。"/>
 </div>
 <div class="title">图 51. 选择启用附加服务</div>
 </div>
@@ -3029,7 +3029,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-hardening-options" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-hardening.png%20是一个图片文件的名称。" alt="显示不同的加固安全选项的菜单。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-hardening.png" alt="显示不同的加固安全选项的菜单。"/>
 </div>
 <div class="title">图 52. 选择加固安全选项</div>
 </div>
@@ -3096,7 +3096,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-add-user2" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-adduser2.png%20是一个图片文件名，无法翻译。" alt="菜单请求新用户的不同信息。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-adduser2.png" alt="菜单请求新用户的不同信息。"/>
 </div>
 <div class="title">图 54. 输入用户信息</div>
 </div>
@@ -3157,7 +3157,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-add-user3" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-adduser3.png%20是一个图片文件名，无法直接翻译为中文。" alt="菜单显示新用户的信息，并询问是否一切正确。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-adduser3.png" alt="菜单显示新用户的信息，并询问是否一切正确。"/>
 </div>
 <div class="title">图 55. 退出用户和组管理</div>
 </div>
@@ -3175,7 +3175,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-final-config" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-finalconfiguration.png%20是一个文件名，无法直接翻译。" alt="在完成安装之前显示不同选项的菜单。例如：添加用户" width="Time Zone" height="etc."/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-finalconfiguration.png" alt="在完成安装之前显示不同选项的菜单。例如：添加用户" width="Time Zone" height="etc."/>
 </div>
 <div class="title">图 56. 最终配置</div>
 </div>
@@ -3224,7 +3224,7 @@ image::bsdinstall-netinstall-mirrorselect.png%20是一个图像文件的名称�
 </div>
 <div id="bsdinstall-final-main" class="imageblock">
 <div class="content">
-<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-mainexit.png%20是一个文件名，无法直接翻译。" alt="菜单显示安装已完成，并询问是否重新启动系统或访问 Live CD 。"/>
+<img src="../../../../images/books/handbook/bsdinstall/bsdinstall-mainexit.png" alt="菜单显示安装已完成，并询问是否重新启动系统或访问 Live CD 。"/>
 </div>
 <div class="title">图 58. 完成安装</div>
 </div>
@@ -3362,7 +3362,7 @@ Starting sshd.</code></pre>
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: December 20, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=e806efe" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: December 21, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=590a2d5" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
