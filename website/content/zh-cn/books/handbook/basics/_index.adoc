@@ -1254,7 +1254,7 @@ man:dump[8] 使用此字段来确定哪些文件系统需要进行备份。如�
 强制挂载一个不干净的文件系统（危险操作），或者在将文件系统的挂载状态从读写改为只读时，撤销写访问权限。
 
 `-r`::
-Mount the file system read-only. This is identical to using `-o ro`.
+将文件系统挂载为只读模式。这与使用 `-o ro` 参数完全相同。
 
 ``-t _fstype_``::
 如果包含 `-a` 选项，则挂载指定的文件系统类型或仅挂载给定类型的文件系统。“ufs”是默认的文件系统类型。
@@ -1285,19 +1285,19 @@ nosuid::
 [[basics-processes]]
 == 进程和守护进程
 
-FreeBSD is a multi-tasking operating system. Each program running at any one time is called a _process_. Every running command starts at least one new process and there are a number of system processes that are run by FreeBSD.
+FreeBSD 是一个多任务操作系统。每个同时运行的程序被称为一个 _进程_。每个正在运行的命令都会启动至少一个新的进程，并且 FreeBSD 还会运行一些系统进程。
 
-Each process is uniquely identified by a number called a _process ID_ (PID). Similar to files, each process has one owner and group, and the owner and group permissions are used to determine which files and devices the process can open. Most processes also have a parent process that started them. For example, the shell is a process, and any command started in the shell is a process which has the shell as its parent process. The exception is a special process called man:init[8] which is always the first process to start at boot time and which always has a PID of `1`.
+每个进程都由一个称为 _进程 ID_（PID）的数字唯一标识。与文件类似，每个进程都有一个所有者和组，并且所有者和组权限用于确定进程可以打开哪些文件和设备。大多数进程还有一个启动它们的父进程。例如，shell 是一个进程，shell 中启动的任何命令都是一个进程，其父进程是 shell 。例外情况是一个特殊的进程，称为 man:init[8]，它始终是在启动时第一个启动的进程，其 PID 始终为 `1`。
 
-Some programs are not designed to be run with continuous user input and disconnect from the terminal at the first opportunity. For example, a web server responds to web requests, rather than user input. Mail servers are another example of this type of application. These types of programs are known as _daemons_. The term daemon comes from Greek mythology and represents an entity that is neither good nor evil, and which invisibly performs useful tasks. This is why the BSD mascot is the cheerful-looking daemon with sneakers and a pitchfork.
+有些程序并不是设计成需要连续的用户输入，也不能在第一时间与终端断开连接。例如，Web 服务器响应 Web 请求，而不是用户输入。邮件服务器是另一种这种类型的应用程序。这些类型的程序被称为 _守护进程（daemon）_。术语 daemon 来自希腊神话，代表着一个既不善良也不邪恶的实体，它在不可见的情况下执行有用的任务。这就是为什么 BSD 吉祥物是一个看起来开心的带着运动鞋和叉子的 daemon。
 
-There is a convention to name programs that normally run as daemons with a trailing "d". For example, BIND is the Berkeley Internet Name Domain, but the actual program that executes is `named`. The Apache web server program is `httpd` and the line printer spooling daemon is `lpd`. This is only a naming convention. For example, the main mail daemon for the Sendmail application is `sendmail`, and not `maild`.
+有一个约定，即通常作为守护进程运行的程序的命名方式是以字母"d"结尾的。例如，BIND 是 Berkeley Internet Name Domain 的缩写，但实际执行的程序是 `named`。Apache Web 服务器程序是 `httpd` ，线打印机排队守护进程是 `lpd`。这只是一种命名约定。例如，Sendmail 应用程序的主邮件守护进程是 `sendmail`，而不是 `maild`。
 
-=== Viewing Processes
+=== 查看进程
 
-To see the processes running on the system, use man:ps[1] or man:top[1]. To display a static list of the currently running processes, their PIDs, how much memory they are using, and the command they were started with, use man:ps[1]. To display all the running processes and update the display every few seconds in order to interactively see what the computer is doing, use man:top[1].
+要查看系统上运行的进程，请使用 man:ps[1] 或 man:top[1]。要显示当前正在运行的进程的静态列表，包括它们的进程 ID 、使用的内存量以及启动它们的命令，请使用 man:ps[1] 。要显示所有正在运行的进程，并每隔几秒更新一次显示，以便交互式地查看计算机正在做什么，请使用 man:top[1]。
 
-By default, man:ps[1] only shows the commands that are running and owned by the user. For example:
+默认情况下，man:ps[1] 只显示正在运行且由用户拥有的命令。例如：
 
 [source, shell]
 ....
@@ -1313,11 +1313,11 @@ By default, man:ps[1] only shows the commands that are running and owned by the 
 8895  0  R+   0:00.00 ps
 ....
 
-The output from man:ps[1] is organized into a number of columns. The `PID` column displays the process ID. PIDs are assigned starting at 1, go up to 99999, then wrap around back to the beginning. However, a PID is not reassigned if it is already in use. The `TT` column shows the tty the program is running on and `STAT` shows the program's state. `TIME` is the amount of time the program has been running on the CPU. This is usually not the elapsed time since the program was started, as most programs spend a lot of time waiting for things to happen before they need to spend time on the CPU. Finally, `COMMAND` is the command that was used to start the program.
+man:ps[1] 的输出被组织成多列。`PID` 列显示进程 ID。PID 从 1 开始分配，最大为 99999 ，然后重新从头开始分配。然而，如果 PID 已经被使用，它不会被重新分配。`TT` 列显示程序所在的 tty，`STAT` 列显示程序的状态。 `TIME` 是程序在 CPU 上运行的时间。这通常不是程序启动后经过的时间，因为大多数程序在需要在 CPU 上花费时间之前会花费很多时间等待事件发生。最后，`COMMAND` 是用于启动程序的命令。
 
-A number of different options are available to change the information that is displayed. One of the most useful sets is `auxww`, where `a` displays information about all the running processes of all users, `u` displays the username and memory usage of the process' owner, `x` displays information about daemon processes, and `ww` causes man:ps[1] to display the full command line for each process, rather than truncating it once it gets too long to fit on the screen.
+有多种不同的选项可用于更改显示的信息。其中最有用的一组是 `auxww`，其中 `a` 显示有关所有用户的所有运行进程的信息，`u` 显示进程所有者的用户名和内存使用情况，`x` 显示有关守护进程的信息，`ww` 使 man:ps[1] 显示每个进程的完整命令行，而不是在屏幕上显示过长时截断它。
 
-The output from man:top[1] is similar:
+man:top[1] 的输出类似：
 
 [source, shell]
 ....
@@ -1349,44 +1349,44 @@ Swap: 2048M Total, 2048M Free
  1427 dru           5  22    0   605M 86412K select  1   0:05  0.00% kdeinit4
 ....
 
-The output is split into two sections. The header (the first five or six lines) shows the PID of the last process to run, the system load averages (which are a measure of how busy the system is), the system uptime (time since the last reboot) and the current time. The other figures in the header relate to how many processes are running, how much memory and swap space has been used, and how much time the system is spending in different CPU states. If the ZFS file system module has been loaded, an `ARC` line indicates how much data was read from the memory cache instead of from disk.
+输出分为两个部分。标题部分（前五或六行）显示了最后一个运行的进程的 PID ，系统负载平均值（衡量系统繁忙程度的指标），系统运行时间（自上次重启以来的时间）和当前时间。标题中的其他数字与正在运行的进程数量、已使用的内存和交换空间以及系统在不同 CPU 状态下花费的时间有关。如果加载了 ZFS 文件系统模块，`ARC` 行将显示有多少数据是从内存缓存中读取而不是从磁盘中读取的。
 
-Below the header is a series of columns containing similar information to the output from man:ps[1], such as the PID, username, amount of CPU time, and the command that started the process. By default, man:top[1] also displays the amount of memory space taken by the process. This is split into two columns: one for total size and one for resident size. Total size is how much memory the application has needed and the resident size is how much it is actually using now.
+在标题下面是一系列列，其中包含与 man:ps[1] 输出类似的信息，例如 PID、用户名、CPU 时间和启动进程的命令。默认情况下，man:top[1] 还会显示进程占用的内存空间。这被分为两列：总大小和常驻大小。总大小是应用程序所需的内存量，常驻大小是它当前实际使用的内存量。
 
-man:top[1] automatically updates the display every two seconds. A different interval can be specified with `-s`.
+man:top[1] 每两秒自动更新显示。可以使用 `-s` 指定不同的间隔。
 
 [[basics-daemons]]
-=== Killing Processes
+=== 杀死进程
 
-One way to communicate with any running process or daemon is to send a _signal_ using man:kill[1]. There are a number of different signals; some have a specific meaning while others are described in the application's documentation. A user can only send a signal to a process they own and sending a signal to someone else's process will result in a permission denied error. The exception is the `root` user, who can send signals to anyone's processes.
+与任何正在运行的进程或守护进程进行通信的一种方法是使用 man:kill[1] 发送一个 _信号（signal）_。有许多不同的信号；一些具有特定的含义，而其他信号在应用程序的文档中有描述。用户只能向自己拥有的进程发送信号，向他人的进程发送信号将导致权限被拒绝的错误。例外情况是 `root` 用户，他可以向任何进程发送信号。
 
-The operating system can also send a signal to a process. If an application is badly written and tries to access memory that it is not supposed to, FreeBSD will send the process the "Segmentation Violation" signal (`SIGSEGV`). If an application has been written to use the man:alarm[3] system call to be alerted after a period of time has elapsed, it will be sent the "Alarm" signal (`SIGALRM`).
+操作系统也可以向进程发送信号。如果一个应用程序编写得很糟糕，试图访问它不应该访问的内存， FreeBSD 将向该进程发送“分段违规（Segmentation Violation）”信号（`SIGSEGV`）。如果一个应用程序被编写成使用 man:alarm[3] 系统调用，在经过一段时间后被提醒，它将收到“闹钟（Alarm）”信号（`SIGALRM`）。
 
-Two signals can be used to stop a process: `SIGTERM` and `SIGKILL`. `SIGTERM` is the polite way to kill a process as the process can read the signal, close any log files it may have open, and attempt to finish what it is doing before shutting down. In some cases, a process may ignore `SIGTERM` if it is in the middle of some task that cannot be interrupted.
+有两个信号可以用来停止一个进程：`SIGTERM` 和 `SIGKILL`。`SIGTERM` 是一种礼貌的方式来终止一个进程，因为进程可以读取该信号，关闭可能打开的任何日志文件，并尝试在关闭之前完成正在进行的操作。在某些情况下，如果进程正在执行无法中断的任务，它可能会忽略 `SIGTERM` 信号。
 
-`SIGKILL` cannot be ignored by a process. Sending a `SIGKILL` to a process will usually stop that process there and then. footnote:[There are a few tasks that cannot be interrupted. For example, if the process is trying to read from a file that is on another computer on the network, and the other computer is unavailable, the process is said to be uninterruptible. Eventually the process will time out, typically after two minutes. As soon as this time out occurs the process will be killed.].
+`SIGKILL` 无法被进程忽略。向一个进程发送 `SIGKILL` 通常会立即停止该进程。footnote:[有一些任务是无法中断的。例如，如果进程正在尝试从网络上的另一台计算机上读取文件，而该计算机不可用，那么该进程被称为不可中断。最终，该进程将超时，通常在两分钟后。一旦超时发生，该进程将被终止。] 。
 
-Other commonly used signals are `SIGHUP`, `SIGUSR1`, and `SIGUSR2`. Since these are general purpose signals, different applications will respond differently.
+其他常用的信号包括 `SIGHUP`、`SIGUSR1` 和 `SIGUSR2`。由于这些是通用的信号，不同的应用程序会有不同的响应。
 
-For example, after changing a web server's configuration file, the web server needs to be told to re-read its configuration. Restarting `httpd` would result in a brief outage period on the web server. Instead, send the daemon the `SIGHUP` signal. Be aware that different daemons will have different behavior, so refer to the documentation for the daemon to determine if `SIGHUP` will achieve the desired results.
+例如，在更改 Web 服务器的配置文件后，需要告诉 Web 服务器重新读取其配置。重新启动 `httpd` 将导致 Web 服务器短暂的停机时间。相反，发送 `SIGHUP` 信号给守护进程。请注意，不同的守护进程会有不同的行为，因此请参考守护进程的文档以确定是否使用 `SIGHUP` 可以达到所需的结果。
 
 [IMPORTANT]
 ====
-Killing a random process on the system is a bad idea. In particular, man:init[8], PID 1, is special. Running `/bin/kill -s KILL 1` is a quick, and unrecommended, way to shutdown the system. _Always_ double check the arguments to man:kill[1] _before_ pressing kbd:[Return].
+在系统上随机杀死一个进程是一个坏主意。特别是，man:init[8]，PID 1 ，是特殊的。运行 `/bin/kill -s KILL 1` 是一个快速但不推荐的关闭系统的方法。在按下 kbd:[Return] 之前，_始终_ 仔细检查 man:kill[1] 的参数。
 ====
 
 [[shells]]
 == Shells
 
-A _shell_ provides a command line interface for interacting with the operating system. A shell receives commands from the input channel and executes them. Many shells provide built in functions to help with everyday tasks such as file management, file globbing, command line editing, command macros, and environment variables. FreeBSD comes with several shells, including the Bourne shell (man:sh[1]) and the extended C shell (man:tcsh[1]). Other shells are available from the FreeBSD Ports Collection, such as `zsh` and `bash`.
+一个 _shell_ 提供了一个命令行界面，用于与操作系统进行交互。 Shell 从输入通道接收命令并执行它们。许多 shell 提供了内置函数来帮助处理日常任务，如文件管理、文件通配符、命令行编辑、命令宏和环境变量。 FreeBSD 提供了几个 shell，包括 Bourne shell（man:sh[1]）和扩展的 C shell（man:tcsh[1]）。FreeBSD Ports Collection 中还提供了其他 shell，如 `zsh` 和 `bash`。
 
-The shell that is used is really a matter of taste. A C programmer might feel more comfortable with a C-like shell such as man:tcsh[1]. A Linux(R) user might prefer `bash`. Each shell has unique properties that may or may not work with a user's preferred working environment, which is why there is a choice of which shell to use.
+使用的 shell 实际上是个人口味的问题。 C 程序员可能更喜欢类似 C 的 shell ，比如 man:tcsh[1] 。 Linux(R) 用户可能更喜欢 `bash`。每个 shell 都有独特的特性，可能适用或不适用于用户首选的工作环境，这就是为什么可以选择使用哪个 shell 的原因。
 
-One common shell feature is filename completion. After a user types the first few letters of a command or filename and presses kbd:[Tab], the shell completes the rest of the command or filename. Consider two files called `foobar` and `football`. To delete `foobar`, the user might type `rm foo` and press kbd:[Tab] to complete the filename.
+一个常见的 shell 功能是文件名补全。当用户输入命令或文件名的前几个字母并按下 kbd:[Tab] 键时， shell 会自动完成命令或文件名的剩余部分。假设有两个文件名分别为 `foobar` 和 `football`。要删除 `foobar`，用户可以输入 `rm foo` 并按下 kbd:[Tab] 键来完成文件名的补全。
 
-But the shell only shows `rm foo`. It was unable to complete the filename because both `foobar` and `football` start with `foo`. Some shells sound a beep or show all the choices if more than one name matches. The user must then type more characters to identify the desired filename. Typing a `t` and pressing kbd:[Tab] again is enough to let the shell determine which filename is desired and fill in the rest.
+但是 Shell 只显示 `rm foo` 。由于 `foobar` 和 `football` 都以 `foo` 开头，它无法完成文件名。一些 Shell 会发出哔哔声或显示所有匹配的选项。用户必须输入更多字符来识别所需的文件名。输入一个 `t` 并再次按下 kbd:[Tab] 就足够让 Shell 确定所需的文件名并填充剩下的部分。
 
-Another feature of the shell is the use of environment variables. Environment variables are a variable/key pair stored in the shell's environment. This environment can be read by any program invoked by the shell, and thus contains a lot of program configuration. <<shell-env-vars>> provides a list of common environment variables and their meanings. Note that the names of environment variables are always in uppercase.
+shell 的另一个特性是使用环境变量。环境变量是存储在 shell 环境中的键值对。任何由 shell 调用的程序都可以读取这个环境，并因此包含了许多程序配置。 <<shell-env-vars>> 提供了常见环境变量及其含义的列表。请注意，环境变量的名称始终为大写。
 
 [[shell-env-vars]]
 .常见的环境变量
@@ -1414,7 +1414,7 @@ Another feature of the shell is the use of environment variables. Environment va
 |终端转义码的数据库条目，用于执行各种终端功能。
 
 |`OSTYPE`
-|Type of operating system.
+|操作系统的类型。
 
 |`MACHTYPE`
 |系统的 CPU 架构。
@@ -1429,158 +1429,158 @@ Another feature of the shell is the use of environment variables. Environment va
 |以冒号分隔的目录列表，用于搜索手册页。
 |===
 
-How to set an environment variable differs between shells. In man:tcsh[1] and man:csh[1], use `setenv` to set environment variables. In man:sh[1] and `bash`, use `export` to set the current environment variables. This example sets the default `EDITOR` to `/usr/local/bin/emacs` for the man:tcsh[1] shell:
+在不同的 shell 中设置环境变量的方法是不同的。在 man:tcsh[1] 和 man:csh[1] 中，使用 `setenv` 来设置环境变量。在 man:sh[1] 和 `bash` 中，使用 `export` 来设置当前的环境变量。以下示例将默认的 `EDITOR` 设置为 `/usr/local/bin/emacs`，适用于 man:tcsh[1] shell。
 
 [source, shell]
 ....
 % setenv EDITOR /usr/local/bin/emacs
 ....
 
-The equivalent command for `bash` would be:
+`bash` 的等效命令是：
 
 [source, shell]
 ....
 % export EDITOR="/usr/local/bin/emacs"
 ....
 
-To expand an environment variable in order to see its current setting, type a `$` character in front of its name on the command line. For example, `echo $TERM` displays the current `$TERM` setting.
+为了展开环境变量以查看其当前设置，在命令行中在其名称前面键入 `$` 字符。例如，`echo $TERM` 会显示当前的 `$TERM` 设置。
 
-Shells treat special characters, known as meta-characters, as special representations of data. The most common meta-character is `\*`, which represents any number of characters in a filename. Meta-characters can be used to perform filename globbing. For example, `echo *` is equivalent to `ls` because the shell takes all the files that match `*` and `echo` lists them on the command line.
+Shell 将特殊字符，称为元字符，视为数据的特殊表示。最常见的元字符是 `\*` ，它表示文件名中的任意数量的字符。元字符可以用于执行文件名通配符匹配。例如，`echo *` 等同于 `ls` ，因为 shell 会将与 `*` 匹配的所有文件取出，并在命令行上列出它们。
 
-To prevent the shell from interpreting a special character, escape it from the shell by starting it with a backslash (`\`). For example, `echo $TERM` prints the terminal setting whereas `echo \$TERM` literally prints the string `$TERM`.
+为了防止 shell 解释特殊字符，可以通过在特殊字符前加上反斜杠（`\`）来将其从 shell 中转义。例如， `echo $TERM` 会打印终端设置，而 `echo \$TERM` 会直接打印字符串 `$TERM`。
 
 [[changing-shells]]
-=== Changing the Shell
+=== 更改 Shell
 
-The easiest way to permanently change the default shell is to use `chsh`. Running this command will open the editor that is configured in the `EDITOR` environment variable, which by default is set to man:vi[1]. Change the `Shell:` line to the full path of the new shell.
+永久更改默认 shell 的最简单方法是使用 `chsh` 命令。运行此命令将打开在 `EDITOR` 环境变量中配置的编辑器，默认设置为 man:vi[1]。将 `Shell:` 行更改为新 shell 的完整路径。
 
-Alternately, use `chsh -s` which will set the specified shell without opening an editor. For example, to change the shell to `bash`:
+或者，使用 `chsh -s` 命令可以在不打开编辑器的情况下设置指定的 shell。例如，要将 shell 更改为 `bash`：
 
 [source, shell]
 ....
 % chsh -s /usr/local/bin/bash
 ....
 
-Enter your password at the prompt and press kbd:[Return] to change your shell. Log off and log in again to start using the new shell.
+在提示符处输入您的密码，然后按下 kbd:[Return] 键来更改您的 shell。注销并重新登录以开始使用新的 shell。
 
 [NOTE]
 ====
-The new shell _must_ be present in `/etc/shells`. If the shell was installed from the FreeBSD Ports Collection as described in crossref:ports[ports,Installing Applications: Packages and Ports], it should be automatically added to this file. If it is missing, add it using this command, replacing the path with the path of the shell:
+新的 shell 必须存在于 `/etc/shells` 中。如果 shell 是按照 crossref:ports[ports,安装应用程序：软件包和 Ports] 中描述的方式从 FreeBSD Ports Collection 安装的，则应自动将其添加到此文件中。如果缺少，则使用以下命令添加，将路径替换为 shell 的路径：
 
 [source, shell]
 ....
 # echo /usr/local/bin/bash >> /etc/shells
 ....
 
-Then, rerun man:chsh[1].
+然后，重新运行 man:chsh[1]。
 ====
 
-=== Advanced Shell Techniques
+=== 高级 Shell 技巧
 
-The UNIX(R) shell is not just a command interpreter, it acts as a powerful tool which allows users to execute commands, redirect their output, redirect their input and chain commands together to improve the final command output. When this functionality is mixed with built in commands, the user is provided with an environment that can maximize efficiency.
+UNIX(R) shell 不仅仅是一个命令解释器，它还是一个强大的工具，允许用户执行命令、重定向输出、重定向输入以及链式组合命令，以提高最终命令的输出。当这种功能与内置命令结合使用时，用户可以获得一个可以最大化效率的环境。
 
-Shell redirection is the action of sending the output or the input of a command into another command or into a file. To capture the output of the man:ls[1] command, for example, into a file, redirect the output:
+Shell 重定向是将命令的输出或输入发送到另一个命令或文件的操作。例如，要将 man:ls[1] 命令的输出捕获到文件中，可以使用重定向操作：
 
 [source, shell]
 ....
 % ls > directory_listing.txt
 ....
 
-The directory contents will now be listed in `directory_listing.txt`. Some commands can be used to read input, such as man:sort[1]. To sort this listing, redirect the input:
+目录内容现在将会列在 `directory_listing.txt` 中。一些命令可以用来读取输入，比如 man:sort[1] 。要对这个列表进行排序，可以重定向输入：
 
 [source, shell]
 ....
 % sort < directory_listing.txt
 ....
 
-The input will be sorted and placed on the screen. To redirect that input into another file, one could redirect the output of man:sort[1] by mixing the direction:
+输入将被排序并显示在屏幕上。要将该输入重定向到另一个文件，可以通过混合方向来重定向 man:sort[1] 的输出。
 
 [source, shell]
 ....
 % sort < directory_listing.txt > sorted.txt
 ....
 
-In all of the previous examples, the commands are performing redirection using file descriptors. Every UNIX(R) system has file descriptors, which include standard input (stdin), standard output (stdout), and standard error (stderr). Each one has a purpose, where input could be a keyboard or a mouse, something that provides input. Output could be a screen or paper in a printer. And error would be anything that is used for diagnostic or error messages. All three are considered I/O based file descriptors and sometimes considered streams.
+在所有之前的示例中，命令都是使用文件描述符进行重定向。每个 UNIX(R) 系统都有文件描述符，包括标准输入 (stdin)、标准输出 (stdout) 和标准错误 (stderr)。每个文件描述符都有其用途，其中输入可以是键盘或鼠标，提供输入的设备。输出可以是屏幕或打印机上的纸张。而错误则是用于诊断或错误消息的任何内容。这三个都被视为基于 I/O 的文件描述符，有时也被称为流。
 
-Through the use of these descriptors, the shell allows output and input to be passed around through various commands and redirected to or from a file. Another method of redirection is the pipe operator.
+通过使用这些描述符， Shell 允许输出和输入在各个命令之间传递，并可以重定向到文件或从文件中读取。另一种重定向的方法是管道操作符。
 
-The UNIX(R) pipe operator, "|" allows the output of one command to be directly passed or directed to another program. Basically, a pipe allows the standard output of a command to be passed as standard input to another command, for example:
+UNIX(R) 管道操作符“|”允许将一个命令的输出直接传递或定向到另一个程序。基本上，管道允许将一个命令的标准输出作为另一个命令的标准输入传递，例如：
 
 [source, shell]
 ....
 % cat directory_listing.txt | sort | less
 ....
 
-In that example, the contents of `directory_listing.txt` will be sorted and the output passed to man:less[1]. This allows the user to scroll through the output at their own pace and prevent it from scrolling off the screen.
+在这个例子中，`directory_listing.txt` 的内容将被排序，并且输出将传递给 man:less[1] 。这使得用户可以按照自己的节奏滚动输出，并防止其滚动到屏幕外。
 
 [[editors]]
-== Text Editors
+== 文本编辑器
 
-Most FreeBSD configuration is done by editing text files, so it is a good idea to become familiar with a text editor. FreeBSD comes with a few as part of the base system, and many more are available in the Ports Collection.
+大多数 FreeBSD 的配置是通过编辑文本文件来完成的，因此熟悉文本编辑器是一个好主意。FreeBSD 自带了一些基本系统的文本编辑器，还有更多的编辑器可以在 Ports Collection 中找到。
 
-A simple editor to learn is man:ee[1], which stands for easy editor. To start this editor, type `ee _filename_` where _filename_ is the name of the file to be edited. Once inside the editor, all of the commands for manipulating the editor's functions are listed at the top of the display. The caret (`^`) represents kbd:[Ctrl], so `^e` expands to kbd:[Ctrl+e]. To leave man:ee[1], press kbd:[Esc], then choose the "leave editor" option from the main menu. The editor will prompt to save any changes if the file has been modified.
+一个简单的学习编辑器是 man:ee[1] ，它代表着 easy editor（简易编辑器）。要启动这个编辑器，输入 `ee _filename_`，其中 _filename_ 是要编辑的文件名。一旦进入编辑器，所有用于操作编辑器功能的命令都列在显示屏的顶部。插入符号（`^`）代表 kbd:[Ctrl]，所以 `^e` 扩展为 kbd:[Ctrl + e]。要离开 man:ee[1]，按下 kbd:[Esc]，然后从主菜单中选择“离开编辑器”选项。如果文件已被修改，编辑器将提示保存任何更改。
 
-FreeBSD also comes with more powerful text editors, such as man:vi[1], as part of the base system. Other editors, like package:editors/emacs[] and package:editors/vim[], are part of the FreeBSD Ports Collection. These editors offer more functionality at the expense of being more complicated to learn. Learning a more powerful editor such as vim or Emacs can save more time in the long run.
+FreeBSD 还配备了更强大的文本编辑器，例如 man:vi[1]，作为基本系统的一部分。其他编辑器，如 package:editors/emacs[] 和 package:editors/vim[]，是 FreeBSD Ports Collection 的一部分。这些编辑器提供了更多的功能，但学习起来更加复杂。学习使用像 vim 或 Emacs 这样更强大的编辑器可以在长期来看节省更多的时间。
 
-Many applications which modify files or require typed input will automatically open a text editor. To change the default editor, set the `EDITOR` environment variable as described in <<shells>>.
+许多修改文件或需要输入文本的应用程序会自动打开一个文本编辑器。要更改默认的编辑器，请按照 <<shells>> 中描述的方式设置 `EDITOR` 环境变量。
 
 [[basics-devices]]
-== Devices and Device Nodes
+== 设备和设备节点
 
-A device is a term used mostly for hardware-related activities in a system, including disks, printers, graphics cards, and keyboards. When FreeBSD boots, the majority of the boot messages refer to devices being detected. A copy of the boot messages is saved to `/var/run/dmesg.boot`.
+设备是系统中主要用于硬件相关活动的术语，包括磁盘、打印机、显卡和键盘等。当 FreeBSD 启动时，大部分引导消息都是关于检测到的设备。引导消息的副本保存在 `/var/run/dmesg.boot` 中。
 
-Each device has a device name and number. For example, `ada0` is the first SATA hard drive, while `kbd0` represents the keyboard.
+每个设备都有一个设备名称和编号。例如， `ada0` 表示第一个 SATA 硬盘，而 `kbd0` 表示键盘。
 
-Most devices in FreeBSD must be accessed through special files called device nodes, which are located in `/dev`.
+在 FreeBSD 中，大多数设备必须通过称为设备节点的特殊文件进行访问，这些文件位于 `/dev` 目录中。
 
 [[basics-more-information]]
-== Manual Pages
+== 手册页
 
-The most comprehensive documentation on FreeBSD is in the form of manual pages. Nearly every program on the system comes with a short reference manual explaining the basic operation and available arguments. These manuals can be viewed using `man`:
+FreeBSD 上最全面的文档是以手册页的形式存在的。系统上几乎每个程序都附带有一个简短的参考手册，解释其基本操作和可用参数。可以使用 `man` 命令查看这些手册。
 
 [source, shell]
 ....
 % man command
 ....
 
-where _command_ is the name of the command to learn about. For example, to learn more about man:ls[1], type:
+其中 _command_ 是要了解的命令的名称。例如，要了解有关 man:ls[1] 的更多信息，请输入：
 
 [source, shell]
 ....
 % man ls
 ....
 
-Manual pages are divided into sections which represent the type of topic. In FreeBSD, the following sections are available:
+手册页被分为不同的章节，代表不同的主题类型。在 FreeBSD 中，有以下几个章节可用：
 
-. User commands.
-. System calls and error numbers.
-. Functions in the C libraries.
-. Device drivers.
-. File formats.
-. Games and other diversions.
-. Miscellaneous information.
-. System maintenance and operation commands.
-. System kernel interfaces.
+. 用户命令。
+. 系统调用和错误编号。
+. C 库中的函数。
+. 设备驱动程序。
+. 文件格式。
+. 游戏和其他娱乐活动。
+. 杂项信息。
+. 系统维护和操作命令。
+. 系统内核接口。
 
-In some cases, the same topic may appear in more than one section of the online manual. For example, there is a `chmod` user command and a `chmod()` system call. To tell man:man[1] which section to display, specify the section number:
+在某些情况下，同一个主题可能会出现在在线手册的多个部分中。例如，有一个 `chmod` 用户命令和一个 `chmod()` 系统调用。要告诉 man:man[1] 显示哪个部分，需要指定部分号码：
 
 [source, shell]
 ....
 % man 1 chmod
 ....
 
-This will display the manual page for the user command man:chmod[1]. References to a particular section of the online manual are traditionally placed in parenthesis in written documentation, so man:chmod[1] refers to the user command and man:chmod[2] refers to the system call.
+这将显示用户命令 man:chmod[1] 的手册页面。在书面文档中，对在线手册的特定部分的引用通常放在括号中，因此 man:chmod[1] 指的是用户命令，man:chmod[2] 指的是系统调用。
 
-If the name of the manual page is unknown, use `man -k` to search for keywords in the manual page descriptions:
+如果不知道手册页的名称，请使用 `man -k` 在手册页描述中搜索关键字：
 
 [source, shell]
 ....
 % man -k mail
 ....
 
-This command displays a list of commands that have the keyword "mail" in their descriptions. This is equivalent to using man:apropos[1].
+该命令显示具有关键字“mail”在其描述中的命令列表。这相当于使用 man:apropos[1] 命令。
 
-To read the descriptions for all of the commands in `/usr/sbin`, type:
+要阅读 `/usr/sbin` 目录下所有命令的描述，请输入：
 
 [source, shell]
 ....
@@ -1588,7 +1588,7 @@ To read the descriptions for all of the commands in `/usr/sbin`, type:
 % man -f * | more
 ....
 
-or
+或者
 
 [source, shell]
 ....
@@ -1597,15 +1597,15 @@ or
 ....
 
 [[basics-info]]
-=== GNU Info Files
+=== GNU Info 文件
 
-FreeBSD includes several applications and utilities produced by the Free Software Foundation (FSF). In addition to manual pages, these programs may include hypertext documents called `info` files. These can be viewed using man:info[1] or, if package:editors/emacs[] is installed, the info mode of emacs.
+FreeBSD 包含了由自由软件基金会（FSF）制作的多个应用程序和实用工具。除了手册页，这些程序还可能包括称为 `info` 文件的超文本文档。可以使用 man:info[1] 命令或者如果安装了 package:editors/emacs[] ，可以使用 emacs 的 info 模式来查看这些文件。
 
-To use man:info[1], type:
+要使用 man:info[1]，请输入：
 
 [source, shell]
 ....
 % info
 ....
 
-For a brief introduction, type `h`. For a quick command reference, type `?`.
+要进行简要介绍，请输入 `h`。要查看快速命令参考，请输入 `?`。
