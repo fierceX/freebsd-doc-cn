@@ -4596,24 +4596,24 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 <div class="sect2">
 <h3 id="basics-processes">3.8. 进程和守护进程<a class="anchor" href="#basics-processes"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 是一个多任务操作系统。每个同时运行的程序被称为一个“进程”。每个正在运行的命令都会启动至少一个新的进程，并且 FreeBSD 还会运行一些系统进程。</p>
+<p>FreeBSD 是一个多任务操作系统。每个同时运行的程序被称为一个 <em>进程</em>。每个正在运行的命令都会启动至少一个新的进程，并且 FreeBSD 还会运行一些系统进程。</p>
 </div>
 <div class="paragraph">
-<p>每个进程都由一个称为“进程 ID ”（ PID ）的数字唯一标识。与文件类似，每个进程都有一个所有者和组，并且所有者和组权限用于确定进程可以打开哪些文件和设备。大多数进程还有一个启动它们的父进程。例如， shell 是一个进程， shell 中启动的任何命令都是一个进程，其父进程是 shell 。例外情况是一个特殊的进程，称为 <a href="https://man.freebsd.org/cgi/man.cgi?query=init&amp;sektion=8&amp;format=html">init(8)</a> ，它始终是在启动时第一个启动的进程，其 PID 始终为 <code>1</code> 。</p>
+<p>每个进程都由一个称为 <em>进程 ID</em>（PID）的数字唯一标识。与文件类似，每个进程都有一个所有者和组，并且所有者和组权限用于确定进程可以打开哪些文件和设备。大多数进程还有一个启动它们的父进程。例如，shell 是一个进程，shell 中启动的任何命令都是一个进程，其父进程是 shell 。例外情况是一个特殊的进程，称为 <a href="https://man.freebsd.org/cgi/man.cgi?query=init&amp;sektion=8&amp;format=html">init(8)</a>，它始终是在启动时第一个启动的进程，其 PID 始终为 <code>1</code>。</p>
 </div>
 <div class="paragraph">
-<p>有些程序并不是设计成需要连续的用户输入并在第一次机会时与终端断开连接。例如， Web 服务器响应 Web 请求，而不是用户输入。邮件服务器是另一种这种类型的应用程序。这些类型的程序被称为_daemon_。术语“ daemon ”来自希腊神话，代表着一个既不善良也不邪恶的实体，它在不可见的情况下执行有用的任务。这就是为什么 BSD 吉祥物是一个看起来开心的带着运动鞋和叉子的 daemon 。</p>
+<p>有些程序并不是设计成需要连续的用户输入，也不能在第一时间与终端断开连接。例如，Web 服务器响应 Web 请求，而不是用户输入。邮件服务器是另一种这种类型的应用程序。这些类型的程序被称为 <em>守护进程（daemon）</em>。术语 daemon 来自希腊神话，代表着一个既不善良也不邪恶的实体，它在不可见的情况下执行有用的任务。这就是为什么 BSD 吉祥物是一个看起来开心的带着运动鞋和叉子的 daemon。</p>
 </div>
 <div class="paragraph">
-<p>有一个约定，即通常作为守护进程运行的程序的命名方式是以字母&#34;d&#34;结尾的。例如， BIND 是 Berkeley Internet Name Domain 的缩写，但实际执行的程序是 <code>named</code> 。 Apache Web 服务器程序是 <code>httpd</code> ，线打印机排队守护进程是 <code>lpd</code> 。这只是一种命名约定。例如， Sendmail 应用程序的主邮件守护进程是 <code>sendmail</code> ，而不是 <code>maild</code> 。</p>
+<p>有一个约定，即通常作为守护进程运行的程序的命名方式是以字母&#34;d&#34;结尾的。例如，BIND 是 Berkeley Internet Name Domain 的缩写，但实际执行的程序是 <code>named</code>。Apache Web 服务器程序是 <code>httpd</code> ，线打印机排队守护进程是 <code>lpd</code>。这只是一种命名约定。例如，Sendmail 应用程序的主邮件守护进程是 <code>sendmail</code>，而不是 <code>maild</code>。</p>
 </div>
 <div class="sect3">
 <h4 id="_查看进程">3.8.1. 查看进程<a class="anchor" href="#_查看进程"></a></h4>
 <div class="paragraph">
-<p>要查看系统上运行的进程，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 。要显示当前正在运行的进程的静态列表，包括它们的进程 ID 、使用的内存量以及启动它们的命令，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 。要显示所有正在运行的进程，并每隔几秒更新一次显示，以便交互式地查看计算机正在做什么，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 。</p>
+<p>要查看系统上运行的进程，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a>。要显示当前正在运行的进程的静态列表，包括它们的进程 ID 、使用的内存量以及启动它们的命令，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 。要显示所有正在运行的进程，并每隔几秒更新一次显示，以便交互式地查看计算机正在做什么，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a>。</p>
 </div>
 <div class="paragraph">
-<p>默认情况下， <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 只显示正在运行且由用户拥有的命令。例如：</p>
+<p>默认情况下，<a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 只显示正在运行且由用户拥有的命令。例如：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4631,10 +4631,10 @@ root     5211  0.0  0.2  3620  1724   2  I+    2:09AM   0:00.01 passwd</code></p
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 的输出被组织成多列。 <code>PID</code> 列显示进程 ID 。 PID 从 1 开始分配，最大为 99999 ，然后重新从头开始分配。然而，如果 PID 已经被使用，它不会被重新分配。 <code>TT</code> 列显示程序所在的 tty ， <code>STAT</code> 列显示程序的状态。 <code>TIME</code> 是程序在 CPU 上运行的时间。这通常不是程序启动后经过的时间，因为大多数程序在需要在 CPU 上花费时间之前会花费很多时间等待事件发生。最后， <code>COMMAND</code> 是用于启动程序的命令。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 的输出被组织成多列。<code>PID</code> 列显示进程 ID。PID 从 1 开始分配，最大为 99999 ，然后重新从头开始分配。然而，如果 PID 已经被使用，它不会被重新分配。<code>TT</code> 列显示程序所在的 tty，<code>STAT</code> 列显示程序的状态。 <code>TIME</code> 是程序在 CPU 上运行的时间。这通常不是程序启动后经过的时间，因为大多数程序在需要在 CPU 上花费时间之前会花费很多时间等待事件发生。最后，<code>COMMAND</code> 是用于启动程序的命令。</p>
 </div>
 <div class="paragraph">
-<p>有多种不同的选项可用于更改显示的信息。其中最有用的一组是 <code>auxww</code> ，其中 <code>a</code> 显示有关所有用户的所有运行进程的信息， <code>u</code> 显示进程所有者的用户名和内存使用情况， <code>x</code> 显示有关守护进程的信息， <code>ww</code> 使 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 显示每个进程的完整命令行，而不是在屏幕上显示过长时截断它。</p>
+<p>有多种不同的选项可用于更改显示的信息。其中最有用的一组是 <code>auxww</code>，其中 <code>a</code> 显示有关所有用户的所有运行进程的信息，<code>u</code> 显示进程所有者的用户名和内存使用情况，<code>x</code> 显示有关守护进程的信息，<code>ww</code> 使 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 显示每个进程的完整命令行，而不是在屏幕上显示过长时截断它。</p>
 </div>
 <div class="paragraph">
 <p><a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 的输出类似：</p>
@@ -4671,10 +4671,10 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>输出分为两个部分。标题部分（前五或六行）显示了最后一个运行的进程的 PID ，系统负载平均值（衡量系统繁忙程度的指标），系统运行时间（自上次重启以来的时间）和当前时间。标题中的其他数字与正在运行的进程数量、已使用的内存和交换空间以及系统在不同 CPU 状态下花费的时间有关。如果加载了 ZFS 文件系统模块， <code>ARC</code> 行将显示有多少数据是从内存缓存中读取而不是从磁盘中读取的。</p>
+<p>输出分为两个部分。标题部分（前五或六行）显示了最后一个运行的进程的 PID ，系统负载平均值（衡量系统繁忙程度的指标），系统运行时间（自上次重启以来的时间）和当前时间。标题中的其他数字与正在运行的进程数量、已使用的内存和交换空间以及系统在不同 CPU 状态下花费的时间有关。如果加载了 ZFS 文件系统模块，<code>ARC</code> 行将显示有多少数据是从内存缓存中读取而不是从磁盘中读取的。</p>
 </div>
 <div class="paragraph">
-<p>在标题下面是一系列列，其中包含与 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 输出类似的信息，例如 PID 、用户名、 CPU 时间和启动进程的命令。默认情况下， <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 还会显示进程占用的内存空间。这被分为两列：总大小和常驻大小。总大小是应用程序所需的内存量，常驻大小是它当前实际使用的内存量。</p>
+<p>在标题下面是一系列列，其中包含与 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 输出类似的信息，例如 PID、用户名、CPU 时间和启动进程的命令。默认情况下，<a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 还会显示进程占用的内存空间。这被分为两列：总大小和常驻大小。总大小是应用程序所需的内存量，常驻大小是它当前实际使用的内存量。</p>
 </div>
 <div class="paragraph">
 <p><a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 每两秒自动更新显示。可以使用 <code>-s</code> 指定不同的间隔。</p>
@@ -4683,19 +4683,19 @@ Swap: 2048M Total, 2048M Free
 <div class="sect3">
 <h4 id="basics-daemons">3.8.2. 杀死进程<a class="anchor" href="#basics-daemons"></a></h4>
 <div class="paragraph">
-<p>与任何正在运行的进程或守护进程进行通信的一种方法是使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=kill&amp;sektion=1&amp;format=html">kill(1)</a> 发送一个“信号”。有许多不同的信号；一些具有特定的含义，而其他信号在应用程序的文档中有描述。用户只能向自己拥有的进程发送信号，向他人的进程发送信号将导致权限被拒绝的错误。例外情况是“ root ”用户，他可以向任何进程发送信号。</p>
+<p>与任何正在运行的进程或守护进程进行通信的一种方法是使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=kill&amp;sektion=1&amp;format=html">kill(1)</a> 发送一个 <em>信号（signal）</em>。有许多不同的信号；一些具有特定的含义，而其他信号在应用程序的文档中有描述。用户只能向自己拥有的进程发送信号，向他人的进程发送信号将导致权限被拒绝的错误。例外情况是 <code>root</code> 用户，他可以向任何进程发送信号。</p>
 </div>
 <div class="paragraph">
-<p>操作系统也可以向进程发送信号。如果一个应用程序编写得很糟糕，试图访问它不应该访问的内存， FreeBSD 将向该进程发送&#34;分段违规&#34;信号（ <code>SIGSEGV</code> ）。如果一个应用程序被编写成使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=alarm&amp;sektion=3&amp;format=html">alarm(3)</a> 系统调用，在经过一段时间后被提醒，它将收到&#34;闹钟&#34;信号（ <code>SIGALRM</code> ）。</p>
+<p>操作系统也可以向进程发送信号。如果一个应用程序编写得很糟糕，试图访问它不应该访问的内存， FreeBSD 将向该进程发送“分段违规（Segmentation Violation）”信号（<code>SIGSEGV</code>）。如果一个应用程序被编写成使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=alarm&amp;sektion=3&amp;format=html">alarm(3)</a> 系统调用，在经过一段时间后被提醒，它将收到“闹钟（Alarm）”信号（<code>SIGALRM</code>）。</p>
 </div>
 <div class="paragraph">
-<p>有两个信号可以用来停止一个进程： <code>SIGTERM</code> 和 <code>SIGKILL</code> 。 <code>SIGTERM</code> 是一种礼貌的方式来终止一个进程，因为进程可以读取该信号，关闭可能打开的任何日志文件，并尝试在关闭之前完成正在进行的操作。在某些情况下，如果进程正在执行无法中断的任务，它可能会忽略 <code>SIGTERM</code> 信号。</p>
+<p>有两个信号可以用来停止一个进程：<code>SIGTERM</code> 和 <code>SIGKILL</code>。<code>SIGTERM</code> 是一种礼貌的方式来终止一个进程，因为进程可以读取该信号，关闭可能打开的任何日志文件，并尝试在关闭之前完成正在进行的操作。在某些情况下，如果进程正在执行无法中断的任务，它可能会忽略 <code>SIGTERM</code> 信号。</p>
 </div>
 <div class="paragraph">
-<p><code>SIGKILL</code> 无法被进程忽略。向一个进程发送 <code>SIGKILL</code> 通常会立即停止该进程。注脚： [有一些任务是无法中断的。例如，如果进程正在尝试从网络上的另一台计算机上读取文件，而该计算机不可用，那么该进程被称为不可中断。最终，该进程将超时，通常在两分钟后。一旦超时发生，该进程将被终止。] 。</p>
+<p><code>SIGKILL</code> 无法被进程忽略。向一个进程发送 <code>SIGKILL</code> 通常会立即停止该进程。<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> 。</p>
 </div>
 <div class="paragraph">
-<p>其他常用的信号包括 <code>SIGHUP</code> 、 <code>SIGUSR1</code> 和 <code>SIGUSR2</code> 。由于这些是通用的信号，不同的应用程序会有不同的响应。</p>
+<p>其他常用的信号包括 <code>SIGHUP</code>、<code>SIGUSR1</code> 和 <code>SIGUSR2</code>。由于这些是通用的信号，不同的应用程序会有不同的响应。</p>
 </div>
 <div class="paragraph">
 <p>例如，在更改 Web 服务器的配置文件后，需要告诉 Web 服务器重新读取其配置。重新启动 <code>httpd</code> 将导致 Web 服务器短暂的停机时间。相反，发送 <code>SIGHUP</code> 信号给守护进程。请注意，不同的守护进程会有不同的行为，因此请参考守护进程的文档以确定是否使用 <code>SIGHUP</code> 可以达到所需的结果。</p>
@@ -4708,7 +4708,7 @@ Swap: 2048M Total, 2048M Free
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在系统上随机杀死一个进程是一个坏主意。特别是， <a href="https://man.freebsd.org/cgi/man.cgi?query=init&amp;sektion=8&amp;format=html">init(8)</a> ， PID 1 ，是特殊的。运行 <code>/bin/kill -s KILL 1</code> 是一个快速但不推荐的关闭系统的方法。在按下 <kbd>Return</kbd> 之前，_始终_仔细检查 <a href="https://man.freebsd.org/cgi/man.cgi?query=kill&amp;sektion=1&amp;format=html">kill(1)</a> 的参数。</p>
+<p>在系统上随机杀死一个进程是一个坏主意。特别是，<a href="https://man.freebsd.org/cgi/man.cgi?query=init&amp;sektion=8&amp;format=html">init(8)</a>，PID 1 ，是特殊的。运行 <code>/bin/kill -s KILL 1</code> 是一个快速但不推荐的关闭系统的方法。在按下 <kbd>Return</kbd> 之前，<em>始终</em> 仔细检查 <a href="https://man.freebsd.org/cgi/man.cgi?query=kill&amp;sektion=1&amp;format=html">kill(1)</a> 的参数。</p>
 </div>
 </td>
 </tr>
@@ -4719,19 +4719,19 @@ Swap: 2048M Total, 2048M Free
 <div class="sect2">
 <h3 id="shells">3.9. Shells<a class="anchor" href="#shells"></a></h3>
 <div class="paragraph">
-<p>一个_shell_提供了一个命令行界面，用于与操作系统进行交互。 Shell 从输入通道接收命令并执行它们。许多 shell 提供了内置函数来帮助处理日常任务，如文件管理、文件通配符、命令行编辑、命令宏和环境变量。 FreeBSD 提供了几个 shell ，包括 Bourne shell （ <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> ）和扩展的 C shell （ <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> ）。 FreeBSD Ports Collection 中还提供了其他 shell ，如 <code>zsh</code> 和 <code>bash</code> 。</p>
+<p>一个 <em>shell</em> 提供了一个命令行界面，用于与操作系统进行交互。 Shell 从输入通道接收命令并执行它们。许多 shell 提供了内置函数来帮助处理日常任务，如文件管理、文件通配符、命令行编辑、命令宏和环境变量。 FreeBSD 提供了几个 shell，包括 Bourne shell（<a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a>）和扩展的 C shell（<a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a>）。FreeBSD Ports Collection 中还提供了其他 shell，如 <code>zsh</code> 和 <code>bash</code>。</p>
 </div>
 <div class="paragraph">
-<p>使用的 shell 实际上是个人口味的问题。 C 程序员可能更喜欢类似 C 的 shell ，比如 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> 。 Linux® 用户可能更喜欢 <code>bash</code> 。每个 shell 都有独特的特性，可能适用或不适用于用户首选的工作环境，这就是为什么可以选择使用哪个 shell 的原因。</p>
+<p>使用的 shell 实际上是个人口味的问题。 C 程序员可能更喜欢类似 C 的 shell ，比如 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> 。 Linux® 用户可能更喜欢 <code>bash</code>。每个 shell 都有独特的特性，可能适用或不适用于用户首选的工作环境，这就是为什么可以选择使用哪个 shell 的原因。</p>
 </div>
 <div class="paragraph">
-<p>一个常见的 shell 功能是文件名补全。当用户输入命令或文件名的前几个字母并按下 <kbd>Tab</kbd> 键时， shell 会自动完成命令或文件名的剩余部分。假设有两个文件名分别为 <code>foobar</code> 和 <code>football</code> 。要删除 <code>foobar</code> ，用户可以输入 <code>rm foo</code> 并按下 <kbd>Tab</kbd> 键来完成文件名的补全。</p>
+<p>一个常见的 shell 功能是文件名补全。当用户输入命令或文件名的前几个字母并按下 <kbd>Tab</kbd> 键时， shell 会自动完成命令或文件名的剩余部分。假设有两个文件名分别为 <code>foobar</code> 和 <code>football</code>。要删除 <code>foobar</code>，用户可以输入 <code>rm foo</code> 并按下 <kbd>Tab</kbd> 键来完成文件名的补全。</p>
 </div>
 <div class="paragraph">
 <p>但是 Shell 只显示 <code>rm foo</code> 。由于 <code>foobar</code> 和 <code>football</code> 都以 <code>foo</code> 开头，它无法完成文件名。一些 Shell 会发出哔哔声或显示所有匹配的选项。用户必须输入更多字符来识别所需的文件名。输入一个 <code>t</code> 并再次按下 <kbd>Tab</kbd> 就足够让 Shell 确定所需的文件名并填充剩下的部分。</p>
 </div>
 <div class="paragraph">
-<p>shell 的另一个特性是使用环境变量。环境变量是存储在 shell 环境中的变量 / 键对。任何由 shell 调用的程序都可以读取这个环境，并因此包含了许多程序配置。 <a href="#shell-env-vars">常见的环境变量</a> 提供了常见环境变量及其含义的列表。请注意，环境变量的名称始终为大写。</p>
+<p>shell 的另一个特性是使用环境变量。环境变量是存储在 shell 环境中的键值对。任何由 shell 调用的程序都可以读取这个环境，并因此包含了许多程序配置。 <a href="#shell-env-vars">常见的环境变量</a> 提供了常见环境变量及其含义的列表。请注意，环境变量的名称始终为大写。</p>
 </div>
 <table id="shell-env-vars" class="tableblock frame-all grid-all stretch">
 <caption class="title">表 6. 常见的环境变量</caption>
@@ -4791,7 +4791,7 @@ Swap: 2048M Total, 2048M Free
 </tbody>
 </table>
 <div class="paragraph">
-<p>在不同的 shell 中设置环境变量的方法是不同的。在 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> 中，使用 <code>setenv</code> 来设置环境变量。在 <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> 和 <code>bash</code> 中，使用 <code>export</code> 来设置当前的环境变量。以下示例将默认的 <code>EDITOR</code> 设置为 <code>/usr/local/bin/emacs</code> ，适用于 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> shell 。</p>
+<p>在不同的 shell 中设置环境变量的方法是不同的。在 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> 中，使用 <code>setenv</code> 来设置环境变量。在 <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> 和 <code>bash</code> 中，使用 <code>export</code> 来设置当前的环境变量。以下示例将默认的 <code>EDITOR</code> 设置为 <code>/usr/local/bin/emacs</code>，适用于 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> shell。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4807,21 +4807,21 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>为了展开环境变量以查看其当前设置，在命令行中在其名称前面键入 ` $ ` 字符。例如， <code>echo $ TERM</code> 会显示当前的 ` $ TERM` 设置。</p>
+<p>为了展开环境变量以查看其当前设置，在命令行中在其名称前面键入 <code>$</code> 字符。例如，<code>echo $TERM</code> 会显示当前的 <code>$TERM</code> 设置。</p>
 </div>
 <div class="paragraph">
-<p>Shell 将特殊字符，称为元字符，视为数据的特殊表示。最常见的元字符是 ` \ <strong>` ，它表示文件名中的任意数量的字符。元字符可以用于执行文件名通配符匹配。例如， <code>echo *</code> 等同于 <code>ls</code> ，因为 shell 会将与 <code></code></strong> 匹配的所有文件取出，并在命令行上列出它们。</p>
+<p>Shell 将特殊字符，称为元字符，视为数据的特殊表示。最常见的元字符是 <code>*</code> ，它表示文件名中的任意数量的字符。元字符可以用于执行文件名通配符匹配。例如，<code>echo *</code> 等同于 <code>ls</code> ，因为 shell 会将与 <code>*</code> 匹配的所有文件取出，并在命令行上列出它们。</p>
 </div>
 <div class="paragraph">
-<p>为了防止 shell 解释特殊字符，可以通过在特殊字符前加上反斜杠（ ` \ ` ）来将其从 shell 中转义。例如， <code>echo $ TERM</code> 会打印终端设置，而 <code>echo \$ TERM</code> 会直接打印字符串 ` $ TERM` 。</p>
+<p>为了防止 shell 解释特殊字符，可以通过在特殊字符前加上反斜杠（<code>\</code>）来将其从 shell 中转义。例如， <code>echo $TERM</code> 会打印终端设置，而 <code>echo \$TERM</code> 会直接打印字符串 <code>$TERM</code>。</p>
 </div>
 <div class="sect3">
 <h4 id="changing-shells">3.9.1. 更改 Shell<a class="anchor" href="#changing-shells"></a></h4>
 <div class="paragraph">
-<p>永久更改默认 shell 的最简单方法是使用 <code>chsh</code> 命令。运行此命令将打开在 <code>EDITOR</code> 环境变量中配置的编辑器，默认设置为 <a href="https://man.freebsd.org/cgi/man.cgi?query=vi&amp;sektion=1&amp;format=html">vi(1)</a> 。将 <code>Shell:</code> 行更改为新 shell 的完整路径。</p>
+<p>永久更改默认 shell 的最简单方法是使用 <code>chsh</code> 命令。运行此命令将打开在 <code>EDITOR</code> 环境变量中配置的编辑器，默认设置为 <a href="https://man.freebsd.org/cgi/man.cgi?query=vi&amp;sektion=1&amp;format=html">vi(1)</a>。将 <code>Shell:</code> 行更改为新 shell 的完整路径。</p>
 </div>
 <div class="paragraph">
-<p>或者，使用 <code>chsh -s</code> 命令可以在不打开编辑器的情况下设置指定的 shell 。例如，要将 shell 更改为 <code>bash</code> ：</p>
+<p>或者，使用 <code>chsh -s</code> 命令可以在不打开编辑器的情况下设置指定的 shell。例如，要将 shell 更改为 <code>bash</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4829,7 +4829,7 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>在提示符处输入您的密码，然后按下 <kbd>Return</kbd> 键来更改您的 shell 。注销并重新登录以开始使用新的 shell 。</p>
+<p>在提示符处输入您的密码，然后按下 <kbd>Return</kbd> 键来更改您的 shell。注销并重新登录以开始使用新的 shell。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4839,7 +4839,7 @@ Swap: 2048M Total, 2048M Free
 </td>
 <td class="content">
 <div class="paragraph">
-<p>新的 shell 必须存在于 <code>/etc/shells</code> 中。如果 shell 是按照 <a href="./#ports">Installing Applications: Packages and Ports</a> 中描述的方式从 FreeBSD Ports Collection 安装的，则应自动将其添加到此文件中。如果缺少，则使用以下命令添加，将路径替换为 shell 的路径：</p>
+<p>新的 shell 必须存在于 <code>/etc/shells</code> 中。如果 shell 是按照 <a href="./#ports">安装应用程序：软件包和 Ports</a> 中描述的方式从 FreeBSD Ports Collection 安装的，则应自动将其添加到此文件中。如果缺少，则使用以下命令添加，将路径替换为 shell 的路径：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4847,7 +4847,7 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>然后，重新运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=chsh&amp;sektion=1&amp;format=html">chsh(1)</a> 。</p>
+<p>然后，重新运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=chsh&amp;sektion=1&amp;format=html">chsh(1)</a>。</p>
 </div>
 </td>
 </tr>
@@ -4884,7 +4884,7 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>在所有之前的示例中，命令都是使用文件描述符进行重定向。每个 UNIX® 系统都有文件描述符，包括标准输入 (stdin) 、标准输出 (stdout) 和标准错误 (stderr) 。每个文件描述符都有其用途，其中输入可以是键盘或鼠标，提供输入的设备。输出可以是屏幕或打印机上的纸张。而错误则是用于诊断或错误消息的任何内容。这三个都被视为基于 I/O 的文件描述符，有时也被称为流。</p>
+<p>在所有之前的示例中，命令都是使用文件描述符进行重定向。每个 UNIX® 系统都有文件描述符，包括标准输入 (stdin)、标准输出 (stdout) 和标准错误 (stderr)。每个文件描述符都有其用途，其中输入可以是键盘或鼠标，提供输入的设备。输出可以是屏幕或打印机上的纸张。而错误则是用于诊断或错误消息的任何内容。这三个都被视为基于 I/O 的文件描述符，有时也被称为流。</p>
 </div>
 <div class="paragraph">
 <p>通过使用这些描述符， Shell 允许输出和输入在各个命令之间传递，并可以重定向到文件或从文件中读取。另一种重定向的方法是管道操作符。</p>
@@ -4898,20 +4898,20 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中， <code>directory_listing.txt</code> 的内容将被排序，并且输出将传递给 <a href="https://man.freebsd.org/cgi/man.cgi?query=less&amp;sektion=1&amp;format=html">less(1)</a> 。这使得用户可以按照自己的节奏滚动输出，并防止其滚动到屏幕外。</p>
+<p>在这个例子中，<code>directory_listing.txt</code> 的内容将被排序，并且输出将传递给 <a href="https://man.freebsd.org/cgi/man.cgi?query=less&amp;sektion=1&amp;format=html">less(1)</a> 。这使得用户可以按照自己的节奏滚动输出，并防止其滚动到屏幕外。</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="editors">3.10. 文本编辑器<a class="anchor" href="#editors"></a></h3>
 <div class="paragraph">
-<p>大多数 FreeBSD 的配置是通过编辑文本文件来完成的，因此熟悉文本编辑器是一个好主意。 FreeBSD 自带了一些基本系统的文本编辑器，还有更多的编辑器可以在 Ports Collection 中找到。</p>
+<p>大多数 FreeBSD 的配置是通过编辑文本文件来完成的，因此熟悉文本编辑器是一个好主意。FreeBSD 自带了一些基本系统的文本编辑器，还有更多的编辑器可以在 Ports Collection 中找到。</p>
 </div>
 <div class="paragraph">
-<p>一个简单的学习编辑器是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ee&amp;sektion=1&amp;format=html">ee(1)</a> ，它代表着 easy editor （简易编辑器）。要启动这个编辑器，输入 <code>ee <em>filename</em></code> ，其中_filename_是要编辑的文件名。一旦进入编辑器，所有用于操作编辑器功能的命令都列在显示屏的顶部。插入符号（ ` ^ ` ）代表 <kbd>Ctrl</kbd> ，所以 ` ^ e` 扩展为 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>e</kbd></span> 。要离开 <a href="https://man.freebsd.org/cgi/man.cgi?query=ee&amp;sektion=1&amp;format=html">ee(1)</a> ，按下 <kbd>Esc</kbd> ，然后从主菜单中选择“离开编辑器”选项。如果文件已被修改，编辑器将提示保存任何更改。</p>
+<p>一个简单的学习编辑器是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ee&amp;sektion=1&amp;format=html">ee(1)</a> ，它代表着 easy editor（简易编辑器）。要启动这个编辑器，输入 <code>ee <em>filename</em></code>，其中 <em>filename</em> 是要编辑的文件名。一旦进入编辑器，所有用于操作编辑器功能的命令都列在显示屏的顶部。插入符号（<code>^</code>）代表 <kbd>Ctrl</kbd>，所以 <code>^e</code> 扩展为 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>e</kbd></span>。要离开 <a href="https://man.freebsd.org/cgi/man.cgi?query=ee&amp;sektion=1&amp;format=html">ee(1)</a>，按下 <kbd>Esc</kbd>，然后从主菜单中选择“离开编辑器”选项。如果文件已被修改，编辑器将提示保存任何更改。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD 还配备了更强大的文本编辑器，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=vi&amp;sektion=1&amp;format=html">vi(1)</a> ，作为基本系统的一部分。其他编辑器，如 <a class="package" href="https://cgit.freebsd.org/ports/tree/editors/emacs/">editors/emacs</a> 和 <a class="package" href="https://cgit.freebsd.org/ports/tree/editors/vim/">editors/vim</a> ，是 FreeBSD Ports Collection 的一部分。这些编辑器提供了更多的功能，但学习起来更加复杂。学习使用像 vim 或 Emacs 这样更强大的编辑器可以在长期来看节省更多的时间。</p>
+<p>FreeBSD 还配备了更强大的文本编辑器，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=vi&amp;sektion=1&amp;format=html">vi(1)</a>，作为基本系统的一部分。其他编辑器，如 <a class="package" href="https://cgit.freebsd.org/ports/tree/editors/emacs/">editors/emacs</a> 和 <a class="package" href="https://cgit.freebsd.org/ports/tree/editors/vim/">editors/vim</a>，是 FreeBSD Ports Collection 的一部分。这些编辑器提供了更多的功能，但学习起来更加复杂。学习使用像 vim 或 Emacs 这样更强大的编辑器可以在长期来看节省更多的时间。</p>
 </div>
 <div class="paragraph">
 <p>许多修改文件或需要输入文本的应用程序会自动打开一个文本编辑器。要更改默认的编辑器，请按照 <a href="#shells">Shells</a> 中描述的方式设置 <code>EDITOR</code> 环境变量。</p>
@@ -4990,7 +4990,7 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>这将显示用户命令 <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=1&amp;format=html">chmod(1)</a> 的手册页面。在书面文档中，对在线手册的特定部分的引用通常放在括号中，因此 <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=1&amp;format=html">chmod(1)</a> 指的是用户命令， <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=2&amp;format=html">chmod(2)</a> 指的是系统调用。</p>
+<p>这将显示用户命令 <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=1&amp;format=html">chmod(1)</a> 的手册页面。在书面文档中，对在线手册的特定部分的引用通常放在括号中，因此 <a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=1&amp;format=html">chmod(1)</a> 指的是用户命令，<a href="https://man.freebsd.org/cgi/man.cgi?query=chmod&amp;sektion=2&amp;format=html">chmod(2)</a> 指的是系统调用。</p>
 </div>
 <div class="paragraph">
 <p>如果不知道手册页的名称，请使用 <code>man -k</code> 在手册页描述中搜索关键字：</p>
@@ -5001,7 +5001,7 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>该命令显示具有关键字“ mail ”在其描述中的命令列表。这相当于使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=apropos&amp;sektion=1&amp;format=html">apropos(1)</a> 命令。</p>
+<p>该命令显示具有关键字“mail”在其描述中的命令列表。这相当于使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=apropos&amp;sektion=1&amp;format=html">apropos(1)</a> 命令。</p>
 </div>
 <div class="paragraph">
 <p>要阅读 <code>/usr/sbin</code> 目录下所有命令的描述，请输入：</p>
@@ -5024,10 +5024,10 @@ Swap: 2048M Total, 2048M Free
 <div class="sect3">
 <h4 id="basics-info">3.12.1. GNU Info 文件<a class="anchor" href="#basics-info"></a></h4>
 <div class="paragraph">
-<p>FreeBSD 包含了由自由软件基金会（ FSF ）制作的多个应用程序和实用工具。除了手册页，这些程序还可能包括称为“ info ”文件的超文本文档。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=info&amp;sektion=1&amp;format=html">info(1)</a> 命令或者如果安装了 <a class="package" href="https://cgit.freebsd.org/ports/tree/editors/emacs/">editors/emacs</a> ，可以使用 emacs 的 info 模式来查看这些文件。</p>
+<p>FreeBSD 包含了由自由软件基金会（FSF）制作的多个应用程序和实用工具。除了手册页，这些程序还可能包括称为 <code>info</code> 文件的超文本文档。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=info&amp;sektion=1&amp;format=html">info(1)</a> 命令或者如果安装了 <a class="package" href="https://cgit.freebsd.org/ports/tree/editors/emacs/">editors/emacs</a> ，可以使用 emacs 的 info 模式来查看这些文件。</p>
 </div>
 <div class="paragraph">
-<p>要使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=info&amp;sektion=1&amp;format=html">info(1)</a> ，请输入：</p>
+<p>要使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=info&amp;sektion=1&amp;format=html">info(1)</a>，请输入：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5035,7 +5035,7 @@ Swap: 2048M Total, 2048M Free
 </div>
 </div>
 <div class="paragraph">
-<p>要进行简要介绍，请输入 <code>h</code> 。要查看快速命令参考，请输入 ` ? ` 。</p>
+<p>要进行简要介绍，请输入 <code>h</code>。要查看快速命令参考，请输入 <code>?</code>。</p>
 </div>
 </div>
 </div>
@@ -50013,12 +50013,18 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
 </div>
 </div>
 </div>
+<div id="footnotes">
+<hr/>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. 有一些任务是无法中断的。例如，如果进程正在尝试从网络上的另一台计算机上读取文件，而该计算机不可用，那么该进程被称为不可中断。最终，该进程将超时，通常在两分钟后。一旦超时发生，该进程将被终止。
+</div>
+</div>
 
     </div>
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: December 21, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=97c478f" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: December 22, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=cca6ae1" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
