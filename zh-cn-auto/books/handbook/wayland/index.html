@@ -325,7 +325,7 @@
   <ul>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-synopsis">6.1. Wayland 概述</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-wayfire">6.2. Wayfire 合成器</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-hikari">6.3. Hikari 合成器</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-sway">6.4. Sway 合成器</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-xwayland">6.5. 使用 Xwayland</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
@@ -1537,7 +1537,7 @@
   <ul>
     <li><a href="#wayland-synopsis">6.1. Wayland 概述</a></li>
     <li><a href="#wayland-wayfire">6.2. Wayfire 合成器</a></li>
-    <li><a href="#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="#wayland-hikari">6.3. Hikari 合成器</a></li>
     <li><a href="#wayland-sway">6.4. Sway 合成器</a></li>
     <li><a href="#wayland-xwayland">6.5. 使用 Xwayland</a></li>
     <li><a href="#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
@@ -1560,10 +1560,10 @@
 <h2 id="wayland-synopsis">6.1. Wayland 概述<a class="anchor" href="#wayland-synopsis"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Wayland 是一个新的显示服务器，但它与 Xorg 在几个重要方面有所不同。首先， Wayland 只是一个协议，充当客户端之间的中介，使用不同的机制来消除对 X 服务器的依赖。 Xorg 包括 X11 协议，用于运行远程显示，并且 X 服务器将接受连接并显示窗口。在 Wayland 下，合成器或窗口管理器提供显示服务器，而不是传统的 X 服务器。</p>
+<p>Wayland 是一个新的显示服务器，但它与 Xorg 在几个重要方面有所不同。首先，Wayland 只是一个协议，充当客户端之间的中介，使用不同的机制来消除对 X 服务器的依赖。Xorg 既包括用于运行远程显示的 X11 协议，也包括 X 服务器将接受连接和显示窗口。在 Wayland 下，合成器或窗口管理器提供显示服务器，而不是传统的 X 服务器。</p>
 </div>
 <div class="paragraph">
-<p>由于 Wayland 不是一个 X 服务器，传统的 X 屏幕连接需要使用其他方法，如 VNC 或 RDP 来进行远程桌面管理。其次， Wayland 可以作为一个独立实体来管理客户端和合成器之间的复合通信，而不需要支持 X 协议。</p>
+<p>由于 Wayland 不是一个 X 服务器，传统的 X 屏幕连接需要使用其他方法，如 VNC 或 RDP 来进行远程桌面管理。其次，Wayland 可以作为一个独立实体来管理客户端和合成器之间的复合通信，而不需要支持 X 协议。</p>
 </div>
 <div class="paragraph">
 <p>Wayland 相对较新，不是所有的软件都已经更新以在没有 <code>Xwayland</code> 支持的情况下本地运行。因为 Wayland 不提供 X 服务器，并且期望合成器提供该支持，尚不支持 Wayland 的 X11 窗口管理器将要求不使用 <code>-rootless</code> 参数启动 <code>Xwayland</code> 。移除 <code>-rootless</code> 参数后，将恢复 X11 窗口管理器的支持。</p>
@@ -1583,7 +1583,7 @@
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>目前，许多软件在 Wayland 上可以正常运行，包括 Firefox 。还有一些可用的桌面环境，比如 Compiz Fusion 的替代品 Wayfire ，以及 i3 窗口管理器的替代品 Sway 。</p>
+<p>目前，许多软件在 Wayland 上可以正常运行，包括 Firefox。还有一些可用的桌面环境，比如 Compiz Fusion 的替代品 Wayfire，以及 i3 窗口管理器的替代品 Sway 。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1593,7 +1593,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>截至 2021 年 5 月， plasma5-kwin 在 FreeBSD 上支持 Wayland 。要在 Wayland 下使用 Plasma ，请使用 <code>ck-launch-session</code> 的 <code>startplasma-wayland</code> 参数，并使用以下命令将 dbus 与其绑定： <code>ck-launch-session dbus-run-session startplasma-wayland</code> 。这样可以使其正常工作。</p>
+<p>截至 2021 年 5 月， plasma5-kwin 在 FreeBSD 上支持 Wayland。要在 Wayland 下使用 Plasma，请使用 <code>ck-launch-session</code> 的 <code>startplasma-wayland</code> 参数，并使用以下命令将 dbus 与其绑定：<code>ck-launch-session dbus-run-session startplasma-wayland</code>。这样可以使其正常工作。</p>
 </div>
 </td>
 </tr>
@@ -1608,14 +1608,14 @@
 </div>
 </div>
 <div class="paragraph">
-<p>安装 Wayland 很简单；协议本身没有太多的配置。大部分的组合将取决于所选择的合成器。通过现在安装 <code>seatd</code> ，可以跳过合成器安装和配置的一步，因为 <code>seatd</code> 需要提供对某些设备的非 root 访问权限。</p>
+<p>安装 Wayland 很简单；协议本身没有太多的配置。大部分的组合将取决于所选择的合成器。通过现在安装 <code>seatd</code>，可以跳过合成器安装和配置一部分的步骤，因为 <code>seatd</code> 需要提供对某些设备的非 root 访问权限。</p>
 </div>
 <div class="paragraph">
 <p>这里描述的所有合成器都应该与 <a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> 开源驱动程序配合使用；然而，使用专有驱动程序时， NVIDIA® 显卡可能会出现问题。首先安装以下软件包：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># 安装 wayland seatd 包</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install wayland seatd</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1623,7 +1623,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nb">export </span>XDG_RUNTIME_DIR <span class="o">=</span> /var/run/user/<span class="sb">`</span>id -u<span class="sb">`</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span><span class="nb">export </span><span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span>/var/run/user/<span class="sb">`</span>id -u<span class="sb">`</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1637,19 +1637,19 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>据报道， ZFS 用户可能会在某些 Wayland 客户端上遇到问题，因为它们需要在运行时目录中访问 <code>posix_fallocate()</code> 函数。尽管作者无法在他们的 ZFS 系统上重现此问题，但建议的解决方法是不要将 ZFS 用于运行时目录，而是使用 <code>tmpfs</code> 作为 <span class="filename">/var/run</span> 目录。在这种情况下，通过命令 <code>mount -t tmpfs tmpfs /var/run</code> 将 <code>tmpfs</code> 文件系统挂载到 <span class="filename">/var/run</span> ，然后通过 <span class="filename">/etc/fstab</span> 使此更改在重新启动后持久化。可以配置 XDG_RUNTIME_DIR 环境变量以使用 <span class="filename">/var/run/user/ $ UID</span> ，避免与 ZFS 可能存在的问题。在查看以下部分的配置示例时，请考虑这种情况。</p>
+<p>据报道，ZFS 用户可能会在某些 Wayland 客户端上遇到问题，因为它们需要在运行时目录中访问 <code>posix_fallocate()</code> 函数。尽管作者无法在他们的 ZFS 系统上重现此问题，但建议的解决方法是不要将 ZFS 用于运行时目录，而是使用 <code>tmpfs</code> 作为 <span class="filename">/var/run</span> 目录。在这种情况下，通过命令 <code>mount -t tmpfs tmpfs /var/run</code> 将 <code>tmpfs</code> 文件系统挂载到 <span class="filename">/var/run</span>，然后通过 <span class="filename">/etc/fstab</span> 使此更改在重新启动后持久化。可以配置 XDG_RUNTIME_DIR 环境变量以使用 <span class="filename">/var/run/user/$UID</span>，避免与 ZFS 可能存在的问题。在查看以下部分的配置示例时，请考虑这种情况。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>seatd 守护进程帮助在合成器中管理非 root 用户对共享系统设备的访问，包括图形卡。对于传统的 X11 管理器，如 Plasma 和 GNOME ，不需要使用 <code>seatd</code> ，但对于这里讨论的 Wayland 合成器，在启动合成器环境之前，需要在系统上启用并运行它。要立即启用和启动 <code>seatd</code> 守护进程，并在系统初始化时启动：</p>
+<p>seatd 守护进程帮助在合成器中管理非 root 用户对共享系统设备的访问，包括图形卡。对于传统的 X11 管理器，如 Plasma 和 GNOME，不需要使用 <code>seatd</code>，但对于这里讨论的 Wayland 合成器，在启动合成器环境之前，需要在系统上启用并运行它。要立即启用和启动 <code>seatd</code> 守护进程，并在系统初始化时启动：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc seatd_enable =” YES ”</span>
- <span class="c"># service seatd start</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># sysrc seatd_enable=”YES”</span>
+<span class="c"># service seatd start</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1661,11 +1661,11 @@
 <h2 id="wayland-wayfire">6.2. Wayfire 合成器<a class="anchor" href="#wayland-wayfire"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Wayfire 是一个旨在轻量化和可定制化的合成器。它提供了多种功能，并且还恢复了之前发布的 Compiz Fusion 桌面的一些元素。所有的部分在现代硬件上看起来都很漂亮。要启动和运行 Wayfire ，请先安装所需的软件包：</p>
+<p>Wayfire 是一个旨在轻量化和可定制化的合成器。它提供了多种功能，并且还恢复了之前发布的 Compiz Fusion 桌面的一些元素。所有的部分在现代硬件上看起来都很漂亮。要启动和运行 Wayfire，请先安装所需的软件包：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># 安装 wayfire wf-shell alacritty swaylock-effects swayidle wlogout kanshi mako wlsunset 包</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install wayfire wf-shell alacritty swaylock-effects swayidle wlogout kanshi mako wlsunset</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1673,8 +1673,8 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkdir ~ /.config/wayfire
- % cp /usr/local/share/examples/wayfire/wayfire.ini ~ /.config/wayfire</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkdir ~/.config/wayfire
+<span class="gp">% </span>cp /usr/local/share/examples/wayfire/wayfire.ini ~/.config/wayfire</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1690,10 +1690,10 @@ scale = 1.000000</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中，从配置文件中，屏幕的输出应该是列表中列出的模式和列表中列出的赫兹。例如，模式应该设置为 ` 宽度 x 高度@刷新率 ` 。位置将输出放置在指定的像素位置上。默认值对大多数用户来说应该是可以接受的。最后， transform 设置了背景变换， scale 将输出按指定的比例因子进行缩放。这些选项的默认值通常是可以接受的；有关更多信息，请参阅文档。</p>
+<p>在这个例子中，从配置文件中，屏幕的输出应该是列表中列出的模式和列表中列出的赫兹。例如，模式应该设置为 <code>widthxheight@refresh_rate</code>。位置将输出放置在指定的像素位置上。默认值对大多数用户来说应该是可以接受的。最后， transform 设置了背景变换， scale 将输出按指定的比例因子进行缩放。这些选项的默认值通常是可以接受的；有关更多信息，请参阅文档。</p>
 </div>
 <div class="paragraph">
-<p>如前所述， Wayland 是一种新的协议，还不是所有的应用程序都能与之兼容。目前， <code>sddm</code> 似乎不支持在 Wayland 中启动和管理合成器。在这些示例中，使用了 <code>swaylock</code> 实用程序。配置文件中包含了运行 <code>swayidle</code> 和 <code>swaylock</code> 来处理屏幕空闲和锁定的选项。</p>
+<p>如前所述，Wayland 是一种新的协议，还不是所有的应用程序都能与之兼容。目前，<code>sddm</code> 似乎不支持在 Wayland 中启动和管理合成器。在这些示例中，使用了 <code>swaylock</code> 实用程序。配置文件中包含了运行 <code>swayidle</code> 和 <code>swaylock</code> 来处理屏幕空闲和锁定的选项。</p>
 </div>
 <div class="paragraph">
 <p>当系统处于空闲状态时，可以使用此选项来定义要执行的操作。</p>
@@ -1704,7 +1704,7 @@ scale = 1.000000</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>锁超时是通过以下行进行配置的：</p>
+<p>锁定超时是通过以下行进行配置的：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1718,7 +1718,7 @@ dpms_timeout = 600</pre>
 <p>第一个选项将在 300 秒后锁定屏幕，再过 300 秒后，屏幕将通过 <code>dpms_timeout</code> 选项关闭。</p>
 </div>
 <div class="paragraph">
-<p>需要注意的最后一件事是 &lt;super&gt; 键。大多数配置都提到了这个键，它是键盘上的传统“ Windows ”键。大多数键盘都有这个超级键可用；然而，如果该键不可用，应在此配置文件中重新映射它。例如，要锁定屏幕，请按住超级键， <kbd>shift</kbd> 键，然后按下 <kbd>escape</kbd> 键。除非映射已更改，否则这将执行 swaylock 应用程序。 <code>swaylock</code> 的默认配置将显示一个灰色屏幕；然而，该应用程序可以高度自定义，并且有很好的文档。此外，由于安装的是 swaylock-effects 版本，因此有几个可用的选项，例如模糊效果，可以使用以下命令查看：</p>
+<p>需要注意的最后一件事是 &lt;super&gt; 键。大多数配置都提到了这个键，它是键盘上的传统 <code>Windows</code> 键。大多数键盘都有这个超级键可用；然而，如果该键不可用，应在此配置文件中重新映射它。例如，要锁定屏幕，请按住超级键，<kbd>shift</kbd> 键，然后按下 <kbd>escape</kbd> 键。除非映射已更改，否则这将执行 swaylock 应用程序。 <code>swaylock</code> 的默认配置将显示一个灰色屏幕；然而，该应用程序可以高度自定义，并且有很好的文档。此外，由于安装的是 swaylock-effects 版本，因此有几个可用的选项，例如模糊效果，可以使用以下命令查看：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1733,7 +1733,7 @@ dpms_timeout = 600</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wayfire -c ~ /.config/wayfire/wayfire.ini</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wayfire -c ~/.config/wayfire/wayfire.ini</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1741,9 +1741,7 @@ dpms_timeout = 600</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wcm
-
- wcm 是 Web 内容管理的缩写，指的是一种用于管理和发布网站内容的技术和工具。它可以帮助网站管理员和内容创作者轻松地创建、编辑和发布网站上的内容。通过使用 wcm ，用户可以方便地管理网站的布局、样式和多媒体内容，同时也可以进行版本控制和权限管理。 wcm 还提供了一些高级功能，如工作流程管理、多语言支持和搜索引擎优化等，以提升网站的效率和用户体验。</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wcm</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1776,14 +1774,14 @@ background = wf-background</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="wayland-hikari">6.3. Hikari Compositor<a class="anchor" href="#wayland-hikari"></a></h2>
+<h2 id="wayland-hikari">6.3. Hikari 合成器<a class="anchor" href="#wayland-hikari"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Hikari 合成器使用了几个以提高生产力为中心的概念，例如 sheets （工作表）、 workspaces （工作区）等等。从这个角度来看，它类似于平铺式窗口管理器。具体来说，合成器从一个单一的工作区开始，类似于虚拟桌面。 Hikari 使用一个单一的工作区或虚拟桌面进行用户交互。工作区由多个视图组成，这些视图是合成器中的工作窗口，分组为 sheets （工作表）或 groups （组）。 sheets （工作表）和 groups （组）都由一组视图组成，即被分组在一起的窗口。在 sheets （工作表）或 groups （组）之间切换时，活动的 sheet （工作表）或 group （组）将被统称为工作区。手册将详细介绍每个功能，但在本文档中，只需考虑一个使用单个 sheet （工作表）的工作区。 Hikari 的安装将包括一个单一的软件包 <a class="package" href="https://cgit.freebsd.org/ports/tree/x11-wm/hikari/">x11-wm/hikari</a> 和一个终端模拟器 <code>alacritty</code> 。</p>
+<p>Hikari 合成器使用了几个以提高生产力为中心的概念，例如工作表（sheets）、工作区（workspaces）等等。从这个角度来看，它类似于平铺式窗口管理器。具体来说，合成器从一个单一的工作区开始，类似于虚拟桌面。 Hikari 使用一个单一的工作区或虚拟桌面进行用户交互。工作区由多个视图组成，这些视图是合成器中的工作窗口，分组为工作表或组（groups）。工作表和组都由一组视图组成，即被分组在一起的窗口。在工作表或之间切换时，活动的工作表或组将被统称为工作区。手册将详细介绍每个功能，但在本文档中，只需考虑一个使用单个 工作表的工作区。 Hikari 的安装将包括一个单一的软件包 <a class="package" href="https://cgit.freebsd.org/ports/tree/x11-wm/hikari/">x11-wm/hikari</a> 和一个终端模拟器 <code>alacritty</code> 。</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># 安装 hikari 和 alacritty 包</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install hikari alacritty</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1794,23 +1792,23 @@ background = wf-background</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>其他终端，如 <code>kitty</code> 或 Plasma 的 <code>Terminal</code> ，在 Wayland 下可以正常工作。用户应该尝试使用他们喜欢的终端编辑器来验证兼容性。</p>
+<p>其他终端，如 <code>kitty</code> 或 Plasma 的 <code>Terminal</code>，在 Wayland 下可以正常工作。用户应该尝试使用他们喜欢的终端编辑器来验证兼容性。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Hikari 使用一个配置文件 <span class="filename">hikari.conf</span> ，可以放置在 XDG_RUNTIME_DIR 目录中，也可以在启动时使用 <code>-c</code> 参数指定。不需要自动启动配置文件，但是可能会使迁移到这个合成器更容易一些。开始配置是创建 Hikari 配置目录并复制配置文件进行编辑：</p>
+<p>Hikari 使用一个配置文件 <span class="filename">hikari.conf</span>，可以放置在 XDG_RUNTIME_DIR 目录中，也可以在启动时使用 <code>-c</code> 参数指定。不需要自动启动配置文件，但是可能会使迁移到这个合成器更容易一些。开始配置是创建 Hikari 配置目录并复制配置文件进行编辑：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkdir ~ /.config/hikari
- % cp /usr/local/etc/hikari/hikari.conf ~ /.config/hikari</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkdir ~/.config/hikari
+<span class="gp">% </span>cp /usr/local/etc/hikari/hikari.conf ~/.config/hikari</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>配置被分解为各种部分，如 ui 、 outputs 、 layouts 等等。对于大多数用户来说，默认设置应该可以正常运行；然而，一些重要的更改应该被进行。例如，$ TERMINAL 变量通常在用户的环境中没有设置。可以更改这个变量或者修改 <span class="filename">hikari.conf</span> 文件以进行读取。</p>
+<p>配置被分解为各种部分，如 ui、outputs、layouts 等等。对于大多数用户来说，默认设置应该可以正常运行；但是还需要进行一些重要的更改。例如，$TERMINAL 变量通常在用户的环境中没有设置。可以更改这个变量或者修改 <span class="filename">hikari.conf</span> 文件以进行读取。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1842,16 +1840,14 @@ SNIP</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在 Hikari 重新启动后，按住 Windows 徽标按钮并在键盘上按下 <kbd>b</kbd> 键将启动网页浏览器。合成器没有菜单栏，建议用户在迁移之前至少设置一个终端仿真器。手册中包含大量的文档，应在进行完整迁移之前阅读。 Hikari 的另一个积极方面是，在迁移到合成器时，可以在 Plasma 和 GNOME 桌面环境中启动 Hikari ，以便在完全迁移之前进行试用。</p>
+<p>在 Hikari 重新启动后，按住 Windows 徽标按钮并在键盘上按下 <kbd>b</kbd> 键将启动网页浏览器。合成器没有菜单栏，建议用户在迁移之前至少设置一个终端仿真器。手册中包含大量的文档，应在进行完整迁移之前阅读。Hikari 的另一个积极方面是，在迁移到合成器时，可以在 Plasma 和 GNOME 桌面环境中启动 Hikari，以便在完全迁移之前进行试用。</p>
 </div>
 <div class="paragraph">
-<p>在 Hikari 中锁定屏幕很容易，因为默认的 <span class="filename">pam.d</span> 配置文件和解锁工具已经与软件包捆绑在一起。锁定屏幕的键绑定是 <kbd>L</kbd> （ Windows 徽标键）+ <kbd>Shift</kbd> + <kbd>Backspace</kbd> 。需要注意的是，所有未标记为公共的视图将被隐藏。当屏幕锁定时，这些视图将不接受输入，但要注意敏感信息可能可见。对于一些用户来说，可能更容易迁移到其他屏幕锁定工具，比如在本节中讨论的 swaylock-effects 。要启动 Hikari ，请使用以下命令：</p>
+<p>在 Hikari 中锁定屏幕很容易，因为默认的 <span class="filename">pam.d</span> 配置文件和解锁工具已经与软件包捆绑在一起。锁定屏幕的键绑定是 <kbd>L</kbd>（Windows 徽标键）+ <kbd>Shift</kbd> + <kbd>Backspace</kbd>。需要注意的是，所有未标记为公共的视图将被隐藏。当屏幕锁定时，这些视图将不接受输入，但要注意敏感信息可能可见。对于一些用户来说，可能更容易迁移到其他屏幕锁定工具，比如在本节中讨论的 swaylock-effects。要启动 Hikari，请使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>hikari -c ~ /.config/hikari/hikari.conf
-
-这是一个命令行指令，它使用 hikari 配置文件 <span class="sb">`</span> ~ /.config/hikari/hikari.conf<span class="sb">`</span> 来启动 hikari 。</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>hikari -c ~/.config/hikari/hikari.conf</code></pre>
 </div>
 </div>
 </div>
@@ -1864,7 +1860,7 @@ SNIP</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># 安装 sway swayidle swaylock-effects alacritty dmenu-wayland dmenu 包</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install sway swayidle swaylock-effects alacritty dmenu-wayland dmenu</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1872,8 +1868,8 @@ SNIP</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkdir ~ /.config/sway
- % cp /usr/local/etc/sway/config ~ /.config/sway</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkdir ~/.config/sway
+<span class="gp">% </span>cp /usr/local/etc/sway/config ~/.config/sway</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1897,10 +1893,10 @@ exec swayidle -w \
 </div>
 </div>
 <div class="paragraph">
-<p>在前面的示例中，加载了 <code>xkb</code> 规则以处理 <a href="https://man.freebsd.org/cgi/man.cgi?query=evdev&amp;sektion=4&amp;format=html">evdev(4)</a> 事件，并将$ mod 键设置为 Windows 徽标键以进行键绑定。接下来，终端仿真器被设置为 <code>alacritty</code> ，并定义了一个屏幕锁定命令；稍后会详细介绍。输出关键字、模式、位置、背景壁纸以及 Sway 还被告知将该壁纸拉伸以填满屏幕。最后，设置 <code>swaylock</code> 在 300 秒超时后将屏幕或监视器锁定并进入睡眠模式。在这里还定义了锁定的背景颜色为 000000 ，即黑色。使用 swaylock-effects ，还可以使用 <code>--clock</code> 参数显示时钟。有关更多选项，请参阅手册页。还应该查看 <a href="https://man.freebsd.org/cgi/man.cgi?query=sway-output&amp;sektion=5&amp;format=html">sway-output(5)</a> 手册页；它包含了大量关于自定义输出选项的信息。</p>
+<p>在前面的示例中，加载了 <code>xkb</code> 规则以处理 <a href="https://man.freebsd.org/cgi/man.cgi?query=evdev&amp;sektion=4&amp;format=html">evdev(4)</a> 事件，并将 $mod 键设置为 Windows 徽标键以进行键绑定。接下来，终端仿真器被设置为 <code>alacritty</code>，并定义了一个屏幕锁定命令；稍后会详细介绍。输出关键字、模式、位置、背景壁纸以及 Sway 还被告知将该壁纸拉伸以填满屏幕。最后，设置 <code>swaylock</code> 在 300 秒超时后将屏幕或监视器锁定并进入睡眠模式。在这里还定义了锁定的背景颜色为 000000，即黑色。使用 swaylock-effects，还可以使用 <code>--clock</code> 参数显示时钟。有关更多选项，请参阅手册页。还应该查看 <a href="https://man.freebsd.org/cgi/man.cgi?query=sway-output&amp;sektion=5&amp;format=html">sway-output(5)</a> 手册页；它包含了大量关于自定义输出选项的信息。</p>
 </div>
 <div class="paragraph">
-<p>在 Sway 中，要打开应用程序菜单，请按住 Windows 徽标键（ mod 键）并按下 <kbd>d</kbd> 键。可以使用键盘上的箭头键来导航菜单。还有一种方法可以操作栏的布局并添加一个托盘；请阅读 <a href="https://man.freebsd.org/cgi/man.cgi?query=sway-bar&amp;sektion=5&amp;format=html">sway-bar(5)</a> 手册页面获取更多信息。默认配置在右上角添加了日期和时间。在配置文件的 <code>Bar</code> 部分中可以找到一个示例。默认情况下，配置不包括在上面的示例之外锁定屏幕，启用锁定计时器。创建一个锁定键绑定需要在 <code>Key bindings</code> 部分添加以下行：</p>
+<p>在 Sway 中，要打开应用程序菜单，请按住 Windows 徽标键（mod 键）并按下 <kbd>d</kbd> 键。可以使用键盘上的箭头键来导航菜单。还有一种方法可以操作栏的布局并添加一个托盘；请阅读 <a href="https://man.freebsd.org/cgi/man.cgi?query=sway-bar&amp;sektion=5&amp;format=html">sway-bar(5)</a> 手册页面获取更多信息。默认配置在右上角添加了日期和时间。在配置文件的 <code>Bar</code> 部分中可以找到一个示例。默认情况下，配置不包括在上面的示例之外锁定屏幕，启用锁定计时器。创建一个锁定键绑定需要在 <code>Key bindings</code> 部分添加以下行：</p>
 </div>
 <div class="literalblock programlising">
 <div class="content">
@@ -1909,16 +1905,14 @@ bindsym $mod+Shift+Return exec $lock</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>现在可以使用按住 Windows 徽标键、按住 Shift 键，最后按下回车键的组合来锁定屏幕。当安装了 Sway ，无论是从软件包还是 FreeBSD Ports Collection 安装的，都会安装一个默认的 <span class="filename">pam.d</span> 文件。默认配置对大多数用户来说应该是可接受的，但也提供了更高级的选项。请阅读 PAM 文档以获取更多信息。</p>
+<p>现在可以使用按住 Windows 徽标键、按住 Shift 键，最后按下回车键的组合来锁定屏幕。当安装了 Sway，无论是从软件包还是 FreeBSD Ports Collection 安装的，都会安装一个默认的 <span class="filename">pam.d</span> 文件。默认配置对大多数用户来说应该是可接受的，但也提供了更高级的选项。请阅读 PAM 文档以获取更多信息。</p>
 </div>
 <div class="paragraph">
-<p>最后，要退出 Sway 并返回到 shell ，请按住 Windows 徽标键和 Shift 键，然后按下键盘上的 [e] 键。会显示一个提示，其中有一个选项可以退出 Sway 。在迁移期间，可以通过在诸如 Plasma 之类的 X11 桌面上的终端模拟器中启动 Sway 。这使得在完全迁移到这个合成器之前，测试不同的更改和键绑定变得更加容易。要启动 Sway ，请执行以下命令：</p>
+<p>最后，要退出 Sway 并返回到 shell，请按住 Windows 徽标键和 Shift 键，然后按下键盘上的 [e] 键。会显示一个提示，其中有一个选项可以退出 Sway。在迁移期间，可以通过在诸如 Plasma 之类的 X11 桌面上的终端模拟器中启动 Sway 。这使得在完全迁移到这个合成器之前，测试不同的更改和键绑定变得更加容易。要启动 Sway ，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sway -c ~ /.config/sway/config
-
-在这个命令中， <span class="sb">`</span>sway<span class="sb">`</span> 是一个用于窗口管理器的程序。 <span class="sb">`</span>-c<span class="sb">`</span> 参数用于指定配置文件的路径， <span class="sb">`</span> ~ /.config/sway/config<span class="sb">`</span> 是配置文件的路径。通过执行这个命令，可以启动 <span class="sb">`</span>sway<span class="sb">`</span> 窗口管理器，并加载指定路径下的配置文件。</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sway -c ~/.config/sway/config</code></pre>
 </div>
 </div>
 </div>
@@ -1931,7 +1925,7 @@ bindsym $mod+Shift+Return exec $lock</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># 安装 xwayland-devel 包</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install xwayland-devel</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1949,7 +1943,7 @@ bindsym $mod+Shift+Return exec $lock</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>一旦安装了 <code>Xwayland</code> ，请在所选的合成器中进行配置。对于 Wayfire 来说，在 <span class="filename">wayfire.ini</span> 文件中需要添加以下行：</p>
+<p>一旦安装了 <code>Xwayland</code>，请在所选的合成器中进行配置。对于 Wayfire 来说，在 <span class="filename">wayfire.ini</span> 文件中需要添加以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1957,7 +1951,7 @@ bindsym $mod+Shift+Return exec $lock</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>对于 Sway 合成器，默认情况下应启用 <code>Xwayland</code> 。即便如此，建议在 [.filename]# ~ /.config/sway/config# 中手动添加以下配置行：</p>
+<p>对于 Sway 合成器，默认情况下应启用 <code>Xwayland</code>。即便如此，建议在 <span class="filename">~/.config/sway/config</span> 中手动添加以下配置行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1972,8 +1966,7 @@ bindsym $mod+Shift+Return exec $lock</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>env | grep DISPLAY
- % env | grep DISPLAY</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>env | grep DISPLAY</code></pre>
 </div>
 </div>
 <div class="literalblock programlisting">
@@ -1983,7 +1976,7 @@ DISPLAY=:0</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个输出中，有一个默认的 Wayland 显示器和一个为 Xwayland 服务器设置的显示器。验证 <code>Xwayland</code> 是否正常工作的另一种方法是安装和测试小包： [x11/eyes] ，并检查输出。如果 <code>xeyes</code> 应用程序启动并且眼睛跟随鼠标指针移动，那么 Xwayland 正常工作。如果显示了以下错误或类似错误，则在 <code>Xwayland</code> 初始化过程中发生了某些问题，可能需要重新安装：</p>
+<p>在这个输出中，有一个默认的 Wayland 显示器和一个为 Xwayland 服务器设置的显示器。验证 <code>Xwayland</code> 是否正常工作的另一种方法是安装和测试一个小包 package:[x11/eyes]，并检查输出。如果 <code>xeyes</code> 应用程序启动并且眼睛跟随鼠标指针移动，那么 Xwayland 正常工作。如果显示了以下错误或类似错误，则在 <code>Xwayland</code> 初始化过程中发生了某些问题，可能需要重新安装：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1998,19 +1991,18 @@ DISPLAY=:0</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Wayland 的一个安全特性是，在没有运行 X 服务器的情况下，没有其他网络监听器。一旦启用了 <code>Xwayland</code> ，这个安全特性对系统就不再适用。</p>
+<p>Wayland 的一个安全特性是，在没有运行 X 服务器的情况下，没有其他网络监听器。一旦启用了 <code>Xwayland</code>，这个安全特性对系统就不再适用。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>对于一些复合器，比如 Wayfire ， <code>Xwayland</code> 可能无法正常启动。因此， <code>env</code> 将显示 <code>DISPLAY</code> 环境变量的以下信息：</p>
+<p>对于一些复合器，比如 Wayfire，<code>Xwayland</code> 可能无法正常启动。因此，<code>env</code> 将显示 <code>DISPLAY</code> 环境变量的以下信息：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>env | grep DISPLAY
- % env | grep DISPLAY</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>env | grep DISPLAY</code></pre>
 </div>
 </div>
 <div class="literalblock programlisting">
@@ -2020,7 +2012,7 @@ WAYLAND_DISPLAY=wayland-1</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>尽管已经安装和配置了 <code>Xwayfire</code> ，但 X11 应用程序无法启动，出现显示问题。为了解决这个问题，可以通过以下两种方法验证是否已经存在一个使用 UNIX 套接字的 <code>Xwayland</code> 实例。首先，检查 <code>sockstat</code> 的输出，并搜索 X11-unix:</p>
+<p>尽管已经安装和配置了 <code>Xwayfire</code>，但 X11 应用程序无法启动，出现显示问题。为了解决这个问题，可以通过以下两种方法验证是否已经存在一个使用 UNIX 套接字的 <code>Xwayland</code> 实例。首先，检查 <code>sockstat</code> 的输出，并搜索 X11-unix:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2044,7 +2036,7 @@ trhodes  Xwayland   2734  28 stream /tmp/.X11-unix/X0</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>Xwayland 是一个允许在 Wayland 显示服务器上运行 X11 应用程序的兼容层。它允许用户在 Wayland 环境中使用传统的 X11 应用程序，并提供了与 X11 协议的兼容性。 Xwayland 是 Wayland 项目的一部分，旨在逐步替代 X Window System ，并为用户提供更现代化的图形显示体验。</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>Xwayland</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2061,15 +2053,15 @@ Fatal server error:
 </div>
 </div>
 <div class="paragraph">
-<p>由于存在一个可用的活动 X 显示器，使用显示器零，环境变量设置不正确，要修复这个问题，将 <code>DISPLAY</code> 环境变量更改为 <code>:0</code> ，然后尝试再次执行应用程序。以下示例使用 <code><a class="package" href="https://cgit.freebsd.org/ports/tree/mail/claws-mail/">mail/claws-mail</a></code> 作为需要 <code>Xwayland</code> 服务的应用程序：</p>
+<p>由于存在一个可用的活动 X 显示器，使用显示器零，环境变量设置不正确，要修复这个问题，将 <code>DISPLAY</code> 环境变量更改为 <code>:0</code>，然后尝试再次执行应用程序。以下示例使用 <code><a class="package" href="https://cgit.freebsd.org/ports/tree/mail/claws-mail/">mail/claws-mail</a></code> 作为需要 <code>Xwayland</code> 服务的应用程序：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell">导出 DISPLAY <span class="o">=</span> :0</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="nb">export </span><span class="nv">DISPLAY</span><span class="o">=</span>:0</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个改变之后， <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/claws-mail/">mail/claws-mail</a> 应用程序现在应该开始使用 <code>Xwayland</code> 并正常工作。</p>
+<p>在这个改变之后，<a class="package" href="https://cgit.freebsd.org/ports/tree/mail/claws-mail/">mail/claws-mail</a> 应用程序现在应该开始使用 <code>Xwayland</code> 并正常工作。</p>
 </div>
 </div>
 </div>
@@ -2077,15 +2069,15 @@ Fatal server error:
 <h2 id="wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问<a class="anchor" href="#wayland-remotedesktop"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>在本文档中早些时候已经指出， Wayland 不像 Xorg 提供相同的 X 服务器样式访问。相反，用户可以自由选择远程桌面协议，如 RDP 或 VNC 。 FreeBSD Ports 集合中包括 <code>wayvnc</code> ，它将支持基于 wlroots 的合成器，例如在这里讨论的合成器。可以使用以下命令安装此应用程序：</p>
+<p>在本文档中早些时候已经指出， Wayland 不像 Xorg 提供相同的 X 服务器样式访问。相反，用户可以自由选择远程桌面协议，如 RDP 或 VNC。FreeBSD Ports 集合中包括 <code>wayvnc</code>，它将支持基于 wlroots 的合成器，例如在这里讨论的合成器。可以使用以下命令安装此应用程序：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># 安装 wayvnc 包</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install wayvnc</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>与其他一些软件包不同， <code>wayvnc</code> 不提供配置文件。幸运的是，手册页面记录了重要的选项，并且可以将它们推导成一个简单的配置文件：</p>
+<p>与其他一些软件包不同，<code>wayvnc</code> 不提供配置文件。幸运的是，手册页面记录了重要的选项，并且可以将它们推导成一个简单的配置文件：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2098,13 +2090,11 @@ certificate_file=/path/to/cert.pem</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>需要生成密钥文件，并强烈建议使用它们以增加连接的安全性。当调用时， wayvnc 将在 [.filename]# ~ /.config/wayvnc/config# 中搜索配置文件。可以使用 <code>-C configuration_file</code> 选项在启动服务器时覆盖该文件。因此，要启动 <code>wayvnc</code> 服务器，请执行以下命令：</p>
+<p>需要生成密钥文件，并强烈建议使用它们以增加连接的安全性。当调用时，wayvnc 将在 <span class="filename">~/.config/wayvnc/config</span> 中搜索配置文件。可以使用 <code>-C configuration_file</code> 选项在启动服务器时覆盖该文件。因此，要启动 <code>wayvnc</code> 服务器，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wayvnc -C ~ /.config/wayvnc/config
-
-将 wayvnc 配置文件设置为~ /.config/wayvnc/config 。</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>wayvnc -C ~/.config/wayvnc/config</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2115,7 +2105,7 @@ certificate_file=/path/to/cert.pem</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在撰写本文时，系统初始化时没有 rc.d 脚本来启动 <code>wayvnc</code> 。如果需要这个功能，需要创建一个本地启动文件。这可能是对端口维护者的一个功能请求。</p>
+<p>在撰写本文时，系统初始化时没有 rc.d 脚本来启动 <code>wayvnc</code>。如果需要这个功能，需要创建一个本地启动文件。这可能是对端口维护者的一个功能请求。</p>
 </div>
 </td>
 </tr>
@@ -2127,11 +2117,11 @@ certificate_file=/path/to/cert.pem</pre>
 <h2 id="wayland-ly">6.7. Wayland 登录管理器<a class="anchor" href="#wayland-ly"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>虽然存在多个登录管理器，并且正在逐渐迁移到 Wayland ，但其中一个选择是 <code>ly</code> 包中的文本用户界面（ TUI ）管理器。 <code>ly</code> 只需要最少的配置，它会在系统初始化时显示一个登录窗口来启动 Sway 、 Wayfire 等桌面环境。要安装 <code>ly</code> ，请执行以下命令：</p>
+<p>虽然存在多个登录管理器，并且正在逐渐迁移到 Wayland，但其中一个选择是 <a class="package" href="https://cgit.freebsd.org/ports/tree/x11/ly/">x11/ly</a> 中的文本用户界面（TUI）管理器。<code>ly</code> 只需要最少的配置，它会在系统初始化时显示一个登录窗口来启动 Sway、Wayfire 等桌面环境。要安装 <code>ly</code>，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># 安装 ly 包</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install ly</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2178,11 +2168,11 @@ certificate_file=/path/to/cert.pem</pre>
 <h2 id="wayland-utilities">6.8. 有用的工具<a class="anchor" href="#wayland-utilities"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>所有合成器都可以使用的一个有用的 Wayland 实用程序是 waybar 。虽然 Wayfire 带有一个启动菜单，但一个易于使用和快速的任务栏对于任何合成器或桌面管理器来说都是一个很好的附件。一个快速且易于配置的 Wayland 兼容的任务栏是 waybar 。要安装该软件包和一个支持音频控制的实用程序，请执行以下命令：</p>
+<p>所有合成器都可以使用的一个有用的 Wayland 实用程序是 waybar。虽然 Wayfire 带有一个启动菜单，但一个易于使用和快速的任务栏对于任何合成器或桌面管理器来说都是一个很好的附件。一个快速且易于配置的 Wayland 兼容的任务栏是 waybar。要安装该软件包和一个支持音频控制的实用程序，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="c"># 安装 pavucontrol 和 waybar 包</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install pavucontrol waybar</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2190,8 +2180,8 @@ certificate_file=/path/to/cert.pem</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkdir ~ /.config/waybar
- % cp /usr/local/etc/xdg/waybar/config ~ /.config/waybar</code></pre>
+<pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>mkdir ~/.config/waybar
+<span class="gp">% </span>cp /usr/local/etc/xdg/waybar/config ~/.config/waybar</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2199,7 +2189,7 @@ certificate_file=/path/to/cert.pem</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell">创建一个名为<span class="s2">&#34;~ /.config/lavalauncher&#34;</span>的文件夹。</code></pre>
+<pre class="rouge highlight"><code data-lang="shell">mkdir ~/.config/lavalauncher</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2240,7 +2230,7 @@ bar {
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: December 25, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=aafdd0e" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: December 28, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=7c936a9" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
@@ -2282,7 +2272,7 @@ bar {
   <ul>
     <li><a href="#wayland-synopsis">6.1. Wayland 概述</a></li>
     <li><a href="#wayland-wayfire">6.2. Wayfire 合成器</a></li>
-    <li><a href="#wayland-hikari">6.3. Hikari Compositor</a></li>
+    <li><a href="#wayland-hikari">6.3. Hikari 合成器</a></li>
     <li><a href="#wayland-sway">6.4. Sway 合成器</a></li>
     <li><a href="#wayland-xwayland">6.5. 使用 Xwayland</a></li>
     <li><a href="#wayland-remotedesktop">6.6. 使用 VNC 进行远程桌面访问</a></li>
