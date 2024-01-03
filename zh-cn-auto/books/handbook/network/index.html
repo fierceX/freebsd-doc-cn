@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="本章深入探讨了网络配置和性能的主题，展示了 FreeBSD 操作系统强大的网络能力。"/>
   <meta name="keywords" content="91, 34, 110, 101, 116, 119, 111, 114, 107, 34, 44, 32, 34, 105, 112, 118, 52, 34, 44, 32, 34, 105, 112, 118, 54, 34, 44, 32, 34, 119, 105, 114, 101, 108, 101, 115, 115, 34, 44, 32, 34, 119, 112, 97, 95, 115, 117, 112, 112, 108, 105, 99, 97, 110, 116, 34, 44, 32, 34, 115, 116, 97, 116, 105, 99, 32, 105, 112, 34, 44, 32, 34, 100, 121, 110, 97, 109, 105, 99, 32, 105, 112, 34, 93"/>
-  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <meta name="copyright" content="1995-2024 The FreeBSD Foundation" />
   <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/" />
 
   <title>第 7 章 网络 |  FreeBSD Documentation Portal</title>
@@ -293,7 +293,7 @@
             
             
   <ul>
-    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 概要</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x11-synopsis">5.1. 简介</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-install">5.2. 安装 Xorg</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-graphic-card-drivers">5.3. 显卡驱动程序</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/#x-config">5.4. Xorg 配置</a></li>
@@ -361,7 +361,7 @@
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#config-network-connection">7.3. 有线网络</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#network-wireless">7.4. 无线网络</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#hostname">7.5. 主机名</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#dns">7.6. DNS</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/network/#troubleshooting">7.7. 故障排除</a></li>
   </ul>
 
@@ -1540,7 +1540,7 @@
     <li><a href="#config-network-connection">7.3. 有线网络</a></li>
     <li><a href="#network-wireless">7.4. 无线网络</a></li>
     <li><a href="#hostname">7.5. 主机名</a></li>
-    <li><a href="#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="#dns">7.6. DNS</a></li>
     <li><a href="#troubleshooting">7.7. 故障排除</a></li>
   </ul>
 </nav>
@@ -1579,12 +1579,12 @@
 <p>FreeBSD 的网络能力以及其在优秀网络性能方面的声誉。</p>
 </li>
 <li>
-<p>对于 FreeBSD 支持的各种网络服务和协议的理解，包括 DNS 、 DHCP 等的配置说明。</p>
+<p>对于 FreeBSD 支持的各种网络服务和协议的理解，包括 DNS、DHCP 等的配置说明。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>有关如何进行高级网络配置的更多信息，请参阅 <a href="../advanced-networking/#高级网络配置， Advanced Networking"></a> 。</p>
+<p>有关如何进行高级网络配置的更多信息，请参阅 <a href="../advanced-networking/#advanced-networking">高级网络</a>。</p>
 </div>
 </div>
 </div>
@@ -1603,7 +1603,7 @@
 <p>如果网络使用 DHCP</p>
 </li>
 <li>
-<p>如果网络没有 DHCP ，则使用静态 IP 。</p>
+<p>如果网络没有 DHCP，则使用静态 IP 。</p>
 </li>
 <li>
 <p>子网掩码</p>
@@ -1630,7 +1630,7 @@
 <div class="sect2">
 <h3 id="config-identify-network-adapter">7.2.1. 识别网络适配器<a class="anchor" href="#config-identify-network-adapter"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 支持各种有线和无线网络适配器。请查看所使用的 FreeBSD 版本的硬件兼容性列表 (<a href="https://www.freebsd.org/releases/">FreeBSD release</a>) ，以查看网络适配器是否受支持。</p>
+<p>FreeBSD 支持各种有线和无线网络适配器。请查看所使用的 FreeBSD 版本的硬件兼容性列表 <a href="https://www.freebsd.org/releases/">FreeBSD release</a>，以查看网络适配器是否受支持。</p>
 </div>
 <div class="paragraph">
 <p>要获取我们系统使用的网络适配器，请执行以下命令：</p>
@@ -1658,7 +1658,7 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
 </div>
 </div>
 <div class="paragraph">
-<p>在 &#39; @ &#39; 符号之前的文本是控制设备的驱动程序的名称。在这种情况下，它们是 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=iwn&amp;sektion=4&amp;format=html">iwn(4)</a> 。</p>
+<p>在 &#39;@&#39; 符号之前的文本是控制设备的驱动程序的名称。在这种情况下，它们是 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=iwn&amp;sektion=4&amp;format=html">iwn(4)</a>。</p>
 </div>
 <div class="colist arabic">
 <table>
@@ -1709,10 +1709,10 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
 <h2 id="config-network-connection">7.3. 有线网络<a class="anchor" href="#config-network-connection"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>一旦正确的驱动程序加载完成，需要配置网络适配器。 FreeBSD 使用驱动程序名称后跟一个单元号来命名网络接口适配器。单元号表示适配器在引导时被检测到的顺序，或者是稍后被发现的顺序。</p>
+<p>一旦正确的驱动程序加载完成，需要配置网络适配器。FreeBSD 使用驱动程序名称后跟一个单元号来命名网络接口适配器。单元号表示适配器在引导时被检测到的顺序，或者是稍后被发现的顺序。</p>
 </div>
 <div class="paragraph">
-<p>例如， <code>em0</code> 是系统上使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 驱动程序的第一个网络接口卡（ NIC ）。</p>
+<p>例如，<code>em0</code> 是系统上使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 驱动程序的第一个网络接口卡（NIC）。</p>
 </div>
 <div class="paragraph">
 <p>要显示网络接口配置，请输入以下命令：</p>
@@ -1750,10 +1750,10 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 <div class="ulist">
 <ul>
 <li>
-<p><code>em0</code> ：以太网接口。</p>
+<p><code>em0</code>：以太网接口。</p>
 </li>
 <li>
-<p><code>lo0</code> ：循环接口是一种软件环回机制，可用于性能分析、软件测试和 / 或本地通信。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=lo&amp;sektion=4&amp;format=html">lo(4)</a> 。</p>
+<p><code>lo0</code>：回环接口是一种软件环回机制，可用于性能分析、软件测试或本地通信。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=lo&amp;sektion=4&amp;format=html">lo(4)</a>。</p>
 </li>
 </ul>
 </div>
@@ -1769,25 +1769,25 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 <p><code>UP</code> 表示接口已配置并准备就绪。</p>
 </li>
 <li>
-<p>该接口具有一个 IPv4 Internet （ <code>inet</code> ）地址， <code>192.168.1.19</code> 。</p>
+<p>该接口具有一个 IPv4 Internet（<code>inet</code>）地址，<code>192.168.1.19</code>。</p>
 </li>
 <li>
-<p>该接口具有一个 IPv6 Internet （ <code>inet6</code> ）地址， <code>fe80::21f:16ff:fe0f:275a%em0</code> 。</p>
+<p>该接口具有一个 IPv6 Internet（<code>inet6</code>）地址，<code>fe80::21f:16ff:fe0f:275a%em0</code> 。</p>
 </li>
 <li>
-<p>它具有有效的子网掩码（ <code>netmask</code> ），其中 <code>0xffffff00</code> 与 <code>255.255.255.0</code> 相同。</p>
+<p>它具有有效的子网掩码（<code>netmask</code>），其中 <code>0xffffff00</code> 与 <code>255.255.255.0</code> 相同。</p>
 </li>
 <li>
-<p>它具有有效的广播地址， <code>192.168.1.255</code> 。</p>
+<p>它具有有效的广播地址，<code>192.168.1.255</code>。</p>
 </li>
 <li>
-<p>接口（ <code>ether</code> ）的 MAC 地址是 <code>00:1f:16:0f:27:5a</code> 。</p>
+<p>接口（<code>ether</code>）的 MAC 地址是 <code>00:1f:16:0f:27:5a</code>。</p>
 </li>
 <li>
-<p>物理媒体选择处于自动选择模式（ ` 媒体：以太网自动选择（ 1000baseT &lt; 全双工 &gt; ） ` ）。</p>
+<p>物理媒体选择处于自动选择模式（<code>media: Ethernet autoselect (1000baseT &lt;full-duplex&gt;)</code>）。</p>
 </li>
 <li>
-<p>链接的状态（ <code>status</code> ）为 <code>active</code> ，表示检测到载波信号。对于 <code>em0</code> ，当以太网电缆未插入接口时， <code>status: no carrier</code> 状态是正常的。</p>
+<p>链接的状态（<code>status</code>）为 <code>active</code>，表示检测到载波信号。对于 <code>em0</code>，当以太网电缆未插入接口时，<code>status: no carrier</code> 状态是正常的。</p>
 </li>
 </ol>
 </div>
@@ -1820,7 +1820,7 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 </td>
 <td class="content">
 <div class="paragraph">
-<p>如果网络在安装过程中由 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdinstall&amp;sektion=8&amp;format=html">bsdinstall(8)</a> 进行配置，则可能已经存在一些网络接口卡（ NIC ）的条目。在执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysrc&amp;sektion=8&amp;format=html">sysrc(8)</a> 之前，请仔细检查 <span class="filename">/etc/rc.conf</span> 。</p>
+<p>如果网络在安装过程中由 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdinstall&amp;sektion=8&amp;format=html">bsdinstall(8)</a> 进行配置，则可能已经存在一些网络接口卡（NIC）的条目。在执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysrc&amp;sektion=8&amp;format=html">sysrc(8)</a> 之前，请仔细检查 <span class="filename">/etc/rc.conf</span>。</p>
 </div>
 </td>
 </tr>
@@ -1860,7 +1860,7 @@ nameserver 8.8.4.4</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>然后执行以下命令重新启动 <code>netif</code> 和 <code>routing</code> ：</p>
+<p>然后执行以下命令重新启动 <code>netif</code> 和 <code>routing</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1893,7 +1893,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <div class="sect2">
 <h3 id="config-dynamic-ip-v4">7.3.2. 配置动态 IPv4 地址<a class="anchor" href="#config-dynamic-ip-v4"></a></h3>
 <div class="paragraph">
-<p>如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。 FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 作为 DHCP 客户端。 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 会自动提供 IP 地址、子网掩码和默认路由器。</p>
+<p>如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 作为 DHCP 客户端。 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 会自动提供 IP 地址、子网掩码和默认路由器。</p>
 </div>
 <div class="paragraph">
 <p>要使接口与 DHCP 配合工作，请执行以下命令：</p>
@@ -1936,7 +1936,7 @@ bound to 192.168.1.19 -- renewal in 43200 seconds.</pre>
 <p><a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 客户端可以在后台启动。这可能会对依赖于正常工作网络的应用程序造成麻烦，但在许多情况下，它将提供更快的启动速度。</p>
 </div>
 <div class="paragraph">
-<p>要在后台执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> ，请执行以下命令：</p>
+<p>要在后台执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a>，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1948,7 +1948,7 @@ bound to 192.168.1.19 -- renewal in 43200 seconds.</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>然后执行以下命令重新启动 <code>netif</code> ：</p>
+<p>然后执行以下命令重新启动 <code>netif</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1979,9 +1979,9 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-ipv6">7.3.3. IPv6 是 Internet Protocol version 6 的缩写，即互联网协议第六版。它是互联网上的一种网络协议，用于为设备在网络中进行唯一标识和定位。 IPv6 是 IPv4 的后继版本，旨在解决 IPv4 地址空间不足的问题。与 IPv4 相比， IPv6 采用 128 位地址，提供了更大的地址空间，可以支持更多的设备连接到互联网。 IPv6 还提供了更好的安全性、可靠性和性能。<a class="anchor" href="#network-ipv6"></a></h3>
+<h3 id="network-ipv6">7.3.3. IPv6<a class="anchor" href="#network-ipv6"></a></h3>
 <div class="paragraph">
-<p>IPv6 是广为人知的 IP 协议的新版本，也被称为 IPv4 。</p>
+<p>IPv6 是广为人知的 IP 协议的新版本，也被称为 IPv4。</p>
 </div>
 <div class="paragraph">
 <p>IPv6 相比 IPv4 提供了几个优势，以及许多新的功能：</p>
@@ -1989,25 +1989,25 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>它的 128 位地址空间允许拥有 340 , 282 , 366 , 920 , 938 , 463 , 463 , 374 , 607 , 431 , 768 , 211 , 456 个地址。这解决了 IPv4 地址短缺和最终的 IPv4 地址耗尽问题。</p>
+<p>它的 128 位地址空间允许拥有 340,282,366,920,938,463,463,374,607,431,768,211,456 个地址。这解决了 IPv4 地址短缺和最终的 IPv4 地址耗尽问题。</p>
 </li>
 <li>
 <p>路由器只在其路由表中存储网络聚合地址，从而将路由表的平均空间减少到 8192 个条目。这解决了与 IPv4 相关的可扩展性问题，因为 IPv4 要求每个分配的 IPv4 地址块在互联网路由器之间进行交换，导致它们的路由表变得过大，无法实现高效的路由。</p>
 </li>
 <li>
-<p>地址自动配置（ RFC2462 ）（ <a href="http://www.ietf.org/rfc/rfc2462.txt" class="bare">http://www.ietf.org/rfc/rfc2462.txt</a> ）</p>
+<p>地址自动配置 (<a href="http://www.ietf.org/rfc/rfc2462.txt">RFC2462</a>)</p>
 </li>
 <li>
 <p>强制性多播地址。</p>
 </li>
 <li>
-<p>内置 IPsec （ IP 安全）。</p>
+<p>内置 IPsec（IP security）。</p>
 </li>
 <li>
 <p>简化的标题结构。</p>
 </li>
 <li>
-<p>支持移动 IP 。</p>
+<p>支持移动 IP。</p>
 </li>
 <li>
 <p>IPv6 到 IPv4 的过渡机制。</p>
@@ -2018,7 +2018,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <p>FreeBSD 包含了 <a href="http://www.kame.net/">KAME 项目</a> IPv6 参考实现，并且提供了使用 IPv6 所需的一切。</p>
 </div>
 <div class="paragraph">
-<p>本节重点介绍如何配置和运行 IPv6 。</p>
+<p>本节重点介绍如何配置和运行 IPv6。</p>
 </div>
 <div class="paragraph">
 <p>IPv6 地址有三种不同的类型：</p>
@@ -2029,24 +2029,24 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <dd>
 <p>发送到单播地址的数据包到达与该地址相关的接口。</p>
 </dd>
-<dt class="hdlist1">Anycast 是一种网络通信技术，它允许多个服务器共享同一个 IP 地址。当用户发送请求时，网络会将请求路由到最近的可用服务器，以提供更快的响应时间和更好的负载均衡。 Anycast 广泛应用于互联网服务，如域名系统（ DNS ）和内容分发网络（ CDN ），以提高网络性能和可靠性。</dt>
+<dt class="hdlist1">任播</dt>
 <dd>
 <p>这些地址在语法上与单播地址无法区分，但它们用于寻址一组接口。发送到任播地址的数据包将到达最近的路由器接口。任播地址只由路由器使用。</p>
 </dd>
 <dt class="hdlist1">多播</dt>
 <dd>
-<p>这些地址标识了一组接口。发送到多播地址的数据包将到达属于多播组的所有接口。 IPv4 广播地址通常为 <code>xxx.xxx.xxx.255</code> ，在 IPv6 中用多播地址表示。</p>
+<p>这些地址标识了一组接口。发送到多播地址的数据包将到达属于多播组的所有接口。 IPv4 广播地址通常为 <code>xxx.xxx.xxx.255</code>，在 IPv6 中用多播地址表示。</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>在阅读 IPv6 地址时，规范形式表示为 <code>x:x:x:x:x:x:x:x</code> ，其中每个 <code>x</code> 表示一个 16 位的十六进制值。一个例子是 <code>FEBC:A574:382B:23C1:AA49:4592:4EFE:9982</code> 。</p>
+<p>在阅读 IPv6 地址时，规范形式表示为 <code>x:x:x:x:x:x:x:x</code>，其中每个 <code>x</code> 表示一个 16 位的十六进制值。一个例子是 <code>FEBC:A574:382B:23C1:AA49:4592:4EFE:9982</code>。</p>
 </div>
 <div class="paragraph">
-<p>通常，一个地址会有很长的全零子串。一个 <code>::</code> （双冒号）可以用来替换地址中的一个子串。此外，每个十六进制值前面的最多三个 <code>0</code> 可以省略。例如， <code>fe80::1</code> 对应的规范形式是 <code>fe80:0000:0000:0000:0000:0000:0000:0001</code> 。</p>
+<p>通常，一个地址会有很长的全零子串。一个 <code>::</code>（双冒号）可以用来替换地址中的一个子串。此外，每个十六进制值前面的最多三个 <code>0</code> 可以省略。例如， <code>fe80::1</code> 对应的规范形式是 <code>fe80:0000:0000:0000:0000:0000:0000:0001</code>。</p>
 </div>
 <div class="paragraph">
-<p>第三种形式是使用众所周知的 IPv4 表示法编写最后 32 位。例如， <code>2002::10.0.0.1</code> 对应于十六进制的规范表示 <code>2002:0000:0000:0000:0000:0000:0a00:0001</code> ，而这又等同于 <code>2002::a00:1</code> 。</p>
+<p>第三种形式是使用众所周知的 IPv4 表示法编写最后 32 位。例如，<code>2002::10.0.0.1</code> 对应于十六进制的规范表示 <code>2002:0000:0000:0000:0000:0000:0a00:0001</code>，而这又等同于 <code>2002::a00:1</code>。</p>
 </div>
 <div class="paragraph">
 <p>要查看 FreeBSD 系统的 IPv6 地址，请执行以下命令：</p>
@@ -2072,7 +2072,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中， <code>em0</code> 接口正在使用 <code>fe80::21f:16ff:fe0f:275a%em0</code> ，这是一个自动配置的链路本地地址，它是根据 MAC 地址自动生成的。</p>
+<p>在这个例子中，<code>em0</code> 接口正在使用 <code>fe80::21f:16ff:fe0f:275a%em0</code>，这是一个自动配置的链路本地地址，它是根据 MAC 地址自动生成的。</p>
 </div>
 <div class="paragraph">
 <p>一些 IPv6 地址是保留地址。保留地址的列表可以在下表中查看：</p>
@@ -2101,51 +2101,51 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 中等同于 <code>0.0.0.0</code> 的地址。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::1</code> 是 IPv6 环回地址的表示形式。在 IPv6 中，环回地址用于将数据包发送到本地主机，类似于 IPv4 中的 <code>127.0.0.1</code> 。 <code>::1</code> 表示的是 IPv6 环回地址的最简形式。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::1</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">128 位</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">环回地址</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 中等同于 <code>127.0.0.1</code> 的地址。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::00:xx:xx:xx:xx</code> 是一个以双冒号开头的字符串。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::00:xx:xx:xx:xx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">96 位</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">嵌入式 IPv4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">低 32 位是兼容的 IPv4 地址。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::ff:xx:xx:xx:xx</code> 是一个以双冒号开头的字符串，通常用于表示 MAC 地址。 MAC 地址是用于识别网络设备的唯一标识符。每个 MAC 地址由六个十六进制数字对（每个数字对由两个字符组成）组成，用冒号分隔。在这个例子中，&#34;xx&#34;代表未知的十六进制数字。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::ff:xx:xx:xx:xx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">96 位</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 映射 IPv6 地址</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">低 32 位是不支持 IPv6 的主机的 IPv4 地址。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fe80::/10</code> 是一个 IPv6 地址的网络前缀。它表示一个具有 10 位网络前缀的地址范围，其中 <code>fe80</code> 是网络前缀的起始地址。 IPv6 地址的网络前缀用于标识一个特定的网络或子网。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fe80::/10</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10 位</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">链路本地</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">在 IPv4 中，等同于 169.254.0.0/16 的地址。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fc00::/7</code> 是一个 IPv6 地址块，它是专门用于私有网络的地址范围。在 IPv6 中，私有网络地址用于在局域网或组织内部使用，不会被路由器转发到公共互联网。这个地址块的前 7 位是固定的，即以 <code>fc</code> 开头，后面的 9 位可以根据需要进行分配和使用。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fc00::/7</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">7 位</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">唯一本地</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">唯一本地地址用于本地通信，只能在一组合作站点内进行路由。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ff00::</code> 是 IPv6 地址中的一个保留地址，用于多播通信。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ff00::</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8 位</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">多播</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>2000::-3fff::</code> 是一个 IPv6 地址范围的表示方式。它表示从 2000 到 3fff 之间的所有 IPv6 地址。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>2000::-3fff::</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3 位</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">全局单播</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">所有全局单播地址都是从这个地址池中分配的。前 3 位是 <code>001</code> 。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">所有全局单播地址都是从这个地址池中分配的。前 3 位是 <code>001</code>。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>有关 IPv6 地址结构的更多信息，请参考 <a href="http://www.ietf.org/rfc/rfc3513.txt">RFC3513</a> 。</p>
+<p>有关 IPv6 地址结构的更多信息，请参考 <a href="http://www.ietf.org/rfc/rfc3513.txt">RFC3513</a>。</p>
 </div>
 </div>
 <div class="sect2">
@@ -2173,7 +2173,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <div class="sect2">
 <h3 id="config-dynamic-ip-v6">7.3.5. 配置动态 IPv6 地址<a class="anchor" href="#config-dynamic-ip-v6"></a></h3>
 <div class="paragraph">
-<p>如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 会自动提供 IP 地址、子网掩码和默认路由器。</p>
+<p>如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。<a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 会自动提供 IP 地址、子网掩码和默认路由器。</p>
 </div>
 <div class="paragraph">
 <p>要使接口与 DHCP 配合工作，请执行以下命令：</p>
@@ -2188,10 +2188,10 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <div class="sect2">
 <h3 id="_路由器通告和主机自动配置">7.3.6. 路由器通告和主机自动配置<a class="anchor" href="#_路由器通告和主机自动配置"></a></h3>
 <div class="paragraph">
-<p>本节演示了如何在 IPv6 路由器上设置 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> ，以广播 IPv6 网络前缀和默认路由。</p>
+<p>本节演示了如何在 IPv6 路由器上设置 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a>，以广播 IPv6 网络前缀和默认路由。</p>
 </div>
 <div class="paragraph">
-<p>要启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> ，执行以下命令：</p>
+<p>要启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a>，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2199,7 +2199,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>指定 IPv6 路由器通告的接口非常重要。例如，要告诉 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> 使用 <code>em0</code> ：</p>
+<p>指定 IPv6 路由器通告的接口非常重要。例如，要告诉 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> 使用 <code>em0</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2245,10 +2245,10 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <h2 id="network-wireless">7.4. 无线网络<a class="anchor" href="#network-wireless"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>大多数无线网络都基于 IEEE® 802.11 标准。</p>
+<p>大多数无线网络都基于 <a href="https://en.wikipedia.org/wiki/IEEE_802.11">IEEE® 802.11 标准</a>。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD 支持使用 802.11a 、 802.11b 、 802.11g 和 802.11n 的网络。</p>
+<p>FreeBSD 支持使用 <a href="https://en.wikipedia.org/wiki/IEEE_802.11a-1999">802.11a</a>，<a href="https://en.wikipedia.org/wiki/IEEE_802.11b-1999">802.11b</a>，<a href="https://en.wikipedia.org/wiki/IEEE_802.11g-2003">802.11g</a> 和 <a href="https://en.wikipedia.org/wiki/IEEE_802.11n-2009">802.11n</a> 网络。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2258,7 +2258,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在 FreeBSD 上，目前正在开发 [802.11ac] 支持。</p>
+<p>在 FreeBSD 上，目前正在开发对 <a href="https://en.wikipedia.org/wiki/IEEE_802.11ac-2013">802.11ac</a> 的支持。</p>
 </div>
 </td>
 </tr>
@@ -2279,7 +2279,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <p>验证该站点</p>
 </li>
 <li>
-<p>配置 IP 地址或使用 DHCP 。</p>
+<p>配置 IP 地址或使用 DHCP。</p>
 </li>
 </ol>
 </div>
@@ -2431,7 +2431,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <p>BSSID 标识了接入点的 MAC 地址。</p>
 </li>
 <li>
-<p>CAPS 字段标识了每个网络的类型以及在该网络上运行的站点的能力（有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 中“ list scan ”的定义）。</p>
+<p>CAPS 字段标识了每个网络的类型以及在该网络上运行的站点的能力（有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 中 <code>list scan</code> 的定义）。</p>
 </li>
 </ol>
 </div>
@@ -2439,18 +2439,18 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <div class="sect2">
 <h3 id="wireless-authentication">7.4.4. 连接和认证无线网络<a class="anchor" href="#wireless-authentication"></a></h3>
 <div class="paragraph">
-<p>一旦从扫描到的网络列表中选择了一个无线网络，就需要进行连接和认证。在绝大多数无线网络中，认证是通过路由器中配置的密码来完成的。其他方案要求在数据流量可以流动之前完成加密握手，可以使用预共享密钥或密钥，也可以使用涉及后端服务（如 RADIUS ）的更复杂的方案。</p>
+<p>一旦从扫描到的网络列表中选择了一个无线网络，就需要进行连接和认证。在绝大多数无线网络中，认证是通过路由器中配置的密码来完成的。其他方案要求在数据流量可以流动之前完成加密握手，可以使用预共享密钥或密钥，也可以使用涉及后端服务（如 RADIUS）的更复杂的方案。</p>
 </div>
 <div class="sect3">
-<h4 id="authenticate-wpa2-wpa-personal">7.4.4.1. 使用 WPA2/WPA/ 个人身份验证进行认证<a class="anchor" href="#authenticate-wpa2-wpa-personal"></a></h4>
+<h4 id="authenticate-wpa2-wpa-personal">7.4.4.1. 使用 WPA2/WPA/Personal<a class="anchor" href="#authenticate-wpa2-wpa-personal"></a></h4>
 <div class="paragraph">
 <p>无线网络中的身份验证过程由 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> 管理。</p>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> 配置将在 <span class="filename">/etc/wpa_supplicant.conf</span> 文件中进行。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant.conf&amp;sektion=5&amp;format=html">wpa_supplicant.conf(5)</a> 。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> 配置将在 <span class="filename">/etc/wpa_supplicant.conf</span> 文件中进行。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant.conf&amp;sektion=5&amp;format=html">wpa_supplicant.conf(5)</a>。</p>
 </div>
 <div class="paragraph">
-<p>一旦完成了对无线网络的扫描，选择了一个网络并获得了密码（ PSK ），那么这些信息将被添加到文件 <span class="filename">/etc/wpa_supplicant.conf</span> 中，如下所示的示例：</p>
+<p>一旦完成了对无线网络的扫描，选择了一个网络并获得了密码（PSK），那么这些信息将被添加到文件 <span class="filename">/etc/wpa_supplicant.conf</span> 中，如下所示的示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2504,7 +2504,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </td>
 <td class="content">
 <div class="paragraph">
-<p>可以在 <a href="../advanced-networking/#network-advanced-wireless">无线高级认证</a> 获取有关如何执行更高级身份验证方法的更多信息。</p>
+<p>可以在 <a href="../advanced-networking/#network-advanced-wireless">“无线高级认证”</a> 获取有关如何执行更高级身份验证方法的更多信息。</p>
 </div>
 </td>
 </tr>
@@ -2551,10 +2551,10 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <p>有线连接提供更好的性能和可靠性，而无线连接提供灵活性和移动性。笔记本电脑用户通常希望在这两种连接类型之间无缝切换。</p>
 </div>
 <div class="paragraph">
-<p>在 FreeBSD 上，可以以“故障转移”的方式将两个甚至更多的网络接口组合在一起。这种配置类型使用一组网络接口中最优先和可用的连接，并且当链路状态发生变化时，操作系统会自动切换。</p>
+<p>在 FreeBSD 上，可以以“故障转移（failover）”的方式将两个甚至更多的网络接口组合在一起。这种配置类型使用一组网络接口中最优先和可用的连接，并且当链路状态发生变化时，操作系统会自动切换。</p>
 </div>
 <div class="paragraph">
-<p>链路聚合和故障转移在 <a href="../advanced-networking/#network-aggregation">链路聚合和故障转移</a> 中有详细介绍，并且在 <a href="../advanced-networking/#networking-lagg-wired-and-wireless">以太网和无线接口之间的故障转移模式</a> 中提供了同时使用有线和无线连接的示例。</p>
+<p>链路聚合和故障转移在 <a href="../advanced-networking/#network-aggregation">“链路聚合和故障转移”</a> 中有详细介绍，并且在 <a href="../advanced-networking/#networking-lagg-wired-and-wireless">“以太网和无线接口之间的故障转移模式”</a> 中提供了同时使用有线和无线连接的示例。</p>
 </div>
 </div>
 </div>
@@ -2563,7 +2563,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <h2 id="hostname">7.5. 主机名<a class="anchor" href="#hostname"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>主机名表示网络上主机的完全限定域名（ FQDN ）。</p>
+<p>主机名表示网络上主机的完全限定域名（FQDN）。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2573,7 +2573,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </td>
 <td class="content">
 <div class="paragraph">
-<p>如果主机没有设置主机名， FreeBSD 将分配值 <code>Amnesiac</code> 。</p>
+<p>如果主机没有设置主机名，FreeBSD 将分配值 <code>Amnesiac</code>。</p>
 </div>
 </td>
 </tr>
@@ -2612,13 +2612,13 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="sect1">
-<h2 id="dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。<a class="anchor" href="#dns"></a></h2>
+<h2 id="dns">7.6. DNS<a class="anchor" href="#dns"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>DNS 可以被理解为一个链接： [电话簿](<a href="https://en.wikipedia.org/wiki/Telephone_directory" class="bare">https://en.wikipedia.org/wiki/Telephone_directory</a>) ，其中将 IP 地址与主机名进行互相识别。</p>
+<p>DNS 可以被理解为一个 <a href="https://en.wikipedia.org/wiki/Telephone_directory">电话簿</a>，其中将 IP 地址与主机名进行互相识别。</p>
 </div>
 <div class="paragraph">
-<p>有三个文件处理 FreeBSD 系统与 DNS 的交互。这三个文件是 <a href="https://man.freebsd.org/cgi/man.cgi?query=hosts&amp;sektion=5&amp;format=html">hosts(5)</a> 、 <a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a> 。</p>
+<p>有三个文件处理 FreeBSD 系统与 DNS 的交互。这三个文件是 <a href="https://man.freebsd.org/cgi/man.cgi?query=hosts&amp;sektion=5&amp;format=html">hosts(5)</a>、<a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a>。</p>
 </div>
 <div class="paragraph">
 <p>除非在 <span class="filename">/etc/nsswitch.conf</span> 文件中另有说明，否则 FreeBSD 将首先查看 <span class="filename">/etc/hosts</span> 文件中的地址，然后再查看 <span class="filename">/etc/resolv.conf</span> 文件中的 DNS 信息。</p>
@@ -2631,10 +2631,10 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </td>
 <td class="content">
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a> 文件指定了 nsdispatch （名称服务切换调度程序）的操作方式。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a> 文件指定了 nsdispatch（名称服务切换调度程序）的操作方式。</p>
 </div>
 <div class="paragraph">
-<p>默认情况下， [/etc/nsswitch.conf](文件) 文件的 hosts 部分将如下所示：</p>
+<p>默认情况下，<span class="filename">/etc/nsswitch.conf</span> 文件的 hosts 部分将如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2670,7 +2670,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <div class="sect2">
 <h3 id="configuring-nameserver">7.6.2. 配置域名服务器<a class="anchor" href="#configuring-nameserver"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 系统如何访问互联网域名系统（ DNS ）由 <a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> 控制。</p>
+<p>FreeBSD 系统如何访问互联网域名系统（DNS）由 <a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> 控制。</p>
 </div>
 <div class="paragraph">
 <p>最常见的条目是 <span class="filename">/etc/resolv.conf</span> ：</p>
@@ -2682,21 +2682,21 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nameserver</code> 是一个计算机网络术语，指的是域名系统（ DNS ）服务器的地址。 DNS 服务器用于将域名转换为相应的 IP 地址，以便在互联网上进行通信。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nameserver</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">解析器应查询的名称服务器的 IP 地址。按照列出的顺序查询服务器，最多查询三个。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>search</code> 搜索</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>search</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">搜索列表用于主机名查找。通常由本地主机名的域确定。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domain</code> 的中文翻译是 ` 域 ` 。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domain</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">本地域名。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>一个典型的 /etc/resolv.conf 文件如下所示：</p>
+<p>一个典型的 <span class="filename">/etc/resolv.conf</span> 文件如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2720,7 +2720,7 @@ nameserver 147.11.100.30</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>在使用 DHCP 时， <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 通常会使用从 DHCP 服务器接收到的信息重写 .filename#/etc/resolv.conf# 文件。</p>
+<p>在使用 DHCP 时，<a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 通常会使用从 DHCP 服务器接收到的信息重写 .filename#/etc/resolv.conf# 文件。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2730,7 +2730,7 @@ nameserver 147.11.100.30</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>如果进行配置的机器 * 不是 *DNS 服务器，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=local-unbound&amp;sektion=8&amp;format=html">local-unbound(8)</a> 来提高 DNS 查找性能。</p>
+<p>如果进行配置的机器 <strong>不是</strong> DNS 服务器，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=local-unbound&amp;sektion=8&amp;format=html">local-unbound(8)</a> 来提高 DNS 查找性能。</p>
 </div>
 <div class="paragraph">
 <p>要在启动时启用它，请执行以下命令：</p>
@@ -2788,7 +2788,7 @@ nameserver 147.11.100.30</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在发送错误报告之前，始终要检查链接中的硬件说明： <a href="https://www.freebsd.org/releases/">FreeBSD 发布页面</a> ，将 FreeBSD 版本更新到最新的 STABLE 版本，检查邮件列表存档，并在互联网上进行搜索。</p>
+<p>在发送错误报告之前，始终要在 <a href="https://www.freebsd.org/releases/">FreeBSD 发布页面</a> 检查硬件说明 ，将 FreeBSD 版本更新到最新的 STABLE 版本，检查邮件列表存档，并在互联网上进行搜索。</p>
 </div>
 </td>
 </tr>
@@ -2797,13 +2797,13 @@ nameserver 147.11.100.30</pre>
 <div class="sect2">
 <h3 id="wired-troubleshooting">7.7.1. 有线网络故障排除<a class="anchor" href="#wired-troubleshooting"></a></h3>
 <div class="paragraph">
-<p>如果卡可以正常工作，但性能较差，请阅读 <a href="https://man.freebsd.org/cgi/man.cgi?query=tuning&amp;sektion=7&amp;format=html">tuning(7)</a> 。此外，请检查网络配置，因为不正确的网络设置可能会导致连接变慢。</p>
+<p>如果卡可以正常工作，但性能较差，请阅读 <a href="https://man.freebsd.org/cgi/man.cgi?query=tuning&amp;sektion=7&amp;format=html">tuning(7)</a>。此外，请检查网络配置，因为不正确的网络设置可能会导致连接变慢。</p>
 </div>
 <div class="paragraph">
-<p>如果系统无法将数据包路由到目标主机，则会出现“无法到达主机”的消息。如果没有指定默认路由或者电缆未插好，就会发生这种情况。检查 <code>netstat -rn</code> 的输出，并确保存在到目标主机的有效路由。如果不存在有效路由，请阅读交叉引用：高级网络 [network-routing ,&#34;Gateways and Routes&#34;] 。</p>
+<p>如果系统无法将数据包路由到目标主机，则会出现“无法到达主机”的消息。如果没有指定默认路由或者电缆未插好，就会发生这种情况。检查 <code>netstat -rn</code> 的输出，并确保存在到目标主机的有效路由。如果不存在有效路由，请阅读 <a href="../advanced-networking/#network-routing">“网关和路由”</a>.</p>
 </div>
 <div class="paragraph">
-<p><code>ping: sendto: Permission denied</code> 错误消息通常是由于配置错误的防火墙引起的。如果在 FreeBSD 上启用了防火墙但没有定义规则，那么默认策略是拒绝所有流量，甚至是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 。有关更多信息，请参考 <a href="../firewalls/#firewalls">Firewalls</a> 。</p>
+<p><code>ping: sendto: Permission denied</code> 错误消息通常是由于配置错误的防火墙引起的。如果在 FreeBSD 上启用了防火墙但没有定义规则，那么默认策略是拒绝所有流量，甚至是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a>。有关更多信息，请参考 <a href="../firewalls/#firewalls">防火墙</a>。</p>
 </div>
 </div>
 <div class="sect2">
@@ -2835,7 +2835,7 @@ nameserver 147.11.100.30</pre>
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: December 28, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=12faea9" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: January 3, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=5e9e2dd" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
@@ -2880,7 +2880,7 @@ nameserver 147.11.100.30</pre>
     <li><a href="#config-network-connection">7.3. 有线网络</a></li>
     <li><a href="#network-wireless">7.4. 无线网络</a></li>
     <li><a href="#hostname">7.5. 主机名</a></li>
-    <li><a href="#dns">7.6. DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。</a></li>
+    <li><a href="#dns">7.6. DNS</a></li>
     <li><a href="#troubleshooting">7.7. 故障排除</a></li>
   </ul>
 </nav>
@@ -2919,7 +2919,7 @@ nameserver 147.11.100.30</pre>
       </section>
       
       <section class="copyright-column">
-        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <p>&copy; 1994-2024 The FreeBSD Project. All rights reserved</p>
         <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
       </section>
   </div>

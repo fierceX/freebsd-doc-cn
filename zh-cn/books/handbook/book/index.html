@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="一个不断发展的、全面的 FreeBSD 用户资源"/>
   <meta name="keywords" content="91, 34, 70, 114, 101, 101, 66, 83, 68, 32, 72, 97, 110, 100, 98, 111, 111, 107, 34, 44, 32, 34, 72, 97, 110, 100, 98, 111, 111, 107, 34, 93"/>
-  <meta name="copyright" content="1995-2023 The FreeBSD Foundation" />
+  <meta name="copyright" content="1995-2024 The FreeBSD Foundation" />
   <link rel="canonical" href="https://free.bsd-doc.org/zh-cn/books/handbook/book/" />
 
   <title>FreeBSD 手册 |  FreeBSD Documentation Portal</title>
@@ -268,9 +268,9 @@
         <li><a href="#bsdinstall">Chapter 2. 安装 FreeBSD</a></li>
         <li><a href="#basics">Chapter 3. FreeBSD 基础知识</a></li>
         <li><a href="#ports">Chapter 4. 安装应用程序：软件包和 Ports</a></li>
-        <li><a href="#x11">Chapter 5. The X Window System</a></li>
+        <li><a href="#x11">Chapter 5. X Window System （X  Window系统）</a></li>
         <li><a href="#wayland">Chapter 6. 在 FreeBSD 上的 Wayland</a></li>
-        <li><a href="#network">Chapter 7. Network</a></li>
+        <li><a href="#network">Chapter 7. 网络</a></li>
       </ul>
     </li>
     <li><a href="#common-tasks">Part II: 常见任务</a>
@@ -6471,50 +6471,50 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="sect1">
-<h2 id="x11">Chapter 5. The X Window System<a class="anchor" href="#x11"></a></h2>
+<h2 id="x11">Chapter 5. X Window System （X  Window系统）<a class="anchor" href="#x11"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="x11-synopsis">5.1. Synopsis<a class="anchor" href="#x11-synopsis"></a></h3>
+<h3 id="x11-synopsis">5.1. 简介<a class="anchor" href="#x11-synopsis"></a></h3>
 <div class="paragraph">
-<p>An installation of FreeBSD using bsdinstall does not automatically install a graphical user interface. This chapter describes how to install and configure Xorg, which provides the open source X Window System used to provide a graphical environment. It then describes how to find and install a desktop environment or window manager.</p>
+<p>使用 bsdinstall 安装 FreeBSD 时，不会自动安装图形用户界面。本章介绍了如何安装和配置 Xorg，它提供了用于提供图形环境的开源 X Window 系统。然后，它描述了如何查找和安装桌面环境或窗口管理器。</p>
 </div>
 <div class="paragraph">
-<p>Before reading this chapter, you should:</p>
+<p>在阅读本章之前，您应该：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Know how to install additional third-party software as described in <a href="./#ports">Installing Applications: Packages and Ports</a>.</p>
+<p>根据 <a href="./#ports">安装应用程序：软件包和 Ports</a> 中描述的方法，了解如何安装额外的第三方软件。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>After reading this chapter, you will know:</p>
+<p>阅读完本章后，您将了解：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The various components of the X Window System, and how they interoperate.</p>
+<p>X Window 系统的各个组件以及它们之间的相互操作。</p>
 </li>
 <li>
-<p>How to install and configure Xorg.</p>
+<p>如何安装和配置 Xorg。</p>
 </li>
 <li>
-<p>How to use TrueType® fonts in Xorg.</p>
+<p>如何在 Xorg 中使用 TrueType® 字体。</p>
 </li>
 <li>
-<p>How to set up your system for graphical logins (XDM).</p>
+<p>如何设置系统以进行图形登录（XDM）。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="x-install">5.2. Installing Xorg<a class="anchor" href="#x-install"></a></h3>
+<h3 id="x-install">5.2. 安装 Xorg<a class="anchor" href="#x-install"></a></h3>
 <div class="paragraph">
-<p>On FreeBSD, Xorg can be installed as a package or port.</p>
+<p>在 FreeBSD 上，Xorg 可以作为一个软件包或者端口进行安装。</p>
 </div>
 <div class="paragraph">
-<p>The binary meta package can be installed quickly but with fewer options for customization:</p>
+<p>二进制元包可以快速安装，但自定义选项较少：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6522,10 +6522,10 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>Either of these installations results in the complete Xorg system being installed.</p>
+<p>任何一种安装方式都会导致完整的 Xorg 系统被安装。</p>
 </div>
 <div class="paragraph">
-<p>The current user must be a member of the <code>video</code> group. To add a user to <code>video</code> group, execute the following command:</p>
+<p>当前用户必须是 <code>video</code> 组的成员。要将用户添加到 <code>video</code> 组中，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6540,7 +6540,7 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>A smaller version of the X system suitable for experienced users is available in <a class="package" href="https://cgit.freebsd.org/ports/tree/x11/xorg-minimal/">x11/xorg-minimal</a>. Most of the documents, libraries, and applications will not be installed. Some applications require these additional components to function.</p>
+<p>适用于有经验的用户的 X 系统的较小版本可在包： x11/xorg-minimal[] 中获得。大多数文档、库和应用程序将不会被安装。某些应用程序需要这些额外的组件才能正常运行。</p>
 </div>
 </td>
 </tr>
@@ -6554,7 +6554,7 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Video cards, monitors, and input devices are automatically detected and do not require any manual configuration. Do not create <code>xorg.conf</code> or run a <code>-configure</code> step unless automatic configuration fails.</p>
+<p>视频卡、显示器和输入设备会被自动检测，不需要任何手动配置。除非自动配置失败，否则不要创建 <code>xorg.conf</code> 文件或运行 <code>-configure</code> 步骤。</p>
 </div>
 </td>
 </tr>
@@ -6562,12 +6562,12 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="sect2">
-<h3 id="x-graphic-card-drivers">5.3. Graphic card drivers<a class="anchor" href="#x-graphic-card-drivers"></a></h3>
+<h3 id="x-graphic-card-drivers">5.3. 显卡驱动程序<a class="anchor" href="#x-graphic-card-drivers"></a></h3>
 <div class="paragraph">
-<p>The following table shows the different graphics cards supported by FreeBSD, which package should be installed and its corresponding module.</p>
+<p>下表显示了 FreeBSD 支持的不同图形卡，应安装的软件包及其对应的模块。</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">表 7. Graphic card packages</caption>
+<caption class="title">表 7. 图形卡套件</caption>
 <colgroup>
 <col style="width: 25%;"/>
 <col style="width: 25%;"/>
@@ -6576,59 +6576,59 @@ ports-mgmt/pkg
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Brand</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Package</th>
-<th class="tableblock halign-left valign-top">Module</th>
+<th class="tableblock halign-left valign-top">品牌</th>
+<th class="tableblock halign-left valign-top">类型</th>
+<th class="tableblock halign-left valign-top">包</th>
+<th class="tableblock halign-left valign-top">模块</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Intel®</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">开源</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">drm-kmod</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>i915kms</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">AMD®</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">开源</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">drm-kmod</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>amdgpu</code> and <code>radeonkms</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>amdgpu</code> 和 <code>radeonkms</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NVIDIA®</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Proprietary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">专有的</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">nvidia-driver</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nvidia</code> or <code>nvidia-modeset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nvidia</code> 或 <code>nvidia-modeset</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">VESA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">开源</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">xf86-video-vesa</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">vesa</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SCFB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">开源</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">xf86-video-scfb</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">scfb</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">VirtualBox®</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">开源</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">virtualbox-ose-additions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">VirtualBox® OSE additions include the <code>vboxvideo</code> driver.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VirtualBox® OSE 增加了 <code>vboxvideo</code> 驱动程序。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">VMware®</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Open Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">开源</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">xf86-video-vmware</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">vmwgfx</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The following command can be used to identify which graphics card is installed in the system:</p>
+<p>可以使用以下命令来识别系统中安装的图形卡：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6636,7 +6636,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -6655,10 +6655,10 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the graphics card is not supported by Intel®, AMD® or NVIDIA® drivers, then VESA or SCFB modules should be used. VESA module must be used when booting in BIOS mode and SCFB module must be used when booting in UEFI mode.</p>
+<p>如果显卡不受 Intel®、AMD® 或 NVIDIA® 驱动程序支持，则应使用 VESA 或 SCFB 模块。在 BIOS 模式下启动时必须使用 VESA 模块，在 UEFI 模式下启动时必须使用 SCFB 模块。</p>
 </div>
 <div class="paragraph">
-<p>This command can be used to check the booting mode:</p>
+<p>这个命令可以用来检查启动模式：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6666,7 +6666,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -6680,10 +6680,10 @@ ports-mgmt/pkg
 <div class="sect3">
 <h4 id="x-configuration-intel">5.3.1. Intel®<a class="anchor" href="#x-configuration-intel"></a></h4>
 <div class="paragraph">
-<p>Intel® Graphics refers to the class of graphics chips that are integrated on the same die as an Intel® CPU. Wikipedia offers <a href="https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units">a good overview of the variations and names used for generations of Intel HD Graphics</a>.</p>
+<p>Intel® Graphics 指的是与 Intel® CPU 集成在同一芯片上的图形芯片类别。维基百科提供了 <a href="https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units">一个关于 Intel HD Graphics 各个世代的变体和命名的良好概述</a> 。</p>
 </div>
 <div class="paragraph">
-<p>The <a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> package indirectly provides a range of kernel modules for use with Intel® Graphics cards. The Intel® driver can be installed by executing the following command:</p>
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> 包间接提供了一系列用于 Intel® 图形卡的内核模块。可以通过执行以下命令来安装 Intel® 驱动程序：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6691,7 +6691,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>Then add the module to <code>/etc/rc.conf</code> file, executing the following command:</p>
+<p>然后将该模块添加到 <code>/etc/rc.conf</code> 文件中，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6706,7 +6706,7 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If a high CPU usage is noticed or excessive tearing with HD video, the installation of <a class="package" href="https://cgit.freebsd.org/ports/tree/multimedia/libva-intel-driver/">multimedia/libva-intel-driver</a> may help. To install the package execute the following command:</p>
+<p>如果注意到高 CPU 使用率或高清视频出现过多的撕裂现象，安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/multimedia/libva-intel-driver/">multimedia/libva-intel-driver</a> 可能会有所帮助。要安装该软件包，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6721,10 +6721,10 @@ ports-mgmt/pkg
 <div class="sect3">
 <h4 id="x-configuration-amd">5.3.2. AMD®<a class="anchor" href="#x-configuration-amd"></a></h4>
 <div class="paragraph">
-<p>The <a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> package indirectly provides a range of kernel modules for use with AMD® Graphics cards. The modules <code>amdgpu</code> and <code>radeonkms</code> can be used depending the generation of the hardware. The FreeBSD project maintains an <a href="https://wiki.freebsd.org/Graphics/AMD-GPU-Matrix">AMD graphics support matrix to determine which driver must be used</a>.</p>
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> 包间接提供了一系列用于 AMD® 图形卡的内核模块。根据硬件的代数，可以使用 <code>amdgpu</code> 和 <code>radeonkms</code> 模块。FreeBSD 项目维护了一个 <a href="https://wiki.freebsd.org/Graphics/AMD-GPU-Matrix">AMD 图形支持矩阵</a>，以确定必须使用哪个驱动程序。</p>
 </div>
 <div class="paragraph">
-<p>AMD® driver can be installed by executing the following command:</p>
+<p>可以通过执行以下命令来安装 AMD® 驱动程序：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6732,7 +6732,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>For post-HD7000 or Tahiti graphic cards add the module to <code>/etc/rc.conf</code> file, executing the following command:</p>
+<p>对于 HD7000 系列或 Tahiti 显卡，请将模块添加到 <code>/etc/rc.conf</code> 文件中，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6740,7 +6740,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>For older graphic cards (pre-HD7000 or pre-Tahiti) add the module to <code>/etc/rc.conf</code> file, executing the following command:</p>
+<p>对于较旧的图形卡（HD7000 之前或 Tahiti 之前，请将模块添加到 <code>/etc/rc.conf</code> 文件中，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6751,40 +6751,40 @@ ports-mgmt/pkg
 <div class="sect3">
 <h4 id="x-configuration-nvidia">5.3.3. NVIDIA®<a class="anchor" href="#x-configuration-nvidia"></a></h4>
 <div class="paragraph">
-<p>FreeBSD supports different versions of the proprietary NVIDIA® driver. Users of newer graphics cards should install the <a class="package" href="https://cgit.freebsd.org/ports/tree/x11/nvidia-driver/">x11/nvidia-driver</a> package. Those with older cards will have to check below which version supports them.</p>
+<p>FreeBSD 支持不同版本的专有 NVIDIA® 驱动程序。使用较新的显卡的用户应安装包： x11/nvidia-driver[]。那些使用较旧显卡的用户需要查看下面支持它们的版本。</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">表 8. Supported versions of NVIDIA® drivers</caption>
+<caption class="title">表 8. 支持的 NVIDIA® 驱动程序版本</caption>
 <colgroup>
 <col style="width: 50%;"/>
 <col style="width: 50%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Package</th>
-<th class="tableblock halign-left valign-top">Supported hardware</th>
+<th class="tableblock halign-left valign-top">包</th>
+<th class="tableblock halign-left valign-top">支持的硬件</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver-304</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/123712/en-us/">supported hardware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/123712/en-us/">支持的硬件</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver-340</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/156167/en-us/">supported hardware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/156167/en-us/">支持的硬件</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver-390</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/191122/en-us/">supported hardware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/191122/en-us/">支持的硬件</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver-470</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/194639/en-us/">supported hardware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/194639/en-us/">支持的硬件</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">x11/nvidia-driver</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/210651/en-us/">supported hardware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nvidia.com/Download/driverResults.aspx/210651/en-us/">支持的硬件</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -6796,14 +6796,14 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Version 304 of the NVIDIA® graphics driver (nvidia-driver-304) does not support xorg-server 1.20 or later.</p>
+<p>NVIDIA® 图形驱动程序的 304 版本（nvidia-driver-304）不支持 xorg-server 1.20 或更高版本。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The latest NVIDIA® driver can be installed by running the following command:</p>
+<p>最新的 NVIDIA® 驱动程序可以通过运行以下命令进行安装：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6811,7 +6811,7 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="paragraph">
-<p>Then add the module to <code>/etc/rc.conf</code> file, executing the following command:</p>
+<p>然后将该模块添加到 <code>/etc/rc.conf</code> 文件中，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6826,7 +6826,7 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The <code>nvidia</code> driver must be used if the packages x11/nvidia-driver-304 or x11/nvidia-driver-340 have been installed.</p>
+<p>如果安装了 x11/nvidia-driver-304 或 x11/nvidia-driver-340 软件包，则必须使用 <code>nvidia</code> 驱动程序。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6840,9 +6840,9 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="sect2">
-<h3 id="x-config">5.4. Xorg Configuration<a class="anchor" href="#x-config"></a></h3>
+<h3 id="x-config">5.4. Xorg 配置<a class="anchor" href="#x-config"></a></h3>
 <div class="paragraph">
-<p>Xorg supports most common video cards, keyboards, and pointing devices.</p>
+<p>Xorg 支持大多数常见的视频卡、键盘和指针设备。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -6852,22 +6852,22 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Video cards, monitors, and input devices are automatically detected and do not require any manual configuration. Do not create <span class="filename">xorg.conf</span> or run a <code>Xorg -configure</code> step unless automatic configuration fails.</p>
+<p>视频卡、显示器和输入设备会被自动检测，不需要任何手动配置。除非自动配置失败，否则不要创建 <span class="filename">xorg.conf</span> 文件或运行 <code>Xorg -configure</code> 步骤。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="x-config-files">5.4.1. Configuration Files<a class="anchor" href="#x-config-files"></a></h4>
+<h4 id="x-config-files">5.4.1. 配置文件<a class="anchor" href="#x-config-files"></a></h4>
 <div class="paragraph">
-<p>Xorg looks in several directories for configuration files. <span class="filename">/usr/local/etc/X11/</span> is the <strong>recommended</strong> directory for these files on FreeBSD. Using this directory helps keep application files separate from operating system files.</p>
+<p>Xorg 在多个目录中查找配置文件。在 FreeBSD 上，推荐使用目录 <code>/usr/local/etc/X11/</code> 来存放这些文件。使用这个目录可以将应用程序文件与操作系统文件分开。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="x-config-files-single-or-multi">5.4.2. Single or Multiple Files<a class="anchor" href="#x-config-files-single-or-multi"></a></h4>
+<h4 id="x-config-files-single-or-multi">5.4.2. 单个文件或多个文件<a class="anchor" href="#x-config-files-single-or-multi"></a></h4>
 <div class="paragraph">
-<p>It is easier to use multiple files that each configure a specific setting than the traditional single <span class="filename">xorg.conf</span>. These files are stored in the <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> subdirectory.</p>
+<p>使用多个文件来配置特定设置比传统的单个 <span class="filename">xorg.conf</span> 文件更容易。这些文件存储在 <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> 子目录中。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -6877,7 +6877,7 @@ ports-mgmt/pkg
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The traditional single <span class="filename">xorg.conf</span> still works, but is neither as clear nor as flexible as multiple files in the <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> subdirectory.</p>
+<p>传统的单一 <span class="filename">xorg.conf</span> 仍然有效，但是与位于 <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> 子目录中的多个文件相比，既不清晰也不灵活。</p>
 </div>
 </td>
 </tr>
@@ -6885,15 +6885,15 @@ ports-mgmt/pkg
 </div>
 </div>
 <div class="sect3">
-<h4 id="x-config-video-cards">5.4.3. Video Cards<a class="anchor" href="#x-config-video-cards"></a></h4>
+<h4 id="x-config-video-cards">5.4.3. 视频卡<a class="anchor" href="#x-config-video-cards"></a></h4>
 <div class="paragraph">
-<p>The driver for the graphics card can be specified in the <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> directory.</p>
+<p>图形卡的驱动程序可以在 <span class="filename">/usr/local/etc/X11/xorg.conf.d/</span> 目录中指定。</p>
 </div>
 <div class="paragraph">
-<p>To configure the Intel® driver in a configuration file:</p>
+<p>要在配置文件中配置 Intel® 驱动程序：</p>
 </div>
 <div id="x-config-video-cards-file-intel" class="exampleblock">
-<div class="title">例 14. Select Intel® Video Driver in a File</div>
+<div class="title">例 14. 在文件中选择 Intel® 视频驱动程序</div>
 <div class="content">
 <div class="paragraph">
 <p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-intel.conf</span></p>
@@ -6909,10 +6909,10 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To configure the AMD® driver in a configuration file:</p>
+<p>要在配置文件中配置 AMD® 驱动程序：</p>
 </div>
 <div id="x-config-video-cards-file-amd" class="exampleblock">
-<div class="title">例 15. Select AMD® Video Driver in a File</div>
+<div class="title">例 15. 在文件中选择 AMD® 视频驱动程序</div>
 <div class="content">
 <div class="paragraph">
 <p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-radeon.conf</span></p>
@@ -6928,10 +6928,10 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To configure the NVIDIA® driver in a configuration file:</p>
+<p>要在配置文件中配置 NVIDIA® 驱动程序：</p>
 </div>
 <div id="x-config-video-cards-file-nvidia" class="exampleblock">
-<div class="title">例 16. Select NVIDIA® Video Driver in a File</div>
+<div class="title">例 16. 在文件中选择 NVIDIA® 视频驱动程序</div>
 <div class="content">
 <div class="paragraph">
 <p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-nvidia.conf</span></p>
@@ -6954,17 +6954,17 @@ EndSection</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><a class="package" href="https://cgit.freebsd.org/ports/tree/x11/nvidia-xconfig/">x11/nvidia-xconfig</a> can also be used to perform basic control over configuration options available in the NVIDIA driver.</p>
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/x11/nvidia-xconfig/">x11/nvidia-xconfig</a> 也可以用来对 NVIDIA 驱动程序中可用的配置选项进行基本控制。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>To configure the VESA driver in a configuration file:</p>
+<p>要在配置文件中配置 VESA 驱动程序：</p>
 </div>
 <div id="x-config-video-cards-file-vesa" class="exampleblock">
-<div class="title">例 17. Select VESA Video Driver in a File</div>
+<div class="title">例 17. 在文件中选择 VESA 视频驱动程序</div>
 <div class="content">
 <div class="paragraph">
 <p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-vesa.conf</span></p>
@@ -6980,10 +6980,10 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To configure the SCFB driver in a configuration file:</p>
+<p>要在配置文件中配置 SCFB 驱动程序：</p>
 </div>
 <div id="x-config-video-cards-file-sfcb" class="exampleblock">
-<div class="title">例 18. Select SCFB Video Driver in a File</div>
+<div class="title">例 18. 在文件中选择 SCFB 视频驱动程序</div>
 <div class="content">
 <div class="paragraph">
 <p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-scfb.conf</span></p>
@@ -6999,7 +6999,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To configure multiple video cards, the <code>BusID</code> can be added. A list of video card bus <code>ID</code>s can be displayed by executing:</p>
+<p>要配置多个视频卡，可以添加 <code>BusID</code>。执行以下命令可以显示视频卡总线 <code>ID</code> 的列表：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7007,7 +7007,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7023,7 +7023,7 @@ vgapci1@pci0:0:2:1:     class=0x038000 rev=0x07 hdr=0x00 vendor=0x8086 device=0x
 </div>
 </div>
 <div id="x-config-video-cards-file-multiple" class="exampleblock">
-<div class="title">例 19. Select Intel® Video Driver and NVIDIA® Video Driver in a File</div>
+<div class="title">例 19. 在一个文件中选择 Intel® 视频驱动程序和 NVIDIA® 视频驱动程序。</div>
 <div class="content">
 <div class="paragraph">
 <p><span class="filename">/usr/local/etc/X11/xorg.conf.d/20-drivers.conf</span></p>
@@ -7047,17 +7047,17 @@ EndSection</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="x-config-monitors">5.4.4. Monitors<a class="anchor" href="#x-config-monitors"></a></h4>
+<h4 id="x-config-monitors">5.4.4. 显示器<a class="anchor" href="#x-config-monitors"></a></h4>
 <div class="paragraph">
-<p>Almost all monitors support the Extended Display Identification Data standard (<code>EDID</code>). Xorg uses <code>EDID</code> to communicate with the monitor and detect the supported resolutions and refresh rates. Then it selects the most appropriate combination of settings to use with that monitor.</p>
+<p>几乎所有的显示器都支持扩展显示识别数据标准（<code>EDID</code>）。Xorg 使用 <code>EDID</code> 与显示器进行通信，检测支持的分辨率和刷新率，然后选择最合适的设置组合来与该显示器配合使用。</p>
 </div>
 <div class="paragraph">
-<p>Other resolutions supported by the monitor can be chosen by setting the desired resolution in configuration files, or after the X server has been started with <a href="https://man.freebsd.org/cgi/man.cgi?query=xrandr&amp;sektion=1&amp;format=html">xrandr(1)</a>.</p>
+<p>可以通过在配置文件中设置所需的分辨率，或在启动 X 服务器后使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=xrandr&amp;sektion=1&amp;format=html">xrandr(1)</a> 来选择显示器支持的其他分辨率。</p>
 </div>
 <div class="sect4">
-<h5 id="x-config-monitors-xrandr">5.4.4.1. Using RandR (Resize and Rotate)<a class="anchor" href="#x-config-monitors-xrandr"></a></h5>
+<h5 id="x-config-monitors-xrandr">5.4.4.1. 使用 RandR (Resize and Rotate)<a class="anchor" href="#x-config-monitors-xrandr"></a></h5>
 <div class="paragraph">
-<p>Run <a href="https://man.freebsd.org/cgi/man.cgi?query=xrandr&amp;sektion=1&amp;format=html">xrandr(1)</a> without any parameters to see a list of video outputs and detected monitor modes:</p>
+<p>运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=xrandr&amp;sektion=1&amp;format=html">xrandr(1)</a> 命令，不带任何参数，可以查看视频输出和检测到的显示器模式列表：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7065,7 +7065,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7100,10 +7100,10 @@ DP-3 disconnected (normal left inverted right x axis y axis)</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This shows that the <code>VGA-1</code> output is being used to display a screen resolution of 1280x960 pixels at a refresh rate of about 60 Hz. The <code>LVDS-1</code> is being used as a secondary monitor to display a screen resolution of 1280x800 pixels at a refresh rate of about 60 Hz. Monitors are not attached to the <code>HDMI-1</code>, <code>HDMI-2</code>, <code>DP-1</code>, <code>DP-2</code> and <code>DP-3</code> connectors.</p>
+<p>这表明 <code>VGA-1</code> 输出正在用于显示分辨率为 1280x960 像素、刷新率约为 60 Hz 的屏幕。<code>LVDS-1</code> 被用作辅助显示器，显示分辨率为 1280x800 像素、刷新率约为 60 Hz 的屏幕。<code>HDMI-1</code>、<code>HDMI-2</code>、<code>DP-1</code>、<code>DP-2</code> 和 <code>DP-3</code> 连接器上没有连接显示器。</p>
 </div>
 <div class="paragraph">
-<p>Any of the other display modes can be selected with <a href="https://man.freebsd.org/cgi/man.cgi?query=xrandr&amp;sektion=1&amp;format=html">xrandr(1)</a>. For example, to switch to 1280x1024 at 60 Hz:</p>
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=xrandr&amp;sektion=1&amp;format=html">xrandr(1)</a> 选择任何其他的显示模式。例如，要切换到 1280x1024 分辨率，刷新率为 60 Hz ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7112,15 +7112,15 @@ DP-3 disconnected (normal left inverted right x axis y axis)</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="x-config-monitors-files">5.4.4.2. Using the Xorg configuration file<a class="anchor" href="#x-config-monitors-files"></a></h5>
+<h5 id="x-config-monitors-files">5.4.4.2. 使用 Xorg 配置文件<a class="anchor" href="#x-config-monitors-files"></a></h5>
 <div class="paragraph">
-<p>The monitor configuration can also be set in a configuration file.</p>
+<p>监视器配置也可以在配置文件中进行设置。</p>
 </div>
 <div class="paragraph">
-<p>To set a screen resolution of 1024x768 in a configuration file:</p>
+<p>在配置文件中设置屏幕分辨率为 1024x768 ：</p>
 </div>
 <div class="exampleblock">
-<div class="title">例 20. Set Screen Resolution in a File</div>
+<div class="title">例 20. 在文件中设置屏幕分辨率</div>
 <div class="content">
 <div class="paragraph">
 <p><span class="filename">/usr/local/etc/X11/xorg.conf.d/10-monitor.conf</span></p>
@@ -7141,9 +7141,9 @@ EndSection</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="x-config-input">5.4.5. Input Devices<a class="anchor" href="#x-config-input"></a></h4>
+<h4 id="x-config-input">5.4.5. 输入设备<a class="anchor" href="#x-config-input"></a></h4>
 <div class="paragraph">
-<p>Xorg supports the vast majority of input devices via <a class="package" href="https://cgit.freebsd.org/ports/tree/x11/libinput/">x11/libinput</a>.</p>
+<p>Xorg 通过 <a class="package" href="https://cgit.freebsd.org/ports/tree/x11/libinput/">x11/libinput</a> 支持绝大部分输入设备。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -7153,17 +7153,17 @@ EndSection</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Some desktop environments (such as KDE Plasma) provide a graphical UI for setting these parameters. Check if this is the case before resorting to manual configuration editing.</p>
+<p>一些桌面环境（如 KDE Plasma）提供了用于设置这些参数的图形界面。在尝试手动配置编辑之前，请检查是否有这样的界面。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div id="x-config-input-keyboard-layout" class="paragraph">
-<p>For example, to configure the keyboard layout:</p>
+<p>例如，要配置键盘布局：</p>
 </div>
 <div class="exampleblock">
-<div class="title">例 21. Setting a Keyboard Layout</div>
+<div class="title">例 21. 设置键盘布局</div>
 <div class="content">
 <div class="paragraph">
 <p><span class="filename">/usr/local/etc/X11/xorg.conf.d/00-keyboard.conf</span></p>
@@ -7185,17 +7185,17 @@ EndSection</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="x-fonts">5.5. Using Fonts in Xorg<a class="anchor" href="#x-fonts"></a></h3>
+<h3 id="x-fonts">5.5. 在 Xorg 中使用字体<a class="anchor" href="#x-fonts"></a></h3>
 <div class="paragraph">
-<p>The default fonts that ship with Xorg are less than ideal for typical desktop publishing applications. Large presentation fonts show up jagged and unprofessional looking, and small fonts are almost completely unintelligible. However, there are several free, high quality Type1 (PostScript®) fonts available which can be readily used with Xorg.</p>
+<p>Xorg 默认提供的字体对于典型的桌面出版应用来说并不理想。大号演示字体显示出来会有锯齿状，不够专业，而小号字体几乎完全无法辨认。然而，有几种免费的高质量 Type1 (PostScript®) 字体可供在 Xorg 中方便地使用。</p>
 </div>
 <div class="sect3">
-<h4 id="type1">5.5.1. Type1 Fonts<a class="anchor" href="#type1"></a></h4>
+<h4 id="type1">5.5.1. Type1 字体<a class="anchor" href="#type1"></a></h4>
 <div class="paragraph">
-<p>The URW font collection (<a class="package" href="https://cgit.freebsd.org/ports/tree/x11-fonts/urwfonts/">x11-fonts/urwfonts</a>) includes high quality versions of standard type1 fonts (Times Roman™, Helvetica™, Palatino™ and others). The Freefonts collection (<a class="package" href="https://cgit.freebsd.org/ports/tree/x11-fonts/freefonts/">x11-fonts/freefonts</a>) includes many more fonts, but most of them are intended for use in graphics software such as the Gimp, and are not complete enough to serve as screen fonts. In addition, Xorg can be configured to use TrueType® fonts with a minimum of effort. For more details on this, see the <a href="https://man.freebsd.org/cgi/man.cgi?query=X&amp;sektion=7&amp;format=html">X(7)</a> manual page or <a href="#truetype">TrueType® Fonts</a>.</p>
+<p>URW 字体集合 (<a class="package" href="https://cgit.freebsd.org/ports/tree/x11-fonts/urwfonts/">x11-fonts/urwfonts</a>) 包括标准 Type1 字体 (Times Roman™，Helvetica™，Palatino™ 等）的高质量版本。Freefonts 集合 (<a class="package" href="https://cgit.freebsd.org/ports/tree/x11-fonts/freefonts/">x11-fonts/freefonts</a>) 包括更多字体，但大部分是为图形软件（如 Gimp）使用的，并不完整，不能用作屏幕字体。此外，Xorg 可以配置为轻松使用 TrueType® 字体。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=X&amp;sektion=7&amp;format=html">X(7)</a> 手册页面或 <a href="#truetype">TrueType® 字体</a>。</p>
 </div>
 <div class="paragraph">
-<p>To install the above Type1 font collections from binary packages, run the following commands:</p>
+<p>要安装上述的 Type1 字体集合，可以运行以下命令来安装二进制包：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7203,7 +7203,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And likewise with the freefont or other collections. To have the X server detect these fonts, add an appropriate line to the X server configuration file (<span class="filename">/usr/local/etc/X11/xorg.conf.d/90-fonts.conf</span>), which reads:</p>
+<p>同样，对于 freefont 或其他字体集合也是如此。要让 X 服务器检测这些字体，需要在 X 服务器配置文件 (<span class="filename">/usr/local/etc/X11/xorg.conf.d/90-fonts.conf</span>) 中添加一行适当的内容，如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7213,7 +7213,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Alternatively, at the command line in the X session run:</p>
+<p>或者，在 X 会话的命令行中运行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7222,13 +7222,13 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will work but will be lost when the X session is closed, unless it is added to the startup file (<span class="filename">~/.xinitrc</span> for a normal <code>startx</code> session, or <span class="filename">~/.xsession</span> when logging in through a graphical login manager like XDM). A third way is to use the new <span class="filename">/usr/local/etc/fonts/local.conf</span> as demonstrated in <a href="#antialias">Anti-Aliased Fonts</a>.</p>
+<p>这将起作用，但在 X 会话关闭时将丢失，除非将其添加到启动文件（对于普通的 <code>startx</code> 会话，为 <span class="filename">~/.xinitrc</span>，或者对于通过图形登录管理器（如 XDM）登录的情况，为 <span class="filename">~/.xsession</span>）。第三种方法是使用新的 <span class="filename">/usr/local/etc/fonts/local.conf</span>，如 <a href="#antialias">抗锯齿字体</a> 中所示。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="truetype">5.5.2. TrueType® Fonts<a class="anchor" href="#truetype"></a></h4>
+<h4 id="truetype">5.5.2. TrueType® 字体<a class="anchor" href="#truetype"></a></h4>
 <div class="paragraph">
-<p>Xorg has built in support for rendering TrueType® fonts. There are two different modules that can enable this functionality. The freetype module is used in this example because it is more consistent with the other font rendering back-ends. To enable the freetype module just add the following line to the <code>&#34;Module&#34;</code> section of <span class="filename">/usr/local/etc/X11/xorg.conf.d/90-fonts.conf</span>.</p>
+<p>Xorg 内置了对 TrueType® 字体的渲染支持。有两个不同的模块可以启用这个功能。在这个例子中使用 freetype 模块，因为它与其他字体渲染后端更加一致。要启用 freetype 模块，只需将以下行添加到 <span class="filename">/usr/local/etc/X11/xorg.conf.d/90-fonts.conf</span> 文件的 <code>&#34;Module&#34;</code> 部分。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7236,7 +7236,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now make a directory for the TrueType® fonts (for example, <span class="filename">/usr/local/share/fonts/TrueType</span>) and copy all of the TrueType® fonts into this directory. Keep in mind that TrueType® fonts cannot be directly taken from an Apple® Mac®; they must be in UNIX®/MS-DOS®/Windows® format for use by Xorg. Once the files have been copied into this directory, use mkfontscale to create a <span class="filename">fonts.dir</span>, so that the X font renderer knows that these new files have been installed. <code>mkfontscale</code> can be installed as a package:</p>
+<p>现在创建一个用于 TrueType® 字体的目录（例如，<span class="filename">/usr/local/share/fonts/TrueType</span>），并将所有的 TrueType® 字体复制到该目录中。请记住，TrueType® 字体不能直接从 Apple® Mac® 中获取；它们必须以 UNIX®/MS-DOS®/Windows® 格式存在，以供 Xorg 使用。一旦文件被复制到该目录中，使用 mkfontscale 创建一个 <span class="filename">fonts.dir</span> 文件，以便 X 字体渲染器知道这些新文件已经安装。<code>mkfontscale</code> 可以作为一个软件包进行安装：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7244,7 +7244,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then create an index of X font files in a directory:</p>
+<p>然后在一个目录中创建 X 字体文件的索引：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7253,7 +7253,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now add the TrueType® directory to the font path. This is just the same as described in <a href="#type1">Type1 Fonts</a>:</p>
+<p>现在将 TrueType® 目录添加到字体路径中。这与 <a href="#type1">Type1 字体</a> 中描述的方式完全相同。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7262,22 +7262,22 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>or add a <code>FontPath</code> line to <span class="filename">xorg.conf</span>.</p>
+<p>或者在 <span class="filename">xorg.conf</span> 文件中添加一个 <code>FontPath</code> 行。</p>
 </div>
 <div class="paragraph">
-<p>Now Gimp, LibreOffice, and all of the other X applications should now recognize the installed TrueType® fonts. Extremely small fonts (as with text in a high resolution display on a web page) and extremely large fonts (within LibreOffice) will look much better now.</p>
+<p>现在，Gimp、LibreOffice 和所有其他 X 应用程序应该能够识别已安装的 TrueType® 字体。现在，在高分辨率显示器上的网页文本中的极小字体以及 LibreOffice 中的极大字体将会看起来更好。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="antialias">5.5.3. Anti-Aliased Fonts<a class="anchor" href="#antialias"></a></h4>
+<h4 id="antialias">5.5.3. 抗锯齿字体<a class="anchor" href="#antialias"></a></h4>
 <div class="paragraph">
-<p>All fonts in Xorg that are found in <span class="filename">/usr/local/share/fonts/</span> and <span class="filename">~/.fonts/</span> are automatically made available for anti-aliasing to Xft-aware applications. Most recent applications are Xft-aware, including KDE, GNOME, and Firefox.</p>
+<p>在 Xorg 中，所有在 <span class="filename">/usr/local/share/fonts/</span> 和 <span class="filename">~/.fonts/</span> 目录中找到的字体都会自动提供给支持 Xft-aware 的应用程序进行反锯齿处理。大多数最新的应用程序都支持 Xft-aware，包括 KDE、GNOME 和 Firefox。</p>
 </div>
 <div class="paragraph">
-<p>To control which fonts are anti-aliased, or to configure anti-aliasing properties, create (or edit, if it already exists) the file <span class="filename">/usr/local/etc/fonts/local.conf</span>. Several advanced features of the Xft font system can be tuned using this file; this section describes only some simple possibilities. For more details, please see <a href="https://man.freebsd.org/cgi/man.cgi?query=fonts-conf&amp;sektion=5&amp;format=html">fonts-conf(5)</a>.</p>
+<p>要控制反锯齿的字体或配置反锯齿属性，请创建（或编辑，如果已存在）文件 <span class="filename">/usr/local/etc/fonts/local.conf</span>。可以使用此文件调整 Xft 字体系统的几个高级功能；本节仅描述了一些简单的可能性。有关更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=fonts-conf&amp;sektion=5&amp;format=html">fonts-conf(5)</a>。</p>
 </div>
 <div class="paragraph">
-<p>This file must be in XML format. Pay careful attention to case, and make sure all tags are properly closed. The file begins with the usual XML header followed by a DOCTYPE definition, and then the <code>&lt;fontconfig&gt;</code> tag:</p>
+<p>这个文件必须是 XML 格式的。请注意大小写，并确保所有标签都正确闭合。文件以通常的 XML 头部开始，接着是 DOCTYPE 定义，然后是 <code>&lt;fontconfig&gt;</code> 标签。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7287,7 +7287,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As previously stated, all fonts in <span class="filename">/usr/local/share/fonts/</span> as well as <span class="filename">~/.fonts/</span> are already made available to Xft-aware applications. To add another directory outside of these two directory trees, add a line like this to <span class="filename">/usr/local/etc/fonts/local.conf</span>:</p>
+<p>如前所述，位于 <span class="filename">/usr/local/share/fonts/</span> 和 <span class="filename">~/.fonts/</span> 目录中的所有字体已经可以在支持 Xft-aware 的应用程序中使用。如果要添加一个位于这两个目录树之外的目录，可以在 <span class="filename">/usr/local/etc/fonts/local.conf</span> 文件中添加如下一行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7295,7 +7295,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After adding new fonts, and especially new font directories, rebuild the font caches:</p>
+<p>在添加新字体，尤其是新的字体目录后，重新构建字体缓存：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7303,7 +7303,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Anti-aliasing makes borders slightly fuzzy, which makes very small text more readable and removes &#34;staircases&#34; from large text, but can cause eyestrain if applied to normal text. To exclude font sizes smaller than 14 point from anti-aliasing, include these lines:</p>
+<p>抗锯齿会使边界略微模糊，这使得非常小的文本更易读，并消除了大文本上的“阶梯状”效果，但如果应用于普通文本，可能会导致眼部疲劳。要排除小于 14 点字号的字体应用抗锯齿，包括以下几行代码：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7326,7 +7326,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Spacing for some monospaced fonts might also be inappropriate with anti-aliasing. This seems to be an issue with KDE, in particular. One possible fix is to force the spacing for such fonts to be 100. Add these lines:</p>
+<p>对于某些等宽字体，使用反锯齿可能会导致间距不合适。这似乎是 KDE 特别存在的问题。一个可能的解决方法是强制将这些字体的间距设置为 100 。添加以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7349,7 +7349,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>(this aliases the other common names for fixed fonts as <code>&#34;mono&#34;</code>), and then add:</p>
+<p>（这将其他常见的固定字体名称别名为 <code>&#34;mono&#34;</code>），然后添加：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7364,7 +7364,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Certain fonts, such as Helvetica, may have a problem when anti-aliased. Usually this manifests itself as a font that seems cut in half vertically. At worst, it may cause applications to crash. To avoid this, consider adding the following to <span class="filename">local.conf</span>:</p>
+<p>某些字体，比如 Helvetica，在反锯齿处理时可能会出现问题。通常表现为字体在垂直方向上被切割了一半。最糟糕的情况下，可能会导致应用程序崩溃。为了避免这种情况，考虑将以下内容添加到 .local.conf 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7379,13 +7379,13 @@ EndSection</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After editing <span class="filename">local.conf</span>, make certain to end the file with the <code>&lt;/fontconfig&gt;</code> tag. Not doing this will cause changes to be ignored.</p>
+<p>在编辑 <span class="filename">local.conf</span> 后，确保用 <code>&lt;/fontconfig&gt;</code> 标签结束文件。如果不这样做，将会忽略所做的更改。</p>
 </div>
 <div class="paragraph">
-<p>Users can add personalized settings by creating their own <span class="filename">~/.config/fontconfig/fonts.conf</span>. This file uses the same <code>XML</code> format described above.</p>
+<p>用户可以通过创建自己的 <span class="filename">~/.config/fontconfig/fonts.conf</span> 文件来添加个性化设置。该文件使用上述描述的相同的 <code>XML</code> 格式。</p>
 </div>
 <div class="paragraph">
-<p>One last point: with an LCD screen, sub-pixel sampling may be desired. This basically treats the (horizontally separated) red, green and blue components separately to improve the horizontal resolution; the results can be dramatic. To enable this, add the line somewhere in <span class="filename">local.conf</span>:</p>
+<p>最后一个要点：对于 LCD 屏幕，可能需要进行亚像素采样。这基本上是将（水平分离的）红色、绿色和蓝色分量分别处理，以提高水平分辨率；结果可能非常显著。要启用此功能，请在 <span class="filename">local.conf</span> 中的某个位置添加以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -7407,14 +7407,14 @@ EndSection</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Depending on the sort of display, <code>rgb</code> may need to be changed to <code>bgr</code>, <code>vrgb</code> or <code>vbgr</code>: experiment and see which works best.</p>
+<p>根据显示器的类型，可能需要将 <code>rgb</code> 更改为 <code>bgr</code>、<code>vrgb</code> 或 <code>vbgr</code>：进行实验并查看哪种效果最好。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>For more information about how to install and configure fonts on FreeBSD, please read the article <a href="{fonts}">Fonts and FreeBSD</a>.</p>
+<p>有关在 FreeBSD 上安装和配置字体的更多信息，请阅读文章 <a href="{fonts}">字体和 FreeBSD</a>。</p>
 </div>
 </div>
 </div>
@@ -8079,60 +8079,60 @@ bar {
 </div>
 </div>
 <div class="sect1">
-<h2 id="network">Chapter 7. Network<a class="anchor" href="#network"></a></h2>
+<h2 id="network">Chapter 7. 网络<a class="anchor" href="#network"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="network-synopsis">7.1. Synopsis<a class="anchor" href="#network-synopsis"></a></h3>
+<h3 id="network-synopsis">7.1. 简介<a class="anchor" href="#network-synopsis"></a></h3>
 <div class="paragraph">
-<p>This chapter delves into the topic of network configuration and performance, showcasing the robust networking capabilities of the FreeBSD operating system. Whether working with wired or wireless networks, this chapter provides a comprehensive guide to configuring and optimizing network connectivity in FreeBSD.</p>
+<p>本章深入探讨了网络配置和性能的主题，展示了 FreeBSD 操作系统强大的网络能力。无论是使用有线网络还是无线网络，本章提供了一个全面的指南，帮助您在 FreeBSD 中配置和优化网络连接。</p>
 </div>
 <div class="paragraph">
-<p>Before diving into the details, it is beneficial for readers to have a basic understanding of networking concepts such as protocols, network interfaces, and addressing.</p>
+<p>在深入了解细节之前，读者对网络概念如协议、网络接口和寻址有基本的了解是有益的。</p>
 </div>
 <div class="paragraph">
-<p>This chapter covers:</p>
+<p>本章内容包括：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The ability to configure wired networks in FreeBSD, including network interface setup, addressing, and customization options.</p>
+<p>在 FreeBSD 中配置有线网络的能力，包括网络接口设置、寻址和定制选项。</p>
 </li>
 <li>
-<p>The skills to configure wireless networks in FreeBSD, encompassing wireless network interface setup, security protocols, and troubleshooting techniques.</p>
+<p>在 FreeBSD 中配置无线网络的技能，包括无线网络接口设置、安全协议和故障排除技术。</p>
 </li>
 <li>
-<p>FreeBSD’s networking capabilities and its reputation for excellent network performance.</p>
+<p>FreeBSD 的网络能力以及其在优秀网络性能方面的声誉。</p>
 </li>
 <li>
-<p>An understanding of various network services and protocols supported by FreeBSD, with configuration instructions for DNS, DHCP and more.</p>
+<p>对于 FreeBSD 支持的各种网络服务和协议的理解，包括 DNS、DHCP 等的配置说明。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>More information about how to make advanced network configurations in <a href="./#advanced-networking">Advanced Networking</a>.</p>
+<p>有关如何进行高级网络配置的更多信息，请参阅 <a href="./#advanced-networking">高级网络</a>。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="config-network-setup">7.2. Setting up the Network<a class="anchor" href="#config-network-setup"></a></h3>
+<h3 id="config-network-setup">7.2. 设置网络<a class="anchor" href="#config-network-setup"></a></h3>
 <div class="paragraph">
-<p>Setting up a wired or wireless connection is a common task for a FreeBSD user. This section will show how to identify the wired and wireless network adapters and how to configure them.</p>
+<p>为 FreeBSD 用户设置有线或无线连接是一个常见的任务。本节将展示如何识别有线和无线网络适配器以及如何配置它们。</p>
 </div>
 <div class="paragraph">
-<p>Before starting with the configuration it is necessary to know the following network data:</p>
+<p>在开始配置之前，需要了解以下网络数据：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>If the network has DHCP</p>
+<p>如果网络使用 DHCP</p>
 </li>
 <li>
-<p>If the network does not have DHCP, the static IP to be used</p>
+<p>如果网络没有 DHCP，则使用静态 IP 。</p>
 </li>
 <li>
-<p>The netmask</p>
+<p>子网掩码</p>
 </li>
 <li>
-<p>The IP address of the default gateway</p>
+<p>默认网关的 IP 地址</p>
 </li>
 </ul>
 </div>
@@ -8144,19 +8144,19 @@ bar {
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The network connection may have been configured at installation time by <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdinstall&amp;sektion=8&amp;format=html">bsdinstall(8)</a>.</p>
+<p>网络连接可能在安装时由 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdinstall&amp;sektion=8&amp;format=html">bsdinstall(8)</a> 进行配置。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="config-identify-network-adapter">7.2.1. Identify Network Adapters<a class="anchor" href="#config-identify-network-adapter"></a></h4>
+<h4 id="config-identify-network-adapter">7.2.1. 识别网络适配器<a class="anchor" href="#config-identify-network-adapter"></a></h4>
 <div class="paragraph">
-<p>FreeBSD supports a wide variety of network adapters for both wired and wireless networks. Check the Hardware Compatibility List for the used <a href="https://www.freebsd.org/releases/">FreeBSD release</a> to see if the network adapter is supported.</p>
+<p>FreeBSD 支持各种有线和无线网络适配器。请查看所使用的 FreeBSD 版本的硬件兼容性列表 <a href="https://www.freebsd.org/releases/">FreeBSD release</a>，以查看网络适配器是否受支持。</p>
 </div>
 <div class="paragraph">
-<p>To get the network adapters used by our system execute the following command:</p>
+<p>要获取我们系统使用的网络适配器，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8164,7 +8164,7 @@ bar {
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8181,17 +8181,17 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
 </div>
 </div>
 <div class="paragraph">
-<p>The text before the &#39;@&#39; symbol is the name of the driver controlling the device. In this case these are <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=iwn&amp;sektion=4&amp;format=html">iwn(4)</a>.</p>
+<p>在 &#39;@&#39; 符号之前的文本是控制设备的驱动程序的名称。在这种情况下，它们是 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=iwn&amp;sektion=4&amp;format=html">iwn(4)</a>。</p>
 </div>
 <div class="colist arabic">
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Shows the name of the vendor</td>
+<td>显示供应商的名称</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Shows the name of the device</td>
+<td>显示设备的名称</td>
 </tr>
 </tbody></table>
 </div>
@@ -8203,10 +8203,10 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
 </td>
 <td class="content">
 <div class="paragraph">
-<p>It is only necessary to load the network interface card module if FreeBSD has not detected it correctly.</p>
+<p>只有在 FreeBSD 没有正确检测到网络接口卡时，才需要加载该模块。</p>
 </div>
 <div class="paragraph">
-<p>For example, to load the <a href="https://man.freebsd.org/cgi/man.cgi?query=alc&amp;sektion=4&amp;format=html">alc(4)</a> module, execute the following command:</p>
+<p>例如，要加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=alc&amp;sektion=4&amp;format=html">alc(4)</a> 模块，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8214,7 +8214,7 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
 </div>
 </div>
 <div class="paragraph">
-<p>Alternatively, to load the driver as a module at boot time, place the following line in <span class="filename">/boot/loader.conf</span>:</p>
+<p>或者，要在启动时将驱动程序加载为模块，请将以下行放置在 <span class="filename">/boot/loader.conf</span> 中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8228,15 +8228,15 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
 </div>
 </div>
 <div class="sect2">
-<h3 id="config-network-connection">7.3. Wired Networks<a class="anchor" href="#config-network-connection"></a></h3>
+<h3 id="config-network-connection">7.3. 有线网络<a class="anchor" href="#config-network-connection"></a></h3>
 <div class="paragraph">
-<p>Once the right driver is loaded the network adapter needs to be configured. FreeBSD uses the driver name followed by a unit number to name the network interface adapter. The unit number represents the order in which the adapter is detected at boot time, or is later discovered.</p>
+<p>一旦正确的驱动程序加载完成，需要配置网络适配器。FreeBSD 使用驱动程序名称后跟一个单元号来命名网络接口适配器。单元号表示适配器在引导时被检测到的顺序，或者是稍后被发现的顺序。</p>
 </div>
 <div class="paragraph">
-<p>For example, <code>em0</code> is the first network interface card (NIC) on the system using the <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> driver.</p>
+<p>例如，<code>em0</code> 是系统上使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=em&amp;sektion=4&amp;format=html">em(4)</a> 驱动程序的第一个网络接口卡（NIC）。</p>
 </div>
 <div class="paragraph">
-<p>To display the network interface configuration, enter the following command:</p>
+<p>要显示网络接口配置，请输入以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8244,7 +8244,7 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8266,54 +8266,54 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 </div>
 </div>
 <div class="paragraph">
-<p>In this example, the following devices were displayed:</p>
+<p>在这个例子中，显示了以下设备：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>em0</code>: The Ethernet interface.</p>
+<p><code>em0</code>：以太网接口。</p>
 </li>
 <li>
-<p><code>lo0</code>: The loop interface is a software loopback mechanism which may be used for performance analysis, software testing, and/or local communication. More information in <a href="https://man.freebsd.org/cgi/man.cgi?query=lo&amp;sektion=4&amp;format=html">lo(4)</a>.</p>
+<p><code>lo0</code>：回环接口是一种软件环回机制，可用于性能分析、软件测试或本地通信。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=lo&amp;sektion=4&amp;format=html">lo(4)</a>。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The example shows that <code>em0</code> is up and running.</p>
+<p>这个例子显示 <code>em0</code> 已经启动并运行。</p>
 </div>
 <div class="paragraph">
-<p>The key indicators are:</p>
+<p>关键指标包括：</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>UP</code> means that the interface is configured and ready.</p>
+<p><code>UP</code> 表示接口已配置并准备就绪。</p>
 </li>
 <li>
-<p>The interface has an IPv4 Internet (<code>inet</code>) address, <code>192.168.1.19</code>.</p>
+<p>该接口具有一个 IPv4 Internet（<code>inet</code>）地址，<code>192.168.1.19</code>。</p>
 </li>
 <li>
-<p>The interface has an IPv6 Internet (<code>inet6</code>) address, <code>fe80::21f:16ff:fe0f:275a%em0</code>.</p>
+<p>该接口具有一个 IPv6 Internet（<code>inet6</code>）地址，<code>fe80::21f:16ff:fe0f:275a%em0</code> 。</p>
 </li>
 <li>
-<p>It has a valid subnet mask (<code>netmask</code>), where <code>0xffffff00</code> is the same as <code>255.255.255.0</code>.</p>
+<p>它具有有效的子网掩码（<code>netmask</code>），其中 <code>0xffffff00</code> 与 <code>255.255.255.0</code> 相同。</p>
 </li>
 <li>
-<p>It has a valid broadcast address, <code>192.168.1.255</code>.</p>
+<p>它具有有效的广播地址，<code>192.168.1.255</code>。</p>
 </li>
 <li>
-<p>The MAC address of the interface (<code>ether</code>) is <code>00:1f:16:0f:27:5a</code>.</p>
+<p>接口（<code>ether</code>）的 MAC 地址是 <code>00:1f:16:0f:27:5a</code>。</p>
 </li>
 <li>
-<p>The physical media selection is on autoselection mode (<code>media: Ethernet autoselect (1000baseT &lt;full-duplex&gt;)</code>).</p>
+<p>物理媒体选择处于自动选择模式（<code>media: Ethernet autoselect (1000baseT &lt;full-duplex&gt;)</code>）。</p>
 </li>
 <li>
-<p>The status of the link (<code>status</code>) is <code>active</code>, indicating that the carrier signal is detected. For <code>em0</code>, the <code>status: no carrier</code> status is normal when an Ethernet cable is not plugged into the interface.</p>
+<p>链接的状态（<code>status</code>）为 <code>active</code>，表示检测到载波信号。对于 <code>em0</code>，当以太网电缆未插入接口时，<code>status: no carrier</code> 状态是正常的。</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>If the <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> output had shown something similar to the next output it would indicate the interface has not been configured:</p>
+<p>如果 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 命令的输出结果与下面的输出结果类似，那么说明接口尚未配置：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8326,12 +8326,12 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 </div>
 </div>
 <div class="sect3">
-<h4 id="config-static-ip-v4">7.3.1. Configuring Static IPv4 Address<a class="anchor" href="#config-static-ip-v4"></a></h4>
+<h4 id="config-static-ip-v4">7.3.1. 配置静态 IPv4 地址<a class="anchor" href="#config-static-ip-v4"></a></h4>
 <div class="paragraph">
-<p>This section provides a guide to configuring a static IPv4 address on a FreeBSD system.</p>
+<p>本节提供了在 FreeBSD 系统上配置静态 IPv4 地址的指南。</p>
 </div>
 <div class="paragraph">
-<p>The network interface card configuration can be performed from the command line with <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> but will not persist after a reboot unless the configuration is also added to <span class="filename">/etc/rc.conf</span>.</p>
+<p>可以使用命令行的 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 来配置网络接口卡，但是如果不将配置添加到 <span class="filename">/etc/rc.conf</span> 中，配置在重启后将不会保留。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -8341,14 +8341,14 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the network was configured during installation by <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdinstall&amp;sektion=8&amp;format=html">bsdinstall(8)</a>, some entries for the network interface card (NICs) may be already present. Double check <span class="filename">/etc/rc.conf</span> before executing <a href="https://man.freebsd.org/cgi/man.cgi?query=sysrc&amp;sektion=8&amp;format=html">sysrc(8)</a>.</p>
+<p>如果网络在安装过程中由 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdinstall&amp;sektion=8&amp;format=html">bsdinstall(8)</a> 进行配置，则可能已经存在一些网络接口卡（NIC）的条目。在执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysrc&amp;sektion=8&amp;format=html">sysrc(8)</a> 之前，请仔细检查 <span class="filename">/etc/rc.conf</span>。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The IP address can be set executing the following command:</p>
+<p>可以通过执行以下命令来设置 IP 地址：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8356,7 +8356,7 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 </div>
 </div>
 <div class="paragraph">
-<p>To make the change persist across reboots execute the following command:</p>
+<p>要使更改在重新启动后保持生效，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8364,7 +8364,7 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 </div>
 </div>
 <div class="paragraph">
-<p>Add the default router executing the following command:</p>
+<p>执行以下命令添加默认路由器：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8372,7 +8372,7 @@ lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
 </div>
 </div>
 <div class="paragraph">
-<p>Add the DNS records to <span class="filename">/etc/resolv.conf</span>:</p>
+<p>将 DNS 记录添加到 [/etc/resolv.conf] 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8381,7 +8381,7 @@ nameserver 8.8.4.4</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then restart <code>netif</code> and <code>routing</code> executing the following command:</p>
+<p>然后执行以下命令重新启动 <code>netif</code> 和 <code>routing</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8389,7 +8389,7 @@ nameserver 8.8.4.4</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The connection can be tested using <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a>:</p>
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 来测试连接。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8397,7 +8397,7 @@ nameserver 8.8.4.4</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8412,12 +8412,12 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="config-dynamic-ip-v4">7.3.2. Configuring Dynamic IPv4 Address<a class="anchor" href="#config-dynamic-ip-v4"></a></h4>
+<h4 id="config-dynamic-ip-v4">7.3.2. 配置动态 IPv4 地址<a class="anchor" href="#config-dynamic-ip-v4"></a></h4>
 <div class="paragraph">
-<p>If the network has a DHCP server, it is very easy to configure the network interface to use DHCP. FreeBSD uses <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> as the DHCP client. <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> will automatically provide the IP, the netmask and the default router.</p>
+<p>如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 作为 DHCP 客户端。 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 会自动提供 IP 地址、子网掩码和默认路由器。</p>
 </div>
 <div class="paragraph">
-<p>To make the interface work with DHCP execute the following command:</p>
+<p>要使接口与 DHCP 配合工作，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8425,7 +8425,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> can be used manually by running the following command:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 可以通过运行以下命令手动使用：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8433,7 +8433,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8444,7 +8444,7 @@ bound to 192.168.1.19 -- renewal in 43200 seconds.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In this way it can be verified that the address assignment using DHCP works correctly.</p>
+<p>通过这种方式可以验证使用 DHCP 进行地址分配是否正常工作。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -8454,10 +8454,10 @@ bound to 192.168.1.19 -- renewal in 43200 seconds.</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> client can be started in background. This can cause trouble with applications depending on a working network, but it will provide a faster startup in many cases.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 客户端可以在后台启动。这可能会对依赖于正常工作网络的应用程序造成麻烦，但在许多情况下，它将提供更快的启动速度。</p>
 </div>
 <div class="paragraph">
-<p>To execute <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> in background execute the following command:</p>
+<p>要在后台执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a>，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8469,7 +8469,7 @@ bound to 192.168.1.19 -- renewal in 43200 seconds.</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Then restart <code>netif</code> executing the following command:</p>
+<p>然后执行以下命令重新启动 <code>netif</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8477,7 +8477,7 @@ bound to 192.168.1.19 -- renewal in 43200 seconds.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The connection can be tested using <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a>:</p>
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 来测试连接。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8485,7 +8485,7 @@ bound to 192.168.1.19 -- renewal in 43200 seconds.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8502,75 +8502,75 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <div class="sect3">
 <h4 id="network-ipv6">7.3.3. IPv6<a class="anchor" href="#network-ipv6"></a></h4>
 <div class="paragraph">
-<p>IPv6 is the new version of the well-known IP protocol, also known as IPv4.</p>
+<p>IPv6 是广为人知的 IP 协议的新版本，也被称为 IPv4。</p>
 </div>
 <div class="paragraph">
-<p>IPv6 provides several advantages over IPv4 as well as many new features:</p>
+<p>IPv6 相比 IPv4 提供了几个优势，以及许多新的功能：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Its 128-bit address space allows for 340,282,366,920,938,463,463,374,607,431,768,211,456 addresses. This addresses the IPv4 address shortage and eventual IPv4 address exhaustion.</p>
+<p>它的 128 位地址空间允许拥有 340,282,366,920,938,463,463,374,607,431,768,211,456 个地址。这解决了 IPv4 地址短缺和最终的 IPv4 地址耗尽问题。</p>
 </li>
 <li>
-<p>Routers only store network aggregation addresses in their routing tables, thus reducing the average space of a routing table to 8192 entries. This addresses the scalability issues associated with IPv4, which required every allocated block of IPv4 addresses to be exchanged between Internet routers, causing their routing tables to become too large to allow efficient routing.</p>
+<p>路由器只在其路由表中存储网络聚合地址，从而将路由表的平均空间减少到 8192 个条目。这解决了与 IPv4 相关的可扩展性问题，因为 IPv4 要求每个分配的 IPv4 地址块在互联网路由器之间进行交换，导致它们的路由表变得过大，无法实现高效的路由。</p>
 </li>
 <li>
-<p>Address autoconfiguration (<a href="http://www.ietf.org/rfc/rfc2462.txt">RFC2462</a>).</p>
+<p>地址自动配置 (<a href="http://www.ietf.org/rfc/rfc2462.txt">RFC2462</a>)</p>
 </li>
 <li>
-<p>Mandatory multicast addresses.</p>
+<p>强制性多播地址。</p>
 </li>
 <li>
-<p>Built-in IPsec (IP security).</p>
+<p>内置 IPsec（IP security）。</p>
 </li>
 <li>
-<p>Simplified header structure.</p>
+<p>简化的标题结构。</p>
 </li>
 <li>
-<p>Support for mobile IP.</p>
+<p>支持移动 IP。</p>
 </li>
 <li>
-<p>IPv6-to-IPv4 transition mechanisms.</p>
+<p>IPv6 到 IPv4 的过渡机制。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>FreeBSD includes the <a href="http://www.kame.net/">KAME project</a> IPv6 reference implementation and comes with everything needed to use IPv6.</p>
+<p>FreeBSD 包含了 <a href="http://www.kame.net/">KAME 项目</a> IPv6 参考实现，并且提供了使用 IPv6 所需的一切。</p>
 </div>
 <div class="paragraph">
-<p>This section focuses on getting IPv6 configured and running.</p>
+<p>本节重点介绍如何配置和运行 IPv6。</p>
 </div>
 <div class="paragraph">
-<p>There are three different types of IPv6 addresses:</p>
+<p>IPv6 地址有三种不同的类型：</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Unicast</dt>
+<dt class="hdlist1">单播</dt>
 <dd>
-<p>A packet sent to a unicast address arrives at the interface belonging to the address.</p>
+<p>发送到单播地址的数据包到达与该地址相关的接口。</p>
 </dd>
-<dt class="hdlist1">Anycast</dt>
+<dt class="hdlist1">任播</dt>
 <dd>
-<p>These addresses are syntactically indistinguishable from unicast addresses but they address a group of interfaces. The packet destined for an anycast address will arrive at the nearest router interface. Anycast addresses are only used by routers.</p>
+<p>这些地址在语法上与单播地址无法区分，但它们用于寻址一组接口。发送到任播地址的数据包将到达最近的路由器接口。任播地址只由路由器使用。</p>
 </dd>
-<dt class="hdlist1">Multicast</dt>
+<dt class="hdlist1">多播</dt>
 <dd>
-<p>These addresses identify a group of interfaces. A packet destined for a multicast address will arrive at all interfaces belonging to the multicast group. The IPv4 broadcast address, usually <code>xxx.xxx.xxx.255</code>, is expressed by multicast addresses in IPv6.</p>
+<p>这些地址标识了一组接口。发送到多播地址的数据包将到达属于多播组的所有接口。 IPv4 广播地址通常为 <code>xxx.xxx.xxx.255</code>，在 IPv6 中用多播地址表示。</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>When reading an IPv6 address, the canonical form is represented as <code>x:x:x:x:x:x:x:x</code>, where each <code>x</code> represents a 16 bit hex value. An example is <code>FEBC:A574:382B:23C1:AA49:4592:4EFE:9982</code>.</p>
+<p>在阅读 IPv6 地址时，规范形式表示为 <code>x:x:x:x:x:x:x:x</code>，其中每个 <code>x</code> 表示一个 16 位的十六进制值。一个例子是 <code>FEBC:A574:382B:23C1:AA49:4592:4EFE:9982</code>。</p>
 </div>
 <div class="paragraph">
-<p>Often, an address will have long substrings of all zeros. A <code>::</code> (double colon) can be used to replace one substring per address. Also, up to three leading <code>0</code>s per hex value can be omitted. For example, <code>fe80::1</code> corresponds to the canonical form <code>fe80:0000:0000:0000:0000:0000:0000:0001</code>.</p>
+<p>通常，一个地址会有很长的全零子串。一个 <code>::</code>（双冒号）可以用来替换地址中的一个子串。此外，每个十六进制值前面的最多三个 <code>0</code> 可以省略。例如， <code>fe80::1</code> 对应的规范形式是 <code>fe80:0000:0000:0000:0000:0000:0000:0001</code>。</p>
 </div>
 <div class="paragraph">
-<p>A third form is to write the last 32 bits using the well known IPv4 notation. For example, <code>2002::10.0.0.1</code> corresponds to the hexadecimal canonical representation <code>2002:0000:0000:0000:0000:0000:0a00:0001</code>, which in turn is equivalent to <code>2002::a00:1</code>.</p>
+<p>第三种形式是使用众所周知的 IPv4 表示法编写最后 32 位。例如，<code>2002::10.0.0.1</code> 对应于十六进制的规范表示 <code>2002:0000:0000:0000:0000:0000:0a00:0001</code>，而这又等同于 <code>2002::a00:1</code>。</p>
 </div>
 <div class="paragraph">
-<p>To view a FreeBSD system’s IPv6 address execute the following command:</p>
+<p>要查看 FreeBSD 系统的 IPv6 地址，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8578,7 +8578,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8593,13 +8593,13 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In this example, the <code>em0</code> interface is using <code>fe80::21f:16ff:fe0f:275a%em0</code>, an auto-configured link-local address which was automatically generated from the MAC address.</p>
+<p>在这个例子中，<code>em0</code> 接口正在使用 <code>fe80::21f:16ff:fe0f:275a%em0</code>，这是一个自动配置的链路本地地址，它是根据 MAC 地址自动生成的。</p>
 </div>
 <div class="paragraph">
-<p>Some IPv6 addresses are reserved. A list of reserved addresses can be checked in the following table:</p>
+<p>一些 IPv6 地址是保留地址。保留地址的列表可以在下表中查看：</p>
 </div>
 <table id="reservedip6" class="tableblock frame-none grid-all stretch">
-<caption class="title">表 9. Example IPv6 Reserved Addresses</caption>
+<caption class="title">表 9. IPv6 保留地址示例</caption>
 <colgroup>
 <col style="width: 25%;"/>
 <col style="width: 25%;"/>
@@ -8608,74 +8608,74 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">IPv6 address</th>
-<th class="tableblock halign-left valign-top">Prefixlength (Bits)</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Notes</th>
+<th class="tableblock halign-left valign-top">IPv6 地址</th>
+<th class="tableblock halign-left valign-top">前缀长度（位）</th>
+<th class="tableblock halign-left valign-top">描述</th>
+<th class="tableblock halign-left valign-top">注释</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">128 bits</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">unspecified</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Equivalent to <code>0.0.0.0</code> in IPv4.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>::</code> 是 asciidoc 中的一个特殊标记，用于表示一个块级元素的开始。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">未指定的</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 中等同于 <code>0.0.0.0</code> 的地址。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>::1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">128 bits</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">loopback address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Equivalent to <code>127.0.0.1</code> in IPv4.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">环回地址</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 中等同于 <code>127.0.0.1</code> 的地址。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>::00:xx:xx:xx:xx</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">96 bits</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">embedded IPv4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The lower 32 bits are the compatible IPv4 address.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">96 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">嵌入式 IPv4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">低 32 位是兼容的 IPv4 地址。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>::ff:xx:xx:xx:xx</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">96 bits</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 mapped IPv6 address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The lower 32 bits are the IPv4 address for hosts which do not support IPv6.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">96 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IPv4 映射 IPv6 地址</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">低 32 位是不支持 IPv6 的主机的 IPv4 地址。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fe80::/10</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10 bits</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">link-local</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Equivalent to 169.254.0.0/16 in IPv4.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">链路本地</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">在 IPv4 中，等同于 169.254.0.0/16 的地址。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fc00::/7</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7 bits</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">unique-local</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Unique local addresses are intended for local communication and are only routable within a set of cooperating sites.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">唯一本地</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">唯一本地地址用于本地通信，只能在一组合作站点内进行路由。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ff00::</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8 bits</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">multicast</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">多播</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>2000::-3fff::</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3 bits</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">global unicast</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">All global unicast addresses are assigned from this pool. The first 3 bits are <code>001</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 位</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">全局单播</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">所有全局单播地址都是从这个地址池中分配的。前 3 位是 <code>001</code>。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>For further information on the structure of IPv6 addresses, refer to <a href="http://www.ietf.org/rfc/rfc3513.txt">RFC3513</a>.</p>
+<p>有关 IPv6 地址结构的更多信息，请参考 <a href="http://www.ietf.org/rfc/rfc3513.txt">RFC3513</a>。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="config-static-ip-v6">7.3.4. Configuring Static IPv6 Address<a class="anchor" href="#config-static-ip-v6"></a></h4>
+<h4 id="config-static-ip-v6">7.3.4. 配置静态 IPv6 地址<a class="anchor" href="#config-static-ip-v6"></a></h4>
 <div class="paragraph">
-<p>To configure a FreeBSD system as an IPv6 client with a static IPv6 address it is necessary to set the IPv6 address.</p>
+<p>要将 FreeBSD 系统配置为具有静态 IPv6 地址的 IPv6 客户端，需要设置 IPv6 地址。</p>
 </div>
 <div class="paragraph">
-<p>Execute the following commands to meet the requirements:</p>
+<p>执行以下命令以满足要求：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8683,7 +8683,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To assign a default router, specify its address executing the following command:</p>
+<p>要分配一个默认路由器，请执行以下命令指定其地址：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8692,12 +8692,12 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="config-dynamic-ip-v6">7.3.5. Configuring Dynamic IPv6 Address<a class="anchor" href="#config-dynamic-ip-v6"></a></h4>
+<h4 id="config-dynamic-ip-v6">7.3.5. 配置动态 IPv6 地址<a class="anchor" href="#config-dynamic-ip-v6"></a></h4>
 <div class="paragraph">
-<p>If the network has a DHCP server, it is very easy to configure the network interface to use DHCP. <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> will provide automatically the IP, the netmask and the default router.</p>
+<p>如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。<a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 会自动提供 IP 地址、子网掩码和默认路由器。</p>
 </div>
 <div class="paragraph">
-<p>To make the interface work with DHCP execute the following command:</p>
+<p>要使接口与 DHCP 配合工作，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8707,12 +8707,12 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_router_advertisement_and_host_auto_configuration">7.3.6. Router Advertisement and Host Auto Configuration<a class="anchor" href="#_router_advertisement_and_host_auto_configuration"></a></h4>
+<h4 id="_路由器通告和主机自动配置">7.3.6. 路由器通告和主机自动配置<a class="anchor" href="#_路由器通告和主机自动配置"></a></h4>
 <div class="paragraph">
-<p>This section demonstrates how to setup <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> on an IPv6 router to advertise the IPv6 network prefix and default route.</p>
+<p>本节演示了如何在 IPv6 路由器上设置 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a>，以广播 IPv6 网络前缀和默认路由。</p>
 </div>
 <div class="paragraph">
-<p>To enable <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a>, execute the following command:</p>
+<p>要启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a>，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8720,7 +8720,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It is important to specify the interface on which to do IPv6 router advertisement. For example, to tell <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> to use <code>em0</code>:</p>
+<p>指定 IPv6 路由器通告的接口非常重要。例如，要告诉 <a href="https://man.freebsd.org/cgi/man.cgi?query=rtadvd&amp;sektion=8&amp;format=html">rtadvd(8)</a> 使用 <code>em0</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8728,7 +8728,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Next, create the configuration file, <span class="filename">/etc/rtadvd.conf</span> as seen in this example:</p>
+<p>接下来，按照以下示例创建配置文件 <span class="filename">/etc/rtadvd.conf</span> ：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8737,22 +8737,22 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Replace <code>em0</code> with the interface to be used and <code>2001:db8:1f11:246::</code> with the prefix of the allocation.</p>
+<p>将 <code>em0</code> 替换为要使用的接口，将 <code>2001:db8:1f11:246::</code> 替换为分配的前缀。</p>
 </div>
 <div class="paragraph">
-<p>For a dedicated <code>/64</code> subnet, nothing else needs to be changed. Otherwise, change the <code>prefixlen#</code> to the correct value.</p>
+<p>对于一个专用的 <code>/64</code> 子网，不需要做任何其他更改。否则，请将 <code>prefixlen#</code> 更改为正确的值。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ipv6_and_ipv4_address_mapping">7.3.7. IPv6 and IPv4 Address mapping<a class="anchor" href="#_ipv6_and_ipv4_address_mapping"></a></h4>
+<h4 id="_ipv6_和_ipv4_地址映射">7.3.7. IPv6 和 IPv4 地址映射<a class="anchor" href="#_ipv6_和_ipv4_地址映射"></a></h4>
 <div class="paragraph">
-<p>When IPv6 is enabled on a server, there may be a need to enable IPv4 mapped IPv6 address communication. This compatibility option allows for IPv4 addresses to be represented as IPv6 addresses. Permitting IPv6 applications to communicate with IPv4 and vice versa may be a security issue.</p>
+<p>当服务器启用 IPv6 时，可能需要启用 IPv4 映射的 IPv6 地址通信。这个兼容选项允许将 IPv4 地址表示为 IPv6 地址。允许 IPv6 应用程序与 IPv4 相互通信可能会存在安全问题。</p>
 </div>
 <div class="paragraph">
-<p>This option may not be required in most cases and is available only for compatibility. This option will allow IPv6-only applications to work with IPv4 in a dual stack environment. This is most useful for third party applications which may not support an IPv6-only environment.</p>
+<p>在大多数情况下，这个选项可能不是必需的，只是为了兼容性而提供的。这个选项将允许仅支持 IPv6 的应用程序在双栈环境中与 IPv4 一起工作。这对于可能不支持仅 IPv6 环境的第三方应用程序非常有用。</p>
 </div>
 <div class="paragraph">
-<p>To enable this feature execute the following command:</p>
+<p>要启用此功能，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8762,12 +8762,12 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-wireless">7.4. Wireless Networks<a class="anchor" href="#network-wireless"></a></h3>
+<h3 id="network-wireless">7.4. 无线网络<a class="anchor" href="#network-wireless"></a></h3>
 <div class="paragraph">
-<p>Most wireless networks are based on the <a href="https://en.wikipedia.org/wiki/IEEE_802.11">IEEE® 802.11 standards</a>.</p>
+<p>大多数无线网络都基于 <a href="https://en.wikipedia.org/wiki/IEEE_802.11">IEEE® 802.11 标准</a>。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD supports networks that operate using <a href="https://en.wikipedia.org/wiki/IEEE_802.11a-1999">802.11a</a>, <a href="https://en.wikipedia.org/wiki/IEEE_802.11b-1999">802.11b</a>, <a href="https://en.wikipedia.org/wiki/IEEE_802.11g-2003">802.11g</a> and <a href="https://en.wikipedia.org/wiki/IEEE_802.11n-2009">802.11n</a>.</p>
+<p>FreeBSD 支持使用 <a href="https://en.wikipedia.org/wiki/IEEE_802.11a-1999">802.11a</a>，<a href="https://en.wikipedia.org/wiki/IEEE_802.11b-1999">802.11b</a>，<a href="https://en.wikipedia.org/wiki/IEEE_802.11g-2003">802.11g</a> 和 <a href="https://en.wikipedia.org/wiki/IEEE_802.11n-2009">802.11n</a> 网络。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -8777,49 +8777,49 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><a href="https://en.wikipedia.org/wiki/IEEE_802.11ac-2013">802.11ac</a> support on FreeBSD is currently under development.</p>
+<p>在 FreeBSD 上，目前正在开发对 <a href="https://en.wikipedia.org/wiki/IEEE_802.11ac-2013">802.11ac</a> 的支持。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>A basic wireless network consists of multiple stations communicating with radios that broadcast in either the 2.4GHz or 5GHz band, though this varies according to the locale and is also changing to enable communication in the 2.3GHz and 4.9GHz ranges.</p>
+<p>一个基本的无线网络由多个站点组成，这些站点使用广播在 2.4GHz 或 5GHz 频段进行通信，尽管这在不同地区可能有所不同，并且也在不断变化以实现在 2.3GHz 和 4.9GHz 范围内的通信。</p>
 </div>
 <div class="paragraph">
-<p>There are three basic steps to configure a wireless network:</p>
+<p>配置无线网络有三个基本步骤：</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Scan and select an access point</p>
+<p>扫描并选择一个接入点</p>
 </li>
 <li>
-<p>Authenticate the station</p>
+<p>验证该站点</p>
 </li>
 <li>
-<p>Configure an IP address or use DHCP.</p>
+<p>配置 IP 地址或使用 DHCP。</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>The following sections discuss each step.</p>
+<p>下面的部分讨论了每个步骤。</p>
 </div>
 <div class="sect3">
-<h4 id="network-wireless-quick-start">7.4.1. Quick Start to Connect to a Wireless Network<a class="anchor" href="#network-wireless-quick-start"></a></h4>
+<h4 id="network-wireless-quick-start">7.4.1. 连接无线网络的快速入门指南<a class="anchor" href="#network-wireless-quick-start"></a></h4>
 <div class="paragraph">
-<p>Connecting FreeBSD to an existing wireless network is a very common situation.</p>
+<p>将 FreeBSD 连接到现有的无线网络是一种非常常见的情况。</p>
 </div>
 <div class="paragraph">
-<p>This procedure shows the steps required:</p>
+<p>该过程显示所需的步骤：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The first step will be to obtain the SSID (Service Set Identifier) and PSK (Pre-Shared Key) for the wireless network from the network administrator.</p>
+<p>第一步是从网络管理员那里获取无线网络的 SSID （服务集标识）和 PSK （预共享密钥）。</p>
 </li>
 <li>
-<p>The second step will be to add an entry for this network to <span class="filename">/etc/wpa_supplicant.conf</span>. If the file does not exist, create it:</p>
+<p>第二步是将此网络添加到 <span class="filename">/etc/wpa_supplicant.conf</span> 的条目中。如果文件不存在，请创建它：</p>
 </li>
 </ul>
 </div>
@@ -8835,11 +8835,11 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Is the SSID of the wireless network. Replace it with the name of the wireless network. &lt;.&gt; Is the PSK of the wireless network. Replace it with the password of the wireless network.
+<td>是无线网络的 SSID 。请将其替换为无线网络的名称。 &lt;.&gt; 是无线网络的 PSK 。请将其替换为无线网络的密码。
 <div class="ulist">
 <ul>
 <li>
-<p>The third step will be to add the network entry to configure the network on startup:</p>
+<p>第三步是添加网络条目以在启动时配置网络：</p>
 </li>
 </ul>
 </div></td>
@@ -8855,7 +8855,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>And the last step will be the restart <code>netif</code> service executing the following command:</p>
+<p>最后一步将是重新启动 <code>netif</code> 服务，执行以下命令：</p>
 </li>
 </ul>
 </div>
@@ -8866,9 +8866,9 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="basic-wireless-configuration">7.4.2. Basic Wireless Configuration<a class="anchor" href="#basic-wireless-configuration"></a></h4>
+<h4 id="basic-wireless-configuration">7.4.2. 基本无线配置<a class="anchor" href="#basic-wireless-configuration"></a></h4>
 <div class="paragraph">
-<p>The first step will be to configure the wireless network card to an interface. To find out what wireless network cards are in the system check the section <a href="#config-identify-network-adapter">Identify Network Adapters</a>.</p>
+<p>第一步是将无线网络卡配置到一个接口上。要查看系统中有哪些无线网络卡，请参考 <a href="#config-identify-network-adapter">识别网络适配器</a> 部分。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8876,7 +8876,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To make the change persist across reboots execute the following command:</p>
+<p>要使更改在重新启动后保持生效，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8891,10 +8891,10 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Since the regulatory situation is different in various parts of the world, it is necessary to correctly set the domains that apply to your location to have the correct information about what channels can be used.</p>
+<p>由于世界各地的监管情况不同，因此有必要正确设置适用于您所在地区的域名，以获取关于可以使用哪些频道的正确信息。</p>
 </div>
 <div class="paragraph">
-<p>The available region definitions can be found in <span class="filename">/etc/regdomain.xml</span>. To set the data at runtime, use <code>ifconfig</code>:</p>
+<p>可用的区域定义可以在 <span class="filename">/etc/regdomain.xml</span> 中找到。要在运行时设置数据，请使用 <code>ifconfig</code> 命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8902,7 +8902,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To persist the settings, add it to <span class="filename">/etc/rc.conf</span>:</p>
+<p>要持久保存设置，请将其添加到 [/etc/rc.conf] 文件中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8915,12 +8915,12 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="scan-wireless-networks">7.4.3. Scan Wireless Networks<a class="anchor" href="#scan-wireless-networks"></a></h4>
+<h4 id="scan-wireless-networks">7.4.3. 扫描无线网络<a class="anchor" href="#scan-wireless-networks"></a></h4>
 <div class="paragraph">
-<p>Available wireless networks can be scanned using <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a>.</p>
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 命令扫描可用的无线网络。</p>
 </div>
 <div class="paragraph">
-<p>To list the wireless networks execute the following command:</p>
+<p>要列出无线网络，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8928,7 +8928,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8944,32 +8944,32 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>SSID/MESH ID identifies the name of the network.</p>
+<p>SSID/MESH ID 标识网络的名称。</p>
 </li>
 <li>
-<p>BSSID identifies the MAC address of the access point.</p>
+<p>BSSID 标识了接入点的 MAC 地址。</p>
 </li>
 <li>
-<p>CAPS field identifies the type of each network and the capabilities of the stations operating there (see the definition of <code>list scan</code> in <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> for more details).</p>
+<p>CAPS 字段标识了每个网络的类型以及在该网络上运行的站点的能力（有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 中 <code>list scan</code> 的定义）。</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect3">
-<h4 id="wireless-authentication">7.4.4. Connection and Authentication to a Wireless Network<a class="anchor" href="#wireless-authentication"></a></h4>
+<h4 id="wireless-authentication">7.4.4. 连接和认证无线网络<a class="anchor" href="#wireless-authentication"></a></h4>
 <div class="paragraph">
-<p>Once a wireless network has been selected from the list of scanned networks, it is necessary to perform the connection and the authentication. In the vast majority of wireless networks, authentication is done with a password configured in the router. Other schemes require cryptographic handshakes to be completed before data traffic can flow, either using pre-shared keys or secrets, or more complex schemes that involve backend services such as RADIUS.</p>
+<p>一旦从扫描到的网络列表中选择了一个无线网络，就需要进行连接和认证。在绝大多数无线网络中，认证是通过路由器中配置的密码来完成的。其他方案要求在数据流量可以流动之前完成加密握手，可以使用预共享密钥或密钥，也可以使用涉及后端服务（如 RADIUS）的更复杂的方案。</p>
 </div>
 <div class="sect4">
-<h5 id="authenticate-wpa2-wpa-personal">7.4.4.1. Authenticate with WPA2/WPA/Personal<a class="anchor" href="#authenticate-wpa2-wpa-personal"></a></h5>
+<h5 id="authenticate-wpa2-wpa-personal">7.4.4.1. 使用 WPA2/WPA/Personal<a class="anchor" href="#authenticate-wpa2-wpa-personal"></a></h5>
 <div class="paragraph">
-<p>The authentication process in a wireless network is managed by <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a>.</p>
+<p>无线网络中的身份验证过程由 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> 管理。</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> configuration will be made in the <span class="filename">/etc/wpa_supplicant.conf</span> file. For more information, see <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant.conf&amp;sektion=5&amp;format=html">wpa_supplicant.conf(5)</a>.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> 配置将在 <span class="filename">/etc/wpa_supplicant.conf</span> 文件中进行。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant.conf&amp;sektion=5&amp;format=html">wpa_supplicant.conf(5)</a>。</p>
 </div>
 <div class="paragraph">
-<p>Once the scanning of the wireless networks has been carried out, a network has been chosen and have the password (PSK), that information will be added to the file <span class="filename">/etc/wpa_supplicant.conf</span> as in the following example:</p>
+<p>一旦完成了对无线网络的扫描，选择了一个网络并获得了密码（PSK），那么这些信息将被添加到文件 <span class="filename">/etc/wpa_supplicant.conf</span> 中，如下所示的示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -8984,15 +8984,15 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>SSID scan technique. Only need to use this option if the network is hidden. &lt;.&gt; Network name. &lt;.&gt; Passwork of the wireless network.</td>
+<td>SSID 扫描技术。只有在网络隐藏时才需要使用此选项。 &lt;.&gt; 网络名称。 &lt;.&gt; 无线网络的密码。</td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The next step will be to configure the wireless connection in the file <span class="filename">/etc/rc.conf</span>.</p>
+<p>下一步将是在文件 <span class="filename">/etc/rc.conf</span> 中配置无线连接。</p>
 </div>
 <div class="paragraph">
-<p>To use a static address it will be necessary to execute the following command:</p>
+<p>要使用静态地址，需要执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9000,7 +9000,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="paragraph">
-<p>To use a dynamic address it will be necessary to execute the following command:</p>
+<p>要使用动态地址，需要执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9008,7 +9008,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="paragraph">
-<p>Then restart the network executing the following command:</p>
+<p>然后执行以下命令重新启动网络：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9023,7 +9023,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </td>
 <td class="content">
 <div class="paragraph">
-<p>More information on how to perform more advanced methods of authentication can be obtained at <a href="./#network-advanced-wireless">Wireless Advanced Authentication</a>.</p>
+<p>可以在 <a href="./#network-advanced-wireless">“无线高级认证”</a> 获取有关如何执行更高级身份验证方法的更多信息。</p>
 </div>
 </td>
 </tr>
@@ -9031,7 +9031,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="sect4">
-<h5 id="authenticate-open-networks">7.4.4.2. Authenticate with Open Networks<a class="anchor" href="#authenticate-open-networks"></a></h5>
+<h5 id="authenticate-open-networks">7.4.4.2. 使用开放网络进行身份验证<a class="anchor" href="#authenticate-open-networks"></a></h5>
 <div class="admonitionblock tip">
 <table>
 <tbody><tr>
@@ -9040,14 +9040,14 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </td>
 <td class="content">
 <div class="paragraph">
-<p>It is important that the user is <strong>very</strong> careful when connecting to open networks without any kind of authentication.</p>
+<p>当用户连接到没有任何身份验证方式的开放网络时，非常重要的是用户要非常小心。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Once the wireless network scan is done and the SSID of the wireless network is selected, execute the following command:</p>
+<p>完成无线网络扫描并选择无线网络的 SSID 后，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9055,7 +9055,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="paragraph">
-<p>And then execute <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> to get the address configured:</p>
+<p>然后执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 来获取配置的地址：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9065,22 +9065,22 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_both_wired_and_wireless_connections">7.4.5. Using Both Wired and Wireless Connections<a class="anchor" href="#_using_both_wired_and_wireless_connections"></a></h4>
+<h4 id="_同时使用有线和无线连接">7.4.5. 同时使用有线和无线连接<a class="anchor" href="#_同时使用有线和无线连接"></a></h4>
 <div class="paragraph">
-<p>A wired connection provides better performance and reliability, while a wireless connection provides flexibility and mobility. Laptop users typically want to roam seamlessly between the two types of connections.</p>
+<p>有线连接提供更好的性能和可靠性，而无线连接提供灵活性和移动性。笔记本电脑用户通常希望在这两种连接类型之间无缝切换。</p>
 </div>
 <div class="paragraph">
-<p>On FreeBSD, it is possible to combine two or even more network interfaces together in a &#34;failover&#34; fashion. This type of configuration uses the most preferred and available connection from a group of network interfaces, and the operating system switches automatically when the link state changes.</p>
+<p>在 FreeBSD 上，可以以“故障转移（failover）”的方式将两个甚至更多的网络接口组合在一起。这种配置类型使用一组网络接口中最优先和可用的连接，并且当链路状态发生变化时，操作系统会自动切换。</p>
 </div>
 <div class="paragraph">
-<p>Link aggregation and failover is covered in <a href="./#network-aggregation">Link Aggregation and Failover</a> and an example for using both wired and wireless connections is provided at <a href="./#networking-lagg-wired-and-wireless">Failover Mode Between Ethernet and Wireless Interfaces</a>.</p>
+<p>链路聚合和故障转移在 <a href="./#network-aggregation">“链路聚合和故障转移”</a> 中有详细介绍，并且在 <a href="./#networking-lagg-wired-and-wireless">“以太网和无线接口之间的故障转移模式”</a> 中提供了同时使用有线和无线连接的示例。</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="hostname">7.5. Hostname<a class="anchor" href="#hostname"></a></h3>
+<h3 id="hostname">7.5. 主机名<a class="anchor" href="#hostname"></a></h3>
 <div class="paragraph">
-<p>The hostname represents the fully qualified domain name (FQDN) of the host on the network.</p>
+<p>主机名表示网络上主机的完全限定域名（FQDN）。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -9090,16 +9090,16 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If no hostname has been set for the host FreeBSD will assign the value <code>Amnesiac</code>.</p>
+<p>如果主机没有设置主机名，FreeBSD 将分配值 <code>Amnesiac</code>。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="get-hostname">7.5.1. Check The Current Hostname<a class="anchor" href="#get-hostname"></a></h4>
+<h4 id="get-hostname">7.5.1. 检查当前主机名<a class="anchor" href="#get-hostname"></a></h4>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=hostname&amp;sektion=1&amp;format=html">hostname(1)</a> can be used to check the current hostname:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=hostname&amp;sektion=1&amp;format=html">hostname(1)</a> 可以用来检查当前的主机名：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9107,7 +9107,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -9116,9 +9116,9 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="sect3">
-<h4 id="change-hostname">7.5.2. Change Hostname<a class="anchor" href="#change-hostname"></a></h4>
+<h4 id="change-hostname">7.5.2. 更改主机名<a class="anchor" href="#change-hostname"></a></h4>
 <div class="paragraph">
-<p>To change the hostname of the host and persist it across reboots execute the following command:</p>
+<p>要更改主机的主机名并在重新启动后保持不变，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9130,13 +9130,13 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <div class="sect2">
 <h3 id="dns">7.6. DNS<a class="anchor" href="#dns"></a></h3>
 <div class="paragraph">
-<p>The DNS could be understanded as a <a href="https://en.wikipedia.org/wiki/Telephone_directory">telephone directory</a> in which an IP is identified to a hostname and vice versa.</p>
+<p>DNS 可以被理解为一个 <a href="https://en.wikipedia.org/wiki/Telephone_directory">电话簿</a>，其中将 IP 地址与主机名进行互相识别。</p>
 </div>
 <div class="paragraph">
-<p>There are three files that handle how a FreeBSD system interact with the DNS. These three files are <a href="https://man.freebsd.org/cgi/man.cgi?query=hosts&amp;sektion=5&amp;format=html">hosts(5)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a></p>
+<p>有三个文件处理 FreeBSD 系统与 DNS 的交互。这三个文件是 <a href="https://man.freebsd.org/cgi/man.cgi?query=hosts&amp;sektion=5&amp;format=html">hosts(5)</a>、<a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a>。</p>
 </div>
 <div class="paragraph">
-<p>Unless otherwise stated in the <span class="filename">/etc/nsswitch.conf</span> file, FreeBSD will look at the addresses in the <span class="filename">/etc/hosts</span> file and then the DNS information in the <span class="filename">/etc/resolv.conf</span> file.</p>
+<p>除非在 <span class="filename">/etc/nsswitch.conf</span> 文件中另有说明，否则 FreeBSD 将首先查看 <span class="filename">/etc/hosts</span> 文件中的地址，然后再查看 <span class="filename">/etc/resolv.conf</span> 文件中的 DNS 信息。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -9146,10 +9146,10 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a> file specifies how the nsdispatch (name-service switch dispatcher) should operate.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=nsswitch.conf&amp;sektion=5&amp;format=html">nsswitch.conf(5)</a> 文件指定了 nsdispatch（名称服务切换调度程序）的操作方式。</p>
 </div>
 <div class="paragraph">
-<p>By default, the hosts section of the <span class="filename">/etc/nsswitch.conf</span> file will be as follows:</p>
+<p>默认情况下，<span class="filename">/etc/nsswitch.conf</span> 文件的 hosts 部分将如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -9157,7 +9157,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="paragraph">
-<p>For example, in case of using the <a href="https://man.freebsd.org/cgi/man.cgi?query=nscd&amp;sektion=8&amp;format=html">nscd(8)</a> service. The order of preference could be changed by leaving the line as follows:</p>
+<p>例如，在使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=nscd&amp;sektion=8&amp;format=html">nscd(8)</a> 服务的情况下，可以通过将该行保持如下来更改优先顺序：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -9169,12 +9169,12 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="local-addresses">7.6.1. Local addresses<a class="anchor" href="#local-addresses"></a></h4>
+<h4 id="local-addresses">7.6.1. 本地地址<a class="anchor" href="#local-addresses"></a></h4>
 <div class="paragraph">
-<p>The <span class="filename">/etc/hosts</span> file is a simple text database who provide host name to IP address mappings. Entries for local computers connected via a LAN can be added to this file for simplistic naming purposes instead of setting up a DNS server. Additionally, <span class="filename">/etc/hosts</span> can be used to provide a local record of Internet names, reducing the need to query external DNS servers for commonly accessed names.</p>
+<p><span class="filename">/etc/hosts</span> 文件是一个简单的文本数据库，用于提供主机名到 IP 地址的映射。可以将连接到局域网的本地计算机的条目添加到此文件中，以简化命名，而不是设置 DNS 服务器。此外， <span class="filename">/etc/hosts</span> 还可以用于提供互联网名称的本地记录，减少查询外部 DNS 服务器以获取常用名称的需求。</p>
 </div>
 <div class="paragraph">
-<p>For example, in the case of having a local instance of <a class="package" href="https://cgit.freebsd.org/ports/tree/www/gitlab-ce/">www/gitlab-ce</a> in a local environment, it could be added as follows to the file <span class="filename">/etc/hosts</span>:</p>
+<p>例如，在本地环境中有一个名为 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/gitlab-ce/">www/gitlab-ce</a> 的本地实例的情况下，可以将其添加到文件 <span class="filename">/etc/hosts</span> 中，如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -9183,12 +9183,12 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-nameserver">7.6.2. Configuring the Nameserver<a class="anchor" href="#configuring-nameserver"></a></h4>
+<h4 id="configuring-nameserver">7.6.2. 配置域名服务器<a class="anchor" href="#configuring-nameserver"></a></h4>
 <div class="paragraph">
-<p>How a FreeBSD system accesses the Internet Domain Name System (DNS) is controlled by <a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a>.</p>
+<p>FreeBSD 系统如何访问互联网域名系统（DNS）由 <a href="https://man.freebsd.org/cgi/man.cgi?query=resolv.conf&amp;sektion=5&amp;format=html">resolv.conf(5)</a> 控制。</p>
 </div>
 <div class="paragraph">
-<p>The most common entries to <span class="filename">/etc/resolv.conf</span> are:</p>
+<p>最常见的条目是 <span class="filename">/etc/resolv.conf</span> ：</p>
 </div>
 <table class="tableblock frame-none grid-all stretch informaltable">
 <colgroup>
@@ -9198,20 +9198,20 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nameserver</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The IP address of a name server the resolver should query. The servers are queried in the order listed with a maximum of three.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">解析器应查询的名称服务器的 IP 地址。按照列出的顺序查询服务器，最多查询三个。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>search</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Search list for hostname lookup. This is normally determined by the domain of the local hostname.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">搜索列表用于主机名查找。通常由本地主机名的域确定。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>domain</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The local domain name.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">本地域名。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>A typical <span class="filename">/etc/resolv.conf</span> looks like this:</p>
+<p>一个典型的 <span class="filename">/etc/resolv.conf</span> 文件如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -9228,14 +9228,14 @@ nameserver 147.11.100.30</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Only one of the <code>search</code> and <code>domain</code> options should be used.</p>
+<p>只能使用 <code>search</code> 和 <code>domain</code> 选项中的一个。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>When using DHCP, <a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> usually rewrites <span class="filename">/etc/resolv.conf</span> with information received from the DHCP server.</p>
+<p>在使用 DHCP 时，<a href="https://man.freebsd.org/cgi/man.cgi?query=dhclient&amp;sektion=8&amp;format=html">dhclient(8)</a> 通常会使用从 DHCP 服务器接收到的信息重写 .filename#/etc/resolv.conf# 文件。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -9245,10 +9245,10 @@ nameserver 147.11.100.30</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the machine in which the configuration is being made is <strong>not</strong> a DNS server, <a href="https://man.freebsd.org/cgi/man.cgi?query=local-unbound&amp;sektion=8&amp;format=html">local-unbound(8)</a> can be used to improve DNS lookup performance.</p>
+<p>如果进行配置的机器 <strong>不是</strong> DNS 服务器，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=local-unbound&amp;sektion=8&amp;format=html">local-unbound(8)</a> 来提高 DNS 查找性能。</p>
 </div>
 <div class="paragraph">
-<p>To enable it at boot time execute the following command:</p>
+<p>要在启动时启用它，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9256,7 +9256,7 @@ nameserver 147.11.100.30</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To start the <a href="https://man.freebsd.org/cgi/man.cgi?query=local-unbound&amp;sektion=8&amp;format=html">local-unbound(8)</a> service execute the following command:</p>
+<p>要启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=local-unbound&amp;sektion=8&amp;format=html">local-unbound(8)</a> 服务，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9270,26 +9270,26 @@ nameserver 147.11.100.30</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="troubleshooting">7.7. Troubleshooting<a class="anchor" href="#troubleshooting"></a></h3>
+<h3 id="troubleshooting">7.7. 故障排除<a class="anchor" href="#troubleshooting"></a></h3>
 <div class="paragraph">
-<p>When troubleshooting hardware and software configurations, check the simple things first.</p>
+<p>在排除硬件和软件配置问题时，首先检查简单的事情。</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Is the network cable plugged in?</p>
+<p>网络电缆已插好吗？</p>
 </li>
 <li>
-<p>Are the network services properly configured?</p>
+<p>网络服务是否已正确配置？</p>
 </li>
 <li>
-<p>Is the firewall configured correctly?</p>
+<p>防火墙配置正确吗？</p>
 </li>
 <li>
-<p>Is the NIC supported by FreeBSD?</p>
+<p>FreeBSD 是否支持该网卡？</p>
 </li>
 <li>
-<p>Is the router working correctly?</p>
+<p>路由器是否正常工作？</p>
 </li>
 </ul>
 </div>
@@ -9301,42 +9301,42 @@ nameserver 147.11.100.30</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Before sending a bug report, always check the Hardware Notes in the <a href="https://www.freebsd.org/releases/">FreeBSD release page</a>, update the version of FreeBSD to the latest STABLE version, check the mailing list archives, and search the Internet.</p>
+<p>在发送错误报告之前，始终要在 <a href="https://www.freebsd.org/releases/">FreeBSD 发布页面</a> 检查硬件说明 ，将 FreeBSD 版本更新到最新的 STABLE 版本，检查邮件列表存档，并在互联网上进行搜索。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="wired-troubleshooting">7.7.1. Troubleshooting in Wired Networks<a class="anchor" href="#wired-troubleshooting"></a></h4>
+<h4 id="wired-troubleshooting">7.7.1. 有线网络故障排除<a class="anchor" href="#wired-troubleshooting"></a></h4>
 <div class="paragraph">
-<p>If the card works, yet performance is poor, read through <a href="https://man.freebsd.org/cgi/man.cgi?query=tuning&amp;sektion=7&amp;format=html">tuning(7)</a>. Also, check the network configuration as incorrect network settings can cause slow connections.</p>
+<p>如果卡可以正常工作，但性能较差，请阅读 <a href="https://man.freebsd.org/cgi/man.cgi?query=tuning&amp;sektion=7&amp;format=html">tuning(7)</a>。此外，请检查网络配置，因为不正确的网络设置可能会导致连接变慢。</p>
 </div>
 <div class="paragraph">
-<p><code>No route to host</code> messages occur if the system is unable to route a packet to the destination host. This can happen if no default route is specified or if a cable is unplugged. Check the output of <code>netstat -rn</code> and make sure there is a valid route to the host. If there is not, read <a href="./#network-routing">Gateways and Routes</a>.</p>
+<p>如果系统无法将数据包路由到目标主机，则会出现“无法到达主机”的消息。如果没有指定默认路由或者电缆未插好，就会发生这种情况。检查 <code>netstat -rn</code> 的输出，并确保存在到目标主机的有效路由。如果不存在有效路由，请阅读 <a href="./#network-routing">“网关和路由”</a>.</p>
 </div>
 <div class="paragraph">
-<p><code>ping: sendto: Permission denied</code> error messages are often caused by a misconfigured firewall. If a firewall is enabled on FreeBSD but no rules have been defined, the default policy is to deny all traffic, even <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a>. Refer to <a href="./#firewalls">Firewalls</a> for more information.</p>
+<p><code>ping: sendto: Permission denied</code> 错误消息通常是由于配置错误的防火墙引起的。如果在 FreeBSD 上启用了防火墙但没有定义规则，那么默认策略是拒绝所有流量，甚至是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a>。有关更多信息，请参考 <a href="./#firewalls">防火墙</a>。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="wireless-troubleshooting">7.7.2. Troubleshooting in Wireless Networks<a class="anchor" href="#wireless-troubleshooting"></a></h4>
+<h4 id="wireless-troubleshooting">7.7.2. 无线网络故障排除<a class="anchor" href="#wireless-troubleshooting"></a></h4>
 <div class="paragraph">
-<p>This section describes a number of steps to help troubleshoot common wireless networking problems.</p>
+<p>本节描述了一些步骤，以帮助解决常见的无线网络问题。</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>If the access point is not listed when scanning, check that the configuration has not limited the wireless device to a limited set of channels.</p>
+<p>如果在扫描时未列出访问点，请检查配置是否限制了无线设备的频道范围。</p>
 </li>
 <li>
-<p>If the device cannot associate with an access point, verify that the configuration matches the settings on the access point. This includes the authentication scheme and any security protocols. Simplify the configuration as much as possible. If using a security protocol such as WPA2 or WPA, configure the access point for open authentication and no security to see if traffic will pass.</p>
+<p>如果设备无法与接入点关联，请验证配置是否与接入点上的设置匹配。这包括认证方案和任何安全协议。尽量简化配置。如果使用 WPA2 或 WPA 等安全协议，请将接入点配置为开放认证和无安全性，以查看是否可以传输流量。</p>
 </li>
 <li>
-<p>Once the system can associate with the access point, diagnose the network configuration using tools like <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a>.</p>
+<p>一旦系统能够与接入点建立关联，可以使用诸如 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 之类的工具来诊断网络配置。</p>
 </li>
 <li>
-<p>There are many lower-level debugging tools. Debugging messages can be enabled in the 802.11 protocol support layer using <a href="https://man.freebsd.org/cgi/man.cgi?query=wlandebug&amp;sektion=8&amp;format=html">wlandebug(8)</a>.</p>
+<p>有许多低级调试工具。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=wlandebug&amp;sektion=8&amp;format=html">wlandebug(8)</a> 在 802.11 协议支持层启用调试消息。</p>
 </li>
 </ul>
 </div>
@@ -49254,7 +49254,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: December 28, 2023 by <a href="https://cgit.freebsd.org/doc/commit/?id=12faea9" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: January 3, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=c3e03a8" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
@@ -49294,9 +49294,9 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
         <li><a href="#bsdinstall">Chapter 2. 安装 FreeBSD</a></li>
         <li><a href="#basics">Chapter 3. FreeBSD 基础知识</a></li>
         <li><a href="#ports">Chapter 4. 安装应用程序：软件包和 Ports</a></li>
-        <li><a href="#x11">Chapter 5. The X Window System</a></li>
+        <li><a href="#x11">Chapter 5. X Window System （X  Window系统）</a></li>
         <li><a href="#wayland">Chapter 6. 在 FreeBSD 上的 Wayland</a></li>
-        <li><a href="#network">Chapter 7. Network</a></li>
+        <li><a href="#network">Chapter 7. 网络</a></li>
       </ul>
     </li>
     <li><a href="#common-tasks">Part II: 常见任务</a>
@@ -49385,7 +49385,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
       </section>
       
       <section class="copyright-column">
-        <p>&copy; 1994-2023 The FreeBSD Project. All rights reserved</p>
+        <p>&copy; 1994-2024 The FreeBSD Project. All rights reserved</p>
         <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
       </section>
   </div>
