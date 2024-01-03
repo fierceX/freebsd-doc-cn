@@ -57,9 +57,9 @@ endif::[]
 * 在 FreeBSD 中配置有线网络的能力，包括网络接口设置、寻址和定制选项。
 * 在 FreeBSD 中配置无线网络的技能，包括无线网络接口设置、安全协议和故障排除技术。
 * FreeBSD 的网络能力以及其在优秀网络性能方面的声誉。
-* 对于 FreeBSD 支持的各种网络服务和协议的理解，包括 DNS 、 DHCP 等的配置说明。
+* 对于 FreeBSD 支持的各种网络服务和协议的理解，包括 DNS、DHCP 等的配置说明。
 
-有关如何进行高级网络配置的更多信息，请参阅 crossref:advanced-networking[高级网络配置， Advanced Networking] 。
+有关如何进行高级网络配置的更多信息，请参阅 crossref:advanced-networking[advanced-networking, 高级网络]。
 
 [[config-network-setup]]
 == 设置网络
@@ -69,7 +69,7 @@ endif::[]
 在开始配置之前，需要了解以下网络数据：
 
 * 如果网络使用 DHCP
-* 如果网络没有 DHCP ，则使用静态 IP 。
+* 如果网络没有 DHCP，则使用静态 IP 。
 * 子网掩码
 * 默认网关的 IP 地址
 
@@ -81,7 +81,7 @@ endif::[]
 [[config-identify-network-adapter]]
 === 识别网络适配器
 
-FreeBSD 支持各种有线和无线网络适配器。请查看所使用的 FreeBSD 版本的硬件兼容性列表 (link:https://www.freebsd.org/releases/[FreeBSD release]) ，以查看网络适配器是否受支持。
+FreeBSD 支持各种有线和无线网络适配器。请查看所使用的 FreeBSD 版本的硬件兼容性列表 link:https://www.freebsd.org/releases/[FreeBSD release]，以查看网络适配器是否受支持。
 
 要获取我们系统使用的网络适配器，请执行以下命令：
 
@@ -106,7 +106,7 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
     class      = networ
 ....
 
-在 ' @ ' 符号之前的文本是控制设备的驱动程序的名称。在这种情况下，它们是 man:em[4] 和 man:iwn[4] 。
+在 '@' 符号之前的文本是控制设备的驱动程序的名称。在这种情况下，它们是 man:em[4] 和 man:iwn[4]。
 
 <1> 显示供应商的名称
 <2> 显示设备的名称
@@ -133,9 +133,9 @@ if_alc_load="YES"
 [[config-network-connection]]
 == 有线网络
 
-一旦正确的驱动程序加载完成，需要配置网络适配器。 FreeBSD 使用驱动程序名称后跟一个单元号来命名网络接口适配器。单元号表示适配器在引导时被检测到的顺序，或者是稍后被发现的顺序。
+一旦正确的驱动程序加载完成，需要配置网络适配器。FreeBSD 使用驱动程序名称后跟一个单元号来命名网络接口适配器。单元号表示适配器在引导时被检测到的顺序，或者是稍后被发现的顺序。
 
-例如， `em0` 是系统上使用 man:em[4] 驱动程序的第一个网络接口卡（ NIC ）。
+例如，`em0` 是系统上使用 man:em[4] 驱动程序的第一个网络接口卡（NIC）。
 
 要显示网络接口配置，请输入以下命令：
 
@@ -167,21 +167,21 @@ lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> metric 0 mtu 16384
 
 在这个例子中，显示了以下设备：
 
-* `em0` ：以太网接口。
-* `lo0` ：循环接口是一种软件环回机制，可用于性能分析、软件测试和 / 或本地通信。有关更多信息，请参阅 man:lo[4] 。
+* `em0`：以太网接口。
+* `lo0`：回环接口是一种软件环回机制，可用于性能分析、软件测试或本地通信。有关更多信息，请参阅 man:lo[4]。
 
 这个例子显示 `em0` 已经启动并运行。
 
 关键指标包括：
 
 . `UP` 表示接口已配置并准备就绪。
-. 该接口具有一个 IPv4 Internet （ `inet` ）地址， `192.168.1.19` 。
-. 该接口具有一个 IPv6 Internet （ `inet6` ）地址， `fe80::21f:16ff:fe0f:275a%em0` 。
-. 它具有有效的子网掩码（ `netmask` ），其中 `0xffffff00` 与 `255.255.255.0` 相同。
-. 它具有有效的广播地址， `192.168.1.255` 。
-. 接口（ `ether` ）的 MAC 地址是 `00:1f:16:0f:27:5a` 。
-. 物理媒体选择处于自动选择模式（ ` 媒体：以太网自动选择（ 1000baseT < 全双工 > ） ` ）。
-. 链接的状态（ `status` ）为 `active` ，表示检测到载波信号。对于 `em0` ，当以太网电缆未插入接口时， `status: no carrier` 状态是正常的。
+. 该接口具有一个 IPv4 Internet（`inet`）地址，`192.168.1.19`。
+. 该接口具有一个 IPv6 Internet（`inet6`）地址，`fe80::21f:16ff:fe0f:275a%em0` 。
+. 它具有有效的子网掩码（`netmask`），其中 `0xffffff00` 与 `255.255.255.0` 相同。
+. 它具有有效的广播地址，`192.168.1.255`。
+. 接口（`ether`）的 MAC 地址是 `00:1f:16:0f:27:5a`。
+. 物理媒体选择处于自动选择模式（`media: Ethernet autoselect (1000baseT <full-duplex>)`）。
+. 链接的状态（`status`）为 `active`，表示检测到载波信号。对于 `em0`，当以太网电缆未插入接口时，`status: no carrier` 状态是正常的。
 
 如果 man:ifconfig[8] 命令的输出结果与下面的输出结果类似，那么说明接口尚未配置：
 
@@ -204,7 +204,7 @@ em0: flags=8822<BROADCAST,SIMPLEX,MULTICAST> metric 0 mtu 1500
 
 [NOTE]
 ====
-如果网络在安装过程中由 man:bsdinstall[8] 进行配置，则可能已经存在一些网络接口卡（ NIC ）的条目。在执行 man:sysrc[8] 之前，请仔细检查 [.filename]#/etc/rc.conf# 。
+如果网络在安装过程中由 man:bsdinstall[8] 进行配置，则可能已经存在一些网络接口卡（NIC）的条目。在执行 man:sysrc[8] 之前，请仔细检查 [.filename]#/etc/rc.conf#。
 ====
 
 可以通过执行以下命令来设置 IP 地址：
@@ -236,7 +236,7 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 ....
 
-然后执行以下命令重新启动 `netif` 和 `routing` ：
+然后执行以下命令重新启动 `netif` 和 `routing`：
 
 [source, shell]
 ....
@@ -266,7 +266,7 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms
 [[config-dynamic-ip-v4]]
 === 配置动态 IPv4 地址
 
-如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。 FreeBSD 使用 man:dhclient[8] 作为 DHCP 客户端。 man:dhclient[8] 会自动提供 IP 地址、子网掩码和默认路由器。
+如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。FreeBSD 使用 man:dhclient[8] 作为 DHCP 客户端。 man:dhclient[8] 会自动提供 IP 地址、子网掩码和默认路由器。
 
 要使接口与 DHCP 配合工作，请执行以下命令：
 
@@ -298,7 +298,7 @@ bound to 192.168.1.19 -- renewal in 43200 seconds.
 ====
 man:dhclient[8] 客户端可以在后台启动。这可能会对依赖于正常工作网络的应用程序造成麻烦，但在许多情况下，它将提供更快的启动速度。
 
-要在后台执行 man:dhclient[8] ，请执行以下命令：
+要在后台执行 man:dhclient[8]，请执行以下命令：
 
 [source, shell]
 ....
@@ -306,7 +306,7 @@ man:dhclient[8] 客户端可以在后台启动。这可能会对依赖于正常�
 ....
 ====
 
-然后执行以下命令重新启动 `netif` ：
+然后执行以下命令重新启动 `netif`：
 
 [source, shell]
 ....
@@ -334,41 +334,41 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms
 ....
 
 [[network-ipv6]]
-=== IPv6 是 Internet Protocol version 6 的缩写，即互联网协议第六版。它是互联网上的一种网络协议，用于为设备在网络中进行唯一标识和定位。 IPv6 是 IPv4 的后继版本，旨在解决 IPv4 地址空间不足的问题。与 IPv4 相比， IPv6 采用 128 位地址，提供了更大的地址空间，可以支持更多的设备连接到互联网。 IPv6 还提供了更好的安全性、可靠性和性能。
+=== IPv6
 
-IPv6 是广为人知的 IP 协议的新版本，也被称为 IPv4 。
+IPv6 是广为人知的 IP 协议的新版本，也被称为 IPv4。
 
 IPv6 相比 IPv4 提供了几个优势，以及许多新的功能：
 
-* 它的 128 位地址空间允许拥有 340 , 282 , 366 , 920 , 938 , 463 , 463 , 374 , 607 , 431 , 768 , 211 , 456 个地址。这解决了 IPv4 地址短缺和最终的 IPv4 地址耗尽问题。
+* 它的 128 位地址空间允许拥有 340,282,366,920,938,463,463,374,607,431,768,211,456 个地址。这解决了 IPv4 地址短缺和最终的 IPv4 地址耗尽问题。
 * 路由器只在其路由表中存储网络聚合地址，从而将路由表的平均空间减少到 8192 个条目。这解决了与 IPv4 相关的可扩展性问题，因为 IPv4 要求每个分配的 IPv4 地址块在互联网路由器之间进行交换，导致它们的路由表变得过大，无法实现高效的路由。
-* 地址自动配置（ RFC2462 ）（ http://www.ietf.org/rfc/rfc2462.txt ）
+* 地址自动配置 (http://www.ietf.org/rfc/rfc2462.txt[RFC2462])
 * 强制性多播地址。
-* 内置 IPsec （ IP 安全）。
+* 内置 IPsec（IP security）。
 * 简化的标题结构。
-* 支持移动 IP 。
+* 支持移动 IP。
 * IPv6 到 IPv4 的过渡机制。
 
 FreeBSD 包含了 http://www.kame.net/[KAME 项目] IPv6 参考实现，并且提供了使用 IPv6 所需的一切。
 
-本节重点介绍如何配置和运行 IPv6 。
+本节重点介绍如何配置和运行 IPv6。
 
 IPv6 地址有三种不同的类型：
 
 单播::
 发送到单播地址的数据包到达与该地址相关的接口。
 
-Anycast 是一种网络通信技术，它允许多个服务器共享同一个 IP 地址。当用户发送请求时，网络会将请求路由到最近的可用服务器，以提供更快的响应时间和更好的负载均衡。 Anycast 广泛应用于互联网服务，如域名系统（ DNS ）和内容分发网络（ CDN ），以提高网络性能和可靠性。::
+任播::
 这些地址在语法上与单播地址无法区分，但它们用于寻址一组接口。发送到任播地址的数据包将到达最近的路由器接口。任播地址只由路由器使用。
 
 多播::
-这些地址标识了一组接口。发送到多播地址的数据包将到达属于多播组的所有接口。 IPv4 广播地址通常为 `xxx.xxx.xxx.255` ，在 IPv6 中用多播地址表示。
+这些地址标识了一组接口。发送到多播地址的数据包将到达属于多播组的所有接口。 IPv4 广播地址通常为 `xxx.xxx.xxx.255`，在 IPv6 中用多播地址表示。
 
-在阅读 IPv6 地址时，规范形式表示为 `x:x:x:x:x:x:x:x` ，其中每个 `x` 表示一个 16 位的十六进制值。一个例子是 `FEBC:A574:382B:23C1:AA49:4592:4EFE:9982` 。
+在阅读 IPv6 地址时，规范形式表示为 `x:x:x:x:x:x:x:x`，其中每个 `x` 表示一个 16 位的十六进制值。一个例子是 `FEBC:A574:382B:23C1:AA49:4592:4EFE:9982`。
 
-通常，一个地址会有很长的全零子串。一个 `::` （双冒号）可以用来替换地址中的一个子串。此外，每个十六进制值前面的最多三个 `0` 可以省略。例如， `fe80::1` 对应的规范形式是 `fe80:0000:0000:0000:0000:0000:0000:0001` 。
+通常，一个地址会有很长的全零子串。一个 `::`（双冒号）可以用来替换地址中的一个子串。此外，每个十六进制值前面的最多三个 `0` 可以省略。例如， `fe80::1` 对应的规范形式是 `fe80:0000:0000:0000:0000:0000:0000:0001`。
 
-第三种形式是使用众所周知的 IPv4 表示法编写最后 32 位。例如， `2002::10.0.0.1` 对应于十六进制的规范表示 `2002:0000:0000:0000:0000:0000:0a00:0001` ，而这又等同于 `2002::a00:1` 。
+第三种形式是使用众所周知的 IPv4 表示法编写最后 32 位。例如，`2002::10.0.0.1` 对应于十六进制的规范表示 `2002:0000:0000:0000:0000:0000:0a00:0001`，而这又等同于 `2002::a00:1`。
 
 要查看 FreeBSD 系统的 IPv6 地址，请执行以下命令：
 
@@ -391,7 +391,7 @@ em0: flags=8863<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
         nd6 options=23<PERFORMNUD,ACCEPT_RTADV,AUTO_LINKLOCAL>
 ....
 
-在这个例子中， `em0` 接口正在使用 `fe80::21f:16ff:fe0f:275a%em0` ，这是一个自动配置的链路本地地址，它是根据 MAC 地址自动生成的。
+在这个例子中，`em0` 接口正在使用 `fe80::21f:16ff:fe0f:275a%em0`，这是一个自动配置的链路本地地址，它是根据 MAC 地址自动生成的。
 
 一些 IPv6 地址是保留地址。保留地址的列表可以在下表中查看：
 
@@ -409,43 +409,43 @@ em0: flags=8863<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
 |未指定的
 |IPv4 中等同于 `0.0.0.0` 的地址。
 
-|`::1` 是 IPv6 环回地址的表示形式。在 IPv6 中，环回地址用于将数据包发送到本地主机，类似于 IPv4 中的 `127.0.0.1` 。 `::1` 表示的是 IPv6 环回地址的最简形式。
+|`::1`
 |128 位
 |环回地址
 |IPv4 中等同于 `127.0.0.1` 的地址。
 
-|`::00:xx:xx:xx:xx` 是一个以双冒号开头的字符串。
+|`::00:xx:xx:xx:xx`
 |96 位
 |嵌入式 IPv4
 |低 32 位是兼容的 IPv4 地址。
 
-|`::ff:xx:xx:xx:xx` 是一个以双冒号开头的字符串，通常用于表示 MAC 地址。 MAC 地址是用于识别网络设备的唯一标识符。每个 MAC 地址由六个十六进制数字对（每个数字对由两个字符组成）组成，用冒号分隔。在这个例子中，"xx"代表未知的十六进制数字。
+|`::ff:xx:xx:xx:xx`
 |96 位
 |IPv4 映射 IPv6 地址
 |低 32 位是不支持 IPv6 的主机的 IPv4 地址。
 
-|`fe80::/10` 是一个 IPv6 地址的网络前缀。它表示一个具有 10 位网络前缀的地址范围，其中 `fe80` 是网络前缀的起始地址。 IPv6 地址的网络前缀用于标识一个特定的网络或子网。
+|`fe80::/10`
 |10 位
 |链路本地
 |在 IPv4 中，等同于 169.254.0.0/16 的地址。
 
-|`fc00::/7` 是一个 IPv6 地址块，它是专门用于私有网络的地址范围。在 IPv6 中，私有网络地址用于在局域网或组织内部使用，不会被路由器转发到公共互联网。这个地址块的前 7 位是固定的，即以 `fc` 开头，后面的 9 位可以根据需要进行分配和使用。
+|`fc00::/7`
 |7 位
 |唯一本地
 |唯一本地地址用于本地通信，只能在一组合作站点内进行路由。
 
-|`ff00::` 是 IPv6 地址中的一个保留地址，用于多播通信。
+|`ff00::`
 |8 位
 |多播
 | 
 
-|``2000::-3fff::`` 是一个 IPv6 地址范围的表示方式。它表示从 2000 到 3fff 之间的所有 IPv6 地址。
+|``2000::-3fff::``
 |3 位
 |全局单播
-|所有全局单播地址都是从这个地址池中分配的。前 3 位是 `001` 。
+|所有全局单播地址都是从这个地址池中分配的。前 3 位是 `001`。
 |===
 
-有关 IPv6 地址结构的更多信息，请参考 http://www.ietf.org/rfc/rfc3513.txt[RFC3513] 。
+有关 IPv6 地址结构的更多信息，请参考 http://www.ietf.org/rfc/rfc3513.txt[RFC3513]。
 
 [[config-static-ip-v6]]
 === 配置静态 IPv6 地址
@@ -469,7 +469,7 @@ em0: flags=8863<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
 [[config-dynamic-ip-v6]]
 === 配置动态 IPv6 地址
 
-如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。 man:dhclient[8] 会自动提供 IP 地址、子网掩码和默认路由器。
+如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。man:dhclient[8] 会自动提供 IP 地址、子网掩码和默认路由器。
 
 要使接口与 DHCP 配合工作，请执行以下命令：
 
@@ -481,16 +481,16 @@ em0: flags=8863<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
 
 === 路由器通告和主机自动配置
 
-本节演示了如何在 IPv6 路由器上设置 man:rtadvd[8] ，以广播 IPv6 网络前缀和默认路由。
+本节演示了如何在 IPv6 路由器上设置 man:rtadvd[8]，以广播 IPv6 网络前缀和默认路由。
 
-要启用 man:rtadvd[8] ，执行以下命令：
+要启用 man:rtadvd[8]，执行以下命令：
 
 [source, shell]
 ....
 # sysrc rtadvd_enable="YES"
 ....
 
-指定 IPv6 路由器通告的接口非常重要。例如，要告诉 man:rtadvd[8] 使用 `em0` ：
+指定 IPv6 路由器通告的接口非常重要。例如，要告诉 man:rtadvd[8] 使用 `em0`：
 
 [source, shell]
 ....
@@ -525,13 +525,13 @@ em0:\
 [[network-wireless]]
 == 无线网络
 
-大多数无线网络都基于 IEEE(R) 802.11 标准。
+大多数无线网络都基于 link:https://en.wikipedia.org/wiki/IEEE_802.11[IEEE(R) 802.11 标准]。
 
-FreeBSD 支持使用 802.11a 、 802.11b 、 802.11g 和 802.11n 的网络。
+FreeBSD 支持使用 link:https://en.wikipedia.org/wiki/IEEE_802.11a-1999[802.11a]，link:https://en.wikipedia.org/wiki/IEEE_802.11b-1999[802.11b]，link:https://en.wikipedia.org/wiki/IEEE_802.11g-2003[802.11g] 和 link:https://en.wikipedia.org/wiki/IEEE_802.11n-2009[802.11n] 网络。
 
 [NOTE]
 ====
-在 FreeBSD 上，目前正在开发 [802.11ac] 支持。
+在 FreeBSD 上，目前正在开发对 link:https://en.wikipedia.org/wiki/IEEE_802.11ac-2013[802.11ac] 的支持。
 ====
 
 一个基本的无线网络由多个站点组成，这些站点使用广播在 2.4GHz 或 5GHz 频段进行通信，尽管这在不同地区可能有所不同，并且也在不断变化以实现在 2.3GHz 和 4.9GHz 范围内的通信。
@@ -540,7 +540,7 @@ FreeBSD 支持使用 802.11a 、 802.11b 、 802.11g 和 802.11n 的网络。
 
 1. 扫描并选择一个接入点
 2. 验证该站点
-3. 配置 IP 地址或使用 DHCP 。
+3. 配置 IP 地址或使用 DHCP。
 
 下面的部分讨论了每个步骤。
 
@@ -643,21 +643,21 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 
 . SSID/MESH ID 标识网络的名称。
 . BSSID 标识了接入点的 MAC 地址。
-. CAPS 字段标识了每个网络的类型以及在该网络上运行的站点的能力（有关详细信息，请参阅 man:ifconfig[8] 中“ list scan ”的定义）。
+. CAPS 字段标识了每个网络的类型以及在该网络上运行的站点的能力（有关详细信息，请参阅 man:ifconfig[8] 中 `list scan` 的定义）。
 
 [[wireless-authentication]]
 === 连接和认证无线网络
 
-一旦从扫描到的网络列表中选择了一个无线网络，就需要进行连接和认证。在绝大多数无线网络中，认证是通过路由器中配置的密码来完成的。其他方案要求在数据流量可以流动之前完成加密握手，可以使用预共享密钥或密钥，也可以使用涉及后端服务（如 RADIUS ）的更复杂的方案。
+一旦从扫描到的网络列表中选择了一个无线网络，就需要进行连接和认证。在绝大多数无线网络中，认证是通过路由器中配置的密码来完成的。其他方案要求在数据流量可以流动之前完成加密握手，可以使用预共享密钥或密钥，也可以使用涉及后端服务（如 RADIUS）的更复杂的方案。
 
 [[authenticate-wpa2-wpa-personal]]
-==== 使用 WPA2/WPA/ 个人身份验证进行认证
+==== 使用 WPA2/WPA/Personal
 
 无线网络中的身份验证过程由 man:wpa_supplicant[8] 管理。
 
-man:wpa_supplicant[8] 配置将在 [.filename]#/etc/wpa_supplicant.conf# 文件中进行。有关更多信息，请参阅 man:wpa_supplicant.conf[5] 。
+man:wpa_supplicant[8] 配置将在 [.filename]#/etc/wpa_supplicant.conf# 文件中进行。有关更多信息，请参阅 man:wpa_supplicant.conf[5]。
 
-一旦完成了对无线网络的扫描，选择了一个网络并获得了密码（ PSK ），那么这些信息将被添加到文件 [.filename]#/etc/wpa_supplicant.conf# 中，如下所示的示例：
+一旦完成了对无线网络的扫描，选择了一个网络并获得了密码（PSK），那么这些信息将被添加到文件 [.filename]#/etc/wpa_supplicant.conf# 中，如下所示的示例：
 
 [.programlisting]
 ....
@@ -695,7 +695,7 @@ network={
 
 [NOTE]
 ====
-可以在 crossref:advanced-networking[network-advanced-wireless ,"无线高级认证"] 获取有关如何执行更高级身份验证方法的更多信息。
+可以在 crossref:advanced-networking[network-advanced-wireless ,“无线高级认证”] 获取有关如何执行更高级身份验证方法的更多信息。
 ====
 
 [[authenticate-open-networks]]
@@ -724,18 +724,18 @@ network={
 
 有线连接提供更好的性能和可靠性，而无线连接提供灵活性和移动性。笔记本电脑用户通常希望在这两种连接类型之间无缝切换。
 
-在 FreeBSD 上，可以以“故障转移”的方式将两个甚至更多的网络接口组合在一起。这种配置类型使用一组网络接口中最优先和可用的连接，并且当链路状态发生变化时，操作系统会自动切换。
+在 FreeBSD 上，可以以“故障转移（failover）”的方式将两个甚至更多的网络接口组合在一起。这种配置类型使用一组网络接口中最优先和可用的连接，并且当链路状态发生变化时，操作系统会自动切换。
 
-链路聚合和故障转移在 crossref:advanced-networking[network-aggregation ,"链路聚合和故障转移"] 中有详细介绍，并且在 crossref:advanced-networking[networking-lagg-wired-and-wireless ,"以太网和无线接口之间的故障转移模式"] 中提供了同时使用有线和无线连接的示例。
+链路聚合和故障转移在 crossref:advanced-networking[network-aggregation ,“链路聚合和故障转移”] 中有详细介绍，并且在 crossref:advanced-networking[networking-lagg-wired-and-wireless ,“以太网和无线接口之间的故障转移模式”] 中提供了同时使用有线和无线连接的示例。
 
 [[hostname]]
 == 主机名
 
-主机名表示网络上主机的完全限定域名（ FQDN ）。
+主机名表示网络上主机的完全限定域名（FQDN）。
 
 [TIP]
 ====
-如果主机没有设置主机名， FreeBSD 将分配值 `Amnesiac` 。
+如果主机没有设置主机名，FreeBSD 将分配值 `Amnesiac`。
 ====
 
 [[get-hostname]]
@@ -766,19 +766,19 @@ freebsdhostname.example.com
 ....
 
 [[dns]]
-== DNS （ Domain Name System ）是一种用于将域名转换为 IP 地址的互联网服务。它充当了互联网上的电话簿，将人类可读的域名（例如 www.example.com ）转换为计算机可理解的 IP 地址（例如 192.0.2.1 ）。 DNS 还负责将域名解析为其他类型的记录，如电子邮件服务器和其他网络服务的地址。通过使用 DNS ，用户可以轻松地访问互联网上的各种资源，而无需记住复杂的 IP 地址。
+== DNS
 
-DNS 可以被理解为一个链接： [电话簿](https://en.wikipedia.org/wiki/Telephone_directory) ，其中将 IP 地址与主机名进行互相识别。
+DNS 可以被理解为一个 link:https://en.wikipedia.org/wiki/Telephone_directory[电话簿]，其中将 IP 地址与主机名进行互相识别。
 
-有三个文件处理 FreeBSD 系统与 DNS 的交互。这三个文件是 man:hosts[5] 、 man:resolv.conf[5] 和 man:nsswitch.conf[5] 。
+有三个文件处理 FreeBSD 系统与 DNS 的交互。这三个文件是 man:hosts[5]、man:resolv.conf[5] 和 man:nsswitch.conf[5]。
 
 除非在 [.filename]#/etc/nsswitch.conf# 文件中另有说明，否则 FreeBSD 将首先查看 [.filename]#/etc/hosts# 文件中的地址，然后再查看 [.filename]#/etc/resolv.conf# 文件中的 DNS 信息。
 
 [NOTE]
 ====
-man:nsswitch.conf[5] 文件指定了 nsdispatch （名称服务切换调度程序）的操作方式。
+man:nsswitch.conf[5] 文件指定了 nsdispatch（名称服务切换调度程序）的操作方式。
 
-默认情况下， [/etc/nsswitch.conf](文件) 文件的 hosts 部分将如下所示：
+默认情况下，[.filename]#/etc/nsswitch.conf# 文件的 hosts 部分将如下所示：
 
 [.programlisting]
 ....
@@ -808,7 +808,7 @@ hosts: files cache dns
 [[configuring-nameserver]]
 === 配置域名服务器
 
-FreeBSD 系统如何访问互联网域名系统（ DNS ）由 man:resolv.conf[5] 控制。
+FreeBSD 系统如何访问互联网域名系统（DNS）由 man:resolv.conf[5] 控制。
 
 最常见的条目是 [.filename]#/etc/resolv.conf# ：
 
@@ -816,17 +816,17 @@ FreeBSD 系统如何访问互联网域名系统（ DNS ）由 man:resolv.conf[5]
 [cols="1,1", frame="none"]
 |===
 
-|`nameserver` 是一个计算机网络术语，指的是域名系统（ DNS ）服务器的地址。 DNS 服务器用于将域名转换为相应的 IP 地址，以便在互联网上进行通信。
+|`nameserver`
 |解析器应查询的名称服务器的 IP 地址。按照列出的顺序查询服务器，最多查询三个。
 
-|`search` 搜索
+|`search`
 |搜索列表用于主机名查找。通常由本地主机名的域确定。
 
-|`domain` 的中文翻译是 ` 域 ` 。
+|`domain`
 |本地域名。
 |===
 
-一个典型的 /etc/resolv.conf 文件如下所示：
+一个典型的 [.filename]#/etc/resolv.conf# 文件如下所示：
 
 [.programlisting]
 ....
@@ -840,11 +840,11 @@ nameserver 147.11.100.30
 只能使用 `search` 和 `domain` 选项中的一个。
 ====
 
-在使用 DHCP 时， man:dhclient[8] 通常会使用从 DHCP 服务器接收到的信息重写 .filename#/etc/resolv.conf# 文件。
+在使用 DHCP 时，man:dhclient[8] 通常会使用从 DHCP 服务器接收到的信息重写 .filename#/etc/resolv.conf# 文件。
 
 [TIP]
 ====
-如果进行配置的机器 * 不是 *DNS 服务器，可以使用 man:local-unbound[8] 来提高 DNS 查找性能。
+如果进行配置的机器 *不是* DNS 服务器，可以使用 man:local-unbound[8] 来提高 DNS 查找性能。
 
 要在启动时启用它，请执行以下命令：
 
@@ -874,17 +874,17 @@ nameserver 147.11.100.30
 
 [TIP]
 ====
-在发送错误报告之前，始终要检查链接中的硬件说明： https://www.freebsd.org/releases/[FreeBSD 发布页面] ，将 FreeBSD 版本更新到最新的 STABLE 版本，检查邮件列表存档，并在互联网上进行搜索。
+在发送错误报告之前，始终要在 link:https://www.freebsd.org/releases/[FreeBSD 发布页面] 检查硬件说明 ，将 FreeBSD 版本更新到最新的 STABLE 版本，检查邮件列表存档，并在互联网上进行搜索。
 ====
 
 [[wired-troubleshooting]]
 === 有线网络故障排除
 
-如果卡可以正常工作，但性能较差，请阅读 man:tuning[7] 。此外，请检查网络配置，因为不正确的网络设置可能会导致连接变慢。
+如果卡可以正常工作，但性能较差，请阅读 man:tuning[7]。此外，请检查网络配置，因为不正确的网络设置可能会导致连接变慢。
 
-如果系统无法将数据包路由到目标主机，则会出现“无法到达主机”的消息。如果没有指定默认路由或者电缆未插好，就会发生这种情况。检查 `netstat -rn` 的输出，并确保存在到目标主机的有效路由。如果不存在有效路由，请阅读交叉引用：高级网络 [network-routing ,"Gateways and Routes"] 。
+如果系统无法将数据包路由到目标主机，则会出现“无法到达主机”的消息。如果没有指定默认路由或者电缆未插好，就会发生这种情况。检查 `netstat -rn` 的输出，并确保存在到目标主机的有效路由。如果不存在有效路由，请阅读 crossref:advanced-networking[network-routing,“网关和路由”].
 
-`ping: sendto: Permission denied` 错误消息通常是由于配置错误的防火墙引起的。如果在 FreeBSD 上启用了防火墙但没有定义规则，那么默认策略是拒绝所有流量，甚至是 man:ping[8] 。有关更多信息，请参考 crossref:firewalls[firewalls , Firewalls] 。
+`ping: sendto: Permission denied` 错误消息通常是由于配置错误的防火墙引起的。如果在 FreeBSD 上启用了防火墙但没有定义规则，那么默认策略是拒绝所有流量，甚至是 man:ping[8]。有关更多信息，请参考 crossref:firewalls[firewalls,防火墙]。
 
 [[wireless-troubleshooting]]
 === 无线网络故障排除

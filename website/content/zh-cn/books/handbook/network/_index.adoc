@@ -1,17 +1,17 @@
 ---
-description: 'This chapter delves into the topic of network configuration and performance, showcasing the robust networking capabilities of the FreeBSD operating system.'
+description: '本章深入探讨了网络配置和性能的主题，展示了 FreeBSD 操作系统强大的网络能力。'
 next: books/handbook/partii
-part: 'Part I. Getting Started'
+part: 第一部分：入门指南
 path: /books/handbook/
 prev: books/handbook/wayland
 showBookMenu: true
 tags: '["network", "ipv4", "ipv6", "wireless", "wpa_supplicant", "static ip", "dynamic ip"]'
-title: 'Chapter 7. Network'
+title: '第 7 章 网络'
 weight: 9
 ---
 
 [[network]]
-= Network
+= 网络
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,51 +46,51 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[network-synopsis]]
-== Synopsis
+== 简介
 
-This chapter delves into the topic of network configuration and performance, showcasing the robust networking capabilities of the FreeBSD operating system. Whether working with wired or wireless networks, this chapter provides a comprehensive guide to configuring and optimizing network connectivity in FreeBSD.
+本章深入探讨了网络配置和性能的主题，展示了 FreeBSD 操作系统强大的网络能力。无论是使用有线网络还是无线网络，本章提供了一个全面的指南，帮助您在 FreeBSD 中配置和优化网络连接。
 
-Before diving into the details, it is beneficial for readers to have a basic understanding of networking concepts such as protocols, network interfaces, and addressing.
+在深入了解细节之前，读者对网络概念如协议、网络接口和寻址有基本的了解是有益的。
 
-This chapter covers:
+本章内容包括：
 
-* The ability to configure wired networks in FreeBSD, including network interface setup, addressing, and customization options.
-* The skills to configure wireless networks in FreeBSD, encompassing wireless network interface setup, security protocols, and troubleshooting techniques.
-* FreeBSD's networking capabilities and its reputation for excellent network performance.
-* An understanding of various network services and protocols supported by FreeBSD, with configuration instructions for DNS, DHCP and more.
+* 在 FreeBSD 中配置有线网络的能力，包括网络接口设置、寻址和定制选项。
+* 在 FreeBSD 中配置无线网络的技能，包括无线网络接口设置、安全协议和故障排除技术。
+* FreeBSD 的网络能力以及其在优秀网络性能方面的声誉。
+* 对于 FreeBSD 支持的各种网络服务和协议的理解，包括 DNS、DHCP 等的配置说明。
 
-More information about how to make advanced network configurations in crossref:advanced-networking[advanced-networking,Advanced Networking].
+有关如何进行高级网络配置的更多信息，请参阅 crossref:advanced-networking[advanced-networking, 高级网络]。
 
 [[config-network-setup]]
-== Setting up the Network
+== 设置网络
 
-Setting up a wired or wireless connection is a common task for a FreeBSD user. This section will show how to identify the wired and wireless network adapters and how to configure them.
+为 FreeBSD 用户设置有线或无线连接是一个常见的任务。本节将展示如何识别有线和无线网络适配器以及如何配置它们。
 
-Before starting with the configuration it is necessary to know the following network data:
+在开始配置之前，需要了解以下网络数据：
 
-* If the network has DHCP
-* If the network does not have DHCP, the static IP to be used
-* The netmask
-* The IP address of the default gateway
+* 如果网络使用 DHCP
+* 如果网络没有 DHCP，则使用静态 IP 。
+* 子网掩码
+* 默认网关的 IP 地址
 
 [TIP]
 ====
-The network connection may have been configured at installation time by man:bsdinstall[8].
+网络连接可能在安装时由 man:bsdinstall[8] 进行配置。
 ====
 
 [[config-identify-network-adapter]]
-=== Identify Network Adapters
+=== 识别网络适配器
 
-FreeBSD supports a wide variety of network adapters for both wired and wireless networks. Check the Hardware Compatibility List for the used link:https://www.freebsd.org/releases/[FreeBSD release] to see if the network adapter is supported.
+FreeBSD 支持各种有线和无线网络适配器。请查看所使用的 FreeBSD 版本的硬件兼容性列表 link:https://www.freebsd.org/releases/[FreeBSD release]，以查看网络适配器是否受支持。
 
-To get the network adapters used by our system execute the following command:
+要获取我们系统使用的网络适配器，请执行以下命令：
 
 [source, shell]
 ....
 % pciconf -lv | grep -A1 -B3 network
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -106,23 +106,23 @@ iwn0@pci0:3:0:0:        class=0x028000 rev=0x00 hdr=0x00 vendor=0x8086 device=0x
     class      = networ
 ....
 
-The text before the '@' symbol is the name of the driver controlling the device. In this case these are man:em[4] and man:iwn[4].
+在 '@' 符号之前的文本是控制设备的驱动程序的名称。在这种情况下，它们是 man:em[4] 和 man:iwn[4]。
 
-<1> Shows the name of the vendor
-<2> Shows the name of the device
+<1> 显示供应商的名称
+<2> 显示设备的名称
 
 [NOTE]
 ====
-It is only necessary to load the network interface card module if FreeBSD has not detected it correctly.
+只有在 FreeBSD 没有正确检测到网络接口卡时，才需要加载该模块。
 
-For example, to load the man:alc[4] module, execute the following command:
+例如，要加载 man:alc[4] 模块，请执行以下命令：
 
 [source, shell]
 ....
 # kldload if_alc
 ....
 
-Alternatively, to load the driver as a module at boot time, place the following line in [.filename]#/boot/loader.conf#:
+或者，要在启动时将驱动程序加载为模块，请将以下行放置在 [.filename]#/boot/loader.conf# 中：
 
 [.programlisting]
 ....
@@ -131,20 +131,20 @@ if_alc_load="YES"
 ====
 
 [[config-network-connection]]
-== Wired Networks
+== 有线网络
 
-Once the right driver is loaded the network adapter needs to be configured. FreeBSD uses the driver name followed by a unit number to name the network interface adapter. The unit number represents the order in which the adapter is detected at boot time, or is later discovered.
+一旦正确的驱动程序加载完成，需要配置网络适配器。FreeBSD 使用驱动程序名称后跟一个单元号来命名网络接口适配器。单元号表示适配器在引导时被检测到的顺序，或者是稍后被发现的顺序。
 
-For example, `em0` is the first network interface card (NIC) on the system using the man:em[4] driver.
+例如，`em0` 是系统上使用 man:em[4] 驱动程序的第一个网络接口卡（NIC）。
 
-To display the network interface configuration, enter the following command:
+要显示网络接口配置，请输入以下命令：
 
 [source, shell]
 ....
 % ifconfig
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -165,25 +165,25 @@ lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> metric 0 mtu 16384
         nd6 options=21<PERFORMNUD,AUTO_LINKLOCAL>
 ....
 
-In this example, the following devices were displayed:
+在这个例子中，显示了以下设备：
 
-* `em0`: The Ethernet interface.
-* `lo0`: The loop interface is a software loopback mechanism which may be used for performance analysis, software testing, and/or local communication. More information in man:lo[4].
+* `em0`：以太网接口。
+* `lo0`：回环接口是一种软件环回机制，可用于性能分析、软件测试或本地通信。有关更多信息，请参阅 man:lo[4]。
 
-The example shows that `em0` is up and running.
+这个例子显示 `em0` 已经启动并运行。
 
-The key indicators are:
+关键指标包括：
 
-. `UP` means that the interface is configured and ready.
-. The interface has an IPv4 Internet (`inet`) address, `192.168.1.19`.
-. The interface has an IPv6 Internet (`inet6`) address, `fe80::21f:16ff:fe0f:275a%em0`.
-. It has a valid subnet mask (`netmask`), where `0xffffff00` is the same as `255.255.255.0`.
-. It has a valid broadcast address, `192.168.1.255`.
-. The MAC address of the interface (`ether`) is `00:1f:16:0f:27:5a`.
-. The physical media selection is on autoselection mode (`media: Ethernet autoselect (1000baseT <full-duplex>)`).
-. The status of the link (`status`) is `active`, indicating that the carrier signal is detected. For `em0`, the `status: no carrier` status is normal when an Ethernet cable is not plugged into the interface.
+. `UP` 表示接口已配置并准备就绪。
+. 该接口具有一个 IPv4 Internet（`inet`）地址，`192.168.1.19`。
+. 该接口具有一个 IPv6 Internet（`inet6`）地址，`fe80::21f:16ff:fe0f:275a%em0` 。
+. 它具有有效的子网掩码（`netmask`），其中 `0xffffff00` 与 `255.255.255.0` 相同。
+. 它具有有效的广播地址，`192.168.1.255`。
+. 接口（`ether`）的 MAC 地址是 `00:1f:16:0f:27:5a`。
+. 物理媒体选择处于自动选择模式（`media: Ethernet autoselect (1000baseT <full-duplex>)`）。
+. 链接的状态（`status`）为 `active`，表示检测到载波信号。对于 `em0`，当以太网电缆未插入接口时，`status: no carrier` 状态是正常的。
 
-If the man:ifconfig[8] output had shown something similar to the next output it would indicate the interface has not been configured:
+如果 man:ifconfig[8] 命令的输出结果与下面的输出结果类似，那么说明接口尚未配置：
 
 [.programlisting]
 ....
@@ -196,39 +196,39 @@ em0: flags=8822<BROADCAST,SIMPLEX,MULTICAST> metric 0 mtu 1500
 ....
 
 [[config-static-ip-v4]]
-=== Configuring Static IPv4 Address
+=== 配置静态 IPv4 地址
 
-This section provides a guide to configuring a static IPv4 address on a FreeBSD system.
+本节提供了在 FreeBSD 系统上配置静态 IPv4 地址的指南。
 
-The network interface card configuration can be performed from the command line with man:ifconfig[8] but will not persist after a reboot unless the configuration is also added to [.filename]#/etc/rc.conf#.
+可以使用命令行的 man:ifconfig[8] 来配置网络接口卡，但是如果不将配置添加到 [.filename]#/etc/rc.conf# 中，配置在重启后将不会保留。
 
 [NOTE]
 ====
-If the network was configured during installation by man:bsdinstall[8], some entries for the network interface card (NICs) may be already present. Double check [.filename]#/etc/rc.conf# before executing man:sysrc[8].
+如果网络在安装过程中由 man:bsdinstall[8] 进行配置，则可能已经存在一些网络接口卡（NIC）的条目。在执行 man:sysrc[8] 之前，请仔细检查 [.filename]#/etc/rc.conf#。
 ====
 
-The IP address can be set executing the following command:
+可以通过执行以下命令来设置 IP 地址：
 
 [source, shell]
 ....
 # ifconfig em0 inet 192.168.1.150/24
 ....
 
-To make the change persist across reboots execute the following command:
+要使更改在重新启动后保持生效，请执行以下命令：
 
 [source, shell]
 ....
 # sysrc ifconfig_em0="inet 192.168.1.150 netmask 255.255.255.0"
 ....
 
-Add the default router executing the following command:
+执行以下命令添加默认路由器：
 
 [source, shell]
 ....
 # sysrc defaultrouter="192.168.1.1"
 ....
 
-Add the DNS records to [.filename]#/etc/resolv.conf#:
+将 DNS 记录添加到 [/etc/resolv.conf] 文件中：
 
 [.programlisting]
 ....
@@ -236,21 +236,21 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 ....
 
-Then restart `netif` and `routing` executing the following command:
+然后执行以下命令重新启动 `netif` 和 `routing`：
 
 [source, shell]
 ....
 # service netif restart && service routing restart
 ....
 
-The connection can be tested using man:ping[8]:
+可以使用 man:ping[8] 来测试连接。
 
 [source, shell]
 ....
 % ping -c2 www.FreeBSD.org
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -264,25 +264,25 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms
 ....
 
 [[config-dynamic-ip-v4]]
-=== Configuring Dynamic IPv4 Address
+=== 配置动态 IPv4 地址
 
-If the network has a DHCP server, it is very easy to configure the network interface to use DHCP. FreeBSD uses man:dhclient[8] as the DHCP client. man:dhclient[8] will automatically provide the IP, the netmask and the default router.
+如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。FreeBSD 使用 man:dhclient[8] 作为 DHCP 客户端。 man:dhclient[8] 会自动提供 IP 地址、子网掩码和默认路由器。
 
-To make the interface work with DHCP execute the following command:
+要使接口与 DHCP 配合工作，请执行以下命令：
 
 [source, shell]
 ....
 # sysrc ifconfig_em0="DHCP"
 ....
 
-man:dhclient[8] can be used manually by running the following command:
+man:dhclient[8] 可以通过运行以下命令手动使用：
 
 [source, shell]
 ....
 # dhclient em0
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -292,13 +292,13 @@ unknown dhcp option value 0x7d
 bound to 192.168.1.19 -- renewal in 43200 seconds.
 ....
 
-In this way it can be verified that the address assignment using DHCP works correctly.
+通过这种方式可以验证使用 DHCP 进行地址分配是否正常工作。
 
 [TIP]
 ====
-man:dhclient[8] client can be started in background. This can cause trouble with applications depending on a working network, but it will provide a faster startup in many cases.
+man:dhclient[8] 客户端可以在后台启动。这可能会对依赖于正常工作网络的应用程序造成麻烦，但在许多情况下，它将提供更快的启动速度。
 
-To execute man:dhclient[8] in background execute the following command:
+要在后台执行 man:dhclient[8]，请执行以下命令：
 
 [source, shell]
 ....
@@ -306,21 +306,21 @@ To execute man:dhclient[8] in background execute the following command:
 ....
 ====
 
-Then restart `netif` executing the following command:
+然后执行以下命令重新启动 `netif`：
 
 [source, shell]
 ....
 # service netif restart
 ....
 
-The connection can be tested using man:ping[8]:
+可以使用 man:ping[8] 来测试连接。
 
 [source, shell]
 ....
 % ping -c2 www.FreeBSD.org
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -336,48 +336,48 @@ round-trip min/avg/max/stddev = 53.093/54.133/55.173/1.040 ms
 [[network-ipv6]]
 === IPv6
 
-IPv6 is the new version of the well-known IP protocol, also known as IPv4.
+IPv6 是广为人知的 IP 协议的新版本，也被称为 IPv4。
 
-IPv6 provides several advantages over IPv4 as well as many new features:
+IPv6 相比 IPv4 提供了几个优势，以及许多新的功能：
 
-* Its 128-bit address space allows for 340,282,366,920,938,463,463,374,607,431,768,211,456 addresses. This addresses the IPv4 address shortage and eventual IPv4 address exhaustion.
-* Routers only store network aggregation addresses in their routing tables, thus reducing the average space of a routing table to 8192 entries. This addresses the scalability issues associated with IPv4, which required every allocated block of IPv4 addresses to be exchanged between Internet routers, causing their routing tables to become too large to allow efficient routing.
-* Address autoconfiguration (http://www.ietf.org/rfc/rfc2462.txt[RFC2462]).
-* Mandatory multicast addresses.
-* Built-in IPsec (IP security).
-* Simplified header structure.
-* Support for mobile IP.
-* IPv6-to-IPv4 transition mechanisms.
+* 它的 128 位地址空间允许拥有 340,282,366,920,938,463,463,374,607,431,768,211,456 个地址。这解决了 IPv4 地址短缺和最终的 IPv4 地址耗尽问题。
+* 路由器只在其路由表中存储网络聚合地址，从而将路由表的平均空间减少到 8192 个条目。这解决了与 IPv4 相关的可扩展性问题，因为 IPv4 要求每个分配的 IPv4 地址块在互联网路由器之间进行交换，导致它们的路由表变得过大，无法实现高效的路由。
+* 地址自动配置 (http://www.ietf.org/rfc/rfc2462.txt[RFC2462])
+* 强制性多播地址。
+* 内置 IPsec（IP security）。
+* 简化的标题结构。
+* 支持移动 IP。
+* IPv6 到 IPv4 的过渡机制。
 
-FreeBSD includes the http://www.kame.net/[KAME project] IPv6 reference implementation and comes with everything needed to use IPv6.
+FreeBSD 包含了 http://www.kame.net/[KAME 项目] IPv6 参考实现，并且提供了使用 IPv6 所需的一切。
 
-This section focuses on getting IPv6 configured and running.
+本节重点介绍如何配置和运行 IPv6。
 
-There are three different types of IPv6 addresses:
+IPv6 地址有三种不同的类型：
 
-Unicast::
-A packet sent to a unicast address arrives at the interface belonging to the address.
+单播::
+发送到单播地址的数据包到达与该地址相关的接口。
 
-Anycast::
-These addresses are syntactically indistinguishable from unicast addresses but they address a group of interfaces. The packet destined for an anycast address will arrive at the nearest router interface. Anycast addresses are only used by routers.
+任播::
+这些地址在语法上与单播地址无法区分，但它们用于寻址一组接口。发送到任播地址的数据包将到达最近的路由器接口。任播地址只由路由器使用。
 
-Multicast::
-These addresses identify a group of interfaces. A packet destined for a multicast address will arrive at all interfaces belonging to the multicast group. The IPv4 broadcast address, usually `xxx.xxx.xxx.255`, is expressed by multicast addresses in IPv6.
+多播::
+这些地址标识了一组接口。发送到多播地址的数据包将到达属于多播组的所有接口。 IPv4 广播地址通常为 `xxx.xxx.xxx.255`，在 IPv6 中用多播地址表示。
 
-When reading an IPv6 address, the canonical form is represented as `x:x:x:x:x:x:x:x`, where each `x` represents a 16 bit hex value. An example is `FEBC:A574:382B:23C1:AA49:4592:4EFE:9982`.
+在阅读 IPv6 地址时，规范形式表示为 `x:x:x:x:x:x:x:x`，其中每个 `x` 表示一个 16 位的十六进制值。一个例子是 `FEBC:A574:382B:23C1:AA49:4592:4EFE:9982`。
 
-Often, an address will have long substrings of all zeros. A `::` (double colon) can be used to replace one substring per address. Also, up to three leading ``0``s per hex value can be omitted. For example, `fe80::1` corresponds to the canonical form `fe80:0000:0000:0000:0000:0000:0000:0001`.
+通常，一个地址会有很长的全零子串。一个 `::`（双冒号）可以用来替换地址中的一个子串。此外，每个十六进制值前面的最多三个 `0` 可以省略。例如， `fe80::1` 对应的规范形式是 `fe80:0000:0000:0000:0000:0000:0000:0001`。
 
-A third form is to write the last 32 bits using the well known IPv4 notation. For example, `2002::10.0.0.1` corresponds to the hexadecimal canonical representation `2002:0000:0000:0000:0000:0000:0a00:0001`, which in turn is equivalent to `2002::a00:1`.
+第三种形式是使用众所周知的 IPv4 表示法编写最后 32 位。例如，`2002::10.0.0.1` 对应于十六进制的规范表示 `2002:0000:0000:0000:0000:0000:0a00:0001`，而这又等同于 `2002::a00:1`。
 
-To view a FreeBSD system's IPv6 address execute the following command:
+要查看 FreeBSD 系统的 IPv6 地址，请执行以下命令：
 
 [source, shell]
 ....
 # ifconfig
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -391,75 +391,75 @@ em0: flags=8863<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
         nd6 options=23<PERFORMNUD,ACCEPT_RTADV,AUTO_LINKLOCAL>
 ....
 
-In this example, the `em0` interface is using `fe80::21f:16ff:fe0f:275a%em0`, an auto-configured link-local address which was automatically generated from the MAC address.
+在这个例子中，`em0` 接口正在使用 `fe80::21f:16ff:fe0f:275a%em0`，这是一个自动配置的链路本地地址，它是根据 MAC 地址自动生成的。
 
-Some IPv6 addresses are reserved. A list of reserved addresses can be checked in the following table:
+一些 IPv6 地址是保留地址。保留地址的列表可以在下表中查看：
 
 [[reservedip6]]
-.Example IPv6 Reserved Addresses
+.IPv6 保留地址示例
 [cols="1,1,1,1", frame="none", options="header"]
 |===
-| IPv6 address
-| Prefixlength (Bits)
-| Description
-| Notes
+| IPv6 地址
+| 前缀长度（位）
+| 描述
+| 注释
 
-|`::`
-|128 bits
-|unspecified
-|Equivalent to `0.0.0.0` in IPv4.
+|`::` 是 asciidoc 中的一个特殊标记，用于表示一个块级元素的开始。
+|128 位
+|未指定的
+|IPv4 中等同于 `0.0.0.0` 的地址。
 
 |`::1`
-|128 bits
-|loopback address
-|Equivalent to `127.0.0.1` in IPv4.
+|128 位
+|环回地址
+|IPv4 中等同于 `127.0.0.1` 的地址。
 
 |`::00:xx:xx:xx:xx`
-|96 bits
-|embedded IPv4
-|The lower 32 bits are the compatible IPv4 address.
+|96 位
+|嵌入式 IPv4
+|低 32 位是兼容的 IPv4 地址。
 
 |`::ff:xx:xx:xx:xx`
-|96 bits
-|IPv4 mapped IPv6 address
-|The lower 32 bits are the IPv4 address for hosts which do not support IPv6.
+|96 位
+|IPv4 映射 IPv6 地址
+|低 32 位是不支持 IPv6 的主机的 IPv4 地址。
 
 |`fe80::/10`
-|10 bits
-|link-local
-|Equivalent to 169.254.0.0/16 in IPv4.
+|10 位
+|链路本地
+|在 IPv4 中，等同于 169.254.0.0/16 的地址。
 
 |`fc00::/7`
-|7 bits
-|unique-local
-|Unique local addresses are intended for local communication and are only routable within a set of cooperating sites.
+|7 位
+|唯一本地
+|唯一本地地址用于本地通信，只能在一组合作站点内进行路由。
 
 |`ff00::`
-|8 bits
-|multicast
+|8 位
+|多播
 | 
 
 |``2000::-3fff::``
-|3 bits
-|global unicast
-|All global unicast addresses are assigned from this pool. The first 3 bits are `001`.
+|3 位
+|全局单播
+|所有全局单播地址都是从这个地址池中分配的。前 3 位是 `001`。
 |===
 
-For further information on the structure of IPv6 addresses, refer to http://www.ietf.org/rfc/rfc3513.txt[RFC3513].
+有关 IPv6 地址结构的更多信息，请参考 http://www.ietf.org/rfc/rfc3513.txt[RFC3513]。
 
 [[config-static-ip-v6]]
-=== Configuring Static IPv6 Address
+=== 配置静态 IPv6 地址
 
-To configure a FreeBSD system as an IPv6 client with a static IPv6 address it is necessary to set the IPv6 address.
+要将 FreeBSD 系统配置为具有静态 IPv6 地址的 IPv6 客户端，需要设置 IPv6 地址。
 
-Execute the following commands to meet the requirements:
+执行以下命令以满足要求：
 
 [source, shell]
 ....
 # sysrc ifconfig_em0_ipv6="inet6 2001:db8:4672:6565:2026:5043:2d42:5344 prefixlen 64"
 ....
 
-To assign a default router, specify its address executing the following command:
+要分配一个默认路由器，请执行以下命令指定其地址：
 
 [source, shell]
 ....
@@ -467,11 +467,11 @@ To assign a default router, specify its address executing the following command:
 ....
 
 [[config-dynamic-ip-v6]]
-=== Configuring Dynamic IPv6 Address
+=== 配置动态 IPv6 地址
 
-If the network has a DHCP server, it is very easy to configure the network interface to use DHCP. man:dhclient[8] will provide automatically the IP, the netmask and the default router.
+如果网络有一个 DHCP 服务器，配置网络接口使用 DHCP 非常简单。man:dhclient[8] 会自动提供 IP 地址、子网掩码和默认路由器。
 
-To make the interface work with DHCP execute the following command:
+要使接口与 DHCP 配合工作，请执行以下命令：
 
 [source, shell]
 ....
@@ -479,25 +479,25 @@ To make the interface work with DHCP execute the following command:
 # sysrc rtsold_enable="YES"
 ....
 
-=== Router Advertisement and Host Auto Configuration
+=== 路由器通告和主机自动配置
 
-This section demonstrates how to setup man:rtadvd[8] on an IPv6 router to advertise the IPv6 network prefix and default route.
+本节演示了如何在 IPv6 路由器上设置 man:rtadvd[8]，以广播 IPv6 网络前缀和默认路由。
 
-To enable man:rtadvd[8], execute the following command:
+要启用 man:rtadvd[8]，执行以下命令：
 
 [source, shell]
 ....
 # sysrc rtadvd_enable="YES"
 ....
 
-It is important to specify the interface on which to do IPv6 router advertisement. For example, to tell man:rtadvd[8] to use `em0`:
+指定 IPv6 路由器通告的接口非常重要。例如，要告诉 man:rtadvd[8] 使用 `em0`：
 
 [source, shell]
 ....
 # sysrc rtadvd_interfaces="em0"
 ....
 
-Next, create the configuration file, [.filename]#/etc/rtadvd.conf# as seen in this example:
+接下来，按照以下示例创建配置文件 [.filename]#/etc/rtadvd.conf# ：
 
 [.programlisting]
 ....
@@ -505,17 +505,17 @@ em0:\
 	:addrs#1:addr="2001:db8:1f11:246::":prefixlen#64:tc=ether:
 ....
 
-Replace `em0` with the interface to be used and `2001:db8:1f11:246::` with the prefix of the allocation.
+将 `em0` 替换为要使用的接口，将 `2001:db8:1f11:246::` 替换为分配的前缀。
 
-For a dedicated `/64` subnet, nothing else needs to be changed. Otherwise, change the `prefixlen#` to the correct value.
+对于一个专用的 `/64` 子网，不需要做任何其他更改。否则，请将 `prefixlen#` 更改为正确的值。
 
-=== IPv6 and IPv4 Address mapping
+=== IPv6 和 IPv4 地址映射
 
-When IPv6 is enabled on a server, there may be a need to enable IPv4 mapped IPv6 address communication. This compatibility option allows for IPv4 addresses to be represented as IPv6 addresses. Permitting IPv6 applications to communicate with IPv4 and vice versa may be a security issue.
+当服务器启用 IPv6 时，可能需要启用 IPv4 映射的 IPv6 地址通信。这个兼容选项允许将 IPv4 地址表示为 IPv6 地址。允许 IPv6 应用程序与 IPv4 相互通信可能会存在安全问题。
 
-This option may not be required in most cases and is available only for compatibility. This option will allow IPv6-only applications to work with IPv4 in a dual stack environment. This is most useful for third party applications which may not support an IPv6-only environment.
+在大多数情况下，这个选项可能不是必需的，只是为了兼容性而提供的。这个选项将允许仅支持 IPv6 的应用程序在双栈环境中与 IPv4 一起工作。这对于可能不支持仅 IPv6 环境的第三方应用程序非常有用。
 
-To enable this feature execute the following command:
+要启用此功能，请执行以下命令：
 
 [source, shell]
 ....
@@ -523,37 +523,37 @@ To enable this feature execute the following command:
 ....
 
 [[network-wireless]]
-== Wireless Networks
+== 无线网络
 
-Most wireless networks are based on the link:https://en.wikipedia.org/wiki/IEEE_802.11[IEEE(R) 802.11 standards].
+大多数无线网络都基于 link:https://en.wikipedia.org/wiki/IEEE_802.11[IEEE(R) 802.11 标准]。
 
-FreeBSD supports networks that operate using link:https://en.wikipedia.org/wiki/IEEE_802.11a-1999[802.11a], link:https://en.wikipedia.org/wiki/IEEE_802.11b-1999[802.11b], link:https://en.wikipedia.org/wiki/IEEE_802.11g-2003[802.11g] and link:https://en.wikipedia.org/wiki/IEEE_802.11n-2009[802.11n].
+FreeBSD 支持使用 link:https://en.wikipedia.org/wiki/IEEE_802.11a-1999[802.11a]，link:https://en.wikipedia.org/wiki/IEEE_802.11b-1999[802.11b]，link:https://en.wikipedia.org/wiki/IEEE_802.11g-2003[802.11g] 和 link:https://en.wikipedia.org/wiki/IEEE_802.11n-2009[802.11n] 网络。
 
 [NOTE]
 ====
-link:https://en.wikipedia.org/wiki/IEEE_802.11ac-2013[802.11ac] support on FreeBSD is currently under development.
+在 FreeBSD 上，目前正在开发对 link:https://en.wikipedia.org/wiki/IEEE_802.11ac-2013[802.11ac] 的支持。
 ====
 
-A basic wireless network consists of multiple stations communicating with radios that broadcast in either the 2.4GHz or 5GHz band, though this varies according to the locale and is also changing to enable communication in the 2.3GHz and 4.9GHz ranges.
+一个基本的无线网络由多个站点组成，这些站点使用广播在 2.4GHz 或 5GHz 频段进行通信，尽管这在不同地区可能有所不同，并且也在不断变化以实现在 2.3GHz 和 4.9GHz 范围内的通信。
 
-There are three basic steps to configure a wireless network:
+配置无线网络有三个基本步骤：
 
-1. Scan and select an access point
-2. Authenticate the station
-3. Configure an IP address or use DHCP.
+1. 扫描并选择一个接入点
+2. 验证该站点
+3. 配置 IP 地址或使用 DHCP。
 
-The following sections discuss each step.
+下面的部分讨论了每个步骤。
 
 [[network-wireless-quick-start]]
-=== Quick Start to Connect to a Wireless Network
+=== 连接无线网络的快速入门指南
 
-Connecting FreeBSD to an existing wireless network is a very common situation.
+将 FreeBSD 连接到现有的无线网络是一种非常常见的情况。
 
-This procedure shows the steps required:
+该过程显示所需的步骤：
 
-* The first step will be to obtain the SSID (Service Set Identifier) and PSK (Pre-Shared Key) for the wireless network from the network administrator.
+* 第一步是从网络管理员那里获取无线网络的 SSID （服务集标识）和 PSK （预共享密钥）。
 
-* The second step will be to add an entry for this network to [.filename]#/etc/wpa_supplicant.conf#. If the file does not exist, create it:
+* 第二步是将此网络添加到 [.filename]#/etc/wpa_supplicant.conf# 的条目中。如果文件不存在，请创建它：
 
 [.programlisting]
 ....
@@ -563,9 +563,9 @@ network={
 }
 ....
 
-<.> Is the SSID of the wireless network. Replace it with the name of the wireless network. <.> Is the PSK of the wireless network. Replace it with the password of the wireless network.
+<.> 是无线网络的 SSID 。请将其替换为无线网络的名称。 <.> 是无线网络的 PSK 。请将其替换为无线网络的密码。
 
-* The third step will be to add the network entry to configure the network on startup:
+* 第三步是添加网络条目以在启动时配置网络：
 
 [source, shell]
 ....
@@ -573,7 +573,7 @@ network={
 # sysrc ifconfig_wlan0="WPA DHCP"
 ....
 
-* And the last step will be the restart `netif` service executing the following command:
+* 最后一步将是重新启动 `netif` 服务，执行以下命令：
 
 [source, shell]
 ....
@@ -581,16 +581,16 @@ network={
 ....
 
 [[basic-wireless-configuration]]
-=== Basic Wireless Configuration
+=== 基本无线配置
 
-The first step will be to configure the wireless network card to an interface. To find out what wireless network cards are in the system check the section <<config-identify-network-adapter>>.
+第一步是将无线网络卡配置到一个接口上。要查看系统中有哪些无线网络卡，请参考 <<config-identify-network-adapter>> 部分。
 
 [source, shell]
 ....
 # ifconfig wlan0 create wlandevice iwm0
 ....
 
-To make the change persist across reboots execute the following command:
+要使更改在重新启动后保持生效，请执行以下命令：
 
 [source, shell]
 ....
@@ -599,16 +599,16 @@ To make the change persist across reboots execute the following command:
 
 [NOTE]
 ====
-Since the regulatory situation is different in various parts of the world, it is necessary to correctly set the domains that apply to your location to have the correct information about what channels can be used.
+由于世界各地的监管情况不同，因此有必要正确设置适用于您所在地区的域名，以获取关于可以使用哪些频道的正确信息。
 
-The available region definitions can be found in [.filename]#/etc/regdomain.xml#. To set the data at runtime, use `ifconfig`:
+可用的区域定义可以在 [.filename]#/etc/regdomain.xml# 中找到。要在运行时设置数据，请使用 `ifconfig` 命令：
 
 [source, shell]
 ....
 # ifconfig wlan0 regdomain etsi2 country AT
 ....
 
-To persist the settings, add it to [.filename]#/etc/rc.conf#:
+要持久保存设置，请将其添加到 [/etc/rc.conf] 文件中：
 
 [source, shell]
 ....
@@ -617,18 +617,18 @@ To persist the settings, add it to [.filename]#/etc/rc.conf#:
 ====
 
 [[scan-wireless-networks]]
-=== Scan Wireless Networks
+=== 扫描无线网络
 
-Available wireless networks can be scanned using man:ifconfig[8].
+可以使用 man:ifconfig[8] 命令扫描可用的无线网络。
 
-To list the wireless networks execute the following command:
+要列出无线网络，请执行以下命令：
 
 [source, shell]
 ....
 # ifconfig wlan0 up list scan
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -641,23 +641,23 @@ Windows                           44:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP   BSSLOAD VHTPWRENV HTCAP WME RSN VHTCAP VHTOPMODE WPS
 ....
 
-. SSID/MESH ID identifies the name of the network.
-. BSSID identifies the MAC address of the access point.
-. CAPS field identifies the type of each network and the capabilities of the stations operating there (see the definition of `list scan` in man:ifconfig[8] for more details).
+. SSID/MESH ID 标识网络的名称。
+. BSSID 标识了接入点的 MAC 地址。
+. CAPS 字段标识了每个网络的类型以及在该网络上运行的站点的能力（有关详细信息，请参阅 man:ifconfig[8] 中 `list scan` 的定义）。
 
 [[wireless-authentication]]
-=== Connection and Authentication to a Wireless Network
+=== 连接和认证无线网络
 
-Once a wireless network has been selected from the list of scanned networks, it is necessary to perform the connection and the authentication. In the vast majority of wireless networks, authentication is done with a password configured in the router. Other schemes require cryptographic handshakes to be completed before data traffic can flow, either using pre-shared keys or secrets, or more complex schemes that involve backend services such as RADIUS.
+一旦从扫描到的网络列表中选择了一个无线网络，就需要进行连接和认证。在绝大多数无线网络中，认证是通过路由器中配置的密码来完成的。其他方案要求在数据流量可以流动之前完成加密握手，可以使用预共享密钥或密钥，也可以使用涉及后端服务（如 RADIUS）的更复杂的方案。
 
 [[authenticate-wpa2-wpa-personal]]
-==== Authenticate with WPA2/WPA/Personal
+==== 使用 WPA2/WPA/Personal
 
-The authentication process in a wireless network is managed by man:wpa_supplicant[8].
+无线网络中的身份验证过程由 man:wpa_supplicant[8] 管理。
 
-The man:wpa_supplicant[8] configuration will be made in the [.filename]#/etc/wpa_supplicant.conf# file. For more information, see man:wpa_supplicant.conf[5].
+man:wpa_supplicant[8] 配置将在 [.filename]#/etc/wpa_supplicant.conf# 文件中进行。有关更多信息，请参阅 man:wpa_supplicant.conf[5]。
 
-Once the scanning of the wireless networks has been carried out, a network has been chosen and have the password (PSK), that information will be added to the file [.filename]#/etc/wpa_supplicant.conf# as in the following example:
+一旦完成了对无线网络的扫描，选择了一个网络并获得了密码（PSK），那么这些信息将被添加到文件 [.filename]#/etc/wpa_supplicant.conf# 中，如下所示的示例：
 
 [.programlisting]
 ....
@@ -668,25 +668,25 @@ network={
 }
 ....
 
-<.> SSID scan technique. Only need to use this option if the network is hidden. <.> Network name. <.> Passwork of the wireless network.
+<.> SSID 扫描技术。只有在网络隐藏时才需要使用此选项。 <.> 网络名称。 <.> 无线网络的密码。
 
-The next step will be to configure the wireless connection in the file [.filename]#/etc/rc.conf#.
+下一步将是在文件 [.filename]#/etc/rc.conf# 中配置无线连接。
 
-To use a static address it will be necessary to execute the following command:
+要使用静态地址，需要执行以下命令：
 
 [source, shell]
 ....
 # sysrc ifconfig_wlan0="inet 192.168.1.20 netmask 255.255.255.0"
 ....
 
-To use a dynamic address it will be necessary to execute the following command:
+要使用动态地址，需要执行以下命令：
 
 [source, shell]
 ....
 # ifconfig_wlan0="WPA DHCP"
 ....
 
-Then restart the network executing the following command:
+然后执行以下命令重新启动网络：
 
 [source, shell]
 ....
@@ -695,60 +695,60 @@ Then restart the network executing the following command:
 
 [NOTE]
 ====
-More information on how to perform more advanced methods of authentication can be obtained at crossref:advanced-networking[network-advanced-wireless,"Wireless Advanced Authentication"].
+可以在 crossref:advanced-networking[network-advanced-wireless ,“无线高级认证”] 获取有关如何执行更高级身份验证方法的更多信息。
 ====
 
 [[authenticate-open-networks]]
-==== Authenticate with Open Networks
+==== 使用开放网络进行身份验证
 
 [TIP]
 ====
-It is important that the user is *very* careful when connecting to open networks without any kind of authentication.
+当用户连接到没有任何身份验证方式的开放网络时，非常重要的是用户要非常小心。
 ====
 
-Once the wireless network scan is done and the SSID of the wireless network is selected, execute the following command:
+完成无线网络扫描并选择无线网络的 SSID 后，执行以下命令：
 
 [source, shell]
 ....
 # ifconfig wlan0 ssid SSID
 ....
 
-And then execute man:dhclient[8] to get the address configured:
+然后执行 man:dhclient[8] 来获取配置的地址：
 
 [source, shell]
 ....
 # dhclient wlan0
 ....
 
-=== Using Both Wired and Wireless Connections
+=== 同时使用有线和无线连接
 
-A wired connection provides better performance and reliability, while a wireless connection provides flexibility and mobility. Laptop users typically want to roam seamlessly between the two types of connections.
+有线连接提供更好的性能和可靠性，而无线连接提供灵活性和移动性。笔记本电脑用户通常希望在这两种连接类型之间无缝切换。
 
-On FreeBSD, it is possible to combine two or even more network interfaces together in a "failover" fashion. This type of configuration uses the most preferred and available connection from a group of network interfaces, and the operating system switches automatically when the link state changes.
+在 FreeBSD 上，可以以“故障转移（failover）”的方式将两个甚至更多的网络接口组合在一起。这种配置类型使用一组网络接口中最优先和可用的连接，并且当链路状态发生变化时，操作系统会自动切换。
 
-Link aggregation and failover is covered in crossref:advanced-networking[network-aggregation,"Link Aggregation and Failover"] and an example for using both wired and wireless connections is provided at crossref:advanced-networking[networking-lagg-wired-and-wireless,"Failover Mode Between Ethernet and Wireless Interfaces"].
+链路聚合和故障转移在 crossref:advanced-networking[network-aggregation ,“链路聚合和故障转移”] 中有详细介绍，并且在 crossref:advanced-networking[networking-lagg-wired-and-wireless ,“以太网和无线接口之间的故障转移模式”] 中提供了同时使用有线和无线连接的示例。
 
 [[hostname]]
-== Hostname
+== 主机名
 
-The hostname represents the fully qualified domain name (FQDN) of the host on the network.
+主机名表示网络上主机的完全限定域名（FQDN）。
 
 [TIP]
 ====
-If no hostname has been set for the host FreeBSD will assign the value `Amnesiac`.
+如果主机没有设置主机名，FreeBSD 将分配值 `Amnesiac`。
 ====
 
 [[get-hostname]]
-=== Check The Current Hostname
+=== 检查当前主机名
 
-man:hostname[1] can be used to check the current hostname:
+man:hostname[1] 可以用来检查当前的主机名：
 
 [source, shell]
 ....
 $ hostname
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -756,9 +756,9 @@ freebsdhostname.example.com
 ....
 
 [[change-hostname]]
-=== Change Hostname
+=== 更改主机名
 
-To change the hostname of the host and persist it across reboots execute the following command:
+要更改主机的主机名并在重新启动后保持不变，请执行以下命令：
 
 [source, shell]
 ....
@@ -768,24 +768,24 @@ To change the hostname of the host and persist it across reboots execute the fol
 [[dns]]
 == DNS
 
-The DNS could be understanded as a link:https://en.wikipedia.org/wiki/Telephone_directory[telephone directory] in which an IP is identified to a hostname and vice versa.
+DNS 可以被理解为一个 link:https://en.wikipedia.org/wiki/Telephone_directory[电话簿]，其中将 IP 地址与主机名进行互相识别。
 
-There are three files that handle how a FreeBSD system interact with the DNS. These three files are man:hosts[5], man:resolv.conf[5] and man:nsswitch.conf[5]
+有三个文件处理 FreeBSD 系统与 DNS 的交互。这三个文件是 man:hosts[5]、man:resolv.conf[5] 和 man:nsswitch.conf[5]。
 
-Unless otherwise stated in the [.filename]#/etc/nsswitch.conf# file, FreeBSD will look at the addresses in the [.filename]#/etc/hosts# file and then the DNS information in the [.filename]#/etc/resolv.conf# file.
+除非在 [.filename]#/etc/nsswitch.conf# 文件中另有说明，否则 FreeBSD 将首先查看 [.filename]#/etc/hosts# 文件中的地址，然后再查看 [.filename]#/etc/resolv.conf# 文件中的 DNS 信息。
 
 [NOTE]
 ====
-The man:nsswitch.conf[5] file specifies how the nsdispatch (name-service switch dispatcher) should operate.
+man:nsswitch.conf[5] 文件指定了 nsdispatch（名称服务切换调度程序）的操作方式。
 
-By default, the hosts section of the [.filename]#/etc/nsswitch.conf# file will be as follows:
+默认情况下，[.filename]#/etc/nsswitch.conf# 文件的 hosts 部分将如下所示：
 
 [.programlisting]
 ....
 hosts: files dns
 ....
 
-For example, in case of using the man:nscd[8] service. The order of preference could be changed by leaving the line as follows:
+例如，在使用 man:nscd[8] 服务的情况下，可以通过将该行保持如下来更改优先顺序：
 
 [.programlisting]
 ....
@@ -794,11 +794,11 @@ hosts: files cache dns
 ====
 
 [[local-addresses]]
-=== Local addresses
+=== 本地地址
 
-The [.filename]#/etc/hosts# file is a simple text database who provide host name to IP address mappings. Entries for local computers connected via a LAN can be added to this file for simplistic naming purposes instead of setting up a DNS server. Additionally, [.filename]#/etc/hosts# can be used to provide a local record of Internet names, reducing the need to query external DNS servers for commonly accessed names.
+[.filename]#/etc/hosts# 文件是一个简单的文本数据库，用于提供主机名到 IP 地址的映射。可以将连接到局域网的本地计算机的条目添加到此文件中，以简化命名，而不是设置 DNS 服务器。此外， [.filename]#/etc/hosts# 还可以用于提供互联网名称的本地记录，减少查询外部 DNS 服务器以获取常用名称的需求。
 
-For example, in the case of having a local instance of package:www/gitlab-ce[] in a local environment, it could be added as follows to the file [.filename]#/etc/hosts#:
+例如，在本地环境中有一个名为 package:www/gitlab-ce[] 的本地实例的情况下，可以将其添加到文件 [.filename]#/etc/hosts# 中，如下所示：
 
 [.programlisting]
 ....
@@ -806,27 +806,27 @@ For example, in the case of having a local instance of package:www/gitlab-ce[] i
 ....
 
 [[configuring-nameserver]]
-=== Configuring the Nameserver
+=== 配置域名服务器
 
-How a FreeBSD system accesses the Internet Domain Name System (DNS) is controlled by man:resolv.conf[5].
+FreeBSD 系统如何访问互联网域名系统（DNS）由 man:resolv.conf[5] 控制。
 
-The most common entries to [.filename]#/etc/resolv.conf# are:
+最常见的条目是 [.filename]#/etc/resolv.conf# ：
 
 [.informaltable]
 [cols="1,1", frame="none"]
 |===
 
 |`nameserver`
-|The IP address of a name server the resolver should query. The servers are queried in the order listed with a maximum of three.
+|解析器应查询的名称服务器的 IP 地址。按照列出的顺序查询服务器，最多查询三个。
 
 |`search`
-|Search list for hostname lookup. This is normally determined by the domain of the local hostname.
+|搜索列表用于主机名查找。通常由本地主机名的域确定。
 
 |`domain`
-|The local domain name.
+|本地域名。
 |===
 
-A typical [.filename]#/etc/resolv.conf# looks like this:
+一个典型的 [.filename]#/etc/resolv.conf# 文件如下所示：
 
 [.programlisting]
 ....
@@ -837,23 +837,23 @@ nameserver 147.11.100.30
 
 [NOTE]
 ====
-Only one of the `search` and `domain` options should be used.
+只能使用 `search` 和 `domain` 选项中的一个。
 ====
 
-When using DHCP, man:dhclient[8] usually rewrites [.filename]#/etc/resolv.conf# with information received from the DHCP server.
+在使用 DHCP 时，man:dhclient[8] 通常会使用从 DHCP 服务器接收到的信息重写 .filename#/etc/resolv.conf# 文件。
 
 [TIP]
 ====
-If the machine in which the configuration is being made is *not* a DNS server, man:local-unbound[8] can be used to improve DNS lookup performance.
+如果进行配置的机器 *不是* DNS 服务器，可以使用 man:local-unbound[8] 来提高 DNS 查找性能。
 
-To enable it at boot time execute the following command:
+要在启动时启用它，请执行以下命令：
 
 [source, shell]
 ....
 # sysrc local_unbound_enable="YES"
 ....
 
-To start the man:local-unbound[8] service execute the following command:
+要启动 man:local-unbound[8] 服务，请执行以下命令：
 
 [source, shell]
 ....
@@ -862,39 +862,39 @@ To start the man:local-unbound[8] service execute the following command:
 ====
 
 [[troubleshooting]]
-== Troubleshooting
+== 故障排除
 
-When troubleshooting hardware and software configurations, check the simple things first.
+在排除硬件和软件配置问题时，首先检查简单的事情。
 
-* Is the network cable plugged in?
-* Are the network services properly configured?
-* Is the firewall configured correctly?
-* Is the NIC supported by FreeBSD?
-* Is the router working correctly?
+* 网络电缆已插好吗？
+* 网络服务是否已正确配置？
+* 防火墙配置正确吗？
+* FreeBSD 是否支持该网卡？
+* 路由器是否正常工作？
 
 [TIP]
 ====
-Before sending a bug report, always check the Hardware Notes in the link:https://www.freebsd.org/releases/[FreeBSD release page], update the version of FreeBSD to the latest STABLE version, check the mailing list archives, and search the Internet.
+在发送错误报告之前，始终要在 link:https://www.freebsd.org/releases/[FreeBSD 发布页面] 检查硬件说明 ，将 FreeBSD 版本更新到最新的 STABLE 版本，检查邮件列表存档，并在互联网上进行搜索。
 ====
 
 [[wired-troubleshooting]]
-=== Troubleshooting in Wired Networks
+=== 有线网络故障排除
 
-If the card works, yet performance is poor, read through man:tuning[7]. Also, check the network configuration as incorrect network settings can cause slow connections.
+如果卡可以正常工作，但性能较差，请阅读 man:tuning[7]。此外，请检查网络配置，因为不正确的网络设置可能会导致连接变慢。
 
-`No route to host` messages occur if the system is unable to route a packet to the destination host. This can happen if no default route is specified or if a cable is unplugged. Check the output of `netstat -rn` and make sure there is a valid route to the host. If there is not, read crossref:advanced-networking[network-routing,"Gateways and Routes"].
+如果系统无法将数据包路由到目标主机，则会出现“无法到达主机”的消息。如果没有指定默认路由或者电缆未插好，就会发生这种情况。检查 `netstat -rn` 的输出，并确保存在到目标主机的有效路由。如果不存在有效路由，请阅读 crossref:advanced-networking[network-routing,“网关和路由”].
 
-`ping: sendto: Permission denied` error messages are often caused by a misconfigured firewall. If a firewall is enabled on FreeBSD but no rules have been defined, the default policy is to deny all traffic, even man:ping[8]. Refer to crossref:firewalls[firewalls,Firewalls] for more information.
+`ping: sendto: Permission denied` 错误消息通常是由于配置错误的防火墙引起的。如果在 FreeBSD 上启用了防火墙但没有定义规则，那么默认策略是拒绝所有流量，甚至是 man:ping[8]。有关更多信息，请参考 crossref:firewalls[firewalls,防火墙]。
 
 [[wireless-troubleshooting]]
-=== Troubleshooting in Wireless Networks
+=== 无线网络故障排除
 
-This section describes a number of steps to help troubleshoot common wireless networking problems.
+本节描述了一些步骤，以帮助解决常见的无线网络问题。
 
-* If the access point is not listed when scanning, check that the configuration has not limited the wireless device to a limited set of channels.
+* 如果在扫描时未列出访问点，请检查配置是否限制了无线设备的频道范围。
 
-* If the device cannot associate with an access point, verify that the configuration matches the settings on the access point. This includes the authentication scheme and any security protocols. Simplify the configuration as much as possible. If using a security protocol such as WPA2 or WPA, configure the access point for open authentication and no security to see if traffic will pass.
+* 如果设备无法与接入点关联，请验证配置是否与接入点上的设置匹配。这包括认证方案和任何安全协议。尽量简化配置。如果使用 WPA2 或 WPA 等安全协议，请将接入点配置为开放认证和无安全性，以查看是否可以传输流量。
 
-* Once the system can associate with the access point, diagnose the network configuration using tools like man:ping[8].
+* 一旦系统能够与接入点建立关联，可以使用诸如 man:ping[8] 之类的工具来诊断网络配置。
 
-* There are many lower-level debugging tools. Debugging messages can be enabled in the 802.11 protocol support layer using man:wlandebug[8].
+* 有许多低级调试工具。可以使用 man:wlandebug[8] 在 802.11 协议支持层启用调试消息。
