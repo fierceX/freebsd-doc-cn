@@ -1,17 +1,17 @@
 ---
-description: 'ZFS is an advanced file system designed to solve major problems found in previous storage subsystem software'
+description: 'ZFS 是一种先进的文件系统，旨在解决以前存储子系统软件中存在的主要问题。'
 next: books/handbook/filesystems
-part: 'Part III. System Administration'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/geom
 showBookMenu: true
 tags: '["ZFS", "filesystem", "administration", "zpool", "features", "terminology", "RAID-Z"]'
-title: 'Chapter 22. The Z File System (ZFS)'
+title: '第 22 章 Z 文件系统（ZFS）'
 weight: 26
 ---
 
 [[zfs]]
-= The Z File System (ZFS)
+= Z 文件系统（ZFS）
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -45,53 +45,53 @@ toc::[]
 include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
-ZFS is an advanced file system designed to solve major problems found in previous storage subsystem software.
+ZFS 是一种先进的文件系统，旨在解决以前存储子系统软件中存在的主要问题。
 
-Originally developed at Sun(TM), ongoing open source ZFS development has moved to the http://open-zfs.org[OpenZFS Project].
+最初由 Sun(TM) 开发，持续的开源 ZFS 开发已经转移到了 http://open-zfs.org[OpenZFS 项目]。
 
-ZFS has three major design goals:
+ZFS 有三个主要的设计目标：
 
-* Data integrity: All data includes a <<zfs-term-checksum,checksum>> of the data. ZFS calculates checksums and writes them along with the data. When reading that data later, ZFS recalculates the checksums. If the checksums do not match, meaning detecting one or more data errors, ZFS will attempt to automatically correct errors when ditto-, mirror-, or parity-blocks are available.
-* Pooled storage: adding physical storage devices to a pool, and allocating storage space from that shared pool. Space is available to all file systems and volumes, and increases by adding new storage devices to the pool.
-* Performance: caching mechanisms provide increased performance. <<zfs-term-arc,ARC>> is an advanced memory-based read cache. ZFS provides a second level disk-based read cache with <<zfs-term-l2arc,L2ARC>>, and a disk-based synchronous write cache named <<zfs-term-zil,ZIL>>.
+* 数据完整性：所有数据都包含数据的校验和。ZFS 会计算校验和并将其与数据一起写入。当以后读取该数据时，ZFS 会重新计算校验和。如果校验和不匹配，即检测到一个或多个数据错误，ZFS 将尝试在可用的副本、镜像或奇偶块时自动纠正错误。
+* 汇集存储：将物理存储设备添加到一个池中，并从该共享池中分配存储空间。空间可供所有文件系统和卷使用，并通过在池中添加新的存储设备来增加空间。
+* 性能：缓存机制提供了更高的性能。<<zfs-term-arc,ARC>> 是一种先进的基于内存的读取缓存。ZFS 提供了第二级基于磁盘的读取缓存 <<zfs-term-l2arc,L2ARC>> ，以及一种基于磁盘的同步写入缓存，名为 <<zfs-term-zil,ZIL>>。
 
-A complete list of features and terminology is in <<zfs-term>>.
+完整的功能和术语列表请参见 <<zfs-term>>。
 
 [[zfs-differences]]
-== What Makes ZFS Different
+== ZFS 有何不同之处
 
-More than a file system, ZFS is fundamentally different from traditional file systems. Combining the traditionally separate roles of volume manager and file system provides ZFS with unique advantages. The file system is now aware of the underlying structure of the disks. Traditional file systems could exist on a single disk alone at a time. If there were two disks then creating two separate file systems was necessary. A traditional hardware RAID configuration avoided this problem by presenting the operating system with a single logical disk made up of the space provided by physical disks on top of which the operating system placed a file system. Even with software RAID solutions like those provided by GEOM, the UFS file system living on top of the RAID believes it's dealing with a single device. ZFS' combination of the volume manager and the file system solves this and allows the creation of file systems that all share a pool of available storage. One big advantage of ZFS' awareness of the physical disk layout is that existing file systems grow automatically when adding extra disks to the pool. This new space then becomes available to the file systems. ZFS can also apply different properties to each file system. This makes it useful to create separate file systems and datasets instead of a single monolithic file system.
+ZFS 不仅仅是一个文件系统，它在根本上与传统的文件系统有所不同。将卷管理器和文件系统的传统分离角色结合起来，为 ZFS 提供了独特的优势。文件系统现在能够意识到底层磁盘的结构。传统的文件系统一次只能存在于单个磁盘上。如果有两个磁盘，那么就需要创建两个单独的文件系统。传统的硬件 RAID 配置通过将操作系统呈现为由物理磁盘提供的空间组成的单个逻辑磁盘来避免这个问题，操作系统在其上放置一个文件系统。即使使用像 GEOM 提供的软件 RAID 解决方案，位于 RAID 之上的 UFS 文件系统也认为它正在处理一个单一设备。 ZFS 的卷管理器和文件系统的组合解决了这个问题，并允许创建共享可用存储池的文件系统。 ZFS 意识到物理磁盘布局的一个重要优势是，当向池中添加额外的磁盘时，现有的文件系统会自动增长。然后，这个新空间就可以供文件系统使用。 ZFS 还可以为每个文件系统应用不同的属性。这使得创建单独的文件系统和数据集比创建单个的整体文件系统更有用。
 
 [[zfs-quickstart]]
-== Quick Start Guide
+== 快速入门指南
 
-FreeBSD can mount ZFS pools and datasets during system initialization. To enable it, add this line to [.filename]#/etc/rc.conf#:
+FreeBSD 可以在系统初始化期间挂载 ZFS 池和数据集。要启用它，请将以下行添加到 [.filename]#/etc/rc.conf#: 文件中：
 
 [.programlisting]
 ....
 zfs_enable="YES"
 ....
 
-Then start the service:
+然后启动服务：
 
 [source, shell]
 ....
 # service zfs start
 ....
 
-The examples in this section assume three SCSI disks with the device names [.filename]#da0#, [.filename]#da1#, and [.filename]#da2#. Users of SATA hardware should instead use [.filename]#ada# device names.
+本节中的示例假设有三个 SCSI 磁盘，设备名称分别为 [.filename]#da0#、[.filename]#da1# 和 [.filename]#da2# 。使用 SATA 硬件的用户应该使用 [.filename]#ada# 设备名称。
 
 [[zfs-quickstart-single-disk-pool]]
-=== Single Disk Pool
+=== 单磁盘池
 
-To create a simple, non-redundant pool using a single disk device:
+要使用单个磁盘设备创建一个简单且非冗余的池，请按以下步骤操作：
 
 [source, shell]
 ....
 # zpool create example /dev/da0
 ....
 
-To view the new pool, review the output of `df`:
+要查看新的存储池，请查看 `df` 命令的输出：
 
 [source, shell]
 ....
@@ -103,7 +103,7 @@ devfs               1       1        0   100%    /dev
 example      17547136       0 17547136     0%    /example
 ....
 
-This output shows creating and mounting of the `example` pool, and that is now accessible as a file system. Create files for users to browse:
+这个输出显示了创建和挂载 `example` 池，并且现在可以作为文件系统访问。为用户创建文件以供浏览：
 
 [source, shell]
 ....
@@ -117,7 +117,7 @@ drwxr-xr-x  21 root  wheel  512 Aug 29 23:12 ..
 -rw-r--r--   1 root  wheel    0 Aug 29 23:15 testfile
 ....
 
-This pool is not using any advanced ZFS features and properties yet. To create a dataset on this pool with compression enabled:
+此池尚未使用任何高级的 ZFS 功能和属性。要在此池上创建启用了压缩的数据集，请执行以下操作：
 
 [source, shell]
 ....
@@ -125,16 +125,16 @@ This pool is not using any advanced ZFS features and properties yet. To create a
 # zfs set compression=gzip example/compressed
 ....
 
-The `example/compressed` dataset is now a ZFS compressed file system. Try copying some large files to [.filename]#/example/compressed#.
+`example/compressed` 数据集现在是一个 ZFS 压缩文件系统。尝试将一些大文件复制到 `/example/compressed`。
 
-Disable compression with:
+禁用压缩功能：
 
 [source, shell]
 ....
 # zfs set compression=off example/compressed
 ....
 
-To unmount a file system, use `zfs umount` and then verify with `df`:
+要卸载文件系统，请使用 `zfs umount` 命令，然后使用 `df` 命令进行验证：
 
 [source, shell]
 ....
@@ -147,7 +147,7 @@ devfs               1       1        0   100%    /dev
 example      17547008       0 17547008     0%    /example
 ....
 
-To re-mount the file system to make it accessible again, use `zfs mount` and verify with `df`:
+要重新挂载文件系统以使其再次可访问，请使用 `zfs mount` 命令，并使用 `df` 命令进行验证：
 
 [source, shell]
 ....
@@ -161,7 +161,7 @@ example             17547008       0 17547008     0%    /example
 example/compressed  17547008       0 17547008     0%    /example/compressed
 ....
 
-Running `mount` shows the pool and file systems:
+运行 `mount` 命令会显示池和文件系统：
 
 [source, shell]
 ....
@@ -173,7 +173,7 @@ example on /example (zfs, local)
 example/compressed on /example/compressed (zfs, local)
 ....
 
-Use ZFS datasets like any file system after creation. Set other available features on a per-dataset basis when needed. The example below creates a new file system called `data`. It assumes the file system contains important files and configures it to store two copies of each data block.
+创建后，可以像任何文件系统一样使用 ZFS 数据集。根据需要，可以在每个数据集上设置其他可用的功能。下面的示例创建了一个名为 `data` 的新文件系统。它假设该文件系统包含重要文件，并将其配置为存储每个数据块的两个副本。
 
 [source, shell]
 ....
@@ -181,7 +181,7 @@ Use ZFS datasets like any file system after creation. Set other available featur
 # zfs set copies=2 example/data
 ....
 
-Use `df` to see the data and space usage:
+使用 `df` 命令查看数据和空间使用情况：
 
 [source, shell]
 ....
@@ -195,9 +195,9 @@ example/compressed  17547008       0 17547008     0%    /example/compressed
 example/data        17547008       0 17547008     0%    /example/data
 ....
 
-Notice that all file systems in the pool have the same available space. Using `df` in these examples shows that the file systems use the space they need and all draw from the same pool. ZFS gets rid of concepts such as volumes and partitions, and allows several file systems to share the same pool.
+请注意，池中的所有文件系统都具有相同的可用空间。在这些示例中使用 `df` 命令显示，文件系统使用它们所需的空间，并且都从同一个池中获取。 ZFS 摒弃了卷和分区等概念，允许多个文件系统共享同一个池。
 
-To destroy the file systems and then the pool that is no longer needed:
+销毁不再需要的文件系统和池：
 
 [source, shell]
 ....
@@ -209,9 +209,9 @@ To destroy the file systems and then the pool that is no longer needed:
 [[zfs-quickstart-raid-z]]
 === RAID-Z
 
-Disks fail. One way to avoid data loss from disk failure is to use RAID. ZFS supports this feature in its pool design. RAID-Z pools require three or more disks but provide more usable space than mirrored pools.
+磁盘会出现故障。避免因磁盘故障导致数据丢失的一种方法是使用 RAID。ZFS 在其存储池设计中支持此功能。 RAID-Z 存储池需要三个或更多的磁盘，但提供比镜像存储池更多的可用空间。
 
-This example creates a RAID-Z pool, specifying the disks to add to the pool:
+这个示例创建了一个 RAID-Z 池，指定要添加到池中的磁盘：
 
 [source, shell]
 ....
@@ -220,17 +220,17 @@ This example creates a RAID-Z pool, specifying the disks to add to the pool:
 
 [NOTE]
 ====
-Sun(TM) recommends that the number of devices used in a RAID-Z configuration be between three and nine. For environments requiring a single pool consisting of 10 disks or more, consider breaking it up into smaller RAID-Z groups. If two disks are available, ZFS mirroring provides redundancy if required. Refer to man:zpool[8] for more details.
+Sun(TM) 建议在 RAID-Z 配置中使用的设备数量应在三到九之间。对于需要由 10 个或更多磁盘组成的单个池的环境，考虑将其分成较小的 RAID-Z 组。如果有两个磁盘可用，可以使用 ZFS 镜像提供冗余性（如果需要）。有关更多详细信息，请参阅 man:zpool[8]。
 ====
 
-The previous example created the `storage` zpool. This example makes a new file system called `home` in that pool:
+前面的示例创建了名为 `storage` 的 `zpool` 。这个示例在该池中创建了一个名为 `home` 的新文件系统：
 
 [source, shell]
 ....
 # zfs create storage/home
 ....
 
-Enable compression and store an extra copy of directories and files:
+启用压缩并存储目录和文件的额外副本：
 
 [source, shell]
 ....
@@ -238,7 +238,7 @@ Enable compression and store an extra copy of directories and files:
 # zfs set compression=gzip storage/home
 ....
 
-To make this the new home directory for users, copy the user data to this directory and create the appropriate symbolic links:
+要将此目录设置为用户的新家目录，请将用户数据复制到此目录并创建相应的符号链接：
 
 [source, shell]
 ....
@@ -248,46 +248,46 @@ To make this the new home directory for users, copy the user data to this direct
 # ln -s /storage/home /usr/home
 ....
 
-Users data is now stored on the freshly-created [.filename]#/storage/home#. Test by adding a new user and logging in as that user.
+用户数据现在存储在新创建的 [.filename]#/storage/home# 上。通过添加一个新用户并以该用户身份登录来进行测试。
 
-Create a file system snapshot to roll back to later:
+创建一个文件系统快照，以便以后可以回滚：
 
 [source, shell]
 ....
 # zfs snapshot storage/home@08-30-08
 ....
 
-ZFS creates snapshots of a dataset, not a single directory or file.
+ZFS 创建数据集的快照，而不是单个目录或文件。
 
-The `@` character is a delimiter between the file system name or the volume name. Before deleting an important directory, back up the file system, then roll back to an earlier snapshot in which the directory still exists:
+`@` 字符是文件系统名称或卷名称之间的分隔符。在删除重要目录之前，先备份文件系统，然后回滚到一个早期的快照，其中目录仍然存在：
 
 [source, shell]
 ....
 # zfs rollback storage/home@08-30-08
 ....
 
-To list all available snapshots, run `ls` in the file system's [.filename]#.zfs/snapshot# directory. For example, to see the snapshot taken:
+要列出所有可用的快照，请在文件系统的 `.zfs/snapshot` 目录中运行 `ls` 命令。例如，要查看已拍摄的快照：
 
 [source, shell]
 ....
 # ls /storage/home/.zfs/snapshot
 ....
 
-Write a script to take regular snapshots of user data. Over time, snapshots can use up a lot of disk space. Remove the previous snapshot using the command:
+编写一个脚本来定期对用户数据进行快照。随着时间的推移，快照可能会占用大量的磁盘空间。使用以下命令删除先前的快照：
 
 [source, shell]
 ....
 # zfs destroy storage/home@08-30-08
 ....
 
-After testing, make [.filename]#/storage/home# the real [.filename]#/home# with this command:
+经过测试，使用以下命令将 [.filename]#/storage/home# 设置为真实的 [.filename]#/home#：
 
 [source, shell]
 ....
 # zfs set mountpoint=/home storage/home
 ....
 
-Run `df` and `mount` to confirm that the system now treats the file system as the real [.filename]#/home#:
+运行 `df` 和 `mount` 命令来确认系统现在将文件系统视为真实的 [.filename]#/home# ：
 
 [source, shell]
 ....
@@ -306,7 +306,7 @@ storage       26320512       0 26320512     0%    /storage
 storage/home  26320512       0 26320512     0%    /home
 ....
 
-This completes the RAID-Z configuration. Add daily status updates about the created file systems to the nightly man:periodic[8] runs by adding this line to [.filename]#/etc/periodic.conf#:
+这样就完成了 RAID-Z 的配置。通过将以下行添加到 [.filename]#/etc/periodic.conf# ，可以将关于创建的文件系统的每日状态更新添加到夜间的 man:periodic[8] 运行中：
 
 [.programlisting]
 ....
@@ -314,23 +314,23 @@ daily_status_zfs_enable="YES"
 ....
 
 [[zfs-quickstart-recovering-raid-z]]
-=== Recovering RAID-Z
+=== 恢复 RAID-Z
 
-Every software RAID has a method of monitoring its `state`. View the status of RAID-Z devices using:
+每个软件 RAID 都有一种监控其 `state` 的方法。使用以下命令查看 RAID-Z 设备的状态：
 
 [source, shell]
 ....
 # zpool status -x
 ....
 
-If all pools are <<zfs-term-online,Online>> and everything is normal, the message shows:
+如果所有池都处于在线状态，并且一切正常，消息将显示：
 
 [source, shell]
 ....
 all pools are healthy
 ....
 
-If there is a problem, perhaps a disk being in the <<zfs-term-offline,Offline>> state, the pool state will look like this:
+如果出现问题，比如磁盘处于 <<zfs-term-offline,离线>> 状态，池的状态将如下所示：
 
 [source, shell]
 ....
@@ -354,21 +354,21 @@ config:
 errors: No known data errors
 ....
 
-"OFFLINE" shows the administrator took [.filename]#da1# offline using:
+"OFFLINE"显示管理员使用以下方式将 [.filename]#da1# 下线：
 
 [source, shell]
 ....
 # zpool offline storage da1
 ....
 
-Power down the computer now and replace [.filename]#da1#. Power up the computer and return [.filename]#da1# to the pool:
+立即关闭计算机并更换 [.filename]#da1#。重新启动计算机并将 [.filename]#da1# 返回到池中：
 
 [source, shell]
 ....
 # zpool replace storage da1
 ....
 
-Next, check the status again, this time without `-x` to display all pools:
+接下来，再次检查状态，这次不使用 `-x` 选项以显示所有的池：
 
 [source, shell]
 ....
@@ -388,26 +388,26 @@ config:
 errors: No known data errors
 ....
 
-In this example, everything is normal.
+在这个例子中，一切都正常。
 
 [[zfs-quickstart-data-verification]]
-=== Data Verification
+=== 数据验证
 
-ZFS uses checksums to verify the integrity of stored data. Creating file systems automatically enables them.
+ZFS 使用校验和来验证存储数据的完整性。创建文件系统时会自动启用校验和功能。
 
 [WARNING]
 ====
-Disabling Checksums is possible but _not_ recommended! Checksums take little storage space and provide data integrity. Most ZFS features will not work properly with checksums disabled. Disabling these checksums will not increase performance noticeably.
+禁用校验和是可以的，但 **不推荐** ！校验和占用很少的存储空间，并提供数据完整性。大多数 ZFS 功能在禁用校验和的情况下将无法正常工作。禁用这些校验和不会明显提高性能。
 ====
 
-Verifying the data checksums (called _scrubbing_) ensures integrity of the `storage` pool with:
+验证数据校验和（称为 _scrubbing_ ）可以确保 `storage` 池的完整性，具体操作如下：
 
 [source, shell]
 ....
 # zpool scrub storage
 ....
 
-The duration of a scrub depends on the amount of data stored. Larger amounts of data will take proportionally longer to verify. Since scrubbing is I/O intensive, ZFS allows a single scrub to run at a time. After scrubbing completes, view the status with `zpool status`:
+一个 scrub 的持续时间取决于存储的数据量。数据量越大，验证所需的时间就越长。由于 scrub 是 I/O 密集型操作， ZFS 只允许同时运行一个 scrub。在 scrub 完成后，可以使用 `zpool status` 命令查看状态。
 
 [source, shell]
 ....
@@ -427,21 +427,21 @@ config:
 errors: No known data errors
 ....
 
-Displaying the completion date of the last scrubbing helps decide when to start another. Routine scrubs help protect data from silent corruption and ensure the integrity of the pool.
+显示最后一次清 scrub 的完成日期有助于决定何时开始下一次 scrub。例行 scrub 有助于保护数据免受静默损坏，并确保池的完整性。
 
-Refer to man:zfs[8] and man:zpool[8] for other ZFS options.
+请参考 man:zfs[8] 和 man:zpool[8] 了解其他 ZFS 选项。
 
 [[zfs-zpool]]
-== `zpool` Administration
+== `zpool` 管理
 
-ZFS administration uses two main utilities. The `zpool` utility controls the operation of the pool and allows adding, removing, replacing, and managing disks. The <<zfs-zfs,`zfs`>> utility allows creating, destroying, and managing datasets, both <<zfs-term-filesystem,file systems>> and <<zfs-term-volume,volumes>>.
+ZFS 管理使用两个主要工具。 `zpool` 工具控制池的操作，允许添加、删除、替换和管理磁盘。`zfs` 工具允许创建、销毁和管理数据集，包括文件系统和卷。
 
 [[zfs-zpool-create]]
-=== Creating and Destroying Storage Pools
+=== 创建和销毁存储池
 
-Creating a ZFS storage pool requires permanent decisions, as the pool structure cannot change after creation. The most important decision is which types of vdevs to group the physical disks into. See the list of <<zfs-term-vdev,vdev types>> for details about the possible options. After creating the pool, most vdev types do not allow adding disks to the vdev. The exceptions are mirrors, which allow adding new disks to the vdev, and stripes, which upgrade to mirrors by attaching a new disk to the vdev. Although adding new vdevs expands a pool, the pool layout cannot change after pool creation. Instead, back up the data, destroy the pool, and recreate it.
+创建一个 ZFS 存储池需要做出永久性的决策，因为在创建后无法更改池的结构。最重要的决策是将物理磁盘分组成哪种类型的 vdev 。有关可能选项的详细信息，请参阅 <<zfs-term-vdev,vdev 类型 >> 列表。创建池后，大多数 vdev 类型不允许向 vdev 添加磁盘。例外情况是镜像，它允许向 vdev 添加新磁盘，并且条带可以通过将新磁盘附加到 vdev 来升级为镜像。虽然添加新的 vdev 可以扩展池，但池的布局在创建后无法更改。取而代之的是备份数据，销毁池，然后重新创建池。
 
-Create a simple mirror pool:
+创建一个简单的镜像池：
 
 [source, shell]
 ....
@@ -461,7 +461,7 @@ config:
 errors: No known data errors
 ....
 
-To create more than one vdev with a single command, specify groups of disks separated by the vdev type keyword, `mirror` in this example:
+要使用单个命令创建多个 vdev ，请使用以 vdev 类型关键字 `mirror` 分隔的磁盘组。
 
 [source, shell]
 ....
@@ -484,9 +484,9 @@ config:
 errors: No known data errors
 ....
 
-Pools can also use partitions rather than whole disks. Putting ZFS in a separate partition allows the same disk to have other partitions for other purposes. In particular, it allows adding partitions with bootcode and file systems needed for booting. This allows booting from disks that are also members of a pool. ZFS adds no performance penalty on FreeBSD when using a partition rather than a whole disk. Using partitions also allows the administrator to _under-provision_ the disks, using less than the full capacity. If a future replacement disk of the same nominal size as the original actually has a slightly smaller capacity, the smaller partition will still fit, using the replacement disk.
+池还可以使用分区而不是整个磁盘。将 ZFS 放在单独的分区中可以使同一磁盘具有其他用途的分区。特别是，它允许添加带有引导代码和用于引导的文件系统的分区。这样就可以从同时也是池成员的磁盘启动。在 FreeBSD 上，使用分区而不是整个磁盘时， ZFS 不会带来性能损失。使用分区还允许管理员对磁盘进行“欠配置”，使用不到全部容量。如果将来替换的磁盘与原始磁盘的名义大小相同，但实际容量略小，较小的分区仍将适应替换磁盘。
 
-Create a <<zfs-term-vdev-raidz,RAID-Z2>> pool using partitions:
+使用分区创建一个 <<zfs-term-vdev-raidz,RAID-Z2>> 池：
 
 [source, shell]
 ....
@@ -510,16 +510,16 @@ config:
 errors: No known data errors
 ....
 
-Destroy a pool that is no longer needed to reuse the disks. Destroying a pool requires unmounting the file systems in that pool first. If any dataset is in use, the unmount operation fails without destroying the pool. Force the pool destruction with `-f`. This can cause undefined behavior in applications which had open files on those datasets.
+销毁一个不再需要的池以重用磁盘。销毁池需要先卸载该池中的文件系统。如果有任何数据集正在使用中，卸载操作将失败，不会销毁池。可以使用 `-f` 强制销毁池。这可能会导致应用程序中对这些数据集有打开文件的未定义行为。
 
 [[zfs-zpool-attach]]
-=== Adding and Removing Devices
+=== 添加和移除设备
 
-Two ways exist for adding disks to a pool: attaching a disk to an existing vdev with `zpool attach`, or adding vdevs to the pool with `zpool add`. Some <<zfs-term-vdev,vdev types>> allow adding disks to the vdev after creation.
+有两种方法可以将磁盘添加到池中：使用 `zpool attach` 将磁盘附加到现有的 vdev 上，或者使用 `zpool add` 将 vdev 添加到池中。一些 <<zfs-term-vdev,vdev 类型 >> 允许在创建后向 vdev 添加磁盘。
 
-A pool created with a single disk lacks redundancy. It can detect corruption but can not repair it, because there is no other copy of the data. The <<zfs-term-copies,copies>> property may be able to recover from a small failure such as a bad sector, but does not provide the same level of protection as mirroring or RAID-Z. Starting with a pool consisting of a single disk vdev, use `zpool attach` to add a new disk to the vdev, creating a mirror. Also use `zpool attach` to add new disks to a mirror group, increasing redundancy and read performance. When partitioning the disks used for the pool, replicate the layout of the first disk on to the second. Use `gpart backup` and `gpart restore` to make this process easier.
+使用单个磁盘创建的池缺乏冗余性。它可以检测到损坏，但无法修复，因为没有其他数据的副本。 <<zfs-term-copies,copies>> 属性可以从小故障（如坏扇区）中恢复，但不提供与镜像或 RAID-Z 相同级别的保护。从由单个磁盘 vdev 组成的池开始，使用 `zpool attach` 将新磁盘添加到 vdev 中，创建镜像。还可以使用 `zpool attach` 将新磁盘添加到镜像组，增加冗余性和读取性能。在为池分区的磁盘上，将第一个磁盘的布局复制到第二个磁盘上。使用 `gpart backup` 和 `gpart restore` 可以使这个过程更容易。
 
-Upgrade the single disk (stripe) vdev [.filename]#ada0p3# to a mirror by attaching [.filename]#ada1p3#:
+通过连接 [.filename]#ada0p3#，将单个磁盘（条带）vdev [.filename]#ada1p3# 升级为镜像：
 
 [source, shell]
 ....
@@ -577,13 +577,13 @@ config:
 errors: No known data errors
 ....
 
-When adding disks to the existing vdev is not an option, as for RAID-Z, an alternative method is to add another vdev to the pool. Adding vdevs provides higher performance by distributing writes across the vdevs. Each vdev provides its own redundancy. Mixing vdev types like `mirror` and `RAID-Z` is possible but discouraged. Adding a non-redundant vdev to a pool containing mirror or RAID-Z vdevs risks the data on the entire pool. Distributing writes means a failure of the non-redundant disk will result in the loss of a fraction of every block written to the pool.
+当无法将磁盘添加到现有的 vdev 时，例如对于 RAID-Z ，一种替代方法是向池中添加另一个 vdev 。添加 vdev 可以通过在 vdev 之间分布写操作来提供更高的性能。每个 vdev 都提供自己的冗余性。可以混合使用 `mirror` 和 `RAID-Z` 等不同类型的 vdev ，但不建议这样做。向包含镜像或 RAID-Z vdev 的池中添加一个非冗余的 vdev 会对整个池中的数据造成风险。分布写操作意味着非冗余磁盘的故障将导致丢失对池中每个块的一部分数据。
 
-ZFS stripes data across each of the vdevs. For example, with two mirror vdevs, this is effectively a RAID 10 that stripes writes across two sets of mirrors. ZFS allocates space so that each vdev reaches 100% full at the same time. Having vdevs with different amounts of free space will lower performance, as more data writes go to the less full vdev.
+ZFS 将数据跨越每个 vdev 进行条带化。例如，使用两个镜像 vdev ，这实际上是一个 RAID 10，将写操作跨越两组镜像。ZFS 分配空间以使每个 vdev 在同一时间达到 100 ％的使用率。如果 vdev 具有不同数量的可用空间，性能将降低，因为更多的数据写入将发送到使用率较低的 vdev。
 
-When attaching new devices to a boot pool, remember to update the bootcode.
+在将新设备连接到引导池时，请记得更新引导代码。
 
-Attach a second mirror group ([.filename]#ada2p3# and [.filename]#ada3p3#) to the existing mirror:
+将第二个镜像组（[.filename]#ada2p3# 和 [.filename]#ada3p3#）附加到现有的镜像中：
 
 [source, shell]
 ....
@@ -623,9 +623,9 @@ config:
 errors: No known data errors
 ....
 
-Removing vdevs from a pool is impossible and removal of disks from a mirror is exclusive if there is enough remaining redundancy. If a single disk remains in a mirror group, that group ceases to be a mirror and becomes a stripe, risking the entire pool if that remaining disk fails.
+从池中删除 vdev 是不可能的，如果剩余的冗余足够，从镜像中删除磁盘是独占的。如果镜像组中只剩下一个磁盘，该组将不再是镜像，而变成条带，如果该剩余磁盘故障，将会危及整个池。
 
-Remove a disk from a three-way mirror group:
+从三路镜像组中移除一个磁盘：
 
 [source, shell]
 ....
@@ -660,9 +660,9 @@ errors: No known data errors
 ....
 
 [[zfs-zpool-status]]
-=== Checking the Status of a Pool
+=== 检查池的状态
 
-Pool status is important. If a drive goes offline or ZFS detects a read, write, or checksum error, the corresponding error count increases. The `status` output shows the configuration and status of each device in the pool and the status of the entire pool. Actions to take and details about the last <<zfs-zpool-scrub,`scrub`>> are also shown.
+池状态非常重要。如果驱动器离线或 ZFS 检测到读取、写入或校验错误，相应的错误计数会增加。`status` 输出显示了池中每个设备的配置和状态，以及整个池的状态。还显示了要采取的操作和有关上次 `scrub` 的详细信息。
 
 [source, shell]
 ....
@@ -686,16 +686,16 @@ errors: No known data errors
 ....
 
 [[zfs-zpool-clear]]
-=== Clearing Errors
+=== 清除错误
 
-When detecting an error, ZFS increases the read, write, or checksum error counts. Clear the error message and reset the counts with `zpool clear _mypool_`. Clearing the error state can be important for automated scripts that alert the administrator when the pool encounters an error. Without clearing old errors, the scripts may fail to report further errors.
+当检测到错误时，ZFS 会增加读取、写入或校验和错误计数。使用 `zpool clear _mypool_` 命令清除错误消息并重置计数。清除错误状态对于自动化脚本非常重要，这些脚本在池遇到错误时会通知管理员。如果不清除旧错误，这些脚本可能无法报告后续的错误。
 
 [[zfs-zpool-replace]]
-=== Replacing a Functioning Device
+=== 替换一个正常工作的设备
 
-It may be desirable to replace one disk with a different disk. When replacing a working disk, the process keeps the old disk online during the replacement. The pool never enters a <<zfs-term-degraded,degraded>> state, reducing the risk of data loss. Running `zpool replace` copies the data from the old disk to the new one. After the operation completes, ZFS disconnects the old disk from the vdev. If the new disk is larger than the old disk, it may be possible to grow the zpool, using the new space. See <<zfs-zpool-online,Growing a Pool>>.
+可能需要用不同的磁盘替换一个磁盘。当替换一个工作中的磁盘时，该过程会在替换期间保持旧磁盘在线。池永远不会进入 <<zfs-term-degraded,降级>> 状态，从而降低数据丢失的风险。运行 `zpool replace` 命令将数据从旧磁盘复制到新磁盘。操作完成后， ZFS 会将旧磁盘与 vdev 断开连接。如果新磁盘比旧磁盘大，可能可以使用新空间来扩展 zpool 。请参见 <<zfs-zpool-online ,扩展池>> 。
 
-Replace a functioning device in the pool:
+替换池中的一个正常工作设备：
 
 [source, shell]
 ....
@@ -757,15 +757,15 @@ errors: No known data errors
 ....
 
 [[zfs-zpool-resilver]]
-=== Dealing with Failed Devices
+=== 处理故障设备
 
-When a disk in a pool fails, the vdev to which the disk belongs enters the <<zfs-term-degraded,degraded>> state. The data is still available, but with reduced performance because ZFS computes missing data from the available redundancy. To restore the vdev to a fully functional state, replace the failed physical device. ZFS is then instructed to begin the <<zfs-term-resilver,resilver>> operation. ZFS recomputes data on the failed device from available redundancy and writes it to the replacement device. After completion, the vdev returns to <<zfs-term-online,online>> status.
+当池中的磁盘发生故障时，该磁盘所属的 vdev 将进入 <<zfs-term-degraded,降级>> 状态。数据仍然可用，但性能降低，因为 ZFS 会通过可用的冗余计算缺失的数据。为了将 vdev 恢复到完全功能状态，需要替换故障的物理设备。然后，ZFS 会开始 <<zfs-term-resilver,同步>> 操作。ZFS 会通过可用的冗余重新计算故障设备上的数据，并将其写入替代设备。完成后，vdev 将返回 <<zfs-term-online,在线>> 状态。
 
-If the vdev does not have any redundancy, or if devices have failed and there is not enough redundancy to compensate, the pool enters the <<zfs-term-faulted,faulted>> state. Unless enough devices can reconnect the pool becomes inoperative requiring a data restore from backups.
+如果 vdev 没有任何冗余，或者设备已经损坏且没有足够的冗余来弥补，那么存储池将进入 <<zfs-term-faulted,故障>> 状态。除非有足够的设备重新连接存储池，否则存储池将无法运行，需要从备份中恢复数据。
 
-When replacing a failed disk, the name of the failed disk changes to the GUID of the new disk. A new device name parameter for `zpool replace` is not required if the replacement device has the same device name.
+当替换一个故障磁盘时，故障磁盘的名称会变为新磁盘的 GUID。如果替换设备具有相同的设备名称，则不需要为 `zpool replace` 指定新的设备名称参数。
 
-Replace a failed disk using `zpool replace`:
+使用 `zpool replace` 命令替换故障的磁盘：
 
 [source, shell]
 ....
@@ -823,9 +823,9 @@ errors: No known data errors
 ....
 
 [[zfs-zpool-scrub]]
-=== Scrubbing a Pool
+=== Scrubbing 池
 
-Routinely <<zfs-term-scrub,scrub>> pools, ideally at least once every month. The `scrub` operation is disk-intensive and will reduce performance while running. Avoid high-demand periods when scheduling `scrub` or use <<zfs-advanced-tuning-scrub_delay,`vfs.zfs.scrub_delay`>> to adjust the relative priority of the `scrub` to keep it from slowing down other workloads.
+定期对池进行 <<zfs-term-scrub,scrub>> 操作，最好每个月至少一次。`scrub` 操作对磁盘的使用较高，运行时会降低性能。在安排 `scrub` 操作时避免高负载时段，或者使用 <<zfs-advanced-tuning-scrub_delay,`vfs.zfs.scrub_delay`>> 来调整 `scrub` 操作的相对优先级，以防止其影响其他工作负载的速度。
 
 [source, shell]
 ....
@@ -851,14 +851,14 @@ config:
 errors: No known data errors
 ....
 
-To cancel a scrub operation if needed, run `zpool scrub -s _mypool_`.
+如果需要取消一个 scrub 操作，请运行 `zpool scrub -s _mypool_` 。
 
 [[zfs-zpool-selfheal]]
-=== Self-Healing
+=== 自我修复
 
-The checksums stored with data blocks enable the file system to _self-heal_. This feature will automatically repair data whose checksum does not match the one recorded on another device that is part of the storage pool. For example, a mirror configuration with two disks where one drive is starting to malfunction and cannot properly store the data any more. This is worse when the data was not accessed for a long time, as with long term archive storage. Traditional file systems need to run commands that check and repair the data like man:fsck[8]. These commands take time, and in severe cases, an administrator has to decide which repair operation to perform. When ZFS detects a data block with a mismatched checksum, it tries to read the data from the mirror disk. If that disk can provide the correct data, ZFS will give that to the application and correct the data on the disk with the wrong checksum. This happens without any interaction from a system administrator during normal pool operation.
+存储在数据块中的校验和使文件系统能够自我修复。这个功能会自动修复数据，如果其校验和与存储池中另一个设备上记录的校验和不匹配。例如，一个具有两个磁盘的镜像配置，其中一个驱动器开始出现故障，无法正确存储数据。当数据长时间未被访问时，如长期存档存储，情况会更糟。传统的文件系统需要运行检查和修复数据的命令，如 man:fsck[8]。这些命令需要时间，在严重情况下，管理员必须决定执行哪个修复操作。当 ZFS 检测到一个数据块的校验和不匹配时，它会尝试从镜像磁盘中读取数据。如果该磁盘能提供正确的数据， ZFS 将将其提供给应用程序，并纠正具有错误校验和的磁盘上的数据。在正常存储池操作期间，这一切都在没有任何系统管理员干预的情况下发生。
 
-The next example shows this self-healing behavior by creating a mirrored pool of disks [.filename]#/dev/ada0# and [.filename]#/dev/ada1#.
+下一个示例通过创建一个镜像磁盘池来展示这种自我修复行为，其中包括 [.filename]#/dev/ada0# 和 [.filename]#/dev/ada1#。
 
 [source, shell]
 ....
@@ -881,7 +881,7 @@ NAME     SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG   CAP  DEDUP  HEALTH  ALT
 healer   960M  92.5K   960M         -         -     0%    0%  1.00x  ONLINE  -
 ....
 
-Copy some important data to the pool to protect from data errors using the self-healing feature and create a checksum of the pool for later comparison.
+将一些重要数据复制到池中，以使用自我修复功能保护免受数据错误，并为池创建校验和以备后续比较。
 
 [source, shell]
 ....
@@ -894,11 +894,11 @@ healer   960M  67.7M   892M     7%  1.00x  ONLINE  -
 SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f
 ....
 
-Simulate data corruption by writing random data to the beginning of one of the disks in the mirror. To keep ZFS from healing the data when detected, export the pool before the corruption and import it again afterwards.
+通过向镜像中的一个磁盘的开头写入随机数据来模拟数据损坏。为了防止 ZFS 在检测到数据损坏时修复数据，可以在损坏之前导出池，并在之后重新导入。
 
 [WARNING]
 ====
-This is a dangerous operation that can destroy vital data, shown here for demonstration alone. *Do not try* it during normal operation of a storage pool. Nor should this intentional corruption example run on any disk with a file system not using ZFS on another partition in it. Do not use any other disk device names other than the ones that are part of the pool. Ensure proper backups of the pool exist and test them before running the command!
+这是一个危险的操作，可能会破坏重要数据，仅用于演示目的。在存储池的正常运行期间，请 *不要尝试* 执行此操作。此意外损坏示例也不应在任何使用 ZFS 以外的文件系统的磁盘上运行，该磁盘上的另一个分区中也不应该有 ZFS 。请不要使用除了存储池中的设备名称之外的任何其他磁盘设备名称。确保存储池有适当的备份，并在执行命令之前对其进行测试！
 ====
 
 [source, shell]
@@ -911,7 +911,7 @@ This is a dangerous operation that can destroy vital data, shown here for demons
 # zpool import healer
 ....
 
-The pool status shows that one device has experienced an error. Note that applications reading data from the pool did not receive any incorrect data. ZFS provided data from the [.filename]#ada0# device with the correct checksums. To find the device with the wrong checksum, look for one whose `CKSUM` column contains a nonzero value.
+池状态显示一个设备发生了错误。请注意，从池中读取数据的应用程序没有接收到任何错误数据。ZFS 从 [.filename]#ada0# 设备提供了正确校验和的数据。要找到校验和错误的设备，请查找 `CKSUM` 列中包含非零值的设备。
 
 [source, shell]
 ....
@@ -935,7 +935,7 @@ The pool status shows that one device has experienced an error. Note that applic
 errors: No known data errors
 ....
 
-ZFS detected the error and handled it by using the redundancy present in the unaffected [.filename]#ada0# mirror disk. A checksum comparison with the original one will reveal whether the pool is consistent again.
+ZFS 检测到错误，并通过使用未受影响的 [.filename]#ada0# 镜像磁盘中的冗余来处理该错误。通过与原始数据进行校验比较，可以确定池是否恢复一致。
 
 [source, shell]
 ....
@@ -945,7 +945,7 @@ SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f
 SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f
 ....
 
-Generate checksums before and after the intentional tampering while the pool data still matches. This shows how ZFS is capable of detecting and correcting any errors automatically when the checksums differ. Note this is possible with enough redundancy present in the pool. A pool consisting of a single device has no self-healing capabilities. That is also the reason why checksums are so important in ZFS; do not disable them for any reason. ZFS requires no man:fsck[8] or similar file system consistency check program to detect and correct this, and keeps the pool available while there is a problem. A scrub operation is now required to overwrite the corrupted data on [.filename]#ada1#.
+在故意篡改之前和之后生成校验和，同时池数据仍然匹配。这显示了当校验和不同时， ZFS 能够自动检测和纠正任何错误。请注意，这需要池中具有足够的冗余。由单个设备组成的池没有自我修复能力。这也是为什么在 ZFS 中校验和如此重要的原因；不要出于任何原因禁用它们。 ZFS 不需要 man:fsck[8] 或类似的文件系统一致性检查程序来检测和纠正这个问题，并且在出现问题时保持池可用。现在需要进行一次 scrub 操作来覆盖在 [.filename]#ada1# 上的损坏数据。
 
 [source, shell]
 ....
@@ -972,7 +972,7 @@ config:
 errors: No known data errors
 ....
 
-The scrub operation reads data from [.filename]#ada0# and rewrites any data with a wrong checksum on [.filename]#ada1#, shown by the `(repairing)` output from `zpool status`. After the operation is complete, the pool status changes to:
+Scrub 操作从 [.filename]#ada0# 读取数据，并将任何具有错误校验和的数据重写到 [.filename]#ada1# 上，这可以通过 `zpool status` 中的 `(repairing)` 输出来显示。操作完成后，池的状态将发生变化：
 
 [source, shell]
 ....
@@ -996,7 +996,7 @@ config:
 errors: No known data errors
 ....
 
-After the scrubbing operation completes with all the data synchronized from [.filename]#ada0# to [.filename]#ada1#, <<zfs-zpool-clear,clear>> the error messages from the pool status by running `zpool clear`.
+在从 [.filename]#ada0# 同步所有数据到 [.filename]#ada1# 后，完成了 <<zfs-zpool-clear,清洗>> 操作，请通过运行 `zpool clear` 命令清除池状态中的错误消息。
 
 [source, shell]
 ....
@@ -1016,30 +1016,30 @@ config:
 errors: No known data errors
 ....
 
-The pool is now back to a fully working state, with all error counts now zero.
+现在，池已经恢复到完全正常的状态，所有错误计数都为零。
 
 [[zfs-zpool-online]]
-=== Growing a Pool
+=== 扩展池
 
-The smallest device in each vdev limits the usable size of a redundant pool. Replace the smallest device with a larger device. After completing a <<zfs-zpool-replace,replace>> or <<zfs-term-resilver,resilver>> operation, the pool can grow to use the capacity of the new device. For example, consider a mirror of a 1 TB drive and a 2 TB drive. The usable space is 1 TB. When replacing the 1 TB drive with another 2 TB drive, the resilvering process copies the existing data onto the new drive. As both of the devices now have 2 TB capacity, the mirror's available space grows to 2 TB.
+每个 vdev 中最小的设备限制了冗余池的可用大小。用一个更大的设备替换最小的设备。在完成 <<zfs-zpool-replace , replace>> 或 <<zfs-term-resilver , resilver>> 操作后，池可以扩展到使用新设备的容量。例如，考虑一个由 1 TB 驱动器和 2 TB 驱动器组成的镜像。可用空间为 1 TB 。当用另一个 2 TB 驱动器替换 1 TB 驱动器时，重新同步过程将现有数据复制到新驱动器上。由于两个设备现在都具有 2 TB 的容量，镜像的可用空间增长到 2 TB。
 
-Start expansion by using `zpool online -e` on each device. After expanding all devices, the extra space becomes available to the pool.
+通过在每个设备上使用 `zpool online -e` 来开始扩展。在扩展所有设备之后，额外的空间将可用于池。
 
 [[zfs-zpool-import]]
-=== Importing and Exporting Pools
+=== 导入和导出存储池
 
-_Export_ pools before moving them to another system. ZFS unmounts all datasets, marking each device as exported but still locked to prevent use by other disks. This allows pools to be _imported_ on other machines, other operating systems that support ZFS, and even different hardware architectures (with some caveats, see man:zpool[8]). When a dataset has open files, use `zpool export -f` to force exporting the pool. Use this with caution. The datasets are forcibly unmounted, potentially resulting in unexpected behavior by the applications which had open files on those datasets.
+在将存储池移动到另一个系统之前，请先 _导出（export）_ 它们。 ZFS 会卸载所有数据集，并将每个设备标记为已导出，但仍然锁定以防止其他磁盘使用。这使得存储池可以在其他支持 ZFS 的机器、其他操作系统甚至不同的硬件架构上导入（有一些注意事项，请参阅 man:zpool[8]）。当数据集有打开的文件时，请使用 `zpool export -f` 强制导出存储池。请谨慎使用此功能。数据集将被强制卸载，可能导致那些数据集上有打开文件的应用程序出现意外行为。
 
-Export a pool that is not in use:
+导出一个未使用的池：
 
 [source, shell]
 ....
 # zpool export mypool
 ....
 
-Importing a pool automatically mounts the datasets. If this is undesired behavior, use `zpool import -N` to prevent it. `zpool import -o` sets temporary properties for this specific import. `zpool import altroot=` allows importing a pool with a base mount point instead of the root of the file system. If the pool was last used on a different system and was not properly exported, force the import using `zpool import -f`. `zpool import -a` imports all pools that do not appear to be in use by another system.
+导入一个存储池会自动挂载数据集。如果不希望出现这种行为，请使用 `zpool import -N` 来阻止它。 `zpool import -o` 为此特定导入设置临时属性。`zpool import altroot=` 允许使用基本挂载点而不是文件系统的根来导入存储池。如果该存储池最后在另一个系统上使用并且没有正确导出，请使用 `zpool import -f` 来强制导入。`zpool import -a` 导入所有未被其他系统使用的存储池。
 
-List all available pools for import:
+列出所有可导入的池：
 
 [source, shell]
 ....
@@ -1054,7 +1054,7 @@ List all available pools for import:
           ada2p3    ONLINE
 ....
 
-Import the pool with an alternative root directory:
+导入具有替代根目录的池：
 
 [source, shell]
 ....
@@ -1066,11 +1066,11 @@ mypool               110K  47.0G    31K  /mnt/mypool
 ....
 
 [[zfs-zpool-upgrade]]
-=== Upgrading a Storage Pool
+=== 升级存储池
 
-After upgrading FreeBSD, or if importing a pool from a system using an older version, manually upgrade the pool to the latest ZFS version to support newer features. Consider whether the pool may ever need importing on an older system before upgrading. Upgrading is a one-way process. Upgrade older pools is possible, but downgrading pools with newer features is not.
+在升级 FreeBSD 之后，或者从使用较旧版本的系统导入池时，需要手动将池升级到最新的 ZFS 版本以支持新功能。在升级之前，请考虑池是否可能需要在较旧的系统上导入。升级是一个单向过程。升级较旧的池是可能的，但是无法降级具有较新功能的池。
 
-Upgrade a v28 pool to support `Feature Flags`:
+将 v28 池升级以支持 `Feature Flags`。
 
 [source, shell]
 ....
@@ -1115,9 +1115,9 @@ Enabled the following features on 'mypool':
   multi_vdev_crash_dump
 ....
 
-The newer features of ZFS will not be available until `zpool upgrade` has completed. Use `zpool upgrade -v` to see what new features the upgrade provides, as well as which features are already supported.
+只有在完成 `zpool upgrade` 之后，ZFS 的新功能才会可用。使用 `zpool upgrade -v` 命令查看升级提供的新功能，以及已经支持的功能。
 
-Upgrade a pool to support new feature flags:
+升级一个池子以支持新的功能标志：
 
 [source, shell]
 ....
@@ -1172,29 +1172,29 @@ Enabled the following features on 'mypool':
 
 [WARNING]
 ====
-Update the boot code on systems that boot from a pool to support the new pool version. Use `gpart bootcode` on the partition that contains the boot code. Two types of bootcode are available, depending on way the system boots: GPT (the most common option) and EFI (for more modern systems).
+更新从池中引导的系统的引导代码，以支持新的池版本。在包含引导代码的分区上使用 `gpart bootcode` 命令。根据系统的引导方式，有两种类型的引导代码可用：GPT（最常见的选项）和 EFI（适用于更现代的系统）。
 
-For legacy boot using GPT, use the following command:
+对于使用 GPT 的传统引导，请使用以下命令：
 
 [source, shell]
 ....
 # gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1
 ....
 
-For systems using EFI to boot, execute the following command:
+对于使用 EFI 引导的系统，请执行以下命令：
 
 [source, shell]
 ....
 # gpart bootcode -p /boot/boot1.efifat -i 1 ada1
 ....
 
-Apply the bootcode to all bootable disks in the pool. See man:gpart[8] for more information.
+将引导代码应用于池中的所有可引导磁盘。有关更多信息，请参阅 man:gpart[8]。
 ====
 
 [[zfs-zpool-history]]
-=== Displaying Recorded Pool History
+=== 显示池的历史记录
 
-ZFS records commands that change the pool, including creating datasets, changing properties, or replacing a disk. Reviewing history about a pool's creation is useful, as is checking which user performed a specific action and when. History is not kept in a log file, but is part of the pool itself. The command to review this history is aptly named `zpool history`:
+ZFS 记录更改池的命令，包括创建数据集、更改属性或替换磁盘。查看关于池创建的历史记录很有用，还可以检查哪个用户执行了特定的操作以及何时执行的。历史记录不会保存在日志文件中，而是作为池本身的一部分。用于查看这个历史记录的命令被恰当地命名为 `zpool history`。
 
 [source, shell]
 ....
@@ -1206,9 +1206,9 @@ History for 'tank':
 2013-02-27.18:51:18 zfs create tank/backup
 ....
 
-The output shows `zpool` and `zfs` commands altering the pool in some way along with a timestamp. Commands like `zfs list` are not included. When specifying no pool name, ZFS displays history of all pools.
+输出显示了 `zpool` 和 `zfs` 命令以某种方式修改了池，并附带了时间戳。不包括像 `zfs list` 这样的命令。当未指定池名称时， ZFS 会显示所有池的历史记录。
 
-`zpool history` can show even more information when providing the options `-i` or `-l`. `-i` displays user-initiated events as well as internally logged ZFS events.
+当使用选项 `-i` 或 `-l` 时，`zpool history` 命令可以显示更多的信息。 `-i` 选项会显示用户发起的事件以及内部记录的 ZFS 事件。
 
 [source, shell]
 ....
@@ -1223,7 +1223,7 @@ History for 'tank':
 2013-02-27.18:51:18 zfs create tank/backup
 ....
 
-Show more details by adding `-l`. Showing history records in a long format, including information like the name of the user who issued the command and the hostname on which the change happened.
+通过添加 `-l` 来显示更多详细信息。以长格式显示历史记录，包括发出命令的用户的名称和发生更改的主机名。
 
 [source, shell]
 ....
@@ -1235,14 +1235,14 @@ History for 'tank':
 2013-02-27.18:51:18 zfs create tank/backup [user 0 (root) on myzfsbox:global]
 ....
 
-The output shows that the `root` user created the mirrored pool with disks [.filename]#/dev/ada0# and [.filename]#/dev/ada1#. The hostname `myzfsbox` is also shown in the commands after the pool's creation. The hostname display becomes important when exporting the pool from one system and importing on another. It's possible to distinguish the commands issued on the other system by the hostname recorded for each command.
+输出显示 `root` 用户使用磁盘 [.filename]#/dev/ada0# 和 [.filename]#/dev/ada1# 创建了镜像池。在池创建后的命令中还显示了主机名 `myzfsbox` 。主机名的显示在将池从一个系统导出并在另一个系统导入时变得重要。可以通过为每个命令记录的主机名来区分在另一个系统上发出的命令。
 
-Combine both options to `zpool history` to give the most detailed information possible for any given pool. Pool history provides valuable information when tracking down the actions performed or when needing more detailed output for debugging.
+将两个选项 `zpool history` 结合起来，以便为任何给定的池提供尽可能详细的信息。池历史记录在追踪执行的操作或需要更详细的输出进行调试时提供有价值的信息。
 
 [[zfs-zpool-iostat]]
-=== Performance Monitoring
+=== 性能监控
 
-A built-in monitoring system can display pool I/O statistics in real time. It shows the amount of free and used space on the pool, read and write operations performed per second, and I/O bandwidth used. By default, ZFS monitors and displays all pools in the system. Provide a pool name to limit monitoring to that pool. A basic example:
+内置的监控系统可以实时显示池的 I/O 统计信息。它显示池中的可用空间和已使用空间的数量，每秒执行的读写操作次数以及使用的 I/O 带宽。默认情况下， ZFS 监视并显示系统中的所有池。提供池名称以限制监控到该池。一个基本示例：
 
 [source, shell]
 ....
@@ -1253,9 +1253,9 @@ pool        alloc   free   read  write   read  write
 data         288G  1.53T      2     11  11.3K  57.1K
 ....
 
-To continuously see I/O activity, specify a number as the last parameter, indicating an interval in seconds to wait between updates. The next statistic line prints after each interval. Press kbd:[Ctrl+C] to stop this continuous monitoring. Give a second number on the command line after the interval to specify the total number of statistics to display.
+要持续查看 I/O 活动，请在最后一个参数中指定一个数字，表示更新之间等待的秒数间隔。每个间隔后都会打印下一个统计行。按下 kbd:[Ctrl + C] 停止此连续监视。在间隔之后的命令行上给出第二个数字，以指定要显示的统计总数。
 
-Display even more detailed I/O statistics with `-v`. Each device in the pool appears with a statistics line. This is useful for seeing read and write operations performed on each device, and can help determine if any individual device is slowing down the pool. This example shows a mirrored pool with two devices:
+使用 `-v` 参数可以显示更详细的 I/O 统计信息。池中的每个设备都会显示一行统计信息。这对于查看在每个设备上执行的读写操作非常有用，并且可以帮助确定是否有任何单个设备导致池变慢。以下示例显示了一个具有两个设备的镜像池。
 
 [source, shell]
 ....
@@ -1271,21 +1271,21 @@ data                      288G  1.53T      2     12  9.23K  61.5K
 ....
 
 [[zfs-zpool-split]]
-=== Splitting a Storage Pool
+=== 分割存储池
 
-ZFS can split a pool consisting of one or more mirror vdevs into two pools. Unless otherwise specified, ZFS detaches the last member of each mirror and creates a new pool containing the same data. Be sure to make a dry run of the operation with `-n` first. This displays the details of the requested operation without actually performing it. This helps confirm that the operation will do what the user intends.
+ZFS 可以将由一个或多个镜像 vdev 组成的池分割成两个池。除非另有指定，ZFS 会分离每个镜像的最后一个成员，并创建一个包含相同数据的新池。请务必先使用 `-n` 进行试运行。这将显示所请求操作的详细信息，但不会实际执行操作。这有助于确认操作是否符合用户的意图。
 
 [[zfs-zfs]]
-== `zfs` Administration
+== `zfs` 管理
 
-The `zfs` utility can create, destroy, and manage all existing ZFS datasets within a pool. To manage the pool itself, use <<zfs-zpool,`zpool`>>.
+`zfs` 实用程序可以在池中创建、销毁和管理所有现有的 ZFS 数据集。要管理池本身，请使用 `zpool`。
 
 [[zfs-zfs-create]]
-=== Creating and Destroying Datasets
+=== 创建和销毁数据集
 
-Unlike traditional disks and volume managers, space in ZFS is _not_ preallocated. With traditional file systems, after partitioning and assigning the space, there is no way to add a new file system without adding a new disk. With ZFS, creating new file systems is possible at any time. Each <<zfs-term-dataset,_dataset_>> has properties including features like compression, deduplication, caching, and quotas, as well as other useful properties like readonly, case sensitivity, network file sharing, and a mount point. Nesting datasets within each other is possible and child datasets will inherit properties from their ancestors. <<zfs-zfs-allow,Delegate>>, <<zfs-zfs-send,replicate>>, <<zfs-zfs-snapshot,snapshot>>, <<zfs-zfs-jail,jail>> allows administering and destroying each dataset as a unit. Creating a separate dataset for each different type or set of files has advantages. The drawbacks to having a large number of datasets are that some commands like `zfs list` will be slower, and that mounting of hundreds or even thousands of datasets will slow the FreeBSD boot process.
+与传统的磁盘和卷管理器不同，ZFS 中的空间是 _不预分配_ 的。在传统文件系统中，分区和分配空间后，无法在不添加新磁盘的情况下添加新的文件系统。而在 ZFS 中，可以随时创建新的文件系统。每个 <<zfs-term-dataset,数据集 >> 都有属性，包括压缩、去重、缓存和配额等功能，以及其他有用的属性，如只读、大小写敏感、网络文件共享和挂载点。可以将数据集嵌套在彼此之间，并且子数据集将继承其祖先的属性。 <<zfs-zfs-allow ,委派 >>、<<zfs-zfs-send ,复制 >>、<<zfs-zfs-snapshot ,快照 >>、<<zfs-zfs-jail ,监狱>> 允许将每个数据集作为一个单元进行管理和销毁。为每种不同类型或文件集创建单独的数据集具有优势。拥有大量数据集的缺点是，某些命令（如 `zfs list`）的速度会变慢，并且挂载数百甚至数千个数据集会减慢 FreeBSD 的启动过程。
 
-Create a new dataset and enable <<zfs-term-compression-lz4,LZ4 compression>> on it:
+创建一个新的数据集，并在其上启用 LZ4 压缩。
 
 [source, shell]
 ....
@@ -1323,9 +1323,9 @@ mypool/var/mail        144K  93.2G   144K  /var/mail
 mypool/var/tmp         152K  93.2G   152K  /var/tmp
 ....
 
-Destroying a dataset is much quicker than deleting the files on the dataset, as it does not involve scanning the files and updating the corresponding metadata.
+销毁数据集比删除数据集上的文件要快得多，因为它不涉及扫描文件和更新相应的元数据。
 
-Destroy the created dataset:
+销毁已创建的数据集：
 
 [source, shell]
 ....
@@ -1363,14 +1363,14 @@ mypool/var/mail       144K  93.2G   144K  /var/mail
 mypool/var/tmp        152K  93.2G   152K  /var/tmp
 ....
 
-In modern versions of ZFS, `zfs destroy` is asynchronous, and the free space might take minutes to appear in the pool. Use `zpool get freeing _poolname_` to see the `freeing` property, that shows which datasets are having their blocks freed in the background. If there are child datasets, like <<zfs-term-snapshot,snapshots>> or other datasets, destroying the parent is impossible. To destroy a dataset and its children, use `-r` to recursively destroy the dataset and its children. Use `-n -v` to list datasets and snapshots destroyed by this operation, without actually destroy anything. Space reclaimed by destroying snapshots is also shown.
+在现代版本的 ZFS 中， `zfs destroy` 是异步的，释放的空间可能需要几分钟才会在池中显示出来。使用 `zpool get freeing _poolname_` 命令来查看 `freeing` 属性，该属性显示了哪些数据集正在后台释放其块。如果存在子数据集，例如快照或其他数据集，那么无法销毁父数据集。要销毁一个数据集及其子数据集，可以使用 `-r` 选项递归地销毁数据集及其子数据集。使用 `-n -v` 选项列出此操作销毁的数据集和快照，而不实际销毁任何内容。销毁快照释放的空间也会显示出来。
 
 [[zfs-zfs-volume]]
-=== Creating and Destroying Volumes
+=== 创建和销毁卷
 
-A volume is a special dataset type. Rather than mounting as a file system, expose it as a block device under [.filename]#/dev/zvol/poolname/dataset#. This allows using the volume for other file systems, to back the disks of a virtual machine, or to make it available to other network hosts using protocols like iSCSI or HAST.
+卷是一种特殊的数据集类型。它不像文件系统那样挂载，而是在 `/dev/zvol/poolname/dataset` 下以块设备的形式公开。这使得可以将卷用于其他文件系统，用于虚拟机的磁盘备份，或者通过 iSCSI 或 HAST 等协议使其对其他网络主机可用。
 
-Format a volume with any file system or without a file system to store raw data. To the user, a volume appears to be a regular disk. Putting ordinary file systems on these _zvols_ provides features that ordinary disks or file systems do not have. For example, using the compression property on a 250 MB volume allows creation of a compressed FAT file system.
+使用任何文件系统或者不使用文件系统来格式化一个卷，以存储原始数据。对于用户来说，一个卷看起来就像一个普通的磁盘。在这些 _zvol_ 上放置普通的文件系统提供了普通磁盘或文件系统所没有的功能。例如，使用压缩属性在一个 250MB 的卷上可以创建一个压缩的 FAT 文件系统。
 
 [source, shell]
 ....
@@ -1387,14 +1387,14 @@ Filesystem           Size Used Avail Capacity Mounted on
 /dev/zvol/tank/fat32 on /mnt (msdosfs, local)
 ....
 
-Destroying a volume is much the same as destroying a regular file system dataset. The operation is nearly instantaneous, but it may take minutes to reclaim the free space in the background.
+销毁一个卷与销毁一个常规文件系统数据集基本相同。该操作几乎是瞬时完成的，但在后台重新获取空闲空间可能需要几分钟的时间。
 
 [[zfs-zfs-rename]]
-=== Renaming a Dataset
+=== 重命名数据集
 
-To change the name of a dataset, use `zfs rename`. To change the parent of a dataset, use this command as well. Renaming a dataset to have a different parent dataset will change the value of those properties inherited from the parent dataset. Renaming a dataset unmounts then remounts it in the new location (inherited from the new parent dataset). To prevent this behavior, use `-u`.
+要更改数据集的名称，请使用 `zfs rename` 命令。要更改数据集的父级，请同样使用此命令。将数据集重命名为具有不同父级的数据集将更改从父级数据集继承的属性的值。将数据集重命名为新位置（从新父级数据集继承）将卸载然后重新挂载它。要防止此行为，请使用 `-u` 选项。
 
-Rename a dataset and move it to be under a different parent dataset:
+重命名数据集并将其移动到不同的父数据集下：
 
 [source, shell]
 ....
@@ -1433,7 +1433,7 @@ mypool/var/newname   87.5K  93.2G  87.5K  /var/newname
 mypool/var/tmp        152K  93.2G   152K  /var/tmp
 ....
 
-Renaming snapshots uses the same command. Due to the nature of snapshots, rename cannot change their parent dataset. To rename a recursive snapshot, specify `-r`; this will also rename all snapshots with the same name in child datasets.
+重命名快照使用相同的命令。由于快照的特性，重命名不能改变它们的父数据集。要重命名递归快照，请指定 `-r` ；这也会重命名所有子数据集中具有相同名称的快照。
 
 [source, shell]
 ....
@@ -1447,9 +1447,9 @@ mypool/var/newname@new_snapshot_name      0      -  87.5K  -
 ....
 
 [[zfs-zfs-set]]
-=== Setting Dataset Properties
+=== 设置数据集属性
 
-Each ZFS dataset has properties that control its behavior. Most properties are automatically inherited from the parent dataset, but can be overridden locally. Set a property on a dataset with `zfs set _property=value dataset_`. Most properties have a limited set of valid values, `zfs get` will display each possible property and valid values. Using `zfs inherit` reverts most properties to their inherited values. User-defined properties are also possible. They become part of the dataset configuration and provide further information about the dataset or its contents. To distinguish these custom properties from the ones supplied as part of ZFS, use a colon (`:`) to create a custom namespace for the property.
+每个 ZFS 数据集都有控制其行为的属性。大多数属性会自动从父数据集继承，但可以在本地进行覆盖。使用 `zfs set _property=value dataset_` 在数据集上设置属性。大多数属性有一组有限的有效值，`zfs get` 将显示每个可能的属性和有效值。使用 `zfs inherit` 将大多数属性恢复为其继承的值。还可以定义用户自定义属性。它们成为数据集配置的一部分，并提供有关数据集或其内容的进一步信息。为了区分这些自定义属性和作为 ZFS 的一部分提供的属性，可以使用冒号（`:`）为属性创建自定义命名空间。
 
 [source, shell]
 ....
@@ -1459,7 +1459,7 @@ NAME PROPERTY           VALUE SOURCE
 tank custom:costcenter  1234  local
 ....
 
-To remove a custom property, use `zfs inherit` with `-r`. If the custom property is not defined in any of the parent datasets, this option removes it (but the pool's history still records the change).
+要删除自定义属性，请使用 `zfs inherit` 命令并加上 `-r` 选项。如果自定义属性在任何父数据集中都没有定义，这个选项将删除它（但池的历史记录仍然会记录这个更改）。
 
 [source, shell]
 ....
@@ -1472,9 +1472,9 @@ tank    custom:costcenter  -                  -
 ....
 
 [[zfs-zfs-set-share]]
-==== Getting and Setting Share Properties
+==== 获取和设置共享属性
 
-Two commonly used and useful dataset properties are the NFS and SMB share options. Setting these defines if and how ZFS shares datasets on the network. At present, FreeBSD supports setting NFS sharing alone. To get the current status of a share, enter:
+两个常用且有用的数据集属性是 NFS 和 SMB 共享选项。设置这些选项可以定义 ZFS 在网络上共享数据集的方式和方式。目前，FreeBSD 仅支持设置 NFS 共享。要获取共享的当前状态，请输入：
 
 [source, shell]
 ....
@@ -1486,14 +1486,14 @@ NAME             PROPERTY  VALUE    SOURCE
 mypool/usr/home  sharesmb  off      local
 ....
 
-To enable sharing of a dataset, enter:
+要启用数据集的共享，请输入：
 
 [source, shell]
 ....
 #  zfs set sharenfs=on mypool/usr/home
 ....
 
-Set other options for sharing datasets through NFS, such as `-alldirs`, `-maproot` and `-network`. To set options on a dataset shared through NFS, enter:
+设置通过 NFS 共享数据集的其他选项，例如 `-alldirs`、`-maproot` 和 `-network`。要在通过 NFS 共享的数据集上设置选项，请输入：
 
 [source, shell]
 ....
@@ -1501,18 +1501,18 @@ Set other options for sharing datasets through NFS, such as `-alldirs`, `-maproo
 ....
 
 [[zfs-zfs-snapshot]]
-=== Managing Snapshots
+=== 管理快照
 
-<<zfs-term-snapshot,Snapshots>> are one of the most powerful features of ZFS. A snapshot provides a read-only, point-in-time copy of the dataset. With Copy-On-Write (COW), ZFS creates snapshots fast by preserving older versions of the data on disk. If no snapshots exist, ZFS reclaims space for future use when data is rewritten or deleted. Snapshots preserve disk space by recording just the differences between the current dataset and a previous version. Allowing snapshots on whole datasets, not on individual files or directories. A snapshot from a dataset duplicates everything contained in it. This includes the file system properties, files, directories, permissions, and so on. Snapshots use no extra space when first created, but consume space as the blocks they reference change. Recursive snapshots taken with `-r` create snapshots with the same name on the dataset and its children, providing a consistent moment-in-time snapshot of the file systems. This can be important when an application has files on related datasets or that depend upon each other. Without snapshots, a backup would have copies of the files from different points in time.
+<<zfs-term-snapshot,快照>> 是 ZFS 最强大的功能之一。快照提供了数据集的只读、时间点的副本。通过写时复制（COW），ZFS 通过在磁盘上保留旧版本的数据来快速创建快照。如果没有快照存在，当数据被重写或删除时，ZFS 会回收空间以供将来使用。快照通过记录当前数据集与先前版本之间的差异来保留磁盘空间。允许在整个数据集上进行快照，而不是在单个文件或目录上进行快照。数据集的快照复制其中包含的所有内容。这包括文件系统属性、文件、目录、权限等。快照在创建时不占用额外的空间，但随着它们引用的块的变化而消耗空间。使用 `-r` 进行递归快照会在数据集及其子数据集上创建具有相同名称的快照，提供文件系统的一致时刻快照。当应用程序在相关数据集上有文件或相互依赖时，这可能很重要。如果没有快照，备份将具有来自不同时间点的文件副本。
 
-Snapshots in ZFS provide a variety of features that even other file systems with snapshot functionality lack. A typical example of snapshot use is as a quick way of backing up the current state of the file system when performing a risky action like a software installation or a system upgrade. If the action fails, rolling back to the snapshot returns the system to the same state when creating the snapshot. If the upgrade was successful, delete the snapshot to free up space. Without snapshots, a failed upgrade often requires restoring backups, which is tedious, time consuming, and may require downtime during which the system is unusable. Rolling back to snapshots is fast, even while the system is running in normal operation, with little or no downtime. The time savings are enormous with multi-terabyte storage systems considering the time required to copy the data from backup. Snapshots are not a replacement for a complete backup of a pool, but offer a quick and easy way to store a dataset copy at a specific time.
+ZFS 中的快照提供了许多其他具有快照功能的文件系统所缺乏的功能。快照的典型用法是在执行风险操作（如软件安装或系统升级）时，快速备份文件系统的当前状态。如果操作失败，回滚到快照可以将系统恢复到创建快照时的相同状态。如果升级成功，可以删除快照以释放空间。如果没有快照，升级失败通常需要恢复备份，这是繁琐、耗时的，并且可能需要停机时间，期间系统无法使用。回滚到快照是快速的，即使系统在正常运行中，几乎没有停机时间。考虑到从备份中复制数据所需的时间，对于多 TB 存储系统来说，节省的时间是巨大的。快照不能替代对池的完整备份，但提供了一种快速简便的方式来存储特定时间点的数据集副本。
 
 [[zfs-zfs-snapshot-creation]]
-==== Creating Snapshots
+==== 创建快照
 
-To create snapshots, use `zfs snapshot _dataset_@_snapshotname_`. Adding `-r` creates a snapshot recursively, with the same name on all child datasets.
+要创建快照，请使用 `zfs snapshot _dataset_@_snapshotname_` 命令。添加 `-r` 选项可以递归地创建快照，并在所有子数据集上使用相同的名称。
 
-Create a recursive snapshot of the entire pool:
+创建整个池的递归快照：
 
 [source, shell]
 ....
@@ -1553,9 +1553,9 @@ mypool/var/newname@my_recursive_snapshot       0      -  87.5K  -
 mypool/var/tmp@my_recursive_snapshot           0      -   152K  -
 ....
 
-Snapshots are not shown by a normal `zfs list` operation. To list snapshots, append `-t snapshot` to `zfs list`. `-t all` displays both file systems and snapshots.
+普通的 `zfs list` 操作不会显示快照。要列出快照，请在 `zfs list` 后面添加 `-t snapshot`。 `-t all` 可以同时显示文件系统和快照。
 
-Snapshots are not mounted directly, showing no path in the `MOUNTPOINT` column. ZFS does not mention available disk space in the `AVAIL` column, as snapshots are read-only after their creation. Compare the snapshot to the original dataset:
+快照不会直接挂载，因此在 `MOUNTPOINT` 列中不显示路径。ZFS 在 `AVAIL` 列中不提及可用磁盘空间，因为快照在创建后是只读的。将快照与原始数据集进行比较：
 
 [source, shell]
 ....
@@ -1565,7 +1565,7 @@ mypool/usr/home                         184K  93.2G   184K  /usr/home
 mypool/usr/home@my_recursive_snapshot      0      -   184K  -
 ....
 
-Displaying both the dataset and the snapshot together reveals how snapshots work in <<zfs-term-cow,COW>> fashion. They save the changes (_delta_) made and not the complete file system contents all over again. This means that snapshots take little space when making changes. Observe space usage even more by copying a file to the dataset, then creating a second snapshot:
+同时显示数据集和快照可以展示快照以 <<zfs-term-cow,写时复制>> 方式工作的原理。它们保存所做的更改（_delta_），而不是再次保存完整的文件系统内容。这意味着在进行更改时，快照所占用的空间很小。通过将文件复制到数据集中，然后创建第二个快照，可以更加观察空间使用情况：
 
 [source, shell]
 ....
@@ -1578,12 +1578,12 @@ mypool/var/tmp@my_recursive_snapshot    88K      -   152K  -
 mypool/var/tmp@after_cp                   0      -   118K  -
 ....
 
-The second snapshot contains the changes to the dataset after the copy operation. This yields enormous space savings. Notice that the size of the snapshot `_mypool/var/tmp@my_recursive_snapshot_` also changed in the `USED` column to show the changes between itself and the snapshot taken afterwards.
+第二个快照包含了复制操作后数据集的变化。这样可以节省大量的空间。请注意，快照 `_mypool/var/tmp@my_recursive_snapshot_` 的大小在 `USED` 列中也发生了变化，以显示它与之后拍摄的快照之间的变化。
 
 [[zfs-zfs-snapshot-diff]]
-==== Comparing Snapshots
+==== 比较快照
 
-ZFS provides a built-in command to compare the differences in content between two snapshots. This is helpful with a lot of snapshots taken over time when the user wants to see how the file system has changed over time. For example, `zfs diff` lets a user find the latest snapshot that still contains a file deleted by accident. Doing this for the two snapshots created in the previous section yields this output:
+ZFS 提供了一个内置命令，用于比较两个快照之间内容的差异。当用户想要查看文件系统随时间变化的方式时，这非常有帮助，尤其是在有很多快照的情况下。例如， `zfs diff` 命令可以帮助用户找到最新的快照，其中仍然包含了意外删除的文件。对于前一节创建的两个快照，执行此命令将输出如下结果：
 
 [source, shell]
 ....
@@ -1597,30 +1597,30 @@ M       /var/tmp/
 +       /var/tmp/passwd
 ....
 
-The command lists the changes between the specified snapshot (in this case `_mypool/var/tmp@my_recursive_snapshot_`) and the live file system. The first column shows the change type:
+该命令列出了指定快照（在本例中为 `_mypool/var/tmp@my_recursive_snapshot_` ）与活动文件系统之间的变化。第一列显示变化类型：
 
 [.informaltable]
 [cols="20%,80%"]
 |===
 
 |+
-|Adding the path or file.
+|添加路径或文件。
 
 |-
-|Deleting the path or file.
+|删除路径或文件。
 
 |M
-|Modifying the path or file.
+|修改路径或文件。
 
 |R
-|Renaming the path or file.
+|重命名路径或文件。
 |===
 
-Comparing the output with the table, it becomes clear that ZFS added [.filename]#passwd# after creating the snapshot `_mypool/var/tmp@my_recursive_snapshot_`. This also resulted in a modification to the parent directory mounted at `_/var/tmp_`.
+将输出与表格进行比较，可以清楚地看到 ZFS 在创建快照 `_mypool/var/tmp@my_recursive_snapshot_` 之后添加了 [.filename]#passwd# 。这也导致了挂载在 `_/var/tmp_` 上的父目录的修改。
 
-Comparing two snapshots is helpful when using the ZFS replication feature to transfer a dataset to a different host for backup purposes.
+当使用 ZFS 复制功能将数据集传输到不同的主机进行备份时，比较两个快照是非常有帮助的。
 
-Compare two snapshots by providing the full dataset name and snapshot name of both datasets:
+通过提供两个数据集的完整数据集名称和快照名称来比较两个快照：
 
 [source, shell]
 ....
@@ -1635,14 +1635,14 @@ M       /var/tmp/
 +       /var/tmp/passwd
 ....
 
-A backup administrator can compare two snapshots received from the sending host and determine the actual changes in the dataset. See the <<zfs-zfs-send,Replication>> section for more information.
+备份管理员可以比较从发送主机接收到的两个快照，并确定数据集中的实际更改。有关更多信息，请参阅 <<zfs-zfs-send,复制 >> 部分。
 
 [[zfs-zfs-snapshot-rollback]]
-==== Snapshot Rollback
+==== 快照回滚
 
-When at least one snapshot is available, roll back to it at any time. Most often this is the case when the current state of the dataset is no longer and if preferring an older version. Scenarios such as local development tests gone wrong, botched system updates hampering the system functionality, or the need to restore deleted files or directories are all too common occurrences. To roll back a snapshot, use `zfs rollback _snapshotname_`. If a lot of changes are present, the operation will take a long time. During that time, the dataset always remains in a consistent state, much like a database that conforms to ACID principles is performing a rollback. This is happening while the dataset is live and accessible without requiring a downtime. Once the snapshot rolled back, the dataset has the same state as it had when the snapshot was originally taken. Rolling back to a snapshot discards all other data in that dataset not part of the snapshot. Taking a snapshot of the current state of the dataset before rolling back to a previous one is a good idea when requiring some data later. This way, the user can roll back and forth between snapshots without losing data that is still valuable.
+当至少有一个快照可用时，随时可以回滚到该快照。大多数情况下，当数据集的当前状态不再存在或者更喜欢旧版本时，会出现这种情况。诸如本地开发测试失败、系统更新失败导致系统功能受阻，或者需要恢复已删除的文件或目录等情况都很常见。要回滚快照，请使用 `zfs rollback _snapshotname_` 命令。如果存在大量更改，操作将需要很长时间。在此期间，数据集始终保持一致的状态，就像符合 ACID 原则的数据库执行回滚操作一样。这一切都发生在数据集处于活动状态且可访问的情况下，无需停机。一旦快照回滚完成，数据集的状态与快照创建时的状态相同。回滚到快照会丢弃数据集中不属于该快照的所有其他数据。在回滚到以前的快照之前，将当前数据集的状态进行快照是一个好主意，以便稍后需要某些数据。这样，用户可以在快照之间来回切换，而不会丢失仍然有价值的数据。
 
-In the first example, roll back a snapshot because of a careless `rm` operation that removes too much data than intended.
+在第一个示例中，由于一个粗心的 `rm` 操作删除了比预期更多的数据，因此需要回滚一个快照。
 
 [source, shell]
 ....
@@ -1659,7 +1659,7 @@ passwd          passwd.copy     vi.recover
 vi.recover
 ....
 
-At this point, the user notices the removal of extra files and wants them back. ZFS provides an easy way to get them back using rollbacks, when performing snapshots of important data on a regular basis. To get the files back and start over from the last snapshot, issue the command:
+在这一点上，用户注意到额外文件被删除了，并希望将它们恢复。 ZFS 提供了一种简单的方法来使用回滚将它们恢复，当定期对重要数据进行快照时。要将文件恢复并从最后一个快照重新开始，执行以下命令：
 
 [source, shell]
 ....
@@ -1668,7 +1668,7 @@ At this point, the user notices the removal of extra files and wants them back. 
 passwd          passwd.copy     vi.recover
 ....
 
-The rollback operation restored the dataset to the state of the last snapshot. Rolling back to a snapshot taken much earlier with other snapshots taken afterwards is also possible. When trying to do this, ZFS will issue this warning:
+回滚操作将数据集恢复到最后一个快照的状态。也可以回滚到之前拍摄的快照之后拍摄的其他快照的状态。在尝试这样做时，ZFS 会发出以下警告：
 
 [source, shell]
 ....
@@ -1684,7 +1684,7 @@ mypool/var/tmp@after_cp
 mypool/var/tmp@diff_snapshot
 ....
 
-This warning means that snapshots exist between the current state of the dataset and the snapshot to which the user wants to roll back. To complete the rollback delete these snapshots. ZFS cannot track all the changes between different states of the dataset, because snapshots are read-only. ZFS will not delete the affected snapshots unless the user specifies `-r` to confirm that this is the desired action. If that is the intention, and understanding the consequences of losing all intermediate snapshots, issue the command:
+这个警告意味着在当前数据集状态和用户想要回滚的快照之间存在快照。要完成回滚操作，请删除这些快照。由于快照是只读的，ZFS 无法跟踪数据集不同状态之间的所有更改。除非用户使用 `-r` 参数确认这是所需的操作，否则 ZFS 不会删除受影响的快照。如果这是用户的意图，并且理解丢失所有中间快照的后果，请执行以下命令：
 
 [source, shell]
 ....
@@ -1696,12 +1696,12 @@ mypool/var/tmp@my_recursive_snapshot     8K      -   152K  -
 vi.recover
 ....
 
-The output from `zfs list -t snapshot` confirms the removal of the intermediate snapshots as a result of `zfs rollback -r`.
+`zfs list -t snapshot` 的输出确认了由于 `zfs rollback -r` 的结果，中间快照已被删除。
 
 [[zfs-zfs-snapshot-snapdir]]
-==== Restoring Individual Files from Snapshots
+==== 从快照中恢复单个文件
 
-Snapshots live in a hidden directory under the parent dataset: [.filename]#.zfs/snapshots/snapshotname#. By default, these directories will not show even when executing a standard `ls -a` . Although the directory doesn't show, access it like any normal directory. The property named `snapdir` controls whether these hidden directories show up in a directory listing. Setting the property to `visible` allows them to appear in the output of `ls` and other commands that deal with directory contents.
+快照存储在父数据集的隐藏目录下： [.filename]#.zfs/snapshots/snapshotname# 。默认情况下，即使执行标准的 `ls -a` 命令，这些目录也不会显示出来。尽管目录不可见，但可以像访问普通目录一样访问它。名为 `snapdir` 的属性控制这些隐藏目录是否在目录列表中显示。将该属性设置为 `visible` 可以使它们出现在 `ls` 和其他处理目录内容的命令的输出中。
 
 [source, shell]
 ....
@@ -1715,7 +1715,7 @@ mypool/var/tmp  snapdir   hidden   default
 .               ..              .zfs            passwd          vi.recover
 ....
 
-Restore individual files to a previous state by copying them from the snapshot back to the parent dataset. The directory structure below [.filename]#.zfs/snapshot# has a directory named like the snapshots taken earlier to make it easier to identify them. The next example shows how to restore a file from the hidden [.filename]#.zfs# directory by copying it from the snapshot containing the latest version of the file:
+通过将文件从快照复制回父数据集，将其恢复到先前的状态。 [.filename]#.zfs/snapshot# 下的目录结构中有一个类似于先前拍摄的快照的目录，以便更容易识别它们。下一个示例显示了如何从隐藏的 [.filename]#.zfs# 目录中复制文件，从包含文件最新版本的快照中恢复文件：
 
 [source, shell]
 ....
@@ -1729,7 +1729,7 @@ passwd          vi.recover
 # cp /var/tmp/.zfs/snapshot/after_cp/passwd /var/tmp
 ....
 
-Even if the `snapdir` property is set to hidden, running `ls .zfs/snapshot` will still list the contents of that directory. The administrator decides whether to display these directories. This is a per-dataset setting. Copying files or directories from this hidden [.filename]#.zfs/snapshot# is simple enough. Trying it the other way around results in this error:
+即使将 `snapdir` 属性设置为隐藏，运行 `ls .zfs/snapshot` 仍然会列出该目录的内容。管理员决定是否显示这些目录。这是每个数据集的设置。从这个隐藏的 [.filename]#.zfs/snapshot# 复制文件或目录非常简单。尝试反过来操作会导致以下错误：
 
 [source, shell]
 ....
@@ -1737,18 +1737,18 @@ Even if the `snapdir` property is set to hidden, running `ls .zfs/snapshot` will
 cp: /var/tmp/.zfs/snapshot/after_cp/rc.conf: Read-only file system
 ....
 
-The error reminds the user that snapshots are read-only and cannot change after creation. Copying files into and removing them from snapshot directories are both disallowed because that would change the state of the dataset they represent.
+该错误提醒用户快照是只读的，创建后不能更改。将文件复制到快照目录或从中删除文件都是不允许的，因为这会改变所表示数据集的状态。
 
-Snapshots consume space based on how much the parent file system has changed since the time of the snapshot. The `written` property of a snapshot tracks the space the snapshot uses.
+快照占用的空间取决于父文件系统自快照以来的更改量。快照的 `written` 属性跟踪快照使用的空间。
 
-To destroy snapshots and reclaim the space, use `zfs destroy _dataset_@_snapshot_`. Adding `-r` recursively removes all snapshots with the same name under the parent dataset. Adding `-n -v` to the command displays a list of the snapshots to be deleted and an estimate of the space it would reclaim without performing the actual destroy operation.
+要销毁快照并回收空间，请使用 `zfs destroy _dataset_@_snapshot_` 命令。添加 `-r` 选项可以递归删除父数据集下具有相同名称的所有快照。在命令中添加 `-n -v` 选项可以显示要删除的快照列表以及执行实际销毁操作前将回收的空间的估计值。
 
 [[zfs-zfs-clones]]
-=== Managing Clones
+=== 管理克隆实例
 
-A clone is a copy of a snapshot treated more like a regular dataset. Unlike a snapshot, a clone is writeable and mountable, and has its own properties. After creating a clone using `zfs clone`, destroying the originating snapshot is impossible. To reverse the child/parent relationship between the clone and the snapshot use `zfs promote`. Promoting a clone makes the snapshot become a child of the clone, rather than of the original parent dataset. This will change how ZFS accounts for the space, but not actually change the amount of space consumed. Mounting the clone anywhere within the ZFS file system hierarchy is possible, not only below the original location of the snapshot.
+克隆是快照的副本，更像一个常规数据集。与快照不同，克隆是可写的和可挂载的，并且具有自己的属性。使用 `zfs clone` 创建克隆后，无法销毁原始快照。要反转克隆和快照之间的子/父关系，请使用 `zfs promote` 。将克隆提升为快照成为克隆的子项，而不是原始父数据集的子项。这将改变 ZFS 对空间的计算方式，但实际上不会改变所消耗的空间量。可以在 ZFS 文件系统层次结构中的任何位置挂载克隆，不仅限于快照的原始位置下方。
 
-To show the clone feature use this example dataset:
+要展示克隆功能，请使用以下示例数据集：
 
 [source, shell]
 ....
@@ -1759,7 +1759,7 @@ camino/home/joe@plans    21K      -  85.5K  -
 camino/home/joe@backup    0K      -    87K  -
 ....
 
-A typical use for clones is to experiment with a specific dataset while keeping the snapshot around to fall back to in case something goes wrong. Since snapshots cannot change, create a read/write clone of a snapshot. After achieving the desired result in the clone, promote the clone to a dataset and remove the old file system. Removing the parent dataset is not strictly necessary, as the clone and dataset can coexist without problems.
+克隆的典型用途是在进行特定数据集的实验时，保留快照以备不时之需。由于快照是不可更改的，因此需要创建一个可读/写的快照克隆。在克隆中获得所需的结果后，将克隆提升为数据集并删除旧的文件系统。严格来说，删除父数据集并非必需，因为克隆和数据集可以共存而不会出现问题。
 
 [source, shell]
 ....
@@ -1776,7 +1776,7 @@ usr/home/joe        1.3G     31k    1.3G     0%    /usr/home/joe
 usr/home/joenew     1.3G     31k    1.3G     0%    /usr/home/joenew
 ....
 
-Creating a clone makes it an exact copy of the state the dataset was in when taking the snapshot. Changing the clone independently from its originating dataset is possible now. The connection between the two is the snapshot. ZFS records this connection in the property `origin`. Promoting the clone with `zfs promote` makes the clone an independent dataset. This removes the value of the `origin` property and disconnects the newly independent dataset from the snapshot. This example shows it:
+创建克隆会使其成为数据集在拍摄快照时的精确副本。现在可以独立地更改克隆与其源数据集之间的连接。两者之间的连接是快照。 ZFS 将此连接记录在属性 `origin` 中。使用 `zfs promote` 提升克隆将使其成为独立的数据集。这将删除 `origin` 属性的值，并断开新独立数据集与快照之间的连接。以下示例说明了这一点：
 
 [source, shell]
 ....
@@ -1789,7 +1789,7 @@ NAME                  PROPERTY  VALUE   SOURCE
 camino/home/joenew    origin    -       -
 ....
 
-After making some changes like copying [.filename]#loader.conf# to the promoted clone, for example, the old directory becomes obsolete in this case. Instead, the promoted clone can replace it. To do this, `zfs destroy` the old dataset first and then `zfs rename` the clone to the old dataset name (or to an entirely different name).
+在进行一些更改后，例如将 [.filename]#loader.conf# 复制到推广的克隆中，旧目录在这种情况下变得过时。相反，推广的克隆可以替代它。为了做到这一点，首先使用 `zfs destroy` 命令销毁旧数据集，然后使用 `zfs rename` 命令将克隆重命名为旧数据集的名称（或完全不同的名称）。
 
 [source, shell]
 ....
@@ -1803,7 +1803,7 @@ Filesystem          Size    Used   Avail Capacity  Mounted on
 usr/home/joe        1.3G    128k    1.3G     0%    /usr/home/joe
 ....
 
-The cloned snapshot is now an ordinary dataset. It contains all the data from the original snapshot plus the files added to it like [.filename]#loader.conf#. Clones provide useful features to ZFS users in different scenarios. For example, provide jails as snapshots containing different sets of installed applications. Users can clone these snapshots and add their own applications as they see fit. Once satisfied with the changes, promote the clones to full datasets and provide them to end users to work with like they would with a real dataset. This saves time and administrative overhead when providing these jails.
+克隆的快照现在是一个普通的数据集。它包含了原始快照中的所有数据，以及像 [.filename]#loader.conf# 这样添加到其中的文件。在不同的场景中，克隆为 ZFS 用户提供了有用的功能。例如，可以将 jails 作为包含不同安装应用程序集的快照。用户可以克隆这些快照，并根据需要添加自己的应用程序。一旦对更改满意，可以将克隆提升为完整的数据集，并将其提供给最终用户，就像使用真实数据集一样。这样可以节省提供这些监狱时的时间和管理开销。
 
 [[zfs-zfs-send]]
 === Replication
