@@ -1894,7 +1894,7 @@ storage/home  26320512       0 26320512     0%    /home</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>如果所有池都处于在线状态，并且一切正常，消息将显示：</p>
+<p>如果所有池都处于 <a href="#zfs-term-online">在线</a> 状态，并且一切正常，消息将显示：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2028,7 +2028,7 @@ errors: No known data errors</code></pre>
 <h2 id="zfs-zpool">22.3. <code>zpool</code> 管理<a class="anchor" href="#zfs-zpool"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>ZFS 管理使用两个主要工具。 <code>zpool</code> 工具控制池的操作，允许添加、删除、替换和管理磁盘。<code>zfs</code> 工具允许创建、销毁和管理数据集，包括文件系统和卷。</p>
+<p>ZFS 管理使用两个主要工具。 <code>zpool</code> 工具控制池的操作，允许添加、删除、替换和管理磁盘。<a href="#zfs-zfs"><code>zfs</code></a> 工具允许创建、销毁和管理数据集，包括 <a href="#zfs-term-filesystem">文件系统</a> 和 <a href="#zfs-term-volume">卷</a>。</p>
 </div>
 <div class="sect2">
 <h3 id="zfs-zpool-create">22.3.1. 创建和销毁存储池<a class="anchor" href="#zfs-zpool-create"></a></h3>
@@ -2118,7 +2118,7 @@ errors: No known data errors</code></pre>
 <p>有两种方法可以将磁盘添加到池中：使用 <code>zpool attach</code> 将磁盘附加到现有的 vdev 上，或者使用 <code>zpool add</code> 将 vdev 添加到池中。一些 <a href="#zfs-term-vdev">vdev 类型 </a> 允许在创建后向 vdev 添加磁盘。</p>
 </div>
 <div class="paragraph">
-<p>使用单个磁盘创建的池缺乏冗余性。它可以检测到损坏，但无法修复，因为没有其他数据的副本。 <a href="#zfs-term-copies">copies</a> 属性可以从小故障（如坏扇区）中恢复，但不提供与镜像或 RAID-Z 相同级别的保护。从由单个磁盘 vdev 组成的池开始，使用 <code>zpool attach</code> 将新磁盘添加到 vdev 中，创建镜像。还可以使用 <code>zpool attach</code> 将新磁盘添加到镜像组，增加冗余性和读取性能。在为池分区的磁盘上，将第一个磁盘的布局复制到第二个磁盘上。使用 <code>gpart backup</code> 和 <code>gpart restore</code> 可以使这个过程更容易。</p>
+<p>使用单个磁盘创建的池缺乏冗余性。它可以检测到损坏，但无法修复，因为没有其他数据的副本。 <a href="#zfs-term-copies">副本</a> 属性可以从小故障（如坏扇区）中恢复，但不提供与镜像或 RAID-Z 相同级别的保护。从由单个磁盘 vdev 组成的池开始，使用 <code>zpool attach</code> 将新磁盘添加到 vdev 中，创建镜像。还可以使用 <code>zpool attach</code> 将新磁盘添加到镜像组，增加冗余性和读取性能。在为池分区的磁盘上，将第一个磁盘的布局复制到第二个磁盘上。使用 <code>gpart backup</code> 和 <code>gpart restore</code> 可以使这个过程更容易。</p>
 </div>
 <div class="paragraph">
 <p>通过连接 <span class="filename">ada0p3</span>，将单个磁盘（条带）vdev <span class="filename">ada1p3</span> 升级为镜像：</p>
@@ -2271,7 +2271,7 @@ errors: No known data errors</code></pre>
 <div class="sect2">
 <h3 id="zfs-zpool-status">22.3.3. 检查池的状态<a class="anchor" href="#zfs-zpool-status"></a></h3>
 <div class="paragraph">
-<p>池状态非常重要。如果驱动器离线或 ZFS 检测到读取、写入或校验错误，相应的错误计数会增加。<code>status</code> 输出显示了池中每个设备的配置和状态，以及整个池的状态。还显示了要采取的操作和有关上次 <code>scrub</code> 的详细信息。</p>
+<p>池状态非常重要。如果驱动器离线或 ZFS 检测到读取、写入或校验错误，相应的错误计数会增加。<code>status</code> 输出显示了池中每个设备的配置和状态，以及整个池的状态。还显示了要采取的操作和有关上次 <a href="#zfs-zpool-scrub"><code>scrub</code></a> 的详细信息。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2304,7 +2304,7 @@ errors: No known data errors</code></pre>
 <div class="sect2">
 <h3 id="zfs-zpool-replace">22.3.5. 替换一个正常工作的设备<a class="anchor" href="#zfs-zpool-replace"></a></h3>
 <div class="paragraph">
-<p>可能需要用不同的磁盘替换一个磁盘。当替换一个工作中的磁盘时，该过程会在替换期间保持旧磁盘在线。池永远不会进入 <a href="#zfs-term-degraded">降级</a> 状态，从而降低数据丢失的风险。运行 <code>zpool replace</code> 命令将数据从旧磁盘复制到新磁盘。操作完成后， ZFS 会将旧磁盘与 vdev 断开连接。如果新磁盘比旧磁盘大，可能可以使用新空间来扩展 zpool 。请参见 <a href="#zfs-zpool-online ">扩展池</a> 。</p>
+<p>可能需要用不同的磁盘替换一个磁盘。当替换一个工作中的磁盘时，该过程会在替换期间保持旧磁盘在线。池永远不会进入 <a href="#zfs-term-degraded">降级</a> 状态，从而降低数据丢失的风险。运行 <code>zpool replace</code> 命令将数据从旧磁盘复制到新磁盘。操作完成后， ZFS 会将旧磁盘与 vdev 断开连接。如果新磁盘比旧磁盘大，可能可以使用新空间来扩展 zpool 。请参见 <a href="#zfs-zpool-online">扩展池</a> 。</p>
 </div>
 <div class="paragraph">
 <p>替换池中的一个正常工作设备：</p>
@@ -2372,7 +2372,7 @@ errors: No known data errors</code></pre>
 <div class="sect2">
 <h3 id="zfs-zpool-resilver">22.3.6. 处理故障设备<a class="anchor" href="#zfs-zpool-resilver"></a></h3>
 <div class="paragraph">
-<p>当池中的磁盘发生故障时，该磁盘所属的 vdev 将进入 <a href="#zfs-term-degraded">降级</a> 状态。数据仍然可用，但性能降低，因为 ZFS 会通过可用的冗余计算缺失的数据。为了将 vdev 恢复到完全功能状态，需要替换故障的物理设备。然后，ZFS 会开始 <a href="#zfs-term-resilver">同步</a> 操作。ZFS 会通过可用的冗余重新计算故障设备上的数据，并将其写入替代设备。完成后，vdev 将返回 <a href="#zfs-term-online">在线</a> 状态。</p>
+<p>当池中的磁盘发生故障时，该磁盘所属的 vdev 将进入 <a href="#zfs-term-degraded">降级</a> 状态。数据仍然可用，但性能降低，因为 ZFS 会通过可用的冗余计算缺失的数据。为了将 vdev 恢复到完全功能状态，需要替换故障的物理设备。然后，ZFS 会开始 <a href="#zfs-term-resilver">重建</a> 操作。ZFS 会通过可用的冗余重新计算故障设备上的数据，并将其写入替代设备。完成后，vdev 将返回 <a href="#zfs-term-online">在线</a> 状态。</p>
 </div>
 <div class="paragraph">
 <p>如果 vdev 没有任何冗余，或者设备已经损坏且没有足够的冗余来弥补，那么存储池将进入 <a href="#zfs-term-faulted">故障</a> 状态。除非有足够的设备重新连接存储池，否则存储池将无法运行，需要从备份中恢复数据。</p>
@@ -2659,7 +2659,7 @@ errors: No known data errors</code></pre>
 <div class="sect2">
 <h3 id="zfs-zpool-online">22.3.9. 扩展池<a class="anchor" href="#zfs-zpool-online"></a></h3>
 <div class="paragraph">
-<p>每个 vdev 中最小的设备限制了冗余池的可用大小。用一个更大的设备替换最小的设备。在完成 <a href="#zfs-zpool-replace ">replace</a> 或 <a href="#zfs-term-resilver ">resilver</a> 操作后，池可以扩展到使用新设备的容量。例如，考虑一个由 1 TB 驱动器和 2 TB 驱动器组成的镜像。可用空间为 1 TB 。当用另一个 2 TB 驱动器替换 1 TB 驱动器时，重新同步过程将现有数据复制到新驱动器上。由于两个设备现在都具有 2 TB 的容量，镜像的可用空间增长到 2 TB。</p>
+<p>每个 vdev 中最小的设备限制了冗余池的可用大小。用一个更大的设备替换最小的设备。在完成 <a href="#zfs-zpool-replace">替换</a> 或 <a href="#zfs-term-resilver">重建</a> 操作后，池可以扩展到使用新设备的容量。例如，考虑一个由 1 TB 驱动器和 2 TB 驱动器组成的镜像。可用空间为 1 TB 。当用另一个 2 TB 驱动器替换 1 TB 驱动器时，重新同步过程将现有数据复制到新驱动器上。由于两个设备现在都具有 2 TB 的容量，镜像的可用空间增长到 2 TB。</p>
 </div>
 <div class="paragraph">
 <p>通过在每个设备上使用 <code>zpool online -e</code> 来开始扩展。在扩展所有设备之后，额外的空间将可用于池。</p>
@@ -2952,15 +2952,15 @@ data                      288G  1.53T      2     12  9.23K  61.5K
 <h2 id="zfs-zfs">22.4. <code>zfs</code> 管理<a class="anchor" href="#zfs-zfs"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>zfs</code> 实用程序可以在池中创建、销毁和管理所有现有的 ZFS 数据集。要管理池本身，请使用 <code>zpool</code>。</p>
+<p><code>zfs</code> 实用程序可以在池中创建、销毁和管理所有现有的 ZFS 数据集。要管理池本身，请使用 <a href="#zfs-zpool"><code>zpool</code></a>。</p>
 </div>
 <div class="sect2">
 <h3 id="zfs-zfs-create">22.4.1. 创建和销毁数据集<a class="anchor" href="#zfs-zfs-create"></a></h3>
 <div class="paragraph">
-<p>与传统的磁盘和卷管理器不同，ZFS 中的空间是 <em>不预分配</em> 的。在传统文件系统中，分区和分配空间后，无法在不添加新磁盘的情况下添加新的文件系统。而在 ZFS 中，可以随时创建新的文件系统。每个 <a href="#zfs-term-dataset">数据集 </a> 都有属性，包括压缩、去重、缓存和配额等功能，以及其他有用的属性，如只读、大小写敏感、网络文件共享和挂载点。可以将数据集嵌套在彼此之间，并且子数据集将继承其祖先的属性。 <a href="#zfs-zfs-allow ">委派 </a>、<a href="#zfs-zfs-send ">复制 </a>、<a href="#zfs-zfs-snapshot ">快照 </a>、<a href="#zfs-zfs-jail ">监狱</a> 允许将每个数据集作为一个单元进行管理和销毁。为每种不同类型或文件集创建单独的数据集具有优势。拥有大量数据集的缺点是，某些命令（如 <code>zfs list</code>）的速度会变慢，并且挂载数百甚至数千个数据集会减慢 FreeBSD 的启动过程。</p>
+<p>与传统的磁盘和卷管理器不同，ZFS 中的空间是 <em>不预分配</em> 的。在传统文件系统中，分区和分配空间后，无法在不添加新磁盘的情况下添加新的文件系统。而在 ZFS 中，可以随时创建新的文件系统。每个 <a href="#zfs-term-dataset">数据集</a> 都有属性，包括压缩、去重、缓存和配额等功能，以及其他有用的属性，如只读、大小写敏感、网络文件共享和挂载点。可以将数据集嵌套在彼此之间，并且子数据集将继承其祖先的属性。 <a href="#zfs-zfs-allow">委派</a>、<a href="#zfs-zfs-send">复制</a>、<a href="#zfs-zfs-snapshot">快照</a>、<a href="#zfs-zfs-jail">jail</a> 允许将每个数据集作为一个单元进行管理和销毁。为每种不同类型或文件集创建单独的数据集具有优势。拥有大量数据集的缺点是，某些命令（如 <code>zfs list</code>）的速度会变慢，并且挂载数百甚至数千个数据集会减慢 FreeBSD 的启动过程。</p>
 </div>
 <div class="paragraph">
-<p>创建一个新的数据集，并在其上启用 LZ4 压缩。</p>
+<p>创建一个新的数据集，并在其上启用 <a href="#zfs-term-compression-lz4">LZ4 压缩</a>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3041,7 +3041,7 @@ mypool/var/tmp        152K  93.2G   152K  /var/tmp</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在现代版本的 ZFS 中， <code>zfs destroy</code> 是异步的，释放的空间可能需要几分钟才会在池中显示出来。使用 <code>zpool get freeing <em>poolname</em></code> 命令来查看 <code>freeing</code> 属性，该属性显示了哪些数据集正在后台释放其块。如果存在子数据集，例如快照或其他数据集，那么无法销毁父数据集。要销毁一个数据集及其子数据集，可以使用 <code>-r</code> 选项递归地销毁数据集及其子数据集。使用 <code>-n -v</code> 选项列出此操作销毁的数据集和快照，而不实际销毁任何内容。销毁快照释放的空间也会显示出来。</p>
+<p>在现代版本的 ZFS 中， <code>zfs destroy</code> 是异步的，释放的空间可能需要几分钟才会在池中显示出来。使用 <code>zpool get freeing <em>poolname</em></code> 命令来查看 <code>freeing</code> 属性，该属性显示了哪些数据集正在后台释放其块。如果存在子数据集，例如 <a href="#zfs-term-snapshot">快照</a> 或其他数据集，那么无法销毁父数据集。要销毁一个数据集及其子数据集，可以使用 <code>-r</code> 选项递归地销毁数据集及其子数据集。使用 <code>-n -v</code> 选项列出此操作销毁的数据集和快照，而不实际销毁任何内容。销毁快照释放的空间也会显示出来。</p>
 </div>
 </div>
 <div class="sect2">
@@ -3344,7 +3344,7 @@ M       /var/tmp/
 </div>
 </div>
 <div class="paragraph">
-<p>备份管理员可以比较从发送主机接收到的两个快照，并确定数据集中的实际更改。有关更多信息，请参阅 <a href="#zfs-zfs-send">复制 </a> 部分。</p>
+<p>备份管理员可以比较从发送主机接收到的两个快照，并确定数据集中的实际更改。有关更多信息，请参阅 <a href="#zfs-zfs-send">复制</a> 部分。</p>
 </div>
 </div>
 <div class="sect3">
@@ -3859,7 +3859,7 @@ vfs.usermount: 0 -&gt; 1
 </div>
 </div>
 <div class="paragraph">
-<p>同样的原则适用于设置 <code>refreservation</code> 属性以设置 <a href="#zfs-term-refreservation ">引用预留 </a>，其一般格式为 <code>refreservation =<em>size</em></code> 。</p>
+<p>同样的原则适用于设置 <code>refreservation</code> 属性以设置 <a href="#zfs-term-refreservation">引用预留 </a>，其一般格式为 <code>refreservation =<em>size</em></code> 。</p>
 </div>
 <div class="paragraph">
 <p>该命令显示位于 <span class="filename">storage/home/bob</span> 目录下的任何预留空间或引用预留空间。</p>
@@ -3874,7 +3874,7 @@ vfs.usermount: 0 -&gt; 1
 <div class="sect2">
 <h3 id="zfs-zfs-compression">22.4.10. 压缩<a class="anchor" href="#zfs-zfs-compression"></a></h3>
 <div class="paragraph">
-<p>ZFS 提供透明压缩功能。在块级别压缩数据可以节省空间，同时提高磁盘吞吐量。如果数据压缩率为 25% ，压缩后的数据写入磁盘的速度与未压缩版本相同，从而实现了 125% 的有效写入速度。压缩也可以作为 <a href="#zfs-zfs-deduplication ">去重</a> 的一个很好的替代方案，因为它不需要额外的内存。</p>
+<p>ZFS 提供透明压缩功能。在块级别压缩数据可以节省空间，同时提高磁盘吞吐量。如果数据压缩率为 25% ，压缩后的数据写入磁盘的速度与未压缩版本相同，从而实现了 125% 的有效写入速度。压缩也可以作为 <a href="#zfs-zfs-deduplication">去重</a> 的一个很好的替代方案，因为它不需要额外的内存。</p>
 </div>
 <div class="paragraph">
 <p>ZFS 提供了不同的压缩算法，每种算法都有不同的权衡。在 ZFS v5000 中引入的 LZ4 压缩算法可以在不牺牲性能的情况下对整个池进行压缩。 LZ4 的最大优势是 <em>提前中止（early abort）</em> 功能。如果 LZ4 在数据的头部部分无法达到至少 12.5% 的压缩率， ZFS 会以未压缩的方式写入该块，以避免浪费 CPU 周期尝试压缩已经压缩或无法压缩的数据。有关 ZFS 中可用的不同压缩算法的详细信息，请参阅术语部分中的 <a href="#zfs-term-compression">压缩</a> 条目。</p>
@@ -3896,7 +3896,7 @@ mypool/compressed_dataset  compression       lz4       <span class="nb">local
 <p>该数据集使用了 449 GB 的空间（使用的属性）。如果不进行压缩，它将占用 496 GB 的空间（逻辑使用的属性）。这导致了 1.11:1 的压缩比率。</p>
 </div>
 <div class="paragraph">
-<p>当与 <a href="#zfs-term-userquota ">用户配额 </a> 结合使用时，压缩可能会产生意想不到的副作用。用户配额限制了用户在数据集上实际消耗的空间（在压缩之后）。如果一个用户的配额是 10GB ，并写入了 10GB 的可压缩数据，他们仍然可以存储更多的数据。如果他们稍后更新一个文件，比如一个数据库，其中包含更多或更少可压缩的数据，可用空间的数量将会改变。这可能导致一个奇怪的情况，即用户没有增加实际数据量（ <code>logicalused</code> 属性），但压缩的变化导致他们达到了配额限制。</p>
+<p>当与 <a href="#zfs-term-userquota">用户配额 </a> 结合使用时，压缩可能会产生意想不到的副作用。用户配额限制了用户在数据集上实际消耗的空间（在压缩之后）。如果一个用户的配额是 10GB ，并写入了 10GB 的可压缩数据，他们仍然可以存储更多的数据。如果他们稍后更新一个文件，比如一个数据库，其中包含更多或更少可压缩的数据，可用空间的数量将会改变。这可能导致一个奇怪的情况，即用户没有增加实际数据量（ <code>logicalused</code> 属性），但压缩的变化导致他们达到了配额限制。</p>
 </div>
 <div class="paragraph">
 <p>压缩可能会与备份产生类似的意外交互作用。配额通常用于限制数据存储，以确保有足够的备份空间可用。由于配额不考虑压缩，因此 ZFS 可能会写入比未压缩备份所能容纳的更多数据。</p>
@@ -3923,7 +3923,7 @@ mypool/compressed_dataset  compression       lz4       <span class="nb">local
 <div class="sect2">
 <h3 id="zfs-zfs-deduplication">22.4.12. 去重<a class="anchor" href="#zfs-zfs-deduplication"></a></h3>
 <div class="paragraph">
-<p>当启用时，<a href="#zfs-term-deduplication ">去重 </a> 使用每个块的校验和来检测重复块。当一个新块是现有块的副本时，ZFS 会写入一个对现有数据的新引用，而不是整个重复块。如果数据包含大量重复的文件或重复的信息，则可以实现巨大的空间节省。警告：去重需要大量的内存，并且启用压缩可以在不增加额外成本的情况下提供大部分的空间节省。</p>
+<p>当启用时，<a href="#zfs-term-deduplication">去重 </a> 使用每个块的校验和来检测重复块。当一个新块是现有块的副本时，ZFS 会写入一个对现有数据的新引用，而不是整个重复块。如果数据包含大量重复的文件或重复的信息，则可以实现巨大的空间节省。警告：去重需要大量的内存，并且启用压缩可以在不增加额外成本的情况下提供大部分的空间节省。</p>
 </div>
 <div class="paragraph">
 <p>要激活去重功能，请在目标池上设置 <code>dedup</code> 属性：</p>
@@ -4036,13 +4036,13 @@ dedup <span class="o">=</span> 1.05, compress <span class="o">=</span> 1.11, cop
 <div class="ulist">
 <ul>
 <li>
-<p><a id="zfs-advanced-tuning-arc_max"></a> <code><em>vfs.zfs.arc.max</em></code> 从 13.x 开始（12.x 为 <code>vfs.zfs.arc_max</code>） - <a href="#zfs-term-arc ">ARC</a> 的上限大小。默认值为所有 RAM 减去 1 GB ，或所有 RAM 的 5/8 ，以较大者为准。如果系统运行其他可能需要内存的守护程序或进程，请使用较低的值。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 在运行时调整此值，并在 <span class="filename">/boot/loader.conf</span> 或 <span class="filename">/etc/sysctl.conf</span> 中设置。</p>
+<p><a id="zfs-advanced-tuning-arc_max"></a> <code><em>vfs.zfs.arc.max</em></code> 从 13.x 开始（12.x 为 <code>vfs.zfs.arc_max</code>） - <a href="#zfs-term-arc">ARC</a> 的上限大小。默认值为所有 RAM 减去 1 GB ，或所有 RAM 的 5/8 ，以较大者为准。如果系统运行其他可能需要内存的守护程序或进程，请使用较低的值。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 在运行时调整此值，并在 <span class="filename">/boot/loader.conf</span> 或 <span class="filename">/etc/sysctl.conf</span> 中设置。</p>
 </li>
 <li>
-<p><a id="zfs-advanced-tuning-arc_meta_limit"></a> <code><em>vfs.zfs.arc.meta_limit</em></code> 从 13.x 版本开始（12.x 版本为 <code>vfs.zfs.arc_meta_limit</code>） - 限制用于存储元数据的 <a href="#zfs-term-arc ">ARC</a> 的数量。默认值为 <code>vfs.zfs.arc.max</code> 的四分之一。如果工作负载涉及大量文件和目录的操作，或者频繁的元数据操作，增加此值将提高性能，但会减少适应于 <a href="#zfs-term-arc ">ARC</a> 的文件数据量。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 在 <span class="filename">/boot/loader.conf</span> 或 <span class="filename">/etc/sysctl.conf</span> 中在运行时调整此值。</p>
+<p><a id="zfs-advanced-tuning-arc_meta_limit"></a> <code><em>vfs.zfs.arc.meta_limit</em></code> 从 13.x 版本开始（12.x 版本为 <code>vfs.zfs.arc_meta_limit</code>） - 限制用于存储元数据的 <a href="#zfs-term-arc">ARC</a> 的数量。默认值为 <code>vfs.zfs.arc.max</code> 的四分之一。如果工作负载涉及大量文件和目录的操作，或者频繁的元数据操作，增加此值将提高性能，但会减少适应于 <a href="#zfs-term-arc">ARC</a> 的文件数据量。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 在 <span class="filename">/boot/loader.conf</span> 或 <span class="filename">/etc/sysctl.conf</span> 中在运行时调整此值。</p>
 </li>
 <li>
-<p><a id="zfs-advanced-tuning-arc_min"></a> <code><em>vfs.zfs.arc.min</em></code> 从 13.x 开始（12.x 为 <code>vfs.zfs.arc_min</code>） - 降低 <a href="#zfs-term-arc ">ARC</a> 的大小。默认值为 <code>vfs.zfs.arc.meta_limit</code> 的一半。调整此值以防止其他应用程序将整个 <a href="#zfs-term-arc ">ARC</a> 压力过大。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 在运行时调整此值，并在 <span class="filename">/boot/loader.conf</span> 或 <span class="filename">/etc/sysctl.conf</span> 中进行调整。</p>
+<p><a id="zfs-advanced-tuning-arc_min"></a> <code><em>vfs.zfs.arc.min</em></code> 从 13.x 开始（12.x 为 <code>vfs.zfs.arc_min</code>） - 降低 <a href="#zfs-term-arc">ARC</a> 的大小。默认值为 <code>vfs.zfs.arc.meta_limit</code> 的一半。调整此值以防止其他应用程序将整个 <a href="#zfs-term-arc">ARC</a> 压力过大。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 在运行时调整此值，并在 <span class="filename">/boot/loader.conf</span> 或 <span class="filename">/etc/sysctl.conf</span> 中进行调整。</p>
 </li>
 <li>
 <p><a id="zfs-advanced-tuning-vdev-cache-size"></a> <code><em>vfs.zfs.vdev.cache.size</em></code> - 在池中的每个设备上预留的用作缓存的内存的预分配量。使用的总内存量将是此值乘以设备数量。在引导时和 <span class="filename">/boot/loader.conf</span> 中设置此值。</p>
@@ -4069,25 +4069,25 @@ dedup <span class="o">=</span> 1.05, compress <span class="o">=</span> 1.11, cop
 <p><a id="zfs-advanced-tuning-vdev-max_pending"></a> <code><em>vfs.zfs.vdev.max_pending</em></code> - 限制每个设备的待处理 I/O 请求的数量。较高的值将保持设备命令队列满，并可能提供更高的吞吐量。较低的值将减少延迟。您可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
 </li>
 <li>
-<p><a id="zfs-advanced-tuning-top_maxinflight"></a> <code><em>vfs.zfs.top_maxinflight</em></code> - 每个顶级 <a href="#zfs-term-vdev ">vdev</a> 的未完成 I/O 的上限。限制命令队列的深度以防止高延迟。该限制是针对每个顶级 vdev 的，意味着该限制独立应用于每个 <a href="#zfs-term-vdev-mirror">镜像</a> 、 <a href="#zfs-term-vdev-raidz ">RAID-Z</a> 或其他 vdev 。可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
+<p><a id="zfs-advanced-tuning-top_maxinflight"></a> <code><em>vfs.zfs.top_maxinflight</em></code> - 每个顶级 <a href="#zfs-term-vdev">vdev</a> 的未完成 I/O 的上限。限制命令队列的深度以防止高延迟。该限制是针对每个顶级 vdev 的，意味着该限制独立应用于每个 <a href="#zfs-term-vdev-mirror">镜像</a> 、 <a href="#zfs-term-vdev-raidz">RAID-Z</a> 或其他 vdev 。可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
 </li>
 <li>
-<p><a id="zfs-advanced-tuning-l2arc_write_max"></a> <code><em>vfs.zfs.l2arc_write_max</em></code> - 限制每秒写入 <a href="#zfs-term-l2arc ">L2ARC</a> 的数据量。通过限制写入设备的数据量，此可调整参数可以延长固态硬盘（SSD）的使用寿命。您可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
+<p><a id="zfs-advanced-tuning-l2arc_write_max"></a> <code><em>vfs.zfs.l2arc_write_max</em></code> - 限制每秒写入 <a href="#zfs-term-l2arc">L2ARC</a> 的数据量。通过限制写入设备的数据量，此可调整参数可以延长固态硬盘（SSD）的使用寿命。您可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
 </li>
 <li>
-<p><a id="zfs-advanced-tuning-l2arc_write_boost"></a> <code><em>vfs.zfs.l2arc_write_boost</em></code> - 将此可调整值添加到 <a href="#zfs-advanced-tuning-l2arc_write_max "><code>vfs.zfs.l2arc_write_max</code></a> 中，并增加对 SSD 的写入速度，直到从 <a href="#zfs-term-l2arc ">L2ARC</a> 中驱逐第一个块。这个&#34;Turbo Warmup Phase&#34;可以减少重启后空的 <a href="#zfs-term-l2arc ">L2ARC</a> 带来的性能损失。随时可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
+<p><a id="zfs-advanced-tuning-l2arc_write_boost"></a> <code><em>vfs.zfs.l2arc_write_boost</em></code> - 将此可调整值添加到 <a href="#zfs-advanced-tuning-l2arc_write_max"><code>vfs.zfs.l2arc_write_max</code></a> 中，并增加对 SSD 的写入速度，直到从 <a href="#zfs-term-l2arc">L2ARC</a> 中驱逐第一个块。这个&#34;Turbo Warmup Phase&#34;可以减少重启后空的 <a href="#zfs-term-l2arc">L2ARC</a> 带来的性能损失。随时可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
 </li>
 <li>
-<p><a id="zfs-advanced-tuning-scrub_delay"></a> <code><em>vfs.zfs.scrub_delay</em></code> - 在进行 <a href="#zfs-term-scrub "><code>scrub</code></a> 时，每个 I/O 之间的延迟时间。为了确保 <code>scrub</code> 不会干扰池的正常操作，如果有其他 I/O 正在进行， <code>scrub</code> 会在每个命令之间进行延迟。该值控制了 <code>scrub</code> 生成的总 IOPS（每秒 I/O 数）的限制。设置的粒度由 <code>kern.hz</code> 的值确定，默认为每秒 1000 个滴答。更改此设置会导致不同的有效 IOPS 限制。默认值为 <code>4</code> ，因此限制为： 1000 个滴答/秒 ÷ 4 = 250 IOPS 。使用值为 <em>20</em> 将得到限制：1000 个滴答/秒 ÷ 20 = 50 IOPS。池上的最近活动限制了 <code>scrub</code> 的速度，由 <a href="#zfs-advanced-tuning-scan_idle "><code>vfs.zfs.scan_idle</code></a> 确定。随时可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
+<p><a id="zfs-advanced-tuning-scrub_delay"></a> <code><em>vfs.zfs.scrub_delay</em></code> - 在进行 <a href="#zfs-term-scrub"><code>scrub</code></a> 时，每个 I/O 之间的延迟时间。为了确保 <code>scrub</code> 不会干扰池的正常操作，如果有其他 I/O 正在进行， <code>scrub</code> 会在每个命令之间进行延迟。该值控制了 <code>scrub</code> 生成的总 IOPS（每秒 I/O 数）的限制。设置的粒度由 <code>kern.hz</code> 的值确定，默认为每秒 1000 个滴答。更改此设置会导致不同的有效 IOPS 限制。默认值为 <code>4</code> ，因此限制为： 1000 个滴答/秒 ÷ 4 = 250 IOPS 。使用值为 <em>20</em> 将得到限制：1000 个滴答/秒 ÷ 20 = 50 IOPS。池上的最近活动限制了 <code>scrub</code> 的速度，由 <a href="#zfs-advanced-tuning-scan_idle"><code>vfs.zfs.scan_idle</code></a> 确定。随时可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
 </li>
 <li>
-<p><a id="zfs-advanced-tuning-resilver_delay"></a> <code><em>vfs.zfs.resilver_delay</em></code> - 在 <a href="#zfs-term-resilver ">resilver</a> 过程中，每个 I/O 之间插入的延迟时间，以毫秒为单位。为了确保 resilver 不会干扰池的正常操作，如果有其他 I/O 正在进行，resilver 将在每个命令之间延迟。该值控制由 resilver 生成的总 IOPS（每秒 I/O 数）的限制。ZFS 通过 <code>kern.hz</code> 的值确定设置的粒度，默认为每秒 1000 个滴答。更改此设置会导致不同的有效 IOPS 限制。默认值为 2 ，结果为：1000 个滴答/秒 ÷ 2 = 500 IOPS 。如果另一个设备故障可能导致池发生故障，从而导致数据丢失，则将池恢复到 <a href="#zfs-term-online">在线</a> 状态可能更为重要。值为 0 将使 resilver 操作与其他操作具有相同的优先级，加快修复过程。池上的其他最近活动会限制 resilver 的速度，由 <a href="#zfs-advanced-tuning-scan_idle "><code>vfs.zfs.scan_idle</code></a> 确定。随时可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
+<p><a id="zfs-advanced-tuning-resilver_delay"></a> <code><em>vfs.zfs.resilver_delay</em></code> - 在 <a href="#zfs-term-resilver">重建</a> 过程中，每个 I/O 之间插入的延迟时间，以毫秒为单位。为了确保 resilver 不会干扰池的正常操作，如果有其他 I/O 正在进行，resilver 将在每个命令之间延迟。该值控制由 resilver 生成的总 IOPS（每秒 I/O 数）的限制。ZFS 通过 <code>kern.hz</code> 的值确定设置的粒度，默认为每秒 1000 个滴答。更改此设置会导致不同的有效 IOPS 限制。默认值为 2 ，结果为：1000 个滴答/秒 ÷ 2 = 500 IOPS 。如果另一个设备故障可能导致池发生故障，从而导致数据丢失，则将池恢复到 <a href="#zfs-term-online">在线</a> 状态可能更为重要。值为 0 将使 resilver 操作与其他操作具有相同的优先级，加快修复过程。池上的其他最近活动会限制 resilver 的速度，由 <a href="#zfs-advanced-tuning-scan_idle"><code>vfs.zfs.scan_idle</code></a> 确定。随时可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
 </li>
 <li>
-<p><a id="zfs-advanced-tuning-scan_idle"></a> <code><em>vfs.zfs.scan_idle</em></code> - 距离上次操作的毫秒数，用于判断池是否处于空闲状态。当池处于空闲状态时， ZFS 会禁用对 <a href="#zfs-term-scrub "><code>scrub</code></a> 和 <a href="#zfs-term-resilver ">resilver</a> 的速率限制。您可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
+<p><a id="zfs-advanced-tuning-scan_idle"></a> <code><em>vfs.zfs.scan_idle</em></code> - 距离上次操作的毫秒数，用于判断池是否处于空闲状态。当池处于空闲状态时， ZFS 会禁用对 <a href="#zfs-term-scrub"><code>scrub</code></a> 和 <a href="#zfs-term-resilver">重建</a> 的速率限制。您可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
 </li>
 <li>
-<p><code><em>vfs.zfs.txg.timeout</em></code> - 两个 <a href="#zfs-term-txg ">事务组 </a> 之间的最长时间间隔，以秒为单位。当前事务组将数据写入池中，并且如果自上一个事务组以来经过了这么长时间，则会启动一个新的事务组。如果写入的数据足够多，事务组可能会提前触发。默认值为 5 秒。增大该值可能会通过延迟异步写入来提高读取性能，但这可能会导致写入事务组时性能不均衡。可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
+<p><code><em>vfs.zfs.txg.timeout</em></code> - 两个 <a href="#zfs-term-txg">事务组 </a> 之间的最长时间间隔，以秒为单位。当前事务组将数据写入池中，并且如果自上一个事务组以来经过了这么长时间，则会启动一个新的事务组。如果写入的数据足够多，事务组可能会提前触发。默认值为 5 秒。增大该值可能会通过延迟异步写入来提高读取性能，但这可能会导致写入事务组时性能不均衡。可以随时使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 调整此值。</p>
 </li>
 </ul>
 </div>
@@ -4234,10 +4234,10 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 <p><a id="zfs-term-vdev-spare"></a> <em>备份（Spare）</em> - ZFS 有一种特殊的伪 vdev 类型，用于跟踪可用的热备。请注意，已安装的热备不会自动部署；请使用 <code>zfs replace</code> 手动配置它们以替换故障设备。</p>
 </li>
 <li>
-<p><a id="zfs-term-vdev-log"></a> <em>日志（Log）</em> - ZFS 日志设备，也称为 ZFS 意图日志（ <a href="#zfs-term-zil ">ZIL</a> ），将意图日志从常规池设备移动到专用设备，通常是 SSD 。拥有专用的日志设备可以提高具有大量同步写入（如数据库）的应用程序的性能。日志设备的镜像是可能的，但不支持 RAID-Z 。如果使用大量日志设备，写入将在它们之间进行负载平衡。</p>
+<p><a id="zfs-term-vdev-log"></a> <em>日志（Log）</em> - ZFS 日志设备，也称为 ZFS 意图日志（ <a href="#zfs-term-zil">ZIL</a> ），将意图日志从常规池设备移动到专用设备，通常是 SSD 。拥有专用的日志设备可以提高具有大量同步写入（如数据库）的应用程序的性能。日志设备的镜像是可能的，但不支持 RAID-Z 。如果使用大量日志设备，写入将在它们之间进行负载平衡。</p>
 </li>
 <li>
-<p><a id="zfs-term-vdev-cache"></a> <em>缓存（Cache）</em> - 向池添加缓存 vdev 将将缓存的存储添加到 <a href="#zfs-term-l2arc ">L2ARC</a> 中。镜像缓存设备是不可能的。由于缓存设备仅存储现有数据的新副本，不存在数据丢失的风险。</p>
+<p><a id="zfs-term-vdev-cache"></a> <em>缓存（Cache）</em> - 向池添加缓存 vdev 将将缓存的存储添加到 <a href="#zfs-term-l2arc">L2ARC</a> 中。镜像缓存设备是不可能的。由于缓存设备仅存储现有数据的新副本，不存在数据丢失的风险。</p>
 </li>
 </ul>
 </div></div></td>
@@ -4245,9 +4245,9 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-txg"></a> 事务组 (TXG)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">事务组是 ZFS 将块更改分组并写入池的方式。事务组是 ZFS 用来确保一致性的原子单位。 ZFS 为每个事务组分配一个唯一的 64 位连续标识符。同时可以有最多三个活动事务组，分别处于以下三种状态之一：</p>
-<p class="tableblock"> * <em>打开（Open）</em> - 新的事务组开始时处于打开状态并接受新的写入。始终有一个处于打开状态的事务组，但如果达到限制，事务组可能会拒绝新的写入。一旦打开的事务组达到限制，或达到了 <a href="#zfs-advanced-tuning-txg-timeout "><code>vfs.zfs.txg.timeout</code></a> ，事务组将进入下一个状态。
+<p class="tableblock"> * <em>打开（Open）</em> - 新的事务组开始时处于打开状态并接受新的写入。始终有一个处于打开状态的事务组，但如果达到限制，事务组可能会拒绝新的写入。一旦打开的事务组达到限制，或达到了 <a href="#zfs-advanced-tuning-txg-timeout"><code>vfs.zfs.txg.timeout</code></a> ，事务组将进入下一个状态。
  * <em>静默（Quiescing）</em> - 一个短暂的状态，允许所有待处理的操作完成，而不会阻塞新的打开事务组的创建。一旦组中的所有事务完成，事务组将进入最终状态。
- * <em>同步（Syncing）</em> - 将事务组中的所有数据写入稳定存储。这个过程将进一步改变其他数据，如元数据和空间映射， ZFS 也会将其写入稳定存储。同步过程涉及多个步骤。首先是所有更改的数据块；接下来是元数据，可能需要多次通过才能完成。由于为数据块分配空间会生成新的元数据，因此同步状态无法完成，直到完成一个不使用任何新空间的步骤。同步状态也是 <em>synctasks</em> 完成的地方。 Synctasks 是完成超级块更改的创建或销毁快照和数据集等管理操作。一旦同步状态完成，处于静默状态的事务组将进入同步状态。所有管理功能，如 <a href="#zfs-term-snapshot "><code>snapshot</code></a> ，都作为事务组的一部分进行写入。 ZFS 将创建的 synctask 添加到打开的事务组中，并尽快将该组推进到同步状态，以减少管理命令的延迟。</p></td>
+ * <em>同步（Syncing）</em> - 将事务组中的所有数据写入稳定存储。这个过程将进一步改变其他数据，如元数据和空间映射， ZFS 也会将其写入稳定存储。同步过程涉及多个步骤。首先是所有更改的数据块；接下来是元数据，可能需要多次通过才能完成。由于为数据块分配空间会生成新的元数据，因此同步状态无法完成，直到完成一个不使用任何新空间的步骤。同步状态也是 <em>synctasks</em> 完成的地方。 Synctasks 是完成超级块更改的创建或销毁快照和数据集等管理操作。一旦同步状态完成，处于静默状态的事务组将进入同步状态。所有管理功能，如 <a href="#zfs-term-snapshot"><code>快照</code></a> ，都作为事务组的一部分进行写入。 ZFS 将创建的 synctask 添加到打开的事务组中，并尽快将该组推进到同步状态，以减少管理命令的延迟。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-arc"></a> 自适应替换缓存（ARC）</p></td>
@@ -4255,7 +4255,7 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-l2arc"></a> L2ARC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">L2ARC 是 ZFS 缓存系统的第二级。 RAM 存储主要的 ARC 。由于可用的 RAM 数量通常有限， ZFS 还可以使用缓存 vdevs 。由于与传统的旋转硬盘相比，固态硬盘（SSD）具有更高的速度和更低的延迟，因此通常将其用作缓存设备。 L2ARC 是完全可选的，但拥有一个 L2ARC 将提高从 SSD 读取缓存文件的速度，而不必从常规磁盘读取。 L2ARC 还可以加速去重，因为不适合 RAM 但适合 L2ARC 的去重表（DDT）比必须从磁盘读取的 DDT 快得多。对缓存设备添加的数据速率限制可以防止额外的写入过早磨损 SSD 。在缓存填满之前（为了腾出空间而驱逐的第一个块），写入 L2ARC 的限制为写入限制和增加限制的总和，之后限制为写入限制。一对 sysctl 值控制这些速率限制。 <a href="#zfs-advanced-tuning-l2arc_write_max"><code>vfs.zfs.l2arc_write_max</code></a> 控制每秒写入缓存的字节数，而 <a href="#zfs-advanced-tuning-l2arc_write_boost"><code>vfs.zfs.l2arc_write_boost</code></a>在“Turbo Warmup Phase（写入增强）”期间增加了这个限制。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L2ARC 是 ZFS 缓存系统的第二级。 RAM 存储主要的 ARC 。由于可用的 RAM 数量通常有限， ZFS 还可以使用 <a href="#zfs-term-vdev-cache">缓存 vdevs</a> 。由于与传统的旋转硬盘相比，固态硬盘（SSD）具有更高的速度和更低的延迟，因此通常将其用作缓存设备。 L2ARC 是完全可选的，但拥有一个 L2ARC 将提高从 SSD 读取缓存文件的速度，而不必从常规磁盘读取。 L2ARC 还可以加速 <a href="#zfs-term-deduplication">去重</a>，因为不适合 RAM 但适合 L2ARC 的去重表（DDT）比必须从磁盘读取的 DDT 快得多。对缓存设备添加的数据速率限制可以防止额外的写入过早磨损 SSD 。在缓存填满之前（为了腾出空间而驱逐的第一个块），写入 L2ARC 的限制为写入限制和增加限制的总和，之后限制为写入限制。一对 sysctl 值控制这些速率限制。 <a href="#zfs-advanced-tuning-l2arc_write_max"><code>vfs.zfs.l2arc_write_max</code></a> 控制每秒写入缓存的字节数，而 <a href="#zfs-advanced-tuning-l2arc_write_boost"><code>vfs.zfs.l2arc_write_boost</code></a>在“Turbo Warmup Phase（写入增强）”期间增加了这个限制。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-zil"></a> ZIL</p></td>
@@ -4267,7 +4267,7 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-dataset"></a> 数据集（Dataset）</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>数据集</em> 是 ZFS 文件系统、卷、快照或克隆的通用术语。每个数据集都有一个唯一的名称，格式为 <em>poolname/path@snapshot</em>。池的根也是一个数据集。子数据集具有层次结构的名称，类似于目录。例如，<em>mypool/home</em>，即 home 数据集，是 mypool 的子数据集，并从其继承属性。通过创建 <em>mypool/home/user</em>，可以进一步扩展此结构。这个孙子数据集将从父级和祖父级继承属性。在子数据集上设置属性以覆盖从父级和祖父级继承的默认值。可以将数据集及其子数据集的管理委托给其他用户。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>数据集</em> 是 ZFS 文件系统、卷、快照或克隆的通用术语。每个数据集都有一个唯一的名称，格式为 <em>poolname/path@snapshot</em>。池的根也是一个数据集。子数据集具有层次结构的名称，类似于目录。例如，<em>mypool/home</em>，即 home 数据集，是 mypool 的子数据集，并从其继承属性。通过创建 <em>mypool/home/user</em>，可以进一步扩展此结构。这个孙子数据集将从父级和祖父级继承属性。在子数据集上设置属性以覆盖从父级和祖父级继承的默认值。可以将数据集及其子数据集的管理 <a href="#zfs-zfs-allow">委托</a> 给其他用户。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-filesystem"></a> 文件系统</p></td>
@@ -4279,7 +4279,7 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-snapshot"></a> 快照（Snapshot）</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ZFS 的 <a href="#zfs-term-cow ">写时复制 </a>（COW）设计允许几乎瞬间创建具有任意名称的一致性快照。在对数据集进行快照或对包含所有子数据集的父数据集进行递归快照之后，新数据将进入新的块，但不会将旧块回收为可用空间。快照包含原始文件系统版本，活动文件系统包含自快照以来所做的任何更改，而不使用其他空间。写入活动文件系统的新数据使用新的块来存储这些数据。随着块在活动文件系统中不再使用，快照将增长，但仅在快照中使用。将这些快照以只读方式挂载可以恢复先前的文件版本。可以将活动文件系统回滚到特定快照的 <a href="#zfs-zfs-snapshot ">回滚</a> 是可能的，从而撤消在快照之后进行的任何更改。池中的每个块都有一个引用计数器，用于跟踪使用该块的快照、克隆、数据集或卷。随着文件和快照被删除，引用计数减少，当不再引用块时，回收可用空间。使用 <a href="#zfs-zfs-snapshot ">保留</a> 标记快照将导致任何试图销毁它的尝试返回 <code>EBUSY</code> 错误。每个快照可以具有唯一名称的保留。 <a href="#zfs-zfs-snapshot ">释放</a> 命令会移除保留，以便可以删除快照。快照、克隆和回滚适用于卷，但独立挂载不适用。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ZFS 的 <a href="#zfs-term-cow">写时复制 </a>（COW）设计允许几乎瞬间创建具有任意名称的一致性快照。在对数据集进行快照或对包含所有子数据集的父数据集进行递归快照之后，新数据将进入新的块，但不会将旧块回收为可用空间。快照包含原始文件系统版本，活动文件系统包含自快照以来所做的任何更改，而不使用其他空间。写入活动文件系统的新数据使用新的块来存储这些数据。随着块在活动文件系统中不再使用，快照将增长，但仅在快照中使用。将这些快照以只读方式挂载可以恢复先前的文件版本。可以将活动文件系统回滚到特定快照的 <a href="#zfs-zfs-snapshot">回滚</a> 是可能的，从而撤消在快照之后进行的任何更改。池中的每个块都有一个引用计数器，用于跟踪使用该块的快照、克隆、数据集或卷。随着文件和快照被删除，引用计数减少，当不再引用块时，回收可用空间。使用 <a href="#zfs-zfs-snapshot">保留</a> 标记快照将导致任何试图销毁它的尝试返回 <code>EBUSY</code> 错误。每个快照可以具有唯一名称的保留。 <a href="#zfs-zfs-snapshot">释放</a> 命令会移除保留，以便可以删除快照。快照、克隆和回滚适用于卷，但独立挂载不适用。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-clone"></a> 克隆（Clone）</p></td>
@@ -4307,7 +4307,7 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-copies"></a> 副本（Copies）</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">当 <code>copies</code> 属性设置为大于 1 的值时，ZFS 会在 <a href="#zfs-term-filesystem ">文件系统 </a> 或 <a href="#zfs-term-volume ">卷 </a> 中维护每个块的副本。在重要的数据集上设置此属性可以提供额外的冗余，以便从中恢复不匹配其校验和的块。在没有冗余的存储池中，副本功能是唯一的冗余形式。副本功能可以从单个坏扇区或其他形式的轻微损坏中恢复，但它不能保护存储池免受整个磁盘的丢失。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">当 <code>copies</code> 属性设置为大于 1 的值时，ZFS 会在 <a href="#zfs-term-filesystem">文件系统 </a> 或 <a href="#zfs-term-volume">卷 </a> 中维护每个块的副本。在重要的数据集上设置此属性可以提供额外的冗余，以便从中恢复不匹配其校验和的块。在没有冗余的存储池中，副本功能是唯一的冗余形式。副本功能可以从单个坏扇区或其他形式的轻微损坏中恢复，但它不能保护存储池免受整个磁盘的丢失。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-deduplication"></a> 去重（Deduplication）</p></td>
@@ -4321,8 +4321,9 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-quota"></a> 数据集配额（Dataset Quota）</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ZFS 提供了快速准确的数据集、用户和组空间账户，以及配额和空间预留。这使得管理员可以对空间分配进行精细控制，并允许为关键文件系统预留空间。</p>
 <p class="tableblock">ZFS 支持不同类型的配额：数据集配额、<a href="#zfs-term-refquota">引用配额 (refquota)</a>、<a href="#zfs-term-userquota">用户配额</a> 和 <a href="#zfs-term-groupquota">组配额</a>。</p>
-<p class="tableblock">配额限制了数据集及其后代的总大小，包括数据集的快照、子数据集和这些数据集的快照。</p>
-<p class="tableblock">[NOTE]
+<p class="tableblock">配额限制了数据集及其后代的总大小，包括数据集的快照、子数据集和这些数据集的快照。
++
+[NOTE]
 ====
 卷不支持配额，因为 <code>volsize</code> 属性充当隐式配额。
 ====</p></td>
@@ -4346,7 +4347,7 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-refreservation"></a> 引用预留（Reference Reservation）</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreservation</code> 属性使得可以为特定数据集的使用保证一定的空间，但不包括其子数据集。这意味着在 <span class="filename">storage/home/bob</span> 上设置 10GB 的保留空间，如果另一个数据集尝试使用空闲空间，至少要保留 10GB 的空间给该数据集。与常规的 <a href="#zfs-term-reservation ">预留空间</a> 不同，快照和子数据集使用的空间不计入预留空间。例如，如果对 <span class="filename">storage/home/bob</span> 进行快照，除了 <code>refreservation</code> 的空间之外，必须存在足够的磁盘空间才能成功进行操作。主数据集的子数据集不计入 <code>refreservation</code> 的空间，因此不会侵占设置的空间。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreservation</code> 属性使得可以为特定数据集的使用保证一定的空间，但不包括其子数据集。这意味着在 <span class="filename">storage/home/bob</span> 上设置 10GB 的保留空间，如果另一个数据集尝试使用空闲空间，至少要保留 10GB 的空间给该数据集。与常规的 <a href="#zfs-term-reservation">预留空间</a> 不同，快照和子数据集使用的空间不计入预留空间。例如，如果对 <span class="filename">storage/home/bob</span> 进行快照，除了 <code>refreservation</code> 的空间之外，必须存在足够的磁盘空间才能成功进行操作。主数据集的子数据集不计入 <code>refreservation</code> 的空间，因此不会侵占设置的空间。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="zfs-term-resilver"></a> 重建（Resilver）</p></td>
@@ -4377,7 +4378,7 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: January 4, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=a7ea095" target="_blank">github actions</a></p>
+      <p><strong>Last modified on</strong>: January 4, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=a1c1022" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
