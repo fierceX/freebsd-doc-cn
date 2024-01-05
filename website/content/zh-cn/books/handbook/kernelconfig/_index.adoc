@@ -1,17 +1,17 @@
 ---
-description: 'This chapter covers how to configure the FreeBSD Kernel. When to build a custom kernel, how to take a hardware inventory, how to customize a kernel configuration file, etc'
+description: '本章介绍了如何配置 FreeBSD 内核。包括何时构建自定义内核，如何进行硬件清查，如何自定义内核配置文件等等。'
 next: books/handbook/printing
-part: 'Part II. Common Tasks'
+part: 第二部分：常见任务
 path: /books/handbook/
 prev: books/handbook/multimedia
 showBookMenu: true
 tags: '["configuring", "kernel", "custom kernel", "hardware requirements", "pciconf"]'
-title: 'Chapter 10. Configuring the FreeBSD Kernel'
+title: '第 10 章 配置 FreeBSD 内核'
 weight: 13
 ---
 
 [[kernelconfig]]
-= Configuring the FreeBSD Kernel
+= 配置 FreeBSD 内核
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,39 +46,39 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[kernelconfig-synopsis]]
-== Synopsis
+== 简介
 
-The kernel is the core of the FreeBSD operating system. It is responsible for managing memory, enforcing security controls, networking, disk access, and much more. While much of FreeBSD is dynamically configurable, it is still occasionally necessary to configure and compile a custom kernel.
+内核是 FreeBSD 操作系统的核心。它负责管理内存、执行安全控制、网络、磁盘访问等等。尽管 FreeBSD 的许多部分是动态可配置的，但有时仍然需要配置和编译自定义内核。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* When to build a custom kernel.
-* How to take a hardware inventory.
-* How to customize a kernel configuration file.
-* How to use the kernel configuration file to create and build a new kernel.
-* How to install the new kernel.
-* How to troubleshoot if things go wrong.
+* 何时构建自定义内核。
+* 如何进行硬件清查。
+* 如何自定义内核配置文件。
+* 如何使用内核配置文件创建和构建新内核。
+* 如何安装新内核。
+* 如果出现问题，如何进行故障排除。
 
-All of the commands listed in the examples in this chapter should be executed as `root`.
+本章中示例中列出的所有命令都应以 `root` 用户身份执行。
 
 [[kernelconfig-custom-kernel]]
-== Why Build a Custom Kernel?
+== 为什么要构建自定义内核？
 
-Traditionally, FreeBSD used a monolithic kernel. The kernel was one large program, supported a fixed list of devices, and in order to change the kernel's behavior, one had to compile and then reboot into a new kernel.
+传统上，FreeBSD 使用的是一个单内核。内核是一个庞大的程序，支持一组固定的设备，并且要改变内核的行为，需要编译并重新启动到一个新的内核。
 
-Today, most of the functionality in the FreeBSD kernel is contained in modules which can be dynamically loaded and unloaded from the kernel as necessary. This allows the running kernel to adapt immediately to new hardware and for new functionality to be brought into the kernel. This is known as a modular kernel.
+如今，FreeBSD 内核中的大部分功能都包含在模块中，这些模块可以根据需要动态加载和卸载。这使得运行中的内核能够立即适应新的硬件，并将新的功能引入内核中。这被称为模块化内核。
 
-Occasionally, it is still necessary to perform static kernel configuration. Sometimes the needed functionality is so tied to the kernel that it can not be made dynamically loadable. Some security environments prevent the loading and unloading of kernel modules and require that only needed functionality is statically compiled into the kernel.
+偶尔，仍然有必要进行静态内核配置。有时所需功能与内核紧密相关，无法以动态加载的方式实现。某些安全环境禁止加载和卸载内核模块，并要求只将所需功能静态编译到内核中。
 
-Building a custom kernel is often a rite of passage for advanced BSD users. This process, while time consuming, can provide benefits to the FreeBSD system. Unlike the [.filename]#GENERIC# kernel, which must support a wide range of hardware, a custom kernel can be stripped down to only provide support for that computer's hardware. This has a number of benefits, such as:
+对于高级 BSD 用户来说，构建自定义内核通常是一种成年礼。尽管这个过程耗时，但可以为 FreeBSD 系统带来好处。与必须支持各种硬件的 [.filename]#GENERIC# 内核不同，自定义内核可以精简为仅提供对该计算机硬件的支持。这有许多好处，例如：
 
-* Faster boot time. Since the kernel will only probe the hardware on the system, the time it takes the system to boot can decrease.
-* Lower memory usage. A custom kernel often uses less memory than the [.filename]#GENERIC# kernel by omitting unused features and device drivers. This is important because the kernel code remains resident in physical memory at all times, preventing that memory from being used by applications. For this reason, a custom kernel is useful on a system with a small amount of RAM.
-* Additional hardware support. A custom kernel can add support for devices which are not present in the [.filename]#GENERIC# kernel.
+* 更快的启动时间。由于内核只会探测系统上的硬件，系统启动所需的时间可以减少。
+* 较低的内存使用量。自定义内核通常通过省略未使用的功能和设备驱动程序来使用较少的内存，相比于 [.filename]#GENERIC# 内核。这很重要，因为内核代码始终驻留在物理内存中，防止该内存被应用程序使用。因此，在内存较小的系统上使用自定义内核非常有用。
+* 额外的硬件支持。自定义内核可以为 [.filename]#GENERIC# 内核中不存在的设备添加支持。
 
-Before building a custom kernel, consider the reason for doing so. If there is a need for specific hardware support, it may already exist as a module.
+在构建自定义内核之前，请考虑进行此操作的原因。如果需要特定的硬件支持，可能已经存在相应的模块。
 
-Kernel modules exist in [.filename]#/boot/kernel# and may be dynamically loaded into the running kernel using man:kldload[8]. Most kernel drivers have a loadable module and manual page. For example, the man:ath[4] wireless network driver has the following information in its manual page:
+内核模块存在于 [.filename]#/boot/kernel# 目录中，并且可以使用 man:kldload[8] 命令动态加载到运行中的内核中。大多数内核驱动程序都有可加载的模块和手册页。例如，man:ath[4] 无线网络驱动程序在其手册页中包含以下信息：
 
 [source, shell, subs="macros"]
 ....
@@ -88,21 +88,21 @@ following line in man:loader.conf[5]:
     if_ath_load="YES"
 ....
 
-Adding `if_ath_load="YES"` to [.filename]#/boot/loader.conf# will load this module dynamically at boot time.
+在 [.filename]#/boot/loader.conf# 中添加 `if_ath_load ="YES"` 将会在启动时动态加载该模块。
 
-In some cases, there is no associated module in [.filename]#/boot/kernel#. This is mostly true for certain subsystems.
+在某些情况下，[.filename]#/boot/kernel# 中没有关联的模块。这在某些子系统中是普遍存在的。
 
 [[kernelconfig-devices]]
-== Finding the System Hardware
+== 查找系统硬件
 
-Before editing the kernel configuration file, it is recommended to perform an inventory of the machine's hardware. On a dual-boot system, the inventory can be created from the other operating system. For example, Microsoft(R)'s Device Manager contains information about installed devices.
+在编辑内核配置文件之前，建议先对机器的硬件进行清查。在双启动系统上，可以从其他操作系统中创建清单。例如，Microsoft(R) 的设备管理器包含有关已安装设备的信息。
 
 [NOTE]
 ====
-Some versions of Microsoft(R) Windows(R) have a System icon which can be used to access Device Manager.
+一些 Microsoft(R) Windows(R) 的版本中有一个系统图标，可以用来访问设备管理器。
 ====
 
-If FreeBSD is the only installed operating system, use man:dmesg[8] to determine the hardware that was found and listed during the boot probe. Most device drivers on FreeBSD have a manual page which lists the hardware supported by that driver. For example, the following lines indicate that the man:psm[4] driver found a mouse:
+如果 FreeBSD 是唯一安装的操作系统，请使用 man:dmesg[8] 命令来确定在启动探测期间找到和列出的硬件。FreeBSD 上的大多数设备驱动程序都有一个手册页面，列出了该驱动程序支持的硬件。例如，以下行表示 man:psm[4] 驱动程序找到了一个鼠标：
 
 [source, shell]
 ....
@@ -112,11 +112,11 @@ psm0: [ITHREAD]
 psm0: model Generic PS/2 mouse, device ID 0
 ....
 
-Since this hardware exists, this driver should not be removed from a custom kernel configuration file.
+由于存在这个硬件，这个驱动程序不应从自定义内核配置文件中删除。
 
-If the output of `dmesg` does not display the results of the boot probe output, instead read the contents of [.filename]#/var/run/dmesg.boot#.
+如果 `dmesg` 命令的输出没有显示引导探测的结果，可以读取文件 [.filename]#/var/run/dmesg.boot# 的内容。
 
-Another tool for finding hardware is man:pciconf[8], which provides more verbose output. For example:
+另一个用于查找硬件的工具是 man:pciconf[8]，它提供更详细的输出。例如：
 
 [source, shell]
 ....
@@ -128,9 +128,9 @@ ath0@pci0:3:0:0:        class=0x020000 card=0x058a1014 chip=0x1014168c rev=0x01 
     subclass   = ethernet
 ....
 
-This output shows that the [.filename]#ath# driver located a wireless Ethernet device.
+这个输出显示 [.filename]#ath# 驱动程序找到了一个无线以太网设备。
 
-The `-k` flag of man:man[1] can be used to provide useful information. For example, it can be used to display a list of manual pages which contain a particular device brand or name:
+man:man[1] 的 `-k` 标志可以用来提供有用的信息。例如，它可以用来显示包含特定设备品牌或名称的手册页面列表：
 
 [source, shell]
 ....
@@ -139,18 +139,18 @@ ath(4)                   - Atheros IEEE 802.11 wireless network driver
 ath_hal(4)               - Atheros Hardware Access Layer (HAL)
 ....
 
-Once the hardware inventory list is created, refer to it to ensure that drivers for installed hardware are not removed as the custom kernel configuration is edited.
+创建硬件清单后，参考该清单以确保在编辑自定义内核配置时不要删除已安装硬件的驱动程序。
 
 [[kernelconfig-config]]
-== The Configuration File
+== 配置文件
 
-In order to create a custom kernel configuration file and build a custom kernel, the full FreeBSD source tree must first be installed.
+为了创建一个自定义的内核配置文件并构建一个自定义的内核，首先必须安装完整的 FreeBSD 源代码树。
 
-If [.filename]#/usr/src/# does not exist or it is empty, source has not been installed. Source can be installed with Git using the instructions in crossref:mirrors[git,“Using Git”].
+如果 [.filename]#/usr/src/# 不存在或为空，则表示源代码未安装。可以使用 Git 安装源代码，具体操作请参考 crossref:mirrors[git,“使用 Git”] 。
 
-Once source is installed, review the contents of [.filename]#/usr/src/sys#. This directory contains a number of subdirectories, including those which represent the following supported architectures: [.filename]#amd64#, [.filename]#i386#, [.filename]#powerpc#, and [.filename]#sparc64#. Everything inside a particular architecture's directory deals with that architecture only and the rest of the code is machine independent code common to all platforms. Each supported architecture has a [.filename]#conf# subdirectory which contains the [.filename]#GENERIC# kernel configuration file for that architecture.
+安装完成后，请查看 [.filename]#/usr/src/sys# 目录的内容。该目录包含许多子目录，其中包括以下支持的架构：amd64，i386，powerpc 和 sparc64。特定架构目录中的所有内容仅与该架构相关，而其余代码是适用于所有平台的机器无关代码。每个支持的架构都有一个 conf 子目录，其中包含该架构的 GENERIC 内核配置文件。
 
-Do not make edits to [.filename]#GENERIC#. Instead, copy the file to a different name and make edits to the copy. The convention is to use a name with all capital letters. When maintaining multiple FreeBSD machines with different hardware, it is a good idea to name it after the machine's hostname. This example creates a copy, named [.filename]#MYKERNEL#, of the [.filename]#GENERIC# configuration file for the `amd64` architecture:
+不要对 [.filename]#GENERIC# 进行编辑。相反，将文件复制到另一个名称并对副本进行编辑。惯例是使用全大写字母的名称。当维护具有不同硬件的多个 FreeBSD 机器时，最好使用机器的主机名来命名。此示例创建了一个名为 [.filename]#MYKERNEL# 的副本，用于 `amd64` 架构的 [.filename]#GENERIC# 配置文件。
 
 [source, shell]
 ....
@@ -158,22 +158,22 @@ Do not make edits to [.filename]#GENERIC#. Instead, copy the file to a different
 # cp GENERIC MYKERNEL
 ....
 
-[.filename]#MYKERNEL# can now be customized with any `ASCII` text editor. The default editor is vi, though an easier editor for beginners, called ee, is also installed with FreeBSD.
+[.filename]#MYKERNEL# 现在可以使用任何 `ASCII` 文本编辑器进行自定义。默认编辑器是 vi，尽管 FreeBSD 还安装了一个更适合初学者的简化编辑器，名为 ee 。
 
-The format of the kernel configuration file is simple. Each line contains a keyword that represents a device or subsystem, an argument, and a brief description. Any text after a `+#+` is considered a comment and ignored. To remove kernel support for a device or subsystem, put a `+#+` at the beginning of the line representing that device or subsystem. Do not add or remove a `+#+` for any line that you do not understand.
+内核配置文件的格式很简单。每一行包含一个关键字，代表一个设备或子系统，一个参数和一个简短的描述。在 `+#+` 之后的任何文本都被视为注释并被忽略。要移除对设备或子系统的内核支持，请在表示该设备或子系统的行的开头加上 `+#+` 。对于任何你不理解的行，请不要添加或删除 `+#+`。
 
 [WARNING]
 ====
-It is easy to remove support for a device or option and end up with a broken kernel. For example, if the man:ata[4] driver is removed from the kernel configuration file, a system using `ATA` disk drivers may not boot. When in doubt, just leave support in the kernel.
+删除设备或选项的支持并最终导致内核损坏是很容易的。例如，如果从内核配置文件中删除了 man:ata[4] 驱动程序，使用 `ATA` 磁盘驱动程序的系统可能无法启动。当有疑问时，最好保留内核中的支持。
 ====
 
-In addition to the brief descriptions provided in this file, additional descriptions are contained in [.filename]#NOTES#, which can be found in the same directory as [.filename]#GENERIC# for that architecture. For architecture independent options, refer to [.filename]#/usr/src/sys/conf/NOTES#.
+除了本文件中提供的简要描述外，其他描述还包含在与该架构的 [.filename]#GENERIC# 文件位于同一目录中的 [.filename]#NOTES# 文件中。对于与架构无关的选项，请参考 [.filename]#/usr/src/sys/conf/NOTES# 。
 
 [TIP]
 ====
-When finished customizing the kernel configuration file, save a backup copy to a location outside of [.filename]#/usr/src#.
+在完成自定义内核配置文件后，将备份副本保存到位于 [.filename]#/usr/src# 之外的位置。
 
-Alternately, keep the kernel configuration file elsewhere and create a symbolic link to the file:
+或者，将内核配置文件保存在其他位置，并创建一个符号链接指向该文件：
 
 [source, shell]
 ....
@@ -185,7 +185,7 @@ Alternately, keep the kernel configuration file elsewhere and create a symbolic 
 
 ====
 
-An `include` directive is available for use in configuration files. This allows another configuration file to be included in the current one, making it easy to maintain small changes relative to an existing file. If only a small number of additional options or drivers are required, this allows a delta to be maintained with respect to [.filename]#GENERIC#, as seen in this example:
+配置文件中可以使用 `include` 指令。这允许将另一个配置文件包含在当前文件中，从而方便地对现有文件进行小的修改。如果只需要少量的额外选项或驱动程序，这样可以相对于 [.filename]#GENERIC# 保持增量，如下面的示例所示：
 
 [.programlisting]
 ....
@@ -198,11 +198,11 @@ options         IPFIREWALL_DEFAULT_TO_ACCEPT
 options         IPDIVERT
 ....
 
-Using this method, the local configuration file expresses local differences from a [.filename]#GENERIC# kernel. As upgrades are performed, new features added to [.filename]#GENERIC# will also be added to the local kernel unless they are specifically prevented using `nooptions` or `nodevice`. A comprehensive list of configuration directives and their descriptions may be found in man:config[5].
+使用这种方法，本地配置文件表达了与 [.filename]#GENERIC# 内核的本地差异。随着升级的进行，添加到 [.filename]#GENERIC# 的新功能也将添加到本地内核中，除非使用 `nooptions` 或 `nodevice` 明确禁止它们。有关配置指令及其描述的详细列表，请参阅 man:config[5] 。
 
 [NOTE]
 ====
-To build a file which contains all available options, run the following command as `root`:
+要构建一个包含所有可用选项的文件，请以 `root` 身份运行以下命令：
 
 [source, shell]
 ....
@@ -212,81 +212,81 @@ To build a file which contains all available options, run the following command 
 ====
 
 [[kernelconfig-building]]
-== Building and Installing a Custom Kernel
+== 构建和安装自定义内核
 
-Once the edits to the custom configuration file have been saved, the source code for the kernel can be compiled using the following steps:
+一旦自定义配置文件的编辑保存完毕，可以按照以下步骤编译内核的源代码：
 
 [.procedure]
 ====
-*Procedure: Building a Kernel*
+*过程：构建内核*
 
-. Change to this directory:
+. 切换到这个目录：
 +
 [source, shell]
 ....
 # cd /usr/src
 ....
 +
-. Compile the new kernel by specifying the name of the custom kernel configuration file:
+. 通过指定自定义内核配置文件的名称来编译新的内核：
 +
 [source, shell]
 ....
 # make buildkernel KERNCONF=MYKERNEL
 ....
 +
-. Install the new kernel associated with the specified kernel configuration file. This command will copy the new kernel to [.filename]#/boot/kernel/kernel# and save the old kernel to [.filename]#/boot/kernel.old/kernel#:
+. 安装与指定的内核配置文件相关联的新内核。此命令将新内核复制到 [.filename]#/boot/kernel/kernel# 并将旧内核保存到 [.filename]#/boot/kernel.old/kernel# 。
 +
 [source, shell]
 ....
 # make installkernel KERNCONF=MYKERNEL
 ....
 +
-. Shutdown the system and reboot into the new kernel. If something goes wrong, refer to <<kernelconfig-noboot, The kernel does not boot>>.
+. 关闭系统并重新启动到新内核。如果出现问题，请参考 <<kernelconfig-noboot,内核无法启动>>。
 ====
 
-By default, when a custom kernel is compiled, all kernel modules are rebuilt. To update a kernel faster or to build only custom modules, edit [.filename]#/etc/make.conf# before starting to build the kernel.
+默认情况下，当编译自定义内核时，所有内核模块都会重新构建。为了更快地更新内核或仅构建自定义模块，在开始构建内核之前，请编辑 [.filename]#/etc/make.conf# 文件。
 
-For example, this variable specifies the list of modules to build instead of using the default of building all modules:
+例如，这个变量指定了要构建的模块列表，而不是使用默认的构建所有模块。
 
 [.programlisting]
 ....
 MODULES_OVERRIDE = linux acpi
 ....
 
-Alternately, this variable lists which modules to exclude from the build process:
+另外，这个变量列出了在构建过程中要排除的模块。
 
 [.programlisting]
 ....
 WITHOUT_MODULES = linux acpi sound
 ....
 
-Additional variables are available. Refer to man:make.conf[5] for details.
+还有其他可用的变量。有关详细信息，请参阅 man:make.conf[5] 。
 
 [[kernelconfig-trouble]]
-== If Something Goes Wrong
+== 如果出现问题
 
-There are four categories of trouble that can occur when building a custom kernel:
+构建自定义内核时可能出现的四种故障类别有：
 
-`config` fails::
-If `config` fails, it will print the line number that is incorrect. As an example, for the following message, make sure that line 17 is typed correctly by comparing it to [.filename]#GENERIC# or [.filename]#NOTES#:
+`config` 失败::
+如果 `config` 失败，它将打印出错误的行号。例如，对于以下消息，请通过将其与 [.filename]#GENERIC# 或 [.filename]#NOTES# 进行比较，确保第 17 行的输入正确。
 +
 [source, shell]
 ....
 config: line 17: syntax error
 ....
 
-`make` fails::
-If `make` fails, it is usually due to an error in the kernel configuration file which is not severe enough for `config` to catch. Review the configuration, and if the problem is not apparent, send an email to the {freebsd-questions} which contains the kernel configuration file.
+`make` 失败::
+如果 `make` 失败，通常是由于内核配置文件中的错误，这种错误不严重到足以被 `config` 捕获。请检查配置，如果问题不明显，请发送一封包含内核配置文件的电子邮件到 {freebsd-questions}。
 
 [[kernelconfig-noboot]]
-The kernel does not boot::
-If the new kernel does not boot or fails to recognize devices, do not panic! Fortunately, FreeBSD has an excellent mechanism for recovering from incompatible kernels. Simply choose the kernel to boot from at the FreeBSD boot loader. This can be accessed when the system boot menu appears by selecting the "Escape to a loader prompt" option. At the prompt, type `boot _kernel.old_`, or the name of any other kernel that is known to boot properly.
+内核无法启动::
+如果新内核无法启动或无法识别设备，请不要惊慌！幸运的是，FreeBSD 有一个出色的机制可以从不兼容的内核中恢复。只需在 FreeBSD 引导加载程序中选择要引导的内核即可。当系统启动菜单出现时，可以通过选择“进入加载程序提示符（Escape to a loader prompt）”选项来访问它。在提示符下，输入 `boot _kernel.old_`，或者任何其他已知可以正确引导的内核的名称。
 +
-After booting with a good kernel, check over the configuration file and try to build it again. One helpful resource is [.filename]#/var/log/messages# which records the kernel messages from every successful boot. Also, man:dmesg[8] will print the kernel messages from the current boot.
+在使用良好的内核启动后，检查配置文件并尝试重新构建。一个有用的资源是 [.filename]#/var/log/messages# 文件，它记录了每次成功启动时的内核消息。此外，man:dmesg[8] 命令将打印当前启动的内核消息。
 +
 [NOTE]
 ====
-When troubleshooting a kernel make sure to keep a copy of a kernel that is known to work, such as [.filename]#GENERIC#. This is important because every time a new kernel is installed, [.filename]#kernel.old# is overwritten with the last installed kernel, which may or may not be bootable. As soon as possible, move the working kernel by renaming the directory containing the good kernel:
+在排除内核问题时，请确保保留一个已知可正常工作的内核副本，例如 [.filename]#GENERIC#。这很重要，因为每次安装新内核时， [.filename]#kernel.old# 都会被上一个安装的内核覆盖，该内核可能无法启动。尽快将工作正常的内核移动，通过重命名包含良好内核的目录。
 
 [source, shell]
 ....
@@ -296,5 +296,5 @@ When troubleshooting a kernel make sure to keep a copy of a kernel that is known
 
 ====
 
-The kernel works, but man:ps[1] does not::
-If the kernel version differs from the one that the system utilities have been built with, for example, a kernel built from -CURRENT sources is installed on a -RELEASE system, many system status commands like man:ps[1] and man:vmstat[8] will not work. To fix this, crossref:cutting-edge[makeworld,recompile and install a world] built with the same version of the source tree as the kernel. It is never a good idea to use a different version of the kernel than the rest of the operating system.
+内核工作正常，但是 man:ps[1] 命令不起作用。::
+如果内核版本与系统实用程序构建的版本不同，例如，在 -RELEASE 系统上安装了从 -CURRENT 源构建的内核，那么许多系统状态命令（如 man:ps[1] 和 man:vmstat[8]）将无法工作。为了解决这个问题，应该使用与内核相同版本的源代码树crossref:cutting-edge[makeworld,重新编译和安装整个系统]。在操作系统中使用与其余部分不同版本的内核从来都不是一个好主意。
