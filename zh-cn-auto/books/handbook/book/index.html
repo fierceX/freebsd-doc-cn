@@ -285,7 +285,7 @@
         <li><a href="#config-tuning">Chapter 14. 配置、服务、日志和电源管理</a></li>
         <li><a href="#boot">Chapter 15. FreeBSD 引导过程</a></li>
         <li><a href="#security">Chapter 16. 安全</a></li>
-        <li><a href="#jails">Chapter 17. 监狱和容器</a></li>
+        <li><a href="#jails">Chapter 17. Jails 和容器</a></li>
         <li><a href="#mac">Chapter 18. 强制访问控制</a></li>
         <li><a href="#audit">Chapter 19. 安全事件审计</a></li>
         <li><a href="#disks">Chapter 20. 存储</a></li>
@@ -2799,7 +2799,7 @@ Starting sshd.</code></pre>
 <h2 id="basics">Chapter 3. FreeBSD 基础知识<a class="anchor" href="#basics"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="basics-synopsis">3.1. 概要<a class="anchor" href="#basics-synopsis"></a></h3>
+<h3 id="basics-synopsis">3.1. 简介<a class="anchor" href="#basics-synopsis"></a></h3>
 <div class="paragraph">
 <p>本章介绍了 FreeBSD 操作系统的基本命令和功能。其中很多内容对于任何类 UNIX 操作系统都是相关的。鼓励新的 FreeBSD 用户仔细阅读本章。</p>
 </div>
@@ -9375,7 +9375,7 @@ nameserver 147.11.100.30</pre>
 <h2 id="desktop">Chapter 8. 桌面环境<a class="anchor" href="#desktop"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="desktop-synopsis">8.1. 概要<a class="anchor" href="#desktop-synopsis"></a></h3>
+<h3 id="desktop-synopsis">8.1. 简介<a class="anchor" href="#desktop-synopsis"></a></h3>
 <div class="paragraph">
 <p>尽管 FreeBSD 因其性能和稳定性而在服务器领域很受欢迎，但它也非常适合作为日常桌面使用。在 FreeBSD ports 树中有超过 36000 个应用程序可用，可以轻松构建一个定制的桌面环境，可以运行各种各样的桌面应用程序。本章介绍了如何安装流行的桌面环境以及诸如网络浏览器、办公软件、文档查看器和财务软件等桌面应用程序。</p>
 </div>
@@ -10635,7 +10635,7 @@ proc                    /proc           procfs  rw              0       0</pre>
 <h2 id="multimedia">Chapter 9. 多媒体<a class="anchor" href="#multimedia"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="multimedia-synopsis">9.1. 概要<a class="anchor" href="#multimedia-synopsis"></a></h3>
+<h3 id="multimedia-synopsis">9.1. 简介<a class="anchor" href="#multimedia-synopsis"></a></h3>
 <div class="paragraph">
 <p>多媒体章节提供了关于 FreeBSD 上多媒体支持的概述。多媒体应用和技术已成为现代计算的重要组成部分， FreeBSD 为各种多媒体硬件和软件提供了强大可靠的支持。本章介绍了各种多媒体组件，如音频、视频和图像处理。还讨论了各种媒体格式和编解码器，以及用于多媒体创建和播放的工具和应用程序。此外，本章还涵盖了多媒体系统配置、故障排除和优化。无论您是多媒体爱好者还是专业内容创作者， FreeBSD 都为多媒体工作提供了强大的平台。本章旨在帮助充分利用 FreeBSD 的多媒体功能，提供有用的信息和实际示例，以帮助入门。</p>
 </div>
@@ -11604,7 +11604,7 @@ which came with this software (README, FAQ, manpages).</pre>
 <h2 id="kernelconfig">Chapter 10. 配置 FreeBSD 内核<a class="anchor" href="#kernelconfig"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="kernelconfig-synopsis">10.1. 概要<a class="anchor" href="#kernelconfig-synopsis"></a></h3>
+<h3 id="kernelconfig-synopsis">10.1. 简介<a class="anchor" href="#kernelconfig-synopsis"></a></h3>
 <div class="paragraph">
 <p>内核是 FreeBSD 操作系统的核心。它负责管理内存、执行安全控制、网络、磁盘访问等等。尽管 FreeBSD 的许多部分是动态可配置的，但有时仍然需要配置和编译自定义内核。</p>
 </div>
@@ -11640,10 +11640,10 @@ which came with this software (README, FAQ, manpages).</pre>
 <div class="sect2">
 <h3 id="kernelconfig-custom-kernel">10.2. 为什么要构建自定义内核？<a class="anchor" href="#kernelconfig-custom-kernel"></a></h3>
 <div class="paragraph">
-<p>传统上， FreeBSD 使用的是一个单内核。内核是一个庞大的程序，支持一组固定的设备，并且要改变内核的行为，需要编译并重新启动到一个新的内核。</p>
+<p>传统上，FreeBSD 使用的是一个单内核。内核是一个庞大的程序，支持一组固定的设备，并且要改变内核的行为，需要编译并重新启动到一个新的内核。</p>
 </div>
 <div class="paragraph">
-<p>如今， FreeBSD 内核中的大部分功能都包含在模块中，这些模块可以根据需要动态加载和卸载。这使得运行中的内核能够立即适应新的硬件，并将新的功能引入内核中。这被称为模块化内核。</p>
+<p>如今，FreeBSD 内核中的大部分功能都包含在模块中，这些模块可以根据需要动态加载和卸载。这使得运行中的内核能够立即适应新的硬件，并将新的功能引入内核中。这被称为模块化内核。</p>
 </div>
 <div class="paragraph">
 <p>偶尔，仍然有必要进行静态内核配置。有时所需功能与内核紧密相关，无法以动态加载的方式实现。某些安全环境禁止加载和卸载内核模块，并要求只将所需功能静态编译到内核中。</p>
@@ -11668,7 +11668,7 @@ which came with this software (README, FAQ, manpages).</pre>
 <p>在构建自定义内核之前，请考虑进行此操作的原因。如果需要特定的硬件支持，可能已经存在相应的模块。</p>
 </div>
 <div class="paragraph">
-<p>内核模块存在于 [/boot/kernel] 目录中，并且可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=kldload&amp;sektion=8&amp;format=html">kldload(8)</a> 命令动态加载到运行中的内核中。大多数内核驱动程序都有可加载的模块和手册页。例如， <a href="https://man.freebsd.org/cgi/man.cgi?query=ath&amp;sektion=4&amp;format=html">ath(4)</a> 无线网络驱动程序在其手册页中包含以下信息：</p>
+<p>内核模块存在于 <span class="filename">/boot/kernel</span> 目录中，并且可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=kldload&amp;sektion=8&amp;format=html">kldload(8)</a> 命令动态加载到运行中的内核中。大多数内核驱动程序都有可加载的模块和手册页。例如，<a href="https://man.freebsd.org/cgi/man.cgi?query=ath&amp;sektion=4&amp;format=html">ath(4)</a> 无线网络驱动程序在其手册页中包含以下信息：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11682,13 +11682,13 @@ following line in <a href="https://man.freebsd.org/cgi/man.cgi?query=loader.conf
 <p>在 <span class="filename">/boot/loader.conf</span> 中添加 <code>if_ath_load =&#34;YES&#34;</code> 将会在启动时动态加载该模块。</p>
 </div>
 <div class="paragraph">
-<p>在某些情况下， <span class="filename">/boot/kernel</span> 中没有关联的模块。这在某些子系统中是普遍存在的。</p>
+<p>在某些情况下，<span class="filename">/boot/kernel</span> 中没有关联的模块。这在某些子系统中是普遍存在的。</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="kernelconfig-devices">10.3. 查找系统硬件<a class="anchor" href="#kernelconfig-devices"></a></h3>
 <div class="paragraph">
-<p>在编辑内核配置文件之前，建议先对机器的硬件进行清单。在双启动系统上，可以从其他操作系统中创建清单。例如， Microsoft® 的设备管理器包含有关已安装设备的信息。</p>
+<p>在编辑内核配置文件之前，建议先对机器的硬件进行清查。在双启动系统上，可以从其他操作系统中创建清单。例如，Microsoft® 的设备管理器包含有关已安装设备的信息。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -11705,7 +11705,7 @@ following line in <a href="https://man.freebsd.org/cgi/man.cgi?query=loader.conf
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>如果 FreeBSD 是唯一安装的操作系统，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dmesg&amp;sektion=8&amp;format=html">dmesg(8)</a> 命令来确定在启动探测期间找到和列出的硬件。 FreeBSD 上的大多数设备驱动程序都有一个手册页面，列出了该驱动程序支持的硬件。例如，以下行表示 <a href="https://man.freebsd.org/cgi/man.cgi?query=psm&amp;sektion=4&amp;format=html">psm(4)</a> 驱动程序找到了一个鼠标：</p>
+<p>如果 FreeBSD 是唯一安装的操作系统，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=dmesg&amp;sektion=8&amp;format=html">dmesg(8)</a> 命令来确定在启动探测期间找到和列出的硬件。FreeBSD 上的大多数设备驱动程序都有一个手册页面，列出了该驱动程序支持的硬件。例如，以下行表示 <a href="https://man.freebsd.org/cgi/man.cgi?query=psm&amp;sektion=4&amp;format=html">psm(4)</a> 驱动程序找到了一个鼠标：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11719,10 +11719,10 @@ psm0: model Generic PS/2 mouse, device ID 0</code></pre>
 <p>由于存在这个硬件，这个驱动程序不应从自定义内核配置文件中删除。</p>
 </div>
 <div class="paragraph">
-<p>如果 <code>dmesg</code> 命令的输出没有显示引导探测的结果，可以读取文件 <code>.filename</code><mark>/var/run/dmesg.boot</mark> 的内容。</p>
+<p>如果 <code>dmesg</code> 命令的输出没有显示引导探测的结果，可以读取文件 <span class="filename">/var/run/dmesg.boot</span> 的内容。</p>
 </div>
 <div class="paragraph">
-<p>另一个用于查找硬件的工具是 <a href="https://man.freebsd.org/cgi/man.cgi?query=pciconf&amp;sektion=8&amp;format=html">pciconf(8)</a> ，它提供更详细的输出。例如：</p>
+<p>另一个用于查找硬件的工具是 <a href="https://man.freebsd.org/cgi/man.cgi?query=pciconf&amp;sektion=8&amp;format=html">pciconf(8)</a>，它提供更详细的输出。例如：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11757,10 +11757,10 @@ ath_hal<span class="o">(</span>4<span class="o">)</span>               - Atheros
 <p>为了创建一个自定义的内核配置文件并构建一个自定义的内核，首先必须安装完整的 FreeBSD 源代码树。</p>
 </div>
 <div class="paragraph">
-<p>如果 <span class="filename">/usr/src/</span> 不存在或为空，则表示源代码未安装。可以使用 Git 安装源代码，具体操作请参考 <a href="./#git">“使用 Git ”</a> 。</p>
+<p>如果 <span class="filename">/usr/src/</span> 不存在或为空，则表示源代码未安装。可以使用 Git 安装源代码，具体操作请参考 <a href="./#git">“使用 Git”</a> 。</p>
 </div>
 <div class="paragraph">
-<p>安装完成后，请查看 [/usr/src/sys] 目录的内容。该目录包含许多子目录，其中包括以下支持的架构： amd64 ， i386 ， powerpc 和 sparc64 。特定架构目录中的所有内容仅与该架构相关，而其余代码是适用于所有平台的机器无关代码。每个支持的架构都有一个 conf 子目录，其中包含该架构的 GENERIC 内核配置文件。</p>
+<p>安装完成后，请查看 <span class="filename">/usr/src/sys</span> 目录的内容。该目录包含许多子目录，其中包括以下支持的架构：amd64，i386，powerpc 和 sparc64。特定架构目录中的所有内容仅与该架构相关，而其余代码是适用于所有平台的机器无关代码。每个支持的架构都有一个 conf 子目录，其中包含该架构的 GENERIC 内核配置文件。</p>
 </div>
 <div class="paragraph">
 <p>不要对 <span class="filename">GENERIC</span> 进行编辑。相反，将文件复制到另一个名称并对副本进行编辑。惯例是使用全大写字母的名称。当维护具有不同硬件的多个 FreeBSD 机器时，最好使用机器的主机名来命名。此示例创建了一个名为 <span class="filename">MYKERNEL</span> 的副本，用于 <code>amd64</code> 架构的 <span class="filename">GENERIC</span> 配置文件。</p>
@@ -11772,10 +11772,10 @@ ath_hal<span class="o">(</span>4<span class="o">)</span>               - Atheros
 </div>
 </div>
 <div class="paragraph">
-<p><span class="filename">MYKERNEL</span> 现在可以使用任何 <code>ASCII</code> 文本编辑器进行自定义。默认编辑器是 vi ，尽管 FreeBSD 还安装了一个更适合初学者的简化编辑器，名为 ee 。</p>
+<p><span class="filename">MYKERNEL</span> 现在可以使用任何 <code>ASCII</code> 文本编辑器进行自定义。默认编辑器是 vi，尽管 FreeBSD 还安装了一个更适合初学者的简化编辑器，名为 ee 。</p>
 </div>
 <div class="paragraph">
-<p>内核配置文件的格式很简单。每一行包含一个关键字，代表一个设备或子系统，一个参数和一个简短的描述。在 <code>#</code> 之后的任何文本都被视为注释并被忽略。要移除对设备或子系统的内核支持，请在表示该设备或子系统的行的开头加上 <code>#</code> 。对于任何你不理解的行，请不要添加或删除 <code>#</code> 。</p>
+<p>内核配置文件的格式很简单。每一行包含一个关键字，代表一个设备或子系统，一个参数和一个简短的描述。在 <code>#</code> 之后的任何文本都被视为注释并被忽略。要移除对设备或子系统的内核支持，请在表示该设备或子系统的行的开头加上 <code>#</code> 。对于任何你不理解的行，请不要添加或删除 <code>#</code>。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -11802,7 +11802,7 @@ ath_hal<span class="o">(</span>4<span class="o">)</span>               - Atheros
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在完成自定义内核配置文件后，将备份副本保存到位于 <code>/usr/src</code> 之外的位置。</p>
+<p>在完成自定义内核配置文件后，将备份副本保存到位于 <span class="filename">/usr/src</span> 之外的位置。</p>
 </div>
 <div class="paragraph">
 <p>或者，将内核配置文件保存在其他位置，并创建一个符号链接指向该文件：</p>
@@ -11863,10 +11863,9 @@ options         IPDIVERT</pre>
 </div>
 <div class="exampleblock procedure">
 <div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>过程：构建内核 *</p>
+<div class="paragraph">
+<p><strong>过程：构建内核</strong></p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -11894,17 +11893,14 @@ options         IPDIVERT</pre>
 </div>
 </li>
 <li>
-<p>关闭系统并重新启动到新内核。如果出现问题，请参考 <a href="#kernelconfig-noboot ">内核无法启动 </a> 。</p>
+<p>关闭系统并重新启动到新内核。如果出现问题，请参考 <a href="#kernelconfig-noboot">内核无法启动</a>。</p>
 </li>
 </ol>
-</div>
-</li>
-</ul>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>默认情况下，当编译自定义内核时，所有内核模块都会重新构建。为了更快地更新内核或仅构建自定义模块，在开始构建内核之前，请编辑 /etc/make.conf 文件。</p>
+<p>默认情况下，当编译自定义内核时，所有内核模块都会重新构建。为了更快地更新内核或仅构建自定义模块，在开始构建内核之前，请编辑 <span class="filename">/etc/make.conf</span> 文件。</p>
 </div>
 <div class="paragraph">
 <p>例如，这个变量指定了要构建的模块列表，而不是使用默认的构建所有模块。</p>
@@ -11942,9 +11938,9 @@ options         IPDIVERT</pre>
 </div>
 </div>
 </dd>
-<dt class="hdlist1"><code>make</code> 失败了。</dt>
+<dt class="hdlist1"><code>make</code> 失败</dt>
 <dd>
-<p>如果 <code>make</code> 失败，通常是由于内核配置文件中的错误，这种错误不严重到足以被 <code>config</code> 捕获。请检查配置，如果问题不明显，请发送一封包含内核配置文件的电子邮件到 {freebsd-questions} 。</p>
+<p>如果 <code>make</code> 失败，通常是由于内核配置文件中的错误，这种错误不严重到足以被 <code>config</code> 捕获。请检查配置，如果问题不明显，请发送一封包含内核配置文件的电子邮件到 {freebsd-questions}。</p>
 </dd>
 </dl>
 </div>
@@ -11952,9 +11948,9 @@ options         IPDIVERT</pre>
 <dl>
 <dt class="hdlist1">内核无法启动</dt>
 <dd>
-<p>如果新内核无法启动或无法识别设备，请不要惊慌！幸运的是， FreeBSD 有一个出色的机制可以从不兼容的内核中恢复。只需在 FreeBSD 引导加载程序中选择要引导的内核即可。当系统启动菜单出现时，可以通过选择“进入加载程序提示符”选项来访问它。在提示符下，输入 <code>boot <em>kernel.old</em></code> ，或者任何其他已知可以正确引导的内核的名称。</p>
+<p>如果新内核无法启动或无法识别设备，请不要惊慌！幸运的是，FreeBSD 有一个出色的机制可以从不兼容的内核中恢复。只需在 FreeBSD 引导加载程序中选择要引导的内核即可。当系统启动菜单出现时，可以通过选择“进入加载程序提示符（Escape to a loader prompt）”选项来访问它。在提示符下，输入 <code>boot <em>kernel.old</em></code>，或者任何其他已知可以正确引导的内核的名称。</p>
 <div class="paragraph">
-<p>在使用良好的内核启动后，检查配置文件并尝试重新构建。一个有用的资源是 [/var/log/messages] 文件，它记录了每次成功启动时的内核消息。此外， <a href="https://man.freebsd.org/cgi/man.cgi?query=dmesg&amp;sektion=8&amp;format=html">dmesg(8)</a> 命令将打印当前启动的内核消息。</p>
+<p>在使用良好的内核启动后，检查配置文件并尝试重新构建。一个有用的资源是 <span class="filename">/var/log/messages</span> 文件，它记录了每次成功启动时的内核消息。此外，<a href="https://man.freebsd.org/cgi/man.cgi?query=dmesg&amp;sektion=8&amp;format=html">dmesg(8)</a> 命令将打印当前启动的内核消息。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -11964,7 +11960,7 @@ options         IPDIVERT</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在排除内核问题时，请确保保留一个已知可正常工作的内核副本，例如 <span class="filename">GENERIC</span> 。这很重要，因为每次安装新内核时， <span class="filename">kernel.old</span> 都会被上一个安装的内核覆盖，该内核可能无法启动。尽快将工作正常的内核移动，通过重命名包含良好内核的目录。</p>
+<p>在排除内核问题时，请确保保留一个已知可正常工作的内核副本，例如 <span class="filename">GENERIC</span>。这很重要，因为每次安装新内核时， <span class="filename">kernel.old</span> 都会被上一个安装的内核覆盖，该内核可能无法启动。尽快将工作正常的内核移动，通过重命名包含良好内核的目录。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11979,7 +11975,7 @@ options         IPDIVERT</pre>
 </dd>
 <dt class="hdlist1">内核工作正常，但是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 命令不起作用。</dt>
 <dd>
-<p>如果内核版本与系统实用程序构建的版本不同，例如，在 -RELEASE 系统上安装了从 -CURRENT 源构建的内核，那么许多系统状态命令（如 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=vmstat&amp;sektion=8&amp;format=html">vmstat(8)</a> ）将无法工作。为了解决这个问题，应该使用与内核相同版本的源代码树交叉引用 :cutting-edge[makeworld ，重新编译和安装整个系统] 。在操作系统中使用与其余部分不同版本的内核从来都不是一个好主意。</p>
+<p>如果内核版本与系统实用程序构建的版本不同，例如，在 -RELEASE 系统上安装了从 -CURRENT 源构建的内核，那么许多系统状态命令（如 <a href="https://man.freebsd.org/cgi/man.cgi?query=ps&amp;sektion=1&amp;format=html">ps(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=vmstat&amp;sektion=8&amp;format=html">vmstat(8)</a>）将无法工作。为了解决这个问题，应该使用与内核相同版本的源代码树<a href="./#makeworld">重新编译和安装整个系统</a>。在操作系统中使用与其余部分不同版本的内核从来都不是一个好主意。</p>
 </dd>
 </dl>
 </div>
@@ -12923,7 +12919,7 @@ lp:
 <h2 id="linuxemu">Chapter 12. Linux 二进制兼容性<a class="anchor" href="#linuxemu"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="linuxemu-synopsis">12.1. 概要<a class="anchor" href="#linuxemu-synopsis"></a></h3>
+<h3 id="linuxemu-synopsis">12.1. 简介<a class="anchor" href="#linuxemu-synopsis"></a></h3>
 <div class="paragraph">
 <p>FreeBSD 提供与 Linux® 的二进制兼容性，通常称为 Linuxulator ，允许用户安装和运行未经修改的 Linux 二进制文件。它适用于 x86 （ 32 位和 64 位）和 AArch64 架构。目前还不支持一些特定于 Linux 的操作系统功能，主要是与硬件相关或与系统管理相关的功能，例如 cgroups 或命名空间。</p>
 </div>
@@ -16628,7 +16624,7 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 <h2 id="boot">Chapter 15. FreeBSD 引导过程<a class="anchor" href="#boot"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="boot-synopsis">15.1. 概要<a class="anchor" href="#boot-synopsis"></a></h3>
+<h3 id="boot-synopsis">15.1. 简介<a class="anchor" href="#boot-synopsis"></a></h3>
 <div class="paragraph">
 <p>启动计算机并加载操作系统的过程被称为“引导过程”或“引导”。 FreeBSD 的引导过程提供了很大的灵活性，可以自定义系统启动时发生的事情，包括选择在同一台计算机上安装的不同操作系统、同一操作系统的不同版本或不同的内核。</p>
 </div>
@@ -19701,24 +19697,24 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="sect1">
-<h2 id="jails">Chapter 17. 监狱和容器<a class="anchor" href="#jails"></a></h2>
+<h2 id="jails">Chapter 17. Jails 和容器<a class="anchor" href="#jails"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="jails-synopsis">17.1. 简介<a class="anchor" href="#jails-synopsis"></a></h3>
 <div class="paragraph">
-<p>由于系统管理是一项困难的任务，因此开发了许多工具来简化管理员的工作。这些工具通常可以增强系统的安装、配置和维护方式。其中一个可以用来增强 FreeBSD 系统安全性的工具是_jails_。自 FreeBSD 4.X 以来， jails 一直在其有用性、性能、可靠性和安全性方面得到改进。</p>
+<p>由于系统管理是一项困难的任务，因此开发了许多工具来简化管理员的工作。这些工具通常可以增强系统的安装、配置和维护方式。其中一个可以用来增强 FreeBSD 系统安全性的工具是 <em>jails</em>。自 FreeBSD 4.X 以来，Jails 一直在其有用性、性能、可靠性和安全性方面得到改进。</p>
 </div>
 <div class="paragraph">
 <p>Jails 是基于 <a href="https://man.freebsd.org/cgi/man.cgi?query=chroot&amp;sektion=2&amp;format=html">chroot(2)</a> 概念构建的，该概念用于更改一组进程的根目录。这样可以创建一个与系统其余部分分离的安全环境。在 chroot 环境中创建的进程无法访问其外部的文件或资源。因此，入侵 chroot 环境中运行的服务不应允许攻击者危害整个系统。</p>
 </div>
 <div class="paragraph">
-<p>然而， chroot 有一些限制。它适用于不需要太多灵活性或复杂高级功能的简单任务。随着时间的推移，人们发现了许多逃离 chroot 环境的方法，使其成为不太理想的保护服务的解决方案。</p>
+<p>然而，chroot 有一些限制。它适用于不需要太多灵活性或复杂高级功能的简单任务。随着时间的推移，人们发现了许多逃离 chroot 环境的方法，使其成为不太理想的保护服务的解决方案。</p>
 </div>
 <div class="paragraph">
 <p>Jails 在多个方面改进了传统 chroot 环境的概念。</p>
 </div>
 <div class="paragraph">
-<p>在传统的 chroot 环境中，进程只能访问文件系统的一部分。其余的系统资源、系统用户、运行中的进程和网络子系统由 chroot 进程和主机系统的进程共享。 Jails 通过虚拟化对文件系统、用户集和网络子系统的访问来扩展这个模型。可以使用更精细的控制来调整被监禁环境的访问权限。 Jails 可以被看作是一种操作系统级别的虚拟化。</p>
+<p>在传统的 chroot 环境中，进程只能访问文件系统的一部分。其余的系统资源、系统用户、运行中的进程和网络子系统由 chroot 进程和主机系统的进程共享。Jails 通过虚拟化对文件系统、用户集和网络子系统的访问来扩展这个模型。可以使用更精细的控制来调整被监禁环境的访问权限。Jails 可以被看作是一种操作系统级别的虚拟化。</p>
 </div>
 <div class="paragraph">
 <p>本章内容包括：</p>
@@ -19726,148 +19722,148 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 <div class="ulist">
 <ul>
 <li>
-<p>在 FreeBSD 安装中，监狱是什么以及它可能起到的作用。</p>
+<p>在 FreeBSD 安装中，jail 是什么以及它可能起到的作用。</p>
 </li>
 <li>
-<p>不同类型的监狱。</p>
+<p>不同类型的 jail。</p>
 </li>
 <li>
-<p>配置监狱网络的不同方法。</p>
+<p>配置 jail 网络的不同方法。</p>
 </li>
 <li>
-<p>监狱配置文件。</p>
+<p>jail 配置文件。</p>
 </li>
 <li>
-<p>如何创建不同类型的监狱。</p>
+<p>如何创建不同类型的 jail。</p>
 </li>
 <li>
-<p>如何启动、停止和重启一个 jail 。</p>
+<p>如何启动、停止和重启一个 jail。</p>
 </li>
 <li>
-<p>监狱管理的基础知识，包括监狱内部和外部的管理。</p>
+<p>jail 管理的基础知识，包括 jail 内部和外部的管理。</p>
 </li>
 <li>
-<p>如何升级不同类型的监狱。</p>
+<p>如何升级不同类型的 jail。</p>
 </li>
 <li>
-<p>一个不完整的 FreeBSD 监狱管理器列表。</p>
+<p>一个不完整的 FreeBSD jail 管理器列表。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="jail-types">17.2. 监狱类型<a class="anchor" href="#jail-types"></a></h3>
+<h3 id="jail-types">17.2. Jail 类型<a class="anchor" href="#jail-types"></a></h3>
 <div class="paragraph">
-<p>一些管理员将监狱分为不同类型，尽管底层技术是相同的。每个管理员都必须根据他们需要解决的问题来评估在每种情况下创建哪种类型的监狱。</p>
+<p>一些管理员将 jail 分为不同类型，尽管底层技术是相同的。每个管理员都必须根据他们需要解决的问题来评估在每种情况下创建哪种类型的 jail。</p>
 </div>
 <div class="paragraph">
 <p>下面是不同类型的列表，包括它们的特点和使用时需要考虑的事项。</p>
 </div>
 <div class="sect3">
-<h4 id="thick-jails">17.2.1. 厚实的监狱<a class="anchor" href="#thick-jails"></a></h4>
+<h4 id="thick-jails">17.2.1. 厚（Thick）Jails<a class="anchor" href="#thick-jails"></a></h4>
 <div class="paragraph">
-<p>厚型监狱是 FreeBSD 监狱的一种传统形式。在厚型监狱中，基本系统的完整副本被复制到监狱的环境中。这意味着监狱拥有自己独立的 FreeBSD 基本系统实例，包括库、可执行文件和配置文件。可以将监狱视为一个几乎完整的独立 FreeBSD 安装，但在主机系统的限制下运行。这种隔离确保监狱内的进程与主机和其他监狱中的进程保持分离。</p>
+<p>厚 jail 是 FreeBSD jail 的一种传统形式。在厚 jail 中，基本系统的完整副本被复制到 jail 的环境中。这意味着 jail 拥有自己独立的 FreeBSD 基本系统实例，包括库、可执行文件和配置文件。可以将 jail 视为一个几乎完整的独立 FreeBSD 安装，但在主机系统的限制下运行。这种隔离确保 jail 内的进程与主机和其他 jail 中的进程保持分离。</p>
 </div>
 <div class="paragraph">
-<p>厚实监狱的优势：</p>
+<p>厚 Jails 的优势：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>高度隔离性：监狱内的进程与主机系统和其他监狱之间是隔离的。</p>
+<p>高度隔离性：jail 内的进程与主机系统和其他 jail 之间是隔离的。</p>
 </li>
 <li>
-<p>独立性：厚型监狱可以拥有与主机系统或其他监狱不同版本的库、配置和软件。</p>
+<p>独立性：厚 jail 可以拥有与主机系统或其他 jail 不同版本的库、配置和软件。</p>
 </li>
 <li>
-<p>安全性：由于监狱包含了自己的基本系统，影响监狱环境的漏洞或问题不会直接影响主机或其他监狱。</p>
+<p>安全性：由于 jail 包含了自己的基本系统，影响 jail 环境的漏洞或问题不会直接影响主机或其他 jail。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>厚壁狱的缺点：</p>
+<p>厚 Jails 的缺点：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>资源开销：由于每个监狱都维护着自己独立的基础系统，相比于薄监狱，厚监狱消耗更多的资源。</p>
+<p>资源开销：由于每个 jail 都维护着自己独立的基础系统，相比于薄 jail，厚 jail 消耗更多的资源。</p>
 </li>
 <li>
-<p>维护：每个监狱都需要对其基本系统组件进行维护和更新。</p>
+<p>维护：每个 jail 都需要对其基本系统组件进行维护和更新。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="thin-jails">17.2.2. 薄型监狱<a class="anchor" href="#thin-jails"></a></h4>
+<h4 id="thin-jails">17.2.2. 薄（Thin）Jails<a class="anchor" href="#thin-jails"></a></h4>
 <div class="paragraph">
-<p>一个薄型监狱使用 OpenZFS 快照或 NullFS 挂载从模板共享基础系统。每个薄型监狱仅复制基础系统的最小子集，与厚型监狱相比，资源消耗更少。然而，这也意味着薄型监狱与厚型监狱相比具有较少的隔离性和独立性。共享组件的更改可能会同时影响多个薄型监狱。</p>
+<p>薄 jail 使用 OpenZFS 快照或 NullFS 挂载从模板共享基础系统。每个薄 jail 仅复制基础系统的最小子集，与厚 jail 相比，资源消耗更少。然而，这也意味着薄 jail 与厚 jail 相比具有较少的隔离性和独立性。共享组件的更改可能会同时影响多个薄 jail。</p>
 </div>
 <div class="paragraph">
-<p>简而言之， FreeBSD Thin Jail 是一种 FreeBSD Jail ，它在隔离环境中复制了基本系统的大部分内容，但并非全部。</p>
+<p>简而言之，FreeBSD 薄 Jail 是一种 FreeBSD Jail，它在隔离环境中复制了基本系统的大部分内容，但并非全部。</p>
 </div>
 <div class="paragraph">
-<p>薄型监狱的优势：</p>
+<p>薄 Jails 的优势：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>资源效率：与厚型监狱相比，薄型监狱在资源利用上更高效。由于它们共享大部分基础系统，所以占用的磁盘空间和内存较少。这使得在同一硬件上运行更多的监狱成为可能，而不会消耗过多的资源。</p>
+<p>资源效率：与厚 jail 相比，薄 jail 在资源利用上更高效。由于它们共享大部分基础系统，所以占用的磁盘空间和内存较少。这使得在同一硬件上运行更多的 jail 成为可能，而不会消耗过多的资源。</p>
 </li>
 <li>
-<p>更快的部署：创建和启动轻量级监狱通常比创建和启动厚重监狱更快。当您需要快速部署多个实例时，这可能特别有优势。</p>
+<p>更快的部署：创建和启动薄 jail 通常比创建和启动厚 jail 更快。当您需要快速部署多个实例时，这可能特别有优势。</p>
 </li>
 <li>
-<p>统一维护：由于薄型监狱与主机系统共享大部分基础系统（如库和二进制文件），因此只需要在主机上进行一次更新和维护常见的基础系统组件。与为每个厚型监狱维护单独的基础系统相比，这简化了维护过程。</p>
+<p>统一维护：由于薄 jail 与主机系统共享大部分基础系统（如库和二进制文件），因此只需要在主机上进行一次更新和维护常见的基础系统组件。与为每个厚 jail 维护单独的基础系统相比，这简化了维护过程。</p>
 </li>
 <li>
-<p>共享资源：薄型监狱可以更轻松地与主机系统共享常见的资源，如库和二进制文件。这可能会导致更高效的磁盘缓存和监狱内应用程序的性能改善。</p>
+<p>共享资源：薄 jail 可以更轻松地与主机系统共享常见的资源，如库和二进制文件。这可能会导致更高效的磁盘缓存和 jail 内应用程序的性能改善。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>薄型监狱的缺点：</p>
+<p>薄 Jails 的缺点：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>降低的隔离性：薄型监狱的主要缺点是相比于厚型监狱，它们提供的隔离性较低。由于它们共享模板基础系统的大部分内容，可能会同时影响多个监狱的漏洞或问题。</p>
+<p>降低的隔离性：薄 jail 的主要缺点是相比于厚 jail，它们提供的隔离性较低。由于它们共享模板基础系统的大部分内容，可能会同时影响多个 jail 的漏洞或问题。</p>
 </li>
 <li>
-<p>安全问题：薄型监狱中减少的隔离性可能会带来安全风险，因为一个监狱的妥协可能对其他监狱或主机系统产生更大的影响潜力。</p>
+<p>安全问题：薄 jail 中减少的隔离性可能会带来安全风险，因为一个 jail 的妥协可能对其他 jail 或主机系统产生更大的影响潜力。</p>
 </li>
 <li>
 <p>依赖冲突：如果多个独立的容器需要不同版本的相同库或软件，管理依赖关系可能会变得复杂。在某些情况下，这可能需要额外的努力来确保兼容性。</p>
 </li>
 <li>
-<p>兼容性挑战：在一个狭窄的监狱中，应用程序可能会遇到兼容性问题，如果它们假设某个基本系统环境与模板提供的共享组件不同。</p>
+<p>兼容性挑战：在一个薄 jail 中，应用程序可能会遇到兼容性问题，如果它们假设某个基本系统环境与模板提供的共享组件不同。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="vnet-jails">17.2.3. VNET Jails 是一种虚拟网络隔离技术。<a class="anchor" href="#vnet-jails"></a></h4>
+<h4 id="vnet-jails">17.2.3. VNET Jails<a class="anchor" href="#vnet-jails"></a></h4>
 <div class="paragraph">
-<p>FreeBSD VNET 监狱是一种虚拟化环境，允许对其中运行的进程的网络资源进行隔离和控制。它通过为监狱内的进程创建单独的网络堆栈，确保监狱内的网络流量与主机系统和其他监狱隔离，从而提供了高级别的网络分割和安全性。</p>
+<p>FreeBSD VNET jail 是一种虚拟化环境，允许对其中运行的进程的网络资源进行隔离和控制。它通过为 jail 内的进程创建单独的网络堆栈，确保 jail 内的网络流量与主机系统和其他 jail 隔离，从而提供了高级别的网络分割和安全性。</p>
 </div>
 <div class="paragraph">
-<p>实质上， FreeBSD VNET jails 添加了一种网络配置机制。这意味着 VNET jail 可以创建为厚型或薄型 Jail 。</p>
+<p>实质上，FreeBSD VNET jails 添加了一种网络配置机制。这意味着 VNET jail 可以创建为厚或薄 Jail。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="linux-jails">17.2.4. Linux Jails<a class="anchor" href="#linux-jails"></a></h4>
 <div class="paragraph">
-<p>FreeBSD Linux Jail 是 FreeBSD 操作系统中的一个功能，它允许在 FreeBSD jail 中使用 Linux 二进制文件和应用程序。通过引入一个兼容层，该功能可以实现将某些 Linux 系统调用和库转换并在 FreeBSD 内核上执行。 Linux Jail 的目的是在不需要单独的 Linux 虚拟机或环境的情况下，在 FreeBSD 系统上执行 Linux 软件。</p>
+<p>FreeBSD Linux Jail 是 FreeBSD 操作系统中的一个功能，它允许在 FreeBSD jail 中使用 Linux 二进制文件和应用程序。通过引入一个兼容层，该功能可以实现将某些 Linux 系统调用和库转换并在 FreeBSD 内核上执行。Linux Jail 的目的是在不需要单独的 Linux 虚拟机或环境的情况下，在 FreeBSD 系统上执行 Linux 软件。</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="host-configuration">17.3. 主机配置<a class="anchor" href="#host-configuration"></a></h3>
 <div class="paragraph">
-<p>在主机系统上创建任何监狱之前，需要进行一些配置并从主机系统中获取一些信息。</p>
+<p>在主机系统上创建任何 jail 之前，需要进行一些配置并从主机系统中获取一些信息。</p>
 </div>
 <div class="paragraph">
-<p>需要配置 <a href="https://man.freebsd.org/cgi/man.cgi?query=jail&amp;sektion=8&amp;format=html">jail(8)</a> 实用程序，创建必要的目录来配置和安装 jails ，从主机的网络获取信息，并检查主机是否使用 OpenZFS 或 UFS 作为其文件系统。</p>
+<p>需要配置 <a href="https://man.freebsd.org/cgi/man.cgi?query=jail&amp;sektion=8&amp;format=html">jail(8)</a> 实用程序，创建必要的目录来配置和安装 jails，从主机的网络获取信息，并检查主机是否使用 OpenZFS 或 UFS 作为其文件系统。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -19884,12 +19880,12 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="host-configuration-jail-utility">17.3.1. 监狱实用工具<a class="anchor" href="#host-configuration-jail-utility"></a></h4>
+<h4 id="host-configuration-jail-utility">17.3.1. Jail 实用工具<a class="anchor" href="#host-configuration-jail-utility"></a></h4>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=jail&amp;sektion=8&amp;format=html">jail(8)</a> 实用程序用于管理 jails 。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=jail&amp;sektion=8&amp;format=html">jail(8)</a> 实用程序用于管理 jails。</p>
 </div>
 <div class="paragraph">
-<p>要在系统启动时启动 jails ，请运行以下命令：</p>
+<p>要在系统启动时启动 jails，请运行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -19905,7 +19901,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </td>
 <td class="content">
 <div class="paragraph">
-<p>使用 <code>jail_parallel_start</code> ，所有配置的监狱将在后台启动。</p>
+<p>使用 <code>jail_parallel_start</code>，所有配置的 jail 将在后台启动。</p>
 </div>
 </td>
 </tr>
@@ -19919,13 +19915,13 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">主机网络模式（ IP 共享）</dt>
+<dt class="hdlist1">主机网络模式（IP 共享）</dt>
 <dd>
 <p>在主机网络模式下，一个 jail 与主机系统共享相同的网络堆栈。当一个 jail 在主机网络模式下创建时，它使用相同的网络接口和 IP 地址。这意味着 jail 没有单独的 IP 地址，它的网络流量与主机的 IP 地址相关联。</p>
 </dd>
-<dt class="hdlist1">虚拟网络（ VNET ）</dt>
+<dt class="hdlist1">虚拟网络（VNET）</dt>
 <dd>
-<p>虚拟网络是 FreeBSD jails 的一个特性，提供比主机网络等基本网络模式更高级和灵活的网络解决方案。 VNET 允许为每个 jail 创建隔离的网络堆栈，为它们提供独立的 IP 地址、路由表和网络接口。这提供了更高级别的网络隔离，并允许 jails 像运行在独立的虚拟机上一样运行。</p>
+<p>虚拟网络是 FreeBSD jails 的一个特性，提供比主机网络等基本网络模式更高级和灵活的网络解决方案。VNET 允许为每个 jail 创建隔离的网络堆栈，为它们提供独立的 IP 地址、路由表和网络接口。这提供了更高级别的网络隔离，并允许 jails 像运行在独立的虚拟机上一样运行。</p>
 </dd>
 <dt class="hdlist1">netgraph 系统</dt>
 <dd>
@@ -19935,9 +19931,9 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="sect3">
-<h4 id="host-configuration-directories">17.3.3. 设置监狱目录树<a class="anchor" href="#host-configuration-directories"></a></h4>
+<h4 id="host-configuration-directories">17.3.3. 设置 jail 目录树<a class="anchor" href="#host-configuration-directories"></a></h4>
 <div class="paragraph">
-<p>没有特定的位置来放置监狱的文件。</p>
+<p>没有特定的位置来放置 jail 的文件。</p>
 </div>
 <div class="paragraph">
 <p>一些管理员使用 <code>/jail</code> ，其他人使用 <code>/usr/jail</code> ，还有一些人使用 <code>/usr/local/jails</code> 。在本章中，将使用 <code>/usr/local/jails</code> 。</p>
@@ -19951,10 +19947,10 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 <p><span class="filename">media</span> 将包含已下载用户空间的压缩文件。</p>
 </li>
 <li>
-<p>在使用 Thin Jails 时， <span class="filename">templates</span> 文件夹将包含模板。</p>
+<p>在使用薄 Jails 时，<span class="filename">templates</span> 文件夹将包含模板。</p>
 </li>
 <li>
-<p><span class="filename">containers</span> 将包含监狱。</p>
+<p><span class="filename">containers</span> 将包含 jail 。</p>
 </li>
 </ul>
 </div>
@@ -19977,7 +19973,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </td>
 <td class="content">
 <div class="paragraph">
-<p>在这种情况下， <code>zroot</code> 被用作父数据集，但也可以使用其他数据集。</p>
+<p>在这种情况下，<code>zroot</code> 被用作父数据集，但也可以使用其他数据集。</p>
 </div>
 </td>
 </tr>
@@ -19996,21 +19992,21 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="sect3">
-<h4 id="jail-configuration-files">17.3.4. 监狱配置文件<a class="anchor" href="#jail-configuration-files"></a></h4>
+<h4 id="jail-configuration-files">17.3.4. Jail 配置文件<a class="anchor" href="#jail-configuration-files"></a></h4>
 <div class="paragraph">
 <p>有两种方法来配置 jails 。</p>
 </div>
 <div class="paragraph">
-<p>第一种方法是在文件 <span class="filename">/etc/jail.conf</span> 中为每个监狱添加一个条目。另一种选项是在目录 <span class="filename">/etc/jail.conf.d/</span> 中为每个监狱创建一个文件。</p>
+<p>第一种方法是在文件 <span class="filename">/etc/jail.conf</span> 中为每个 jail 添加一个条目。另一种选项是在目录 <span class="filename">/etc/jail.conf.d/</span> 中为每个 jail 创建一个文件。</p>
 </div>
 <div class="paragraph">
 <p>没有正确或错误的选择。每个管理员必须选择最适合他们需求的选项。</p>
 </div>
 <div class="paragraph">
-<p>如果主机系统只有几个 jail ，可以在文件 <span class="filename">/etc/jail.conf</span> 中为每个 jail 添加一个条目。如果主机系统有很多 jail ，最好在 <span class="filename">/etc/jail.conf.d/</span> 目录中为每个 jail 拥有一个配置文件。</p>
+<p>如果主机系统只有几个 jail，可以在文件 <span class="filename">/etc/jail.conf</span> 中为每个 jail 添加一个条目。如果主机系统有很多 jail，最好在 <span class="filename">/etc/jail.conf.d/</span> 目录中为每个 jail 拥有一个配置文件。</p>
 </div>
 <div class="paragraph">
-<p>一个典型的监狱入口会是这样的：</p>
+<p>一个典型的 jail 入口会是这样的：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -20040,7 +20036,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>jailname</code> - 监狱的名称。 &lt;.&gt; <code>exec.start</code> - 创建监狱时在监狱环境中运行的命令。通常运行的命令是 &#34;/bin/sh /etc/rc&#34;。 &lt;.&gt; <code>exec.stop</code> - 删除监狱之前在监狱环境中运行的命令。通常运行的命令是 &#34;/bin/sh /etc/rc.shutdown&#34;。 &lt;.&gt; <code>exec.consolelog</code> - 将命令输出（ stdout 和 stderr ）重定向到的文件。 &lt;.&gt; <code>allow.raw_sockets</code> - 允许在监狱内创建原始套接字。设置此参数允许像 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=traceroute&amp;sektion=8&amp;format=html">traceroute(8)</a> 这样的实用程序在监狱内运行。 &lt;.&gt; <code>exec.clean</code> - 在一个干净的环境中运行命令。 &lt;.&gt; <code>mount.devfs</code> - 在 chrooted <span class="filename">/dev</span> 目录上挂载一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=devfs&amp;sektion=5&amp;format=html">devfs(5)</a> 文件系统，并应用 devfs_ruleset 参数中的规则集来限制监狱内可见的设备。 &lt;.&gt; <code>host.hostname</code> - 监狱的主机名。 &lt;.&gt; <code>path</code> - 监狱的根目录。在监狱内运行的任何命令，无论是通过 jail 还是 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 运行，都是从此目录开始的。 &lt;.&gt; <code>ip4.addr</code> - IPv4 地址。 IPv4 有两种配置可能性。第一种是像示例中所做的那样建立一个 IP 或 IP 列表。另一种是使用 <code>ip4</code> 替代，并将 <code>inherit</code> 值设置为继承主机的 IP 地址。 &lt;.&gt; <code>ip6.addr</code> - IPv6 地址。 IPv6 有两种配置可能性。第一种是像示例中所做的那样建立一个 IP 或 IP 列表。另一种是使用 <code>ip6</code> 替代，并将 <code>inherit</code> 值设置为继承主机的 IP 地址。 &lt;.&gt; <code>interface</code> - 添加监狱的 IP 地址的网络接口。通常是主机接口。</td>
+<td><code>jailname</code> - jail 的名称。 &lt;.&gt; <code>exec.start</code> - 创建 jail 时在 jail 环境中运行的命令。通常运行的命令是 &#34;/bin/sh /etc/rc&#34;。 &lt;.&gt; <code>exec.stop</code> - 删除 jail 之前在 jail 环境中运行的命令。通常运行的命令是 &#34;/bin/sh /etc/rc.shutdown&#34;。 &lt;.&gt; <code>exec.consolelog</code> - 将命令输出（stdout 和 stderr）重定向到的文件。 &lt;.&gt; <code>allow.raw_sockets</code> - 允许在 jail 内创建原始套接字。设置此参数允许像 <a href="https://man.freebsd.org/cgi/man.cgi?query=ping&amp;sektion=8&amp;format=html">ping(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=traceroute&amp;sektion=8&amp;format=html">traceroute(8)</a> 这样的实用程序在 jail 内运行。 &lt;.&gt; <code>exec.clean</code> - 在一个干净的环境中运行命令。 &lt;.&gt; <code>mount.devfs</code> - 在 chrooted <span class="filename">/dev</span> 目录上挂载一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=devfs&amp;sektion=5&amp;format=html">devfs(5)</a> 文件系统，并应用 devfs_ruleset 参数中的规则集来限制 jail 内可见的设备。 &lt;.&gt; <code>host.hostname</code> - jail 的主机名。 &lt;.&gt; <code>path</code> - jail 的根目录。在 jail 内运行的任何命令，无论是通过 jail 还是 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 运行，都是从此目录开始的。 &lt;.&gt; <code>ip4.addr</code> - IPv4 地址。 IPv4 有两种配置可能性。第一种是像示例中所做的那样建立一个 IP 或 IP 列表。另一种是使用 <code>ip4</code> 替代，并将 <code>inherit</code> 值设置为继承主机的 IP 地址。 &lt;.&gt; <code>ip6.addr</code> - IPv6 地址。 IPv6 有两种配置可能性。第一种是像示例中所做的那样建立一个 IP 或 IP 列表。另一种是使用 <code>ip6</code> 替代，并将 <code>inherit</code> 值设置为继承主机的 IP 地址。 &lt;.&gt; <code>interface</code> - 添加 jail 的 IP 地址的网络接口。通常是主机接口。</td>
 </tr>
 </tbody></table>
 </div>
@@ -20050,17 +20046,17 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="sect2">
-<h3 id="classic-jail">17.4. 经典监狱（厚重监狱）<a class="anchor" href="#classic-jail"></a></h3>
+<h3 id="classic-jail">17.4. 经典 Jail（厚 Jail ）<a class="anchor" href="#classic-jail"></a></h3>
 <div class="paragraph">
-<p>这些监狱类似于真实的 FreeBSD 系统。它们可以像普通主机系统一样进行管理，并且可以独立更新。</p>
+<p>这些 jail 类似于真实的 FreeBSD 系统。它们可以像普通主机系统一样进行管理，并且可以独立更新。</p>
 </div>
 <div class="sect3">
-<h4 id="creating-classic-jail">17.4.1. 创建一个经典监狱<a class="anchor" href="#creating-classic-jail"></a></h4>
+<h4 id="creating-classic-jail">17.4.1. 创建一个经典 Jail<a class="anchor" href="#creating-classic-jail"></a></h4>
 <div class="paragraph">
 <p>原则上，一个 jail 只需要一个主机名、一个根目录、一个 IP 地址和一个用户空间。</p>
 </div>
 <div class="paragraph">
-<p>可以从官方的 FreeBSD 下载服务器获取用于监狱的用户空间。</p>
+<p>可以从官方的 FreeBSD 下载服务器获取用于 jail 的用户空间。</p>
 </div>
 <div class="paragraph">
 <p>执行以下命令以下载用户空间：</p>
@@ -20071,10 +20067,10 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>下载完成后，需要将内容解压到监狱目录中。</p>
+<p>下载完成后，需要将内容解压到 jail 目录中。</p>
 </div>
 <div class="paragraph">
-<p>执行以下命令将用户空间提取到监狱目录中：</p>
+<p>执行以下命令将用户空间提取到 jail 目录中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20083,7 +20079,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>在监狱目录中提取用户空间后，需要复制时区和 DNS 服务器文件：</p>
+<p>在 jail 目录中提取用户空间后，需要复制时区和 DNS 服务器文件：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20100,7 +20096,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>最后一步是配置监狱。需要在配置文件 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中添加一个条目，包含监狱的参数。</p>
+<p>最后一步是配置 jail。需要在配置文件 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中添加一个条目，包含 jail 的参数。</p>
 </div>
 <div class="paragraph">
 <p>一个例子如下：</p>
@@ -20129,7 +20125,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>执行以下命令以启动监狱：</p>
+<p>执行以下命令以启动 jail ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20137,25 +20133,25 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>有关如何管理 jails 的更多信息可以在 <a href="#jail-management">监狱管理</a> 部分找到。</p>
+<p>有关如何管理 jails 的更多信息可以在 <a href="#jail-management">Jail 管理</a> 部分找到。</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="thin-jail">17.5. 薄型监狱<a class="anchor" href="#thin-jail"></a></h3>
+<h3 id="thin-jail">17.5. 薄（Thin）Jails<a class="anchor" href="#thin-jail"></a></h3>
 <div class="paragraph">
-<p>尽管 Thin Jails 使用与 Thick Jails 相同的技术，但创建过程是不同的。可以使用 OpenZFS 快照或使用模板和 NullFS 来创建 Thin jails 。使用 OpenZFS 快照和使用 NullFS 的模板相比传统的 jails 具有一定的优势，例如可以更快地从快照创建它们，或者可以使用 NullFS 更新多个 jails 。</p>
+<p>尽管瘦 Jails 使用与胖 Jails 相同的技术，但创建过程是不同的。可以使用 OpenZFS 快照或使用模板和 NullFS 来创建瘦 jails。使用 OpenZFS 快照和使用 NullFS 的模板相比传统的 jails 具有一定的优势，例如可以更快地从快照创建它们，或者可以使用 NullFS 更新多个 jails。</p>
 </div>
 <div class="sect3">
-<h4 id="creating-thin-jail-openzfs-snapshots">17.5.1. 使用 OpenZFS 快照创建一个轻量级监狱<a class="anchor" href="#creating-thin-jail-openzfs-snapshots"></a></h4>
+<h4 id="creating-thin-jail-openzfs-snapshots">17.5.1. 使用 OpenZFS 快照创建一个瘦 Jail<a class="anchor" href="#creating-thin-jail-openzfs-snapshots"></a></h4>
 <div class="paragraph">
-<p>由于 FreeBSD 和 OpenZFS 之间的良好集成，使用 OpenZFS 快照创建新的 Thin Jails 非常容易。</p>
+<p>由于 FreeBSD 和 OpenZFS 之间的良好集成，使用 OpenZFS 快照创建新的瘦 Jails 非常容易。</p>
 </div>
 <div class="paragraph">
-<p>使用 OpenZFS 快照创建 Thin Jail 的第一步是创建一个模板。</p>
+<p>使用 OpenZFS 快照创建瘦 Jail 的第一步是创建一个模板。</p>
 </div>
 <div class="paragraph">
-<p>模板只用于创建新的监狱。因此，它们以“只读”模式创建，以便监狱以不可变的基础创建。</p>
+<p>模板只用于创建新的 jail。因此，它们以“只读”模式创建，以便 jail 以不可变的基础创建。</p>
 </div>
 <div class="paragraph">
 <p>要为模板创建数据集，请执行以下命令：</p>
@@ -20210,10 +20206,10 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>一旦创建了 OpenZFS 快照，就可以使用 OpenZFS 克隆功能创建无限个 jail 。</p>
+<p>一旦创建了 OpenZFS 快照，就可以使用 OpenZFS 克隆功能创建无限个 jail。</p>
 </div>
 <div class="paragraph">
-<p>要创建一个名为 <code>thinjail</code> 的 Thin Jail ，请执行以下命令：</p>
+<p>要创建一个名为 <code>thinjail</code> 的薄 Jail，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20221,7 +20217,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>最后一步是配置监狱。需要在配置文件 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中添加一个条目，包含监狱的参数。</p>
+<p>最后一步是配置 jail。需要在配置文件 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中添加一个条目，包含 jail 的参数。</p>
 </div>
 <div class="paragraph">
 <p>一个例子如下：</p>
@@ -20250,7 +20246,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>执行以下命令以启动监狱：</p>
+<p>执行以下命令以启动 jail ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20258,16 +20254,16 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>有关如何管理 jails 的更多信息可以在 <a href="#jail-management">监狱管理</a> 部分找到。</p>
+<p>有关如何管理 jails 的更多信息可以在 <a href="#jail-management">Jail 管理</a> 部分找到。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="creating-thin-jail-nullfs">17.5.2. 使用 NullFS 创建一个薄型监狱<a class="anchor" href="#creating-thin-jail-nullfs"></a></h4>
+<h4 id="creating-thin-jail-nullfs">17.5.2. 使用 NullFS 创建一个薄 Jail<a class="anchor" href="#creating-thin-jail-nullfs"></a></h4>
 <div class="paragraph">
-<p>使用 Thin Jail 技术和使用 NullFS 将特定目录从主机系统选择性地共享到监狱中，可以减少系统文件的重复创建。</p>
+<p>使用薄 Jail 技术和使用 NullFS 将特定目录从主机系统选择性地共享到 jail 中，可以减少系统文件的重复创建。</p>
 </div>
 <div class="paragraph">
-<p>第一步是创建数据集以保存模板，如果使用 OpenZFS ，请执行以下命令：</p>
+<p>第一步是创建数据集以保存模板，如果使用 OpenZFS，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20275,7 +20271,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>如果使用 UFS ，则使用以下命令：</p>
+<p>如果使用 UFS，则使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20316,7 +20312,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>除了基本模板之外，还需要创建一个目录，用于存放“骨架”。一些目录将从模板复制到“骨架”中。</p>
+<p>除了基本模板之外，还需要创建一个目录，用于存放 <code>skeleton</code>。一些目录将从模板复制到 <code>skeleton</code> 中。</p>
 </div>
 <div class="paragraph">
 <p>在使用 OpenZFS 的情况下，执行以下命令创建 <code>skeleton</code> 的数据集：</p>
@@ -20327,7 +20323,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>如果使用 UFS ，则使用以下命令：</p>
+<p>如果使用 UFS，则使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20335,7 +20331,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>然后创建 ` 骨架（ skeleton ） ` 目录。 ` 骨架（ skeleton ） ` 目录将保存监狱的本地目录。</p>
+<p>然后创建 <code>skeleton</code> 目录。 <code>skeleton</code> 目录将保存 jail 的本地目录。</p>
 </div>
 <div class="paragraph">
 <p>执行以下命令创建目录：</p>
@@ -20367,10 +20363,10 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>准备好了 <code>skeleton</code> 之后，需要将数据复制到监狱目录中。</p>
+<p>准备好了 <code>skeleton</code> 之后，需要将数据复制到 jail 目录中。</p>
 </div>
 <div class="paragraph">
-<p>如果使用 OpenZFS ，可以使用 OpenZFS 快照通过执行以下命令轻松创建所需数量的 jails ：</p>
+<p>如果使用 OpenZFS，可以使用 OpenZFS 快照通过执行以下命令轻松创建所需数量的 jails ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20388,7 +20384,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>然后创建一个目录，用于挂载基本模板和骨架：</p>
+<p>然后创建一个目录，用于挂载基本模板和 skeleton：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20396,7 +20392,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>在 <span class="filename">/etc/jail.conf</span> 中添加一个监狱条目，或者在 <span class="filename">jail.conf.d</span> 目录中添加一个文件，内容如下：</p>
+<p>在 <span class="filename">/etc/jail.conf</span> 中添加一个 jail 条目，或者在 <span class="filename">jail.conf.d</span> 目录中添加一个文件，内容如下：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -20434,7 +20430,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="paragraph">
-<p>执行以下命令以启动监狱：</p>
+<p>执行以下命令以启动 jail ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20443,7 +20439,7 @@ LpWvSuhRMSQaYkJU72SodQc0FM5mqqNN42Vx+X4EutOfvQuRGlI=
 </div>
 </div>
 <div class="sect3">
-<h4 id="creating-vnet-jail">17.5.3. 创建一个 VNET 监狱<a class="anchor" href="#creating-vnet-jail"></a></h4>
+<h4 id="creating-vnet-jail">17.5.3. 创建一个 VNET Jail<a class="anchor" href="#creating-vnet-jail"></a></h4>
 <div class="paragraph">
 <p>FreeBSD VNET Jails 拥有独立的网络堆栈，包括接口、 IP 地址、路由表和防火墙规则。</p>
 </div>
@@ -20482,16 +20478,16 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>下一步是按照上述所示创建监狱。</p>
+<p>下一步是按照上述所示创建 jail 。</p>
 </div>
 <div class="paragraph">
-<p>可以使用 <a href="#classic-jail">经典监狱（厚重监狱）</a> 过程和 <a href="#thin-jail">薄型监狱</a> 过程。唯一需要更改的是 <span class="filename">/etc/jail.conf</span> 文件中的配置。</p>
+<p>可以使用 <a href="#classic-jail">经典 Jail（厚 Jail ）</a> 过程和 <a href="#thin-jail">薄（Thin）Jails</a> 过程。唯一需要更改的是 <span class="filename">/etc/jail.conf</span> 文件中的配置。</p>
 </div>
 <div class="paragraph">
 <p>路径 <span class="filename">/usr/local/jails/containers/vnet</span> 将被用作创建的 jail 的示例。</p>
 </div>
 <div class="paragraph">
-<p>以下是一个 VNET 监狱的配置示例：</p>
+<p>以下是一个 VNET jail 的配置示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -20537,18 +20533,18 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>表示 Jail 的 IP 地址，它必须是 * 唯一的 * 。 &lt;.&gt; 指的是之前创建的桥接。</td>
+<td>表示 Jail 的 IP 地址，它必须是 <strong>唯一的</strong> 。 &lt;.&gt; 指的是之前创建的桥接。</td>
 </tr>
 </tbody></table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="creating-linux-jail">17.5.4. 创建一个 Linux 监狱<a class="anchor" href="#creating-linux-jail"></a></h4>
+<h4 id="creating-linux-jail">17.5.4. 创建一个 Linux Jail<a class="anchor" href="#creating-linux-jail"></a></h4>
 <div class="paragraph">
-<p>FreeBSD 可以使用 <a href="./#linuxemu ， Linux 二进制兼容性"></a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=debootstrap&amp;sektion=8&amp;format=html">debootstrap(8)</a> 在监狱中运行 Linux 。监狱没有内核，它们在主机的内核上运行。因此，在主机系统中启用 Linux 二进制兼容性是必要的。</p>
+<p>FreeBSD 可以使用 <a href="./#linuxemu">Linux 二进制兼容性</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=debootstrap&amp;sektion=8&amp;format=html">debootstrap(8)</a> 在 jail 中运行 Linux。jail 没有内核，它们在主机的内核上运行。因此，在主机系统中启用 Linux 二进制兼容性是必要的。</p>
 </div>
 <div class="paragraph">
-<p>要在启动时启用 Linux ABI ，请执行以下命令：</p>
+<p>要在启动时启用 Linux ABI，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20564,10 +20560,10 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>下一步将是按照上述所示创建一个监狱，例如在 <a href="#creating-thin-jail-openzfs-snapshots">使用 OpenZFS 快照创建一个轻量级监狱</a> 中，但 * 不要 * 执行配置。 FreeBSD Linux 监狱需要特定的配置，将在下面详细说明。</p>
+<p>下一步将是按照上述所示创建一个 jail ，例如在 <a href="#creating-thin-jail-openzfs-snapshots">使用 OpenZFS 快照创建一个瘦 Jail</a> 中，但 <strong>不要</strong> 执行配置。FreeBSD Linux jail 需要特定的配置，将在下面详细说明。</p>
 </div>
 <div class="paragraph">
-<p>一旦按照上述说明创建了监狱，执行以下命令进行所需的监狱配置并启动它：</p>
+<p>一旦按照上述说明创建了 jail，执行以下命令进行所需的 jail 配置并启动它：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20592,10 +20588,10 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>要访问 jail ，需要安装包： sysutils/debootstrap[] 。</p>
+<p>要访问 jail ，需要安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/debootstrap/">sysutils/debootstrap</a>。</p>
 </div>
 <div class="paragraph">
-<p>执行以下命令以访问 FreeBSD Linux 监狱：</p>
+<p>执行以下命令以访问 FreeBSD Linux jail：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20603,7 +20599,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在监狱内执行以下命令来安装包： sysutils/debootstrap[] 并准备 Ubuntu 环境：</p>
+<p>在 jail 内执行以下命令来安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/debootstrap/">sysutils/debootstrap</a> 并准备 Ubuntu 环境：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20612,7 +20608,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>当进程完成并在控制台上显示“基本系统安装成功”消息时，需要通过执行以下命令在主机系统上停止 jail ：</p>
+<p>当进程完成并在控制台上显示 <code>successfully</code> 消息时，需要通过执行以下命令在主机系统上停止 jail：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20620,7 +20616,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>然后在 [/etc/jail.conf] 文件中添加一个 Linux 监狱的条目：</p>
+<p>然后在 [/etc/jail.conf] 文件中添加一个 Linux jail 的条目：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -20656,7 +20652,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>然后可以使用以下命令正常启动监狱：</p>
+<p>然后可以使用以下命令正常启动 jail：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20677,14 +20673,14 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="jail-management">17.6. 监狱管理<a class="anchor" href="#jail-management"></a></h3>
+<h3 id="jail-management">17.6. Jail 管理<a class="anchor" href="#jail-management"></a></h3>
 <div class="paragraph">
-<p>一旦创建了监狱，就可以执行许多操作，比如启动、重启或删除监狱，安装软件等。本节将描述可以在主机上执行的不同监狱操作。</p>
+<p>一旦创建了 jail，就可以执行许多操作，比如启动、重启或删除 jail，安装软件等。本节将描述可以在主机上执行的不同 jail 操作。</p>
 </div>
 <div class="sect3">
 <h4 id="list-running-jails">17.6.1. 列出运行中的 Jails<a class="anchor" href="#list-running-jails"></a></h4>
 <div class="paragraph">
-<p>要列出运行在主机系统上的 jails ，可以使用命令 <a href="https://man.freebsd.org/cgi/man.cgi?query=jls&amp;sektion=8&amp;format=html">jls(8)</a> 。</p>
+<p>要列出运行在主机系统上的 jails，可以使用命令 <a href="https://man.freebsd.org/cgi/man.cgi?query=jls&amp;sektion=8&amp;format=html">jls(8)</a>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20701,7 +20697,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=jls&amp;sektion=8&amp;format=html">jls(8)</a> 支持 <code>--libxo</code> 参数，通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=libxo&amp;sektion=3&amp;format=html">libxo(3)</a> 库可以显示其他类型的格式，例如 <code>JSON</code> 、 <code>HTML</code> 等。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=jls&amp;sektion=8&amp;format=html">jls(8)</a> 支持 <code>--libxo</code> 参数，通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=libxo&amp;sektion=3&amp;format=html">libxo(3)</a> 库可以显示其他类型的格式，例如 <code>JSON</code>、<code>HTML</code> 等。</p>
 </div>
 <div class="paragraph">
 <p>例如，执行以下命令以获取 <code>JSON</code> 输出：</p>
@@ -20723,10 +20719,10 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 <div class="sect3">
 <h4 id="start-jail">17.6.2. 启动、重新启动和停止一个 Jail<a class="anchor" href="#start-jail"></a></h4>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a> 用于在主机上启动、重启或停止一个 jail 。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a> 用于在主机上启动、重启或停止一个 jail。</p>
 </div>
 <div class="paragraph">
-<p>例如，要启动一个监狱，请运行以下命令：</p>
+<p>例如，要启动一个 jail，请运行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20734,19 +20730,19 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>将 <code>start</code> 参数更改为 <code>restart</code> 或 <code>stop</code> 以执行其他对监狱的操作。</p>
+<p>将 <code>start</code> 参数更改为 <code>restart</code> 或 <code>stop</code> 以执行其他对 jail 的操作。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="destroy-jail">17.6.3. 摧毁一个监狱<a class="anchor" href="#destroy-jail"></a></h4>
+<h4 id="destroy-jail">17.6.3. 销毁一个 jail<a class="anchor" href="#destroy-jail"></a></h4>
 <div class="paragraph">
-<p>销毁一个监狱并不像使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a> 停止监狱和删除监狱目录以及 <span class="filename">/etc/jail.conf</span> 条目那样简单。</p>
+<p>销毁一个 jail 并不像使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a> 停止 jail 和删除 jail 目录以及 <span class="filename">/etc/jail.conf</span> 条目那样简单。</p>
 </div>
 <div class="paragraph">
 <p>FreeBSD 非常重视系统安全。因此，有一些文件即使是 root 用户也无法删除。这种功能被称为文件标志。</p>
 </div>
 <div class="paragraph">
-<p>第一步是停止所需的监狱执行以下命令：</p>
+<p>第一步是停止所需的 jail 执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20754,7 +20750,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>第二步是使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 命令来移除这些标志，执行以下命令，其中 <code>classic</code> 是要移除的监狱的名称：</p>
+<p>第二步是使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 命令来移除这些标志，执行以下命令，其中 <code>classic</code> 是要移除的 jail 的名称：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20762,7 +20758,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>第三步是删除监狱所在的目录：</p>
+<p>第三步是删除 jail 所在的目录：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20770,16 +20766,16 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>最后，需要在 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中删除监狱条目。</p>
+<p>最后，需要在 <span class="filename">/etc/jail.conf</span> 或 <span class="filename">jail.conf.d</span> 中删除 jail 条目。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="handle-packages-jail">17.6.4. 在监狱中处理软件包<a class="anchor" href="#handle-packages-jail"></a></h4>
+<h4 id="handle-packages-jail">17.6.4. 在 Jail 中处理软件包<a class="anchor" href="#handle-packages-jail"></a></h4>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 工具支持 <code>-j</code> 参数，以处理安装在监狱内的软件包。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> 工具支持 <code>-j</code> 参数，以处理安装在 jail 内的软件包。</p>
 </div>
 <div class="paragraph">
-<p>例如，在 jail 中安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/nginx-lite/">nginx-lite</a> ，可以从主机上执行以下命令：</p>
+<p>例如，在 jail 中安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/nginx-lite/">nginx-lite</a>，可以从主机上执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20787,16 +20783,16 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>有关在 FreeBSD 中使用软件包的更多信息，请参阅 <a href="./#ports">安装应用程序：软件包和端口</a> 。</p>
+<p>有关在 FreeBSD 中使用软件包的更多信息，请参阅 <a href="./#ports">“安装应用程序：软件包和 Ports”</a>。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="access-jail">17.6.5. 访问一个监狱<a class="anchor" href="#access-jail"></a></h4>
+<h4 id="access-jail">17.6.5. 访问一个 Jail<a class="anchor" href="#access-jail"></a></h4>
 <div class="paragraph">
-<p>虽然上面已经提到最好从主机系统管理监狱，但可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 进入监狱。</p>
+<p>虽然上面已经提到最好从主机系统管理 jail，但可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 进入 jail。</p>
 </div>
 <div class="paragraph">
-<p>可以通过在主机上运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 来进入监狱。</p>
+<p>可以通过在主机上运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 来进入 jail。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20804,11 +20800,11 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>当访问监狱时，将显示在 <a href="https://man.freebsd.org/cgi/man.cgi?query=motd&amp;sektion=5&amp;format=html">motd(5)</a> 中配置的消息。</p>
+<p>当访问 jail 时，将显示在 <a href="https://man.freebsd.org/cgi/man.cgi?query=motd&amp;sektion=5&amp;format=html">motd(5)</a> 中配置的消息。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="execute-commands-jail">17.6.6. 在监狱中执行命令<a class="anchor" href="#execute-commands-jail"></a></h4>
+<h4 id="execute-commands-jail">17.6.6. 在 Jail 中执行命令<a class="anchor" href="#execute-commands-jail"></a></h4>
 <div class="paragraph">
 <p>要在一个 jail 中从主机系统执行命令，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=jexec&amp;sektion=8&amp;format=html">jexec(8)</a> 命令。</p>
 </div>
@@ -20823,12 +20819,12 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="jail-upgrading">17.7. 监狱升级<a class="anchor" href="#jail-upgrading"></a></h3>
+<h3 id="jail-upgrading">17.7. Jail 升级<a class="anchor" href="#jail-upgrading"></a></h3>
 <div class="paragraph">
 <p>升级 FreeBSD Jails 可以确保隔离环境保持安全、最新，并与 FreeBSD 生态系统中的最新功能和改进保持一致。</p>
 </div>
 <div class="sect3">
-<h4 id="jails-updating">17.7.1. 使用 OpenZFS 快照升级经典监狱或薄监狱<a class="anchor" href="#jails-updating"></a></h4>
+<h4 id="jails-updating">17.7.1. 使用 OpenZFS 快照升级经典 Jail 或薄 Jail<a class="anchor" href="#jails-updating"></a></h4>
 <div class="paragraph">
 <p>Jails 必须从主机操作系统进行更新。在 FreeBSD 中，默认行为是禁止在 jail 中使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 命令。这将阻止对某些文件的更新，因此在 jail 内部进行更新将失败。</p>
 </div>
@@ -20842,7 +20838,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>要将监狱升级到新的主要或次要版本，首先按照 <a href="./#freebsdupdate-upgrade">执行主要和次要版本升级</a> 中描述的方法升级主机系统。一旦主机升级并重新启动，就可以升级监狱。</p>
+<p>要将 jail 升级到新的主要或次要版本，首先按照 <a href="./#freebsdupdate-upgrade">“执行主要和次要版本升级”</a> 中描述的方法升级主机系统。一旦主机升级并重新启动，就可以升级 jail。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -20852,14 +20848,14 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>如果从一个版本升级到另一个版本，创建一个新的监狱比完全升级更容易。</p>
+<p>如果从一个版本升级到另一个版本，创建一个新的 jail 比完全升级更容易。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>例如，要从 13.1-RELEASE 升级到 13.2-RELEASE ，请在主机上执行以下命令：</p>
+<p>例如，要从 13.1-RELEASE 升级到 13.2-RELEASE，请在主机上执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20885,7 +20881,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>然后，如果是一个主要版本的升级，重新安装所有已安装的软件包并重新启动 jail 。这是必需的，因为在 FreeBSD 的主要版本之间升级时， ABI 版本会发生变化。</p>
+<p>然后，如果是一个主要版本的升级，重新安装所有已安装的软件包并重新启动 jail。这是必需的，因为在 FreeBSD 的主要版本之间升级时，ABI 版本会发生变化。</p>
 </div>
 <div class="paragraph">
 <p>来自主机：</p>
@@ -20898,12 +20894,9 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="upgrading-thin-jail">17.7.2. 使用 NullFS 升级 Thin Jail<a class="anchor" href="#upgrading-thin-jail"></a></h4>
+<h4 id="upgrading-thin-jail">17.7.2. 使用 NullFS 升级薄 Jail<a class="anchor" href="#upgrading-thin-jail"></a></h4>
 <div class="paragraph">
-<p>在升级 Thin Jail 时使用 NullFS</p>
-</div>
-<div class="paragraph">
-<p>由于使用 NullFS 的 Thin Jails 共享了大部分系统目录，因此它们非常容易更新。只需更新模板即可，这样可以同时更新多个 Jail 。</p>
+<p>由于使用 NullFS 的薄 Jails 共享了大部分系统目录，因此它们非常容易更新。只需更新模板即可，这样可以同时更新多个 Jail。</p>
 </div>
 <div class="paragraph">
 <p>要将模板更新到运行的 FreeBSD 版本的最新补丁版本，请在主机上执行以下命令：</p>
@@ -20915,7 +20908,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>要将模板升级到新的主要或次要版本，首先按照 <a href="./#freebsdupdate-upgrade">执行主要和次要版本升级</a> 中描述的方式升级主机系统。一旦主机升级并重新启动，然后可以升级模板。</p>
+<p>要将模板升级到新的主要或次要版本，首先按照 <a href="./#freebsdupdate-upgrade">“执行主要和次要版本升级”</a> 中描述的方式升级主机系统。一旦主机升级并重新启动，然后可以升级模板。</p>
 </div>
 <div class="paragraph">
 <p>例如，要从 13.1-RELEASE 升级到 13.2-RELEASE ，请在主机上执行以下命令：</p>
@@ -20932,12 +20925,12 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="jail-resource-limits">17.8. 监狱资源限制<a class="anchor" href="#jail-resource-limits"></a></h3>
+<h3 id="jail-resource-limits">17.8. Jail 资源限制<a class="anchor" href="#jail-resource-limits"></a></h3>
 <div class="paragraph">
-<p>系统管理员需要考虑从主机系统控制监狱使用的资源的任务。</p>
+<p>系统管理员需要考虑从主机系统控制 jail 使用的资源的任务。</p>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=rctl&amp;sektion=8&amp;format=html">rctl(8)</a> 允许您从主机系统管理监狱可以使用的资源。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=rctl&amp;sektion=8&amp;format=html">rctl(8)</a> 允许您从主机系统管理 jail 可以使用的资源。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -20954,7 +20947,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>限制监狱资源的语法如下：</p>
+<p>限制 jail 资源的语法如下：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -20962,7 +20955,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>例如，要限制一个 jail 可以访问的最大 RAM ，运行以下命令：</p>
+<p>例如，要限制一个 jail 可以访问的最大 RAM，运行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20978,11 +20971,11 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>有关资源限制的更多信息可以在安全章节中找到，具体请参考 <a href="./#security-resourcelimits">Resource Limits section</a> 。</p>
+<p>有关资源限制的更多信息可以在安全章节中找到，具体请参考 <a href="./#security-resourcelimits">“资源限制部分”</a> 。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="jail-managers-and-containers">17.9. 监狱管理员和容器<a class="anchor" href="#jail-managers-and-containers"></a></h3>
+<h3 id="jail-managers-and-containers">17.9. Jail 管理器和容器<a class="anchor" href="#jail-managers-and-containers"></a></h3>
 <div class="paragraph">
 <p>如前所述，每种类型的 FreeBSD Jail 都可以手动创建和配置，但 FreeBSD 还有第三方工具可以使配置和管理更加简便。</p>
 </div>
@@ -21001,7 +20994,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 <tr>
 <th class="tableblock halign-left valign-top">名称</th>
 <th class="tableblock halign-left valign-top">许可证</th>
-<th class="tableblock halign-left valign-top">Package</th>
+<th class="tableblock halign-left valign-top">包</th>
 <th class="tableblock halign-left valign-top">文档</th>
 </tr>
 </thead>
@@ -21010,37 +21003,37 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BastilleBSD</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BSD-3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/bastille/">sysutils/bastille</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://bastille.readthedocs.io/en/latest/">文档</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://bastille.readthedocs.io/en/latest/">[文档</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">pot</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BSD-3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">包： sysutils/pot[]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://pot.pizzamig.dev/">文档</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/pot/">sysutils/pot</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pot.pizzamig.dev/">文档</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">cbsd</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BSD-2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cbsd/">sysutils/cbsd</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://www.bsdstore.ru/en/docs.html">文档</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.bsdstore.ru/en/docs.html">文档</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">AppJail</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BSD-3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/appjail/">sysutils/appjail</a>, for devel <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/appjail-devel/">sysutils/appjail-devel</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://github.com/DtxdF/AppJail#getting-started">文档</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/DtxdF/AppJail#getting-started">文档</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">iocage</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BSD-2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/iocage/">sysutils/iocage</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://iocage.readthedocs.io/en/latest/">文档</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://iocage.readthedocs.io/en/latest/">文档</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ezjail</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://erdgeist.org/beerware.html">Beer Ware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://erdgeist.org/beerware.html">Beer Ware</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/ezjail/">sysutils/ezjail</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">链接： <a href="https://erdgeist.org/arts/software/ezjail/" class="bare">https://erdgeist.org/arts/software/ezjail/</a> [文档]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://erdgeist.org/arts/software/ezjail/">文档</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -21051,7 +21044,7 @@ ifconfig_bridge0=&#34;inet 192.168.1.150/24 addm em0 up&#34;</pre>
 <h2 id="mac">Chapter 18. 强制访问控制<a class="anchor" href="#mac"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="mac-synopsis">18.1. 概要<a class="anchor" href="#mac-synopsis"></a></h3>
+<h3 id="mac-synopsis">18.1. 简介<a class="anchor" href="#mac-synopsis"></a></h3>
 <div class="paragraph">
 <p>FreeBSD 支持基于 POSIX®.1e 草案的安全扩展。这些安全机制包括文件系统访问控制列表（参见： security[fs-acl ，“访问控制列表”] ）和强制访问控制（ MAC ）。 MAC 允许加载访问控制模块以实施安全策略。一些模块为系统的一小部分提供保护，加固特定服务。其他模块提供全面的标记安全性，涵盖所有主体和对象。定义中的强制部分表示控制的执行由管理员和操作系统执行。这与默认的自主访问控制（ DAC ）安全机制形成对比，后者将执行权留给用户自行决定。</p>
 </div>
@@ -22238,7 +22231,7 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 <h2 id="audit">Chapter 19. 安全事件审计<a class="anchor" href="#audit"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="audit-synopsis">19.1. 概要<a class="anchor" href="#audit-synopsis"></a></h3>
+<h3 id="audit-synopsis">19.1. 简介<a class="anchor" href="#audit-synopsis"></a></h3>
 <div class="paragraph">
 <p>FreeBSD 操作系统包含安全事件审计的支持。事件审计支持可靠、细粒度和可配置的记录各种与安全相关的系统事件，包括登录、配置更改以及文件和网络访问。这些日志记录对于实时系统监控、入侵检测和事后分析非常宝贵。 FreeBSD 实现了 Sun™ 发布的基本安全模块（ BSM ）应用程序编程接口（ API ）和文件格式，并与 Solaris™ 和 Mac OS® X 的审计实现互操作。</p>
 </div>
@@ -22770,7 +22763,7 @@ fi</pre>
 <h2 id="disks">Chapter 20. 存储<a class="anchor" href="#disks"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="disks-synopsis">20.1. 概要<a class="anchor" href="#disks-synopsis"></a></h3>
+<h3 id="disks-synopsis">20.1. 简介<a class="anchor" href="#disks-synopsis"></a></h3>
 <div class="paragraph">
 <p>本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、 CD 和 DVD 媒体、内存支持的磁盘以及 USB 存储设备。</p>
 </div>
@@ -30016,7 +30009,7 @@ vfs.zfs.vdev.cache.size=&#34;5M&#34;</pre>
 <h2 id="filesystems">Chapter 23. 其他文件系统<a class="anchor" href="#filesystems"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="filesystems-synopsis">23.1. 概要<a class="anchor" href="#filesystems-synopsis"></a></h3>
+<h3 id="filesystems-synopsis">23.1. 简介<a class="anchor" href="#filesystems-synopsis"></a></h3>
 <div class="paragraph">
 <p>文件系统是任何操作系统的重要组成部分。它们允许用户上传和存储文件，提供对数据的访问，并使硬盘变得有用。不同的操作系统在其本机文件系统上有所不同。传统上，本机的 FreeBSD 文件系统一直是 Unix 文件系统 UFS ，现已现代化为 UFS2 。自 FreeBSD 7.0 以来， Z 文件系统（ ZFS ）也作为本机文件系统可用。有关更多信息，请参见 <a href="./#zfs ， Z 文件系统（ ZFS ）"></a> 。</p>
 </div>
@@ -32092,7 +32085,7 @@ Option &#34;XkbOptions&#34;  &#34;grp:toggle&#34;</pre>
 <h2 id="updating-upgrading">Chapter 26. 更新和升级 FreeBSD<a class="anchor" href="#updating-upgrading"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="updating-upgrading-synopsis">26.1. 概要<a class="anchor" href="#updating-upgrading-synopsis"></a></h3>
+<h3 id="updating-upgrading-synopsis">26.1. 简介<a class="anchor" href="#updating-upgrading-synopsis"></a></h3>
 <div class="paragraph">
 <p>FreeBSD 在发布之间处于不断的开发中。有些人喜欢使用官方发布的版本，而其他人则喜欢与最新的开发保持同步。然而，即使是官方发布的版本也经常会更新以修复安全和其他关键问题。无论使用哪个版本， FreeBSD 都提供了所有必要的工具来保持系统更新，并允许在版本之间进行轻松升级。本章介绍如何跟踪开发系统以及保持 FreeBSD 系统最新的基本工具。</p>
 </div>
@@ -33720,7 +33713,7 @@ Elapsed Times <span class="k">for </span>processes csh,
 <h2 id="usb-device-mode">Chapter 28. USB 设备模式 /USB OTG<a class="anchor" href="#usb-device-mode"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="usb-device-mode-synopsis">28.1. 概要<a class="anchor" href="#usb-device-mode-synopsis"></a></h3>
+<h3 id="usb-device-mode-synopsis">28.1. 简介<a class="anchor" href="#usb-device-mode-synopsis"></a></h3>
 <div class="paragraph">
 <p>本章介绍了在 FreeBSD 中使用 USB 设备模式和 USB On The Go （ USB OTG ）。这包括虚拟串行控制台、虚拟网络接口和虚拟 USB 驱动器的使用。</p>
 </div>
@@ -34040,7 +34033,7 @@ hw.usb.template=1</pre>
 <h2 id="serialcomms">Chapter 29. 串行通信<a class="anchor" href="#serialcomms"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="serial-synopsis">29.1. 概要<a class="anchor" href="#serial-synopsis"></a></h3>
+<h3 id="serial-synopsis">29.1. 简介<a class="anchor" href="#serial-synopsis"></a></h3>
 <div class="paragraph">
 <p>UNIX® 一直以来都支持串行通信，因为最早的 UNIX® 机器依赖串行线路进行用户输入和输出。从平均终端只包含一个每秒 10 个字符的串行打印机和一个键盘的时代以来，情况发生了很大变化。本章介绍了在 FreeBSD 上使用串行通信的一些方法。</p>
 </div>
@@ -35442,7 +35435,7 @@ options DDB</pre>
 <h2 id="ppp-and-slip">Chapter 30. PPP<a class="anchor" href="#ppp-and-slip"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="ppp-and-slip-synopsis">30.1. 概要<a class="anchor" href="#ppp-and-slip-synopsis"></a></h3>
+<h3 id="ppp-and-slip-synopsis">30.1. 简介<a class="anchor" href="#ppp-and-slip-synopsis"></a></h3>
 <div class="paragraph">
 <p>FreeBSD 支持点对点（ PPP ）协议，可以使用拨号调制解调器建立网络或互联网连接。本章介绍了如何在 FreeBSD 中配置基于调制解调器的通信服务。</p>
 </div>
@@ -37557,7 +37550,7 @@ define(`confAUTH_MECHANISMS&#39;, `GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN&#39;)dnl</pr
 <h2 id="network-servers">Chapter 32. 网络服务器<a class="anchor" href="#network-servers"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="network-servers-synopsis">32.1. 概要<a class="anchor" href="#network-servers-synopsis"></a></h3>
+<h3 id="network-servers-synopsis">32.1. 简介<a class="anchor" href="#network-servers-synopsis"></a></h3>
 <div class="paragraph">
 <p>本章介绍了 UNIX® 系统上一些常用的网络服务。这包括安装、配置、测试和维护许多不同类型的网络服务。本章中还包含了示例配置文件，供参考使用。</p>
 </div>
@@ -44003,7 +43996,7 @@ pass out</pre>
 <h2 id="advanced-networking">Chapter 34. 高级网络<a class="anchor" href="#advanced-networking"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="advanced-networking-synopsis">34.1. 概要<a class="anchor" href="#advanced-networking-synopsis"></a></h3>
+<h3 id="advanced-networking-synopsis">34.1. 简介<a class="anchor" href="#advanced-networking-synopsis"></a></h3>
 <div class="paragraph">
 <p>本章涵盖了一些高级网络主题。</p>
 </div>
@@ -49938,7 +49931,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: January 4, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=f0af0e3" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: January 5, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=f5391ad" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
@@ -49998,7 +49991,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
         <li><a href="#config-tuning">Chapter 14. 配置、服务、日志和电源管理</a></li>
         <li><a href="#boot">Chapter 15. FreeBSD 引导过程</a></li>
         <li><a href="#security">Chapter 16. 安全</a></li>
-        <li><a href="#jails">Chapter 17. 监狱和容器</a></li>
+        <li><a href="#jails">Chapter 17. Jails 和容器</a></li>
         <li><a href="#mac">Chapter 18. 强制访问控制</a></li>
         <li><a href="#audit">Chapter 19. 安全事件审计</a></li>
         <li><a href="#disks">Chapter 20. 存储</a></li>
