@@ -8,7 +8,7 @@
   <meta name="copyright" content="1995-2024 The FreeBSD Foundation" />
   <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/" />
 
-  <title>第 12 章 . Linux 二进制兼容性 |  FreeBSD 中文文档</title>
+  <title>第 12 章 Linux 二进制兼容性 |  FreeBSD 中文文档</title>
 
   <meta name="theme-color" content="#790000">
   <meta name="color-scheme" content="system light dark high-contrast">
@@ -23,7 +23,7 @@
   
   
     
-    <meta property="og:title" content="第 12 章 . Linux 二进制兼容性" />
+    <meta property="og:title" content="第 12 章 Linux 二进制兼容性" />
     <meta property="og:description" content="FreeBSD 提供与 Linux 的二进制兼容性，允许用户在 FreeBSD 系统上安装和运行大多数 Linux 二进制文件，而无需先修改二进制文件。" />
     <meta property="og:type" content="website"/>
     <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
@@ -527,7 +527,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/linuxemu/">
-              第 12 章 . Linux 二进制兼容性
+              第 12 章 Linux 二进制兼容性
             </a>
             
             
@@ -643,7 +643,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/boot/">
-              第 15 章 . FreeBSD 的启动过程
+              第 15 章 FreeBSD 的引导过程
             </a>
             
             
@@ -713,7 +713,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/jails/">
-              第 17 章 jail 和容器
+              第 17 章 Jails 和容器
             </a>
             
             
@@ -1516,7 +1516,7 @@
       </label>
     </div>
     
-    <h1 class="title">第 12 章 . Linux 二进制兼容性</h1>
+    <h1 class="title">第 12 章 Linux 二进制兼容性</h1>
     
     
       <div class="admonitionblock note">
@@ -1553,7 +1553,7 @@
 <h2 id="linuxemu-synopsis">12.1. 简介<a class="anchor" href="#linuxemu-synopsis"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>FreeBSD 提供与 Linux® 的二进制兼容性，通常称为 Linuxulator ，允许用户安装和运行未经修改的 Linux 二进制文件。它适用于 x86 （ 32 位和 64 位）和 AArch64 架构。目前还不支持一些特定于 Linux 的操作系统功能，主要是与硬件相关或与系统管理相关的功能，例如 cgroups 或命名空间。</p>
+<p>FreeBSD 提供与 Linux® 的二进制兼容性，通常称为 Linuxulator，允许用户安装和运行未经修改的 Linux 二进制文件。它适用于 x86（32 位和 64 位）和 AArch64 架构。目前还不支持一些特定于 Linux 的操作系统功能，主要是与硬件相关或与系统管理相关的功能，例如 cgroups 或命名空间。</p>
 </div>
 <div class="paragraph">
 <p>在阅读本章之前，你应该：</p>
@@ -1561,7 +1561,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>了解如何安装 <a href="../ports/#ports">其他第三方软件</a> 。</p>
+<p>了解如何安装 <a href="../ports/#ports">其他第三方软件</a>。</p>
 </li>
 </ul>
 </div>
@@ -1593,7 +1593,7 @@
 <p>默认情况下，不启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=linux&amp;sektion=4&amp;format=html">linux(4)</a> 二进制兼容性。</p>
 </div>
 <div class="paragraph">
-<p>要在启动时启用 Linux ABI ，请执行以下命令：</p>
+<p>要在启动时启用 Linux ABI，请执行以下命令：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1612,7 +1612,7 @@
 <p>这对于静态链接的 Linux 二进制文件来说已经足够了。</p>
 </div>
 <div class="paragraph">
-<p>Linux 服务将加载 Linux 应用程序所需的内核模块并挂载文件系统，这些文件系统位于 [/compat/linux] 目录下。它们可以像本机 FreeBSD 二进制文件一样启动；它们的行为几乎与本机进程完全相同，并且可以按照通常的方式进行跟踪和调试。</p>
+<p>Linux 服务将加载 Linux 应用程序所需的内核模块并挂载文件系统，这些文件系统位于 <span class="filename">/compat/linux</span> 目录下。它们可以像本机 FreeBSD 二进制文件一样启动；它们的行为几乎与本机进程完全相同，并且可以按照通常的方式进行跟踪和调试。</p>
 </div>
 <div class="paragraph">
 <p>可以通过执行以下命令来检查 <span class="filename">/compat/linux</span> 的当前内容：</p>
@@ -1707,12 +1707,12 @@ drwxr-xr-x  16 root  wheel   17 Apr 11 21:10 var</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="linuxemu-debootstrap">12.3.2. 使用 debootstrap 创建 Debian / Ubuntu 基础系统<a class="anchor" href="#linuxemu-debootstrap"></a></h3>
+<h3 id="linuxemu-debootstrap">12.3.2. 使用 debootstrap 创建 Debian/Ubuntu 基础系统<a class="anchor" href="#linuxemu-debootstrap"></a></h3>
 <div class="paragraph">
-<p>提供 Linux 共享库的另一种方式是使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/debootstrap/">sysutils/debootstrap</a> 。这样做的优点是可以提供完整的 Debian 或 Ubuntu 发行版。</p>
+<p>提供 Linux 共享库的另一种方式是使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/debootstrap/">sysutils/debootstrap</a>。这样做的优点是可以提供完整的 Debian 或 Ubuntu 发行版。</p>
 </div>
 <div class="paragraph">
-<p>要安装 debootstrap ，请执行以下命令：</p>
+<p>要安装 debootstrap，请执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1720,7 +1720,7 @@ drwxr-xr-x  16 root  wheel   17 Apr 11 21:10 var</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=debootstrap&amp;sektion=8&amp;format=html">debootstrap(8)</a> 需要启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=linux&amp;sektion=4&amp;format=html">linux(4)</a> ABI 。启用后，执行以下命令在 <span class="filename">/compat/ubuntu</span> 中安装 Ubuntu 或 Debian ：</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=debootstrap&amp;sektion=8&amp;format=html">debootstrap(8)</a> 需要启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=linux&amp;sektion=4&amp;format=html">linux(4)</a> ABI。启用后，执行以下命令在 <span class="filename">/compat/ubuntu</span> 中安装 Ubuntu 或 Debian ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1735,7 +1735,7 @@ drwxr-xr-x  16 root  wheel   17 Apr 11 21:10 var</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>虽然从技术上讲可以安装到 <span class="filename">/compat/linux</span> 目录中，但由于可能与基于 CentOS 的软件包发生冲突，不建议这样做。相反，应根据发行版或版本名称派生目录名称，例如 <span class="filename">/compat/ubuntu</span> 。</p>
+<p>虽然从技术上讲可以安装到 <span class="filename">/compat/linux</span> 目录中，但由于可能与基于 CentOS 的软件包发生冲突，不建议这样做。相反，应根据发行版或版本名称派生目录名称，例如 <span class="filename">/compat/ubuntu</span>。</p>
 </div>
 </td>
 </tr>
@@ -1764,7 +1764,7 @@ I: Base system installed successfully.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>然后在 <code>/etc/fstab</code> 中设置挂载点。</p>
+<p>然后在 <span class="filename">/etc/fstab</span> 中设置挂载点。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1777,7 +1777,7 @@ I: Base system installed successfully.</pre>
 <p>如果要共享主目录的内容并且能够运行 X11 应用程序，应该使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=nullfs&amp;sektion=5&amp;format=html">nullfs(5)</a> 将 <span class="filename">/home</span> 和 <span class="filename">/tmp</span> 挂载到 Linux 兼容区域中，以实现回环。</p>
 </div>
 <div class="paragraph">
-<p>以下示例可以添加到 [/etc/fstab] 文件中：</p>
+<p>以下示例可以添加到 <span class="filename">/etc/fstab</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1792,7 +1792,7 @@ linsysfs        /compat/ubuntu/sys      linsysfs        rw,late                 
 </div>
 </div>
 <div class="paragraph">
-<p>然后执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> ：</p>
+<p>然后执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1884,7 +1884,7 @@ deb http://archive.ubuntu.com/ubuntu focal-updates universe multiverse restricte
 </div>
 </div>
 <div class="paragraph">
-<p>通过 rc 脚本挂载的文件系统在 chroots 或 jails 中的 Linux 进程中将无法工作；如果需要，在 /etc/fstab 中进行配置：</p>
+<p>通过 rc 脚本挂载的文件系统在 chroots 或 jails 中的 Linux 进程中将无法工作；如果需要，在 <span class="filename">/etc/fstab</span> 中进行配置：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1900,37 +1900,6 @@ linsysfs   /compat/linux/sys      linsysfs   rw,late                    0  0</pr
 </div>
 <div class="sect2">
 <h3 id="linuxemu-libs-manually">12.4.1. 手动安装额外的库<a class="anchor" href="#linuxemu-libs-manually"></a></h3>
-<div class="paragraph">
-<p>在某些情况下，您可能需要手动安装一些额外的库来满足您的项目需求。以下是手动安装额外库的步骤：</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>首先，您需要确定您需要安装的库的名称和版本。您可以在库的官方网站或文档中找到这些信息。</p>
-</li>
-<li>
-<p>打开命令行界面，并导航到您项目的根目录。</p>
-</li>
-<li>
-<p>使用适合您操作系统的包管理器来安装库的依赖项。例如，如果您使用的是 Linux 系统，您可以使用 apt-get 或 yum 来安装所需的依赖项。</p>
-</li>
-<li>
-<p>下载库的源代码或二进制文件。您可以在库的官方网站或其他可信来源上找到这些文件。</p>
-</li>
-<li>
-<p>解压缩下载的文件，并进入解压缩后的目录。</p>
-</li>
-<li>
-<p>根据库的文档或说明，执行适当的安装步骤。这可能包括运行配置脚本、编译源代码或执行其他必要的操作。</p>
-</li>
-<li>
-<p>安装完成后，您可以在您的项目中引用该库，并开始使用它。</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>请注意，手动安装库可能会比使用包管理器更复杂，并且可能需要更多的配置和设置。确保您仔细阅读库的文档，并按照说明进行操作。</p>
-</div>
 <div class="admonitionblock note">
 <table>
 <tbody><tr>
@@ -2019,9 +1988,9 @@ libc.so.4 (DLL Jump 4.5pl26) =&gt; /lib/libc.so.4.6.29</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_为_linux_elf_可执行文件进行品牌化">12.4.2. 为 Linux ELF 可执行文件进行品牌化<a class="anchor" href="#_为_linux_elf_可执行文件进行品牌化"></a></h3>
+<h3 id="_标记_linux_elf_可执行文件">12.4.2. 标记 Linux ELF 可执行文件<a class="anchor" href="#_标记_linux_elf_可执行文件"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 内核使用多种方法来确定要执行的二进制文件是否为 Linux 文件：它检查 ELF 文件头中的品牌，查找已知的 ELF 解释器路径并检查 ELF 注释；最后，默认情况下，未标记品牌的 ELF 可执行文件被认为是 Linux 文件。</p>
+<p>FreeBSD 内核使用多种方法来确定要执行的二进制文件是否为 Linux 文件：它检查 ELF 文件头中的标记，查找已知的 ELF 解释器路径并检查 ELF 注释；最后，默认情况下，未标记的 ELF 可执行文件被认为是 Linux 文件。</p>
 </div>
 <div class="paragraph">
 <p>如果所有这些方法都失败了，尝试执行二进制文件可能会导致错误消息：</p>
@@ -2052,7 +2021,7 @@ Abort</pre>
 <div class="sect2">
 <h3 id="_安装基于_linux_rpm_的应用程序">12.4.3. 安装基于 Linux RPM 的应用程序<a class="anchor" href="#_安装基于_linux_rpm_的应用程序"></a></h3>
 <div class="paragraph">
-<p>要安装一个基于 Linux RPM 的应用程序，首先安装 <code>archivers/rpm4</code> 包或端口。安装完成后， <code>root</code> 用户可以使用以下命令来安装 <code>.rpm</code> 文件：</p>
+<p>要安装一个基于 Linux RPM 的应用程序，首先安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/archivers/rpm4/">archivers/rpm4</a> 包或port。安装完成后，<code>root</code> 用户可以使用以下命令来安装 <span class="filename">.rpm</span> 文件：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2085,13 +2054,13 @@ multi on</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>这指定了首先搜索 <span class="filename">/etc/hosts</span> ，其次搜索 DNS 。当 <span class="filename">/compat/linux/etc/host.conf</span> 不存在时， Linux 应用程序使用主机系统中的 <span class="filename">/etc/host.conf</span> ，但它们会抱怨因为在 FreeBSD 中该文件不存在。如果没有配置名称服务器，请删除 <code>bind</code> ，使用 <span class="filename">/etc/resolv.conf</span> 。</p>
+<p>这指定了首先搜索 <span class="filename">/etc/hosts</span> ，其次搜索 DNS。当 <span class="filename">/compat/linux/etc/host.conf</span> 不存在时，Linux 应用程序使用主机系统中的 <span class="filename">/etc/host.conf</span>，但它们会抱怨因为在 FreeBSD 中该文件不存在。如果没有配置名称服务器，请删除 <code>bind</code>，使用 <span class="filename">/etc/resolv.conf</span>。</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="linuxemu-misc">12.4.5. 杂项<a class="anchor" href="#linuxemu-misc"></a></h3>
 <div class="paragraph">
-<p>有关 Linux® 与二进制兼容性的更多信息，请参阅文章链接： {linux-emulation}[FreeBSD 中的 Linux 模拟] 。</p>
+<p>有关 Linux® 与二进制兼容性的更多信息，请参阅文章 <a href="{linux-emulation}">FreeBSD 中的 Linux 模拟</a>。</p>
 </div>
 </div>
 </div>
@@ -2101,7 +2070,7 @@ multi on</pre>
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: January 5, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=2c469a9" target="_blank">github actions</a></p>
+      <p><strong>Last modified on</strong>: January 9, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=f5358f8" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
