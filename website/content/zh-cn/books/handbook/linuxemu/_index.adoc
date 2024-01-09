@@ -1,17 +1,17 @@
 ---
-description: 'FreeBSD provides binary compatibility with Linux, allowing users to install and run most Linux binaries on a FreeBSD system without having to first modify the binary'
+description: 'FreeBSD 提供与 Linux 的二进制兼容性，允许用户在 FreeBSD 系统上安装和运行大多数 Linux 二进制文件，而无需先修改二进制文件。'
 next: books/handbook/wine
-part: 'Part II. Common Tasks'
+part: 第二部分：常见任务
 path: /books/handbook/
 prev: books/handbook/printing
 showBookMenu: true
 tags: '["linux", "linuxulator", "emulation", "binary", "compatibility"]'
-title: 'Chapter 12. Linux Binary Compatibility'
+title: '第 12 章 Linux 二进制兼容性'
 weight: 15
 ---
 
 [[linuxemu]]
-= Linux Binary Compatibility
+= Linux 二进制兼容性
 :doctype: book
 :toc: macro
 :toclevels: 1
@@ -46,52 +46,52 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[linuxemu-synopsis]]
-== Synopsis
+== 简介
 
-FreeBSD provides *optional* binary compatibility with Linux(R), commonly referred to as Linuxulator, allowing users to install and run unmodified Linux binaries. It is available for the x86 (both 32 and 64 bit) and AArch64 architectures. Some Linux-specific operating system features are not yet supported; this mostly happens with functionality specific to hardware or related to system management, such as cgroups or namespaces.
+FreeBSD 提供与 Linux(R) 的二进制兼容性，通常称为 Linuxulator，允许用户安装和运行未经修改的 Linux 二进制文件。它适用于 x86（32 位和 64 位）和 AArch64 架构。目前还不支持一些特定于 Linux 的操作系统功能，主要是与硬件相关或与系统管理相关的功能，例如 cgroups 或命名空间。
 
-Before reading this chapter, you should:
+在阅读本章之前，你应该：
 
-* Know how to install crossref:ports[ports,additional third-party software].
+* 了解如何安装 crossref:ports[ports,其他第三方软件]。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* How to enable Linux binary compatibility on a FreeBSD system.
-* How to install additional Linux shared libraries.
-* How to install Linux applications on a FreeBSD system.
-* The implementation details of Linux compatibility in FreeBSD.
+* 如何在 FreeBSD 系统上启用 Linux 二进制兼容性。
+* 如何安装额外的 Linux 共享库。
+* 如何在 FreeBSD 系统上安装 Linux 应用程序。
+* FreeBSD 中 Linux 兼容性的实现细节。
 
 [[linuxemu-lbc-install]]
-== Configuring Linux Binary Compatibility
+== 配置 Linux 二进制兼容性
 
-By default, man:linux[4] binary compatibility is not enabled.
+默认情况下，不启用 man:linux[4] 二进制兼容性。
 
-To enable the Linux ABI at boot time, execute the following command:
+要在启动时启用 Linux ABI，请执行以下命令：
 
 [.programlisting]
 ....
 # sysrc linux_enable="YES"
 ....
 
-Once enabled, it can be started without rebooting executing the following command:
+一旦启用，可以通过执行以下命令来启动，无需重新启动：
 
 [source, shell]
 ....
 # service linux start
 ....
 
-This is enough for statically linked Linux binaries to work.
+这对于静态链接的 Linux 二进制文件来说已经足够了。
 
-The Linux service will load necessary kernel modules and mount filesystems expected by Linux applications under [.filename]#/compat/linux#. They can be started in the same way native FreeBSD binaries can; they behave almost exactly like native processes and can be traced and debugged the usual way.
+Linux 服务将加载 Linux 应用程序所需的内核模块并挂载文件系统，这些文件系统位于 [.filename]#/compat/linux# 目录下。它们可以像本机 FreeBSD 二进制文件一样启动；它们的行为几乎与本机进程完全相同，并且可以按照通常的方式进行跟踪和调试。
 
-The current content of [.filename]#/compat/linux# can be checked executing the following command:
+可以通过执行以下命令来检查 [.filename]#/compat/linux# 的当前内容：
 
 [source, shell]
 ....
 # ls -l /compat/linux/
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -102,15 +102,15 @@ dr-xr-xr-x   1 root  wheel    0 Apr 11 21:03 sys
 ....
 
 [[linux-userlands]]
-== Linux userlands
+== Linux 用户空间
 
-Linux software requires more than just an ABI to work. In order to run Linux software a Linux userland must be installed first.
+Linux 软件需要的不仅仅是一个 ABI 才能运行。为了运行 Linux 软件，首先必须安装 Linux 用户空间。
 
 [TIP]
 ====
-If all that is wanted is to run some software already included in the Ports tree, it can be installed via package manager and man:pkg[8] will automatically setup the required Linux userland.
+如果只是想运行已包含在 Ports 树中的一些软件，可以通过软件包管理器进行安装，并且 man:pkg[8] 将自动设置所需的 Linux 用户空间。
 
-For example, to install Sublime Text 4, along with all the Linux libraries it depends on, run this command:
+例如，要安装 Sublime Text 4 以及它所依赖的所有 Linux 库，请运行以下命令：
  
 [source, shell]
 ....
@@ -119,25 +119,25 @@ For example, to install Sublime Text 4, along with all the Linux libraries it de
 ====
 
 [[linuxemu-packages]]
-=== CentOS Base System from FreeBSD Packages
+=== 从 FreeBSD 软件包中获取的 CentOS 基本系统
 
-To install the CentOS userland execute the following command:
+要安装 CentOS 用户空间，请执行以下命令：
 
 [source, shell]
 ....
 # pkg install linux_base-c7
 ....
 
-package:emulators/linux_base-c7[] will place the base system derived from CentOS 7 into [.filename]#/compat/linux#.
+package:emulators/linux_base-c7[] 将基于 CentOS 7 的基本系统放置在 [.filename]#/compat/linux# 中。
 
-After installing the package, the contents of [.filename]#/compat/linux# can be verified by running the following command to check that the CentOS userland has been installed:
+安装完软件包后，可以通过运行以下命令来验证 [.filename]#/compat/linux# 的内容，以检查是否已安装 CentOS 用户空间：
 
 [source, shell]
 ....
 # ls -l /compat/linux/
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -158,18 +158,18 @@ drwxr-xr-x  16 root  wheel   17 Apr 11 21:10 var
 ....
 
 [[linuxemu-debootstrap]]
-=== Debian / Ubuntu Base System with debootstrap
+=== 使用 debootstrap 创建 Debian/Ubuntu 基础系统
 
-An alternative way of providing Linux shared libraries is by using package:sysutils/debootstrap[]. This has the advantage of providing a full Debian or Ubuntu distribution.
+提供 Linux 共享库的另一种方式是使用 package:sysutils/debootstrap[]。这样做的优点是可以提供完整的 Debian 或 Ubuntu 发行版。
 
-To install debootstrap execute the following command:
+要安装 debootstrap，请执行以下命令：
 
 [source, shell]
 ....
 # pkg install debootstrap
 ....
 
-man:debootstrap[8] needs man:linux[4] ABI enabled. Once enabled, execute the following command to install Ubuntu or Debian in [.filename]#/compat/ubuntu#:
+man:debootstrap[8] 需要启用 man:linux[4] ABI。启用后，执行以下命令在 [.filename]#/compat/ubuntu# 中安装 Ubuntu 或 Debian ：
 
 [source, shell]
 ....
@@ -178,10 +178,10 @@ man:debootstrap[8] needs man:linux[4] ABI enabled. Once enabled, execute the fol
 
 [NOTE]
 ====
-While it is technically possible to install into [.filename]#/compat/linux# instead, it's discouraged due to possible clashes with CentOS-based packages. Instead, derive the directory name from the distribution or version name, e.g., [.filename]#/compat/ubuntu#.
+虽然从技术上讲可以安装到 [.filename]#/compat/linux# 目录中，但由于可能与基于 CentOS 的软件包发生冲突，不建议这样做。相反，应根据发行版或版本名称派生目录名称，例如 [.filename]#/compat/ubuntu#。
 ====
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -202,13 +202,13 @@ I: Configuring ca-certificates...
 I: Base system installed successfully.
 ....
 
-Then set up mounts in [.filename]#/etc/fstab#.
+然后在 [.filename]#/etc/fstab# 中设置挂载点。
 
 [TIP]
 ====
-If the contents of the home directory should be shared and to be able to run X11 applications, [.filename]#/home# and [.filename]#/tmp# should be mounted in the linux compat area using man:nullfs[5] for loopback.
+如果要共享主目录的内容并且能够运行 X11 应用程序，应该使用 man:nullfs[5] 将 [.filename]#/home# 和 [.filename]#/tmp# 挂载到 Linux 兼容区域中，以实现回环。
 
-The following example can be added to [.filename]#/etc/fstab#:
+以下示例可以添加到 [.filename]#/etc/fstab# 文件中：
 
 [.programlisting]
 ....
@@ -222,7 +222,7 @@ linsysfs        /compat/ubuntu/sys      linsysfs        rw,late                 
 /home           /compat/ubuntu/home     nullfs          rw,late                      0       0
 ....
 
-Then execute man:mount[8]:
+然后执行 man:mount[8]：
 
 [source, shell]
 ....
@@ -230,34 +230,34 @@ Then execute man:mount[8]:
 ....
 ====
 
-To access the system using man:chroot[8] execute the following command:
+要使用 man:chroot[8] 访问系统，请执行以下命令：
 
 [source, shell]
 ....
 # chroot /compat/ubuntu /bin/bash
 ....
 
-Then man:uname[1] can be executed to check the Linux environment:
+然后可以执行 man:uname[1] 命令来检查 Linux 环境：
 
 [source, shell]
 ....
 # uname -s -r -m
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
 Linux 3.17.0 x86_64
 ....
 
-Once inside the chroot, the system behaves as in a normal Ubuntu installation While systemd doesn't work, the man:service[8] command works as usual.
+一旦进入 chroot 环境，系统的行为就像在正常的 Ubuntu 安装中一样。虽然 systemd 不起作用，但 man:service[8] 命令仍然像往常一样工作。
 
 [TIP]
 ====
-To add the package repositories missing from defaults edit the file [.filename]#/compat/ubuntu/etc/apt/sources.list#.
+要添加默认缺失的软件包仓库，请编辑文件 [.filename]#/compat/ubuntu/etc/apt/sources.list# 。
 
-For amd64 the following example can be used:
+对于 amd64 架构，可以使用以下示例：
 
 [.programlisting]
 ....
@@ -267,7 +267,7 @@ deb http://archive.ubuntu.com/ubuntu focal-backports universe multiverse restric
 deb http://archive.ubuntu.com/ubuntu focal-updates universe multiverse restricted main
 ....
 
-For arm64 this other example can be used:
+对于 arm64 架构，可以使用以下示例：
 
 [.programlisting]
 ....
@@ -276,20 +276,20 @@ deb http://ports.ubuntu.com/ubuntu-ports bionic main universe restricted multive
 ====
 
 [[linuxemu-advanced]]
-== Advanced Topics
+== 高级主题
 
-A list of all Linux-related man:sysctl[8] knobs can be found in man:linux[4].
+所有与 Linux 相关的 man:sysctl[8] 参数列表可以在 man:linux[4] 中找到。
 
-Some applications require specific filesystems to be mounted.
+有些应用程序需要挂载特定的文件系统。
 
-This is normally handled by the [.filename]#/etc/rc.d/linux# script but can be disabled at boot executing the following command:
+这通常由 [.filename]#/etc/rc.d/linux# 脚本处理，但可以通过执行以下命令在启动时禁用：
 
 [.programlisting]
 ....
 sysrc linux_mounts_enable="NO"
 ....
 
-Filesystems mounted by the rc script will not work for Linux processes inside chroots or jails; if needed, configure them in [.filename]#/etc/fstab#:
+通过 rc 脚本挂载的文件系统在 chroots 或 jails 中的 Linux 进程中将无法工作；如果需要，在 [.filename]#/etc/fstab# 中进行配置：
 
 [.programlisting]
 ....
@@ -300,28 +300,28 @@ linprocfs  /compat/linux/proc     linprocfs  rw,late                    0  0
 linsysfs   /compat/linux/sys      linsysfs   rw,late                    0  0
 ....
 
-Since the Linux binary compatibility layer has gained support for running both 32- and 64-bit Linux binaries, it is no longer possible to link the emulation functionality statically into a custom kernel.
+由于 Linux 二进制兼容层已经支持运行 32 位和 64 位 Linux 二进制文件，因此不再可能将仿真功能静态链接到自定义内核中。
 
 [[linuxemu-libs-manually]]
-=== Installing Additional Libraries Manually
+=== 手动安装额外的库
 
 [NOTE]
 ====
-For base system subdirectories created with man:debootstrap[8], use the instructions above instead.
+对于使用 man:debootstrap[8] 创建的基本系统子目录，请使用上述说明。
 ====
 
-If a Linux application complains about missing shared libraries after configuring Linux binary compatibility, determine which shared libraries the Linux binary needs and install them manually.
+如果在配置 Linux 二进制兼容性后，一个 Linux 应用程序抱怨缺少共享库，那么需要确定 Linux 二进制文件需要哪些共享库，并手动安装它们。
 
-From a Linux system using the same CPU architecture, `ldd` can be used to determine which shared libraries the application needs.
+在使用相同的 CPU 架构的 Linux 系统上，可以使用 `ldd` 命令来确定应用程序需要哪些共享库。
 
-For example, to check which shared libraries `linuxdoom` needs, run this command from a Linux system that has Doom installed:
+例如，要检查 `linuxdoom` 需要哪些共享库，请从已安装 Doom 的 Linux 系统上运行以下命令：
 
 [source, shell]
 ....
 % ldd linuxdoom
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -330,9 +330,9 @@ libX11.so.3 (DLL Jump 3.1) => /usr/X11/lib/libX11.so.3.1.0
 libc.so.4 (DLL Jump 4.5pl26) => /lib/libc.so.4.6.29
 ....
 
-Then, copy all the files in the last column of the output from the Linux system into [.filename]#/compat/linux# on the FreeBSD system. Once copied, create symbolic links to the names in the first column.
+然后，将 Linux 系统输出的最后一列中的所有文件复制到 FreeBSD 系统的 [.filename]#/compat/linux# 目录中。复制完成后，创建指向第一列中的文件名的符号链接。
 
-This example will result in the following files on the FreeBSD system:
+这个例子将在 FreeBSD 系统上生成以下文件：
 
 [.programlisting]
 ....
@@ -344,9 +344,9 @@ This example will result in the following files on the FreeBSD system:
 /compat/linux/lib/libc.so.4 -> libc.so.4.6.29
 ....
 
-If a Linux shared library already exists with a matching major revision number to the first column of the `ldd` output, it does not need to be copied to the file named in the last column, as the existing library should work. It is advisable to copy the shared library if it is a newer version, though. The old one can be removed, as long as the symbolic link points to the new one.
+如果在 `ldd` 输出的第一列中存在一个与 Linux 共享库的主要修订号匹配的库，则无需将其复制到最后一列中指定的文件中，因为现有库应该可以正常工作。但是，如果共享库是较新版本，则建议复制它。只要符号链接指向新的库，就可以删除旧的库。
 
-For example, these libraries already exist on the FreeBSD system:
+例如，这些库已经存在于 FreeBSD 系统上：
 
 [.programlisting]
 ....
@@ -354,14 +354,14 @@ For example, these libraries already exist on the FreeBSD system:
 /compat/linux/lib/libc.so.4 -> libc.so.4.6.27
 ....
 
-and `ldd` indicates that a binary requires a later version:
+而 `ldd` 指示一个二进制文件需要一个较新的版本：
 
 [.programlisting]
 ....
 libc.so.4 (DLL Jump 4.5pl26) -> libc.so.4.6.29
 ....
 
-Since the existing library is only one or two versions out of date in the last digit, the program should still work with the slightly older version. However, it is safe to replace the existing [.filename]#libc.so# with the newer version:
+由于现有的库只是在最后一位数字上过时了一到两个版本，所以程序应该仍然可以与稍旧的版本一起工作。然而，将现有的 [.filename]#libc.so# 替换为更新的版本是安全的。
 
 [.programlisting]
 ....
@@ -369,20 +369,20 @@ Since the existing library is only one or two versions out of date in the last d
 /compat/linux/lib/libc.so.4 -> libc.so.4.6.29
 ....
 
-Generally, one will need to look for the shared libraries that Linux binaries depend on only the first few times that a Linux program is installed on FreeBSD. After a while, there will be a sufficient set of Linux shared libraries on the system to be able to run newly installed Linux binaries without any extra work.
+通常情况下，在 FreeBSD 上首次安装 Linux 程序时，需要查找 Linux 二进制文件所依赖的共享库。然而，随着时间的推移，系统上会积累足够的 Linux 共享库，可以在安装新的 Linux 二进制文件时无需额外操作即可运行。
 
-=== Branding Linux ELF Binaries
+=== 标记 Linux ELF 可执行文件
 
-The FreeBSD kernel uses several methods to determine if the binary to be executed is a Linux one: it checks the brand in the ELF file header, looks for known ELF interpreter paths and checks ELF notes; finally, by default, unbranded ELF executables are assumed to be Linux anyway.
+FreeBSD 内核使用多种方法来确定要执行的二进制文件是否为 Linux 文件：它检查 ELF 文件头中的标记，查找已知的 ELF 解释器路径并检查 ELF 注释；最后，默认情况下，未标记的 ELF 可执行文件被认为是 Linux 文件。
 
-Should all those methods fail, an attempt to execute the binary might result in error message:
+如果所有这些方法都失败了，尝试执行二进制文件可能会导致错误消息：
 
 [source, shell]
 ....
 % ./my-linux-elf-binary
 ....
 
-The output should be similar to the following:
+输出应该类似于以下内容：
 
 [.programlisting]
 ....
@@ -390,16 +390,16 @@ ELF binary type not known
 Abort
 ....
 
-To help the FreeBSD kernel distinguish between a FreeBSD ELF binary and a Linux binary, use man:brandelf[1]:
+为了帮助 FreeBSD 内核区分 FreeBSD ELF 二进制文件和 Linux 二进制文件，请使用 man:brandelf[1] 命令。
 
 [source, shell]
 ....
 % brandelf -t Linux my-linux-elf-binary
 ....
 
-=== Installing a Linux RPM Based Application
+=== 安装基于 Linux RPM 的应用程序
 
-To install a Linux RPM-based application, first install the package:archivers/rpm4[] package or port. Once installed, `root` can use this command to install a [.filename]#.rpm#:
+要安装一个基于 Linux RPM 的应用程序，首先安装 package:archivers/rpm4[] 包或port。安装完成后，`root` 用户可以使用以下命令来安装 [.filename]#.rpm# 文件：
 
 [source, shell]
 ....
@@ -407,11 +407,11 @@ To install a Linux RPM-based application, first install the package:archivers/rp
 # rpm2cpio < /path/to/linux.archive.rpm | cpio -id
 ....
 
-If necessary, `brandelf` the installed ELF binaries. Note that this will prevent a clean uninstall.
+如果需要的话，对已安装的 ELF 二进制文件进行 `brandelf` 处理。请注意，这将阻止干净卸载。
 
-=== Configuring the Hostname Resolver
+=== 配置主机名解析器
 
-If DNS does not work or this error appears:
+如果 DNS 不工作或出现此错误：
 
 [.programlisting]
 ....
@@ -419,7 +419,7 @@ resolv+: "bind" is an invalid keyword resolv+:
 "hosts" is an invalid keyword
 ....
 
-configure [.filename]#/compat/linux/etc/host.conf# as follows:
+将 [.filename]#/compat/linux/etc/host.conf# 配置如下：
 
 [.programlisting]
 ....
@@ -427,9 +427,9 @@ order hosts, bind
 multi on
 ....
 
-This specifies that [.filename]#/etc/hosts# is searched first and DNS is searched second. When [.filename]#/compat/linux/etc/host.conf# does not exist, Linux applications use [.filename]#/etc/host.conf# in the host system but they complain since that file does not exist in FreeBSD. Remove `bind` if a name server is not configured using [.filename]#/etc/resolv.conf#.
+这指定了首先搜索 [.filename]#/etc/hosts# ，其次搜索 DNS。当 [.filename]#/compat/linux/etc/host.conf# 不存在时，Linux 应用程序使用主机系统中的 [.filename]#/etc/host.conf#，但它们会抱怨因为在 FreeBSD 中该文件不存在。如果没有配置名称服务器，请删除 `bind`，使用 [.filename]#/etc/resolv.conf#。
 
 [[linuxemu-misc]]
-=== Miscellaneous
+=== 杂项
 
-More information on how binary compatibility works with Linux(R) can be found in the article link:{linux-emulation}[Linux emulation in FreeBSD].
+有关 Linux(R) 与二进制兼容性的更多信息，请参阅文章 link:{linux-emulation}[FreeBSD 中的 Linux 模拟]。
