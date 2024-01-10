@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="本章介绍如何在 FreeBSD 中使用 DTrace 。"/>
-  <meta name="keywords" content="91, 34, 68, 84, 114, 97, 99, 101, 34, 44, 32, 34, 102, 101, 97, 116, 117, 114, 101, 115, 34, 44, 32, 34, 103, 117, 105, 100, 101, 34, 44, 32, 34, 116, 117, 116, 111, 114, 105, 97, 108, 34, 44, 32, 34, 107, 108, 100, 108, 111, 97, 100, 34, 93"/>
+  <meta name="keywords" content="DTrace, features, guide, tutorial, kldload"/>
   <meta name="copyright" content="1995-2024 The FreeBSD Foundation" />
   <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/dtrace/" />
 
@@ -13,12 +13,18 @@
   <meta name="theme-color" content="#790000">
   <meta name="color-scheme" content="system light dark high-contrast">
 
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.0/fuse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+
+
     <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
     <link rel="stylesheet" href="/styles/main.min.css">
     <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
     <script defer src="/js/theme-chooser.min.js"></script>
     <script defer src="/js/copy-clipboard.min.js"></script>
     <script defer src="/js/search.min.js"></script>
+    <script defer src="/js/fssearch.min.js"></script>
 
   
   
@@ -62,6 +68,12 @@
     
     <div class="search-donate-container">
       
+      <form class="search" method="get" id="search-header-form" action="https://free.bsd-doc.org/zh-cn/search" name="search-header-form">
+        <input id="search-query" name="s" type="text" size="20" maxlength="255" value="" />
+        <button>
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </form>
       <div class="donate">
         <a href="https://github.com/fierceX/freebsd-doc-cn" target="_blank">
           <span class="heart">♥</span>
@@ -152,7 +164,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/introduction/">
-              第一章 引言
+              第 1 章 引言
             </a>
             
             
@@ -180,7 +192,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/bsdinstall/">
-              第二章 安装 FreeBSD
+              第 2 章 安装 FreeBSD
             </a>
             
             
@@ -215,7 +227,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/basics/">
-              第三章. FreeBSD 基础知识
+              第 3 章 FreeBSD 基础知识
             </a>
             
             
@@ -252,7 +264,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/ports/">
-              第四章 安装应用程序：软件包和 Ports
+              第 4 章 安装应用程序：软件包和 Ports
             </a>
             
             
@@ -285,7 +297,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/x11/">
-              第五章 X Window 系统
+              第 5 章 X Window 系统
             </a>
             
             
@@ -315,7 +327,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/wayland/">
-              第六章 Wayland
+              第 6 章 Wayland
             </a>
             
             
@@ -1801,7 +1813,7 @@ Elapsed Times <span class="k">for </span>processes csh,
     
     <hr />
     <div class="last-modified">
-      <p><strong>Last modified on</strong>: January 9, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=57cd73e" target="_blank">fiercex</a></p>
+      <p><strong>Last modified on</strong>: January 10, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=16e6bcc" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
