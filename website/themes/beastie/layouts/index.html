@@ -2,13 +2,8 @@
   {{ $downloadurl := "" }}
   {{ $language := $.Site.Language.Lang }}
 
-  {{ if ne $language "en" }}
-    {{ $downloadurl = printf "%s/%s/%s/" $.Site.Params.websiteURL $language "where" }}
-  {{ else }}
-    {{ $downloadurl = printf "%s/%s/" $.Site.Params.websiteURL "where" }}
-  {{ end }}
   <main class="main-wrapper">
-    <!-- {{ partial "global-search.html" . }} -->
+    {{ partial "global-search.html" . }}
     <section class="cards-container">
       <div class="card">
         <a href={{ "books/handbook/basics" | absLangURL }}>
@@ -17,7 +12,7 @@
         </a>
       </div>
       <div class="card">
-        <a href={{ $downloadurl }}>
+        <a href=https://www.freebsd.org/where/>
           <h5>{{ i18n "download" }}</h5>
           <p>{{ i18n "download-freebsd" }}</p>
         </a>

@@ -1,0 +1,46 @@
+{{ define "footerfiles" }}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.0/fuse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+<script src="{{ "js/fssearch.js" | absURL }}"></script>
+{{ end }}
+{{ define "main" }}
+<section class="resume-section p-3 p-lg-5 d-flex flex-column">
+  <div class="my-auto" >
+    <center>
+    <!-- <form action="{{ $.Site.BaseURL }}/zh-cn/search">
+      <input id="search-query" name="s"/>
+    </form> -->
+    <div id="search-results">
+     <h3>Search results</h3>
+    </div>
+</center>
+  </div>
+</section>
+<!-- this template is sucked in by search.js and appended to the search-results div above. So editing here will adjust style -->
+<center>
+    <table align="right">
+        <td valign=top>
+        </td>
+            <script id="search-result-template" type="text/x-js-template">
+            <tr align="left">
+                <td valign=top>
+                </td>
+            <td>
+                <b><a href="${link}">${title}</a></b><br>
+                <!-- <a href="https://docs.freebsd.org/en/books/handbook/zfs/index.html">https://docs.freebsd.org/en/books/handbook/zfs/index.html</a><br> -->
+                <small>
+                    <div style="width: 800px;">
+                        <!-- <p>${snippet}</p> -->
+                        ${ isset tags }<p>Tags: ${tags}</p>${ end }
+                    </div>
+                    <!-- ${ isset categories }<p>Categories: ${categories}</p>${ end } -->
+                </small>
+            </td>
+        </tr>
+
+</script>
+</table> 
+</center>
+
+{{ end }}

@@ -11,6 +11,11 @@
   <meta name="theme-color" content="#790000">
   <meta name="color-scheme" content="system light dark high-contrast">
 
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.0/fuse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+
+
     <link rel="shortcut icon" href="{{ $.Site.BaseURL }}/favicon.ico">
 
     {{- $styles := resources.Get "styles/main.scss" | resources.ToCSS | resources.Minify }}
@@ -25,6 +30,9 @@
 
     {{- $search := resources.Get "js/search.js" | resources.Minify }}
     <script defer src="{{ $search.RelPermalink }}"></script>
+
+    {{- $fssearch := resources.Get "js/fssearch.js" | resources.Minify }}
+    <script defer src="{{ $fssearch.RelPermalink }}"></script>
 
   <!-- SEO -->
   {{ if $.Site.Params.isOnline }}
