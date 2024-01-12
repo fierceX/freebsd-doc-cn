@@ -1,0 +1,146 @@
+{{ define "main" }}
+<input type="checkbox" class="hidden toggle" id="menu-control">
+<main class="main-wrapper-book">
+  <a id="top"></a>
+  {{ if eq .Params.showBookMenu true }}
+  <aside class="book-menu">
+    <div class="book-menu-content">
+      <input id="search-book" type="text" placeholder="{{ i18n "search" }}" aria-label="{{ i18n "search" }}" maxlength="128" />
+      <nav id="MenuContents">
+        {{ partial "menu" . }}
+      </nav>
+    </div>
+  </aside>
+  {{ end }}
+  <div class="book">
+    {{ if eq .Params.showBookMenu true }}
+    <div class="book-menu-mobile">
+      <label for="menu-control">
+        <span class="menu-control-button">
+          <i class="fa fa-list" aria-hidden="true" title="{{ i18n "book-menu" }}"></i>
+          {{ i18n "book-menu" }}
+        </span>
+      </label>
+    </div>
+    {{ end }}
+    <h1 class="title">{{ .Title }}</h1>
+    {{ $siteLanguage := string $.Site.Language }}
+    {{ if ne $siteLanguage "en" }}
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          {{ i18n "stale-warning-message" }} <a href="https://translate-dev.freebsd.org/" target="_blank">{{ i18n "translation-instance" }}</a>.
+        </p>
+      </div>
+    {{ end }}
+    {{ if .Params.copyright }}
+      <div class="copyright">
+        Copyright © {{ .Params.copyright }}
+      </div>
+    {{ end}}
+    {{ if isset .Params "trademarks" }}
+      {{ partial "trademarks" .Params.trademarks }}
+    {{ end }}
+    <div class="toc-mobile">
+      <h3>{{ i18n "toc" }}</h3>
+      {{ .TableOfContents }}
+    </div>
+    {{ if $.Site.Params.isOnline }}
+      {{ if .Params.add_split_page_link }}
+      <div>
+        [ <a href="../">{{ i18n "split-html" }}</a> / {{ i18n "single-html" }} ]
+      </div>
+      {{ end }}
+      {{ if .Params.add_single_page_link }}
+      <div>
+        [ {{ i18n "split-html" }} / <a href="book/">{{ i18n "single-html" }}</a> ]
+      </div>
+      {{ end }}
+    {{ end }}
+    <div class="book-content">
+      {{ .Content }}
+    </div>
+    {{ if .GitInfo }}
+    <hr />
+    <div class="last-modified">
+      <p><strong>{{ i18n "last-modified" }}</strong>: {{ .GitInfo.AuthorDate | time.Format ":date_long" }} {{ i18n "by" }} <a href="https://cgit.freebsd.org/doc/commit/?id={{ .GitInfo.AbbreviatedHash }}" target="_blank">{{ .GitInfo.AuthorName }}</a></p>
+    </div>
+    {{ end }}
+    <div class="buttons">
+      {{ if .Params.prev }}
+      <div class="prev">
+        <i class="fa fa-angle-left" aria-hidden="true" title="{{ i18n "prev" }}"></i>
+        <div class="container">
+          {{ if $.Site.Params.isOnline }}
+            <a href={{ .Params.Prev | absLangURL }} class="direction">{{ i18n "prev" }}</a>
+          {{ else }}
+            {{ $pathSectionsPrev := split .Params.Prev "/" }}
+
+            {{if eq (len $pathSectionsPrev) 3}}
+              {{ $path := index $pathSectionsPrev 2 }}
+              <a href=../{{ $path }}/index.html>{{ i18n "prev" }}</a>
+            {{ end }}
+            {{if eq (len $pathSectionsPrev) 2}}
+              <a href=../index.html>{{ i18n "prev" }}</a>
+            {{ end }}
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+      <div class="home">
+        <i class="fa fa-home" aria-hidden="true" title="{{ i18n "home" }}"></i>
+        <div class="container">
+          {{ if $.Site.Params.isOnline }}
+            <a href="../" class="direction">{{ i18n "home" }}</a>
+          {{ else }}
+            <a href="../index.html" class="direction">{{ i18n "home" }}</a>
+          {{ end }}
+        </div>
+      </div>
+      {{ if .Params.next }}
+      <div class="next">
+        <div class="container">
+          {{ if $.Site.Params.isOnline }}
+            <a href={{ .Params.Next | absLangURL }}  class="direction">{{ i18n "next" }}</a>
+          {{ else }}
+            {{ $pathSectionsNext := split .Params.next "/" }}
+
+            {{if eq (len $pathSectionsNext) 3}}
+              {{ $book := index $pathSectionsNext 1 }}
+              {{ $chapter := index $pathSectionsNext 2 }}
+              <a href=../{{ $book }}/{{ $chapter }}/index.html>{{ i18n "next" }}</a>
+            {{ end }}
+            {{if eq (len $pathSectionsNext) 2}}
+              <a href=../index.html>{{ i18n "next" }}</a>
+            {{ end }}
+          {{ end }}
+        </div>
+        <i class="fa fa-angle-right" aria-hidden="true" title="{{ i18n "next" }}"></i>
+      </div>
+      {{ end }}
+    </div>
+    <label class="hidden book-menu-overlay" for="menu-control"></label>
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>{{ i18n "toc" }}</h3>
+      {{ .TableOfContents }}
+      <hr />
+      <div class="resources">
+        <h3>{{ i18n "resources" }}</h3>
+        <ul class="contents">
+          {{ $pathSections := split .Page.File "/" }}
+          {{ $path := printf "%s/%s/%s_%s.pdf" (index $pathSections 0) (index $pathSections 1) (index $pathSections 1) $.Site.Home.Language }}
+          {{ $pdfUrl := printf "%s%s/%s" $.Site.Params.downloadBaseUrl $.Site.Home.Language $path }}
+          <li><i class="fa fa-file-pdf-o" aria-hidden="true" title="{{ i18n "download-pdf" }}"></i><a href="{{ $pdfUrl }}">{{ i18n "download-pdf" }}</a></li>
+          {{ $editUrl := printf "%s%s/%s" $.Site.Params.editBaseUrl $.Site.Home.Language .Page.File }}
+          <li><i class="fa fa-pencil-square-o" aria-hidden="true" title="{{ i18n "edit-page" }}"></i><a href="{{ $editUrl }}" target="_blank">{{ i18n "edit-page" }}</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+  <a class="to-top" href="#top">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+</main>
+{{ end }}
