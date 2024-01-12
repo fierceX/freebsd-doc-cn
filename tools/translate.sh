@@ -43,6 +43,12 @@ fixup_Meun()
 	sed -i "s/showBookMenu: 'true'/showBookMenu: true/g" "${1}"
 }
 
+fixup_Toc()
+{
+	sed -i "s/:toclevels: 1/:toclevels: 2/g" "${1}"
+}
+
+
 #########################################################
 # Fix includes. In a few cases we want to include the	#
 # master (aka English) version of the includes		#
@@ -123,6 +129,7 @@ for adoc_orig in $(find "$COMPONENT/content/en/$SEARCH_RESTRICT" -name "*.adoc")
 
 	fixup_lists "${adoc_lang}"
 	fixup_Meun "${adoc_lang}"
+	fixup_Toc "${adoc_lang}"
 	# fixup_includes "${adoc_lang}" "${LANGUAGE}"
 done
 
