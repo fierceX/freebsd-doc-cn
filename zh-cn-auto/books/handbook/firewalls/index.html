@@ -3,7 +3,7 @@
   <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FreeBSD 基本系统内置了三个防火墙： PF 、 IPFW 和 IPFILTER 。本章介绍如何定义数据包过滤规则， FreeBSD 内置防火墙之间的区别以及如何使用它们。"/>
+  <meta name="description" content="FreeBSD 基本系统内置了三个防火墙：PF、IPFW 和 IPFILTER。本章介绍如何定义数据包过滤规则，FreeBSD 内置防火墙之间的区别以及如何使用它们。"/>
   <meta name="keywords" content="firewall, pf, ipfw, ipfilter, blacklistd, filtering"/>
   <meta name="copyright" content="1995-2024 The FreeBSD Foundation" />
   <link rel="canonical" href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/" />
@@ -30,7 +30,7 @@
   
     
     <meta property="og:title" content="第 33 章 防火墙" />
-    <meta property="og:description" content="FreeBSD 基本系统内置了三个防火墙： PF 、 IPFW 和 IPFILTER 。本章介绍如何定义数据包过滤规则， FreeBSD 内置防火墙之间的区别以及如何使用它们。" />
+    <meta property="og:description" content="FreeBSD 基本系统内置了三个防火墙：PF、IPFW 和 IPFILTER。本章介绍如何定义数据包过滤规则，FreeBSD 内置防火墙之间的区别以及如何使用它们。" />
     <meta property="og:type" content="website"/>
     <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
     <meta property="og:image:alt" content="FreeBSD Logo">
@@ -1265,9 +1265,9 @@
   <ul>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-intro">33.1. 简介</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-concepts">33.2. 防火墙概念</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-pf">33.3. PF</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipfw">33.4. IPFW</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-ipf">33.5. IPFILTER (IPF)</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn-auto/books/handbook/firewalls/#firewalls-blacklistd">33.6. 黑名单服务</a></li>
   </ul>
 
@@ -1546,9 +1546,9 @@
   <ul>
     <li><a href="#firewalls-intro">33.1. 简介</a></li>
     <li><a href="#firewalls-concepts">33.2. 防火墙概念</a></li>
-    <li><a href="#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
-    <li><a href="#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
-    <li><a href="#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="#firewalls-pf">33.3. PF</a></li>
+    <li><a href="#firewalls-ipfw">33.4. IPFW</a></li>
+    <li><a href="#firewalls-ipf">33.5. IPFILTER (IPF)</a></li>
     <li><a href="#firewalls-blacklistd">33.6. 黑名单服务</a></li>
   </ul>
 </nav>
@@ -1581,12 +1581,12 @@
 <p>限制或禁止内部网络主机访问公共互联网的服务。</p>
 </li>
 <li>
-<p>支持网络地址转换（ NAT ），允许内部网络使用私有 IP 地址，并使用单个 IP 地址或共享的自动分配的公共地址池与公共互联网建立单一连接。</p>
+<p>支持网络地址转换（NAT），允许内部网络使用私有 IP 地址，并使用单个 IP 地址或共享的自动分配的公共地址池与公共互联网建立单一连接。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>FreeBSD 基本系统内置了三个防火墙： PF 、 IPFW 和 IPFILTER （也称为 IPF ）。 FreeBSD 还提供了两个流量整形器，用于控制带宽使用： <a href="https://man.freebsd.org/cgi/man.cgi?query=altq&amp;sektion=4&amp;format=html">altq(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=dummynet&amp;sektion=4&amp;format=html">dummynet(4)</a> 。 ALTQ 通常与 PF 紧密关联，而 dummynet 与 IPFW 关联。每个防火墙使用规则来控制数据包对 FreeBSD 系统的访问，尽管它们的实现方式不同，并且每个防火墙都有不同的规则语法。</p>
+<p>FreeBSD 基本系统内置了三个防火墙：PF、IPFW 和 IPFILTER（也称为 IPF）。FreeBSD 还提供了两个流量整形器，用于控制带宽使用：<a href="https://man.freebsd.org/cgi/man.cgi?query=altq&amp;sektion=4&amp;format=html">altq(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=dummynet&amp;sektion=4&amp;format=html">dummynet(4)</a>。ALTQ 通常与 PF 紧密关联，而 dummynet 与 IPFW 关联。每个防火墙使用规则来控制数据包对 FreeBSD 系统的访问，尽管它们的实现方式不同，并且每个防火墙都有不同的规则语法。</p>
 </div>
 <div class="paragraph">
 <p>FreeBSD 提供多个防火墙，以满足各种用户的不同需求和偏好。每个用户应该评估哪个防火墙最适合他们的需求。</p>
@@ -1646,16 +1646,16 @@
 <p>一个规则集包含一组规则，根据数据包中包含的值来通过或阻止数据包。主机之间的双向数据包交换构成一个会话对话。防火墙规则集处理来自公共互联网的数据包以及系统作为对其响应而产生的数据包。每个 TCP/IP 服务都由其协议和监听端口预定义。目标为特定服务的数据包源自源地址使用非特权端口，并且目标地址上的特定服务端口。所有上述参数都可以用作选择条件来创建将通过或阻止服务的规则。</p>
 </div>
 <div class="paragraph">
-<p>要查找未知的端口号，请参考 [/etc/services](/etc/services) 。或者，访问 [<a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers" class="bare">http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers</a>](<a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers" class="bare">http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers</a>) ，进行端口号查找以找到特定端口号的用途。</p>
+<p>要查找未知的端口号，请参考 <span class="filename">/etc/services</span>。或者，访问 [<a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers" class="bare">http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers</a>](<a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers)，进行端口号查找以找到特定端口号的用途。" class="bare">http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers)，进行端口号查找以找到特定端口号的用途。</a></p>
 </div>
 <div class="paragraph">
-<p>请查看此链接，了解 [Trojans 使用的端口号](<a href="http://web.archive.org/web/20150803024617/http://www.sans.org/security-resources/idfaq/oddports.php" class="bare">http://web.archive.org/web/20150803024617/http://www.sans.org/security-resources/idfaq/oddports.php</a>) 。</p>
+<p>请查看此链接，了解 <a href="http://web.archive.org/web/20150803024617/http://www.sans.org/security-resources/idfaq/oddports.php">Trojans 使用的端口号</a>。</p>
 </div>
 <div class="paragraph">
-<p>FTP 有两种模式：主动模式和被动模式。它们的区别在于数据通道的获取方式。被动模式更安全，因为数据通道是由原始的 FTP 会话请求者获取的。关于 FTP 和不同模式的详细解释，请参见 <a href="http://www.slacksite.com/other/ftp.html">http://www.slacksite.com/other/ftp.html</a> 。</p>
+<p>FTP 有两种模式：主动模式和被动模式。它们的区别在于数据通道的获取方式。被动模式更安全，因为数据通道是由原始的 FTP 会话请求者获取的。关于 FTP 和不同模式的详细解释，请参见 <a href="http://www.slacksite.com/other/ftp.html">http://www.slacksite.com/other/ftp.html</a>。</p>
 </div>
 <div class="paragraph">
-<p>防火墙规则集可以是“排他性”或“包容性”。排他性防火墙允许所有流量通过，除了与规则集匹配的流量。而包容性防火墙则相反，它只允许与规则匹配的流量通过，阻止其他所有流量。</p>
+<p>防火墙规则集可以是“排他性（exclusive）”或“包容性（inclusive）”。排他性防火墙允许所有流量通过，除了与规则集匹配的流量。而包容性防火墙则相反，它只允许与规则匹配的流量通过，阻止其他所有流量。</p>
 </div>
 <div class="paragraph">
 <p>一个包容性防火墙可以更好地控制出站流量，因此对于向公共互联网提供服务的系统来说是更好的选择。它还可以控制来自公共互联网的流量类型，以便访问私有网络。所有不符合规则的流量都会被阻止并记录。包容性防火墙通常比排他性防火墙更安全，因为它们显著降低了允许不需要的流量的风险。</p>
@@ -1675,7 +1675,7 @@
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>可以使用“有状态防火墙”进一步加强安全性。这种类型的防火墙会跟踪打开的连接，并且只允许与现有连接匹配或打开新的允许连接的流量通过。</p>
+<p>可以使用“有状态防火墙（stateful firewall）”进一步加强安全性。这种类型的防火墙会跟踪打开的连接，并且只允许与现有连接匹配或打开新的允许连接的流量通过。</p>
 </div>
 <div class="paragraph">
 <p>有状态过滤将流量视为会话中的双向数据包交换。当在匹配规则上指定状态时，防火墙会动态生成每个会话期间预期交换的数据包的内部规则。它具有足够的匹配能力来确定数据包是否适用于会话。任何不符合会话模板的数据包都会被自动拒绝。</p>
@@ -1684,27 +1684,27 @@
 <p>当会话完成时，它将从动态状态表中移除。</p>
 </div>
 <div class="paragraph">
-<p>有状态过滤允许我们专注于阻止 / 通过新的会话。如果新的会话被通过，所有后续的数据包将自动被允许通过，任何冒充的数据包将自动被拒绝。如果新的会话被阻止，它的所有后续数据包都将被禁止。有状态过滤提供了高级匹配能力，能够抵御攻击者使用的各种攻击方法。</p>
+<p>有状态过滤允许我们专注于阻止/通过新的会话。如果新的会话被通过，所有后续的数据包将自动被允许通过，任何冒充的数据包将自动被拒绝。如果新的会话被阻止，它的所有后续数据包都将被禁止。有状态过滤提供了高级匹配能力，能够抵御攻击者使用的各种攻击方法。</p>
 </div>
 <div class="paragraph">
-<p>NAT 代表网络地址转换。 NAT 功能使得防火墙后面的私有局域网能够共享一个由 ISP 分配的 IP 地址，即使该地址是动态分配的。 NAT 允许局域网中的每台计算机都能够访问互联网，而无需为多个互联网账户或 IP 地址向 ISP 付费。</p>
+<p>NAT 代表网络地址转换。NAT 功能使得防火墙后面的私有局域网能够共享一个由 ISP 分配的 IP 地址，即使该地址是动态分配的。NAT 允许局域网中的每台计算机都能够访问互联网，而无需为多个互联网账户或 IP 地址向 ISP 付费。</p>
 </div>
 <div class="paragraph">
 <p>NAT 会自动将局域网上每个系统的私有 LAN IP 地址转换为单个公共 IP 地址，以便在通过防火墙发送到公共互联网的数据包中使用。它还会对返回的数据包执行相反的转换。</p>
 </div>
 <div class="paragraph">
-<p>根据 RFC 1918 ，以下 IP 地址范围被保留用于私有网络，这些地址将不会直接路由到公共互联网，因此可用于与 NAT 一起使用：</p>
+<p>根据 RFC 1918，以下 IP 地址范围被保留用于私有网络，这些地址将不会直接路由到公共互联网，因此可用于与 NAT 一起使用：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>10.0.0.0/8</code> 。</p>
+<p><code>10.0.0.0/8</code>。</p>
 </li>
 <li>
-<p><code>172.16.0.0/12</code> 。</p>
+<p><code>172.16.0.0/12</code>。</p>
 </li>
 <li>
-<p><code>192.168.0.0/16</code> 是一个 CIDR （无类别域间路由）表示法，用于表示一个 IP 地址范围。在这个表示法中， <code>192.168.0.0</code> 是网络地址， <code>16</code> 表示网络前缀的长度。这个 CIDR 表示的是一个包含 <code>192.168.0.0</code> 到 <code>192.168.255.255</code> 之间所有 IP 地址的网络。</p>
+<p><code>192.168.0.0/16</code>。</p>
 </li>
 </ul>
 </div>
@@ -1725,33 +1725,13 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：<a class="anchor" href="#firewalls-pf"></a></h2>
+<h2 id="firewalls-pf">33.3. PF<a class="anchor" href="#firewalls-pf"></a></h2>
 <div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>公共基金（ Public Fund ）</p>
-</li>
-<li>
-<p>个人金融（ Personal Finance ）</p>
-</li>
-<li>
-<p>个人文件（ Personal File ）</p>
-</li>
-<li>
-<p>保护因子（ Protection Factor ）</p>
-</li>
-<li>
-<p>电子邮件后缀（ Postfix ）
-请提供更多上下文以便准确翻译。</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>自从 FreeBSD 5.3 版本以来，OpenBSD 的 PF 防火墙的移植版本已经作为基本系统的一部分包含在其中。PF 是一个完整的、功能齐全的防火墙，可选择性地支持 ALTQ（Alternate Queuing ），提供了服务质量（QoS）功能。</p>
 </div>
 <div class="paragraph">
-<p>自从 FreeBSD 5.3 版本以来， OpenBSD 的 PF 防火墙的移植版本已经作为基本系统的一部分包含在其中。 PF 是一个完整的、功能齐全的防火墙，可选择性地支持 ALTQ （ Alternate Queuing ），提供了服务质量（ QoS ）功能。</p>
-</div>
-<div class="paragraph">
-<p>OpenBSD 项目在 <a href="http://www.openbsd.org/faq/pf/">PF FAQ</a> 中维护了 PF 的权威参考。 Peter Hansteen 在 <a href="http://home.nuug.no/" class="bare">http://home.nuug.no/</a> \~ peter/pf/[<a href="http://home.nuug.no/" class="bare">http://home.nuug.no/</a> ~ peter/pf/] 上维护了一个详尽的 PF 教程。</p>
+<p>OpenBSD 项目在 <a href="http://www.openbsd.org/faq/pf/">PF FAQ</a> 中维护了 PF 的权威参考。Peter Hansteen 在 <a href="http://home.nuug.no/\~" class="bare">http://home.nuug.no/\~</a> peter/pf/[<a href="http://home.nuug.no/~peter/pf/" class="bare">http://home.nuug.no/~peter/pf/</a>] 上维护了一个详尽的 PF 教程。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -1761,7 +1741,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>阅读 <a href="http://www.openbsd.org/faq/pf/">PF FAQ</a> 时，请记住多年来， FreeBSD 的 PF 版本与上游的 OpenBSD 版本有很大的差异。在 FreeBSD 上，不是所有的功能都与 OpenBSD 上的工作方式相同，反之亦然。</p>
+<p>阅读 <a href="http://www.openbsd.org/faq/pf/">PF FAQ</a> 时，请记住多年来，FreeBSD 的 PF 版本与上游的 OpenBSD 版本有很大的差异。在 FreeBSD 上，不是所有的功能都与 OpenBSD 上的工作方式相同，反之亦然。</p>
 </div>
 </td>
 </tr>
@@ -1771,15 +1751,15 @@
 <p>{freebsd-pf} 是一个很好的地方，可以询问有关配置和运行 PF 防火墙的问题。在提问之前，请先查看邮件列表的存档，因为可能已经有人回答过了。</p>
 </div>
 <div class="paragraph">
-<p>本手册的这一部分重点介绍了与 FreeBSD 相关的 PF 。它演示了如何启用 PF 和 ALTQ 。还提供了在 FreeBSD 系统上创建规则集的几个示例。</p>
+<p>本手册的这一部分重点介绍了与 FreeBSD 相关的 PF。它演示了如何启用 PF 和 ALTQ。还提供了在 FreeBSD 系统上创建规则集的几个示例。</p>
 </div>
 <div class="sect2">
 <h3 id="_启用_pf">33.3.1. 启用 PF<a class="anchor" href="#_启用_pf"></a></h3>
 <div class="paragraph">
-<p>要使用 PF ，首先必须加载其内核模块。本节描述了可以添加到 /etc/rc.conf 文件中以启用 PF 的条目。</p>
+<p>要使用 PF，首先必须加载其内核模块。本节描述了可以添加到 <span class="filename">/etc/rc.conf</span> 文件中以启用 PF 的条目。</p>
 </div>
 <div class="paragraph">
-<p>首先，在 <span class="filename">/etc/rc.conf</span> 中添加 <code>pf_enable = yes</code> 。</p>
+<p>首先，在 <span class="filename">/etc/rc.conf</span> 中添加 <code>pf_enable=yes</code>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1787,7 +1767,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>当启动 PF 时，可以传递在 <a href="https://man.freebsd.org/cgi/man.cgi?query=pfctl&amp;sektion=8&amp;format=html">pfctl(8)</a> 中描述的其他选项。在 .filename#/etc/rc.conf# 中添加或更改此条目，并在两个引号（ <code>&#34;&#34;</code> ）之间指定任何所需的标志。</p>
+<p>当启动 PF 时，可以传递在 <a href="https://man.freebsd.org/cgi/man.cgi?query=pfctl&amp;sektion=8&amp;format=html">pfctl(8)</a> 中描述的其他选项。在 <span class="filename">/etc/rc.conf</span> 中添加或更改此条目，并在两个引号（<code>&#34;&#34;</code>）之间指定任何所需的标志。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1795,7 +1775,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>如果 PF 无法找到其规则集配置文件，则不会启动。默认情况下， FreeBSD 不提供规则集，并且没有 /etc/pf.conf 文件。示例规则集可以在 /usr/share/examples/pf/ 中找到。如果已经将自定义规则集保存在其他位置，请在 /etc/rc.conf 文件中添加一行，指定文件的完整路径：</p>
+<p>如果 PF 无法找到其规则集配置文件，则不会启动。默认情况下，FreeBSD 不提供规则集，并且没有 <span class="filename">/etc/pf.conf</span> 文件。示例规则集可以在 <span class="filename">/usr/share/examples/pf/</span> 中找到。如果已经将自定义规则集保存在其他位置，请在 <span class="filename">/etc/rc.conf</span> 文件中添加一行，指定文件的完整路径：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1803,7 +1783,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>PF 提供了日志记录支持，可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=pflog&amp;sektion=4&amp;format=html">pflog(4)</a> 来查看。要启用日志记录支持，请将 <code>pflog_enable = yes</code> 添加到 <span class="filename">/etc/rc.conf</span> 文件中。</p>
+<p>PF 提供了日志记录支持，可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=pflog&amp;sektion=4&amp;format=html">pflog(4)</a> 来查看。要启用日志记录支持，请将 <code>pflog_enable=yes</code> 添加到 <span class="filename">/etc/rc.conf</span> 文件中。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1820,7 +1800,7 @@ pflog_flags=&#34;&#34;                  # additional flags for pflogd startup</p
 </div>
 </div>
 <div class="paragraph">
-<p>最后，如果防火墙后面有一个局域网，并且需要转发局域网上的计算机的数据包，或者需要进行网络地址转换（ NAT ），请启用以下选项：</p>
+<p>最后，如果防火墙后面有一个局域网，并且需要转发局域网上的计算机的数据包，或者需要进行网络地址转换（NAT），请启用以下选项：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1828,7 +1808,7 @@ pflog_flags=&#34;&#34;                  # additional flags for pflogd startup</p
 </div>
 </div>
 <div class="paragraph">
-<p>保存所需的编辑后，可以通过输入以下命令启动带有日志支持的 PF ：</p>
+<p>保存所需的编辑后，可以通过输入以下命令启动带有日志支持的 PF：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1837,10 +1817,10 @@ pflog_flags=&#34;&#34;                  # additional flags for pflogd startup</p
 </div>
 </div>
 <div class="paragraph">
-<p>默认情况下， PF 从 [/etc/pf.conf] 读取其配置规则，并根据该文件中指定的规则或定义修改、丢弃或通过数据包。 FreeBSD 安装包含位于 [/usr/share/examples/pf/] 的几个示例文件。请参考 [PF FAQ] 以获取完整的 PF 规则集覆盖范围。</p>
+<p>默认情况下，PF 从 <span class="filename">/etc/pf.conf</span> 读取其配置规则，并根据该文件中指定的规则或定义修改、丢弃或通过数据包。FreeBSD 安装包含位于 <span class="filename">/usr/share/examples/pf/</span> 的几个示例文件。请参考 <a href="http://www.openbsd.org/faq/pf/">PF FAQ</a> 以获取完整的 PF 规则集覆盖范围。</p>
 </div>
 <div class="paragraph">
-<p>要控制 PF ，请使用 <code>pfctl</code> 命令。 <a href="#pfctl">有用的 <code>pfctl</code> 选项</a> 总结了一些对该命令有用的选项。有关所有可用选项的描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=pfctl&amp;sektion=8&amp;format=html">pfctl(8)</a> 。</p>
+<p>要控制 PF，请使用 <code>pfctl</code> 命令。<a href="#pfctl">有用的 <code>pfctl</code> 选项</a> 总结了一些对该命令有用的选项。有关所有可用选项的描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=pfctl&amp;sektion=8&amp;format=html">pfctl(8)</a>。</p>
 </div>
 <table id="pfctl" class="tableblock frame-none grid-all stretch">
 <caption class="title">表 1. 有用的 <code>pfctl</code> 选项</caption>
@@ -1856,24 +1836,24 @@ pflog_flags=&#34;&#34;                  # additional flags for pflogd startup</p
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -e</code> 是一个命令行工具，用于启用 PF （ Packet Filter ）防火墙。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -e</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">启用 PF 。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -d</code> 是一个用于禁用 PF （ Packet Filter ）防火墙的命令。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -d</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">禁用 PF 。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -F all -f /etc/pf.conf</code> 是一个用于在 BSD 操作系统中重置和重新加载 PF 防火墙规则的命令。它会清除所有当前的规则，并从指定的配置文件 <code>/etc/pf.conf</code> 中重新加载规则。</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">清除所有的 NAT 、过滤、状态和表规则，并重新加载 /etc/pf.conf 文件。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -F all -f /etc/pf.conf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">清除所有的 NAT、过滤、状态和表规则，并重新加载 <span class="filename">/etc/pf.conf</span> 文件。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">`pfctl -s [ rules | 网络地址转换（ Network Address Translation ）</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">状态 ]`</p></td>
-</tr>
-<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -s [ rules | nat | states ]</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">关于过滤规则、 NAT 规则或状态表的报告。</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -vnf /etc/pf.conf</code> 是一个命令，用于验证和加载位于 <code>/etc/pf.conf</code> 文件中的 PF 防火墙规则。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pfctl -vnf /etc/pf.conf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">检查 <span class="filename">/etc/pf.conf</span> 是否有错误，但不要加载规则集。</p></td>
 </tr>
 </tbody>
 </table>
@@ -1885,14 +1865,14 @@ pflog_flags=&#34;&#34;                  # additional flags for pflogd startup</p
 </td>
 <td class="content">
 <div class="paragraph">
-<p><a class="package" href="https://cgit.freebsd.org/ports/tree/security/sudo/">security/sudo</a> 是用于运行需要提升权限的命令，例如 <code>pfctl</code> 。它可以从 Ports Collection 安装。</p>
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/security/sudo/">security/sudo</a> 是用于运行需要提升权限的命令，例如 <code>pfctl</code>。它可以从 Ports Collection 安装。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>要监视通过 PF 防火墙的流量，请考虑安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/pftop/">sysutils/pftop</a> 包或端口。安装完成后，可以运行 pftop 以查看类似于 <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 的格式的流量的实时快照。</p>
+<p>要监视通过 PF 防火墙的流量，请考虑安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/pftop/">sysutils/pftop</a> 包或 port。安装完成后，可以运行 pftop 以查看类似于 <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 的格式的流量的实时快照。</p>
 </div>
 </div>
 <div class="sect2">
@@ -1901,7 +1881,7 @@ pflog_flags=&#34;&#34;                  # additional flags for pflogd startup</p
 <p>本节演示如何创建自定义规则集。它从最简单的规则集开始，并通过多个示例来构建其概念，以展示 PF 的许多功能在实际应用中的用法。</p>
 </div>
 <div class="paragraph">
-<p>最简单的规则集适用于不运行任何服务且需要访问一个网络（可能是互联网）的单台机器。要创建这个最小的规则集，请编辑 <code>/etc/pf.conf</code> 文件，使其如下所示：</p>
+<p>最简单的规则集适用于不运行任何服务且需要访问一个网络（可能是互联网）的单台机器。要创建这个最小的规则集，请编辑 <span class="filename">/etc/pf.conf</span> 文件，使其如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1918,7 +1898,7 @@ pass out all keep state</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>除了保持状态， PF 还提供了可以在创建规则时定义和使用的“列表”和“宏”。宏可以包含列表，并且需要在使用之前进行定义。例如，在规则集的最顶部插入以下行：</p>
+<p>除了保持状态，PF 还提供了可以在创建规则时定义和使用的 <em>列表</em> 和 <em>宏</em>。宏可以包含列表，并且需要在使用之前进行定义。例如，在规则集的最顶部插入以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1927,7 +1907,7 @@ udp_services = &#34;{ domain }&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>PF 不仅可以识别端口号，还可以识别端口名称，只要这些名称在 [/etc/services] 文件中列出。这个例子创建了两个宏。第一个宏是一个包含七个 TCP 端口名称的列表，第二个宏是一个 UDP 端口名称。一旦定义了宏，就可以在规则中使用它们。在这个例子中，除了由该系统发起的与七个指定的 TCP 服务和一个指定的 UDP 服务相关的连接之外，所有流量都被阻止。</p>
+<p>PF 不仅可以识别端口号，还可以识别端口名称，只要这些名称在 <span class="filename">/etc/services</span> 文件中列出。这个例子创建了两个宏。第一个宏是一个包含七个 TCP 端口名称的列表，第二个宏是一个 UDP 端口名称。一旦定义了宏，就可以在规则中使用它们。在这个例子中，除了由该系统发起的与七个指定的 TCP 服务和一个指定的 UDP 服务相关的连接之外，所有流量都被阻止。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -1939,7 +1919,7 @@ pass proto udp to any port $udp_services keep state</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>尽管 UDP 被认为是一种无状态协议，但 PF 能够跟踪一些状态信息。例如，当传递一个 UDP 请求来询问域名服务器的域名时， PF 会监视响应并将其传递回去。</p>
+<p>尽管 UDP 被认为是一种无状态协议，但 PF 能够跟踪一些状态信息。例如，当传递一个 UDP 请求来询问域名服务器的域名时，PF 会监视响应并将其传递回去。</p>
 </div>
 <div class="paragraph">
 <p>每当对规则集进行编辑时，必须加载新的规则，以便可以使用它们：</p>
@@ -1950,7 +1930,7 @@ pass proto udp to any port $udp_services keep state</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>如果没有语法错误， <code>pfctl</code> 在加载规则时不会输出任何消息。在尝试加载规则之前，也可以对规则进行测试：</p>
+<p>如果没有语法错误，<code>pfctl</code> 在加载规则时不会输出任何消息。在尝试加载规则之前，也可以对规则进行测试：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1977,7 +1957,7 @@ pass proto udp to any port $udp_services keep state</pre>
 <div class="sect3">
 <h4 id="pftut-gateway">33.3.2.1. 一个带有 NAT 的简单网关<a class="anchor" href="#pftut-gateway"></a></h4>
 <div class="paragraph">
-<p>本节演示了如何配置运行 PF 的 FreeBSD 系统，使其充当至少一台其他计算机的网关。网关需要至少两个网络接口，每个接口连接到不同的网络。在本示例中， .filename#xl0# 连接到互联网， .filename#xl1# 连接到内部网络。</p>
+<p>本节演示了如何配置运行 PF 的 FreeBSD 系统，使其充当至少一台其他计算机的网关。网关需要至少两个网络接口，每个接口连接到不同的网络。在本示例中，<span class="filename">xl0</span> 连接到互联网， <span class="filename">xl1</span> 连接到内部网络。</p>
 </div>
 <div class="paragraph">
 <p>首先，启用网关以使机器将其接收到的网络流量从一个接口转发到另一个接口。这个 sysctl 设置将转发 IPv4 数据包：</p>
@@ -1996,7 +1976,7 @@ pass proto udp to any port $udp_services keep state</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>要在系统启动时启用这些设置，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysrc&amp;sektion=8&amp;format=html">sysrc(8)</a> 将它们添加到 [/etc/rc.conf] 文件中。</p>
+<p>要在系统启动时启用这些设置，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysrc&amp;sektion=8&amp;format=html">sysrc(8)</a> 将它们添加到 <span class="filename">/etc/rc.conf</span> 文件中。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2032,10 +2012,10 @@ pass proto udp to any port $udp_services keep state</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>可以使用宏来替代 <code>interface:network</code> 表示法，使规则集更易读。例如，可以定义一个 ` $ localnet` 宏，表示直接连接到内部接口的网络（ ` $ xl1:network` ）。另外，也可以将 ` $ localnet` 的定义更改为_IP 地址 / 子网掩码_表示法来表示网络，例如 <code>192.168.100.1/24</code> 表示私有地址的子网。</p>
+<p>可以使用宏来替代 <code>interface:network</code> 表示法，使规则集更易读。例如，可以定义一个 <code>$localnet</code> 宏，表示直接连接到内部接口的网络（<code>$xl1:network</code>）。另外，也可以将 <code>$localnet</code> 的定义更改为 <em>IP 地址/子网掩码</em> 表示法来表示网络，例如 <code>192.168.100.1/24</code> 表示私有地址的子网。</p>
 </div>
 <div class="paragraph">
-<p>如果需要的话， ` $ localnet` 甚至可以被定义为一个网络列表。无论具体需求如何，一个合理的 ` $ localnet` 定义可以在典型的通过规则中使用，如下所示：</p>
+<p>如果需要的话，<code>$localnet</code> 甚至可以被定义为一个网络列表。无论具体需求如何，一个合理的 <code>$localnet</code> 定义可以在典型的通过规则中使用，如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2053,7 +2033,7 @@ pass proto udp to any port $udp_services keep state</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>对于拨号用户，外部接口将使用 <span class="filename">tun0</span> 。对于 ADSL 连接，特别是使用以太网上的 PPP （ PPPoE ）的连接，正确的外部接口是 <span class="filename">tun0</span> ，而不是物理以太网接口。</p>
+<p>对于拨号用户，外部接口将使用 <span class="filename">tun0</span>。对于 ADSL 连接，特别是使用以太网上的 PPP（PPPoE）的连接，正确的外部接口是 <span class="filename">tun0</span>，而不是物理以太网接口。</p>
 </div>
 </td>
 </tr>
@@ -2071,7 +2051,7 @@ pass from { lo0, $localnet } to any keep state</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>这个规则集引入了 <code>nat</code> 规则，用于处理内部网络中不可路由的地址到分配给外部接口的 IP 地址的网络地址转换。 nat 规则的最后部分周围的括号 <code>($ ext_if)</code> 是在外部接口的 IP 地址是动态分配时包含的。它确保即使外部 IP 地址发生变化，网络流量也能够正常运行而不会有严重的中断。</p>
+<p>这个规则集引入了 <code>nat</code> 规则，用于处理内部网络中不可路由的地址到分配给外部接口的 IP 地址的网络地址转换。nat 规则的最后部分周围的括号 <code>($ext_if)</code> 是在外部接口的 IP 地址是动态分配时包含的。它确保即使外部 IP 地址发生变化，网络流量也能够正常运行而不会有严重的中断。</p>
 </div>
 <div class="paragraph">
 <p>请注意，这个规则集可能允许更多的流量从网络中通过，而实际上并不需要这么多。一个合理的设置可以创建这个宏：</p>
@@ -2131,13 +2111,13 @@ pass quick inet proto { tcp, udp } to any port $udp_services keep state</pre>
 </ul>
 </div>
 <div class="paragraph">
-<p>在考虑客户端或服务器软件的潜在安全弱点之前，所有这些要点都提出了安全挑战。存在更安全的文件传输替代方案，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=sftp&amp;sektion=1&amp;format=html">sftp(1)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=scp&amp;sektion=1&amp;format=html">scp(1)</a> ，它们都具有身份验证和加密连接上的数据传输功能。</p>
+<p>在考虑客户端或服务器软件的潜在安全弱点之前，所有这些要点都提出了安全挑战。存在更安全的文件传输替代方案，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=sftp&amp;sektion=1&amp;format=html">sftp(1)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=scp&amp;sektion=1&amp;format=html">scp(1)</a>，它们都具有身份验证和加密连接上的数据传输功能。</p>
 </div>
 <div class="paragraph">
-<p>对于需要使用 FTP 的情况， PF 提供了将 FTP 流量重定向到一个名为 <a href="https://man.freebsd.org/cgi/man.cgi?query=ftp-proxy&amp;sektion=8&amp;format=html">ftp-proxy(8)</a> 的小型代理程序，该程序包含在 FreeBSD 的基本系统中。代理的作用是使用一组锚点动态插入和删除规则，以正确处理 FTP 流量。</p>
+<p>对于需要使用 FTP 的情况，PF 提供了将 FTP 流量重定向到一个名为 <a href="https://man.freebsd.org/cgi/man.cgi?query=ftp-proxy&amp;sektion=8&amp;format=html">ftp-proxy(8)</a> 的小型代理程序，该程序包含在 FreeBSD 的基本系统中。代理的作用是使用一组锚点动态插入和删除规则，以正确处理 FTP 流量。</p>
 </div>
 <div class="paragraph">
-<p>要启用 FTP 代理，请将以下行添加到 /etc/rc.conf 文件中：</p>
+<p>要启用 FTP 代理，请将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2153,7 +2133,7 @@ pass quick inet proto { tcp, udp } to any port $udp_services keep state</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>对于基本配置，需要将三个元素添加到 [/etc/pf.conf] 文件中。首先是代理将用于插入生成的 FTP 会话规则的锚点：</p>
+<p>对于基本配置，需要将三个元素添加到 <span class="filename">/etc/pf.conf</span> 文件中。首先是代理将用于插入生成的 FTP 会话规则的锚点：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2181,7 +2161,7 @@ rdr-anchor &#34;ftp-proxy/*&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>` $ proxy` 是代理守护程序绑定的地址的展开形式。</p>
+<p><code>$proxy</code> 是代理守护程序绑定的地址的展开形式。</p>
 </div>
 <div class="paragraph">
 <p>保存 <span class="filename">/etc/pf.conf</span> 文件，加载新的规则，并从客户端验证 FTP 连接是否正常工作：</p>
@@ -2192,7 +2172,7 @@ rdr-anchor &#34;ftp-proxy/*&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>这个例子涵盖了一个基本的设置，其中本地网络中的客户端需要联系其他地方的 FTP 服务器。这个基本配置应该适用于大多数 FTP 客户端和服务器的组合。如 <a href="https://man.freebsd.org/cgi/man.cgi?query=ftp-proxy&amp;sektion=8&amp;format=html">ftp-proxy(8)</a> 所示，通过在 `ftpproxy_flags = ` 行中添加选项，可以改变代理的行为。一些客户端或服务器可能有特定的问题，在配置中必须进行补偿，或者可能需要以特定的方式集成代理，例如将 FTP 流量分配给特定的队列。</p>
+<p>这个例子涵盖了一个基本的设置，其中本地网络中的客户端需要联系其他地方的 FTP 服务器。这个基本配置应该适用于大多数 FTP 客户端和服务器的组合。如 <a href="https://man.freebsd.org/cgi/man.cgi?query=ftp-proxy&amp;sektion=8&amp;format=html">ftp-proxy(8)</a> 所示，通过在 <code>ftpproxy_flags=</code> 行中添加选项，可以改变代理的行为。一些客户端或服务器可能有特定的问题，在配置中必须进行补偿，或者可能需要以特定的方式集成代理，例如将 FTP 流量分配给特定的队列。</p>
 </div>
 <div class="paragraph">
 <p>要以 PF 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=ftp-proxy&amp;sektion=8&amp;format=html">ftp-proxy(8)</a> 保护的方式运行 FTP 服务器，可以配置一个独立的 <code>ftp-proxy</code> 以反向模式运行，使用 <code>-R</code> 选项，在一个独立的端口上，并具有自己的重定向通过规则。</p>
@@ -2201,10 +2181,10 @@ rdr-anchor &#34;ftp-proxy/*&#34;</pre>
 <div class="sect3">
 <h4 id="pftut-icmp">33.3.2.3. 管理 ICMP<a class="anchor" href="#pftut-icmp"></a></h4>
 <div class="paragraph">
-<p>许多用于调试或故障排除 TCP/IP 网络的工具依赖于 Internet 控制消息协议（ ICMP ），该协议专门设计用于调试。</p>
+<p>许多用于调试或故障排除 TCP/IP 网络的工具依赖于 Internet 控制消息协议（ICMP），该协议专门设计用于调试。</p>
 </div>
 <div class="paragraph">
-<p>ICMP 协议在主机和网关之间发送和接收“控制消息”，主要是为了向发送方提供有关到目标主机的任何异常或困难条件的反馈。路由器使用 ICMP 来协商数据包大小和其他传输参数，这个过程通常被称为“路径 MTU 发现”。</p>
+<p>ICMP 协议在主机和网关之间发送和接收 <em>控制消息（ontrol messages）</em>，主要是为了向发送方提供有关到目标主机的任何异常或困难条件的反馈。路由器使用 ICMP 来协商数据包大小和其他传输参数，这个过程通常被称为 <em>路径 MTU 发现（path MTU discovery）</em>。</p>
 </div>
 <div class="paragraph">
 <p>从防火墙的角度来看，一些 ICMP 控制消息容易受到已知的攻击向量的攻击。此外，无条件地允许所有诊断流量通过可以使调试更容易，但也会使他人更容易提取有关网络的信息。因此，以下规则可能不是最佳选择：</p>
@@ -2243,7 +2223,7 @@ pass inet proto icmp from any to $ext_if keep state</pre>
 <p>如果需要其他类型的 ICMP 数据包，请将 <code>icmp_types</code> 扩展为这些数据包类型的列表。输入 <code>more /usr/src/sbin/pfctl/pfctl_parser.c</code> 以查看 PF 支持的 ICMP 消息类型列表。请参考 <a href="http://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml">http://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml</a> 以了解每个消息类型的解释。</p>
 </div>
 <div class="paragraph">
-<p>由于 Unix 的 <code>traceroute</code> 默认使用 UDP ，因此需要添加另一条规则来允许 Unix 的 <code>traceroute</code> 。</p>
+<p>由于 Unix 的 <code>traceroute</code> 默认使用 UDP，因此需要添加另一条规则来允许 Unix 的 <code>traceroute</code>。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2252,15 +2232,15 @@ pass out on $ext_if inet proto udp from any to any port 33433 &gt;&lt; 33626 kee
 </div>
 </div>
 <div class="paragraph">
-<p>由于 Microsoft Windows 系统上的 <code>TRACERT.EXE</code> 使用 ICMP 回显请求消息，因此只需要第一个规则来允许来自这些系统的网络跟踪。 Unix 的 <code>traceroute</code> 也可以指示使用其他协议，并且如果使用了 <code>-I</code> 选项，它将使用 ICMP 回显请求消息。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=traceroute&amp;sektion=8&amp;format=html">traceroute(8)</a> 手册页。</p>
+<p>由于 Microsoft Windows 系统上的 <code>TRACERT.EXE</code> 使用 ICMP 回显请求消息，因此只需要第一个规则来允许来自这些系统的网络跟踪。Unix 的 <code>traceroute</code> 也可以指示使用其他协议，并且如果使用了 <code>-I</code> 选项，它将使用 ICMP 回显请求消息。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=traceroute&amp;sektion=8&amp;format=html">traceroute(8)</a> 手册页。</p>
 </div>
 <div class="sect4">
-<h5 id="pftut-pathmtudisc">33.3.2.3.1. 路径最大传输单元发现<a class="anchor" href="#pftut-pathmtudisc"></a></h5>
+<h5 id="pftut-pathmtudisc">33.3.2.3.1. 路径 MTU 发现<a class="anchor" href="#pftut-pathmtudisc"></a></h5>
 <div class="paragraph">
-<p>Internet 协议被设计为与设备无关，设备无关的一个结果是无法可靠地预测给定连接的最佳数据包大小。数据包大小的主要限制是“最大传输单元”（ MTU ），它设置了接口的数据包大小的上限。输入 <code>ifconfig</code> 命令可以查看系统网络接口的 MTU 值。</p>
+<p>Internet 协议被设计为与设备无关，设备无关的一个结果是无法可靠地预测给定连接的最佳数据包大小。数据包大小的主要限制是 <em>最大传输单元</em>（MTU），它设置了接口的数据包大小的上限。输入 <code>ifconfig</code> 命令可以查看系统网络接口的 MTU 值。</p>
 </div>
 <div class="paragraph">
-<p>TCP/IP 使用一种称为路径 MTU 发现的过程来确定连接的正确数据包大小。该过程发送大小不同的数据包，并设置“不分片”标志，期望在达到上限时收到一个 ICMP 返回数据包，其类型为“ 3 型，代码 4 ”。类型 3 表示“目标不可达”，代码 4 表示“需要分片，但设置了不分片标志”。为了支持与其他 MTU 的连接，可以将“目标不可达”类型添加到“ icmp_types ”宏中，以允许路径 MTU 发现。</p>
+<p>TCP/IP 使用一种称为路径 MTU 发现的过程来确定连接的正确数据包大小。该过程发送大小不同的数据包，并设置“不分片（Do not fragment）”标志，期望在达到上限时收到一个 ICMP 返回数据包，其类型为“type 3, code 4”。Type 3 表示“目标不可达（destination unreachable）”，Code 4 表示“需要分片，但设置了不分片标志（fragmentation needed,but the do-not-fragment flag is set）”。为了支持与其他 MTU 的连接，可以将 <code>destination unreachable</code> 类型添加到 <code>icmp_types</code> 宏中，以允许路径 MTU 发现。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2291,7 +2271,7 @@ pass out on $ext_if inet proto udp from any to any port 33433 &gt;&lt; 33626 kee
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中， <code>192.168.2.0/24</code> 网络是表的一部分，除了地址 <code>192.168.2.5</code> ，它使用 ` ! ` 运算符被排除在外。还可以从文件中加载表，其中每个项目都在单独的行上，就像在这个例子中看到的那样 <span class="filename">/etc/clients</span> ：</p>
+<p>在这个例子中，<code>192.168.2.0/24</code> 网络是表的一部分，除了地址 <code>192.168.2.5</code>，它使用 <code>!</code> 运算符被排除在外。还可以从文件中加载表，其中每个项目都在单独的行上，就像在这个例子中看到的那样 <span class="filename">/etc/clients</span>：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2351,7 +2331,7 @@ Sep 26 03:12:44 skapet sshd[24703]: Failed password for invalid user admin from 
 <p>这表明正在进行一次暴力攻击，某人或某个程序正在尝试发现能够让他们进入系统的用户名和密码。</p>
 </div>
 <div class="paragraph">
-<p>如果需要合法用户进行外部 SSH 访问，更改 SSH 使用的默认端口可以提供一定的保护。然而， PF 提供了一种更优雅的解决方案。通过 Pass 规则，可以限制连接主机的操作，并将违规者放入被拒绝某些或全部访问的地址表中。甚至可以断开超出限制的机器的所有现有连接。</p>
+<p>如果需要合法用户进行外部 SSH 访问，更改 SSH 使用的默认端口可以提供一定的保护。然而，PF 提供了一种更优雅的解决方案。通过 Pass 规则，可以限制连接主机的操作，并将违规者放入被拒绝某些或全部访问的地址表中。甚至可以断开超出限制的机器的所有现有连接。</p>
 </div>
 <div class="paragraph">
 <p>要进行配置，请在规则集的表格部分创建此表格。</p>
@@ -2380,13 +2360,13 @@ pass inet proto tcp from any to $localnet port $tcp_services \
 <p><code>max-src-conn</code> 是指允许来自一个主机的同时连接数。</p>
 </div>
 <div class="paragraph">
-<p><code>max-src-conn-rate</code> 是指在每个指定的时间段（ 5 秒）内，允许来自单个主机（ 15 ）的新连接的速率。</p>
+<p><code>max-src-conn-rate</code> 是每秒钟（<em>5</em>）允许来自任何单个主机的新连接的速率（<em>15</em>）。</p>
 </div>
 <div class="paragraph">
 <p><code>overload &lt;bruteforce&gt;</code> 的意思是任何超过这些限制的主机都会将其地址添加到 <code>bruteforce</code> 表中。规则集会阻止来自 <code>bruteforce</code> 表中地址的所有流量。</p>
 </div>
 <div class="paragraph">
-<p>最后， <code>flush global</code> 表示当一个主机达到限制时，该主机的所有连接 (<code>global</code>) 将被终止 (<code>flush</code>) 。</p>
+<p>最后，<code>flush global</code> 表示当一个主机达到限制时，该主机的所有连接 (<code>global</code>) 将被终止 (<code>flush</code>) 。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2396,7 +2376,7 @@ pass inet proto tcp from any to $localnet port $tcp_services \
 </td>
 <td class="content">
 <div class="paragraph">
-<p>这些规则将 <em>不会</em> 阻止慢速暴力破解者，如 <a href="http://home.nuug.no/" class="bare">http://home.nuug.no/</a> \~ peter/hailmary2013/[<a href="http://home.nuug.no/" class="bare">http://home.nuug.no/</a> ~ peter/hailmary2013/] 中所描述的。</p>
+<p>这些规则将 <em>不会</em> 阻止慢速暴力破解者，如 <a href="http://home.nuug.no/~peter/hailmary2013/">http://home.nuug.no/~peter/hailmary2013/</a> 中所描述的。</p>
 </div>
 </td>
 </tr>
@@ -2420,15 +2400,11 @@ pass inet proto tcp from any to $localnet port $tcp_services \
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>不一定需要阻止所有超载器： *</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>不一定需要阻止所有超载器：</strong><br/></p>
 </div>
 <div class="paragraph">
-<p>值得注意的是，过载机制是一种通用技术，不仅适用于 SSH ，并且完全阻止来自违规者的所有流量并不总是最优的选择。</p>
+<p>值得注意的是，过载机制是一种通用技术，不仅适用于 SSH，并且完全阻止来自违规者的所有流量并不总是最优的选择。</p>
 </div>
 <div class="paragraph">
 <p>例如，可以使用过载规则来保护邮件服务或网络服务，并且可以在规则中使用过载表来将违规者分配到带有最小带宽分配的队列中，或者重定向到特定的网页。</p>
@@ -2441,7 +2417,7 @@ pass inet proto tcp from any to $localnet port $tcp_services \
 <p>随着时间的推移，表格将被过载规则填满，其大小将逐渐增长，占用更多的内存。有时，被阻止的 IP 地址是一个动态分配的地址，后来被分配给了一个有合法理由与本地网络中的主机通信的主机。</p>
 </div>
 <div class="paragraph">
-<p>对于这种情况， pfctl 提供了过期表项的功能。例如，以下命令将删除在 <code>86400</code> 秒内没有被引用的 <code>&lt;bruteforce&gt;</code> 表项：</p>
+<p>对于这种情况，pfctl 提供了过期表项的功能。例如，以下命令将删除在 <code>86400</code> 秒内没有被引用的 <code>&lt;bruteforce&gt;</code> 表项：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2449,10 +2425,10 @@ pass inet proto tcp from any to $localnet port $tcp_services \
 </div>
 </div>
 <div class="paragraph">
-<p>类似的功能由包： security/expiretable[] 提供，该包会删除在指定时间内未被访问的表条目。</p>
+<p>类似的功能由 <a class="package" href="https://cgit.freebsd.org/ports/tree/security/expiretable/">security/expiretable</a> 提供，该包会删除在指定时间内未被访问的表条目。</p>
 </div>
 <div class="paragraph">
-<p>安装完成后，可以运行 expiretable 来删除指定年龄之前的 <code>&lt;bruteforce&gt;</code> 表条目。以下示例将删除所有 24 小时之前的条目：</p>
+<p>安装完成后，可以运行 expiretable 来删除指定时限之前的 <code>&lt;bruteforce&gt;</code> 表条目。以下示例将删除所有 24 小时之前的条目：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2463,13 +2439,13 @@ pass inet proto tcp from any to $localnet port $tcp_services \
 <div class="sect3">
 <h4 id="pftut-spamd">33.3.2.6. 防止垃圾邮件的保护措施<a class="anchor" href="#pftut-spamd"></a></h4>
 <div class="paragraph">
-<p>不要将其与 spamassassin 捆绑的 spamd 守护程序混淆， <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/spamd/">mail/spamd</a> 可以通过配置 PF 来提供对垃圾邮件的外部防御。这个 spamd 通过一组重定向钩入 PF 配置。</p>
+<p>不要将其与 spamassassin 捆绑的 spamd 守护程序混淆，<a class="package" href="https://cgit.freebsd.org/ports/tree/mail/spamd/">mail/spamd</a> 可以通过配置 PF 来提供对垃圾邮件的外部防御。这个 spamd 通过一组重定向钩入 PF 配置。</p>
 </div>
 <div class="paragraph">
 <p>垃圾邮件发送者往往发送大量的消息，垃圾邮件主要来自一些友好的垃圾邮件网络和大量被劫持的机器，这些都会被迅速报告给封锁列表。</p>
 </div>
 <div class="paragraph">
-<p>当接收到来自黑名单中地址的 SMTP 连接时， spamd 会呈现其横幅，并立即切换到一种模式，以逐字节地回答 SMTP 流量。这种技术旨在尽可能浪费垃圾邮件发送者的时间，被称为“蜿蜒”。具体实现使用逐字节 SMTP 回复的方法通常被称为“口吃”。</p>
+<p>当接收到来自黑名单中地址的 SMTP 连接时，spamd 会呈现其横幅，并立即切换到一种模式，以逐字节地回答 SMTP 流量。这种技术旨在尽可能浪费垃圾邮件发送者的时间，被称为“蜿蜒（tarpitting）”。具体实现使用逐字节 SMTP 回复的方法通常被称为“口吃（stuttering）”。</p>
 </div>
 <div class="paragraph">
 <p>这个示例演示了使用自动更新的屏蔽列表设置 spamd 的基本步骤。有关更多信息，请参考安装在 <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/spamd/">mail/spamd</a> 中的 man 页面。</p>
@@ -2477,104 +2453,10 @@ pass inet proto tcp from any to $localnet port $tcp_services \
 <div class="sidebarblock procedure">
 <div class="content">
 <div class="olist arabic">
-<div class="title">过程：配置 spamd</div>
+<div class="title">配置 spamd 过程</div>
 <ol class="arabic">
 <li>
-<p>Open the configuration file for spamd. This file is typically located at /etc/spamassassin/spamd.conf.</p>
-</li>
-<li>
-<p>Look for the following options in the configuration file:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>allowed_ips</code>: This option allows you to specify a list of IP addresses or networks that are allowed to connect to spamd. You can use CIDR notation to specify networks.</p>
-</li>
-<li>
-<p><code>listen</code>: This option specifies the IP address and port on which spamd should listen for incoming connections. By default , spamd listens on all available IP addresses and port 783.</p>
-</li>
-<li>
-<p><code>max_children</code>: This option sets the maximum number of child processes that spamd can spawn to handle incoming connections. The default value is 5.</p>
-</li>
-<li>
-<p><code>max_requests</code>: This option sets the maximum number of requests that a child process can handle before it is terminated. The default value is 20.</p>
-</li>
-<li>
-<p><code>pidfile</code>: This option specifies the location of the file where spamd will write its process ID. By default , this file is located at /var/run/spamd.pid.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Modify these options as needed and save the configuration file.</p>
-</li>
-<li>
-<p>Restart the spamd service to apply the changes. The command to restart the service may vary depending on your operating system. For example , on a system using systemd , you can use the command <code>systemctl restart spamassassin</code>.</p>
-</li>
-<li>
-<p>Verify that spamd is running and listening on the specified IP address and port. You can use the command <code>netstat -tuln | grep 783</code> to check if spamd is listening on port 783.</p>
-</li>
-<li>
-<p>Test spamd by sending a test email to a user on your system. Check the email headers to see if spamd has processed the email and added any spam-related headers.</p>
-</li>
-<li>
-<p>If necessary , adjust the spamd configuration further to meet your specific needs. Refer to the spamd documentation for more information on available options and their usage.</p>
-</li>
-<li>
-<p>Monitor the spamd logs for any errors or issues. The logs are typically located at /var/log/maillog or /var/log/spamd.log.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>配置 spamd 的过程</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>打开 spamd 的配置文件。该文件通常位于 /etc/spamassassin/spamd.conf 。</p>
-</li>
-<li>
-<p>在配置文件中查找以下选项：</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>allowed_ips</code> ：该选项允许您指定允许连接到 spamd 的 IP 地址或网络列表。您可以使用 CIDR 表示法指定网络。</p>
-</li>
-<li>
-<p><code>listen</code> ：该选项指定 spamd 应在哪个 IP 地址和端口上监听传入连接。默认情况下， spamd 在所有可用的 IP 地址和端口 783 上监听。</p>
-</li>
-<li>
-<p><code>max_children</code> ：该选项设置 spamd 可以生成的用于处理传入连接的子进程的最大数量。默认值为 5 。</p>
-</li>
-<li>
-<p><code>max_requests</code> ：该选项设置子进程在终止之前可以处理的最大请求数。默认值为 20 。</p>
-</li>
-<li>
-<p><code>pidfile</code> ：该选项指定 spamd 将写入其进程 ID 的文件的位置。默认情况下，该文件位于 /var/run/spamd.pid 。</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>根据需要修改这些选项并保存配置文件。</p>
-</li>
-<li>
-<p>重新启动 spamd 服务以应用更改。重新启动服务的命令可能因操作系统而异。例如，在使用 systemd 的系统上，您可以使用命令 <code>systemctl restart spamassassin</code> 。</p>
-</li>
-<li>
-<p>验证 spamd 是否正在运行并监听指定的 IP 地址和端口。您可以使用命令 <code>netstat -tuln | grep 783</code> 来检查 spamd 是否在端口 783 上监听。</p>
-</li>
-<li>
-<p>通过向系统上的用户发送测试电子邮件来测试 spamd 。检查电子邮件头以查看 spamd 是否已处理电子邮件并添加了任何与垃圾邮件相关的头部。</p>
-</li>
-<li>
-<p>如有必要，进一步调整 spamd 配置以满足您的特定需求。有关可用选项及其用法的更多信息，请参阅 spamd 文档。</p>
-</li>
-<li>
-<p>监视 spamd 日志以查找任何错误或问题。日志通常位于 /var/log/maillog 或 /var/log/spamd.log 。</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/spamd/">mail/spamd</a> 包或端口。要使用 spamd 的灰名单功能，必须在 <span class="filename">/dev/fd</span> 上挂载 <a href="https://man.freebsd.org/cgi/man.cgi?query=fdescfs&amp;sektion=5&amp;format=html">fdescfs(5)</a> 。将以下行添加到 <span class="filename">/etc/fstab</span> ：</p>
+<p>安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/mail/spamd/">mail/spamd</a> 包或 port。要使用 spamd 的灰名单功能，必须在 <span class="filename">/dev/fd</span> 上挂载 <a href="https://man.freebsd.org/cgi/man.cgi?query=fdescfs&amp;sektion=5&amp;format=html">fdescfs(5)</a>。将以下行添加到 <span class="filename">/etc/fstab</span>：</p>
 <div class="literalblock programlisting">
 <div class="content">
 <pre> fdescfs /dev/fd fdescfs rw 0 0</pre>
@@ -2606,12 +2488,12 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 </div>
 </li>
 <li>
-<p>下一步是在 <code>/usr/local/etc/spamd.conf</code> 中配置 spamd ，并添加一些 <code>rc.conf</code> 参数。</p>
+<p>下一步是在 <span class="filename">/usr/local/etc/spamd.conf</span> 中配置 spamd，并添加一些 <span class="filename">rc.conf</span> 参数。</p>
 <div class="paragraph">
-<p>安装包： mail/spamd[] 包括一个示例配置文件（ <span class="filename">/usr/local/etc/spamd.conf.sample</span> ）和一个用于 <span class="filename">spamd.conf</span> 的 man 页面。请参考这些内容以获取超出本示例所示配置选项的其他配置选项。</p>
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/mail/spamd/">mail/spamd</a> 安装包括一个示例配置文件（<span class="filename">/usr/local/etc/spamd.conf.sample</span>）和一个用于 <span class="filename">spamd.conf</span> 的 man 页面。请参考这些内容以获取超出本示例所示配置选项的其他配置选项。</p>
 </div>
 <div class="paragraph">
-<p>配置文件中第一行不以“+ # +”注释符号开头的行包含了定义“ all ”列表的块，该列表指定要使用的列表：</p>
+<p>配置文件中第一行不以 <code>#</code> 注释符号开头的行包含了定义 <code>all</code> 列表的块，该列表指定要使用的列表：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2620,7 +2502,7 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 </div>
 </div>
 <div class="paragraph">
-<p>此条目添加了所需的阻止列表，用冒号（ <code>:</code> ）分隔。要使用允许列表从阻止列表中减去地址，请在该阻止列表的名称之后立即添加允许列表的名称。例如： <code>: 阻止列表 : 允许列表 :</code> 。</p>
+<p>此条目添加了所需的阻止列表，用冒号（<code>:</code>）分隔。要使用允许列表从阻止列表中减去地址，请在该阻止列表的名称之后 <em>立即</em> 添加允许列表的名称。例如：<code>:blocklist:allowlist:</code> 。</p>
 </div>
 <div class="paragraph">
 <p>接下来是指定块列表的定义：</p>
@@ -2635,7 +2517,7 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 </div>
 </div>
 <div class="paragraph">
-<p>第一行是块列表的名称，第二行指定了列表类型。 <code>msg</code> 字段包含在 SMTP 对话期间显示给被列入块列表的发件人的消息。 <code>method</code> 字段指定了 spamd-setup 获取列表数据的方式；支持的方法有 <code>http</code> 、 <code>ftp</code> 、从挂载文件系统中的 <code>file</code> 文件和通过执行外部程序的 <code>exec</code> 。最后， <code>file</code> 字段指定了 spamd 期望接收的文件的名称。</p>
+<p>第一行是块列表的名称，第二行指定了列表类型。<code>msg</code> 字段包含在 SMTP 对话期间显示给被列入块列表的发件人的消息。<code>method</code> 字段指定了 spamd-setup 获取列表数据的方式；支持的方法有 <code>http</code>、<code>ftp</code>、从挂载文件系统中的 <code>file</code> 文件和通过执行外部程序的 <code>exec</code>。最后，<code>file</code> 字段指定了 spamd 期望接收的文件的名称。</p>
 </div>
 <div class="paragraph">
 <p>指定允许列表的定义类似，但省略了 <code>msg</code> 字段，因为不需要消息。</p>
@@ -2655,12 +2537,8 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>谨慎选择数据源 :*<br/></p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>谨慎选择数据源:</strong><br/></p>
 </div>
 <div class="paragraph">
 <p>使用样本中的所有屏蔽列表 <span class="filename">spamd.conf</span> 将会屏蔽大量的互联网区块。管理员需要编辑该文件，以创建一个最佳配置，使用适用的数据源，并在必要时使用自定义列表。</p>
@@ -2670,7 +2548,7 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>接下来，将此条目添加到 [/etc/rc.conf] 文件中。其他标志在由注释指定的 man 页面中有描述。</p>
+<p>接下来，将此条目添加到 <span class="filename">/etc/rc.conf</span> 文件中。其他标志在由注释指定的 man 页面中有描述。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2678,10 +2556,7 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 </div>
 </div>
 <div class="paragraph">
-<p>完成后，重新加载规则集，通过输入 <code>service obspamd start</code> 启动 spamd ，并使用 <code>spamd-setup</code> 完成配置。最后，创建一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 任务，定期调用 <code>spamd-setup</code> 来更新表格。</p>
-</div>
-</li>
-</ol>
+<p>完成后，重新加载规则集，通过输入 <code>service obspamd start</code> 启动 spamd，并使用 <code>spamd-setup</code> 完成配置。最后，创建一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 任务，定期调用 <code>spamd-setup</code> 来更新表格。</p>
 </div>
 </li>
 </ol>
@@ -2692,7 +2567,7 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 <p>在邮件服务器前的典型网关上，主机很快就会在几秒钟到几分钟内被困住。</p>
 </div>
 <div class="paragraph">
-<p>PF 还支持&#34;灰名单&#34;，它会暂时拒绝来自未知主机的带有&#34;45n&#34;代码的消息。在合理的时间内再次尝试的灰名单主机的消息将被放行。符合 RFC 1123 和 RFC 2821 规定的发件人的流量将立即被放行。</p>
+<p>PF 还支持 <em>灰名单（greylisting）</em>，它会暂时拒绝来自未知主机的带有 <em>45n</em> 代码的消息。在合理的时间内再次尝试的灰名单主机的消息将被放行。符合 RFC 1123 和 RFC 2821 规定的发件人的流量将立即被放行。</p>
 </div>
 <div class="paragraph">
 <p>关于灰名单技术的更多信息可以在 <a href="http://www.greylisting.org/">greylisting.org</a> 网站上找到。灰名单最令人惊讶的事情之一，除了它的简单性，就是它仍然有效。垃圾邮件发送者和恶意软件编写者一直非常慢地适应绕过这种技术。</p>
@@ -2701,44 +2576,24 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 <p>配置灰名单的基本步骤如下：</p>
 </div>
 <div class="olist arabic procedure">
-<div class="title">过程：配置灰名单</div>
+<div class="title">配置灰名单过程</div>
 <ol class="arabic">
 <li>
-<p>Install a greylisting software on your mail server. There are several options available , such as Postgrey , Greylistd , and Policyd-weight.</p>
+<p>确保按照上一个步骤的说明，将 <a href="https://man.freebsd.org/cgi/man.cgi?query=fdescfs&amp;sektion=5&amp;format=html">fdescfs(5)</a> 挂载起来。</p>
 </li>
 <li>
-<p>Configure the greylisting software by editing its configuration file. The exact steps may vary depending on the software you are using , but typically you will need to specify the IP address or domain of your mail server , as well as any whitelisted addresses or domains.</p>
-</li>
-<li>
-<p>Enable greylisting on your mail server by restarting the mail server or reloading its configuration. This will activate the greylisting software and start applying greylisting to incoming emails.</p>
-</li>
-<li>
-<p>Monitor the greylisting logs to ensure that legitimate emails are not being blocked. Greylisting works by temporarily rejecting incoming emails from unknown senders and then accepting them on subsequent delivery attempts. It is important to review the logs regularly to ensure that legitimate emails are not being mistakenly blocked.</p>
-</li>
-<li>
-<p>Fine-tune the greylisting settings if necessary. Some greylisting software allows you to adjust parameters such as the length of the greylisting delay or the number of delivery attempts before accepting an email. Experiment with these settings to find the right balance between blocking spam and allowing legitimate emails through.</p>
-</li>
-<li>
-<p>Periodically review the effectiveness of greylisting. Greylisting can be an effective tool in reducing spam , but it may also result in delayed delivery of legitimate emails. Monitor the impact of greylisting on your mail server’s performance and adjust the settings as needed.</p>
-<div class="literalblock">
-<div class="content">
-<pre> By following these steps , you can configure greylisting on your mail server to help reduce spam and improve email security.
-. 确保按照上一个步骤的说明，将 man:fdescfs[5] 挂载起来。
-. 要以灰名单模式运行 spamd ，请将以下行添加到 /etc/rc.conf 文件中：</pre>
-</div>
-</div>
+<p>要以灰名单模式运行 spamd，请将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 <div class="literalblock programlisting">
 <div class="content">
 <pre>spamd_grey=&#34;YES&#34;  # use spamd greylisting if YES</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>请参考 spamd 手册，了解其他相关参数的描述。
-. 完成灰名单设置的步骤：</p>
+<p>请参考 spamd 手册，了解其他相关参数的描述。</p>
 </div>
-<div class="paragraph">
-<p>+</p>
-</div>
+</li>
+<li>
+<p>完成灰名单设置的步骤：</p>
 <div class="literalblock programlisting">
 <div class="content">
 <pre>#  service obspamd restart
@@ -2749,19 +2604,19 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 </ol>
 </div>
 <div class="paragraph">
-<p>在幕后， spamdb 数据库工具和 spamlogd 白名单更新程序为灰名单功能执行重要功能。 spamdb 是管理员通过 <span class="var/db/spamdb">/var/db/spamdb</span> 数据库的内容来管理阻止、灰名单和允许名单的主要界面。</p>
+<p>在幕后，spamdb 数据库工具和 spamlogd 白名单更新程序为灰名单功能执行重要功能。spamdb 是管理员通过 <span class="filename">/var/db/spamdb</span> 数据库的内容来管理阻止、灰名单和允许名单的主要界面。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="pftut-hygiene">33.3.2.7. 网络卫生<a class="anchor" href="#pftut-hygiene"></a></h4>
+<h4 id="pftut-hygiene">33.3.2.7. 网络维护<a class="anchor" href="#pftut-hygiene"></a></h4>
 <div class="paragraph">
-<p>本节介绍了如何使用 <code>block-policy</code> 、 <code>scrub</code> 和 <code>antispoof</code> 来使规则集的行为正常。</p>
+<p>本节介绍了如何使用 <code>block-policy</code>、<code>scrub</code> 和 <code>antispoof</code> 来使规则集的行为正常。</p>
 </div>
 <div class="paragraph">
-<p><code>block-policy</code> 是一个选项，可以在规则集的 <code>options</code> 部分中设置，该部分位于重定向和过滤规则之前。该选项确定了 PF 在规则阻止主机时发送的反馈信息（如果有的话）。该选项有两个可能的值： <code>drop</code> 会丢弃被阻止的数据包而不提供反馈， <code>return</code> 会返回一个状态码，例如 <code>Connection refused</code> 。</p>
+<p><code>block-policy</code> 是一个选项，可以在规则集的 <code>options</code> 部分中设置，该部分位于重定向和过滤规则之前。该选项确定了 PF 在规则阻止主机时发送的反馈信息（如果有的话）。该选项有两个可能的值：<code>drop</code> 会丢弃被阻止的数据包而不提供反馈，<code>return</code> 会返回一个状态码，例如 <code>Connection refused</code>。</p>
 </div>
 <div class="paragraph">
-<p>如果未设置，默认策略为“ drop ”。要更改“ block-policy ”，请指定所需的值：</p>
+<p>如果未设置，默认策略为 <code>drop</code>。要更改 <code>block-policy</code>，请指定所需的值：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2769,7 +2624,7 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 </div>
 </div>
 <div class="paragraph">
-<p>在 PF 中， <code>scrub</code> 是一个关键字，它可以启用网络数据包的规范化。该过程会重新组装分段的数据包，并且丢弃具有无效标志组合的 TCP 数据包。启用 <code>scrub</code> 可以提供一定程度的保护，防止基于数据包片段处理不正确的某些攻击。有许多选项可供选择，但最简单的形式适用于大多数配置：</p>
+<p>在 PF 中，<code>scrub</code> 是一个关键字，它可以启用网络数据包的规范化。该过程会重新组装分段的数据包，并且丢弃具有无效标志组合的 TCP 数据包。启用 <code>scrub</code> 可以提供一定程度的保护，防止基于数据包片段处理不正确的某些攻击。有许多选项可供选择，但最简单的形式适用于大多数配置：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2777,10 +2632,10 @@ rdr pass on $ext_if inet proto tcp from !&lt;spamd-white&gt; to \
 </div>
 </div>
 <div class="paragraph">
-<p>一些服务，如 NFS ，需要特定的片段处理选项。有关更多信息，请参阅 <a href="https://home.nuug.no/" class="bare">https://home.nuug.no/</a> ~ peter/pf/en/scrub.html 。</p>
+<p>一些服务，如 NFS，需要特定的片段处理选项。有关更多信息，请参阅 <a href="https://home.nuug.no/~peter/pf/en/scrub.html">https://home.nuug.no/~peter/pf/en/scrub.html</a></p>
 </div>
 <div class="paragraph">
-<p>这个例子重新组装片段，清除“不分片”位，并将最大分段大小设置为 1440 字节：</p>
+<p>这个例子重新组装片段，清除“不分段（do not fragment）”位，并将最大分段大小设置为 1440 字节：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2823,13 +2678,13 @@ block drop out quick on $ext_if from any to $martians</pre>
 <div class="sect2">
 <h3 id="_启用_altq">33.3.3. 启用 ALTQ<a class="anchor" href="#_启用_altq"></a></h3>
 <div class="paragraph">
-<p>在 FreeBSD 上，可以使用 ALTQ 与 PF 一起提供服务质量（ QoS ）。一旦启用 ALTQ ，可以在规则集中定义队列，确定出站数据包的处理优先级。</p>
+<p>在 FreeBSD 上，可以使用 ALTQ 与 PF 一起提供服务质量（QoS）。一旦启用 ALTQ，可以在规则集中定义队列，确定出站数据包的处理优先级。</p>
 </div>
 <div class="paragraph">
 <p>在启用 ALTQ 之前，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=altq&amp;sektion=4&amp;format=html">altq(4)</a> 以确定系统上安装的网络卡驱动程序是否支持它。</p>
 </div>
 <div class="paragraph">
-<p>ALTQ 不可用作可加载的内核模块。如果系统的接口支持 ALTQ ，请按照 <a href="../kernelconfig/#kernelconfig">配置 FreeBSD 内核</a> 中的说明创建自定义内核。以下内核选项可用。第一个选项用于启用 ALTQ 。其他选项中至少需要一个来指定队列调度算法：</p>
+<p>ALTQ 不可用作可加载的内核模块。如果系统的接口支持 ALTQ，请按照 <a href="../kernelconfig/#kernelconfig">配置 FreeBSD 内核</a> 中的说明创建自定义内核。以下内核选项可用。第一个选项用于启用 ALTQ。其他选项中至少需要一个来指定队列调度算法：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2846,25 +2701,25 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">CBQ 是一种网络流量管理算法，用于在网络中对不同类型的流量进行优先级和带宽控制。 CBQ 代表分类优先队列，它通过将流量划分为不同的类别，并为每个类别分配带宽和优先级来实现流量管理。 CBQ 算法可以帮助网络管理员更好地管理网络流量，提高网络性能和服务质量。</dt>
+<dt class="hdlist1">CBQ</dt>
 <dd>
-<p>基于类的排队（ CBQ ）用于将连接的带宽划分为不同的类别或队列，以根据过滤规则对流量进行优先级排序。</p>
+<p>基于类的排队（CBQ）用于将连接的带宽划分为不同的类别或队列，以根据过滤规则对流量进行优先级排序。</p>
 </dd>
-<dt class="hdlist1">红色</dt>
+<dt class="hdlist1">RED</dt>
 <dd>
-<p>随机早期检测（ RED ）用于通过测量队列的长度并将其与队列的最小和最大阈值进行比较来避免网络拥塞。当队列超过最大阈值时，所有新的数据包将被随机丢弃。</p>
+<p>随机早期检测（RED）用于通过测量队列的长度并将其与队列的最小和最大阈值进行比较来避免网络拥塞。当队列超过最大阈值时，所有新的数据包将被随机丢弃。</p>
 </dd>
 <dt class="hdlist1">RIO</dt>
 <dd>
-<p>在随机早期检测输入输出（ RIO ）模式中， RED 维护多个平均队列长度和多个阈值，每个 QOS 级别对应一个阈值。</p>
+<p>在随机早期检测输入输出（RIO）模式中，RED 维护多个平均队列长度和多个阈值，每个 QOS 级别对应一个阈值。</p>
 </dd>
-<dt class="hdlist1">HFSC 是一种网络流量调度算法，全称为 Hierarchical Fair Service Curve 。它是一种基于令牌桶算法的调度算法，用于在网络中实现公平的带宽分配。 HFSC 通过将网络流量划分为不同的类别，并为每个类别分配带宽和延迟目标，以实现对不同流量的优先级控制和公平分配。 HFSC 在计算机网络中被广泛应用，特别是在 QoS （ Quality of Service ）和流量控制方面。</dt>
+<dt class="hdlist1">HFSC</dt>
 <dd>
-<p>层次公平服务曲线分组调度器（ HFSC ）的描述可以在 <a href="http://www-2.cs.cmu.edu/" class="bare">http://www-2.cs.cmu.edu/</a> ~ hzhang/HFSC/main.html[<a href="http://www-2.cs.cmu.edu/" class="bare">http://www-2.cs.cmu.edu/</a> ~ hzhang/HFSC/main.html] 找到。</p>
+<p>层次公平服务曲线分组调度器（HFSC）的描述可以在 <a href="http://www-2.cs.cmu.edu/" class="bare">http://www-2.cs.cmu.edu/</a><sub>hzhang/HFSC/main.html[<a href="http://www-2.cs.cmu.edu/" class="bare">http://www-2.cs.cmu.edu/</a></sub>hzhang/HFSC/main.html] 找到。</p>
 </dd>
-<dt class="hdlist1">PRIQ 是一种优先级队列的数据结构，它根据元素的优先级来确定元素的顺序。优先级队列允许高优先级的元素先出队列，而低优先级的元素则后出队列。 PRIQ 通常用于解决需要按照优先级处理元素的问题，例如任务调度、事件处理等。</dt>
+<dt class="hdlist1">PRIQ</dt>
 <dd>
-<p>优先队列（ PRIQ ）始终首先传递位于较高队列中的流量。</p>
+<p>优先队列（PRIQ）始终首先传递位于较高队列中的流量。</p>
 </dd>
 </dl>
 </div>
@@ -2875,27 +2730,27 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。<a class="anchor" href="#firewalls-ipfw"></a></h2>
+<h2 id="firewalls-ipfw">33.4. IPFW<a class="anchor" href="#firewalls-ipfw"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>IPFW 是为 FreeBSD 编写的一种有状态防火墙，支持 IPv4 和 IPv6 。它由几个组件组成：内核防火墙过滤规则处理器及其集成的数据包计数功能、日志记录功能、 NAT 、 <a href="https://man.freebsd.org/cgi/man.cgi?query=dummynet&amp;sektion=4&amp;format=html">dummynet(4)</a> 流量整形器、转发功能、桥接功能和 ipstealth 功能。</p>
+<p>IPFW 是为 FreeBSD 编写的一种有状态防火墙，支持 IPv4 和 IPv6。它由几个组件组成：内核防火墙过滤规则处理器及其集成的数据包计数功能、日志记录功能、 NAT、<a href="https://man.freebsd.org/cgi/man.cgi?query=dummynet&amp;sektion=4&amp;format=html">dummynet(4)</a> 流量整形器、转发功能、桥接功能和 ipstealth 功能。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD 在 [/etc/rc.firewall] 中提供了一个示例规则集，该规则集定义了几种常见场景的防火墙类型，以帮助新手用户生成适当的规则集。 IPFW 提供了一个强大的语法，高级用户可以使用它来创建符合特定环境安全要求的自定义规则集。</p>
+<p>FreeBSD 在 <span class="filename">/etc/rc.firewall</span> 中提供了一个示例规则集，该规则集定义了几种常见场景的防火墙类型，以帮助新手用户生成适当的规则集。IPFW 提供了一个强大的语法，高级用户可以使用它来创建符合特定环境安全要求的自定义规则集。</p>
 </div>
 <div class="paragraph">
-<p>本节介绍了如何启用 IPFW ，提供了其规则语法的概述，并演示了几个常见配置场景的规则集。</p>
+<p>本节介绍了如何启用 IPFW，提供了其规则语法的概述，并演示了几个常见配置场景的规则集。</p>
 </div>
 <div class="sect2">
 <h3 id="firewalls-ipfw-enable">33.4.1. 启用 IPFW<a class="anchor" href="#firewalls-ipfw-enable"></a></h3>
 <div class="paragraph">
-<p>IPFW 已经作为一个可加载的内核模块包含在基本的 FreeBSD 安装中，这意味着不需要自定义内核来启用 IPFW 。</p>
+<p>IPFW 已经作为一个可加载的内核模块包含在基本的 FreeBSD 安装中，这意味着不需要自定义内核来启用 IPFW。</p>
 </div>
 <div class="paragraph">
-<p>对于那些希望将 IPFW 支持静态编译到自定义内核中的用户，请参阅 <a href="#firewalls-ipfw-kernelconfig">IPFW 内核选项</a> 。</p>
+<p>对于那些希望将 IPFW 支持静态编译到自定义内核中的用户，请参阅 <a href="#firewalls-ipfw-kernelconfig">IPFW 内核选项</a>。</p>
 </div>
 <div class="paragraph">
-<p>要在启动时配置系统以启用 IPFW ，请将 <code>firewall_enable =&#34;YES&#34;</code> 添加到 <code>/etc/rc.conf</code> 文件中。</p>
+<p>要在启动时配置系统以启用 IPFW ，请将 <code>firewall_enable =&#34;YES&#34;</code> 添加到 <span class="filename">/etc/rc.conf</span> 文件中。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2916,22 +2771,22 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><code>open</code> ：允许通过所有流量。</p>
+<p><code>open</code>：允许通过所有流量。</p>
 </li>
 <li>
 <p><code>client</code>: 仅保护本机。</p>
 </li>
 <li>
-<p><code>simple</code> ：保护整个网络。</p>
+<p><code>simple</code>：保护整个网络。</p>
 </li>
 <li>
-<p><code>closed</code> ：完全禁用 IP 流量，除了回环接口之外。</p>
+<p><code>closed</code>：完全禁用 IP 流量，除了回环接口之外。</p>
 </li>
 <li>
-<p>` 工作站 ` ：使用有状态规则仅保护此计算机。</p>
+<p><code>workstation</code>：使用有状态规则仅保护此计算机。</p>
 </li>
 <li>
-<p><code>UNKNOWN</code> ：禁用防火墙规则的加载。</p>
+<p><code>UNKNOWN</code>：禁用防火墙规则的加载。</p>
 </li>
 <li>
 <p><span class="filename">filename</span>: 包含防火墙规则集的文件的完整路径。</p>
@@ -2942,10 +2797,10 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 <p>如果 <code>firewall_type</code> 被设置为 <code>client</code> 或 <code>simple</code> ，请修改 <span class="filename">/etc/rc.firewall</span> 中的默认规则以适应系统的配置。</p>
 </div>
 <div class="paragraph">
-<p>请注意， <code>filename</code> 类型用于加载自定义规则集。</p>
+<p>请注意，<code>filename</code> 类型用于加载自定义规则集。</p>
 </div>
 <div class="paragraph">
-<p>加载自定义规则集的另一种方法是将 <code>firewall_script</code> 变量设置为包含 IPFW 命令的可执行脚本的绝对路径。本节中使用的示例假设 <code>firewall_script</code> 设置为 <code>/etc/ipfw.rules</code> 。</p>
+<p>加载自定义规则集的另一种方法是将 <code>firewall_script</code> 变量设置为包含 IPFW 命令的可执行脚本的绝对路径。本节中使用的示例假设 <code>firewall_script</code> 设置为 <span class="filename">/etc/ipfw.rules</span>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2975,7 +2830,7 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>没有 <span class="filename">/etc/rc.conf</span> 变量来设置日志限制。要限制每个连接尝试中规则被记录的次数，请在 <span class="filename">/etc/sysctl.conf</span> 中使用以下行指定数字：</p>
+<p>没有设置日志限制的 <span class="filename">/etc/rc.conf</span> 变量。要限制每个连接尝试中规则被记录的次数，请在 <span class="filename">/etc/sysctl.conf</span> 中使用以下行指定数字：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3025,53 +2880,53 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 <div class="sect2">
 <h3 id="firewalls-ipfw-rules">33.4.2. IPFW 规则语法<a class="anchor" href="#firewalls-ipfw-rules"></a></h3>
 <div class="paragraph">
-<p>当一个数据包进入 IPFW 防火墙时，它会与规则集中的第一条规则进行比较，并按顺序逐条进行，从上到下移动。当数据包与规则的选择参数匹配时，执行规则的动作，并终止该数据包的规则集搜索。这被称为“先中者胜”。如果数据包不匹配任何规则，则被强制 IPFW 默认规则号 65535 捕获，该规则拒绝所有数据包并将其静默丢弃。然而，如果数据包与包含 <code>count</code> 、 <code>skipto</code> 或 <code>tee</code> 关键字的规则匹配，搜索将继续进行。有关这些关键字如何影响规则处理的详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 。</p>
+<p>当一个数据包进入 IPFW 防火墙时，它会与规则集中的第一条规则进行比较，并按顺序逐条进行，从上到下移动。当数据包与规则的选择参数匹配时，执行规则的动作，并终止该数据包的规则集搜索。这被称为“先中者胜（first match wins）”。如果数据包不匹配任何规则，则被强制 IPFW 默认规则号 65535 捕获，该规则拒绝所有数据包并将其静默丢弃。然而，如果数据包与包含 <code>count</code>、<code>skipto</code> 或 <code>tee</code> 关键字的规则匹配，搜索将继续进行。有关这些关键字如何影响规则处理的详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a>。</p>
 </div>
 <div class="paragraph">
-<p>创建 IPFW 规则时，关键字必须按照以下顺序编写。某些关键字是必需的，而其他关键字是可选的。大写字母表示变量，小写字母表示必须在其后出现的变量。 ` + # + ` 符号用于标记注释的开始，可以出现在规则的末尾或单独的一行上。空行将被忽略。</p>
+<p>创建 IPFW 规则时，关键字必须按照以下顺序编写。某些关键字是必需的，而其他关键字是可选的。大写字母表示变量，小写字母表示必须在其后出现的变量。 <code>#</code> 符号用于标记注释的开始，可以出现在规则的末尾或单独的一行上。空行将被忽略。</p>
 </div>
 <div class="paragraph">
-<p><code><em>CMD RULE_NUMBER set SET_NUMBER ACTION log LOG_AMOUNT PROTO from SRC SRC_PORT to DST DST_PORT OPTIONS</em></code> 的中文翻译为： <code><em>CMD 规则编号设置 设置编号 动作 记录 日志数量 协议 源地址 源端口 到 目的地址 目的端口 选项</em></code></p>
+<p><code><em>CMD RULE_NUMBER set SET_NUMBER ACTION log LOG_AMOUNT PROTO from SRC SRC_PORT to DST DST_PORT OPTIONS</em></code></p>
 </div>
 <div class="paragraph">
-<p>本节提供了这些关键字及其选项的概述。这不是一个详尽无遗的选项列表。有关创建 IPFW 规则时可用的规则语法的完整描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 。</p>
+<p>本节提供了这些关键字及其选项的概述。这不是一个详尽无遗的选项列表。有关创建 IPFW 规则时可用的规则语法的完整描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a>。</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">CMD 是 Windows 操作系统中的命令行解释器。它允许用户通过键入命令来与计算机进行交互，并执行各种操作，如文件管理、进程控制和系统配置等。 CMD 提供了一系列的命令和参数，可以用于执行各种任务和操作。</dt>
+<dt class="hdlist1">CMD</dt>
 <dd>
 <p>每条规则都必须以 <code>ipfw add</code> 开头。</p>
 </dd>
-<dt class="hdlist1">规则编号</dt>
+<dt class="hdlist1">RULE_NUMBER</dt>
 <dd>
 <p>每个规则都与一个从 <code>1</code> 到 <code>65534</code> 的数字相关联。该数字用于指示规则处理的顺序。多个规则可以具有相同的数字，这种情况下它们按照添加的顺序应用。</p>
 </dd>
-<dt class="hdlist1">设置编号</dt>
+<dt class="hdlist1">SET_NUMBER</dt>
 <dd>
 <p>每个规则与一个从 <code>0</code> 到 <code>31</code> 的集合编号相关联。可以单独禁用或启用集合，从而可以快速添加或删除一组规则。如果未指定 SET_NUMBER ，则规则将被添加到集合 <code>0</code> 中。</p>
 </dd>
-<dt class="hdlist1">行动</dt>
+<dt class="hdlist1">动作（ACTION）</dt>
 <dd>
 <p>规则可以与以下动作之一关联。当数据包与规则的选择条件匹配时，将执行指定的动作。</p>
 <div class="paragraph">
-<p><code>allow | accept | pass | permit</code> ：这些关键字是等效的，允许匹配规则的数据包通过。</p>
+<p><code>allow | accept | pass | permit</code>：这些关键字是等效的，允许匹配规则的数据包通过。</p>
 </div>
 <div class="paragraph">
-<p><code>check-state</code> ：检查数据包是否与动态状态表匹配。如果找到匹配项，则执行与生成此动态规则相关联的操作，否则转到下一条规则。 <code>check-state</code> 规则没有选择条件。如果规则集中没有 <code>check-state</code> 规则，则在第一个 <code>keep-state</code> 或 <code>limit</code> 规则处检查动态规则表。</p>
+<p><code>check-state</code>：检查数据包是否与动态状态表匹配。如果找到匹配项，则执行与生成此动态规则相关联的操作，否则转到下一条规则。 <code>check-state</code> 规则没有选择条件。如果规则集中没有 <code>check-state</code> 规则，则在第一个 <code>keep-state</code> 或 <code>limit</code> 规则处检查动态规则表。</p>
 </div>
 <div class="paragraph">
-<p><code>count</code> ：更新与规则匹配的所有数据包的计数器。搜索将继续进行下一个规则。</p>
+<p><code>count</code>：更新与规则匹配的所有数据包的计数器。搜索将继续进行下一个规则。</p>
 </div>
 <div class="paragraph">
-<p><code>deny | drop</code> ：这两个词都表示静默丢弃与此规则匹配的数据包。</p>
+<p><code>deny | drop</code>：这两个词都表示静默丢弃与此规则匹配的数据包。</p>
 </div>
 <div class="paragraph">
-<p>还有其他可用的操作。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 。</p>
+<p>还有其他可用的操作。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a>。</p>
 </div>
 </dd>
-<dt class="hdlist1">日志数量</dt>
+<dt class="hdlist1">LOG_AMOUNT</dt>
 <dd>
-<p>当一个数据包与带有 <code>log</code> 关键字的规则匹配时，将会向 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> 记录一条消息，该消息的设施名称为 <code>SECURITY</code> 。只有在特定规则的记录的数据包数量不超过指定的 LOG_AMOUNT 时才会发生记录。如果没有指定 LOG_AMOUNT ，则限制值将从 <code>net.inet.ip.fw.verbose_limit</code> 的值中获取。值为零将移除记录限制。一旦达到限制，可以通过清除该规则的记录计数器或数据包计数器来重新启用记录，使用 <code>ipfw resetlog</code> 命令。</p>
+<p>当一个数据包与带有 <code>log</code> 关键字的规则匹配时，将会向 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> 记录一条消息，该消息的设施名称为 <code>SECURITY</code>。只有在特定规则的记录的数据包数量不超过指定的 LOG_AMOUNT 时才会发生记录。如果没有指定 LOG_AMOUNT，则限制值将从 <code>net.inet.ip.fw.verbose_limit</code> 的值中获取。值为零将移除记录限制。一旦达到限制，可以通过清除该规则的记录计数器或数据包计数器来重新启用记录，使用 <code>ipfw resetlog</code> 命令。</p>
 <div class="admonitionblock note">
 <table>
 <tbody><tr>
@@ -3087,29 +2942,29 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 </tbody></table>
 </div>
 </dd>
-<dt class="hdlist1">PROTO</dt>
+<dt class="hdlist1">协议（PROTO）</dt>
 <dd>
-<p>这个可选值可以用来指定在 [/etc/protocols](filename) 中找到的任何协议名称或编号。</p>
+<p>这个可选值可以用来指定在 <span class="filename">/etc/protocols</span> 中找到的任何协议名称或编号。</p>
 </dd>
-<dt class="hdlist1">SRC 是指源代码（ Source Code ）的缩写，是计算机程序的原始形式，通常由程序员使用编程语言编写。源代码是计算机程序的一种文本形式，它包含了程序的逻辑结构和算法。通过编译或解释，源代码可以被转换成可执行文件或者在特定环境中运行。</dt>
+<dt class="hdlist1">源地址（SRC）</dt>
 <dd>
-<p><code>from</code> 关键字后面必须跟着源地址或表示源地址的关键字。地址可以用 <code>any</code> 、 <code>me</code> （在此系统上配置的任何接口的地址）、 <code>me6</code> （在此系统上配置的任何 IPv6 地址）或 <code>table</code> 后跟包含地址列表的查找表的编号来表示。在指定 IP 地址时，可以选择性地跟着 CIDR 掩码或子网掩码。例如， <code>1.2.3.4/25</code> 或 <code>1.2.3.4:255.255.255.128</code> 。</p>
+<p><code>from</code> 关键字后面必须跟着源地址或表示源地址的关键字。地址可以用 <code>any</code>、<code>me</code>（在此系统上配置的任何接口的地址）、<code>me6</code>（在此系统上配置的任何 IPv6 地址）或 <code>table</code> 后跟包含地址列表的查找表的编号来表示。在指定 IP 地址时，可以选择性地跟着 CIDR 掩码或子网掩码。例如，<code>1.2.3.4/25</code> 或 <code>1.2.3.4:255.255.255.128</code>。</p>
 </dd>
-<dt class="hdlist1">源端口</dt>
+<dt class="hdlist1">源端口（SRC_PORT）</dt>
 <dd>
-<p>可以使用端口号或者从 [/etc/services] 中的名称来指定可选的源端口。</p>
+<p>可以使用端口号或者从 <span class="filename">/etc/services</span> 中的名称来指定可选的源端口。</p>
 </dd>
-<dt class="hdlist1">DST 是夏令时（ Daylight Saving Time ）的缩写。</dt>
+<dt class="hdlist1">目标地址（DST）</dt>
 <dd>
 <p><code>to</code> 关键字后面必须跟着目标地址或代表目标地址的关键字。在 SRC 部分描述的相同关键字和地址可以用来描述目标。</p>
 </dd>
-<dt class="hdlist1">目标端口</dt>
+<dt class="hdlist1">目标端口（DST_PORT）</dt>
 <dd>
-<p>可以使用端口号或者从 [/etc/services] 文件中的名称来指定可选的目标端口。</p>
+<p>可以使用端口号或者从 <span class="filename">/etc/services</span> 文件中的名称来指定可选的目标端口。</p>
 </dd>
-<dt class="hdlist1">选项</dt>
+<dt class="hdlist1">选项（OPTIONS）</dt>
 <dd>
-<p>源和目的地后面可以跟随几个关键字。顾名思义， OPTIONS 是可选的。常用的选项包括 <code>in</code> 或 <code>out</code> ，用于指定数据包流动的方向， <code>icmptypes</code> 后面跟随 ICMP 消息的类型，以及 <code>keep-state</code> 。</p>
+<p>源和目的地后面可以跟随几个关键字。顾名思义，OPTIONS 是可选的。常用的选项包括 <code>in</code> 或 <code>out</code>，用于指定数据包流动的方向，<code>icmptypes</code> 后面跟随 ICMP 消息的类型，以及 <code>keep-state</code>。</p>
 <div class="paragraph">
 <p>当匹配到 <code>keep-state</code> 规则时，防火墙将创建一个动态规则，该规则匹配源地址和目标地址以及端口之间的双向流量，使用相同的协议。</p>
 </div>
@@ -3117,7 +2972,7 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 <p>动态规则功能容易受到 SYN 洪水攻击的资源耗尽问题的影响，该攻击会打开大量的动态规则。为了使用 IPFW 来对抗这种类型的攻击，可以使用 <code>limit</code> 选项。该选项通过检查打开的动态规则，计算该规则和 IP 地址组合出现的次数，来限制同时会话的数量。如果该计数大于 <code>limit</code> 指定的值，数据包将被丢弃。</p>
 </div>
 <div class="paragraph">
-<p>有数十种选项可供选择。有关每个可用选项的描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 。</p>
+<p>有数十种选项可供选择。有关每个可用选项的描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a>。</p>
 </div>
 </dd>
 </dl>
@@ -3126,7 +2981,7 @@ options         ALTQ_PRIQ       # Priority Queuing (PRIQ)</pre>
 <div class="sect2">
 <h3 id="_示例规则集">33.4.3. 示例规则集<a class="anchor" href="#_示例规则集"></a></h3>
 <div class="paragraph">
-<p>本节演示了如何创建一个名为 <span class="filename">/etc/ipfw.rules</span> 的示例有状态防火墙规则脚本。在这个示例中，所有连接规则使用 <code>in</code> 或 <code>out</code> 来明确方向。它们还使用 <code>via</code> _interface-name_来指定数据包所经过的接口。</p>
+<p>本节演示了如何创建一个名为 <span class="filename">/etc/ipfw.rules</span> 的示例有状态防火墙规则脚本。在这个示例中，所有连接规则使用 <code>in</code> 或 <code>out</code> 来明确方向。它们还使用 <code>via</code> <em>interface-name</em> 来指定数据包所经过的接口。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3223,7 +3078,7 @@ $cmd 00299 deny log all from any to any out via $pif</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>下一组规则控制来自互联网主机到内部网络的连接。它首先拒绝通常与攻击相关的数据包，然后明确允许特定类型的连接。所有从互联网发起的授权服务都使用“ limit ”来防止洪水攻击。</p>
+<p>下一组规则控制来自互联网主机到内部网络的连接。它首先拒绝通常与攻击相关的数据包，然后明确允许特定类型的连接。所有从互联网发起的授权服务都使用 <code>limit</code> 来防止洪水攻击。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3281,15 +3136,15 @@ $cmd 00999 deny log all from any to any</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="in-kernel-nat">33.4.4. 内核级网络地址转换（ In-kernel NAT ）<a class="anchor" href="#in-kernel-nat"></a></h3>
+<h3 id="in-kernel-nat">33.4.4. 内核级网络地址转换（In-kernel NAT）<a class="anchor" href="#in-kernel-nat"></a></h3>
 <div class="paragraph">
 <p>FreeBSD 的 IPFW 防火墙有两种 NAT 实现：用户空间实现 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 和更近期的内核 NAT 实现。两者都与 IPFW 配合工作，提供网络地址转换功能。这可以用于提供 Internet 连接共享解决方案，使多台内部计算机可以使用单个公共 IP 地址连接到互联网。</p>
 </div>
 <div class="paragraph">
-<p>要实现这一点，连接到互联网的 FreeBSD 机器必须充当网关。该系统必须具有两个网络接口卡（ NIC ），其中一个连接到互联网，另一个连接到内部局域网（ LAN ）。连接到 LAN 的每台机器应分配一个私有网络空间中的 IP 地址，如 <a href="https://www.ietf.org/rfc/rfc1918.txt">RFC 1918</a> 所定义。</p>
+<p>要实现这一点，连接到互联网的 FreeBSD 机器必须充当网关。该系统必须具有两个网络接口卡（NIC），其中一个连接到互联网，另一个连接到内部局域网（LAN）。连接到 LAN 的每台机器应分配一个私有网络空间中的 IP 地址，如 <a href="https://www.ietf.org/rfc/rfc1918.txt">RFC 1918</a> 所定义。</p>
 </div>
 <div class="paragraph">
-<p>为了启用 IPFW 内核中的 NAT 功能，需要进行一些额外的配置。要在启动时启用内核中的 NAT 支持，必须在 /etc/rc.conf 文件中设置以下内容：</p>
+<p>为了启用 IPFW 内核中的 NAT 功能，需要进行一些额外的配置。要在启动时启用内核中的 NAT 支持，必须在 <span class="filename">/etc/rc.conf</span> 文件中设置以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3313,7 +3168,7 @@ firewall_nat_enable=&#34;YES&#34;</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>当规则集包含有状态的规则时， NAT 规则的位置至关重要，并且使用 <code>skipto</code> 操作。 <code>skipto</code> 操作需要一个规则编号，以便知道要跳转到哪个规则。下面的示例基于前一节中显示的防火墙规则集进行构建。它添加了一些额外的条目并修改了一些现有规则，以便为内核中的 NAT 配置防火墙。首先添加一些额外的变量，这些变量表示要跳转到的规则编号， <code>keep-state</code> 选项以及将用于减少规则数量的 TCP 端口列表。</p>
+<p>当规则集包含有状态的规则时，NAT 规则的位置至关重要，并且使用 <code>skipto</code> 操作。<code>skipto</code> 操作需要一个规则编号，以便知道要跳转到哪个规则。下面的示例基于前一节中显示的防火墙规则集进行构建。它添加了一些额外的条目并修改了一些现有规则，以便为内核中的 NAT 配置防火墙。首先添加一些额外的变量，这些变量表示要跳转到的规则编号，<code>keep-state</code> 选项以及将用于减少规则数量的 TCP 端口列表。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3327,7 +3182,7 @@ good_tcpo=&#34;22,25,37,53,80,443,110&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>使用内核级别的 NAT 时，由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=libalias&amp;sektion=3&amp;format=html">libalias(3)</a> 的架构，需要禁用 TCP 分段卸载（ TSO ）， <a href="https://man.freebsd.org/cgi/man.cgi?query=libalias&amp;sektion=3&amp;format=html">libalias(3)</a> 是一个作为内核模块实现的库，用于提供 IPFW 的内核级别 NAT 功能。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 在每个网络接口上禁用 TSO ，也可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 在整个系统上禁用 TSO 。要在整个系统上禁用 TSO ，需要在 <span class="filename">/etc/sysctl.conf</span> 中设置以下内容：</p>
+<p>使用内核级别的 NAT 时，由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=libalias&amp;sektion=3&amp;format=html">libalias(3)</a> 的架构，需要禁用 TCP 分段卸载（TSO），<a href="https://man.freebsd.org/cgi/man.cgi?query=libalias&amp;sektion=3&amp;format=html">libalias(3)</a> 是一个作为内核模块实现的库，用于提供 IPFW 的内核级别 NAT 功能。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 在每个网络接口上禁用 TSO，也可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 在整个系统上禁用 TSO。要在整个系统上禁用 TSO，需要在 <span class="filename">/etc/sysctl.conf</span> 中设置以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3335,7 +3190,7 @@ good_tcpo=&#34;22,25,37,53,80,443,110&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>还将配置一个 NAT 实例。可以配置多个 NAT 实例，每个实例都有自己的配置。在这个例子中，只需要一个 NAT 实例，即 NAT 实例号 1 。配置可以包括一些选项，如： <code>if</code> 表示公共接口， <code>same_ports</code> 确保别名端口和本地端口号映射相同， <code>unreg_only</code> 将只处理未注册（私有）地址空间的 NAT 实例， <code>reset</code> 将帮助保持一个正常运行的 NAT 实例，即使 IPFW 机器的公共 IP 地址发生变化。有关可以传递给单个 NAT 实例配置的所有可能选项，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 。在配置有状态的 NAT 防火墙时，需要允许将已转换的数据包重新注入防火墙进行进一步处理。可以通过在防火墙脚本的开始处禁用 <code>one_pass</code> 行为来实现这一点。</p>
+<p>还将配置一个 NAT 实例。可以配置多个 NAT 实例，每个实例都有自己的配置。在这个例子中，只需要一个 NAT 实例，即 NAT 实例号 1。配置可以包括一些选项，如：<code>if</code> 表示公共接口，<code>same_ports</code> 确保别名端口和本地端口号映射相同，<code>unreg_only</code> 将只处理未注册（私有）地址空间的 NAT 实例，<code>reset</code> 将帮助保持一个正常运行的 NAT 实例，即使 IPFW 机器的公共 IP 地址发生变化。有关可以传递给单个 NAT 实例配置的所有可能选项，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a>。在配置有状态的 NAT 防火墙时，需要允许将已转换的数据包重新注入防火墙进行进一步处理。可以通过在防火墙脚本的开始处禁用 <code>one_pass</code> 行为来实现这一点。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3344,7 +3199,7 @@ ipfw -q nat 1 config if $pif same_ports unreg_only reset</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>入站 NAT 规则被插入在允许所有受信任和回环接口上的所有流量的两个规则之后，并且在重新组装规则之后，但在 <code>check-state</code> 规则之前。在此示例中，为此 NAT 规则选择的规则编号（例如 <code>100</code> ）比前三个规则更高，但比 <code>check-state</code> 规则更低非常重要。此外，由于内核 NAT 的行为，建议在第一个 NAT 规则之前和允许受信任接口上的流量的规则之后放置一个重新组装规则。通常情况下，不应发生 IP 分段，但在处理 IPSEC/ESP/GRE 隧道流量时可能会发生，并且在将完整数据包交给内核 NAT 设备之前需要重新组装片段。</p>
+<p>入站 NAT 规则被插入在允许所有受信任和回环接口上的所有流量的两个规则之后，并且在重新组装规则之后，但在 <code>check-state</code> 规则之前。在此示例中，为此 NAT 规则选择的规则编号（例如 <code>100</code>）比前三个规则更高，但比 <code>check-state</code> 规则更低非常重要。此外，由于内核 NAT 的行为，建议在第一个 NAT 规则之前和允许受信任接口上的流量的规则之后放置一个重新组装规则。通常情况下，不应发生 IP 分段，但在处理 IPSEC/ESP/GRE 隧道流量时可能会发生，并且在将完整数据包交给内核 NAT 设备之前需要重新组装片段。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3374,7 +3229,7 @@ $cmd 101 check-state</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>出站规则已经被修改，将 <code>allow</code> 操作替换为 ` $ skip` 变量，表示规则处理将继续在规则 <code>1000</code> 处。七个 <code>tcp</code> 规则已被替换为规则 <code>125</code> ，因为 ` $ good_tcpo` 变量包含了七个允许的出站端口。</p>
+<p>出站规则已经被修改，将 <code>allow</code> 操作替换为 <code>$skip</code> 变量，表示规则处理将继续在规则 <code>1000</code> 处。七个 <code>tcp</code> 规则已被替换为规则 <code>125</code>，因为 <code>$good_tcpo</code> 变量包含了七个允许的出站端口。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3384,7 +3239,7 @@ $cmd 101 check-state</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>请记住， IPFW 的性能主要取决于规则集中存在的规则数量。</p>
+<p>请记住，IPFW 的性能主要取决于规则集中存在的规则数量。</p>
 </div>
 </td>
 </tr>
@@ -3400,7 +3255,7 @@ $cmd 130 $skip icmp from any to any out via $pif $ks</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>入站规则保持不变，除了最后一条规则，它移除了 <code>via $ pif</code> ，以便捕获入站和出站规则。 NAT 规则必须跟随这个最后的出站规则，规则号必须比最后一条规则的号码更高，并且规则号必须被 <code>skipto</code> 动作引用。在这个规则集中，规则号为 <code>1000</code> 的规则处理将所有数据包传递给我们配置的实例进行 NAT 处理。下一条规则允许经过 NAT 处理的任何数据包通过。</p>
+<p>入站规则保持不变，除了最后一条规则，它移除了 <code>via$pif</code>，以便捕获入站和出站规则。NAT 规则必须跟随这个最后的出站规则，规则号必须比最后一条规则的号码更高，并且规则号必须被 <code>skipto</code> 动作引用。在这个规则集中，规则号为 <code>1000</code> 的规则处理将所有数据包传递给我们配置的实例进行 NAT 处理。下一条规则允许经过 NAT 处理的任何数据包通过。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3410,13 +3265,13 @@ $cmd 1001 allow ip from any to any</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中，规则 <code>100</code> 、 <code>101</code> 、 <code>125</code> 、 <code>1000</code> 和 <code>1001</code> 控制出站和入站数据包的地址转换，以便动态状态表中的条目始终注册私有 LANIP 地址。</p>
+<p>在这个例子中，规则 <code>100</code>、<code>101</code>、<code>125</code>、<code>1000</code> 和 <code>1001</code> 控制出站和入站数据包的地址转换，以便动态状态表中的条目始终注册私有 LANIP 地址。</p>
 </div>
 <div class="paragraph">
-<p>考虑一个内部的网络浏览器，它通过 80 端口初始化一个新的出站 HTTP 会话。当第一个出站数据包进入防火墙时，它不匹配规则 <code>100</code> ，因为它是向外而不是向内的。它通过规则 <code>101</code> ，因为这是第一个数据包，并且尚未被添加到动态状态表中。该数据包最终匹配规则 <code>125</code> ，因为它是在允许的端口上进行出站，并且具有来自内部局域网的源 IP 地址。匹配此规则后，会执行两个操作。首先， <code>keep-state</code> 操作将一个条目添加到动态状态表中，并执行指定的操作 <code>skipto rule 1000</code> 。接下来，数据包经过 NAT 处理并发送到互联网。该数据包到达目标 Web 服务器，生成并发送一个响应数据包。这个新的数据包进入规则集的顶部。它匹配规则 <code>100</code> ，并将其目标 IP 地址映射回原始的内部地址。然后，它经过 <code>check-state</code> 规则的处理，在表中被识别为一个现有的会话，并被释放到局域网。</p>
+<p>考虑一个内部的网络浏览器，它通过 80 端口初始化一个新的出站 HTTP 会话。当第一个出站数据包进入防火墙时，它不匹配规则 <code>100</code> ，因为它是向外而不是向内的。它通过规则 <code>101</code> ，因为这是第一个数据包，并且尚未被添加到动态状态表中。该数据包最终匹配规则 <code>125</code> ，因为它是在允许的端口上进行出站，并且具有来自内部局域网的源 IP 地址。匹配此规则后，会执行两个操作。首先，<code>keep-state</code> 操作将一个条目添加到动态状态表中，并执行指定的操作 <code>skipto rule 1000</code>。接下来，数据包经过 NAT 处理并发送到互联网。该数据包到达目标 Web 服务器，生成并发送一个响应数据包。这个新的数据包进入规则集的顶部。它匹配规则 <code>100</code>，并将其目标 IP 地址映射回原始的内部地址。然后，它经过 <code>check-state</code> 规则的处理，在表中被识别为一个现有的会话，并被释放到局域网。</p>
 </div>
 <div class="paragraph">
-<p>在入站方面，规则集必须拒绝恶意数据包，并仅允许授权的服务。与入站规则匹配的数据包将被发布到动态状态表，并将数据包释放到局域网。作为响应生成的数据包被 <code>check-state</code> 规则识别为属于现有会话。然后，它将被发送到规则 <code>1000</code> 进行网络地址转换（ NAT ），然后释放到出站接口。</p>
+<p>在入站方面，规则集必须拒绝恶意数据包，并仅允许授权的服务。与入站规则匹配的数据包将被发布到动态状态表，并将数据包释放到局域网。作为响应生成的数据包被 <code>check-state</code> 规则识别为属于现有会话。然后，它将被发送到规则 <code>1000</code> 进行网络地址转换（NAT），然后释放到出站接口。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3426,7 +3281,7 @@ $cmd 1001 allow ip from any to any</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>从用户空间的 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 过渡到内核级别的 NAT 可能一开始看起来是无缝的，但有一个小问题。当使用 GENERIC 内核时，当在 /etc/rc.conf 中启用 firewall_nat_enable 时， IPFW 将加载 libalias.ko 内核模块。 libalias.ko 内核模块只提供基本的 NAT 功能，而用户空间实现的 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 在其用户空间库中提供了所有的 NAT 功能，无需任何额外配置。所有功能都指的是以下内核模块，除了标准的 libalias.ko 内核模块之外，还可以在需要时额外加载： alias_ftp.ko 、 alias_bbt.ko 、 skinny.ko 、 irc.ko 、 alias_pptp.ko 和 alias_smedia.ko ，使用 /etc/rc.conf 中的 kld_list 指令。如果使用自定义内核，可以使用 options LIBALIAS 将用户空间库的全部功能编译到内核中。</p>
+<p>从用户空间的 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 过渡到内核级别的 NAT 可能一开始看起来是无缝的，但有一个小问题。当使用 GENERIC 内核时，当在 <span class="filename">/etc/rc.conf</span> 中启用 <code>firewall_nat_enable</code> 时，IPFW 将加载 <span class="filename">libalias.ko</span> 内核模块。 <span class="filename">libalias.ko</span> 内核模块只提供基本的 NAT 功能，而用户空间实现的 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 在其用户空间库中提供了所有的 NAT 功能，无需任何额外配置。所有功能都指的是以下内核模块，除了标准的 <span class="filename">libalias.ko</span> 内核模块之外，还可以在需要时额外加载： <span class="filename">alias_ftp.ko</span>、<span class="filename">alias_bbt.ko</span>、<span class="filename">skinny.ko</span>、<span class="filename">irc.ko</span>、<span class="filename">alias_pptp.ko</span> 和 <span class="filename">alias_smedia.ko</span>，使用[.filename]<mark>/etc/rc.conf</mark> 中的 <code>kld_list</code> 指令。如果使用自定义内核，可以使用 <code>options LIBALIAS</code> 将用户空间库的全部功能编译到内核中。</p>
 </div>
 </td>
 </tr>
@@ -3438,10 +3293,10 @@ $cmd 1001 allow ip from any to any</pre>
 <p>NAT 的一般缺点是 LAN 客户端无法从互联网访问。 LAN 上的客户端可以向外部建立连接，但无法接收传入连接。如果尝试在 LAN 客户端机器上运行互联网服务，这将带来问题。一个简单的解决方法是将 NAT 提供机器上的选定互联网端口重定向到 LAN 客户端。</p>
 </div>
 <div class="paragraph">
-<p>例如， IRC 服务器运行在客户端 <code>A</code> 上，而 Web 服务器运行在客户端 <code>B</code> 上。为了使其正常工作，必须将接收到的 6667 端口（ IRC ）和 80 端口（ HTTP ）的连接重定向到相应的机器上。</p>
+<p>例如，IRC 服务器运行在客户端 <code>A</code> 上，而 Web 服务器运行在客户端 <code>B</code> 上。为了使其正常工作，必须将接收到的 6667 端口（IRC）和 80 端口（HTTP）的连接重定向到相应的机器上。</p>
 </div>
 <div class="paragraph">
-<p>使用内核级别的 NAT ，所有配置都在 NAT 实例配置中完成。要查看内核级别 NAT 实例可以使用的所有选项，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 。 IPFW 的语法遵循 natd 的语法。 <code>redirect_port</code> 的语法如下：</p>
+<p>使用内核级别的 NAT，所有配置都在 NAT 实例配置中完成。要查看内核级别 NAT 实例可以使用的所有选项，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a>。 IPFW 的语法遵循 natd 的语法。<code>redirect_port</code> 的语法如下：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3460,7 +3315,7 @@ redirect_port tcp 192.168.0.3:80 80</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在上述规则集中将这些参数添加到 NAT 实例 1 的配置后， TCP 端口将被端口转发到运行 IRC 和 HTTP 服务的局域网客户机。</p>
+<p>在上述规则集中将这些参数添加到 NAT 实例 1 的配置后，TCP 端口将被端口转发到运行 IRC 和 HTTP 服务的局域网客户机。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3476,10 +3331,10 @@ redirect_port tcp 192.168.0.3:80 80</pre>
 <div class="sect3">
 <h4 id="_地址重定向">33.4.4.2. 地址重定向<a class="anchor" href="#_地址重定向"></a></h4>
 <div class="paragraph">
-<p>如果有多个 IP 地址可用，地址重定向非常有用。每个局域网客户端可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 分配自己的外部 IP 地址，然后 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 将重写来自局域网客户端的出站数据包，使用正确的外部 IP 地址，并将所有进入特定 IP 地址的流量重定向回特定的局域网客户端。这也被称为静态 NAT 。例如，如果可用的 IP 地址为 <code>128.1.1.1</code> 、 <code>128.1.1.2</code> 和 <code>128.1.1.3</code> ，则 <code>128.1.1.1</code> 可以用作 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 机器的外部 IP 地址，而 <code>128.1.1.2</code> 和 <code>128.1.1.3</code> 则被转发回局域网客户端 <code>A</code> 和 <code>B</code> 。</p>
+<p>如果有多个 IP 地址可用，地址重定向非常有用。每个局域网客户端可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 分配自己的外部 IP 地址，然后 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 将重写来自局域网客户端的出站数据包，使用正确的外部 IP 地址，并将所有进入特定 IP 地址的流量重定向回特定的局域网客户端。这也被称为静态 NAT 。例如，如果可用的 IP 地址为 <code>128.1.1.1</code>、<code>128.1.1.2</code> 和 <code>128.1.1.3</code>，则 <code>128.1.1.1</code> 可以用作 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 机器的外部 IP 地址，而 <code>128.1.1.2</code> 和 <code>128.1.1.3</code> 则被转发回局域网客户端 <code>A</code> 和 <code>B</code>。</p>
 </div>
 <div class="paragraph">
-<p><code>redirect_addr</code> 的语法如下，其中 <code>localIP</code> 是局域网客户端的内部 IP 地址， <code>publicIP</code> 是与局域网客户端对应的外部 IP 地址。</p>
+<p><code>redirect_addr</code> 的语法如下，其中 <code>localIP</code> 是局域网客户端的内部 IP 地址，<code>publicIP</code> 是与局域网客户端对应的外部 IP 地址。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3499,16 +3354,16 @@ redirect_addr 192.168.0.3 128.1.1.3</pre>
 <p>与 <code>redirect_port</code> 类似，这些参数也被放置在 NAT 实例配置中。通过地址重定向，不需要进行端口重定向，因为所有接收到的特定 IP 地址的数据都会被重定向。</p>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 机器上的外部 IP 地址必须处于活动状态，并且必须与外部接口进行别名设置。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a> 。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 机器上的外部 IP 地址必须处于活动状态，并且必须与外部接口进行别名设置。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a>。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_用户空间_nat">33.4.4.3. 用户空间 NAT<a class="anchor" href="#_用户空间_nat"></a></h4>
 <div class="paragraph">
-<p>让我们从一个陈述开始：用户空间的 NAT 实现： <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> ，比内核中的 NAT 有更多的开销。为了让 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 翻译数据包，数据包必须从内核复制到用户空间，然后再返回，这带来了额外的开销，而内核中的 NAT 则没有这种开销。</p>
+<p>让我们从一个声明开始：用户空间的 NAT 实现：<a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a>，比内核中的 NAT 有更多的开销。为了让 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 翻译数据包，数据包必须从内核复制到用户空间，然后再返回，这带来了额外的开销，而内核中的 NAT 则没有这种开销。</p>
 </div>
 <div class="paragraph">
-<p>要在启动时启用用户空间 NAT 守护进程 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> ，以下是在文件 <span class="filename">/etc/rc.conf</span> 中的最小配置。其中， <code>natd_interface</code> 设置为连接到互联网的网卡的名称。 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 的 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 脚本将自动检查是否使用动态 IP 地址，并配置自身以处理该地址。</p>
+<p>要在启动时启用用户空间 NAT 守护进程 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a>，以下是在文件 <span class="filename">/etc/rc.conf</span> 中的最小配置。其中，<code>natd_interface</code> 设置为连接到互联网的网卡的名称。<a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 的 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 脚本将自动检查是否使用动态 IP 地址，并配置自身以处理该地址。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3518,7 +3373,7 @@ natd_interface=&#34;rl0&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>通常情况下，上述内核 NAT 的规则集也可以与 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 一起使用。唯一的例外是内核 NAT 实例的配置 <code>(ipfw -q nat 1 config …​)</code> ，与重组规则 99 一起不需要，因为其功能已包含在 <code>divert</code> 操作中。规则编号 100 和 1000 需要稍作修改，如下所示。</p>
+<p>通常情况下，上述内核 NAT 的规则集也可以与 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 一起使用。唯一的例外是内核 NAT 实例的配置 <code>(ipfw -q nat 1 config …​)</code> ，不需要与重组规则 99 一起使用，因为其功能已包含在 <code>divert</code> 操作中。规则编号 100 和 1000 需要稍作修改，如下所示。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3527,7 +3382,7 @@ $cmd 1000 divert natd ip from any to any out via $pif</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>要配置端口或地址重定向，使用与内核 NAT 相似的语法。然而，现在，与内核 NAT 不同，我们不再在规则集脚本中指定配置，而是最好在配置文件中配置 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 。为了做到这一点，必须通过 <span class="filename">/etc/rc.conf</span> 传递一个额外的标志，指定配置文件的路径。</p>
+<p>要配置端口或地址重定向，使用与内核 NAT 相似的语法。然而，现在，与内核 NAT 不同，我们不再在规则集脚本中指定配置，而是最好在配置文件中配置 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a>。为了做到这一点，必须通过 <span class="filename">/etc/rc.conf</span> 传递一个额外的标志，指定配置文件的路径。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3542,7 +3397,7 @@ $cmd 1000 divert natd ip from any to any out via $pif</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>指定的文件必须包含一行一个的配置选项列表。有关配置文件和可能的变量的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a> 。以下是两个示例条目，每行一个：</p>
+<p>指定的文件必须包含一行一个的配置选项列表。有关配置文件和可能的变量的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=natd&amp;sektion=8&amp;format=html">natd(8)</a>。以下是两个示例条目，每行一个：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3613,7 +3468,7 @@ redirect_addr 192.168.0.3 128.1.1.3</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>将编号为_NUM_的规则的计数器清零：</p>
+<p>将编号为 <em>NUM</em> 的规则的计数器清零：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3623,13 +3478,13 @@ redirect_addr 192.168.0.3 128.1.1.3</pre>
 <div class="sect3">
 <h4 id="_记录防火墙消息">33.4.5.1. 记录防火墙消息<a class="anchor" href="#_记录防火墙消息"></a></h4>
 <div class="paragraph">
-<p>即使启用了日志功能， IPFW 也不会自动生成任何规则日志。防火墙管理员决定哪些规则将被记录，并在这些规则中添加&#34;log&#34;关键字。通常只有拒绝规则会被记录。习惯上，在规则集中将“ ipfw default deny everything ”规则复制一份，并在最后一条规则中包含&#34;log&#34;关键字。这样，就可以查看所有未匹配规则集中任何规则的数据包。</p>
+<p>即使启用了日志功能，IPFW 也不会自动生成任何规则日志。防火墙管理员决定哪些规则将被记录，并在这些规则中添加 <code>log</code> 关键字。通常只有拒绝规则会被记录。习惯上，在规则集中将“ipfw default deny everything”规则复制一份，并在最后一条规则中包含 <code>log</code> 关键字。这样，就可以查看所有未匹配规则集中任何规则的数据包。</p>
 </div>
 <div class="paragraph">
-<p>日志记录是一把双刃剑。如果不小心处理，过多的日志数据或者 DoS 攻击可能会填满磁盘的日志文件。日志消息不仅会被写入 syslogd ，还会显示在根控制台屏幕上，很快就会变得令人讨厌。</p>
+<p>日志记录是一把双刃剑。如果不小心处理，过多的日志数据或者 DoS 攻击可能会填满磁盘的日志文件。日志消息不仅会被写入 syslogd，还会显示在根控制台屏幕上，很快就会变得令人讨厌。</p>
 </div>
 <div class="paragraph">
-<p><code>IPFIREWALL_VERBOSE_LIMIT = 5</code> 内核选项限制了发送给 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> 的连续消息数量，这些消息涉及给定规则的数据包匹配。当内核中启用了这个选项时，关于特定规则的连续消息数量被限制在指定的数量上。 200 条相同的日志消息并没有什么好处。当这个选项设置为五时，关于特定规则的五条连续消息将被记录到 syslogd 中，其余相同的连续消息将被计数并以类似以下的短语发布到 syslogd 中：</p>
+<p><code>IPFIREWALL_VERBOSE_LIMIT=5</code> 内核选项限制了发送给 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> 的连续消息数量，这些消息涉及给定规则的数据包匹配。当内核中启用了这个选项时，关于特定规则的连续消息数量被限制在指定的数量上。200 条相同的日志消息并没有什么好处。当这个选项设置为五时，关于特定规则的五条连续消息将被记录到 syslogd 中，其余相同的连续消息将被计数并以类似以下的短语发布到 syslogd 中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3637,7 +3492,7 @@ redirect_addr 192.168.0.3 128.1.1.3</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>所有已记录的数据包消息默认写入到 <span class="filename">/var/log/security</span> ，该路径在 <span class="filename">/etc/syslog.conf</span> 中定义。</p>
+<p>所有已记录的数据包消息默认写入到 <span class="filename">/var/log/security</span>，该路径在 <span class="filename">/etc/syslog.conf</span> 中定义。</p>
 </div>
 </div>
 <div class="sect3">
@@ -3646,7 +3501,7 @@ redirect_addr 192.168.0.3 128.1.1.3</pre>
 <p>大多数经验丰富的 IPFW 用户会创建一个包含规则的文件，并以与脚本运行兼容的方式编码它们。这样做的主要好处是防火墙规则可以批量刷新，而无需重新启动系统来激活它们。这种方法在测试新规则时非常方便，因为可以根据需要执行该过程多次。作为脚本，可以使用符号替换来将常用值替换为多个规则中的值。</p>
 </div>
 <div class="paragraph">
-<p>这个示例脚本与 <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> 、 <a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> shells 使用的语法兼容。符号替换字段以美元符号 ($) 为前缀。符号字段没有$前缀。用于填充符号字段的值必须用双引号 (&#34;&#34;) 括起来。</p>
+<p>这个示例脚本与 <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a>、<a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> shells 使用的语法兼容。符号替换字段以美元符号 ($) 为前缀。符号字段没有 $ 前缀。用于填充符号字段的值必须用双引号 (&#34;&#34;) 括起来。</p>
 </div>
 <div class="paragraph">
 <p>像这样开始规则文件：</p>
@@ -3703,7 +3558,7 @@ $cmd 00611 allow udp from any to $odns 53 out via $oif $ks
 <div class="sect2">
 <h3 id="firewalls-ipfw-kernelconfig">33.4.6. IPFW 内核选项<a class="anchor" href="#firewalls-ipfw-kernelconfig"></a></h3>
 <div class="paragraph">
-<p>为了将 IPFW 支持静态编译到自定义内核中，请参考 <a href="../kernelconfig/#kernelconfig ，配置 FreeBSD 内核"></a> 中的说明。以下选项可用于自定义内核配置文件：</p>
+<p>为了将 IPFW 支持静态编译到自定义内核中，请参考 <a href="../kernelconfig/#kernelconfig，配置 FreeBSD 内核"></a> 中的说明。以下选项可用于自定义内核配置文件：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3737,22 +3592,22 @@ options    IPDIVERT			# enables NAT through natd(8)</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="firewalls-ipf">33.5. IPFILTER （ IPF ）<a class="anchor" href="#firewalls-ipf"></a></h2>
+<h2 id="firewalls-ipf">33.5. IPFILTER (IPF)<a class="anchor" href="#firewalls-ipf"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>IPFILTER ，也称为 IPF ，是一个跨平台的开源防火墙，已经移植到多个操作系统，包括 FreeBSD 、 NetBSD 、 OpenBSD 和 Solaris™ 。</p>
+<p>IPFILTER，也称为 IPF，是一个跨平台的开源防火墙，已经移植到多个操作系统，包括 FreeBSD、NetBSD、OpenBSD 和 Solaris™。</p>
 </div>
 <div class="paragraph">
 <p>IPFILTER 是一个位于内核的防火墙和 NAT 机制，可以由用户空间程序进行控制和监控。可以使用 ipf 设置或删除防火墙规则，使用 ipnat 设置或删除 NAT 规则，使用 ipfstat 打印 IPFILTER 内核部分的运行时统计信息，并可以使用 ipmon 将 IPFILTER 的操作记录到系统日志文件中。</p>
 </div>
 <div class="paragraph">
-<p>IPF 最初使用“最后匹配规则获胜”的规则处理逻辑，并且只使用无状态规则。此后， IPF 已经进行了增强，包括了 <code>quick</code> 和 <code>keep state</code> 选项。</p>
+<p>IPF 最初使用“最后匹配规则获胜（the last matching rule wins）”的规则处理逻辑，并且只使用无状态规则。此后，IPF 已经进行了增强，包括了 <code>quick</code> 和 <code>keep state</code> 选项。</p>
 </div>
 <div class="paragraph">
-<p>IPF FAQ 位于 <a href="http://www.phildev.net/ipf/index.html">http://www.phildev.net/ipf/index.html</a> 。 IPFilter 邮件列表的可搜索存档可在 <a href="http://marc.info/" class="bare">http://marc.info/</a> ? l = ipfilter[<a href="http://marc.info/" class="bare">http://marc.info/</a> ? l = ipfilter] 上找到。</p>
+<p>IPF FAQ 位于 <a href="http://www.phildev.net/ipf/index.html">http://www.phildev.net/ipf/index.html</a>。IPFilter 邮件列表的可搜索存档可在 <a href="http://marc.info/?l=ipfilter">http://marc.info/?l=ipfilter</a> 上找到。</p>
 </div>
 <div class="paragraph">
-<p>本手册的这一部分重点介绍了与 FreeBSD 相关的 IPF 。它提供了包含 <code>quick</code> 和 <code>keep state</code> 选项的规则示例。</p>
+<p>本手册的这一部分重点介绍了与 FreeBSD 相关的 IPF。它提供了包含 <code>quick</code> 和 <code>keep state</code> 选项的规则示例。</p>
 </div>
 <div class="sect2">
 <h3 id="_启用_ipf">33.5.1. 启用 IPF<a class="anchor" href="#_启用_ipf"></a></h3>
@@ -3771,10 +3626,10 @@ options IPFILTER_DEFAULT_BLOCK</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>options IPFILTER</code> 启用对 IPFILTER 的支持， <code>options IPFILTER_LOG</code> 启用使用 <span class="filename">ipl</span> 伪设备进行 IPF 日志记录，对于每个带有 <code>log</code> 关键字的规则， <code>IPFILTER_LOOKUP</code> 启用 IP 池以加快 IP 查找速度，而 <code>options IPFILTER_DEFAULT_BLOCK</code> 更改默认行为，使得任何不符合防火墙 <code>pass</code> 规则的数据包都被阻止。</p>
+<p><code>options IPFILTER</code> 启用对 IPFILTER 的支持，<code>options IPFILTER_LOG</code> 启用使用 <span class="filename">ipl</span> 伪设备对于每个带有 <code>log</code> 关键字的规则进行 IPF 日志记录，<code>IPFILTER_LOOKUP</code> 启用 IP 池以加快 IP 查找速度，而 <code>options IPFILTER_DEFAULT_BLOCK</code> 更改默认行为，使得任何不符合防火墙 <code>pass</code> 规则的数据包都被阻止。</p>
 </div>
 <div class="paragraph">
-<p>要在启动时配置系统以启用 IPF ，请将以下条目添加到 [/etc/rc.conf] 文件中。这些条目还将启用日志记录和“ default pass all ”。要将默认策略更改为“ block all ”而无需编译自定义内核，请记住在规则集的末尾添加一个“ block all ”规则。</p>
+<p>要在启动时配置系统以启用 IPF，请将以下条目添加到 <span class="filename">/etc/rc.conf</span> 文件中。这些条目还将启用日志记录和 <code>default pass all</code>。要将默认策略更改为 <code>block all</code> 而无需编译自定义内核，请记住在规则集的末尾添加一个 <code>block all</code> 规则。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3799,7 +3654,7 @@ ipnat_rules=&#34;/etc/ipnat.rules&#34;    # rules definition file for ipnat</pre
 </div>
 </div>
 <div class="paragraph">
-<p>然后，现在开始启动 IPF ：</p>
+<p>然后，现在开始启动 IPF：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3815,19 +3670,19 @@ ipnat_rules=&#34;/etc/ipnat.rules&#34;    # rules definition file for ipnat</pre
 </div>
 </div>
 <div class="paragraph">
-<p><code>-Fa</code> 选项会清空所有内部规则表， <code>-f</code> 选项用于指定包含要加载的规则的文件。</p>
+<p><code>-Fa</code> 选项会清空所有内部规则表，<code>-f</code> 选项用于指定包含要加载的规则的文件。</p>
 </div>
 <div class="paragraph">
 <p>这提供了对自定义规则集进行更改并使用最新的规则副本更新正在运行的防火墙的能力，而无需重新启动系统。这种方法对于测试新规则非常方便，因为可以根据需要执行该过程多次。</p>
 </div>
 <div class="paragraph">
-<p>有关此命令可用的其他标志的详细信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=8&amp;format=html">ipf(8)</a> 。</p>
+<p>有关此命令可用的其他标志的详细信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=8&amp;format=html">ipf(8)</a>。</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_ipf_规则语法">33.5.2. IPF 规则语法<a class="anchor" href="#_ipf_规则语法"></a></h3>
 <div class="paragraph">
-<p>本节描述了用于创建有状态规则的 IPF 规则语法。在创建规则时，请记住，除非规则中出现了 <code>quick</code> 关键字，否则每个规则都会按顺序读取，应用的是_最后匹配的规则_。这意味着，即使第一个匹配数据包的规则是 <code>pass</code> ，如果后面有一个匹配的规则是 <code>block</code> ，数据包将被丢弃。示例规则集可以在 <span class="filename">/usr/share/examples/ipfilter</span> 中找到。</p>
+<p>本节描述了用于创建有状态规则的 IPF 规则语法。在创建规则时，请记住，除非规则中出现了 <code>quick</code> 关键字，否则每个规则都会按顺序读取，应用的是 <em>最后匹配的规则</em>。这意味着，即使第一个匹配数据包的规则是 <code>pass</code>，如果后面有一个匹配的规则是 <code>block</code>，数据包将被丢弃。示例规则集可以在 <span class="filename">/usr/share/examples/ipfilter</span> 中找到。</p>
 </div>
 <div class="paragraph">
 <p>创建规则时，使用 <code>#</code> 字符来标记注释的开始，并且可以出现在规则的末尾，以解释该规则的功能，或者独占一行。任何空行都会被忽略。</p>
@@ -3836,43 +3691,43 @@ ipnat_rules=&#34;/etc/ipnat.rules&#34;    # rules definition file for ipnat</pre
 <p>在规则中使用的关键字必须按照特定的顺序从左到右进行编写。一些关键字是必需的，而其他一些是可选的。一些关键字具有子选项，这些子选项可能是关键字本身，并且还可以包含更多的子选项。关键字的顺序如下所示，其中大写字母表示变量，小写字母表示必须在其后面的变量之前出现的关键字：</p>
 </div>
 <div class="paragraph">
-<p><code><em>ACTION DIRECTION OPTIONS proto PROTO_TYPE from SRC_ADDR SRC_PORT to DST_ADDR DST_PORT TCP_FLAG | ICMP_TYPE keep state STATE</em></code> 的中文翻译如下： <code><em>ACTION DIRECTION OPTIONS proto PROTO_TYPE from SRC_ADDR SRC_PORT to DST_ADDR DST_PORT TCP_FLAG | ICMP_TYPE keep state STATE</em></code></p>
+<p><code><em>ACTION DIRECTION OPTIONS proto PROTO_TYPE from SRC_ADDR SRC_PORT to DST_ADDR DST_PORT TCP_FLAG|ICMP_TYPE keep state STATE</em></code></p>
 </div>
 <div class="paragraph">
-<p>本节描述了每个关键字及其选项。这不是一个详尽无遗的选项列表。有关在创建 IPF 规则和使用每个关键字的示例时可以使用的规则语法的完整描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a> 。</p>
+<p>本节描述了每个关键字及其选项。这不是一个详尽无遗的选项列表。有关在创建 IPF 规则和使用每个关键字的示例时可以使用的规则语法的完整描述，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a>。</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">行动</dt>
+<dt class="hdlist1">动作（ACTION）</dt>
 <dd>
-<p>action 关键字指示如果数据包与该规则匹配，应该采取什么操作。每个规则都 <strong> 必须 </strong> 有一个动作。以下动作被识别：</p>
+<p>action 关键字指示如果数据包与该规则匹配，应该采取什么操作。每个规则都 <strong>必须</strong> 有一个动作。以下动作被识别：</p>
 <div class="paragraph">
-<p><code>block</code> ：丢弃该数据包。</p>
+<p><code>block</code>：丢弃该数据包。</p>
 </div>
 <div class="paragraph">
-<p><code>pass</code> ：允许数据包通过。</p>
+<p><code>pass</code>：允许数据包通过。</p>
 </div>
 <div class="paragraph">
-<p><code>log</code> ：生成一条日志记录。</p>
+<p><code>log</code>：生成一条日志记录。</p>
 </div>
 <div class="paragraph">
-<p><code>count</code> ：计算数据包和字节数的数量，可以提供规则使用频率的指示。</p>
+<p><code>count</code>：计算数据包和字节数的数量，可以提供规则使用频率的指示。</p>
 </div>
 <div class="paragraph">
-<p><code>auth</code> ：将数据包排队，以便由另一个程序进一步处理。</p>
+<p><code>auth</code>：将数据包排队，以便由另一个程序进一步处理。</p>
 </div>
 <div class="paragraph">
-<p><code>call</code> ：提供对内置于 IPF 中的函数的访问，允许执行更复杂的操作。</p>
+<p><code>call</code>：提供对内置于 IPF 中的函数的访问，允许执行更复杂的操作。</p>
 </div>
 <div class="paragraph">
-<p><code>decapsulate</code> ：移除任何头部以便处理数据包的内容。</p>
+<p><code>decapsulate</code>：移除任何头部以便处理数据包的内容。</p>
 </div>
 </dd>
-<dt class="hdlist1">方向</dt>
+<dt class="hdlist1">方向（DIRECTION）</dt>
 <dd>
 <p>接下来，每个规则必须明确指定流量的方向，使用以下关键字之一：</p>
 <div class="paragraph">
-<p><code>in</code> ：规则应用于入站数据包。</p>
+<p><code>in</code>：规则应用于入站数据包。</p>
 </div>
 <div class="paragraph">
 <p><code>out</code>: 规则应用于出站数据包。</p>
@@ -3881,73 +3736,73 @@ ipnat_rules=&#34;/etc/ipnat.rules&#34;    # rules definition file for ipnat</pre
 <p><code>all</code>: 规则适用于任何方向。</p>
 </div>
 <div class="paragraph">
-<p>如果系统有多个接口，可以在指定方向时同时指定接口。一个例子是 <code>in on fxp0</code> 。</p>
+<p>如果系统有多个接口，可以在指定方向时同时指定接口。一个例子是 <code>in on fxp0</code>。</p>
 </div>
 </dd>
-<dt class="hdlist1">选项</dt>
+<dt class="hdlist1">选项（OPTIONS）</dt>
 <dd>
 <p>选项是可选的。然而，如果指定了多个选项，则必须按照这里显示的顺序使用。</p>
 <div class="paragraph">
-<p><code>log</code> ：在执行指定的操作时，数据包头部的内容将被写入到 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipl&amp;sektion=4&amp;format=html">ipl(4)</a> 数据包日志伪设备中。</p>
+<p><code>log</code>：在执行指定的操作时，数据包头部的内容将被写入到 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipl&amp;sektion=4&amp;format=html">ipl(4)</a> 数据包日志伪设备中。</p>
 </div>
 <div class="paragraph">
 <p><code>quick</code>: 如果一个数据包符合这个规则，那么规则指定的操作将会执行，并且对于这个数据包，不会再进行任何后续规则的处理。</p>
 </div>
 <div class="paragraph">
-<p><code>on</code> ：必须跟随着 <code><a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a></code> 中显示的接口名称。只有当数据包通过指定的接口以指定的方向传输时，规则才会匹配。</p>
+<p><code>on</code>：必须跟随着 <code><a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a></code> 中显示的接口名称。只有当数据包通过指定的接口以指定的方向传输时，规则才会匹配。</p>
 </div>
 <div class="paragraph">
 <p>使用 <code>log</code> 关键字时，可以按照以下顺序使用以下限定词：</p>
 </div>
 <div class="paragraph">
-<p><code>body</code> ：表示在报文头部之后，将记录报文内容的前 128 个字节。</p>
+<p><code>body</code>：表示在报文头部之后，将记录报文内容的前 128 个字节。</p>
 </div>
 <div class="paragraph">
-<p><code>first</code> ：如果 <code>log</code> 关键字与 <code>keep state</code> 选项一起使用，建议使用此选项，以便仅记录触发的数据包，而不是与状态连接匹配的每个数据包。</p>
+<p><code>first</code>：如果 <code>log</code> 关键字与 <code>keep state</code> 选项一起使用，建议使用此选项，以便仅记录触发的数据包，而不是与状态连接匹配的每个数据包。</p>
 </div>
 <div class="paragraph">
-<p>还有其他选项可用于指定错误返回消息。有关更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a> 。</p>
+<p>还有其他选项可用于指定错误返回消息。有关更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a>。</p>
 </div>
 </dd>
-<dt class="hdlist1">PROTO_TYPE 的中文翻译是&#34;原型&#34;。</dt>
+<dt class="hdlist1">协议类型（PROTO_TYPE）</dt>
 <dd>
-<p>协议类型是可选的。然而，如果规则需要指定 SRC_PORT 或 DST_PORT ，则协议类型是必需的，因为它定义了协议的类型。在指定协议类型时，使用 <code>proto</code> 关键字，后面跟着来自 [/etc/protocols](/etc/protocols) 的协议号或名称。示例协议名称包括 <code>tcp</code> 、 <code>udp</code> 或 <code>icmp</code> 。如果指定了 PROTO_TYPE ，但未指定 SRC_PORT 或 DST_PORT ，则该规则将匹配该协议的所有端口号。</p>
+<p>协议类型是可选的。然而，如果规则需要指定 SRC_PORT 或 DST_PORT ，则协议类型是必需的，因为它定义了协议的类型。在指定协议类型时，使用 <code>proto</code> 关键字，后面跟着来自 <span class="filename">/etc/protocols</span> 的协议号或名称。示例协议名称包括 <code>tcp</code>、<code>udp</code> 或 <code>icmp</code>。如果指定了 PROTO_TYPE，但未指定 SRC_PORT 或 DST_PORT，则该规则将匹配该协议的所有端口号。</p>
 </dd>
 <dt class="hdlist1">源地址</dt>
 <dd>
-<p><code>from</code> 关键字是必需的，并且后面跟着一个关键字，表示数据包的来源。来源可以是主机名、 IP 地址后跟 CIDR 掩码、地址池或关键字 <code>all</code> 。有关示例，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a> 。</p>
+<p><code>from</code> 关键字是必需的，并且后面跟着一个关键字，表示数据包的来源。来源可以是主机名、IP 地址后跟 CIDR 掩码、地址池或关键字 <code>all</code>。有关示例，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a>。</p>
 <div class="paragraph">
-<p>没有办法匹配那些不容易用点分十进制形式或掩码长度表示的 IP 地址范围。可以使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/net-mgmt/ipcalc/">net-mgmt/ipcalc</a> 软件包或端口来简化 CIDR 掩码的计算。有关该实用程序的更多信息，请访问其网页： <a href="http://jodies.de/ipcalc">http://jodies.de/ipcalc</a> 。</p>
+<p>没有办法匹配那些不容易用点分十进制形式或掩码长度表示的 IP 地址范围。可以使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/net-mgmt/ipcalc/">net-mgmt/ipcalc</a> 软件包或 port 来简化 CIDR 掩码的计算。有关该实用程序的更多信息，请访问其网页：http://jodies.de/ipcalc[<a href="http://jodies.de/ipcalc" class="bare">http://jodies.de/ipcalc</a>]。</p>
 </div>
 </dd>
-<dt class="hdlist1">源端口</dt>
+<dt class="hdlist1">源端口（SRC_PORT）</dt>
 <dd>
-<p>源端口号是可选的。但是，如果使用了源端口号，规则中必须首先定义 PROTO_TYPE 。端口号还必须在 <code>proto</code> 关键字之前。</p>
+<p>源端口号是可选的。但是，如果使用了源端口号，规则中必须首先定义 PROTO_TYPE。端口号还必须在 <code>proto</code> 关键字之前。</p>
 <div class="paragraph">
-<p>支持多种不同的比较运算符： ` = ` （等于）， ` != ` （不等于）， <code>&lt;</code> （小于）， <code>&gt;</code> （大于）， `&lt; = ` （小于等于）和 `&gt; = ` （大于等于）。</p>
+<p>支持多种不同的比较运算符：` = <code>（等于），</code>!=<code>（不等于），</code>&lt;`（小于），<code>&gt;</code>（大于），<code>⇐</code>（小于等于）和 <code>&gt;=</code>（大于等于）。</p>
 </div>
 <div class="paragraph">
-<p>要指定端口范围，请将两个端口号放在 <code>&lt;&gt;</code> （小于和大于）、 <code>&gt;&lt;</code> （大于和小于）或 <code>:</code> （大于或等于和小于或等于）之间。</p>
+<p>要指定端口范围，请将两个端口号放在 <code>&lt;&gt;</code>（小于和大于）、<code>&gt;&lt;</code>（大于和小于）或 <code>:</code>（大于或等于和小于或等于）之间。</p>
 </div>
 </dd>
 <dt class="hdlist1">目标地址</dt>
 <dd>
-<p><code>to</code> 关键字是必需的，后面跟着一个关键字，表示数据包的目的地。与 SRC_ADDR 类似，它可以是主机名、 IP 地址后跟 CIDR 掩码、地址池或关键字 <code>all</code> 。</p>
+<p><code>to</code> 关键字是必需的，后面跟着一个关键字，表示数据包的目的地。与 SRC_ADDR 类似，它可以是主机名、IP 地址后跟 CIDR 掩码、地址池或关键字 <code>all</code>。</p>
 </dd>
-<dt class="hdlist1">目标端口</dt>
+<dt class="hdlist1">目标端口（DST_PORT）</dt>
 <dd>
 <p>与 SRC_PORT 类似，目标端口号是可选的。然而，如果使用了目标端口号，规则中必须首先定义 PROTO_TYPE 。端口号还必须在 <code>proto</code> 关键字之前。</p>
 </dd>
-<dt class="hdlist1">TCP_FLAG | ICMP_TYPE</dt>
+<dt class="hdlist1">TCP_FLAG|ICMP_TYPE</dt>
 <dd>
-<p>如果指定 <code>tcp</code> 作为 PROTO_TYPE ，那么可以使用字母来指定标志，其中每个字母代表用于确定连接状态的可能的 TCP 标志之一。可能的值包括： <code>S</code> （ SYN ）， <code>A</code> （ ACK ）， <code>P</code> （ PSH ）， <code>F</code> （ FIN ）， <code>U</code> （ URG ）， <code>R</code> （ RST ）， <code>C</code> （ CWN ）和 <code>E</code> （ ECN ）。</p>
+<p>如果指定 <code>tcp</code> 作为 PROTO_TYPE，那么可以使用字母来指定标志，其中每个字母代表用于确定连接状态的可能的 TCP 标志之一。可能的值包括：<code>S</code>（SYN），<code>A</code>（ACK），<code>P</code>（PSH），<code>F</code>（FIN），<code>U</code>（URG），<code>R</code>（RST），<code>C</code>（CWN）和 <code>E</code>（ECN）。</p>
 <div class="paragraph">
-<p>如果指定了 <code>icmp</code> 作为 PROTO_TYPE ，可以指定要匹配的 ICMP 类型。有关允许的类型，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a> 。</p>
+<p>如果指定了 <code>icmp</code> 作为 PROTO_TYPE，可以指定要匹配的 ICMP 类型。有关允许的类型，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a>。</p>
 </div>
 </dd>
-<dt class="hdlist1">状态</dt>
+<dt class="hdlist1">状态（STATE）</dt>
 <dd>
-<p>如果一个 <code>pass</code> 规则包含 <code>keep state</code> ， IPF 将在其动态状态表中添加一个条目，并允许匹配连接的后续数据包。 IPF 可以跟踪 TCP 、 UDP 和 ICMP 会话的状态。任何 IPF 可以确定是活动会话的一部分的数据包，即使是不同的协议，也将被允许通过。</p>
+<p>如果一个 <code>pass</code> 规则包含 <code>keep state</code>，IPF 将在其动态状态表中添加一个条目，并允许匹配连接的后续数据包。IPF 可以跟踪 TCP、UDP 和 ICMP 会话的状态。任何 IPF 可以确定是活动会话的一部分的数据包，即使是不同的协议，也将被允许通过。</p>
 <div class="paragraph">
 <p>在 IPF 中，目标要通过连接到公共互联网的接口发送的数据包首先会与动态状态表进行匹配检查。如果数据包与活动会话对话的下一个预期数据包匹配，它将离开防火墙，并且会话对话流的状态将在动态状态表中更新。不属于已经活动会话的数据包将会与出站规则集进行检查。从连接到公共互联网的接口进入的数据包首先会与动态状态表进行匹配检查。如果数据包与活动会话的下一个预期数据包匹配，它将离开防火墙，并且会话对话流的状态将在动态状态表中更新。不属于已经活动会话的数据包将会与入站规则集进行检查。</p>
 </div>
@@ -3961,10 +3816,10 @@ ipnat_rules=&#34;/etc/ipnat.rules&#34;    # rules definition file for ipnat</pre
 <div class="sect2">
 <h3 id="_示例规则集_2">33.5.3. 示例规则集<a class="anchor" href="#_示例规则集_2"></a></h3>
 <div class="paragraph">
-<p>本节演示如何创建一个示例规则集，该规则集仅允许与“ pass ”规则匹配的服务，并阻止所有其他服务。</p>
+<p>本节演示如何创建一个示例规则集，该规则集仅允许与 <code>pass</code> 规则匹配的服务，并阻止所有其他服务。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD 使用回环接口（ <span class="filename">lo0</span> ）和 IP 地址 <code>127.0.0.1</code> 进行内部通信。防火墙规则集必须包含允许这些内部使用的数据包自由传输的规则：</p>
+<p>FreeBSD 使用回环接口（<span class="filename">lo0</span>）和 IP 地址 <code>127.0.0.1</code> 进行内部通信。防火墙规则集必须包含允许这些内部使用的数据包自由传输的规则：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4100,7 +3955,7 @@ block in log first quick on dc0 all</pre>
 <div class="sect2">
 <h3 id="_配置_nat">33.5.4. 配置 NAT<a class="anchor" href="#_配置_nat"></a></h3>
 <div class="paragraph">
-<p>要启用 NAT ，请将以下语句添加到 [/etc/rc.conf] 文件中，并指定包含 NAT 规则的文件的名称：</p>
+<p>要启用 NAT，请将以下语句添加到 <span class="filename">/etc/rc.conf</span> 文件中，并指定包含 NAT 规则的文件的名称：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4110,10 +3965,10 @@ ipnat_rules=&#34;/etc/ipnat.rules&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>NAT 规则是灵活的，可以实现许多不同的功能，以满足商业和家庭用户的需求。这里介绍的规则语法已经简化，以展示常见用法。有关完整的规则语法描述，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipnat&amp;sektion=5&amp;format=html">ipnat(5)</a> 。</p>
+<p>NAT 规则是灵活的，可以实现许多不同的功能，以满足商业和家庭用户的需求。这里介绍的规则语法已经简化，以展示常见用法。有关完整的规则语法描述，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipnat&amp;sektion=5&amp;format=html">ipnat(5)</a>。</p>
 </div>
 <div class="paragraph">
-<p>NAT 规则的基本语法如下所示，其中 <code>map</code> 开始规则，_IF_应替换为外部接口的名称：</p>
+<p>NAT 规则的基本语法如下所示，其中 <code>map</code> 是规则的开始，<em>IF</em> 应替换为外部接口的名称：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4121,10 +3976,10 @@ ipnat_rules=&#34;/etc/ipnat.rules&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>_LAN_IP_RANGE_是内部客户端使用的 IP 地址范围。通常情况下，它是一个私有地址范围，比如 <code>192.168.1.0/24</code> 。_PUBLIC_ADDRESS_可以是静态外部 IP 地址，也可以是关键字 <code>0/32</code> ，表示分配给_IF_的 IP 地址。</p>
+<p><em>LAN_IP_RANGE</em> 是内部客户端使用的 IP 地址范围。通常情况下，它是一个私有地址范围，比如 <code>192.168.1.0/24</code> 。<em>PUBLIC_ADDRESS</em> 可以是静态外部 IP 地址，也可以是关键字 <code>0/32</code>，表示分配给 <em>IF</em> 的 IP 地址。</p>
 </div>
 <div class="paragraph">
-<p>在 IPF 中，当一个数据包从局域网带有公共目的地到达防火墙时，它首先通过防火墙规则集的出站规则。然后，数据包被传递到 NAT 规则集，该规则集从上到下进行读取，第一个匹配的规则获胜。 IPF 会将每个 NAT 规则与数据包的接口名称和源 IP 地址进行测试。当数据包的接口名称与 NAT 规则匹配时，将检查数据包在私有局域网中的源 IP 地址是否落在_LAN_IP_RANGE_指定的 IP 地址范围内。如果匹配成功，数据包的源 IP 地址将被重写为_PUBLIC_ADDRESS_指定的公共 IP 地址。 IPF 会在其内部 NAT 表中发布一个条目，以便当数据包从互联网返回时，可以将其映射回原始的私有 IP 地址，然后将其传递给防火墙规则进行进一步处理。</p>
+<p>在 IPF 中，当一个数据包从局域网带有公共目的地到达防火墙时，它首先通过防火墙规则集的出站规则。然后，数据包被传递到 NAT 规则集，该规则集从上到下进行读取，第一个匹配的规则获胜。IPF 会将每个 NAT 规则与数据包的接口名称和源 IP 地址进行测试。当数据包的接口名称与 NAT 规则匹配时，将检查数据包在私有局域网中的源 IP 地址是否落在 <em>LAN_IP_RANGE</em> 指定的 IP 地址范围内。如果匹配成功，数据包的源 IP 地址将被重写为 <em>PUBLIC_ADDRESS</em> 指定的公共 IP 地址。IPF 会在其内部 NAT 表中发布一个条目，以便当数据包从互联网返回时，可以将其映射回原始的私有 IP 地址，然后将其传递给防火墙规则进行进一步处理。</p>
 </div>
 <div class="paragraph">
 <p>对于拥有大量内部系统或多个子网的网络来说，将每个私有 IP 地址汇集到一个公共 IP 地址中的过程会成为一个资源问题。有两种方法可以解决这个问题。</p>
@@ -4158,7 +4013,7 @@ map dc0 192.168.1.0/24 -&gt; 204.134.75.0/24</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>常见做法是将公共可访问的 Web 服务器或邮件服务器隔离到内部网络段。这些服务器的流量仍然需要经过 NAT ，但需要进行端口重定向以将入站流量定向到正确的服务器。例如，要将使用内部地址 <code>10.0.10.25</code> 的 Web 服务器映射到其公共 IP 地址 <code>20.20.20.5</code> ，请使用以下规则：</p>
+<p>常见做法是将公共可访问的 Web 服务器或邮件服务器隔离到内部网络段。这些服务器的流量仍然需要经过 NAT ，但需要进行端口重定向以将入站流量定向到正确的服务器。例如，要将使用内部地址 <code>10.0.10.25</code> 的 Web 服务器映射到其公共 IP 地址 <code>20.20.20.5</code>，请使用以下规则：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4166,7 +4021,7 @@ map dc0 192.168.1.0/24 -&gt; 204.134.75.0/24</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>如果它是唯一的 Web 服务器，这个规则也会起作用，因为它会将所有外部 HTTP 请求重定向到 <code>10.0.10.25</code> 。</p>
+<p>如果它是唯一的 Web 服务器，这个规则也会起作用，因为它会将所有外部 HTTP 请求重定向到 <code>10.0.10.25</code>。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4187,7 +4042,7 @@ map dc0 10.0.10.0/29 -&gt; 0/32</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>FTP 的 <code>map</code> 规则在 NAT 规则之前，这样当一个数据包匹配到 FTP 规则时， FTP 代理会创建临时过滤规则，以便让 FTP 会话数据包通过并进行 NAT 。所有不是 FTP 的局域网数据包如果匹配到第三条规则，也会进行 NAT 处理。</p>
+<p>FTP 的 <code>map</code> 规则在 NAT 规则之前，这样当一个数据包匹配到 FTP 规则时， FTP 代理会创建临时过滤规则，以便让 FTP 会话数据包通过并进行 NAT。所有不是 FTP 的局域网数据包如果匹配到第三条规则，也会进行 NAT 处理。</p>
 </div>
 <div class="paragraph">
 <p>如果没有 FTP 代理，将需要以下防火墙规则。请注意，如果没有代理，需要允许所有大于 <code>1024</code> 的端口：</p>
@@ -4241,7 +4096,7 @@ pass in quick on rl0 proto tcp from any to any port = 20 flags S keep state</pre
 <div class="sect2">
 <h3 id="_查看_ipf_统计信息">33.5.5. 查看 IPF 统计信息<a class="anchor" href="#_查看_ipf_统计信息"></a></h3>
 <div class="paragraph">
-<p>IPF 包括 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfstat&amp;sektion=8&amp;format=html">ipfstat(8)</a> ，可用于检索和显示统计信息，这些统计信息是在数据包通过防火墙时匹配规则时收集的。统计信息从上次启动防火墙或使用 <code>ipf -Z</code> 将其重置为零的上次重置以来累积。</p>
+<p>IPF 包括 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfstat&amp;sektion=8&amp;format=html">ipfstat(8)</a>，可用于检索和显示统计信息，这些统计信息是在数据包通过防火墙时匹配规则时收集的。统计信息从上次启动防火墙或使用 <code>ipf -Z</code> 将其重置为零的上次重置以来累积。</p>
 </div>
 <div class="paragraph">
 <p>默认的 <code>ipfstat</code> 输出如下所示：</p>
@@ -4268,7 +4123,7 @@ pass in quick on rl0 proto tcp from any to any port = 20 flags S keep state</pre
 </div>
 </div>
 <div class="paragraph">
-<p>有几个选项可供选择。当使用 <code>-i</code> 参数表示入站规则，或使用 <code>-o</code> 参数表示出站规则时，该命令将检索并显示内核当前安装和使用的相应过滤规则列表。如果想要同时看到规则编号，可以加上 <code>-n</code> 参数。例如， <code>ipfstat -on</code> 将显示带有规则编号的出站规则表：</p>
+<p>有几个选项可供选择。当使用 <code>-i</code> 参数表示入站规则，或使用 <code>-o</code> 参数表示出站规则时，该命令将检索并显示内核当前安装和使用的相应过滤规则列表。如果想要同时看到规则编号，可以加上 <code>-n</code> 参数。例如，<code>ipfstat -on</code> 将显示带有规则编号的出站规则表：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4278,7 +4133,7 @@ pass in quick on rl0 proto tcp from any to any port = 20 flags S keep state</pre
 </div>
 </div>
 <div class="paragraph">
-<p>在每个规则前加上匹配次数的计数，请使用 <code>-h</code> 选项。例如， <code>ipfstat -oh</code> 显示出站内部规则表，每个规则前都有它的使用次数计数。</p>
+<p>在每个规则前加上匹配次数的计数，请使用 <code>-h</code> 选项。例如，<code>ipfstat -oh</code> 显示出站内部规则表，每个规则前都有它的使用次数计数。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4288,11 +4143,11 @@ pass in quick on rl0 proto tcp from any to any port = 20 flags S keep state</pre
 </div>
 </div>
 <div class="paragraph">
-<p>要以类似于 <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 的格式显示状态表，请使用 <code>ipfstat -t</code> 命令。当防火墙遭受攻击时，此选项可以识别和查看攻击数据包。可选的子标志提供了实时监控目标或源 IP 、端口或协议的能力。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfstat&amp;sektion=8&amp;format=html">ipfstat(8)</a> 。</p>
+<p>要以类似于 <a href="https://man.freebsd.org/cgi/man.cgi?query=top&amp;sektion=1&amp;format=html">top(1)</a> 的格式显示状态表，请使用 <code>ipfstat -t</code> 命令。当防火墙遭受攻击时，此选项可以识别和查看攻击数据包。可选的子标志提供了实时监控目标或源 IP、端口或协议的能力。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfstat&amp;sektion=8&amp;format=html">ipfstat(8)</a>。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ipf_logging_是一种记录和跟踪系统中发生的事件和活动的技术它可以帮助开发人员和系统管理员识别和解决问题监控系统性能并提供审计和合规性支持通过记录关键事件和错误信息_ipf_logging_可以提供有关系统运行状况的详细信息以便进行故障排除和分析它还可以帮助监控系统的安全性并提供对潜在威胁的警报和响应_ipf_logging_通常与其他监控和日志分析工具一起使用以提供全面的系统管理和监控功能">33.5.6. IPF Logging 是一种记录和跟踪系统中发生的事件和活动的技术。它可以帮助开发人员和系统管理员识别和解决问题，监控系统性能，并提供审计和合规性支持。通过记录关键事件和错误信息， IPF Logging 可以提供有关系统运行状况的详细信息，以便进行故障排除和分析。它还可以帮助监控系统的安全性，并提供对潜在威胁的警报和响应。 IPF Logging 通常与其他监控和日志分析工具一起使用，以提供全面的系统管理和监控功能。<a class="anchor" href="#_ipf_logging_是一种记录和跟踪系统中发生的事件和活动的技术它可以帮助开发人员和系统管理员识别和解决问题监控系统性能并提供审计和合规性支持通过记录关键事件和错误信息_ipf_logging_可以提供有关系统运行状况的详细信息以便进行故障排除和分析它还可以帮助监控系统的安全性并提供对潜在威胁的警报和响应_ipf_logging_通常与其他监控和日志分析工具一起使用以提供全面的系统管理和监控功能"></a></h3>
+<h3 id="_ipf_日志记录">33.5.6. IPF 日志记录<a class="anchor" href="#_ipf_日志记录"></a></h3>
 <div class="paragraph">
 <p>IPF 提供了 <code>ipmon</code> 工具，可以将防火墙的日志信息以人类可读的格式写入。使用该工具需要首先按照 <a href="../kernelconfig/#kernelconfig">配置 FreeBSD 内核</a> 中的说明，在自定义内核中添加 <code>options IPFILTER_LOG</code> 选项。</p>
 </div>
@@ -4311,10 +4166,10 @@ pass in quick on rl0 proto tcp from any to any port = 20 flags S keep state</pre
 <p>日志记录提供了事后审查的能力，可以查看诸如哪些数据包被丢弃、它们来自哪些地址以及它们的目的地是什么等信息。这些信息在追踪攻击者方面非常有用。</p>
 </div>
 <div class="paragraph">
-<p>一旦在 <span class="filename">rc.conf</span> 中启用了日志记录功能，并使用 <code>service ipmon start</code> 启动后， IPF 将只记录包含 <code>log</code> 关键字的规则。防火墙管理员决定哪些规则应该被记录，通常只有拒绝规则会被记录。习惯上，在规则集中的最后一个规则中包含 <code>log</code> 关键字。这样可以查看所有未匹配规则集中任何规则的数据包。</p>
+<p>一旦在 <span class="filename">rc.conf</span> 中启用了日志记录功能，并使用 <code>service ipmon start</code> 启动后，IPF 将只记录包含 <code>log</code> 关键字的规则。防火墙管理员决定哪些规则应该被记录，通常只有拒绝规则会被记录。习惯上，在规则集中的最后一个规则中包含 <code>log</code> 关键字。这样可以查看所有未匹配规则集中任何规则的数据包。</p>
 </div>
 <div class="paragraph">
-<p>默认情况下， <code>ipmon -Ds</code> 模式使用 <code>local0</code> 作为日志设施。以下日志级别可用于进一步分离记录的数据：</p>
+<p>默认情况下，<code>ipmon -Ds</code> 模式使用 <code>local0</code> 作为日志设备。以下日志级别可用于进一步分离记录的数据：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4325,7 +4180,7 @@ LOG_ERR - packets which have been logged and which can be considered short due t
 </div>
 </div>
 <div class="paragraph">
-<p>为了将 IPF 设置为将所有数据记录到 [/var/log/ipfilter.log] 文件中，首先创建一个空文件：</p>
+<p>为了将 IPF 设置为将所有数据记录到 <span class="filename">/var/log/ipfilter.log</span> 文件中，首先创建一个空文件：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4333,7 +4188,7 @@ LOG_ERR - packets which have been logged and which can be considered short due t
 </div>
 </div>
 <div class="paragraph">
-<p>然后，要将所有记录的消息写入指定的文件，请将以下语句添加到 [/etc/syslog.conf] 文件中：</p>
+<p>然后，要将所有记录的消息写入指定的文件，请将以下语句添加到 <span class="filename">/etc/syslog.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4341,7 +4196,7 @@ LOG_ERR - packets which have been logged and which can be considered short due t
 </div>
 </div>
 <div class="paragraph">
-<p>要激活更改并指示 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> 读取修改后的 /etc/syslog.conf ，请运行 <code>service syslogd reload</code> 。</p>
+<p>要激活更改并指示 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> 读取修改后的 <span class="filename">/etc/syslog.conf</span>，请运行 <code>service syslogd reload</code>。</p>
 </div>
 <div class="paragraph">
 <p>不要忘记编辑 <span class="filename">/etc/newsyslog.conf</span> 来轮转新的日志文件。</p>
@@ -4355,25 +4210,25 @@ LOG_ERR - packets which have been logged and which can be considered short due t
 <p>数据包接收日期。</p>
 </li>
 <li>
-<p>数据包接收时间。格式为 HH:MM:SS.F ，表示小时、分钟、秒和秒的小数部分。</p>
+<p>数据包接收时间。格式为 HH:MM:SS.F，表示小时、分钟、秒和秒的小数部分。</p>
 </li>
 <li>
 <p>处理数据包的接口名称。</p>
 </li>
 <li>
-<p>规则的组和规则编号的格式为 ` @ 0:17` 。</p>
+<p>规则的组和规则编号的格式为 <code>@0:17</code>。</p>
 </li>
 <li>
-<p>操作： <code>p</code> 表示通过， <code>b</code> 表示阻止， <code>S</code> 表示短数据包， <code>n</code> 表示未匹配任何规则， <code>L</code> 表示日志规则。</p>
+<p>动作：<code>p</code> 表示通过，<code>b</code> 表示阻止，<code>S</code> 表示短数据包，<code>n</code> 表示未匹配任何规则，<code>L</code> 表示日志规则。</p>
 </li>
 <li>
-<p>地址写作三个字段：源地址和端口由逗号分隔， → 符号，以及目标地址和端口。例如： <code>209.53.17.22 , 80 → 198.73.220.17 , 1722</code> 。</p>
+<p>地址写作三个字段：源地址和端口由逗号分隔，→ 符号，以及目标地址和端口。例如： <code>209.53.17.22,80 → 198.73.220.17,1722</code>。</p>
 </li>
 <li>
-<p>以协议名称或编号后跟 <code>PR</code> ：例如， <code>PR tcp</code> 。</p>
+<p>以协议名称或编号后跟 <code>PR</code>：例如，<code>PR tcp</code>。</p>
 </li>
 <li>
-<p><code>len</code> 后面跟着数据包的头部长度和总长度：例如， <code>len 20 40</code> 。</p>
+<p><code>len</code> 后面跟着数据包的头部长度和总长度：例如，<code>len 20 40</code>。</p>
 </li>
 </ol>
 </div>
@@ -4381,7 +4236,7 @@ LOG_ERR - packets which have been logged and which can be considered short due t
 <p>如果数据包是 TCP 数据包，则会有一个额外的字段，以连字符开头，后面跟着对应于设置的任何标志的字母。请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipf&amp;sektion=5&amp;format=html">ipf(5)</a> 以获取字母和它们的标志列表。</p>
 </div>
 <div class="paragraph">
-<p>如果数据包是一个 ICMP 数据包，那么在末尾将会有两个字段：第一个字段始终是&#34;icmp&#34;，下一个字段是 ICMP 消息和子消息类型，用斜杠分隔。例如：对于一个端口不可达的消息，表示为 <code>icmp 3/3</code> 。</p>
+<p>如果数据包是一个 ICMP 数据包，那么在末尾将会有两个字段：第一个字段始终是“icmp”，下一个字段是 ICMP 消息和子消息类型，用斜杠分隔。例如：对于一个端口不可达的消息，表示为 <code>icmp 3/3</code>。</p>
 </div>
 </div>
 </div>
@@ -4390,15 +4245,15 @@ LOG_ERR - packets which have been logged and which can be considered short due t
 <h2 id="firewalls-blacklistd">33.6. 黑名单服务<a class="anchor" href="#firewalls-blacklistd"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Blacklistd 是一个守护进程，监听套接字以接收来自其他守护进程的有关连接尝试失败或成功的通知。它最常用于阻止在开放端口上进行过多的连接尝试。一个典型的例子是在互联网上运行的 SSH 收到大量来自机器人或脚本的密码猜测和入侵尝试。使用 blacklistd ，守护进程可以通知防火墙在多次尝试后创建一个过滤规则，以阻止来自单个源的过多连接尝试。 Blacklistd 最初在 NetBSD 上开发，并在版本 7 中首次出现。 FreeBSD 11 从 NetBSD 导入了 blacklistd 。</p>
+<p>Blacklistd 是一个守护进程，监听套接字以接收来自其他守护进程的有关连接尝试失败或成功的通知。它最常用于阻止在开放端口上进行过多的连接尝试。一个典型的例子是在互联网上运行的 SSH 收到大量来自机器人或脚本的密码猜测和入侵尝试。使用 blacklistd ，守护进程可以通知防火墙在多次尝试后创建一个过滤规则，以阻止来自单个源的过多连接尝试。 Blacklistd 最初在 NetBSD 上开发，并在版本 7 中首次出现。FreeBSD 11 从 NetBSD 导入了 blacklistd。</p>
 </div>
 <div class="paragraph">
-<p>本章介绍了如何设置和配置 blacklistd ，并提供了如何使用它的示例。读者应该熟悉基本的防火墙概念，如规则。有关详细信息，请参阅防火墙章节。示例中使用了 PF ，但在 FreeBSD 上可用的其他防火墙也应该能够与 blacklistd 一起使用。</p>
+<p>本章介绍了如何设置和配置 blacklistd ，并提供了如何使用它的示例。读者应该熟悉基本的防火墙概念，如规则。有关详细信息，请参阅防火墙章节。示例中使用了 PF，但在 FreeBSD 上可用的其他防火墙也应该能够与 blacklistd 一起使用。</p>
 </div>
 <div class="sect2">
 <h3 id="_启用_blacklistd">33.6.1. 启用 Blacklistd<a class="anchor" href="#_启用_blacklistd"></a></h3>
 <div class="paragraph">
-<p>blacklistd 的主要配置存储在 <a href="https://man.freebsd.org/cgi/man.cgi?query=blacklistd.conf&amp;sektion=5&amp;format=html">blacklistd.conf(5)</a> 中。还有一些命令行选项可用于更改 blacklistd 的运行时行为。重启后的持久配置应存储在 <span class="filename">/etc/blacklistd.conf</span> 中。要在系统启动时启用守护进程，请在 <span class="filename">/etc/rc.conf</span> 中添加一行 <code>blacklistd_enable</code> ，如下所示：</p>
+<p>blacklistd 的主要配置存储在 <a href="https://man.freebsd.org/cgi/man.cgi?query=blacklistd.conf&amp;sektion=5&amp;format=html">blacklistd.conf(5)</a> 中。还有一些命令行选项可用于更改 blacklistd 的运行时行为。重启后的持久配置应存储在 <span class="filename">/etc/blacklistd.conf</span> 中。要在系统启动时启用守护进程，请在 <span class="filename">/etc/rc.conf</span> 中添加一行 <code>blacklistd_enable</code>，如下所示：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4417,7 +4272,7 @@ LOG_ERR - packets which have been logged and which can be considered short due t
 <div class="sect2">
 <h3 id="_创建一个_blacklistd_规则集">33.6.2. 创建一个 Blacklistd 规则集<a class="anchor" href="#_创建一个_blacklistd_规则集"></a></h3>
 <div class="paragraph">
-<p>黑名单规则在 <a href="https://man.freebsd.org/cgi/man.cgi?query=blacklistd.conf&amp;sektion=5&amp;format=html">blacklistd.conf(5)</a> 中配置，每行一个条目。每个规则包含一个由空格或制表符分隔的元组。规则可以属于 <code>local</code> 或 <code>remote</code> ，分别适用于运行 blacklistd 的机器或外部来源。</p>
+<p>黑名单规则在 <a href="https://man.freebsd.org/cgi/man.cgi?query=blacklistd.conf&amp;sektion=5&amp;format=html">blacklistd.conf(5)</a> 中配置，每行一个条目。每个规则包含一个由空格或制表符分隔的元组。规则可以属于 <code>local</code> 或 <code>remote</code>，分别适用于运行 blacklistd 的机器或外部来源。</p>
 </div>
 <div class="sect3">
 <h4 id="_本地规则">33.6.2.1. 本地规则<a class="anchor" href="#_本地规则"></a></h4>
@@ -4434,7 +4289,7 @@ ssh             stream  *       *               *       3       24h</pre>
 <p>在 <code>[local]</code> 部分之后的所有规则都被视为本地规则（这是默认情况），适用于本地机器。当遇到 <code>[remote]</code> 部分时，其后的所有规则都被视为远程机器规则。</p>
 </div>
 <div class="paragraph">
-<p>规则由七个字段组成，字段之间用制表符或空格分隔。前四个字段用于标识应该被加入黑名单的流量。接下来的三个字段定义了黑名单的行为。通配符用星号（ <code>*</code> ）表示，可以匹配该字段中的任何内容。第一个字段定义了位置，对于本地规则来说，这些是网络端口。位置字段的语法如下：</p>
+<p>规则由七个字段组成，字段之间用制表符或空格分隔。前四个字段用于标识应该被加入黑名单的流量。接下来的三个字段定义了黑名单的行为。通配符用星号（<code>*</code>）表示，可以匹配该字段中的任何内容。第一个字段定义了位置，对于本地规则来说，这些是网络端口。位置字段的语法如下：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4442,19 +4297,19 @@ ssh             stream  *       *               *       3       24h</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>地址可以以数字格式指定为 IPv4 ，也可以以方括号指定为 IPv6 。还可以使用类似“<em>em0</em>”的接口名称。</p>
+<p>地址可以以数字格式指定为 IPv4 ，也可以以方括号指定为 IPv6 。还可以使用类似 <code><em>em0</em></code> 的接口名称。</p>
 </div>
 <div class="paragraph">
-<p>套接字类型由第二个字段定义。 TCP 套接字的类型是“ stream ”，而 UDP 则表示为“ dgram ”。上面的示例使用 TCP ，因为 SSH 正在使用该协议。</p>
+<p>套接字类型由第二个字段定义。TCP 套接字的类型是 <code>stream</code>，而 UDP 则表示为 <code>dgram</code> 。上面的示例使用 TCP，因为 SSH 正在使用该协议。</p>
 </div>
 <div class="paragraph">
-<p>协议可以在 blacklistd 规则的第三个字段中使用。可以使用以下协议： <code>tcp</code> ， <code>udp</code> ， <code>tcp6</code> ， <code>udp6</code> 或数字。通常使用通配符（如示例中）来匹配所有协议，除非有理由通过特定协议区分流量。</p>
+<p>协议可以在 blacklistd 规则的第三个字段中使用。可以使用以下协议：<code>tcp</code>，<code>udp</code>，<code>tcp6</code>，<code>udp6</code> 或数字。通常使用通配符（如示例中）来匹配所有协议，除非有理由通过特定协议区分流量。</p>
 </div>
 <div class="paragraph">
 <p>在第四个字段中，定义了报告事件的守护进程的有效用户或所有者。可以在这里使用用户名或 UID ，也可以使用通配符（参见上面的示例规则）。</p>
 </div>
 <div class="paragraph">
-<p>数据包过滤规则的名称由第五个字段声明，该字段开始规则的行为部分。默认情况下， blacklistd 将所有阻止的数据包放在名为 <code>blacklistd</code> 的 pf 锚点下，就像这样在 <span class="filename">pf.conf</span> 中：</p>
+<p>数据包过滤规则的名称由第五个字段声明，该字段开始规则的行为部分。默认情况下，blacklistd 将所有阻止的数据包放在名为 <code>blacklistd</code> 的 pf 锚点下，就像这样在 <span class="filename">pf.conf</span> 中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4464,7 +4319,7 @@ pass out</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>对于单独的块列表，可以在此字段中使用锚点名称。在其他情况下，通配符就足够了。当名称以连字符（ <code>-</code> ）开头时，意味着应该使用带有默认规则名称前缀的锚点。使用连字符的修改示例如下所示：</p>
+<p>对于单独的块列表，可以在此字段中使用锚点名称。在其他情况下，通配符就足够了。当名称以连字符（<code>-</code>）开头时，意味着应该使用带有默认规则名称前缀的锚点。使用连字符的修改示例如下所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4475,7 +4330,7 @@ pass out</pre>
 <p>有了这样的规则，任何新的阻止列表规则都会被添加到一个名为 <code>blacklistd-ssh</code> 的锚点中。</p>
 </div>
 <div class="paragraph">
-<p>为了针对单个规则违规封锁整个子网，可以在规则名称中使用 <code>/</code> 。这会导致名称的剩余部分被解释为要应用于规则中指定的地址的掩码。例如，这个规则将封锁与 <code>/24</code> 相邻的每个地址。</p>
+<p>为了针对单个规则违规封锁整个子网，可以在规则名称中使用 <code>/</code>。这会导致名称的剩余部分被解释为要应用于规则中指定的地址的掩码。例如，这个规则将封锁与 <code>/24</code> 相邻的每个地址。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4500,13 +4355,13 @@ pass out</pre>
 <p>这条规则定义了如果该网络中的任何一个主机表现不当，那么该网络上的其他所有内容也将被阻止。</p>
 </div>
 <div class="paragraph">
-<p>第六个字段称为 <code>nfail</code> ，它设置了在特定远程 IP 被列入黑名单之前所需的登录失败次数。当在此位置使用通配符时，意味着永远不会发生阻止。在上面的示例规则中，定义了三次限制，这意味着在一次连接中尝试三次登录 SSH 后，该 IP 将被阻止。</p>
+<p>第六个字段称为 <code>nfail</code>，它设置了在特定远程 IP 被列入黑名单之前所需的登录失败次数。当在此位置使用通配符时，意味着永远不会发生阻止。在上面的示例规则中，定义了三次限制，这意味着在一次连接中尝试三次登录 SSH 后，该 IP 将被阻止。</p>
 </div>
 <div class="paragraph">
-<p>在 blacklistd 规则定义中，最后一个字段指定了主机被加入黑名单的时间长度。默认单位是秒，但也可以使用后缀 <code>m</code> 、 <code>h</code> 和 <code>d</code> 分别指定分钟、小时和天。</p>
+<p>在 blacklistd 规则定义中，最后一个字段指定了主机被加入黑名单的时间长度。默认单位是秒，但也可以使用后缀 <code>m</code>、<code>h</code> 和 <code>d</code> 分别指定分钟、小时和天。</p>
 </div>
 <div class="paragraph">
-<p>整个示例规则的意思是，当通过 SSH 进行三次身份验证后，将为该主机生成一个新的 PF 阻止规则。规则匹配是通过首先按顺序检查本地规则来进行的，从最具体到最不具体。当发生匹配时，将应用“ remote ”规则，并且匹配的“ remote ”规则将更改名称、“ nfail ”和“ disable ”字段。</p>
+<p>整个示例规则的意思是，当通过 SSH 进行三次身份验证后，将为该主机生成一个新的 PF 阻止规则。规则匹配是通过首先按顺序检查本地规则来进行的，从最具体到最不具体。当发生匹配时，将应用 <code>remote</code> 规则，并且匹配的 <code>remote</code> 规则将更改名称、<code>nfail</code> 和 <code>disable</code> 字段。</p>
 </div>
 </div>
 <div class="sect3">
@@ -4521,13 +4376,13 @@ pass out</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>地址字段可以是 IP 地址（ IPv4 或 IPv6 ），端口或两者兼有。这允许为特定的远程地址范围设置特殊规则，就像这个例子中一样。套接字类型、协议和所有者字段的解释与本地规则完全相同。</p>
+<p>地址字段可以是 IP 地址（IPv4 或 IPv6），端口或两者兼有。这允许为特定的远程地址范围设置特殊规则，就像这个例子中一样。套接字类型、协议和所有者字段的解释与本地规则完全相同。</p>
 </div>
 <div class="paragraph">
-<p>然而，名称字段是不同的：远程规则中的等号（ ` = ` ）告诉 blacklistd 使用匹配的本地规则的值。这意味着防火墙规则条目被采用，并添加了 <code>/25</code> 前缀（一个 <code>255.255.255.128</code> 的网络掩码）。当来自该地址范围的连接被列入黑名单时，整个子网都会受到影响。在这里也可以使用 PF 锚点名称，这样 blacklistd 将为该地址块添加到该名称的锚点的规则。当指定通配符时，将使用默认表。</p>
+<p>然而，名称字段是不同的：远程规则中的等号（<code>=</code>）告诉 blacklistd 使用匹配的本地规则的值。这意味着防火墙规则条目被采用，并添加了 <code>/25</code> 前缀（一个 <code>255.255.255.128</code> 的网络掩码）。当来自该地址范围的连接被列入黑名单时，整个子网都会受到影响。在这里也可以使用 PF 锚点名称，这样 blacklistd 将为该地址块添加到该名称的锚点的规则。当指定通配符时，将使用默认表。</p>
 </div>
 <div class="paragraph">
-<p>可以为地址定义“ nfail ”列中的自定义失败次数。这对于特定规则的例外情况非常有用，可以允许某人对规则应用更宽松或更宽容的登录尝试。当在第六个字段中使用星号时，阻止功能将被禁用。</p>
+<p>可以为地址定义 <code>nfail</code> 列中的自定义失败次数。这对于特定规则的例外情况非常有用，可以允许某人对规则应用更宽松或更宽容的登录尝试。当在第六个字段中使用星号时，阻止功能将被禁用。</p>
 </div>
 <div class="paragraph">
 <p>远程规则允许对登录尝试的限制进行更严格的执行，相比于来自本地网络（如办公室）的尝试。</p>
@@ -4537,7 +4392,7 @@ pass out</pre>
 <div class="sect2">
 <h3 id="_黑名单客户端配置">33.6.3. 黑名单客户端配置<a class="anchor" href="#_黑名单客户端配置"></a></h3>
 <div class="paragraph">
-<p>在 FreeBSD 中有几个软件包可以利用 blacklistd 的功能。其中最重要的两个是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ftpd&amp;sektion=8&amp;format=html">ftpd(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=sshd&amp;sektion=8&amp;format=html">sshd(8)</a> ，用于阻止过多的连接尝试。要在 SSH 守护程序中激活 blacklistd ，请将以下行添加到 <span class="filename">/etc/ssh/sshd_config</span> 文件中：</p>
+<p>在 FreeBSD 中有几个软件包可以利用 blacklistd 的功能。其中最重要的两个是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ftpd&amp;sektion=8&amp;format=html">ftpd(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=sshd&amp;sektion=8&amp;format=html">sshd(8)</a> ，用于阻止过多的连接尝试。要在 SSH 守护程序中激活 blacklistd，请将以下行添加到 <span class="filename">/etc/ssh/sshd_config</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -4591,7 +4446,7 @@ pass out</pre>
 <div class="sect2">
 <h3 id="_从阻止列表中移除主机">33.6.5. 从阻止列表中移除主机<a class="anchor" href="#_从阻止列表中移除主机"></a></h3>
 <div class="paragraph">
-<p>有时候在剩余时间到期之前需要将主机从阻止列表中移除。不幸的是， blacklistd 中没有这样的功能。然而，可以使用 pfctl 将地址从 PF 表中移除。对于每个被阻止的端口，在 [/etc/pf.conf] 中的 blacklistd 锚点内定义了一个子锚点。例如，如果有一个用于阻止端口 22 的子锚点，它被称为 <code>blacklistd/22</code> 。在该子锚点内有一个包含被阻止地址的表。该表的名称是 port 加上端口号。在这个例子中，它将被称为 <code>port22</code> 。有了这些信息，现在可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pfctl&amp;sektion=8&amp;format=html">pfctl(8)</a> 来显示所有列出的地址。</p>
+<p>有时候在剩余时间到期之前需要将主机从阻止列表中移除。不幸的是，blacklistd 中没有这样的功能。然而，可以使用 pfctl 将地址从 PF 表中移除。对于每个被阻止的端口，在 <span class="filename">/etc/pf.conf</span> 中的 blacklistd 锚点内定义了一个子锚点。例如，如果有一个用于阻止端口 22 的子锚点，它被称为 <code>blacklistd/22</code>。在该子锚点内有一个包含被阻止地址的表。该表的名称是 port 加上端口号。在这个例子中，它将被称为 <code>port22</code>。有了这些信息，现在可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=pfctl&amp;sektion=8&amp;format=html">pfctl(8)</a> 来显示所有列出的地址。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4610,7 +4465,7 @@ pass out</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>该地址现在已从 PF 中移除，但仍会显示在 blacklistctl 列表中，因为它不知道在 PF 中所做的任何更改。 blacklistd 数据库中的条目最终会过期并从其输出中删除。 如果主机再次匹配 blacklistd 中的阻止规则，则该条目将被再次添加。</p>
+<p>该地址现在已从 PF 中移除，但仍会显示在 blacklistctl 列表中，因为它不知道在 PF 中所做的任何更改。blacklistd 数据库中的条目最终会过期并从其输出中删除。 如果主机再次匹配 blacklistd 中的阻止规则，则该条目将被再次添加。</p>
 </div>
 </div>
 </div>
@@ -4620,7 +4475,7 @@ pass out</pre>
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: January 10, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=9a13c86" target="_blank">fiercex</a></p>
+      <p><strong>上次修改时间</strong>: January 12, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=7e1852b" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
@@ -4662,9 +4517,9 @@ pass out</pre>
   <ul>
     <li><a href="#firewalls-intro">33.1. 简介</a></li>
     <li><a href="#firewalls-concepts">33.2. 防火墙概念</a></li>
-    <li><a href="#firewalls-pf">33.3. PF 可以有多种含义，根据上下文不同可能指：</a></li>
-    <li><a href="#firewalls-ipfw">33.4. IPFW 是指 Internet 协议防火墙，是一种用于网络安全的技术。它可以通过过滤和监控网络流量来保护计算机和网络免受恶意攻击和未经授权的访问。 IPFW 可以根据预先定义的规则集来控制网络流量的进出，以实现对网络连接的管理和保护。它是一种常见的防火墙解决方案，被广泛应用于企业和个人网络环境中。</a></li>
-    <li><a href="#firewalls-ipf">33.5. IPFILTER （ IPF ）</a></li>
+    <li><a href="#firewalls-pf">33.3. PF</a></li>
+    <li><a href="#firewalls-ipfw">33.4. IPFW</a></li>
+    <li><a href="#firewalls-ipf">33.5. IPFILTER (IPF)</a></li>
     <li><a href="#firewalls-blacklistd">33.6. 黑名单服务</a></li>
   </ul>
 </nav>
