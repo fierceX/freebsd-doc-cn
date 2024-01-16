@@ -1,7 +1,7 @@
 ---
-description: '本章介绍如何在 FreeBSD 中使用 DTrace 。'
+description: '本章介绍如何在 FreeBSD 中使用 DTrace。'
 next: books/handbook/usb-device-mode
-part: '第三部分 . 系统管理'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/cutting-edge
 showBookMenu: true
@@ -11,7 +11,7 @@ weight: 31
 ---
 
 [[dtrace]]
-= DTrace 是一种动态跟踪工具，用于在操作系统和应用程序中收集和分析性能数据。它最初是由 Sun Microsystems 开发的，现在已经成为许多操作系统的标准特性，包括 Solaris 、 FreeBSD 和 Mac OS X 。 DTrace 可以帮助开发人员和系统管理员识别和解决性能问题，优化代码和系统配置，并提供深入的可视化和分析功能。它使用一种称为 D 语言的特殊语法来编写跟踪脚本，并提供了丰富的系统调用和内核事件的跟踪功能。 DTrace 是一个强大而灵活的工具，被广泛用于调试和优化各种类型的软件和系统。
+= DTrace
 :doctype: book
 :toc: macro
 :toclevels: 2
@@ -48,29 +48,29 @@ endif::[]
 [[dtrace-synopsis]]
 == 简介
 
-DTrace ，也被称为动态跟踪，是由 Sun(TM) 开发的一种工具，用于定位生产和预生产系统中的性能瓶颈。除了诊断性能问题外， DTrace 还可以用于帮助调查和调试 FreeBSD 内核和用户程序中的意外行为。
+DTrace，也被称为动态跟踪，是由 Sun(TM) 开发的一种工具，用于定位生产和预生产系统中的性能瓶颈。除了诊断性能问题外，DTrace 还可以用于帮助调查和调试 FreeBSD 内核和用户程序中的意外行为。
 
 DTrace 是一个出色的性能分析工具，具有令人印象深刻的一系列功能，用于诊断系统问题。它还可以用于运行预先编写的脚本，以利用其功能。用户可以使用 DTrace D 语言编写自己的实用工具，根据特定需求自定义性能分析。
 
-FreeBSD 实现提供了对内核 DTrace 的完全支持，并对用户空间 DTrace 提供了实验性支持。用户空间 DTrace 允许用户使用 `pid` 提供程序对用户空间程序进行函数边界跟踪，并在用户空间程序中插入静态探针以供后续跟踪。一些端口，如 package:databases/postgresql12-server[] 和 package:lang/php74[] ，具有启用静态探针的 DTrace 选项。
+FreeBSD 实现提供了对内核 DTrace 的完全支持，并对用户空间 DTrace 提供了实验性支持。用户空间 DTrace 允许用户使用 `pid` 提供程序对用户空间程序进行函数边界跟踪，并在用户空间程序中插入静态探针以供后续跟踪。一些 ports，如 package:databases/postgresql12-server[] 和 package:lang/php74[]，具有启用静态探针的 DTrace 选项。
 
-DTrace 的官方指南由 Illumos 项目维护，网址为 http://dtrace.org/guide[DTrace 指南] 。
+DTrace 的官方指南由 Illumos 项目维护，网址为 http://dtrace.org/guide[DTrace 指南]。
 
 阅读完本章后，您将了解：
 
-* DTrace 是一种强大的动态跟踪工具，用于在操作系统和应用程序中收集和分析数据。它提供了许多功能，包括实时监测、故障排除、性能分析和系统优化等。 DTrace 可以帮助开发人员和系统管理员深入了解系统的运行情况，识别性能瓶颈和问题，并提供详细的数据和统计信息以支持决策和优化。它还具有灵活的脚本语言和丰富的工具集，使用户能够自定义和扩展跟踪功能，以满足各种需求。总之， DTrace 是一个强大而全面的工具，可以提供深入的系统级分析和调试能力。
+* 什么是 DTrace 及其提供的功能。
 * Solaris(TM) DTrace 实现与 FreeBSD 提供的实现之间的区别。
-* 如何在 FreeBSD 上启用和使用 DTrace 。
+* 如何在 FreeBSD 上启用和使用 DTrace。
 
 在阅读本章之前，您应该：
 
-* 了解 UNIX(R) 和 FreeBSD 基础知识（参见 :basics[basics , FreeBSD Basics] ）。
-* 对 FreeBSD 的安全性有一定的了解（参考： security[security , Security] ）。
+* 了解 UNIX(R) 和 FreeBSD 基础知识（crossref:basics[basics,FreeBSD Basics]）。
+* 对 FreeBSD 的安全性有一定的了解（crossref:security[security,Security]）。
 
 [[dtrace-implementation]]
 == 实现差异
 
-尽管 FreeBSD 中的 DTrace 与 Solaris(TM) 中的 DTrace 相似，但仍存在一些差异。主要的差异在于，在 FreeBSD 中， DTrace 是作为一组内核模块实现的，只有在加载这些模块之后才能使用 DTrace 。要加载所有必要的模块：
+尽管 FreeBSD 中的 DTrace 与 Solaris(TM) 中的 DTrace 相似，但仍存在一些差异。主要的差异在于，在 FreeBSD 中，DTrace 是作为一组内核模块实现的，只有在加载这些模块之后才能使用 DTrace。要加载所有必要的模块：
 
 [source, shell]
 ....
@@ -79,18 +79,18 @@ DTrace 的官方指南由 Illumos 项目维护，网址为 http://dtrace.org/gui
 
 从 FreeBSD 10.0-RELEASE 开始，当运行 `dtrace` 时，模块会自动加载。
 
-FreeBSD 使用 `DDB_CTF` 内核选项来启用对从内核模块和内核本身加载 `CTF` 数据的支持。 `CTF` 是 Solaris(TM) Compact C Type Format ，它封装了一种类似于 `DWARF` 和古老的 stabs 的调试信息的简化形式。 `CTF` 数据是由 `ctfconvert` 和 `ctfmerge` 构建工具添加到二进制文件中的。 `ctfconvert` 实用程序解析由编译器创建的 `DWARF``ELF` 调试部分，而 `ctfmerge` 将对象中的 `CTF``ELF` 部分合并到可执行文件或共享库中。
+FreeBSD 使用 `DDB_CTF` 内核选项来启用对从内核模块和内核本身加载 `CTF` 数据的支持。 `CTF` 是 Solaris(TM) Compact C Type Format，它封装了一种类似于 `DWARF` 和古老的 stabs 的调试信息的简化形式。`CTF` 数据是由 `ctfconvert` 和 `ctfmerge` 构建工具添加到二进制文件中的。`ctfconvert` 实用程序解析由编译器创建的 `DWARF``ELF` 调试部分，而 `ctfmerge` 将对象中的 `CTF``ELF` 部分合并到可执行文件或共享库中。
 
-FreeBSD 和 Solaris(TM) 存在一些不同的提供商。其中最显著的是 `dtmalloc` 提供商，它允许在 FreeBSD 内核中按类型跟踪 `malloc()` 。 Solaris(TM) 中的一些提供商，如 `cpc` 和 `mib` ，在 FreeBSD 中不存在。这些可能会出现在未来的 FreeBSD 版本中。此外，两个操作系统中都可用的一些提供商不兼容，因为它们的探测器具有不同的参数类型。因此，在 Solaris(TM) 上编写的 `D` 脚本可能无法在 FreeBSD 上不经修改地工作，反之亦然。
+FreeBSD 和 Solaris(TM) 存在一些不同的 providers 程序。其中最显著的是 `dtmalloc` provider，它允许在 FreeBSD 内核中按类型跟踪 `malloc()`。 Solaris(TM) 中的一些 provider，如 `cpc` 和 `mib`，在 FreeBSD 中不存在。这些可能会出现在未来的 FreeBSD 版本中。此外，两个操作系统中都可用的一些 provider 不兼容，因为它们的探测器具有不同的参数类型。因此，在 Solaris(TM) 上编写的 `D` 脚本可能无法在 FreeBSD 上不经修改地工作，反之亦然。
 
-由于安全差异，只有 `root` 用户可以在 FreeBSD 上使用 DTrace 。 Solaris(TM) 在安全方面有一些低级别的安全检查，在 FreeBSD 中尚不存在。因此， `.filename`#/dev/dtrace/dtrace# 严格限制为 `root` 用户。
+由于安全差异，只有 `root` 用户可以在 FreeBSD 上使用 DTrace。Solaris(TM) 在安全方面有一些低级别的安全检查，在 FreeBSD 中尚不存在。因此，[.filename]#/dev/dtrace/dtrace# 严格限制为 `root` 用户。
 
-DTrace 属于 Common Development and Distribution License （ CDDL ）许可证。要在 FreeBSD 上查看此许可证，请参阅 /usr/src/cddl/contrib/opensolaris/OPENSOLARIS.LICENSE 文件，或在线查看 http://opensource.org/licenses/CDDL-1.0[http://opensource.org/licenses/CDDL-1.0] 。虽然支持 DTrace 的 FreeBSD 内核是 BSD 许可证，但在以二进制形式分发模块或加载二进制文件时，使用 CDDL 许可证。
+DTrace 属于 Common Development and Distribution License（CDDL）许可证。要在 FreeBSD 上查看此许可证，请参阅 [.filename]#/usr/src/cddl/contrib/opensolaris/OPENSOLARIS.LICENSE# 文件，或在线查看 http://opensource.org/licenses/CDDL-1.0[http://opensource.org/licenses/CDDL-1.0]。虽然支持 DTrace 的 FreeBSD 内核是 BSD 许可证，但在以二进制形式分发模块或加载二进制文件时，使用 CDDL 许可证。
 
 [[dtrace-enable]]
 == 启用 DTrace 支持
 
-在 FreeBSD 9.2 和 10.0 中， DTrace 支持已经内置在 [.filename]#GENERIC# 内核中。使用早期版本的 FreeBSD 或者更喜欢静态编译 DTrace 支持的用户应该在自定义内核配置文件中添加以下行，并按照 crossref:kernelconfig[kernelconfig , Configuring the FreeBSD Kernel] 中的说明重新编译内核。
+在 FreeBSD 9.2 和 10.0 中，DTrace 支持已经内置在 [.filename]#GENERIC# 内核中。使用早期版本的 FreeBSD 或者更喜欢静态编译 DTrace 支持的用户应该在自定义内核配置文件中添加以下行，并按照 crossref:kernelconfig[kernelconfig,配置FreeBSD内核] 中的说明重新编译内核。
 
 [.programlisting]
 ....
@@ -109,13 +109,13 @@ options         KDTRACE_FRAME
 
 此选项提供对 `FBT` 的支持。虽然在没有此选项的情况下 DTrace 也可以工作，但对于函数边界跟踪的支持将受到限制。
 
-一旦 FreeBSD 系统重启到新内核，或者使用 `kldload dtraceall` 加载了 DTrace 内核模块，系统将需要支持 Korn shell ，因为 DTrace Toolkit 中有几个工具是用 `ksh` 编写的。确保安装了 package:shells/ksh93[] 软件包或端口。也可以在 package:shells/pdksh[] 或 package:shells/mksh[] 下运行这些工具。
+一旦 FreeBSD 系统重启到新内核，或者使用 `kldload dtraceall` 加载了 DTrace 内核模块，系统将需要支持 Korn shell，因为 DTrace Toolkit 中有几个工具是用 `ksh` 编写的。确保安装了 package:shells/ksh93[] 软件包或 port。也可以在 package:shells/pdksh[] 或 package:shells/mksh[] 下运行这些工具。
 
-最后，安装当前的 DTrace Toolkit ，这是一个收集系统信息的现成脚本集合。其中包括检查打开文件、内存、 `CPU` 使用情况等脚本。 FreeBSD 10 会将其中一些脚本安装在 [.filename]#/usr/share/dtrace# 目录下。对于其他版本的 FreeBSD ，或者要安装完整的 DTrace Toolkit ，可以使用 package:sysutils/dtrace-toolkit[] 包或端口进行安装。
+最后，安装当前的 DTrace Toolkit，这是一个收集系统信息的现成脚本集合。其中包括检查打开文件、内存、`CPU` 使用情况等脚本。 FreeBSD 10 会将其中一些脚本安装在 [.filename]#/usr/share/dtrace# 目录下。对于其他版本的 FreeBSD，或者要安装完整的 DTrace Toolkit，可以使用 package:sysutils/dtrace-toolkit[] 包或 port 进行安装。
 
 [NOTE]
 ====
-在 [.filename]#/usr/share/dtrace# 中找到的脚本已经专门移植到了 FreeBSD 。并非所有在 DTrace Toolkit 中找到的脚本都可以直接在 FreeBSD 上运行，有些脚本可能需要一些努力才能在 FreeBSD 上运行。
+在 [.filename]#/usr/share/dtrace# 中找到的脚本已经专门移植到了 FreeBSD。并非所有在 DTrace Toolkit 中找到的脚本都可以直接在 FreeBSD 上运行，有些脚本可能需要一些努力才能在 FreeBSD 上运行。
 ====
 
 DTrace 工具包中包含了许多使用 DTrace 特殊语言编写的脚本。这种语言被称为 D 语言，它与 C ++非常相似。本文档不会深入讨论该语言的细节，但在 http://www.dtrace.org/guide[Illumos 动态跟踪指南] 中有详细介绍。
@@ -132,9 +132,9 @@ DTrace 脚本由一个或多个探针（或称为仪器点）的列表组成，�
 # dtrace -l | more
 ....
 
-每个探针都有一个 `ID` ，一个 `PROVIDER` （ dtrace 或 fbt ），一个 `MODULE` 和一个 `FUNCTION NAME` 。有关此命令的更多信息，请参阅 man:dtrace[1] 。
+每个探针都有一个 `ID`，一个 `PROVIDER`（dtrace 或 fbt），一个 `MODULE` 和一个 `FUNCTION NAME`。有关此命令的更多信息，请参阅 man:dtrace[1]。
 
-本节中的示例提供了如何使用 DTrace Toolkit 中两个完全支持的脚本的概述： [.filename]#hotkernel# 和 [.filename]#procsystime# 脚本。
+本节中的示例提供了如何使用 DTrace Toolkit 中两个完全支持的脚本的概述：[.filename]#hotkernel# 和 [.filename]#procsystime# 脚本。
 
 [.filename]#hotkernel# 脚本旨在识别哪个函数使用了最多的内核时间。它将产生类似以下的输出：
 
@@ -145,7 +145,7 @@ DTrace 脚本由一个或多个探针（或称为仪器点）的列表组成，�
 Sampling... Hit Ctrl-C to end.
 ....
 
-按照指示，使用 kbd:[Ctrl + C] 键组合来停止进程。在终止后，脚本将显示一个内核函数列表和时间信息，按时间递增的顺序排序输出：
+按照指示，使用 kbd:[Ctrl+C] 键组合来停止进程。在终止后，脚本将显示一个内核函数列表和时间信息，按时间递增的顺序排序输出：
 
 [source, shell]
 ....
@@ -199,7 +199,7 @@ kernel                                                    874   0.4%
 0xc10981a5                                             213781  99.6%
 ....
 
-[.filename]#procsystime# 脚本用于捕获并打印给定进程 `ID` (`PID`) 或进程名称的系统调用时间使用情况。在下面的示例中，一个新的 [.filename]#/bin/csh# 实例被创建。然后，执行了 [.filename]#procsystime# 并保持等待状态，同时在另一个 `csh` 实例中输入了一些命令。这是这个测试的结果：
+[.filename]#procsystime# 脚本用于捕获并打印给定进程 `ID`(`PID`) 或进程名称的系统调用时间使用情况。在下面的示例中，一个新的 [.filename]#/bin/csh# 实例被创建。然后，执行了 [.filename]#procsystime# 并保持等待状态，同时在另一个 `csh` 实例中输入了一些命令。这是这个测试的结果：
 
 [source, shell]
 ....
@@ -230,4 +230,4 @@ Elapsed Times for processes csh,
             read         3988049784
 ....
 
-如图所示， `read()` 系统调用使用的时间最长，以纳秒为单位，而 `getpid()` 系统调用使用的时间最短。
+如图所示，`read()` 系统调用使用的时间最长，以纳秒为单位，而 `getpid()` 系统调用使用的时间最短。

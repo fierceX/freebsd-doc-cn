@@ -1,17 +1,17 @@
 ---
-description: 'This chapter shows the other filesystems supported by FreeBSD'
+description: '本章介绍了 FreeBSD 支持的其他文件系统。'
 next: books/handbook/virtualization
-part: 'Part III. System Administration'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/zfs
 showBookMenu: true
 tags: ["filesystem", "ext2", "ext3", "ext4", "ext2fs"]
-title: 'Chapter 23. Other File Systems'
+title: '第 23 章 其他文件系统'
 weight: 27
 ---
 
 [[filesystems]]
-= Other File Systems
+= 其他文件系统
 :doctype: book
 :toc: macro
 :toclevels: 2
@@ -46,42 +46,42 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[filesystems-synopsis]]
-== Synopsis
+== 简介
 
-File systems are an integral part of any operating system. They allow users to upload and store files, provide access to data, and make hard drives useful. Different operating systems differ in their native file system. Traditionally, the native FreeBSD file system has been the Unix File System UFS which has been modernized as UFS2. Since FreeBSD 7.0, the Z File System (ZFS) is also available as a native file system. See crossref:zfs[zfs,The Z File System (ZFS)] for more information.
+文件系统是任何操作系统的重要组成部分。它们允许用户上传和存储文件，提供对数据的访问，并使硬盘变得有用。不同的操作系统在其本机文件系统上有所不同。传统上，本机的 FreeBSD 文件系统一直是 Unix 文件系统 UFS，现已现代化为 UFS2。自 FreeBSD 7.0 以来，Z 文件系统（ZFS）也作为本机文件系统可用。有关更多信息，请参见 crossref:zfs[zfs,Z 文件系统（ZFS）]。
 
-In addition to its native file systems, FreeBSD supports a multitude of other file systems so that data from other operating systems can be accessed locally, such as data stored on locally attached USB storage devices, flash drives, and hard disks. This includes support for the Linux(R) Extended File System (EXT).
+除了本地文件系统之外，FreeBSD 还支持多种其他文件系统，以便可以本地访问来自其他操作系统的数据，例如存储在本地连接的 USB 存储设备、闪存驱动器和硬盘上的数据。这包括对 Linux(R) 扩展文件系统（EXT）的支持。
 
-There are different levels of FreeBSD support for the various file systems. Some require a kernel module to be loaded and others may require a toolset to be installed. Some non-native file system support is full read-write while others are read-only.
+对于不同的文件系统，FreeBSD 提供了不同级别的支持。有些需要加载内核模块，而其他一些可能需要安装工具集。一些非本地文件系统的支持是完全读写的，而其他一些则只支持只读。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解到：
 
-* The difference between native and supported file systems.
-* Which file systems are supported by FreeBSD.
-* How to enable, configure, access, and make use of non-native file systems.
+* 本地文件系统和支持的文件系统之间的区别。
+* FreeBSD 支持哪些文件系统？
+* 如何启用、配置、访问和使用非本机文件系统。
 
-Before reading this chapter, you should:
+在阅读本章之前，您应该：
 
-* Understand UNIX(R) and crossref:basics[basics,FreeBSD basics].
-* Be familiar with the basics of crossref:kernelconfig[kernelconfig,kernel configuration and compilation].
-* Feel comfortable crossref:ports[ports,installing software] in FreeBSD.
-* Have some familiarity with crossref:disks[disks,disks], storage, and device names in FreeBSD.
+* 了解 UNIX(R) 和 crossref:basics[basics,FreeBSD 基础知识]。
+* 熟悉基础的 crossref:kernelconfig[kernelconfig,内核配置和编译]。
+* 在 FreeBSD 中，crossref:ports[ports,安装软件] 会让您感到很方便。
+* 对 FreeBSD 中的 crossref:disks[disks,磁盘]、存储和设备名称有一些了解。
 
 [[filesystems-linux]]
-== Linux(R) File Systems
+== Linux(R) 文件系统
 
-FreeBSD provides built-in support for several Linux(R) file systems. This section demonstrates how to load support for and how to mount the supported Linux(R) file systems.
+FreeBSD 提供了对多种 Linux(R) 文件系统的内置支持。本节介绍如何加载支持和挂载支持的 Linux(R) 文件系统。
 
 === ext2 / ext3 / ext4
 
-Kernel support for ext2 file systems has been available since FreeBSD 2.2. The man:ext2fs[5] driver allows the FreeBSD kernel to both read and write to ext2, ext3, and ext4 file systems.
+自 FreeBSD 2.2 版本起，内核对 ext2 文件系统的支持已经可用。man:ext2fs[5] 驱动程序允许 FreeBSD 内核对 ext2、ext3 和 ext4 文件系统进行读写操作。
 
 [NOTE]
 ====
-Journalling and encryption are not supported yet.
+目前还不支持日志记录和加密。
 ====
 
-To access an ext file system, mount the ext volume by specifying its FreeBSD partition name and an existing mount point. This example mounts [.filename]#/dev/ada1s1# on [.filename]#/mnt#:
+要访问一个 ext 文件系统，通过指定其 FreeBSD 分区名称和现有的挂载点来挂载 ext 卷。这个例子将 [.filename]#/dev/ada1s1# 挂载到 [.filename]#/mnt# 上：
 
 [source, shell]
 ....
