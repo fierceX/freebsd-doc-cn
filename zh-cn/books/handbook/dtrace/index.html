@@ -3,12 +3,12 @@
   <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="This chapter explains how to use DTrace in FreeBSD"/>
+  <meta name="description" content="本章介绍如何在 FreeBSD 中使用 DTrace。"/>
   <meta name="keywords" content="DTrace, features, guide, tutorial, kldload"/>
   <meta name="copyright" content="1995-2024 The FreeBSD Foundation" />
   <link rel="canonical" href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/" />
 
-  <title>Chapter 27. DTrace |  FreeBSD 中文文档</title>
+  <title>第 27 章 DTrace |  FreeBSD 中文文档</title>
 
   <meta name="theme-color" content="#790000">
   <meta name="color-scheme" content="system light dark high-contrast">
@@ -29,8 +29,8 @@
   
   
     
-    <meta property="og:title" content="Chapter 27. DTrace" />
-    <meta property="og:description" content="This chapter explains how to use DTrace in FreeBSD" />
+    <meta property="og:title" content="第 27 章 DTrace" />
+    <meta property="og:description" content="本章介绍如何在 FreeBSD 中使用 DTrace。" />
     <meta property="og:type" content="website"/>
     <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
     <meta property="og:image:alt" content="FreeBSD Logo">
@@ -1611,13 +1611,13 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/">
-              Chapter 23. Other File Systems
+              第 23 章 其他文件系统
             </a>
             
             
   <ul>
-    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/#filesystems-synopsis">23.1. Synopsis</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/#filesystems-linux">23.2. Linux® File Systems</a>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/#filesystems-synopsis">23.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/#filesystems-linux">23.2. Linux® 文件系统</a>
       <ul>
         <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/filesystems/#_ext2_ext3_ext4">23.2.1. ext2 / ext3 / ext4</a></li>
       </ul>
@@ -1808,15 +1808,15 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/">
-              Chapter 27. DTrace
+              第 27 章 DTrace
             </a>
             
             
   <ul>
-    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-synopsis">27.1. Synopsis</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-implementation">27.2. Implementation Differences</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-enable">27.3. Enabling DTrace Support</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-using">27.4. Using DTrace</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/dtrace/#dtrace-using">27.4. 使用 DTrace</a></li>
   </ul>
 
           
@@ -2505,7 +2505,7 @@
           
             
             <a href="https://free.bsd-doc.org/zh-cn/books/handbook/glossary/">
-              FreeBSD Glossary
+              FreeBSD 词汇表
             </a>
             
             
@@ -2580,7 +2580,7 @@
       </label>
     </div>
     
-    <h1 class="title">Chapter 27. DTrace</h1>
+    <h1 class="title">第 27 章 DTrace</h1>
     
     
       <div class="admonitionblock note">
@@ -2596,10 +2596,10 @@
       <h3>目录</h3>
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#dtrace-synopsis">27.1. Synopsis</a></li>
-    <li><a href="#dtrace-implementation">27.2. Implementation Differences</a></li>
-    <li><a href="#dtrace-enable">27.3. Enabling DTrace Support</a></li>
-    <li><a href="#dtrace-using">27.4. Using DTrace</a></li>
+    <li><a href="#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="#dtrace-using">27.4. 使用 DTrace</a></li>
   </ul>
 </nav>
     </div>
@@ -2614,56 +2614,56 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="dtrace-synopsis">27.1. Synopsis<a class="anchor" href="#dtrace-synopsis"></a></h2>
+<h2 id="dtrace-synopsis">27.1. 简介<a class="anchor" href="#dtrace-synopsis"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>DTrace, also known as Dynamic Tracing, was developed by Sun™ as a tool for locating performance bottlenecks in production and pre-production systems. In addition to diagnosing performance problems, DTrace can be used to help investigate and debug unexpected behavior in both the FreeBSD kernel and in userland programs.</p>
+<p>DTrace，也被称为动态跟踪，是由 Sun™ 开发的一种工具，用于定位生产和预生产系统中的性能瓶颈。除了诊断性能问题外，DTrace 还可以用于帮助调查和调试 FreeBSD 内核和用户程序中的意外行为。</p>
 </div>
 <div class="paragraph">
-<p>DTrace is a remarkable profiling tool, with an impressive array of features for diagnosing system issues. It may also be used to run pre-written scripts to take advantage of its capabilities. Users can author their own utilities using the DTrace D Language, allowing them to customize their profiling based on specific needs.</p>
+<p>DTrace 是一个出色的性能分析工具，具有令人印象深刻的一系列功能，用于诊断系统问题。它还可以用于运行预先编写的脚本，以利用其功能。用户可以使用 DTrace D 语言编写自己的实用工具，根据特定需求自定义性能分析。</p>
 </div>
 <div class="paragraph">
-<p>The FreeBSD implementation provides full support for kernel DTrace and experimental support for userland DTrace. Userland DTrace allows users to perform function boundary tracing for userland programs using the <code>pid</code> provider, and to insert static probes into userland programs for later tracing. Some ports, such as <a class="package" href="https://cgit.freebsd.org/ports/tree/databases/postgresql12-server/">databases/postgresql12-server</a> and <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/php74/">lang/php74</a> have a DTrace option to enable static probes.</p>
+<p>FreeBSD 实现提供了对内核 DTrace 的完全支持，并对用户空间 DTrace 提供了实验性支持。用户空间 DTrace 允许用户使用 <code>pid</code> 提供程序对用户空间程序进行函数边界跟踪，并在用户空间程序中插入静态探针以供后续跟踪。一些 ports，如 <a class="package" href="https://cgit.freebsd.org/ports/tree/databases/postgresql12-server/">databases/postgresql12-server</a> 和 <a class="package" href="https://cgit.freebsd.org/ports/tree/lang/php74/">lang/php74</a>，具有启用静态探针的 DTrace 选项。</p>
 </div>
 <div class="paragraph">
-<p>The official guide to DTrace is maintained by the Illumos project at <a href="http://dtrace.org/guide">DTrace Guide</a>.</p>
+<p>DTrace 的官方指南由 Illumos 项目维护，网址为 <a href="http://dtrace.org/guide">DTrace 指南</a>。</p>
 </div>
 <div class="paragraph">
-<p>After reading this chapter, you will know:</p>
+<p>阅读完本章后，您将了解：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>What DTrace is and what features it provides.</p>
+<p>什么是 DTrace 及其提供的功能。</p>
 </li>
 <li>
-<p>Differences between the Solaris™ DTrace implementation and the one provided by FreeBSD.</p>
+<p>Solaris™ DTrace 实现与 FreeBSD 提供的实现之间的区别。</p>
 </li>
 <li>
-<p>How to enable and use DTrace on FreeBSD.</p>
+<p>如何在 FreeBSD 上启用和使用 DTrace。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Before reading this chapter, you should:</p>
+<p>在阅读本章之前，您应该：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Understand UNIX® and FreeBSD basics (<a href="../basics/#basics">FreeBSD Basics</a>).</p>
+<p>了解 UNIX® 和 FreeBSD 基础知识（<a href="../basics/#basics">FreeBSD Basics</a>）。</p>
 </li>
 <li>
-<p>Have some familiarity with security and how it pertains to FreeBSD (<a href="../security/#security">Security</a>).</p>
+<p>对 FreeBSD 的安全性有一定的了解（<a href="../security/#security">Security</a>）。</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="dtrace-implementation">27.2. Implementation Differences<a class="anchor" href="#dtrace-implementation"></a></h2>
+<h2 id="dtrace-implementation">27.2. 实现差异<a class="anchor" href="#dtrace-implementation"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>While the DTrace in FreeBSD is similar to that found in Solaris™, differences do exist. The primary difference is that in FreeBSD, DTrace is implemented as a set of kernel modules and DTrace can not be used until the modules are loaded. To load all of the necessary modules:</p>
+<p>尽管 FreeBSD 中的 DTrace 与 Solaris™ 中的 DTrace 相似，但仍存在一些差异。主要的差异在于，在 FreeBSD 中，DTrace 是作为一组内核模块实现的，只有在加载这些模块之后才能使用 DTrace。要加载所有必要的模块：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2671,27 +2671,27 @@
 </div>
 </div>
 <div class="paragraph">
-<p>Beginning with FreeBSD 10.0-RELEASE, the modules are automatically loaded when <code>dtrace</code> is run.</p>
+<p>从 FreeBSD 10.0-RELEASE 开始，当运行 <code>dtrace</code> 时，模块会自动加载。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD uses the <code>DDB_CTF</code> kernel option to enable support for loading <code>CTF</code> data from kernel modules and the kernel itself. <code>CTF</code> is the Solaris™ Compact C Type Format which encapsulates a reduced form of debugging information similar to <code>DWARF</code> and the venerable stabs. <code>CTF</code> data is added to binaries by the <code>ctfconvert</code> and <code>ctfmerge</code> build tools. The <code>ctfconvert</code> utility parses <code>DWARF<code>ELF</code> debug sections created by the compiler and <code>ctfmerge</code> merges <code>CTF</code>ELF</code> sections from objects into either executables or shared libraries.</p>
+<p>FreeBSD 使用 <code>DDB_CTF</code> 内核选项来启用对从内核模块和内核本身加载 <code>CTF</code> 数据的支持。 <code>CTF</code> 是 Solaris™ Compact C Type Format，它封装了一种类似于 <code>DWARF</code> 和古老的 stabs 的调试信息的简化形式。<code>CTF</code> 数据是由 <code>ctfconvert</code> 和 <code>ctfmerge</code> 构建工具添加到二进制文件中的。<code>ctfconvert</code> 实用程序解析由编译器创建的 <code>DWARF<code>ELF</code> 调试部分，而 <code>ctfmerge</code> 将对象中的 <code>CTF</code>ELF</code> 部分合并到可执行文件或共享库中。</p>
 </div>
 <div class="paragraph">
-<p>Some different providers exist for FreeBSD than for Solaris™. Most notable is the <code>dtmalloc</code> provider, which allows tracing <code>malloc()</code> by type in the FreeBSD kernel. Some of the providers found in Solaris™, such as <code>cpc</code> and <code>mib</code>, are not present in FreeBSD. These may appear in future versions of FreeBSD. Moreover, some of the providers available in both operating systems are not compatible, in the sense that their probes have different argument types. Thus, <code>D</code> scripts written on Solaris™ may or may not work unmodified on FreeBSD, and vice versa.</p>
+<p>FreeBSD 和 Solaris™ 存在一些不同的 providers 程序。其中最显著的是 <code>dtmalloc</code> provider，它允许在 FreeBSD 内核中按类型跟踪 <code>malloc()</code>。 Solaris™ 中的一些 provider，如 <code>cpc</code> 和 <code>mib</code>，在 FreeBSD 中不存在。这些可能会出现在未来的 FreeBSD 版本中。此外，两个操作系统中都可用的一些 provider 不兼容，因为它们的探测器具有不同的参数类型。因此，在 Solaris™ 上编写的 <code>D</code> 脚本可能无法在 FreeBSD 上不经修改地工作，反之亦然。</p>
 </div>
 <div class="paragraph">
-<p>Due to security differences, only <code>root</code> may use DTrace on FreeBSD. Solaris™ has a few low level security checks which do not yet exist in FreeBSD. As such, the <span class="filename">/dev/dtrace/dtrace</span> is strictly limited to <code>root</code>.</p>
+<p>由于安全差异，只有 <code>root</code> 用户可以在 FreeBSD 上使用 DTrace。Solaris™ 在安全方面有一些低级别的安全检查，在 FreeBSD 中尚不存在。因此，<span class="filename">/dev/dtrace/dtrace</span> 严格限制为 <code>root</code> 用户。</p>
 </div>
 <div class="paragraph">
-<p>DTrace falls under the Common Development and Distribution License (<code>CDDL</code>) license. To view this license on FreeBSD, see <span class="filename">/usr/src/cddl/contrib/opensolaris/OPENSOLARIS.LICENSE</span> or view it online at <a href="http://opensource.org/licenses/CDDL-1.0">http://opensource.org/licenses/CDDL-1.0</a>. While a FreeBSD kernel with DTrace support is <code>BSD</code> licensed, the <code>CDDL</code> is used when the modules are distributed in binary form or the binaries are loaded.</p>
+<p>DTrace 属于 Common Development and Distribution License（CDDL）许可证。要在 FreeBSD 上查看此许可证，请参阅 <span class="filename">/usr/src/cddl/contrib/opensolaris/OPENSOLARIS.LICENSE</span> 文件，或在线查看 <a href="http://opensource.org/licenses/CDDL-1.0">http://opensource.org/licenses/CDDL-1.0</a>。虽然支持 DTrace 的 FreeBSD 内核是 BSD 许可证，但在以二进制形式分发模块或加载二进制文件时，使用 CDDL 许可证。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="dtrace-enable">27.3. Enabling DTrace Support<a class="anchor" href="#dtrace-enable"></a></h2>
+<h2 id="dtrace-enable">27.3. 启用 DTrace 支持<a class="anchor" href="#dtrace-enable"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In FreeBSD 9.2 and 10.0, DTrace support is built into the <span class="filename">GENERIC</span> kernel. Users of earlier versions of FreeBSD or who prefer to statically compile in DTrace support should add the following lines to a custom kernel configuration file and recompile the kernel using the instructions in <a href="../kernelconfig/#kernelconfig">Configuring the FreeBSD Kernel</a>:</p>
+<p>在 FreeBSD 9.2 和 10.0 中，DTrace 支持已经内置在 <span class="filename">GENERIC</span> 内核中。使用早期版本的 FreeBSD 或者更喜欢静态编译 DTrace 支持的用户应该在自定义内核配置文件中添加以下行，并按照 <a href="../kernelconfig/#kernelconfig">配置FreeBSD内核</a> 中的说明重新编译内核。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2702,7 +2702,7 @@ makeoptions	WITH_CTF=1</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Users of the AMD64 architecture should also add this line:</p>
+<p>使用 AMD64 架构的用户还应添加以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2710,13 +2710,13 @@ makeoptions	WITH_CTF=1</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This option provides support for <code>FBT</code>. While DTrace will work without this option, there will be limited support for function boundary tracing.</p>
+<p>此选项提供对 <code>FBT</code> 的支持。虽然在没有此选项的情况下 DTrace 也可以工作，但对于函数边界跟踪的支持将受到限制。</p>
 </div>
 <div class="paragraph">
-<p>Once the FreeBSD system has rebooted into the new kernel, or the DTrace kernel modules have been loaded using <code>kldload dtraceall</code>, the system will need support for the Korn shell as the DTrace Toolkit has several utilities written in <code>ksh</code>. Make sure that the <a class="package" href="https://cgit.freebsd.org/ports/tree/shells/ksh93/">shells/ksh93</a> package or port is installed. It is also possible to run these tools under <a class="package" href="https://cgit.freebsd.org/ports/tree/shells/pdksh/">shells/pdksh</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/shells/mksh/">shells/mksh</a>.</p>
+<p>一旦 FreeBSD 系统重启到新内核，或者使用 <code>kldload dtraceall</code> 加载了 DTrace 内核模块，系统将需要支持 Korn shell，因为 DTrace Toolkit 中有几个工具是用 <code>ksh</code> 编写的。确保安装了 <a class="package" href="https://cgit.freebsd.org/ports/tree/shells/ksh93/">shells/ksh93</a> 软件包或 port。也可以在 <a class="package" href="https://cgit.freebsd.org/ports/tree/shells/pdksh/">shells/pdksh</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/shells/mksh/">shells/mksh</a> 下运行这些工具。</p>
 </div>
 <div class="paragraph">
-<p>Finally, install the current DTrace Toolkit, a collection of ready-made scripts for collecting system information. There are scripts to check open files, memory, <code>CPU</code> usage, and a lot more. FreeBSD 10 installs a few of these scripts into <span class="filename">/usr/share/dtrace</span>. On other FreeBSD versions, or to install the full DTrace Toolkit, use the <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/dtrace-toolkit/">sysutils/dtrace-toolkit</a> package or port.</p>
+<p>最后，安装当前的 DTrace Toolkit，这是一个收集系统信息的现成脚本集合。其中包括检查打开文件、内存、<code>CPU</code> 使用情况等脚本。 FreeBSD 10 会将其中一些脚本安装在 <span class="filename">/usr/share/dtrace</span> 目录下。对于其他版本的 FreeBSD，或者要安装完整的 DTrace Toolkit，可以使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/dtrace-toolkit/">sysutils/dtrace-toolkit</a> 包或 port 进行安装。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2726,25 +2726,25 @@ makeoptions	WITH_CTF=1</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The scripts found in <span class="filename">/usr/share/dtrace</span> have been specifically ported to FreeBSD. Not all of the scripts found in the DTrace Toolkit will work as-is on FreeBSD and some scripts may require some effort in order for them to work on FreeBSD.</p>
+<p>在 <span class="filename">/usr/share/dtrace</span> 中找到的脚本已经专门移植到了 FreeBSD。并非所有在 DTrace Toolkit 中找到的脚本都可以直接在 FreeBSD 上运行，有些脚本可能需要一些努力才能在 FreeBSD 上运行。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The DTrace Toolkit includes many scripts in the special language of DTrace. This language is called the D language and it is very similar to C++. An in depth discussion of the language is beyond the scope of this document. It is covered extensively in the <a href="http://www.dtrace.org/guide">Illumos Dynamic Tracing Guide</a>.</p>
+<p>DTrace 工具包中包含了许多使用 DTrace 特殊语言编写的脚本。这种语言被称为 D 语言，它与 C ++非常相似。本文档不会深入讨论该语言的细节，但在 <a href="http://www.dtrace.org/guide">Illumos 动态跟踪指南</a> 中有详细介绍。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="dtrace-using">27.4. Using DTrace<a class="anchor" href="#dtrace-using"></a></h2>
+<h2 id="dtrace-using">27.4. 使用 DTrace<a class="anchor" href="#dtrace-using"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>DTrace scripts consist of a list of one or more <em>probes</em>, or instrumentation points, where each probe is associated with an action. Whenever the condition for a probe is met, the associated action is executed. For example, an action may occur when a file is opened, a process is started, or a line of code is executed. The action might be to log some information or to modify context variables. The reading and writing of context variables allows probes to share information and to cooperatively analyze the correlation of different events.</p>
+<p>DTrace 脚本由一个或多个探针（或称为仪器点）的列表组成，每个探针都与一个动作相关联。当探针的条件满足时，执行相应的动作。例如，当文件被打开、进程被启动或者代码行被执行时，可能会触发一个动作。动作可以是记录一些信息或修改上下文变量。读取和写入上下文变量允许探针共享信息并协同分析不同事件之间的关联性。</p>
 </div>
 <div class="paragraph">
-<p>To view all probes, the administrator can execute the following command:</p>
+<p>要查看所有探针，管理员可以执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2752,13 +2752,13 @@ makeoptions	WITH_CTF=1</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Each probe has an <code>ID</code>, a <code>PROVIDER</code> (dtrace or fbt), a <code>MODULE</code>, and a <code>FUNCTION NAME</code>. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=dtrace&amp;sektion=1&amp;format=html">dtrace(1)</a> for more information about this command.</p>
+<p>每个探针都有一个 <code>ID</code>，一个 <code>PROVIDER</code>（dtrace 或 fbt），一个 <code>MODULE</code> 和一个 <code>FUNCTION NAME</code>。有关此命令的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=dtrace&amp;sektion=1&amp;format=html">dtrace(1)</a>。</p>
 </div>
 <div class="paragraph">
-<p>The examples in this section provide an overview of how to use two of the fully supported scripts from the DTrace Toolkit: the <span class="filename">hotkernel</span> and <span class="filename">procsystime</span> scripts.</p>
+<p>本节中的示例提供了如何使用 DTrace Toolkit 中两个完全支持的脚本的概述：<span class="filename">hotkernel</span> 和 <span class="filename">procsystime</span> 脚本。</p>
 </div>
 <div class="paragraph">
-<p>The <span class="filename">hotkernel</span> script is designed to identify which function is using the most kernel time. It will produce output similar to the following:</p>
+<p><span class="filename">hotkernel</span> 脚本旨在识别哪个函数使用了最多的内核时间。它将产生类似以下的输出：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2768,7 +2768,7 @@ Sampling... Hit Ctrl-C to end.</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As instructed, use the <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>C</kbd></span> key combination to stop the process. Upon termination, the script will display a list of kernel functions and timing information, sorting the output in increasing order of time:</p>
+<p>按照指示，使用 <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>C</kbd></span> 键组合来停止进程。在终止后，脚本将显示一个内核函数列表和时间信息，按时间递增的顺序排序输出：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2801,7 +2801,7 @@ kernel<span class="sb">`</span>sched_idletd                                     
 </div>
 </div>
 <div class="paragraph">
-<p>This script will also work with kernel modules. To use this feature, run the script with <code>-m</code>:</p>
+<p>这个脚本也可以用于内核模块。要使用这个功能，请使用 <code>-m</code> 选项运行脚本：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2824,7 +2824,7 @@ kernel                                                    874   0.4%
 </div>
 </div>
 <div class="paragraph">
-<p>The <span class="filename">procsystime</span> script captures and prints the system call time usage for a given process <code>ID</code> (<code>PID</code>) or process name. In the following example, a new instance of <span class="filename">/bin/csh</span> was spawned. Then, <span class="filename">procsystime</span> was executed and remained waiting while a few commands were typed on the other incarnation of <code>csh</code>. These are the results of this test:</p>
+<p><span class="filename">procsystime</span> 脚本用于捕获并打印给定进程 <code>ID</code>(<code>PID</code>) 或进程名称的系统调用时间使用情况。在下面的示例中，一个新的 <span class="filename">/bin/csh</span> 实例被创建。然后，执行了 <span class="filename">procsystime</span> 并保持等待状态，同时在另一个 <code>csh</code> 实例中输入了一些命令。这是这个测试的结果：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2856,7 +2856,7 @@ Elapsed Times <span class="k">for </span>processes csh,
 </div>
 </div>
 <div class="paragraph">
-<p>As shown, the <code>read()</code> system call used the most time in nanoseconds while the <code>getpid()</code> system call used the least amount of time.</p>
+<p>如图所示，<code>read()</code> 系统调用使用的时间最长，以纳秒为单位，而 <code>getpid()</code> 系统调用使用的时间最短。</p>
 </div>
 </div>
 </div>
@@ -2865,7 +2865,7 @@ Elapsed Times <span class="k">for </span>processes csh,
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: January 12, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=c820292" target="_blank">github actions</a></p>
+      <p><strong>上次修改时间</strong>: January 16, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=fdbb642" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
@@ -2905,10 +2905,10 @@ Elapsed Times <span class="k">for </span>processes csh,
       <h3>目录</h3>
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#dtrace-synopsis">27.1. Synopsis</a></li>
-    <li><a href="#dtrace-implementation">27.2. Implementation Differences</a></li>
-    <li><a href="#dtrace-enable">27.3. Enabling DTrace Support</a></li>
-    <li><a href="#dtrace-using">27.4. Using DTrace</a></li>
+    <li><a href="#dtrace-synopsis">27.1. 简介</a></li>
+    <li><a href="#dtrace-implementation">27.2. 实现差异</a></li>
+    <li><a href="#dtrace-enable">27.3. 启用 DTrace 支持</a></li>
+    <li><a href="#dtrace-using">27.4. 使用 DTrace</a></li>
   </ul>
 </nav>
       <hr />
