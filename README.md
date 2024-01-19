@@ -45,7 +45,7 @@ po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件�
 |partiii|✅|✅|
 |config|✅||
 |boot|✅|✅|
-|security|✅||
+|security|✅|✅|
 |jails|✅|✅|
 |mac|✅|✅|
 |audit|✅||
