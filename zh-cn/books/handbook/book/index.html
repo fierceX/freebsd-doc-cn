@@ -299,7 +299,7 @@
         <li><a href="#security">Chapter 16. 安全</a></li>
         <li><a href="#jails">Chapter 17. Jails 和容器</a></li>
         <li><a href="#mac">Chapter 18. 强制访问控制</a></li>
-        <li><a href="#audit">Chapter 19. Security Event Auditing</a></li>
+        <li><a href="#audit">Chapter 19. 安全事件审计</a></li>
         <li><a href="#disks">Chapter 20. Storage</a></li>
         <li><a href="#geom">Chapter 21. GEOM: Modular Disk Transformation Framework</a></li>
         <li><a href="#zfs">Chapter 22. Z 文件系统（ZFS）</a></li>
@@ -535,7 +535,7 @@
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1"><em><a href="./#introduction">Introduction</a></em></dt>
+<dt class="hdlist1"><em><a href="./#introduction">导言</a></em></dt>
 <dd>
 <p>本文向新用户介绍 FreeBSD 。它描述了 FreeBSD 项目的历史、目标和开发模型。</p>
 </dd>
@@ -17679,14 +17679,8 @@ Enter new password:</pre>
 </dd>
 <dt class="hdlist1">0</dt>
 <dd>
-<div class="ulist">
-<ul>
-<li>
-<p>安全模式* - 可以关闭不可变和仅追加标志。
+<p><strong>安全模式</strong> - 可以关闭不可变和仅追加标志。
 所有设备都可以根据其权限进行读取或写入。</p>
-</li>
-</ul>
-</div>
 </dd>
 <dt class="hdlist1">1</dt>
 <dd>
@@ -22115,45 +22109,45 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </div>
 </div>
 <div class="sect1">
-<h2 id="audit">Chapter 19. Security Event Auditing<a class="anchor" href="#audit"></a></h2>
+<h2 id="audit">Chapter 19. 安全事件审计<a class="anchor" href="#audit"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="audit-synopsis">19.1. Synopsis<a class="anchor" href="#audit-synopsis"></a></h3>
+<h3 id="audit-synopsis">19.1. 简介<a class="anchor" href="#audit-synopsis"></a></h3>
 <div class="paragraph">
-<p>The FreeBSD operating system includes support for security event auditing. Event auditing supports reliable, fine-grained, and configurable logging of a variety of security-relevant system events, including logins, configuration changes, and file and network access. These log records can be invaluable for live system monitoring, intrusion detection, and postmortem analysis. FreeBSD implements Sun™&#39;s published Basic Security Module (BSM) Application Programming Interface (API) and file format, and is interoperable with the Solaris™ and Mac OS® X audit implementations.</p>
+<p>FreeBSD 操作系统包含安全事件审计的支持。事件审计支持可靠、细粒度和可配置的记录各种与安全相关的系统事件，包括登录、配置更改以及文件和网络访问。这些日志记录对于实时系统监控、入侵检测和事后分析非常宝贵。 FreeBSD 实现了 Sun™ 发布的基本安全模块（BSM）应用程序编程接口（API）和文件格式，并与 Solaris™ 和 Mac OS® X 的审计实现互操作。</p>
 </div>
 <div class="paragraph">
-<p>This chapter focuses on the installation and configuration of event auditing. It explains audit policies and provides an example audit configuration.</p>
+<p>本章重点介绍事件审计的安装和配置。它解释了审计策略，并提供了一个示例审计配置。</p>
 </div>
 <div class="paragraph">
-<p>After reading this chapter, you will know:</p>
+<p>阅读完本章后，您将了解：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>What event auditing is and how it works.</p>
+<p>什么是事件审计以及它是如何工作的。</p>
 </li>
 <li>
-<p>How to configure event auditing on FreeBSD for users and processes.</p>
+<p>如何在 FreeBSD 上配置用户和进程的事件审计。</p>
 </li>
 <li>
-<p>How to review the audit trail using the audit reduction and review tools.</p>
+<p>如何使用审计缩减和审查工具来审查审计跟踪记录。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Before reading this chapter, you should:</p>
+<p>在阅读本章之前，你应该：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Understand UNIX® and FreeBSD basics (<a href="./#basics">FreeBSD Basics</a>).</p>
+<p>了解 UNIX® 和 <a href="./#basics">FreeBSD 基础知识</a>。</p>
 </li>
 <li>
-<p>Be familiar with the basics of kernel configuration/compilation (<a href="./#kernelconfig">Configuring the FreeBSD Kernel</a>).</p>
+<p>熟悉 <a href="./#kernelconfig">内核配置/编译的基础知识</a>。</p>
 </li>
 <li>
-<p>Have some familiarity with security and how it pertains to FreeBSD (<a href="./#security">Security</a>).</p>
+<p>对于安全性以及它与 FreeBSD 相关的内容有一定的了解（<a href="./#security">Security</a>）。</p>
 </li>
 </ul>
 </div>
@@ -22165,10 +22159,10 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The audit facility has some known limitations. Not all security-relevant system events are auditable and some login mechanisms, such as Xorg-based display managers and third-party daemons, do not properly configure auditing for user login sessions.</p>
+<p>审计功能有一些已知的限制。并非所有与安全相关的系统事件都可以进行审计，而某些登录机制（例如基于 Xorg 的显示管理器和第三方守护程序）未正确配置用户登录会话的审计功能。</p>
 </div>
 <div class="paragraph">
-<p>The security event auditing facility is able to generate very detailed logs of system activity. On a busy system, trail file data can be very large when configured for high detail, exceeding gigabytes a week in some configurations. Administrators should take into account the disk space requirements associated with high volume audit configurations. For example, it may be desirable to dedicate a file system to <span class="filename">/var/audit</span> so that other file systems are not affected if the audit file system becomes full.</p>
+<p>安全事件审计功能能够生成系统活动的非常详细的日志。在繁忙的系统上，当配置为高详细级别时，跟踪文件数据可能非常大，在某些配置下每周超过几个千兆字节。管理员应考虑与高容量审计配置相关的磁盘空间需求。例如，可以将一个文件系统专门用于 <span class="filename">/var/audit</span>，这样如果审计文件系统变满，其他文件系统不会受到影响。</p>
 </div>
 </td>
 </tr>
@@ -22176,40 +22170,40 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </div>
 </div>
 <div class="sect2">
-<h3 id="audit-inline-glossary">19.2. Key Terms<a class="anchor" href="#audit-inline-glossary"></a></h3>
+<h3 id="audit-inline-glossary">19.2. 关键术语<a class="anchor" href="#audit-inline-glossary"></a></h3>
 <div class="paragraph">
-<p>The following terms are related to security event auditing:</p>
+<p>以下术语与安全事件审计相关：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><em>event</em>: an auditable event is any event that can be logged using the audit subsystem. Examples of security-relevant events include the creation of a file, the building of a network connection, or a user logging in. Events are either &#34;attributable&#34;, meaning that they can be traced to an authenticated user, or &#34;non-attributable&#34;. Examples of non-attributable events are any events that occur before authentication in the login process, such as bad password attempts.</p>
+<p><em>事件（event）</em>：可审计事件是指可以使用审计子系统记录的任何事件。安全相关事件的示例包括文件的创建、网络连接的建立或用户登录。事件可以是“可归因”的，意味着可以追溯到经过身份验证的用户，也可以是“不可归因”的。不可归因事件的示例是在登录过程中身份验证之前发生的任何事件，例如密码错误尝试。</p>
 </li>
 <li>
-<p><em>class</em>: a named set of related events which are used in selection expressions. Commonly used classes of events include &#34;file creation&#34; (fc), &#34;exec&#34; (ex), and &#34;login_logout&#34; (lo).</p>
+<p><em>class</em>：一组命名的相关事件，用于选择表达式中使用。常用的事件类包括“文件创建”（fc）、“执行”（ex）和“登录/注销”（lo）。</p>
 </li>
 <li>
-<p><em>record</em>: an audit log entry describing a security event. Records contain a record event type, information on the subject (user) performing the action, date and time information, information on any objects or arguments, and a success or failure condition.</p>
+<p><em>record</em>：描述安全事件的审计日志条目。记录包含记录事件类型、执行操作的主体（用户）的信息、日期和时间信息、任何对象或参数的信息，以及成功或失败的条件。</p>
 </li>
 <li>
-<p><em>trail</em>: a log file consisting of a series of audit records describing security events. Trails are in roughly chronological order with respect to the time events completed. Only authorized processes are allowed to commit records to the audit trail.</p>
+<p><em>trail</em>：一个由一系列描述安全事件的审计记录组成的日志文件。Trail 的顺序大致按照事件完成的时间顺序排列。只有经过授权的进程才允许向审计轨迹提交记录。</p>
 </li>
 <li>
-<p><em>selection expression</em>: a string containing a list of prefixes and audit event class names used to match events.</p>
+<p><em>选择表达式（selection expression）</em>：一个包含前缀和审计事件类名列表的字符串，用于匹配事件。</p>
 </li>
 <li>
-<p><em>preselection</em>: the process by which the system identifies which events are of interest to the administrator. The preselection configuration uses a series of selection expressions to identify which classes of events to audit for which users, as well as global settings that apply to both authenticated and unauthenticated processes.</p>
+<p><em>预选（preselection）</em>：系统识别哪些事件对管理员感兴趣的过程。预选配置使用一系列选择表达式来识别哪些事件类别适用于哪些用户进行审计，以及适用于已认证和未认证进程的全局设置。</p>
 </li>
 <li>
-<p><em>reduction</em>: the process by which records from existing audit trails are selected for preservation, printing, or analysis. Likewise, the process by which undesired audit records are removed from the audit trail. Using reduction, administrators can implement policies for the preservation of audit data. For example, detailed audit trails might be kept for one month, but after that, trails might be reduced in order to preserve only login information for archival purposes.</p>
+<p><em>reduction</em>：从现有审计跟踪中选择记录以进行保留、打印或分析的过程。同样，也是从审计跟踪中删除不需要的审计记录的过程。通过使用减少，管理员可以实施有关保留审计数据的策略。例如，详细的审计跟踪可能会保留一个月，但之后，为了保留仅用于归档目的的登录信息，可能会进行减少。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="audit-config">19.3. Audit Configuration<a class="anchor" href="#audit-config"></a></h3>
+<h3 id="audit-config">19.3. 审计配置<a class="anchor" href="#audit-config"></a></h3>
 <div class="paragraph">
-<p>User space support for event auditing is installed as part of the base FreeBSD operating system. Kernel support is available in the <span class="filename">GENERIC</span> kernel by default, and <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a> can be enabled by adding the following line to <span class="filename">/etc/rc.conf</span>:</p>
+<p>用户空间对事件审计的支持是作为基本的 FreeBSD 操作系统的一部分安装的。内核支持默认情况下在 <span class="filename">GENERIC</span> 内核中可用，并且可以通过在 <span class="filename">/etc/rc.conf</span> 中添加以下行来启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a>。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22217,7 +22211,7 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </div>
 </div>
 <div class="paragraph">
-<p>Then, start the audit daemon:</p>
+<p>然后，启动审计守护进程：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22225,7 +22219,7 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </div>
 </div>
 <div class="paragraph">
-<p>Users who prefer to compile a custom kernel must include the following line in their custom kernel configuration file:</p>
+<p>喜欢编译自定义内核的用户必须在其自定义内核配置文件中包含以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22233,15 +22227,15 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </div>
 </div>
 <div class="sect3">
-<h4 id="_event_selection_expressions">19.3.1. Event Selection Expressions<a class="anchor" href="#_event_selection_expressions"></a></h4>
+<h4 id="_事件选择表达式">19.3.1. 事件选择表达式<a class="anchor" href="#_事件选择表达式"></a></h4>
 <div class="paragraph">
-<p>Selection expressions are used in a number of places in the audit configuration to determine which events should be audited. Expressions contain a list of event classes to match. Selection expressions are evaluated from left to right, and two expressions are combined by appending one onto the other.</p>
+<p>选择表达式在审计配置中的许多地方用于确定应该审计哪些事件。表达式包含要匹配的事件类别列表。选择表达式从左到右进行评估，并通过将一个表达式附加到另一个来组合两个表达式。</p>
 </div>
 <div class="paragraph">
-<p><a href="#event-selection">Default Audit Event Classes</a> summarizes the default audit event classes:</p>
+<p><a href="#event-selection">默认的审计事件类别</a> 总结了默认的审计事件类别：</p>
 </div>
 <table id="event-selection" class="tableblock frame-none grid-all stretch">
-<caption class="title">表 31. Default Audit Event Classes</caption>
+<caption class="title">表 31. 默认的审计事件类别</caption>
 <colgroup>
 <col style="width: 33.3333%;"/>
 <col style="width: 33.3333%;"/>
@@ -22249,160 +22243,160 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Class Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Action</th>
+<th class="tableblock halign-left valign-top">类名</th>
+<th class="tableblock halign-left valign-top">描述</th>
+<th class="tableblock halign-left valign-top">行动</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">all</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">all</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Match all event classes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">所有</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">所有</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">匹配所有事件类。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">aa</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">authentication and authorization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">身份验证和授权</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ad</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">administrative</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Administrative actions performed on the system as a whole.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">管理操作</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">对整个系统执行的管理操作。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ap</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">application</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Application defined action.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">应用程序</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">应用程序定义的操作。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">cl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">file close</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit calls to the <code>close</code> system call.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">关闭文件</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计对 <code>close</code> 系统调用的调用。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ex</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">exec</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit program execution. Auditing of command line arguments and environmental variables is controlled via <a href="https://man.freebsd.org/cgi/man.cgi?query=audit_control&amp;sektion=5&amp;format=html">audit_control(5)</a> using the <code>argv</code> and <code>envv</code> parameters to the <code>policy</code> setting.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">执行</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">执行审计程序。通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=audit_control&amp;sektion=5&amp;format=html">audit_control(5)</a> 使用 <code>argv</code> 和 <code>envv</code> 参数来控制命令行参数和环境变量的审计，这是通过 <code>policy</code> 设置实现的。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fa</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">file attribute access</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit the access of object attributes such as <a href="https://man.freebsd.org/cgi/man.cgi?query=stat&amp;sektion=1&amp;format=html">stat(1)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=pathconf&amp;sektion=2&amp;format=html">pathconf(2)</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">文件属性访问</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计对象属性的访问，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=stat&amp;sektion=1&amp;format=html">stat(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=pathconf&amp;sektion=2&amp;format=html">pathconf(2)</a>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fc</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">file create</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit events where a file is created as a result.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">创建文件</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计事件：文件创建的结果。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fd</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">file delete</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit events where file deletion occurs.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">删除文件</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计文件删除事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fm</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">file attribute modify</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit events where file attribute modification occurs, such as by <a href="https://man.freebsd.org/cgi/man.cgi?query=chown&amp;sektion=8&amp;format=html">chown(8)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a>, and <a href="https://man.freebsd.org/cgi/man.cgi?query=flock&amp;sektion=2&amp;format=html">flock(2)</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">文件属性修改</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计文件属性修改的事件，例如通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=chown&amp;sektion=8&amp;format=html">chown(8)</a>，<a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=flock&amp;sektion=2&amp;format=html">flock(2)</a> 进行的修改。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fr</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">file read</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit events in which data is read or files are opened for reading.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">文件读取</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计事件中涉及数据读取或打开文件进行读取的情况。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fw</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">file write</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit events in which data is written or files are written or modified.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">文件写入</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计事件中涉及数据写入、文件写入或修改的情况。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">io</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ioctl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit use of the <code>ioctl</code> system call.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计对 <code>ioctl</code> 系统调用的使用。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ip</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ipc</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit various forms of Inter-Process Communication, including POSIX pipes and System V IPC operations.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计各种形式的进程间通信，包括 POSIX 管道和 System V IPC 操作。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">lo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">login_logout</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit <a href="https://man.freebsd.org/cgi/man.cgi?query=login&amp;sektion=1&amp;format=html">login(1)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=logout&amp;sektion=1&amp;format=html">logout(1)</a> events.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">登录_注销</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计 <a href="https://man.freebsd.org/cgi/man.cgi?query=login&amp;sektion=1&amp;format=html">login(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=logout&amp;sektion=1&amp;format=html">logout(1)</a> 事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">na</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">non attributable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit non-attributable events.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">不可归因的</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计不可归属事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">invalid class</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Match no audit events.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">无效的类</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">没有匹配的审计事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">nt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">network</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit events related to network actions such as <a href="https://man.freebsd.org/cgi/man.cgi?query=connect&amp;sektion=2&amp;format=html">connect(2)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=accept&amp;sektion=2&amp;format=html">accept(2)</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">与网络操作相关的审计事件，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=connect&amp;sektion=2&amp;format=html">connect(2)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=accept&amp;sektion=2&amp;format=html">accept(2)</a>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ot</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">other</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit miscellaneous events.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">其他</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计其他事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">pc</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">process</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit process operations such as <a href="https://man.freebsd.org/cgi/man.cgi?query=exec&amp;sektion=3&amp;format=html">exec(3)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=exit&amp;sektion=3&amp;format=html">exit(3)</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">过程</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计进程操作，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=exec&amp;sektion=3&amp;format=html">exec(3)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=exit&amp;sektion=3&amp;format=html">exit(3)</a>。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>These audit event classes may be customized by modifying the <span class="filename">audit_class</span> and <span class="filename">audit_event</span> configuration files.</p>
+<p>这些审计事件类可以通过修改 <span class="filename">audit_class</span> 和 <span class="filename">audit_event</span> 配置文件进行自定义。</p>
 </div>
 <div class="paragraph">
-<p>Each audit event class may be combined with a prefix indicating whether successful/failed operations are matched, and whether the entry is adding or removing matching for the class and type. <a href="#event-prefixes">Prefixes for Audit Event Classes</a> summarizes the available prefixes:</p>
+<p>每个审计事件类别可以与前缀组合，以指示匹配成功/失败的操作，并指示添加或删除该类别和类型的匹配项。 <a href="#event-prefixes">审计事件类的前缀</a> 总结了可用的前缀：</p>
 </div>
 <table id="event-prefixes" class="tableblock frame-none grid-all stretch">
-<caption class="title">表 32. Prefixes for Audit Event Classes</caption>
+<caption class="title">表 32. 审计事件类的前缀</caption>
 <colgroup>
 <col style="width: 50%;"/>
 <col style="width: 50%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Prefix</th>
-<th class="tableblock halign-left valign-top">Action</th>
+<th class="tableblock halign-left valign-top">前缀</th>
+<th class="tableblock halign-left valign-top">行动</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">+</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit successful events in this class.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计此类中的成功事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit failed events in this class.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计此类中的失败事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">^</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit neither successful nor failed events in this class.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">在这个类中，既不审计成功事件，也不审计失败事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">^+</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Do not audit successful events in this class.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">不要对这个类中的成功事件进行审计。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">^-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Do not audit failed events in this class.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">不要对该类中的失败事件进行审计。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>If no prefix is present, both successful and failed instances of the event will be audited.</p>
+<p>如果没有前缀，则对事件的成功和失败实例都将进行审计。</p>
 </div>
 <div class="paragraph">
-<p>The following example selection string selects both successful and failed login/logout events, but only successful execution events:</p>
+<p>以下示例选择字符串选择成功和失败的登录/注销事件，但仅选择成功的执行事件：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22411,26 +22405,26 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration_files">19.3.2. Configuration Files<a class="anchor" href="#_configuration_files"></a></h4>
+<h4 id="_配置文件">19.3.2. 配置文件<a class="anchor" href="#_配置文件"></a></h4>
 <div class="paragraph">
-<p>The following configuration files for security event auditing are found in <span class="filename">/etc/security</span>:</p>
+<p>安全事件审计的以下配置文件位于 <span class="filename">/etc/security</span> 目录中：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><span class="filename">audit_class</span>: contains the definitions of the audit classes.</p>
+<p><span class="filename">audit_class</span>: 包含了审计类的定义。</p>
 </li>
 <li>
-<p><span class="filename">audit_control</span>: controls aspects of the audit subsystem, such as default audit classes, minimum disk space to leave on the audit log volume, and maximum audit trail size.</p>
+<p><span class="filename">audit_control</span>: 控制审计子系统的各个方面，如默认审计类别、在审计日志卷上保留的最小磁盘空间以及最大审计跟踪大小。</p>
 </li>
 <li>
-<p><span class="filename">audit_event</span>: textual names and descriptions of system audit events and a list of which classes each event is in.</p>
+<p><span class="filename">audit_event</span>: 系统审计事件的文本名称和描述，以及每个事件所属的类别列表。</p>
 </li>
 <li>
-<p><span class="filename">audit_user</span>: user-specific audit requirements to be combined with the global defaults at login.</p>
+<p><span class="filename">audit_user</span>: 用户特定的审计要求，在登录时与全局默认值结合使用。</p>
 </li>
 <li>
-<p><span class="filename">audit_warn</span>: a customizable shell script used by <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a> to generate warning messages in exceptional situations, such as when space for audit records is running low or when the audit trail file has been rotated.</p>
+<p><span class="filename">audit_warn</span>: 是一个可定制的 Shell 脚本，由 <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a> 使用，用于在异常情况下生成警告消息，例如当审计记录的空间不足或审计跟踪文件已经轮转时。</p>
 </li>
 </ul>
 </div>
@@ -22442,19 +22436,19 @@ setpmac biba/10<span class="se">\(</span>10-10<span class="se">\)</span> /usr/lo
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Audit configuration files should be edited and maintained carefully, as errors in configuration may result in improper logging of events.</p>
+<p>审计配置文件应该小心编辑和维护，因为配置错误可能导致事件记录不正确。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>In most cases, administrators will only need to modify <span class="filename">audit_control</span> and <span class="filename">audit_user</span>. The first file controls system-wide audit properties and policies and the second file may be used to fine-tune auditing by user.</p>
+<p>在大多数情况下，管理员只需要修改 <span class="filename">audit_control</span> 和 <span class="filename">audit_user</span> 这两个文件。第一个文件控制系统范围的审计属性和策略，而第二个文件可用于按用户进行细化调整审计。</p>
 </div>
 <div class="sect4">
-<h5 id="audit-auditcontrol">19.3.2.1. The <span class="filename">audit_control</span> File<a class="anchor" href="#audit-auditcontrol"></a></h5>
+<h5 id="audit-auditcontrol">19.3.2.1. <span class="filename">audit_control</span> 文件<a class="anchor" href="#audit-auditcontrol"></a></h5>
 <div class="paragraph">
-<p>A number of defaults for the audit subsystem are specified in <span class="filename">audit_control</span>:</p>
+<p>在 <span class="filename">audit_control</span> 文件中指定了一些审计子系统的默认值：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22469,37 +22463,37 @@ expire-after:10M</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>dir</code> entry is used to set one or more directories where audit logs will be stored. If more than one directory entry appears, they will be used in order as they fill. It is common to configure audit so that audit logs are stored on a dedicated file system, in order to prevent interference between the audit subsystem and other subsystems if the file system fills.</p>
+<p><code>dir</code> 条目用于设置一个或多个目录，用于存储审计日志。如果出现多个 <code>dir</code> 条目，则按照它们出现的顺序进行填充。通常配置审计时，会将审计日志存储在专用的文件系统中，以防止文件系统填满时审计子系统与其他子系统之间的干扰。</p>
 </div>
 <div class="paragraph">
-<p>If the <code>dist</code> field is set to <code>on</code> or <code>yes</code>, hard links will be created to all trail files in <span class="filename">/var/audit/dist</span>.</p>
+<p>如果 <code>dist</code> 字段设置为 <code>on</code> 或 <code>yes</code> ，将会在 <span class="filename">/var/audit/dist</span> 目录下创建所有审计文件的硬链接。</p>
 </div>
 <div class="paragraph">
-<p>The <code>flags</code> field sets the system-wide default preselection mask for attributable events. In the example above, successful and failed login/logout events as well as authentication and authorization are audited for all users.</p>
+<p><code>flags</code> 字段设置了系统范围内可归属事件的默认预选掩码。在上面的示例中，成功和失败的登录/注销事件以及身份验证和授权将为所有用户进行审计。</p>
 </div>
 <div class="paragraph">
-<p>The <code>minfree</code> entry defines the minimum percentage of free space for the file system where the audit trail is stored.</p>
+<p><code>minfree</code> 条目定义了存储审计跟踪的文件系统的最小空闲空间百分比。</p>
 </div>
 <div class="paragraph">
-<p>The <code>naflags</code> entry specifies audit classes to be audited for non-attributed events, such as the login/logout process and authentication and authorization.</p>
+<p><code>naflags</code> 条目指定了要对非归因事件进行审计的审计类别，例如登录/注销过程以及身份验证和授权。</p>
 </div>
 <div class="paragraph">
-<p>The <code>policy</code> entry specifies a comma-separated list of policy flags controlling various aspects of audit behavior. The <code>cnt</code> indicates that the system should continue running despite an auditing failure (this flag is highly recommended). The other flag, <code>argv</code>, causes command line arguments to the <a href="https://man.freebsd.org/cgi/man.cgi?query=execve&amp;sektion=2&amp;format=html">execve(2)</a> system call to be audited as part of command execution.</p>
+<p><code>policy</code> 条目指定了一个逗号分隔的策略标志列表，用于控制审计行为的各个方面。<code>cnt</code> 表示系统应该在审计失败的情况下继续运行（强烈推荐使用此标志）。另一个标志 <code>argv</code> 会导致命令行参数在执行命令时作为 <a href="https://man.freebsd.org/cgi/man.cgi?query=execve&amp;sektion=2&amp;format=html">execve(2)</a> 系统调用的一部分进行审计。</p>
 </div>
 <div class="paragraph">
-<p>The <code>filesz</code> entry specifies the maximum size for an audit trail before automatically terminating and rotating the trail file. A value of <code>0</code> disables automatic log rotation. If the requested file size is below the minimum of 512k, it will be ignored and a log message will be generated.</p>
+<p><code>filesz</code> 条目指定了审计跟踪文件在自动终止和轮转之前的最大大小。值为 <code>0</code> 表示禁用自动日志轮转。如果请求的文件大小低于最小值 512k ，它将被忽略并生成一条日志消息。</p>
 </div>
 <div class="paragraph">
-<p>The <code>expire-after</code> field specifies when audit log files will expire and be removed.</p>
+<p><code>expire-after</code> 字段指定了审计日志文件何时过期并被删除。</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="audit-audituser">19.3.2.2. The <span class="filename">audit_user</span> File<a class="anchor" href="#audit-audituser"></a></h5>
+<h5 id="audit-audituser">19.3.2.2. <span class="filename">audit_user</span> 文件<a class="anchor" href="#audit-audituser"></a></h5>
 <div class="paragraph">
-<p>The administrator can specify further audit requirements for specific users in <span class="filename">audit_user</span>. Each line configures auditing for a user via two fields: the <code>alwaysaudit</code> field specifies a set of events that should always be audited for the user, and the <code>neveraudit</code> field specifies a set of events that should never be audited for the user.</p>
+<p>管理员可以在 <span class="filename">audit_user</span> 中为特定用户指定进一步的审计要求。每一行通过两个字段配置用户的审计： <code>alwaysaudit</code> 字段指定应始终对用户进行审计的一组事件，而 <code>neveraudit</code> 字段指定不应对用户进行审计的一组事件。</p>
 </div>
 <div class="paragraph">
-<p>The following example entries audit login/logout events and successful command execution for <code>root</code> and file creation and successful command execution for <code>www</code>. If used with the default <span class="filename">audit_control</span>, the <code>lo</code> entry for <code>root</code> is redundant, and login/logout events will also be audited for <code>www</code>.</p>
+<p>以下示例条目审计 <code>root</code> 用户的登录/注销事件和成功的命令执行，以及 <code>www</code> 用户的文件创建和成功的命令执行。如果与默认的 <span class="filename">audit_control</span> 一起使用，对于 <code>root</code> 用户的 <code>lo</code> 条目是多余的，并且还将审计 <code>www</code> 用户的登录/注销事件。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22511,12 +22505,12 @@ www:fc,+ex:no</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="audit-administration">19.4. Working with Audit Trails<a class="anchor" href="#audit-administration"></a></h3>
+<h3 id="audit-administration">19.4. 使用审计跟踪功能<a class="anchor" href="#audit-administration"></a></h3>
 <div class="paragraph">
-<p>Since audit trails are stored in the BSM binary format, several built-in tools are available to modify or convert these trails to text. To convert trail files to a simple text format, use <code>praudit</code>. To reduce the audit trail file for analysis, archiving, or printing purposes, use <code>auditreduce</code>. This utility supports a variety of selection parameters, including event type, event class, user, date or time of the event, and the file path or object acted on.</p>
+<p>由于审计跟踪是以 BSM 二进制格式存储的，因此有几个内置工具可用于修改或将这些跟踪转换为文本。要将跟踪文件转换为简单的文本格式，请使用 <code>praudit</code>。要缩小审计跟踪文件以进行分析、存档或打印，请使用 <code>auditreduce</code>。此实用程序支持各种选择参数，包括事件类型、事件类别、用户、事件的日期或时间，以及操作的文件路径或对象。</p>
 </div>
 <div class="paragraph">
-<p>For example, to dump the entire contents of a specified audit log in plain text:</p>
+<p>例如，要以纯文本形式转储指定审计日志的全部内容：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22524,10 +22518,10 @@ www:fc,+ex:no</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Where <em>AUDITFILE</em> is the audit log to dump.</p>
+<p>其中 <em>AUDITFILE</em> 是要转储的审计日志文件。</p>
 </div>
 <div class="paragraph">
-<p>Audit trails consist of a series of audit records made up of tokens, which <code>praudit</code> prints sequentially, one per line. Each token is of a specific type, such as <code>header</code> (an audit record header) or <code>path</code> (a file path from a name lookup). The following is an example of an <code>execve</code> event:</p>
+<p>审计追踪由一系列由令牌组成的审计记录组成，<code>praudit</code> 按顺序逐行打印这些记录，每行一个令牌。每个令牌都是特定类型的，例如 <code>header</code> （审计记录头）或 <code>path</code>（名称查找的文件路径）。以下是一个 <code>execve</code> 事件的示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22541,13 +22535,13 @@ trailer,133</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This audit represents a successful <code>execve</code> call, in which the command <code>finger doug</code> has been run. The <code>exec arg</code> token contains the processed command line presented by the shell to the kernel. The <code>path</code> token holds the path to the executable as looked up by the kernel. The <code>attribute</code> token describes the binary and includes the file mode. The <code>subject</code> token stores the audit user ID, effective user ID and group ID, real user ID and group ID, process ID, session ID, port ID, and login address. Notice that the audit user ID and real user ID differ as the user <code>robert</code> switched to the <code>root</code> account before running this command, but it is audited using the original authenticated user. The <code>return</code> token indicates the successful execution and the <code>trailer</code> concludes the record.</p>
+<p>此审计记录表示一个成功的 <code>execve</code> 调用，其中运行了命令 <code>finger doug</code>。<code>exec arg</code> 令牌包含由 shell 传递给内核的处理过的命令行。<code>path</code> 令牌保存了内核查找到的可执行文件的路径。<code>attribute</code> 令牌描述了二进制文件，并包括文件模式。<code>subject</code> 令牌存储了审计用户 ID 、有效用户 ID 和组 ID 、真实用户 ID 和组 ID 、进程 ID 、会话 ID 、端口 ID 和登录地址。请注意，审计用户 ID 和真实用户 ID 不同，因为用户 <code>robert</code> 在运行此命令之前切换到了 <code>root</code> 账户，但是它是使用原始认证用户进行审计的。<code>return</code> 令牌表示成功执行，<code>trailer</code> 结束了记录。</p>
 </div>
 <div class="paragraph">
-<p>XML output format is also supported and can be selected by including <code>-x</code>.</p>
+<p>还支持 XML 输出格式，可以通过包含 <code>-x</code> 来选择。</p>
 </div>
 <div class="paragraph">
-<p>Since audit logs may be very large, a subset of records can be selected using <code>auditreduce</code>. This example selects all audit records produced for the user <code>trhodes</code> stored in <span class="filename">AUDITFILE</span>:</p>
+<p>由于审计日志可能非常庞大，可以使用 <code>auditreduce</code> 选择记录的子集。此示例选择存储在 <span class="filename">AUDITFILE</span> 中的用户 <code>trhodes</code> 生成的所有审计记录。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22555,12 +22549,12 @@ trailer,133</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Members of the <code>audit</code> group have permission to read audit trails in <span class="filename">/var/audit</span>. By default, this group is empty, so only the <code>root</code> user can read audit trails. Users may be added to the <code>audit</code> group in order to delegate audit review rights. As the ability to track audit log contents provides significant insight into the behavior of users and processes, it is recommended that the delegation of audit review rights be performed with caution.</p>
+<p><code>audit</code> 组的成员有权限读取位于 <span class="filename">/var/audit</span> 目录下的审计日志。默认情况下，该组为空，因此只有 <code>root</code> 用户可以读取审计日志。可以将用户添加到 <code>audit</code> 组中以委派审计审查权限。由于跟踪审计日志内容可以提供对用户和进程行为的重要见解，建议谨慎进行审计审查权限的委派。</p>
 </div>
 <div class="sect3">
-<h4 id="_live_monitoring_using_audit_pipes">19.4.1. Live Monitoring Using Audit Pipes<a class="anchor" href="#_live_monitoring_using_audit_pipes"></a></h4>
+<h4 id="_使用审计管道进行实时监控">19.4.1. 使用审计管道进行实时监控<a class="anchor" href="#_使用审计管道进行实时监控"></a></h4>
 <div class="paragraph">
-<p>Audit pipes are cloning pseudo-devices which allow applications to tap the live audit record stream. This is primarily of interest to authors of intrusion detection and system monitoring applications. However, the audit pipe device is a convenient way for the administrator to allow live monitoring without running into problems with audit trail file ownership or log rotation interrupting the event stream. To track the live audit event stream:</p>
+<p>审计管道是克隆伪设备，允许应用程序监听实时审计记录流。这主要对入侵检测和系统监控应用程序的作者感兴趣。然而，审计管道设备是管理员允许实时监控的便捷方式，可以避免审计跟踪文件所有权或日志轮换中断事件流的问题。要跟踪实时审计事件流：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22568,7 +22562,7 @@ trailer,133</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>By default, audit pipe device nodes are accessible only to the <code>root</code> user. To make them accessible to the members of the <code>audit</code> group, add a <code>devfs</code> rule to <span class="filename">/etc/devfs.rules</span>:</p>
+<p>默认情况下，审计管道设备节点只对 <code>root</code> 用户可访问。要使其对 <code>audit</code> 组的成员可访问，需要在 <code>/etc/devfs.rules</code> 文件中添加一个 <code>devfs</code> 规则。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22576,7 +22570,7 @@ trailer,133</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>See <a href="https://man.freebsd.org/cgi/man.cgi?query=devfs.rules&amp;sektion=5&amp;format=html">devfs.rules(5)</a> for more information on configuring the devfs file system.</p>
+<p>请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=devfs.rules&amp;sektion=5&amp;format=html">devfs.rules(5)</a> 以获取有关配置 devfs 文件系统的更多信息。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -22586,7 +22580,7 @@ trailer,133</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>It is easy to produce audit event feedback cycles, in which the viewing of each audit event results in the generation of more audit events. For example, if all network I/O is audited, and <code>praudit</code> is run from an SSH session, a continuous stream of audit events will be generated at a high rate, as each event being printed will generate another event. For this reason, it is advisable to run <code>praudit</code> on an audit pipe device from sessions without fine-grained I/O auditing.</p>
+<p>很容易产生审计事件反馈循环，即每个审计事件的查看都会导致更多的审计事件生成。例如，如果对所有网络 I/O 进行审计，并且从一个 SSH 会话中运行 <code>praudit</code>，将以高速生成连续的审计事件流，因为每个被打印的事件都会生成另一个事件。因此，建议在没有细粒度 I/O 审计的会话中从审计管道设备上运行 <code>praudit</code>。</p>
 </div>
 </td>
 </tr>
@@ -22594,9 +22588,9 @@ trailer,133</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rotating_and_compressing_audit_trail_files">19.4.2. Rotating and Compressing Audit Trail Files<a class="anchor" href="#_rotating_and_compressing_audit_trail_files"></a></h4>
+<h4 id="_旋转和压缩审计日志文件">19.4.2. 旋转和压缩审计日志文件<a class="anchor" href="#_旋转和压缩审计日志文件"></a></h4>
 <div class="paragraph">
-<p>Audit trails are written to by the kernel and managed by the audit daemon, <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a>. Administrators should not attempt to use <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> or other tools to directly rotate audit logs. Instead, <code>audit</code> should be used to shut down auditing, reconfigure the audit system, and perform log rotation. The following command causes the audit daemon to create a new audit log and signal the kernel to switch to using the new log. The old log will be terminated and renamed, at which point it may then be manipulated by the administrator:</p>
+<p>审计日志由内核编写，并由审计守护程序（<a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a>）管理。管理员不应尝试使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 或其他工具直接轮转审计日志。相反，应使用 <code>audit</code> 来关闭审计、重新配置审计系统并执行日志轮转。以下命令会导致审计守护程序创建一个新的审计日志，并向内核发出信号以切换到使用新日志。旧日志将被终止和重命名，此时管理员可以对其进行操作。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22604,10 +22598,10 @@ trailer,133</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a> is not currently running, this command will fail and an error message will be produced.</p>
+<p>如果 <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a> 当前未运行，该命令将失败并产生错误消息。</p>
 </div>
 <div class="paragraph">
-<p>Adding the following line to <span class="filename">/etc/crontab</span> will schedule this rotation every twelve hours:</p>
+<p>将以下行添加到 <span class="filename">/etc/crontab</span> 将会每隔十二小时安排此轮换：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22615,13 +22609,13 @@ trailer,133</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The change will take effect once <span class="filename">/etc/crontab</span> is saved.</p>
+<p>更改将在保存 <span class="filename">/etc/crontab</span> 后生效。</p>
 </div>
 <div class="paragraph">
-<p>Automatic rotation of the audit trail file based on file size is possible using <code>filesz</code> in <span class="filename">audit_control</span> as described in <a href="#audit-auditcontrol">The <span class="filename">audit_control</span> File</a>.</p>
+<p>根据 <a href="#audit-auditcontrol"><span class="filename">audit_control</span> 文件</a> 中所述，可以使用 <code>filesz</code> 在 <span class="filename">audit_control</span> 中基于文件大小自动旋转审计跟踪文件。</p>
 </div>
 <div class="paragraph">
-<p>As audit trail files can become very large, it is often desirable to compress or otherwise archive trails once they have been closed by the audit daemon. The <span class="filename">audit_warn</span> script can be used to perform customized operations for a variety of audit-related events, including the clean termination of audit trails when they are rotated. For example, the following may be added to <span class="filename">/etc/security/audit_warn</span> to compress audit trails on close:</p>
+<p>由于审计跟踪文件可能变得非常大，因此通常希望在审计守护程序关闭它们后对跟踪进行压缩或归档。 <span class="filename">audit_warn</span> 脚本可用于执行各种与审计相关的事件的自定义操作，包括在轮换审计跟踪时对其进行清理终止。 例如，可以将以下内容添加到 <span class="filename">/etc/security/audit_warn</span> 中以在关闭时压缩审计跟踪：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -22634,7 +22628,7 @@ fi</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Other archiving activities might include copying trail files to a centralized server, deleting old trail files, or reducing the audit trail to remove unneeded records. This script will be run only when audit trail files are cleanly terminated. It will not be run on trails left unterminated following an improper shutdown.</p>
+<p>其他归档活动可能包括将轨迹文件复制到集中服务器，删除旧的轨迹文件，或者减少审计轨迹以删除不需要的记录。此脚本仅在审计轨迹文件被正确终止时运行。它不会在因不正确的关闭而导致未终止的轨迹上运行。</p>
 </div>
 </div>
 </div>
@@ -49271,7 +49265,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: January 19, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=d7865ac" target="_blank">fiercex</a></p>
+      <p><strong>上次修改时间</strong>: January 22, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=4435de7" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
@@ -49333,7 +49327,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
         <li><a href="#security">Chapter 16. 安全</a></li>
         <li><a href="#jails">Chapter 17. Jails 和容器</a></li>
         <li><a href="#mac">Chapter 18. 强制访问控制</a></li>
-        <li><a href="#audit">Chapter 19. Security Event Auditing</a></li>
+        <li><a href="#audit">Chapter 19. 安全事件审计</a></li>
         <li><a href="#disks">Chapter 20. Storage</a></li>
         <li><a href="#geom">Chapter 21. GEOM: Modular Disk Transformation Framework</a></li>
         <li><a href="#zfs">Chapter 22. Z 文件系统（ZFS）</a></li>

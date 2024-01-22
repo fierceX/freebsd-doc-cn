@@ -2600,7 +2600,7 @@
 <h2 id="audit-synopsis">19.1. 简介<a class="anchor" href="#audit-synopsis"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>FreeBSD 操作系统包含安全事件审计的支持。事件审计支持可靠、细粒度和可配置的记录各种与安全相关的系统事件，包括登录、配置更改以及文件和网络访问。这些日志记录对于实时系统监控、入侵检测和事后分析非常宝贵。 FreeBSD 实现了 Sun™ 发布的基本安全模块（ BSM ）应用程序编程接口（ API ）和文件格式，并与 Solaris™ 和 Mac OS® X 的审计实现互操作。</p>
+<p>FreeBSD 操作系统包含安全事件审计的支持。事件审计支持可靠、细粒度和可配置的记录各种与安全相关的系统事件，包括登录、配置更改以及文件和网络访问。这些日志记录对于实时系统监控、入侵检测和事后分析非常宝贵。 FreeBSD 实现了 Sun™ 发布的基本安全模块（BSM）应用程序编程接口（API）和文件格式，并与 Solaris™ 和 Mac OS® X 的审计实现互操作。</p>
 </div>
 <div class="paragraph">
 <p>本章重点介绍事件审计的安装和配置。它解释了审计策略，并提供了一个示例审计配置。</p>
@@ -2611,7 +2611,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>事件审计是一种记录和监控系统中发生的事件的过程。它通过跟踪和记录用户活动、系统操作和其他重要事件来提供安全性和合规性。事件审计可以帮助识别潜在的安全漏洞、检测异常行为和追踪事件的来源。 事件审计的工作原理是通过收集和分析系统生成的日志数据来创建审计记录。这些日志数据可以包括用户登录信息、文件访问记录、系统配置更改、网络通信等。审计记录通常包括事件的时间戳、事件类型、事件源、事件描述和相关的详细信息。 事件审计可以通过实时监控和离线分析来实现。实时监控可以及时检测和响应事件，而离线分析可以对历史数据进行深入分析和调查。通过使用专门的审计工具和技术，可以对事件进行筛选、过滤和报告，以便进行安全审计和合规性验证。 总之，事件审计是一种重要的安全措施，可以帮助保护系统免受潜在的威胁，并确保系统的合规性和可追溯性。</p>
+<p>什么是事件审计以及它是如何工作的。</p>
 </li>
 <li>
 <p>如何在 FreeBSD 上配置用户和进程的事件审计。</p>
@@ -2627,13 +2627,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>了解 UNIX® 和 FreeBSD 基础知识（参见： basics[basics , FreeBSD Basics] ）。</p>
+<p>了解 UNIX® 和 <a href="../basics/#basics">FreeBSD 基础知识</a>。</p>
 </li>
 <li>
-<p>熟悉内核配置 / 编译的基础知识（参考： kernelconfig[内核配置，配置 FreeBSD 内核] ）。</p>
+<p>熟悉 <a href="../kernelconfig/#kernelconfig">内核配置/编译的基础知识</a>。</p>
 </li>
 <li>
-<p>对于安全性以及它与 FreeBSD 相关的内容有一定的了解（参考： security[security , Security] ）。</p>
+<p>对于安全性以及它与 FreeBSD 相关的内容有一定的了解（<a href="../security/#security">Security</a>）。</p>
 </li>
 </ul>
 </div>
@@ -2648,7 +2648,7 @@
 <p>审计功能有一些已知的限制。并非所有与安全相关的系统事件都可以进行审计，而某些登录机制（例如基于 Xorg 的显示管理器和第三方守护程序）未正确配置用户登录会话的审计功能。</p>
 </div>
 <div class="paragraph">
-<p>安全事件审计功能能够生成系统活动的非常详细的日志。在繁忙的系统上，当配置为高详细级别时，跟踪文件数据可能非常大，在某些配置下每周超过几个千兆字节。管理员应考虑与高容量审计配置相关的磁盘空间需求。例如，可以将一个文件系统专门用于 /var/audit ，这样如果审计文件系统变满，其他文件系统不会受到影响。</p>
+<p>安全事件审计功能能够生成系统活动的非常详细的日志。在繁忙的系统上，当配置为高详细级别时，跟踪文件数据可能非常大，在某些配置下每周超过几个千兆字节。管理员应考虑与高容量审计配置相关的磁盘空间需求。例如，可以将一个文件系统专门用于 <span class="filename">/var/audit</span>，这样如果审计文件系统变满，其他文件系统不会受到影响。</p>
 </div>
 </td>
 </tr>
@@ -2665,22 +2665,22 @@
 <div class="ulist">
 <ul>
 <li>
-<p><em>事件</em>：可审计事件是指可以使用审计子系统记录的任何事件。安全相关事件的示例包括文件的创建、网络连接的建立或用户登录。事件可以是“可归因”的，意味着可以追溯到经过身份验证的用户，也可以是“不可归因”的。不可归因事件的示例是在登录过程中身份验证之前发生的任何事件，例如密码错误尝试。</p>
+<p><em>事件（event）</em>：可审计事件是指可以使用审计子系统记录的任何事件。安全相关事件的示例包括文件的创建、网络连接的建立或用户登录。事件可以是“可归因”的，意味着可以追溯到经过身份验证的用户，也可以是“不可归因”的。不可归因事件的示例是在登录过程中身份验证之前发生的任何事件，例如密码错误尝试。</p>
 </li>
 <li>
-<p><em>class</em>：一组命名的相关事件，用于选择表达式中使用。常用的事件类包括“文件创建”（ fc ）、“执行”（ ex ）和“登录 / 注销”（ lo ）。</p>
+<p><em>class</em>：一组命名的相关事件，用于选择表达式中使用。常用的事件类包括“文件创建”（fc）、“执行”（ex）和“登录/注销”（lo）。</p>
 </li>
 <li>
 <p><em>record</em>：描述安全事件的审计日志条目。记录包含记录事件类型、执行操作的主体（用户）的信息、日期和时间信息、任何对象或参数的信息，以及成功或失败的条件。</p>
 </li>
 <li>
-<p><em>trail</em>：一个由一系列描述安全事件的审计记录组成的日志文件。 Trail 的顺序大致按照事件完成的时间顺序排列。只有经过授权的进程才允许向审计轨迹提交记录。</p>
+<p><em>trail</em>：一个由一系列描述安全事件的审计记录组成的日志文件。Trail 的顺序大致按照事件完成的时间顺序排列。只有经过授权的进程才允许向审计轨迹提交记录。</p>
 </li>
 <li>
-<p>选择表达式：一个包含前缀和审计事件类名列表的字符串，用于匹配事件。</p>
+<p><em>选择表达式（selection expression）</em>：一个包含前缀和审计事件类名列表的字符串，用于匹配事件。</p>
 </li>
 <li>
-<p><em>预选</em>：系统识别哪些事件对管理员感兴趣的过程。预选配置使用一系列选择表达式来识别哪些事件类别适用于哪些用户进行审计，以及适用于已认证和未认证进程的全局设置。</p>
+<p><em>预选（preselection）</em>：系统识别哪些事件对管理员感兴趣的过程。预选配置使用一系列选择表达式来识别哪些事件类别适用于哪些用户进行审计，以及适用于已认证和未认证进程的全局设置。</p>
 </li>
 <li>
 <p><em>reduction</em>：从现有审计跟踪中选择记录以进行保留、打印或分析的过程。同样，也是从审计跟踪中删除不需要的审计记录的过程。通过使用减少，管理员可以实施有关保留审计数据的策略。例如，详细的审计跟踪可能会保留一个月，但之后，为了保留仅用于归档目的的登录信息，可能会进行减少。</p>
@@ -2693,7 +2693,7 @@
 <h2 id="audit-config">19.3. 审计配置<a class="anchor" href="#audit-config"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>用户空间对事件审计的支持是作为基本的 FreeBSD 操作系统的一部分安装的。内核支持默认情况下在 <span class="filename">GENERIC</span> 内核中可用，并且可以通过在 <span class="filename">/etc/rc.conf</span> 中添加以下行来启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a> 。</p>
+<p>用户空间对事件审计的支持是作为基本的 FreeBSD 操作系统的一部分安装的。内核支持默认情况下在 <span class="filename">GENERIC</span> 内核中可用，并且可以通过在 <span class="filename">/etc/rc.conf</span> 中添加以下行来启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a>。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2751,7 +2751,7 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ad</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">行政的</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">管理操作</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">对整个系统执行的管理操作。</p></td>
 </tr>
 <tr>
@@ -2760,13 +2760,7 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">应用程序定义的操作。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cl 可以指以下几个含义：</p>
-<p class="tableblock"> 1. 命令行（ Command Line ）：是计算机操作系统中通过命令行界面（ CLI ）执行命令的方式。</p>
-<p class="tableblock"> 2. C 语言（ C Language ）：是一种通用的高级编程语言，广泛应用于系统软件开发和嵌入式系统领域。</p>
-<p class="tableblock"> 3. OpenCL （ Open Computing Language ）：是一种开放的并行计算框架，用于利用多核处理器、图形处理器（ GPU ）和其他加速器进行高性能计算。</p>
-<p class="tableblock"> 4. 信用额度（ Credit Limit ）：是指银行或信用卡公司为客户设定的最高借款或消费限额。</p>
-<p class="tableblock"> 5. 中央限制（ Central Limit ）：是统计学中的概念，指在一定条件下，大量独立随机变量的均值近似服从正态分布的现象。</p>
-<p class="tableblock">请根据上下文确定具体含义。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cl</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">关闭文件</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计对 <code>close</code> 系统调用的调用。</p></td>
 </tr>
@@ -2778,7 +2772,7 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fa</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">文件属性访问</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">审计对象属性的访问，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=stat&amp;sektion=1&amp;format=html">stat(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=pathconf&amp;sektion=2&amp;format=html">pathconf(2)</a> 。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计对象属性的访问，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=stat&amp;sektion=1&amp;format=html">stat(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=pathconf&amp;sektion=2&amp;format=html">pathconf(2)</a>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fc</p></td>
@@ -2793,10 +2787,10 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">fm</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">文件属性修改</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">审计文件属性修改的事件，例如通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=chown&amp;sektion=8&amp;format=html">chown(8)</a> ， <a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=flock&amp;sektion=2&amp;format=html">flock(2)</a> 进行的修改。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计文件属性修改的事件，例如通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=chown&amp;sektion=8&amp;format=html">chown(8)</a>，<a href="https://man.freebsd.org/cgi/man.cgi?query=chflags&amp;sektion=1&amp;format=html">chflags(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=flock&amp;sektion=2&amp;format=html">flock(2)</a> 进行的修改。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">抱歉，我只能翻译英文到中文。如果您有英文文本需要翻译，请告诉我。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fr</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">文件读取</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计事件中涉及数据读取或打开文件进行读取的情况。</p></td>
 </tr>
@@ -2806,17 +2800,17 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计事件中涉及数据写入、文件写入或修改的情况。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">输入 / 输出</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ioctl 是一个用于在 UNIX 系统中进行设备控制的系统调用。它允许应用程序通过发送特定的命令和参数来与设备驱动程序进行通信，以实现对设备的控制和配置。 ioctl 的全称是 input/output control ，它可以用于各种设备，包括硬盘、串口、网络接口等。通过 ioctl ，应用程序可以读取和修改设备的状态、属性和配置信息，以及执行特定的操作。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">io</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ioctl</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计对 <code>ioctl</code> 系统调用的使用。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IP （ Internet Protocol ）是一种用于在网络中传输数据的协议。它定义了数据如何在网络中进行分组、路由和传递。 IP 地址是用于标识网络中设备的唯一标识符。 IP 地址由 32 位或 128 位二进制数字组成，用于定位和识别设备在网络中的位置。 IP 地址分为 IPv4 和 IPv6 两种版本，其中 IPv4 使用 32 位地址，而 IPv6 使用 128 位地址。 IP 地址的格式通常以四个十进制数表示，每个数之间用点分隔。例如， 192.168.0.1 是一个 IPv4 地址。</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IPC （ Inter-Process Communication ）是指进程间通信，是计算机科学中的一个概念。它允许不同的进程在同一台计算机上进行通信和数据交换。 IPC 可以通过多种方式实现，包括管道、消息队列、共享内存和套接字等。通过 IPC ，进程可以共享信息、协调操作和实现并发处理。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ipc</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计各种形式的进程间通信，包括 POSIX 管道和 System V IPC 操作。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">你好</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lo</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">登录_注销</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计 <a href="https://man.freebsd.org/cgi/man.cgi?query=login&amp;sektion=1&amp;format=html">login(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=logout&amp;sektion=1&amp;format=html">logout(1)</a> 事件。</p></td>
 </tr>
@@ -2826,14 +2820,14 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计不可归属事件。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">不需要解释。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">无效的类</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">没有匹配的审计事件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">nt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">网络</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">与网络操作相关的审计事件，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=connect&amp;sektion=2&amp;format=html">connect(2)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=accept&amp;sektion=2&amp;format=html">accept(2)</a> 。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">与网络操作相关的审计事件，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=connect&amp;sektion=2&amp;format=html">connect(2)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=accept&amp;sektion=2&amp;format=html">accept(2)</a>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ot</p></td>
@@ -2841,9 +2835,9 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计其他事件。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">个人电脑</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pc</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">过程</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">审计进程操作，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=exec&amp;sektion=3&amp;format=html">exec(3)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=exit&amp;sektion=3&amp;format=html">exit(3)</a> 。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">审计进程操作，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=exec&amp;sektion=3&amp;format=html">exec(3)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=exit&amp;sektion=3&amp;format=html">exit(3)</a>。</p></td>
 </tr>
 </tbody>
 </table>
@@ -2851,7 +2845,7 @@
 <p>这些审计事件类可以通过修改 <span class="filename">audit_class</span> 和 <span class="filename">audit_event</span> 配置文件进行自定义。</p>
 </div>
 <div class="paragraph">
-<p>每个审计事件类别可以与前缀组合，以指示匹配成功 / 失败的操作，并指示添加或删除该类别和类型的匹配项。 <a href="#event-prefixes">审计事件类的前缀</a> 总结了可用的前缀：</p>
+<p>每个审计事件类别可以与前缀组合，以指示匹配成功/失败的操作，并指示添加或删除该类别和类型的匹配项。 <a href="#event-prefixes">审计事件类的前缀</a> 总结了可用的前缀：</p>
 </div>
 <table id="event-prefixes" class="tableblock frame-none grid-all stretch">
 <caption class="title">表 2. 审计事件类的前缀</caption>
@@ -2871,7 +2865,7 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计此类中的成功事件。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">翻译引擎</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">审计此类中的失败事件。</p></td>
 </tr>
 <tr>
@@ -2879,11 +2873,11 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">在这个类中，既不审计成功事件，也不审计失败事件。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">^+在 asciidoc 格式中表示上标。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">^+</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">不要对这个类中的成功事件进行审计。</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">^ - 表示一个升序操作符。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">^-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">不要对该类中的失败事件进行审计。</p></td>
 </tr>
 </tbody>
@@ -2892,7 +2886,7 @@
 <p>如果没有前缀，则对事件的成功和失败实例都将进行审计。</p>
 </div>
 <div class="paragraph">
-<p>以下示例选择字符串选择成功和失败的登录 / 注销事件，但仅选择成功的执行事件：</p>
+<p>以下示例选择字符串选择成功和失败的登录/注销事件，但仅选择成功的执行事件：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2903,7 +2897,7 @@
 <div class="sect2">
 <h3 id="_配置文件">19.3.2. 配置文件<a class="anchor" href="#_配置文件"></a></h3>
 <div class="paragraph">
-<p>安全事件审计的以下配置文件位于 [/etc/security] 目录中：</p>
+<p>安全事件审计的以下配置文件位于 <span class="filename">/etc/security</span> 目录中：</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2962,19 +2956,19 @@ expire-after:10M</pre>
 <p><code>dir</code> 条目用于设置一个或多个目录，用于存储审计日志。如果出现多个 <code>dir</code> 条目，则按照它们出现的顺序进行填充。通常配置审计时，会将审计日志存储在专用的文件系统中，以防止文件系统填满时审计子系统与其他子系统之间的干扰。</p>
 </div>
 <div class="paragraph">
-<p>如果 <code>dist</code> 字段设置为 <code>on</code> 或 <code>yes</code> ，将会在 <code>/var/audit/dist</code> 目录下创建所有审计文件的硬链接。</p>
+<p>如果 <code>dist</code> 字段设置为 <code>on</code> 或 <code>yes</code> ，将会在 <span class="filename">/var/audit/dist</span> 目录下创建所有审计文件的硬链接。</p>
 </div>
 <div class="paragraph">
-<p><code>flags</code> 字段设置了系统范围内可归属事件的默认预选掩码。在上面的示例中，成功和失败的登录 / 注销事件以及身份验证和授权将为所有用户进行审计。</p>
+<p><code>flags</code> 字段设置了系统范围内可归属事件的默认预选掩码。在上面的示例中，成功和失败的登录/注销事件以及身份验证和授权将为所有用户进行审计。</p>
 </div>
 <div class="paragraph">
 <p><code>minfree</code> 条目定义了存储审计跟踪的文件系统的最小空闲空间百分比。</p>
 </div>
 <div class="paragraph">
-<p><code>naflags</code> 条目指定了要对非归因事件进行审计的审计类别，例如登录 / 注销过程以及身份验证和授权。</p>
+<p><code>naflags</code> 条目指定了要对非归因事件进行审计的审计类别，例如登录/注销过程以及身份验证和授权。</p>
 </div>
 <div class="paragraph">
-<p><code>policy</code> 条目指定了一个逗号分隔的策略标志列表，用于控制审计行为的各个方面。 <code>cnt</code> 表示系统应该在审计失败的情况下继续运行（强烈推荐使用此标志）。另一个标志 <code>argv</code> 会导致命令行参数在执行命令时作为 <a href="https://man.freebsd.org/cgi/man.cgi?query=execve&amp;sektion=2&amp;format=html">execve(2)</a> 系统调用的一部分进行审计。</p>
+<p><code>policy</code> 条目指定了一个逗号分隔的策略标志列表，用于控制审计行为的各个方面。<code>cnt</code> 表示系统应该在审计失败的情况下继续运行（强烈推荐使用此标志）。另一个标志 <code>argv</code> 会导致命令行参数在执行命令时作为 <a href="https://man.freebsd.org/cgi/man.cgi?query=execve&amp;sektion=2&amp;format=html">execve(2)</a> 系统调用的一部分进行审计。</p>
 </div>
 <div class="paragraph">
 <p><code>filesz</code> 条目指定了审计跟踪文件在自动终止和轮转之前的最大大小。值为 <code>0</code> 表示禁用自动日志轮转。如果请求的文件大小低于最小值 512k ，它将被忽略并生成一条日志消息。</p>
@@ -2989,7 +2983,7 @@ expire-after:10M</pre>
 <p>管理员可以在 <span class="filename">audit_user</span> 中为特定用户指定进一步的审计要求。每一行通过两个字段配置用户的审计： <code>alwaysaudit</code> 字段指定应始终对用户进行审计的一组事件，而 <code>neveraudit</code> 字段指定不应对用户进行审计的一组事件。</p>
 </div>
 <div class="paragraph">
-<p>以下示例条目审计 <code>root</code> 用户的登录 / 注销事件和成功的命令执行，以及 <code>www</code> 用户的文件创建和成功的命令执行。如果与默认的 <span class="filename">audit_control</span> 一起使用，对于 <code>root</code> 用户的 <code>lo</code> 条目是多余的，并且还将审计 <code>www</code> 用户的登录 / 注销事件。</p>
+<p>以下示例条目审计 <code>root</code> 用户的登录/注销事件和成功的命令执行，以及 <code>www</code> 用户的文件创建和成功的命令执行。如果与默认的 <span class="filename">audit_control</span> 一起使用，对于 <code>root</code> 用户的 <code>lo</code> 条目是多余的，并且还将审计 <code>www</code> 用户的登录/注销事件。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3005,7 +2999,7 @@ www:fc,+ex:no</pre>
 <h2 id="audit-administration">19.4. 使用审计跟踪功能<a class="anchor" href="#audit-administration"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>由于审计跟踪是以 BSM 二进制格式存储的，因此有几个内置工具可用于修改或将这些跟踪转换为文本。要将跟踪文件转换为简单的文本格式，请使用 <code>praudit</code> 。要缩小审计跟踪文件以进行分析、存档或打印，请使用 <code>auditreduce</code> 。此实用程序支持各种选择参数，包括事件类型、事件类别、用户、事件的日期或时间，以及操作的文件路径或对象。</p>
+<p>由于审计跟踪是以 BSM 二进制格式存储的，因此有几个内置工具可用于修改或将这些跟踪转换为文本。要将跟踪文件转换为简单的文本格式，请使用 <code>praudit</code>。要缩小审计跟踪文件以进行分析、存档或打印，请使用 <code>auditreduce</code>。此实用程序支持各种选择参数，包括事件类型、事件类别、用户、事件的日期或时间，以及操作的文件路径或对象。</p>
 </div>
 <div class="paragraph">
 <p>例如，要以纯文本形式转储指定审计日志的全部内容：</p>
@@ -3019,7 +3013,7 @@ www:fc,+ex:no</pre>
 <p>其中 <em>AUDITFILE</em> 是要转储的审计日志文件。</p>
 </div>
 <div class="paragraph">
-<p>审计追踪由一系列由令牌组成的审计记录组成， <code>praudit</code> 按顺序逐行打印这些记录，每行一个令牌。每个令牌都是特定类型的，例如 <code>header</code> （审计记录头）或 <code>path</code> （名称查找的文件路径）。以下是一个 <code>execve</code> 事件的示例：</p>
+<p>审计追踪由一系列由令牌组成的审计记录组成，<code>praudit</code> 按顺序逐行打印这些记录，每行一个令牌。每个令牌都是特定类型的，例如 <code>header</code> （审计记录头）或 <code>path</code>（名称查找的文件路径）。以下是一个 <code>execve</code> 事件的示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -3033,7 +3027,7 @@ trailer,133</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>此审计记录表示一个成功的 <code>execve</code> 调用，其中运行了命令 <code>finger doug</code> 。 <code>exec arg</code> 令牌包含由 shell 传递给内核的处理过的命令行。 <code>path</code> 令牌保存了内核查找到的可执行文件的路径。 <code>attribute</code> 令牌描述了二进制文件，并包括文件模式。 <code>subject</code> 令牌存储了审计用户 ID 、有效用户 ID 和组 ID 、真实用户 ID 和组 ID 、进程 ID 、会话 ID 、端口 ID 和登录地址。请注意，审计用户 ID 和真实用户 ID 不同，因为用户 <code>robert</code> 在运行此命令之前切换到了 <code>root</code> 账户，但是它是使用原始认证用户进行审计的。 <code>return</code> 令牌表示成功执行， <code>trailer</code> 结束了记录。</p>
+<p>此审计记录表示一个成功的 <code>execve</code> 调用，其中运行了命令 <code>finger doug</code>。<code>exec arg</code> 令牌包含由 shell 传递给内核的处理过的命令行。<code>path</code> 令牌保存了内核查找到的可执行文件的路径。<code>attribute</code> 令牌描述了二进制文件，并包括文件模式。<code>subject</code> 令牌存储了审计用户 ID 、有效用户 ID 和组 ID 、真实用户 ID 和组 ID 、进程 ID 、会话 ID 、端口 ID 和登录地址。请注意，审计用户 ID 和真实用户 ID 不同，因为用户 <code>robert</code> 在运行此命令之前切换到了 <code>root</code> 账户，但是它是使用原始认证用户进行审计的。<code>return</code> 令牌表示成功执行，<code>trailer</code> 结束了记录。</p>
 </div>
 <div class="paragraph">
 <p>还支持 XML 输出格式，可以通过包含 <code>-x</code> 来选择。</p>
@@ -3047,7 +3041,7 @@ trailer,133</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>audit</code> 组的成员有权限读取位于 [/var/audit](#var-audit) 目录下的审计日志。默认情况下，该组为空，因此只有 <code>root</code> 用户可以读取审计日志。可以将用户添加到 <code>audit</code> 组中以委派审计审查权限。由于跟踪审计日志内容可以提供对用户和进程行为的重要见解，建议谨慎进行审计审查权限的委派。</p>
+<p><code>audit</code> 组的成员有权限读取位于 <span class="filename">/var/audit</span> 目录下的审计日志。默认情况下，该组为空，因此只有 <code>root</code> 用户可以读取审计日志。可以将用户添加到 <code>audit</code> 组中以委派审计审查权限。由于跟踪审计日志内容可以提供对用户和进程行为的重要见解，建议谨慎进行审计审查权限的委派。</p>
 </div>
 <div class="sect2">
 <h3 id="_使用审计管道进行实时监控">19.4.1. 使用审计管道进行实时监控<a class="anchor" href="#_使用审计管道进行实时监控"></a></h3>
@@ -3078,7 +3072,7 @@ trailer,133</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>很容易产生审计事件反馈循环，即每个审计事件的查看都会导致更多的审计事件生成。例如，如果对所有网络 I/O 进行审计，并且从一个 SSH 会话中运行 <code>praudit</code> ，将以高速生成连续的审计事件流，因为每个被打印的事件都会生成另一个事件。因此，建议在没有细粒度 I/O 审计的会话中从审计管道设备上运行 <code>praudit</code> 。</p>
+<p>很容易产生审计事件反馈循环，即每个审计事件的查看都会导致更多的审计事件生成。例如，如果对所有网络 I/O 进行审计，并且从一个 SSH 会话中运行 <code>praudit</code>，将以高速生成连续的审计事件流，因为每个被打印的事件都会生成另一个事件。因此，建议在没有细粒度 I/O 审计的会话中从审计管道设备上运行 <code>praudit</code>。</p>
 </div>
 </td>
 </tr>
@@ -3088,7 +3082,7 @@ trailer,133</pre>
 <div class="sect2">
 <h3 id="_旋转和压缩审计日志文件">19.4.2. 旋转和压缩审计日志文件<a class="anchor" href="#_旋转和压缩审计日志文件"></a></h3>
 <div class="paragraph">
-<p>审计日志由内核编写，并由审计守护程序（ <a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a> ）管理。管理员不应尝试使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 或其他工具直接轮转审计日志。相反，应使用 <code>audit</code> 来关闭审计、重新配置审计系统并执行日志轮转。以下命令会导致审计守护程序创建一个新的审计日志，并向内核发出信号以切换到使用新日志。旧日志将被终止和重命名，此时管理员可以对其进行操作。</p>
+<p>审计日志由内核编写，并由审计守护程序（<a href="https://man.freebsd.org/cgi/man.cgi?query=auditd&amp;sektion=8&amp;format=html">auditd(8)</a>）管理。管理员不应尝试使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 或其他工具直接轮转审计日志。相反，应使用 <code>audit</code> 来关闭审计、重新配置审计系统并执行日志轮转。以下命令会导致审计守护程序创建一个新的审计日志，并向内核发出信号以切换到使用新日志。旧日志将被终止和重命名，此时管理员可以对其进行操作。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3136,7 +3130,7 @@ fi</pre>
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: January 19, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=d7865ac" target="_blank">fiercex</a></p>
+      <p><strong>上次修改时间</strong>: January 22, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=ef338ae" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
