@@ -1,17 +1,17 @@
 ---
-description: 'FreeBSD security event auditing supports reliable, fine-grained, and configurable logging of a variety of security-relevant system events, including logins, configuration changes, and file and network access'
+description: 'FreeBSD 安全事件审计支持可靠、细粒度和可配置的记录各种与安全相关的系统事件，包括登录、配置更改以及文件和网络访问。'
 next: books/handbook/disks
-part: 'Part III. System Administration'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/mac
 showBookMenu: true
 tags: ["audit", "terms", "configuration", "guide", "audit trails"]
-title: 'Chapter 19. Security Event Auditing'
+title: '第 19 章 安全事件审计'
 weight: 23
 ---
 
 [[audit]]
-= Security Event Auditing
+= 安全事件审计
 :doctype: book
 :toc: macro
 :toclevels: 2
@@ -46,220 +46,220 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[audit-synopsis]]
-== Synopsis
+== 简介
 
-The FreeBSD operating system includes support for security event auditing. Event auditing supports reliable, fine-grained, and configurable logging of a variety of security-relevant system events, including logins, configuration changes, and file and network access. These log records can be invaluable for live system monitoring, intrusion detection, and postmortem analysis. FreeBSD implements Sun(TM)'s published Basic Security Module (BSM) Application Programming Interface (API) and file format, and is interoperable with the Solaris(TM) and Mac OS(R) X audit implementations.
+FreeBSD 操作系统包含安全事件审计的支持。事件审计支持可靠、细粒度和可配置的记录各种与安全相关的系统事件，包括登录、配置更改以及文件和网络访问。这些日志记录对于实时系统监控、入侵检测和事后分析非常宝贵。 FreeBSD 实现了 Sun(TM) 发布的基本安全模块（BSM）应用程序编程接口（API）和文件格式，并与 Solaris(TM) 和 Mac OS(R) X 的审计实现互操作。
 
-This chapter focuses on the installation and configuration of event auditing. It explains audit policies and provides an example audit configuration.
+本章重点介绍事件审计的安装和配置。它解释了审计策略，并提供了一个示例审计配置。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* What event auditing is and how it works.
-* How to configure event auditing on FreeBSD for users and processes.
-* How to review the audit trail using the audit reduction and review tools.
+* 什么是事件审计以及它是如何工作的。
+* 如何在 FreeBSD 上配置用户和进程的事件审计。
+* 如何使用审计缩减和审查工具来审查审计跟踪记录。
 
-Before reading this chapter, you should:
+在阅读本章之前，你应该：
 
-* Understand UNIX(R) and FreeBSD basics (crossref:basics[basics,FreeBSD Basics]).
-* Be familiar with the basics of kernel configuration/compilation (crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel]).
-* Have some familiarity with security and how it pertains to FreeBSD (crossref:security[security,Security]).
+* 了解 UNIX(R) 和 crossref:basics[basics,FreeBSD 基础知识]。
+* 熟悉 crossref:kernelconfig[kernelconfig,内核配置/编译的基础知识]。
+* 对于安全性以及它与 FreeBSD 相关的内容有一定的了解（crossref:security[security,Security]）。
 
 [WARNING]
 ====
-The audit facility has some known limitations. Not all security-relevant system events are auditable and some login mechanisms, such as Xorg-based display managers and third-party daemons, do not properly configure auditing for user login sessions.
+审计功能有一些已知的限制。并非所有与安全相关的系统事件都可以进行审计，而某些登录机制（例如基于 Xorg 的显示管理器和第三方守护程序）未正确配置用户登录会话的审计功能。
 
-The security event auditing facility is able to generate very detailed logs of system activity. On a busy system, trail file data can be very large when configured for high detail, exceeding gigabytes a week in some configurations. Administrators should take into account the disk space requirements associated with high volume audit configurations. For example, it may be desirable to dedicate a file system to [.filename]#/var/audit# so that other file systems are not affected if the audit file system becomes full.
+安全事件审计功能能够生成系统活动的非常详细的日志。在繁忙的系统上，当配置为高详细级别时，跟踪文件数据可能非常大，在某些配置下每周超过几个千兆字节。管理员应考虑与高容量审计配置相关的磁盘空间需求。例如，可以将一个文件系统专门用于 [.filename]#/var/audit#，这样如果审计文件系统变满，其他文件系统不会受到影响。
 ====
 
 [[audit-inline-glossary]]
-== Key Terms
+== 关键术语
 
-The following terms are related to security event auditing:
+以下术语与安全事件审计相关：
 
-* _event_: an auditable event is any event that can be logged using the audit subsystem. Examples of security-relevant events include the creation of a file, the building of a network connection, or a user logging in. Events are either "attributable", meaning that they can be traced to an authenticated user, or "non-attributable". Examples of non-attributable events are any events that occur before authentication in the login process, such as bad password attempts.
-* _class_: a named set of related events which are used in selection expressions. Commonly used classes of events include "file creation" (fc), "exec" (ex), and "login_logout" (lo).
-* _record_: an audit log entry describing a security event. Records contain a record event type, information on the subject (user) performing the action, date and time information, information on any objects or arguments, and a success or failure condition.
-* _trail_: a log file consisting of a series of audit records describing security events. Trails are in roughly chronological order with respect to the time events completed. Only authorized processes are allowed to commit records to the audit trail.
-* _selection expression_: a string containing a list of prefixes and audit event class names used to match events.
-* _preselection_: the process by which the system identifies which events are of interest to the administrator. The preselection configuration uses a series of selection expressions to identify which classes of events to audit for which users, as well as global settings that apply to both authenticated and unauthenticated processes.
-* _reduction_: the process by which records from existing audit trails are selected for preservation, printing, or analysis. Likewise, the process by which undesired audit records are removed from the audit trail. Using reduction, administrators can implement policies for the preservation of audit data. For example, detailed audit trails might be kept for one month, but after that, trails might be reduced in order to preserve only login information for archival purposes.
+* _事件（event）_：可审计事件是指可以使用审计子系统记录的任何事件。安全相关事件的示例包括文件的创建、网络连接的建立或用户登录。事件可以是“可归因”的，意味着可以追溯到经过身份验证的用户，也可以是“不可归因”的。不可归因事件的示例是在登录过程中身份验证之前发生的任何事件，例如密码错误尝试。
+* _class_：一组命名的相关事件，用于选择表达式中使用。常用的事件类包括“文件创建”（fc）、“执行”（ex）和“登录/注销”（lo）。
+* _record_：描述安全事件的审计日志条目。记录包含记录事件类型、执行操作的主体（用户）的信息、日期和时间信息、任何对象或参数的信息，以及成功或失败的条件。
+* _trail_：一个由一系列描述安全事件的审计记录组成的日志文件。Trail 的顺序大致按照事件完成的时间顺序排列。只有经过授权的进程才允许向审计轨迹提交记录。
+* _选择表达式（selection expression）_：一个包含前缀和审计事件类名列表的字符串，用于匹配事件。
+* _预选（preselection）_：系统识别哪些事件对管理员感兴趣的过程。预选配置使用一系列选择表达式来识别哪些事件类别适用于哪些用户进行审计，以及适用于已认证和未认证进程的全局设置。
+* _reduction_：从现有审计跟踪中选择记录以进行保留、打印或分析的过程。同样，也是从审计跟踪中删除不需要的审计记录的过程。通过使用减少，管理员可以实施有关保留审计数据的策略。例如，详细的审计跟踪可能会保留一个月，但之后，为了保留仅用于归档目的的登录信息，可能会进行减少。
 
 [[audit-config]]
-== Audit Configuration
+== 审计配置
 
-User space support for event auditing is installed as part of the base FreeBSD operating system. Kernel support is available in the [.filename]#GENERIC# kernel by default, and man:auditd[8] can be enabled by adding the following line to [.filename]#/etc/rc.conf#:
+用户空间对事件审计的支持是作为基本的 FreeBSD 操作系统的一部分安装的。内核支持默认情况下在 [.filename]#GENERIC# 内核中可用，并且可以通过在 [.filename]#/etc/rc.conf# 中添加以下行来启用 man:auditd[8]。
 
 [.programlisting]
 ....
 auditd_enable="YES"
 ....
 
-Then, start the audit daemon:
+然后，启动审计守护进程：
 
 [source, shell]
 ....
 # service auditd start
 ....
 
-Users who prefer to compile a custom kernel must include the following line in their custom kernel configuration file:
+喜欢编译自定义内核的用户必须在其自定义内核配置文件中包含以下行：
 
 [.programlisting]
 ....
 options	AUDIT
 ....
 
-=== Event Selection Expressions
+=== 事件选择表达式
 
-Selection expressions are used in a number of places in the audit configuration to determine which events should be audited. Expressions contain a list of event classes to match. Selection expressions are evaluated from left to right, and two expressions are combined by appending one onto the other.
+选择表达式在审计配置中的许多地方用于确定应该审计哪些事件。表达式包含要匹配的事件类别列表。选择表达式从左到右进行评估，并通过将一个表达式附加到另一个来组合两个表达式。
 
-<<event-selection>> summarizes the default audit event classes:
+<<event-selection>> 总结了默认的审计事件类别：
 
 [[event-selection]]
-.Default Audit Event Classes
+.默认的审计事件类别
 [cols="1,1,1", frame="none", options="header"]
 |===
-| Class Name
-| Description
-| Action
+| 类名
+| 描述
+| 行动
 
-|all
-|all
-|Match all event classes.
+|所有
+|所有
+|匹配所有事件类。
 
 |aa
-|authentication and authorization
+|身份验证和授权
 | 
 
 |ad
-|administrative
-|Administrative actions performed on the system as a whole.
+|管理操作
+|对整个系统执行的管理操作。
 
 |ap
-|application
-|Application defined action.
+|应用程序
+|应用程序定义的操作。
 
 |cl
-|file close
-|Audit calls to the `close` system call.
+|关闭文件
+|审计对 `close` 系统调用的调用。
 
 |ex
-|exec
-|Audit program execution. Auditing of command line arguments and environmental variables is controlled via man:audit_control[5] using the `argv` and `envv` parameters to the `policy` setting.
+|执行
+|执行审计程序。通过 man:audit_control[5] 使用 `argv` 和 `envv` 参数来控制命令行参数和环境变量的审计，这是通过 `policy` 设置实现的。
 
 |fa
-|file attribute access
-|Audit the access of object attributes such as man:stat[1] and man:pathconf[2].
+|文件属性访问
+|审计对象属性的访问，例如 man:stat[1] 和 man:pathconf[2]。
 
 |fc
-|file create
-|Audit events where a file is created as a result.
+|创建文件
+|审计事件：文件创建的结果。
 
 |fd
-|file delete
-|Audit events where file deletion occurs.
+|删除文件
+|审计文件删除事件。
 
 |fm
-|file attribute modify
-|Audit events where file attribute modification occurs, such as by man:chown[8], man:chflags[1], and man:flock[2].
+|文件属性修改
+|审计文件属性修改的事件，例如通过 man:chown[8]，man:chflags[1] 和 man:flock[2] 进行的修改。
 
 |fr
-|file read
-|Audit events in which data is read or files are opened for reading.
+|文件读取
+|审计事件中涉及数据读取或打开文件进行读取的情况。
 
 |fw
-|file write
-|Audit events in which data is written or files are written or modified.
+|文件写入
+|审计事件中涉及数据写入、文件写入或修改的情况。
 
 |io
 |ioctl
-|Audit use of the `ioctl` system call.
+|审计对 `ioctl` 系统调用的使用。
 
 |ip
 |ipc
-|Audit various forms of Inter-Process Communication, including POSIX pipes and System V IPC operations.
+|审计各种形式的进程间通信，包括 POSIX 管道和 System V IPC 操作。
 
 |lo
-|login_logout
-|Audit man:login[1] and man:logout[1] events.
+|登录_注销
+|审计 man:login[1] 和 man:logout[1] 事件。
 
 |na
-|non attributable
-|Audit non-attributable events.
+|不可归因的
+|审计不可归属事件。
 
 |no
-|invalid class
-|Match no audit events.
+|无效的类
+|没有匹配的审计事件。
 
 |nt
-|network
-|Audit events related to network actions such as man:connect[2] and man:accept[2].
+|网络
+|与网络操作相关的审计事件，如 man:connect[2] 和 man:accept[2]。
 
 |ot
-|other
-|Audit miscellaneous events.
+|其他
+|审计其他事件。
 
 |pc
-|process
-|Audit process operations such as man:exec[3] and man:exit[3].
+|过程
+|审计进程操作，如 man:exec[3] 和 man:exit[3]。
 |===
 
-These audit event classes may be customized by modifying the [.filename]#audit_class# and [.filename]#audit_event# configuration files.
+这些审计事件类可以通过修改 [.filename]#audit_class# 和 [.filename]#audit_event# 配置文件进行自定义。
 
-Each audit event class may be combined with a prefix indicating whether successful/failed operations are matched, and whether the entry is adding or removing matching for the class and type. <<event-prefixes>> summarizes the available prefixes:
+每个审计事件类别可以与前缀组合，以指示匹配成功/失败的操作，并指示添加或删除该类别和类型的匹配项。 <<event-prefixes>> 总结了可用的前缀：
 
 [[event-prefixes]]
-.Prefixes for Audit Event Classes
+.审计事件类的前缀
 [cols="1,1", frame="none", options="header"]
 |===
-| Prefix
-| Action
+| 前缀
+| 行动
 
 |+
-|Audit successful events in this class.
+|审计此类中的成功事件。
 
 |-
-|Audit failed events in this class.
+|审计此类中的失败事件。
 
 |^
-|Audit neither successful nor failed events in this class.
+|在这个类中，既不审计成功事件，也不审计失败事件。
 
 |^+
-|Do not audit successful events in this class.
+|不要对这个类中的成功事件进行审计。
 
 |^-
-|Do not audit failed events in this class.
+|不要对该类中的失败事件进行审计。
 |===
 
-If no prefix is present, both successful and failed instances of the event will be audited.
+如果没有前缀，则对事件的成功和失败实例都将进行审计。
 
-The following example selection string selects both successful and failed login/logout events, but only successful execution events:
+以下示例选择字符串选择成功和失败的登录/注销事件，但仅选择成功的执行事件：
 
 [.programlisting]
 ....
 lo,+ex
 ....
 
-=== Configuration Files
+=== 配置文件
 
-The following configuration files for security event auditing are found in [.filename]#/etc/security#:
+安全事件审计的以下配置文件位于 [.filename]#/etc/security# 目录中：
 
-* [.filename]#audit_class#: contains the definitions of the audit classes.
-* [.filename]#audit_control#: controls aspects of the audit subsystem, such as default audit classes, minimum disk space to leave on the audit log volume, and maximum audit trail size.
-* [.filename]#audit_event#: textual names and descriptions of system audit events and a list of which classes each event is in.
-* [.filename]#audit_user#: user-specific audit requirements to be combined with the global defaults at login.
-* [.filename]#audit_warn#: a customizable shell script used by man:auditd[8] to generate warning messages in exceptional situations, such as when space for audit records is running low or when the audit trail file has been rotated.
+* [.filename]#audit_class#: 包含了审计类的定义。
+* [.filename]#audit_control#: 控制审计子系统的各个方面，如默认审计类别、在审计日志卷上保留的最小磁盘空间以及最大审计跟踪大小。
+* [.filename]#audit_event#: 系统审计事件的文本名称和描述，以及每个事件所属的类别列表。
+* [.filename]#audit_user#: 用户特定的审计要求，在登录时与全局默认值结合使用。
+* [.filename]#audit_warn#: 是一个可定制的 Shell 脚本，由 man:auditd[8] 使用，用于在异常情况下生成警告消息，例如当审计记录的空间不足或审计跟踪文件已经轮转时。
 
 [WARNING]
 ====
-Audit configuration files should be edited and maintained carefully, as errors in configuration may result in improper logging of events.
+审计配置文件应该小心编辑和维护，因为配置错误可能导致事件记录不正确。
 ====
 
-In most cases, administrators will only need to modify [.filename]#audit_control# and [.filename]#audit_user#. The first file controls system-wide audit properties and policies and the second file may be used to fine-tune auditing by user.
+在大多数情况下，管理员只需要修改 [.filename]#audit_control# 和 [.filename]#audit_user# 这两个文件。第一个文件控制系统范围的审计属性和策略，而第二个文件可用于按用户进行细化调整审计。
 
 [[audit-auditcontrol]]
-==== The [.filename]#audit_control# File
+==== [.filename]#audit_control# 文件
 
-A number of defaults for the audit subsystem are specified in [.filename]#audit_control#:
+在 [.filename]#audit_control# 文件中指定了一些审计子系统的默认值：
 
 [.programlisting]
 ....
@@ -273,28 +273,28 @@ filesz:2M
 expire-after:10M
 ....
 
-The `dir` entry is used to set one or more directories where audit logs will be stored. If more than one directory entry appears, they will be used in order as they fill. It is common to configure audit so that audit logs are stored on a dedicated file system, in order to prevent interference between the audit subsystem and other subsystems if the file system fills.
+`dir` 条目用于设置一个或多个目录，用于存储审计日志。如果出现多个 `dir` 条目，则按照它们出现的顺序进行填充。通常配置审计时，会将审计日志存储在专用的文件系统中，以防止文件系统填满时审计子系统与其他子系统之间的干扰。
 
-If the `dist` field is set to `on` or `yes`, hard links will be created to all trail files in [.filename]#/var/audit/dist#.
+如果 `dist` 字段设置为 `on` 或 `yes` ，将会在 [.filename]#/var/audit/dist# 目录下创建所有审计文件的硬链接。
 
-The `flags` field sets the system-wide default preselection mask for attributable events. In the example above, successful and failed login/logout events as well as authentication and authorization are audited for all users.
+`flags` 字段设置了系统范围内可归属事件的默认预选掩码。在上面的示例中，成功和失败的登录/注销事件以及身份验证和授权将为所有用户进行审计。
 
-The `minfree` entry defines the minimum percentage of free space for the file system where the audit trail is stored.
+`minfree` 条目定义了存储审计跟踪的文件系统的最小空闲空间百分比。
 
-The `naflags` entry specifies audit classes to be audited for non-attributed events, such as the login/logout process and authentication and authorization.
+`naflags` 条目指定了要对非归因事件进行审计的审计类别，例如登录/注销过程以及身份验证和授权。
 
-The `policy` entry specifies a comma-separated list of policy flags controlling various aspects of audit behavior. The `cnt` indicates that the system should continue running despite an auditing failure (this flag is highly recommended). The other flag, `argv`, causes command line arguments to the man:execve[2] system call to be audited as part of command execution.
+`policy` 条目指定了一个逗号分隔的策略标志列表，用于控制审计行为的各个方面。`cnt` 表示系统应该在审计失败的情况下继续运行（强烈推荐使用此标志）。另一个标志 `argv` 会导致命令行参数在执行命令时作为 man:execve[2] 系统调用的一部分进行审计。
 
-The `filesz` entry specifies the maximum size for an audit trail before automatically terminating and rotating the trail file. A value of `0` disables automatic log rotation. If the requested file size is below the minimum of 512k, it will be ignored and a log message will be generated.
+`filesz` 条目指定了审计跟踪文件在自动终止和轮转之前的最大大小。值为 `0` 表示禁用自动日志轮转。如果请求的文件大小低于最小值 512k ，它将被忽略并生成一条日志消息。
 
-The `expire-after` field specifies when audit log files will expire and be removed.
+`expire-after` 字段指定了审计日志文件何时过期并被删除。
 
 [[audit-audituser]]
-==== The [.filename]#audit_user# File
+==== [.filename]#audit_user# 文件
 
-The administrator can specify further audit requirements for specific users in [.filename]#audit_user#. Each line configures auditing for a user via two fields: the `alwaysaudit` field specifies a set of events that should always be audited for the user, and the `neveraudit` field specifies a set of events that should never be audited for the user.
+管理员可以在 [.filename]#audit_user# 中为特定用户指定进一步的审计要求。每一行通过两个字段配置用户的审计： `alwaysaudit` 字段指定应始终对用户进行审计的一组事件，而 `neveraudit` 字段指定不应对用户进行审计的一组事件。
 
-The following example entries audit login/logout events and successful command execution for `root` and file creation and successful command execution for `www`. If used with the default [.filename]#audit_control#, the `lo` entry for `root` is redundant, and login/logout events will also be audited for `www`.
+以下示例条目审计 `root` 用户的登录/注销事件和成功的命令执行，以及 `www` 用户的文件创建和成功的命令执行。如果与默认的 [.filename]#audit_control# 一起使用，对于 `root` 用户的 `lo` 条目是多余的，并且还将审计 `www` 用户的登录/注销事件。
 
 [.programlisting]
 ....
@@ -303,20 +303,20 @@ www:fc,+ex:no
 ....
 
 [[audit-administration]]
-== Working with Audit Trails
+== 使用审计跟踪功能
 
-Since audit trails are stored in the BSM binary format, several built-in tools are available to modify or convert these trails to text. To convert trail files to a simple text format, use `praudit`. To reduce the audit trail file for analysis, archiving, or printing purposes, use `auditreduce`. This utility supports a variety of selection parameters, including event type, event class, user, date or time of the event, and the file path or object acted on.
+由于审计跟踪是以 BSM 二进制格式存储的，因此有几个内置工具可用于修改或将这些跟踪转换为文本。要将跟踪文件转换为简单的文本格式，请使用 `praudit`。要缩小审计跟踪文件以进行分析、存档或打印，请使用 `auditreduce`。此实用程序支持各种选择参数，包括事件类型、事件类别、用户、事件的日期或时间，以及操作的文件路径或对象。
 
-For example, to dump the entire contents of a specified audit log in plain text:
+例如，要以纯文本形式转储指定审计日志的全部内容：
 
 [source, shell]
 ....
 # praudit /var/audit/AUDITFILE
 ....
 
-Where _AUDITFILE_ is the audit log to dump.
+其中 _AUDITFILE_ 是要转储的审计日志文件。
 
-Audit trails consist of a series of audit records made up of tokens, which `praudit` prints sequentially, one per line. Each token is of a specific type, such as `header` (an audit record header) or `path` (a file path from a name lookup). The following is an example of an `execve` event:
+审计追踪由一系列由令牌组成的审计记录组成，`praudit` 按顺序逐行打印这些记录，每行一个令牌。每个令牌都是特定类型的，例如 `header` （审计记录头）或 `path`（名称查找的文件路径）。以下是一个 `execve` 事件的示例：
 
 [.programlisting]
 ....
@@ -329,65 +329,65 @@ return,success,0
 trailer,133
 ....
 
-This audit represents a successful `execve` call, in which the command `finger doug` has been run. The `exec arg` token contains the processed command line presented by the shell to the kernel. The `path` token holds the path to the executable as looked up by the kernel. The `attribute` token describes the binary and includes the file mode. The `subject` token stores the audit user ID, effective user ID and group ID, real user ID and group ID, process ID, session ID, port ID, and login address. Notice that the audit user ID and real user ID differ as the user `robert` switched to the `root` account before running this command, but it is audited using the original authenticated user. The `return` token indicates the successful execution and the `trailer` concludes the record.
+此审计记录表示一个成功的 `execve` 调用，其中运行了命令 `finger doug`。`exec arg` 令牌包含由 shell 传递给内核的处理过的命令行。`path` 令牌保存了内核查找到的可执行文件的路径。`attribute` 令牌描述了二进制文件，并包括文件模式。`subject` 令牌存储了审计用户 ID 、有效用户 ID 和组 ID 、真实用户 ID 和组 ID 、进程 ID 、会话 ID 、端口 ID 和登录地址。请注意，审计用户 ID 和真实用户 ID 不同，因为用户 `robert` 在运行此命令之前切换到了 `root` 账户，但是它是使用原始认证用户进行审计的。`return` 令牌表示成功执行，`trailer` 结束了记录。
 
-XML output format is also supported and can be selected by including `-x`.
+还支持 XML 输出格式，可以通过包含 `-x` 来选择。
 
-Since audit logs may be very large, a subset of records can be selected using `auditreduce`. This example selects all audit records produced for the user `trhodes` stored in [.filename]#AUDITFILE#:
+由于审计日志可能非常庞大，可以使用 `auditreduce` 选择记录的子集。此示例选择存储在 [.filename]#AUDITFILE# 中的用户 `trhodes` 生成的所有审计记录。
 
 [source, shell]
 ....
 # auditreduce -u trhodes /var/audit/AUDITFILE | praudit
 ....
 
-Members of the `audit` group have permission to read audit trails in [.filename]#/var/audit#. By default, this group is empty, so only the `root` user can read audit trails. Users may be added to the `audit` group in order to delegate audit review rights. As the ability to track audit log contents provides significant insight into the behavior of users and processes, it is recommended that the delegation of audit review rights be performed with caution.
+`audit` 组的成员有权限读取位于 [.filename]#/var/audit# 目录下的审计日志。默认情况下，该组为空，因此只有 `root` 用户可以读取审计日志。可以将用户添加到 `audit` 组中以委派审计审查权限。由于跟踪审计日志内容可以提供对用户和进程行为的重要见解，建议谨慎进行审计审查权限的委派。
 
-=== Live Monitoring Using Audit Pipes
+=== 使用审计管道进行实时监控
 
-Audit pipes are cloning pseudo-devices which allow applications to tap the live audit record stream. This is primarily of interest to authors of intrusion detection and system monitoring applications. However, the audit pipe device is a convenient way for the administrator to allow live monitoring without running into problems with audit trail file ownership or log rotation interrupting the event stream. To track the live audit event stream:
+审计管道是克隆伪设备，允许应用程序监听实时审计记录流。这主要对入侵检测和系统监控应用程序的作者感兴趣。然而，审计管道设备是管理员允许实时监控的便捷方式，可以避免审计跟踪文件所有权或日志轮换中断事件流的问题。要跟踪实时审计事件流：
 
 [source, shell]
 ....
 # praudit /dev/auditpipe
 ....
 
-By default, audit pipe device nodes are accessible only to the `root` user. To make them accessible to the members of the `audit` group, add a `devfs` rule to [.filename]#/etc/devfs.rules#:
+默认情况下，审计管道设备节点只对 `root` 用户可访问。要使其对 `audit` 组的成员可访问，需要在 `/etc/devfs.rules` 文件中添加一个 `devfs` 规则。
 
 [.programlisting]
 ....
 add path 'auditpipe*' mode 0440 group audit
 ....
 
-See man:devfs.rules[5] for more information on configuring the devfs file system.
+请参阅 man:devfs.rules[5] 以获取有关配置 devfs 文件系统的更多信息。
 
 [WARNING]
 ====
-It is easy to produce audit event feedback cycles, in which the viewing of each audit event results in the generation of more audit events. For example, if all network I/O is audited, and `praudit` is run from an SSH session, a continuous stream of audit events will be generated at a high rate, as each event being printed will generate another event. For this reason, it is advisable to run `praudit` on an audit pipe device from sessions without fine-grained I/O auditing.
+很容易产生审计事件反馈循环，即每个审计事件的查看都会导致更多的审计事件生成。例如，如果对所有网络 I/O 进行审计，并且从一个 SSH 会话中运行 `praudit`，将以高速生成连续的审计事件流，因为每个被打印的事件都会生成另一个事件。因此，建议在没有细粒度 I/O 审计的会话中从审计管道设备上运行 `praudit`。
 ====
 
-=== Rotating and Compressing Audit Trail Files
+=== 旋转和压缩审计日志文件
 
-Audit trails are written to by the kernel and managed by the audit daemon, man:auditd[8]. Administrators should not attempt to use man:newsyslog.conf[5] or other tools to directly rotate audit logs. Instead, `audit` should be used to shut down auditing, reconfigure the audit system, and perform log rotation. The following command causes the audit daemon to create a new audit log and signal the kernel to switch to using the new log. The old log will be terminated and renamed, at which point it may then be manipulated by the administrator:
+审计日志由内核编写，并由审计守护程序（man:auditd[8]）管理。管理员不应尝试使用 man:newsyslog.conf[5] 或其他工具直接轮转审计日志。相反，应使用 `audit` 来关闭审计、重新配置审计系统并执行日志轮转。以下命令会导致审计守护程序创建一个新的审计日志，并向内核发出信号以切换到使用新日志。旧日志将被终止和重命名，此时管理员可以对其进行操作。
 
 [source, shell]
 ....
 # audit -n
 ....
 
-If man:auditd[8] is not currently running, this command will fail and an error message will be produced.
+如果 man:auditd[8] 当前未运行，该命令将失败并产生错误消息。
 
-Adding the following line to [.filename]#/etc/crontab# will schedule this rotation every twelve hours:
+将以下行添加到 [.filename]#/etc/crontab# 将会每隔十二小时安排此轮换：
 
 [.programlisting]
 ....
 0     */12       *       *       *       root    /usr/sbin/audit -n
 ....
 
-The change will take effect once [.filename]#/etc/crontab# is saved.
+更改将在保存 [.filename]#/etc/crontab# 后生效。
 
-Automatic rotation of the audit trail file based on file size is possible using `filesz` in [.filename]#audit_control# as described in <<audit-auditcontrol>>.
+根据 <<audit-auditcontrol>> 中所述，可以使用 `filesz` 在 [.filename]#audit_control# 中基于文件大小自动旋转审计跟踪文件。
 
-As audit trail files can become very large, it is often desirable to compress or otherwise archive trails once they have been closed by the audit daemon. The [.filename]#audit_warn# script can be used to perform customized operations for a variety of audit-related events, including the clean termination of audit trails when they are rotated. For example, the following may be added to [.filename]#/etc/security/audit_warn# to compress audit trails on close:
+由于审计跟踪文件可能变得非常大，因此通常希望在审计守护程序关闭它们后对跟踪进行压缩或归档。 [.filename]#audit_warn# 脚本可用于执行各种与审计相关的事件的自定义操作，包括在轮换审计跟踪时对其进行清理终止。 例如，可以将以下内容添加到 [.filename]#/etc/security/audit_warn# 中以在关闭时压缩审计跟踪：
 
 [.programlisting]
 ....
@@ -399,4 +399,4 @@ if [ "$1" = closefile ]; then
 fi
 ....
 
-Other archiving activities might include copying trail files to a centralized server, deleting old trail files, or reducing the audit trail to remove unneeded records. This script will be run only when audit trail files are cleanly terminated. It will not be run on trails left unterminated following an improper shutdown.
+其他归档活动可能包括将轨迹文件复制到集中服务器，删除旧的轨迹文件，或者减少审计轨迹以删除不需要的记录。此脚本仅在审计轨迹文件被正确终止时运行。它不会在因不正确的关闭而导致未终止的轨迹上运行。
