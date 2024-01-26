@@ -294,7 +294,7 @@
     </li>
     <li><a href="#system-administration">Part III: 系统管理</a>
       <ul>
-        <li><a href="#config-tuning">Chapter 14. Configuration, Services, Logging and Power Management</a></li>
+        <li><a href="#config-tuning">Chapter 14. 配置、服务、日志和电源管理</a></li>
         <li><a href="#boot">Chapter 15. FreeBSD 的引导过程</a></li>
         <li><a href="#security">Chapter 16. 安全</a></li>
         <li><a href="#jails">Chapter 17. Jails 和容器</a></li>
@@ -14581,59 +14581,59 @@ WINDOWS_USERS ALL = (windows) NOPASSWD: WINDOWS</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="config-tuning">Chapter 14. Configuration, Services, Logging and Power Management<a class="anchor" href="#config-tuning"></a></h2>
+<h2 id="config-tuning">Chapter 14. 配置、服务、日志和电源管理<a class="anchor" href="#config-tuning"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="config-synopsis">14.1. Synopsis<a class="anchor" href="#config-synopsis"></a></h3>
+<h3 id="config-synopsis">14.1. 简介<a class="anchor" href="#config-synopsis"></a></h3>
 <div class="paragraph">
-<p>One of the important aspects of FreeBSD is proper system configuration. This chapter explains much of the FreeBSD configuration process, including some of the parameters which can be set to tune a FreeBSD system.</p>
+<p>FreeBSD 的一个重要方面是正确的系统配置。本章介绍了 FreeBSD 配置过程的许多内容，包括一些可以设置的参数，用于调整 FreeBSD 系统。</p>
 </div>
 <div class="paragraph">
-<p>Before reading this chapter, you should:</p>
+<p>在阅读本章之前，您应该：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Understand UNIX® and FreeBSD basics (<a href="./#basics">FreeBSD Basics</a>).</p>
+<p>了解 UNIX® 和 FreeBSD <a href="./#basics">FreeBSD 基础知识</a>。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>After reading this chapter, you will know:</p>
+<p>阅读本章后，您将了解：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>How to use the various configuration files in <span class="filename">/etc</span>.</p>
+<p>如何使用 <span class="filename">/etc</span> 中的各种配置文件。</p>
 </li>
 <li>
-<p>The basics of <span class="filename">rc.conf</span> configuration and <span class="filename">/usr/local/etc/rc.d</span> startup scripts.</p>
+<p><span class="filename">rc.conf</span> 配置和 <span class="filename">/usr/local/etc/rc.d</span> 启动脚本的基础知识。</p>
 </li>
 <li>
-<p>How to tune FreeBSD using <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> variables.</p>
+<p>如何使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 变量来调整 FreeBSD。</p>
 </li>
 <li>
-<p>How to configure the power management in FreeBSD.</p>
+<p>如何在 FreeBSD 中配置电源管理。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configtuning-configfiles">14.2. Configuration Files<a class="anchor" href="#configtuning-configfiles"></a></h3>
+<h3 id="configtuning-configfiles">14.2. 配置文件<a class="anchor" href="#configtuning-configfiles"></a></h3>
 <div class="paragraph">
-<p>FreeBSD maintains a clear separation between the base system and third party applications and therefore this affects where the configuration files of these applications are located.</p>
+<p>FreeBSD 在基础系统和第三方应用程序之间保持了明确的分离，因此这影响了这些应用程序的配置文件的位置。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD base system configuration is located at the <span class="filename">/etc</span> directory, and the <span class="filename">/usr/local/etc</span> directory contains all the configuration files of the applications installed on the system through the ports collection and packages.</p>
+<p>FreeBSD 基本系统配置位于 .filename]<mark>/etc</mark> 目录下，而 <span class="filename">/usr/local/etc</span> 目录包含通过 ports 集合和软件包安装在系统上的所有应用程序的配置文件。</p>
 </div>
 <div class="paragraph">
-<p>The kernel state configuration is located in <span class="filename">/etc/sysctl.conf</span>. In the section <a href="#configtuning-sysctl">The sysctl utility</a>, the operation of <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> will be explained in more detail.</p>
+<p>内核状态配置位于 <span class="filename">/etc/sysctl.conf</span>。在 <a href="#configtuning-sysctl">sysctl 实用程序</a> 部分，将更详细地解释 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 的操作。</p>
 </div>
 <div class="paragraph">
-<p>For more information about the FreeBSD file system structure refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=hier&amp;sektion=7&amp;format=html">hier(7)</a>.</p>
+<p>有关 FreeBSD 文件系统结构的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=hier&amp;sektion=7&amp;format=html">hier(7)</a>。</p>
 </div>
 <div class="paragraph">
-<p>As a general rule, configuration files do not use a standard on what syntax they must follow. Although it is true that the <code>#</code> character is normally used to comment a line and that each line has a configuration variable.</p>
+<p>通常情况下，配置文件没有遵循统一的语法规范。虽然使用 <code>#</code> 字符来注释一行是常见的做法，并且每行都包含一个配置变量。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -14643,16 +14643,16 @@ WINDOWS_USERS ALL = (windows) NOPASSWD: WINDOWS</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Some applications like <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a> are starting to use the <a href="https://github.com/vstakhov/libucl">Universal Configuration Language (UCL)</a>.</p>
+<p>一些应用程序，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=pkg&amp;sektion=8&amp;format=html">pkg(8)</a>，开始使用 <a href="https://github.com/vstakhov/libucl">通用配置语言（UCL）</a> 。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="_the_etc_directory">14.2.1. The <span class="filename">/etc</span> directory<a class="anchor" href="#_the_etc_directory"></a></h4>
+<h4 id="_etc_目录">14.2.1. <span class="filename">/etc</span> 目录<a class="anchor" href="#_etc_目录"></a></h4>
 <div class="paragraph">
-<p>The <span class="filename">/etc</span> directory contains all of the FreeBSD base system configuration files that are responsible for configuring FreeBSD.</p>
+<p><span class="filename">/etc</span> 目录包含了所有负责配置 FreeBSD 的基本系统配置文件。</p>
 </div>
 <div class="admonitionblock caution">
 <table>
@@ -14662,7 +14662,7 @@ WINDOWS_USERS ALL = (windows) NOPASSWD: WINDOWS</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><strong>Extreme</strong> caution must be taken when modifying files in the <span class="filename">/etc</span> directory; misconfiguration could make FreeBSD unbootable or malfunction.</p>
+<p>在修改 <span class="filename">/etc</span> 目录中的文件时，必须非常小心；配置错误可能会导致 FreeBSD 无法启动或出现故障。</p>
 </div>
 </td>
 </tr>
@@ -14676,113 +14676,113 @@ WINDOWS_USERS ALL = (windows) NOPASSWD: WINDOWS</pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">System configuration files and scripts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">系统配置文件和脚本。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/defaults</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default system configuration files, see <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> for more information.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">默认的系统配置文件，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 获取更多信息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/fstab</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> contains descriptive information about the various file systems.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> 包含了关于各种文件系统的描述信息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/mail</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Extra <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a> configuration and other MTA configuration files.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">额外的 <a href="https://man.freebsd.org/cgi/man.cgi?query=sendmail&amp;sektion=8&amp;format=html">sendmail(8)</a> 配置和其他 MTA 配置文件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/mtree</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mtree configuration files, see man: mtree[8] for more information.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mtree 配置文件，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=mtree&amp;sektion=8&amp;format=html">mtree(8)</a> 了解更多信息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/pam.d</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration files for the Pluggable Authentication Modules (PAM) library.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pluggable Authentication Modules（PAM）库的配置文件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/periodic</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Scripts that are run daily, weekly, and monthly, via <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>, see <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> for more information.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 每天、每周和每月运行的脚本，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 获取更多信息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/rc.d</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">System and daemon startup/control scripts, see <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> for more information.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">系统和守护进程的启动/控制脚本，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 获取更多信息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/rc.conf</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains descriptive information about the local host name, configuration details for any potential network interfaces and which services should be started up at system initial boot time. More information in <a href="#configtuning-core-configuration">Managing System-Specific Configuration</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包含有关本地主机名称的描述性信息，潜在网络接口的配置细节以及应在系统初始启动时启动的服务。有关更多信息，请参见 <a href="#configtuning-core-configuration">管理系统特定配置</a>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/security</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OpenBSM audit configuration files, see <a href="https://man.freebsd.org/cgi/man.cgi?query=audit&amp;sektion=8&amp;format=html">audit(8)</a> for more information.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenBSM 审计配置文件，详见 <a href="https://man.freebsd.org/cgi/man.cgi?query=audit&amp;sektion=8&amp;format=html">audit(8)</a> 获取更多信息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ppp</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ppp configuration files, see <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> for more information.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ppp 配置文件，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> 获取更多信息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ssh</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSSH configuration files, see <a href="https://man.freebsd.org/cgi/man.cgi?query=ssh&amp;sektion=1&amp;format=html">ssh(1)</a> for more information.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSSH 配置文件，更多信息请参见 <a href="https://man.freebsd.org/cgi/man.cgi?query=ssh&amp;sektion=1&amp;format=html">ssh(1)</a>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/ssl</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSSL configuration files.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenSSL 配置文件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="filename">/etc/sysctl.conf</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains settings for the kernel. More information in <a href="#configtuning-sysctl">The sysctl utility</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包含内核的设置。更多信息请参见 <a href="#configtuning-sysctl">sysctl 实用程序</a>。</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="configtuning-sysctl">14.2.2. The sysctl utility<a class="anchor" href="#configtuning-sysctl"></a></h4>
+<h4 id="configtuning-sysctl">14.2.2. sysctl 实用程序<a class="anchor" href="#configtuning-sysctl"></a></h4>
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> utility is used to make changes to a running FreeBSD system.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 实用程序用于对运行中的 FreeBSD 系统进行更改。</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> utility retrieves kernel state and allows processes with appropriate privilege to set kernel state. The state to be retrieved or set is described using a &#34;Management Information Base&#34; (&#34;MIB&#34;) style name, described as a dotted set of components.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 实用程序用于检索内核状态，并允许具有适当特权的进程设置内核状态。要检索或设置的状态使用“管理信息库（Management Information Base）”（“MIB”）样式的名称进行描述，该名称被描述为一组由点分隔的组件。</p>
 </div>
 <table class="tableblock frame-none grid-all stretch informaltable">
-<caption class="title">表 23. Management Information Base</caption>
+<caption class="title">表 23. 管理信息库</caption>
 <colgroup>
 <col style="width: 50%;"/>
 <col style="width: 50%;"/>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sysctl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#34;Magic&#34; numbers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sysctl 是一个用于管理和配置 Linux 内核参数的命令行工具。它允许用户查看和修改内核的运行时参数，以及控制系统的行为。通过 sysctl 命令，用户可以查询和修改各种系统设置，如网络配置、文件系统参数、内存管理等。这个工具在调优系统性能、解决问题和进行系统管理时非常有用。</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#34;魔术&#34;数字</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">kern</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Kernel functions and features</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">内核功能和特性</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">vm</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">virtual memory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟内存</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">vfs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Filesystem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">文件系统</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">net</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">debug</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Debugging parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">调试参数</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">hw</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hardware</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">硬件</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">machdep</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Machine dependent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">机器依赖</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Userland</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">用户空间</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">p1003_1b</p></td>
@@ -14791,10 +14791,10 @@ WINDOWS_USERS ALL = (windows) NOPASSWD: WINDOWS</pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>At its core, <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> serves two functions: to read and to modify system settings.</p>
+<p>在其核心，<a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 有两个功能：读取和修改系统设置。</p>
 </div>
 <div class="paragraph">
-<p>To view all readable variables:</p>
+<p>查看所有可读取的变量：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14802,7 +14802,7 @@ WINDOWS_USERS ALL = (windows) NOPASSWD: WINDOWS</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -14820,7 +14820,7 @@ vfs.zfs.sync_pass_deferred_free: 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To read a particular variable, specify its name:</p>
+<p>要读取特定的变量，请指定其名称：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14828,7 +14828,7 @@ vfs.zfs.sync_pass_deferred_free: 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -14836,7 +14836,7 @@ vfs.zfs.sync_pass_deferred_free: 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The Management Information Base (MIB) is hierarchical and hence, specifying a prefix prints all the nodes hanging from it:</p>
+<p>管理信息库（MIB）是分层的，因此，指定一个前缀将打印出所有挂在该前缀下的节点：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14844,7 +14844,7 @@ vfs.zfs.sync_pass_deferred_free: 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -14865,7 +14865,7 @@ net.inet.ip.portrange.randomcps: 9999
 </div>
 </div>
 <div class="paragraph">
-<p>To set a particular variable, use the <em>variable</em>=<em>value</em> syntax:</p>
+<p>要设置特定的变量，请使用 <em>variable</em>=<em>value</em> 的语法：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14873,7 +14873,7 @@ net.inet.ip.portrange.randomcps: 9999
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -14888,7 +14888,7 @@ net.inet.ip.portrange.randomcps: 9999
 </td>
 <td class="content">
 <div class="paragraph">
-<p>To keep the configuration after a reboot it is necessary to add these variables to the <span class="filename">/etc/sysctl.conf</span> file as explained below.</p>
+<p>为了在重启后保留配置，需要按照下面的说明将这些变量添加到 <span class="filename">/etc/sysctl.conf</span> 文件中。</p>
 </div>
 </td>
 </tr>
@@ -14896,12 +14896,12 @@ net.inet.ip.portrange.randomcps: 9999
 </div>
 </div>
 <div class="sect3">
-<h4 id="configtuning-sysctlconf">14.2.3. The <span class="filename">/etc/sysctl.conf</span> file<a class="anchor" href="#configtuning-sysctlconf"></a></h4>
+<h4 id="configtuning-sysctlconf">14.2.3. <span class="filename">/etc/sysctl.conf</span> 文件<a class="anchor" href="#configtuning-sysctlconf"></a></h4>
 <div class="paragraph">
-<p>The configuration file for <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a>, <span class="filename">/etc/sysctl.conf</span>, looks much like <span class="filename">/etc/rc.conf</span>.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 的配置文件，<span class="filename">/etc/sysctl.conf</span> ，看起来很像 <span class="filename">/etc/rc.conf</span>。</p>
 </div>
 <div class="paragraph">
-<p>Values are set using a <code>variable=value</code> syntax.</p>
+<p>使用 <code>variable=value</code> 语法来设置值。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -14911,14 +14911,14 @@ net.inet.ip.portrange.randomcps: 9999
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The specified values are set after the system goes into multi-user mode. Not all variables are settable in this mode.</p>
+<p>系统进入多用户模式后，设置了指定的值。并非所有变量都可以在此模式下设置。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>For example, to turn off logging of fatal signal exits and prevent users from seeing processes started by other users, the following tunables can be set in <span class="filename">/etc/sysctl.conf</span>:</p>
+<p>例如，要关闭致命信号退出的日志记录并防止用户看到其他用户启动的进程，可以在[.filename]<mark>/etc/sysctl.conf</mark> 中设置以下可调整项：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -14931,7 +14931,7 @@ security.bsd.see_other_uids=0</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To obtain more information about what function a particular sysctl has, the following command can be executed:</p>
+<p>要获取关于特定 sysctl 函数的更多信息，可以执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14939,7 +14939,7 @@ security.bsd.see_other_uids=0</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -14948,15 +14948,15 @@ security.bsd.see_other_uids=0</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configtuning-core-configuration">14.2.4. Managing System-Specific Configuration<a class="anchor" href="#configtuning-core-configuration"></a></h4>
+<h4 id="configtuning-core-configuration">14.2.4. 管理系统特定配置<a class="anchor" href="#configtuning-core-configuration"></a></h4>
 <div class="paragraph">
-<p>The principal location for system configuration information is <span class="filename">/etc/rc.conf</span>.</p>
+<p>系统配置信息的主要位置是 <span class="filename">/etc/rc.conf</span>。</p>
 </div>
 <div class="paragraph">
-<p>This file contains a wide range of configuration information and it is read at system startup to configure the system. It provides the configuration information for the <span class="filename">rc*</span> files.</p>
+<p>该文件包含了各种配置信息，并在系统启动时读取以配置系统。它为 <span class="filename">rc*</span> 文件提供配置信息。</p>
 </div>
 <div class="paragraph">
-<p>The entries in <span class="filename">/etc/rc.conf</span> override the default settings in <span class="filename">/etc/defaults/rc.conf</span>.</p>
+<p><span class="filename">/etc/rc.conf</span> 中的条目会覆盖 <span class="filename">/etc/defaults/rc.conf</span> 中的默认设置。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -14966,20 +14966,20 @@ security.bsd.see_other_uids=0</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The file <span class="filename">/etc/defaults/rc.conf</span> containing the default settings should not be edited. Instead, all system-specific changes should be made to <span class="filename">/etc/rc.conf</span>.</p>
+<p>不应编辑包含默认设置的文件 <span class="filename">/etc/defaults/rc.conf</span> 。相反，所有特定于系统的更改应该在 <span class="filename">/etc/rc.conf</span> 中进行。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>A number of strategies may be applied in clustered applications to separate site-wide configuration from system-specific configuration in order to reduce administration overhead.</p>
+<p>在集群应用中，可以采用多种策略来将整个站点的配置与系统特定的配置分离，以减少管理开销。</p>
 </div>
 <div class="paragraph">
-<p>The recommended approach is to place system-specific configuration into <span class="filename">/etc/rc.conf.local</span>.</p>
+<p>推荐的方法是将系统特定的配置放置在 <span class="filename">/etc/rc.conf.local</span> 文件中。</p>
 </div>
 <div class="paragraph">
-<p>For example, these entries in <span class="filename">/etc/rc.conf</span> apply to all systems:</p>
+<p>例如，这些条目在 <span class="filename">/etc/rc.conf</span> 适用于所有系统：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -14989,7 +14989,7 @@ defaultrouter=&#34;10.1.1.254&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Whereas these entries in <span class="filename">/etc/rc.conf.local</span> apply to this system only:</p>
+<p>而这些条目在 <span class="filename">/etc/rc.conf.local</span> 文件中仅适用于此系统：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -14998,10 +14998,10 @@ ifconfig_fxp0=&#34;inet 10.1.1.1/8&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Distribute <span class="filename">/etc/rc.conf</span> to every system using an application such as rsync or puppet, while <span class="filename">/etc/rc.conf.local</span> remains unique.</p>
+<p>使用诸如 rsync 或 puppet 的应用程序，将 <span class="filename">/etc/rc.conf</span> 分发到每个系统，同时保持 <span class="filename">/etc/rc.conf.local</span> 的唯一性。</p>
 </div>
 <div class="paragraph">
-<p>Upgrading the system will not overwrite <span class="filename">/etc/rc.conf</span>, so system configuration information will not be lost.</p>
+<p>升级系统不会覆盖 <span class="filename">/etc/rc.conf</span> 文件，因此系统配置信息不会丢失。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -15011,7 +15011,7 @@ ifconfig_fxp0=&#34;inet 10.1.1.1/8&#34;</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Both <span class="filename">/etc/rc.conf</span> and <span class="filename">/etc/rc.conf.local</span> are parsed by <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a>. This allows system operators to create complex configuration scenarios. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a> for further information on this topic.</p>
+<p><span class="filename">/etc/rc.conf</span> 和 <span class="filename">/etc/rc.conf.local</span> 都由 <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> 解析。这使得系统操作员能够创建复杂的配置场景。有关此主题的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a>。</p>
 </div>
 </td>
 </tr>
@@ -15020,15 +15020,15 @@ ifconfig_fxp0=&#34;inet 10.1.1.1/8&#34;</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configtuning-rcd">14.3. Managing Services in FreeBSD<a class="anchor" href="#configtuning-rcd"></a></h3>
+<h3 id="configtuning-rcd">14.3. 在 FreeBSD 中管理服务<a class="anchor" href="#configtuning-rcd"></a></h3>
 <div class="paragraph">
-<p>FreeBSD uses the <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> system of startup scripts during system initialization and for managing services.</p>
+<p>FreeBSD 在系统初始化和服务管理过程中使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 系统的启动脚本。</p>
 </div>
 <div class="paragraph">
-<p>The scripts listed in <span class="filename">/etc/rc.d</span> provide basic services which can be controlled with the <code>start</code>, <code>stop</code>, and <code>restart</code> options to <a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a>.</p>
+<p><span class="filename">/etc/rc.d</span> 中列出的脚本提供基本服务，可以通过 <code>start</code>、<code>stop</code> 和 `restart`选项来控制，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=service&amp;sektion=8&amp;format=html">service(8)</a> 命令。</p>
 </div>
 <div class="paragraph">
-<p>A basic script may look similar to the following:</p>
+<p>一个基本的脚本可能类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15058,21 +15058,21 @@ run_rc_command &#34;$1&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Refer to <a href="{rc-scripting}">this article</a> for instructions on how to create custom <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> scripts.</p>
+<p>请参考 <a href="{rc-scripting}">这篇文章</a>，了解如何创建自定义的 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 脚本的指南。</p>
 </div>
 <div class="sect3">
-<h4 id="configtuning-starting-services">14.3.1. Starting Services<a class="anchor" href="#configtuning-starting-services"></a></h4>
+<h4 id="configtuning-starting-services">14.3.1. 启动服务<a class="anchor" href="#configtuning-starting-services"></a></h4>
 <div class="paragraph">
-<p>Many users install third party software on FreeBSD from the Ports Collection and require the installed services to be started upon system initialization.</p>
+<p>许多用户在 FreeBSD 上从 Ports Collection 安装第三方软件，并要求在系统初始化时启动已安装的服务。</p>
 </div>
 <div class="paragraph">
-<p>Services, such as <a class="package" href="https://cgit.freebsd.org/ports/tree/security/openssh-portable/">security/openssh-portable</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> are just two of the many software packages which may be started during system initialization. This section explains the procedures available for starting services.</p>
+<p>服务，例如 <a class="package" href="https://cgit.freebsd.org/ports/tree/security/openssh-portable/">security/openssh-portable</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> 只是许多软件包中的两个，这些软件包可能在系统初始化期间启动。本节介绍了启动服务的可用程序。</p>
 </div>
 <div class="paragraph">
-<p>Since the <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> system is primarily intended to start and stop services at system startup and shutdown time, the <code>start</code>, <code>stop</code> and <code>restart</code> options will only perform their action if the appropriate <span class="filename">/etc/rc.conf</span> variable is set.</p>
+<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 系统主要用于在系统启动和关闭时启动和停止服务，因此只有在设置了适当的 <span class="filename">/etc/rc.conf</span> 变量时，<code>start</code>、<code>stop</code> 和 <code>restart</code> 选项才会执行其操作。</p>
 </div>
 <div class="paragraph">
-<p>So the first step to start a service, like for example <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> is to add it to <span class="filename">/etc/rc.conf</span> by executing the following command:</p>
+<p>因此，启动服务的第一步，例如 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a>，是通过执行以下命令将其添加到 <span class="filename">/etc/rc.conf</span> 中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15080,7 +15080,7 @@ run_rc_command &#34;$1&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then nginx can be started executing the following command:</p>
+<p>然后可以执行以下命令来启动 nginx ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15095,7 +15095,7 @@ run_rc_command &#34;$1&#34;</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>To <code>start</code>, <code>stop</code> or <code>restart</code> a service regardless of the settings in <span class="filename">/etc/rc.conf</span>, these commands should be prefixed with &#34;one&#34;. For instance, to start <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> regardless of the current <span class="filename">/etc/rc.conf</span> setting, execute the following command:</p>
+<p>无论 <span class="filename">/etc/rc.conf</span> 中的设置如何，要启动、停止或重新启动服务，这些命令都应以“one”为前缀。例如，要启动 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a>，无论当前 <span class="filename">/etc/rc.conf</span> 的设置如何，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15108,12 +15108,12 @@ run_rc_command &#34;$1&#34;</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configtuning-status-services">14.3.2. Status of a Service<a class="anchor" href="#configtuning-status-services"></a></h4>
+<h4 id="configtuning-status-services">14.3.2. 服务的状态<a class="anchor" href="#configtuning-status-services"></a></h4>
 <div class="paragraph">
-<p>To determine if a service is running, use the <code>status</code> subcommand.</p>
+<p>要确定服务是否正在运行，请使用 <code>status</code> 子命令。</p>
 </div>
 <div class="paragraph">
-<p>For example, to verify that <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> is running:</p>
+<p>例如，要验证 <a class="package" href="https://cgit.freebsd.org/ports/tree/www/nginx/">www/nginx</a> 是否正在运行：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15121,7 +15121,7 @@ run_rc_command &#34;$1&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15130,18 +15130,18 @@ run_rc_command &#34;$1&#34;</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configtuning-reload-services">14.3.3. Reload a Service<a class="anchor" href="#configtuning-reload-services"></a></h4>
+<h4 id="configtuning-reload-services">14.3.3. 重新加载服务<a class="anchor" href="#configtuning-reload-services"></a></h4>
 <div class="paragraph">
-<p>In some cases, it is also possible to <code>reload</code> a service. This attempts to send a signal to an individual service, forcing the service to reload its configuration files.</p>
+<p>在某些情况下，也可以“重新加载（reload）”一个服务。这将尝试向一个单独的服务发送一个信号，强制该服务重新加载其配置文件。</p>
 </div>
 <div class="paragraph">
-<p>In most cases, this means sending the service a <code>SIGHUP</code> signal.</p>
+<p>在大多数情况下，这意味着向服务发送一个 <code>SIGHUP</code> 信号。</p>
 </div>
 <div class="paragraph">
-<p><strong>Not all services support this feature.</strong></p>
+<p><strong>并非所有服务都支持此功能。</strong></p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> system is used for network services and it also contributes to most of the system initialization. For instance, when the <span class="filename">/etc/rc.d/bgfsck</span> script is executed, it prints out the following message:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 系统用于网络服务，并且它还贡献了大部分系统初始化工作。例如，当执行 <span class="filename">/etc/rc.d/bgfsck</span> 脚本时，它会打印出以下消息：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15149,55 +15149,55 @@ run_rc_command &#34;$1&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This script is used for background file system checks, which occur only during system initialization.</p>
+<p>该脚本用于后台文件系统检查，仅在系统初始化期间进行。</p>
 </div>
 <div class="paragraph">
-<p>Many system services depend on other services to function properly. For example, <a href="https://man.freebsd.org/cgi/man.cgi?query=yp&amp;sektion=8&amp;format=html">yp(8)</a> and other RPC-based services may fail to start until after the <a href="https://man.freebsd.org/cgi/man.cgi?query=rpcbind&amp;sektion=8&amp;format=html">rpcbind(8)</a> service has started.</p>
+<p>许多系统服务依赖其他服务的正常运行。例如，<a href="https://man.freebsd.org/cgi/man.cgi?query=yp&amp;sektion=8&amp;format=html">yp(8)</a> 和其他基于 RPC 的服务可能在 <a href="https://man.freebsd.org/cgi/man.cgi?query=rpcbind&amp;sektion=8&amp;format=html">rpcbind(8)</a> 服务启动之前无法启动。</p>
 </div>
 <div class="paragraph">
-<p>Additional information can be found in <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.subr&amp;sektion=8&amp;format=html">rc.subr(8)</a>.</p>
+<p>可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc&amp;sektion=8&amp;format=html">rc(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.subr&amp;sektion=8&amp;format=html">rc.subr(8)</a> 中找到更多的信息。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_services_to_start_services">14.3.4. Using Services to Start Services<a class="anchor" href="#_using_services_to_start_services"></a></h4>
+<h4 id="_使用服务启动服务">14.3.4. 使用服务启动服务<a class="anchor" href="#_使用服务启动服务"></a></h4>
 <div class="paragraph">
-<p>Other services can be started using <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a>. Working with <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a> and its configuration is described in depth in <a href="./#network-inetd">“The inetd Super-Server”</a>.</p>
+<p>其他服务可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a> 启动。有关使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a> 及其配置的详细信息，请参阅 <a href="./#network-inetd">“inetd 超级服务器”</a>。</p>
 </div>
 <div class="paragraph">
-<p>In some cases, it may make more sense to use <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> to start system services. This approach has a number of advantages as <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> runs these processes as the owner of the <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a>. This allows regular users to start and maintain their own applications.</p>
+<p>在某些情况下，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 来启动系统服务可能更合理。这种方法有许多优点，因为 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 以 <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a> 的所有者身份运行这些进程。这使得普通用户可以启动和维护自己的应用程序。</p>
 </div>
 <div class="paragraph">
-<p>The <code>@reboot</code> feature of <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>, may be used in place of the time specification. This causes the job to run when <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> is started, normally during system initialization.</p>
+<p><code>@reboot</code> 功能是 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 的一个特性，可以用来替代时间规范。这将导致作业在 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 启动时运行，通常是在系统初始化期间。</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cron-periodic">14.4. Cron and Periodic<a class="anchor" href="#cron-periodic"></a></h3>
+<h3 id="cron-periodic">14.4. Cron 和周期性任务<a class="anchor" href="#cron-periodic"></a></h3>
 <div class="paragraph">
-<p>Scheduling tasks to run at a certain day or time is a very common task on FreeBSD. The tool in charge of performing this task is <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>.</p>
+<p>在 FreeBSD 上，安排任务在特定的日期或时间运行是一项非常常见的任务。负责执行这项任务的工具是 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>。</p>
 </div>
 <div class="paragraph">
-<p>In addition to tasks that can be scheduled by the user via <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>, FreeBSD performs routine background tasks managed by <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a>.</p>
+<p>除了用户可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 进行调度的任务之外，FreeBSD 还执行由 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 管理的常规后台任务。</p>
 </div>
 <div class="sect3">
 <h4 id="configtuning-cron">14.4.1. Cron<a class="anchor" href="#configtuning-cron"></a></h4>
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> utility runs in the background and regularly checks <span class="filename">/etc/crontab</span> for tasks to execute and searches <span class="filename">/var/cron/tabs</span> for custom crontab files.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 实用程序在后台运行，并定期检查 <span class="filename">/etc/crontab</span> 中的任务以执行，并在 <span class="filename">/var/cron/tabs</span> 中搜索自定义的 crontab 文件。</p>
 </div>
 <div class="paragraph">
-<p>These files are used to schedule tasks which cron runs at the specified times.</p>
+<p>这些文件用于安排任务，cron 会在指定的时间运行这些任务。</p>
 </div>
 <div class="paragraph">
-<p>Each entry in a crontab defines a task to run and is known as a <em>cron job</em>.</p>
+<p>crontab 中的每个条目定义了一个要运行的任务，被称为 <em>cron 作业</em>。</p>
 </div>
 <div class="paragraph">
-<p>Two different types of configuration files are used: the system crontab, which should not be modified, and user crontabs, which can be created and edited as needed. The format used by these files is documented in <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a>. The format of the system crontab, <span class="filename">/etc/crontab</span> includes a <code>who</code> column which does not exist in user crontabs. In the system crontab, cron runs the command as the user specified in this column. In a user crontab, all commands run as the user who created the crontab.</p>
+<p>使用了两种不同类型的配置文件：系统 crontab 和用户 crontab。系统 crontab 不应该被修改，而用户 crontab 可以根据需要创建和编辑。这些文件使用的格式在 <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a> 中有文档记录。系统 crontab 的格式（.filename]<mark>/etc/crontab</mark>）包括一个 <code>who</code> 列，在用户 crontab 中不存在。在系统 crontab 中，cron 根据该列中指定的用户运行命令。在用户 crontab 中，所有命令都以创建 crontab 的用户身份运行。</p>
 </div>
 <div class="paragraph">
-<p>User crontabs allow individual users to schedule their own tasks. The <code>root</code> user can also have a user <span class="filename">crontab</span> which can be used to schedule tasks that do not exist in the system <span class="filename">crontab</span>.</p>
+<p>用户的 crontab 允许个别用户安排自己的任务。<code>root</code> 用户也可以拥有一个用户 crontab ，用于安排系统中不存在的任务。</p>
 </div>
 <div class="paragraph">
-<p>Here is a sample entry from the system crontab, <span class="filename">/etc/crontab</span>:</p>
+<p>这是系统 crontab 的一个示例条目，<span class="filename">/etc/crontab</span>:</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15230,27 +15230,27 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin <i class="conu
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Lines that begin with the <code>#</code> character are comments. A comment can be placed in the file as a reminder of what and why a desired action is performed. Comments cannot be on the same line as a command or else they will be interpreted as part of the command; they must be on a new line. Blank lines are ignored.</td>
+<td>以 <code>#</code> 字符开头的行是注释。注释可以放在文件中作为对所执行的操作的内容和原因的提醒。注释不能与命令在同一行，否则它们将被解释为命令的一部分；它们必须在新的一行上。空行会被忽略。</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The equals (<code>=</code>) character is used to define any environment settings. In this example, it is used to define the <code>SHELL</code> and <code>PATH</code>. If the <code>SHELL</code> is omitted, cron will use the default Bourne shell. If the <code>PATH</code> is omitted, the full path must be given to the command or script to run.</td>
+<td>等号（<code>=</code>）字符用于定义任何环境设置。在这个例子中，它被用来定义 <code>SHELL</code> 和 <code>PATH</code>。如果省略了 <code>SHELL</code>， cron 将使用默认的 Bourne shell。如果省略了 <code>PATH</code>，则必须提供要运行的命令或脚本的完整路径。</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>This line defines the seven fields used in a system crontab: <code>minute</code>, <code>hour</code>, <code>mday</code>, <code>month</code>, <code>wday</code>, <code>who</code>, and <code>command</code>. The <code>minute</code> field is the time in minutes when the specified command will be run, the <code>hour</code> is the hour when the specified command will be run, the <code>mday</code> is the day of the month, <code>month</code> is the month, and <code>wday</code> is the day of the week. These fields must be numeric values, representing the twenty-four hour clock, or a <code>*</code>, representing all values for that field. The <code>who</code> field only exists in the system crontab and specifies which user the command should be run as. The last field is the command to be executed.</td>
+<td>这行定义了系统 crontab 中使用的七个字段：<code>minute</code>（分钟）、<code>hour</code>（小时）、<code>mday</code>（月中的某一天）、<code>month</code>（月份）、<code>wday</code>（星期几）、<code>who</code>（用户）和 <code>command</code>（命令）。<code>minute</code> 字段表示指定命令将运行的分钟数，<code>hour</code> 字段表示指定命令将运行的小时数，<code>mday</code> 字段表示月份中的某一天，<code>month</code> 字段表示月份，<code>wday</code> 字段表示星期几。这些字段必须是数字值，表示 24 小时制的时间，或者是 <code>*</code>，表示该字段的所有值。<code>who</code> 字段仅存在于系统 crontab 中，用于指定命令应该以哪个用户身份运行。最后一个字段是要执行的命令。</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>This entry defines the values for this cron job. The <code>*/11</code>, followed by several more <code>*</code> characters, specifies that <code>/usr/libexec/save-entropy</code> is invoked by <code>operator</code> every eleven minutes of every hour, of every day and day of the week, of every month. Commands can include any number of switches. However, commands which extend to multiple lines need to be broken with the backslash &#34;\&#34; continuation character.</td>
+<td>此条目定义了此 cron 作业的值。<code>*/11</code> 后面跟着几个 <code>*</code> 字符，指定了 <code>/usr/libexec/save-entropy</code> 在每小时的每十一分钟，每天的每小时，每周的每天，每月的每天都由 <code>operator</code> 调用。命令可以包含任意数量的开关。然而，跨多行的命令需要使用反斜杠 &#34;\&#34; 继续字符进行分割。</td>
 </tr>
 </tbody></table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configtuning-installcrontab">14.4.2. Creating a User Crontab<a class="anchor" href="#configtuning-installcrontab"></a></h4>
+<h4 id="configtuning-installcrontab">14.4.2. 创建用户的定时任务表<a class="anchor" href="#configtuning-installcrontab"></a></h4>
 <div class="paragraph">
-<p>To create a user crontab, invoke <code>crontab</code> in editor mode:</p>
+<p>要创建一个用户的定时任务表，可以在编辑器模式下调用 <code>crontab</code> 命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15258,10 +15258,10 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin <i class="conu
 </div>
 </div>
 <div class="paragraph">
-<p>This will open the user’s crontab using the default text editor. The first time a user runs this command, it will open an empty file. Once a user creates a crontab, this command will open that file for editing.</p>
+<p>这将使用默认的文本编辑器打开用户的 crontab。当用户第一次运行此命令时，它将打开一个空文件。一旦用户创建了一个 crontab，此命令将打开该文件以供编辑。</p>
 </div>
 <div class="paragraph">
-<p>It is useful to add these lines to the top of the crontab file in order to set the environment variables and to remember the meanings of the fields in the crontab:</p>
+<p>在 crontab 文件的顶部添加以下行是很有用的，这样可以设置环境变量并记住 crontab 中字段的含义：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15272,7 +15272,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 </div>
 </div>
 <div class="paragraph">
-<p>Then add a line for each command or script to run, specifying the time to run the command. This example runs the specified custom Bourne shell script every day at two in the afternoon. Since the path to the script is not specified in <code>PATH</code>, the full path to the script is given:</p>
+<p>然后为每个要运行的命令或脚本添加一行，指定运行命令的时间。此示例在每天下午两点运行指定的自定义 Bourne shell 脚本。由于脚本的路径没有在 <code>PATH</code> 中指定，因此给出了脚本的完整路径：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15287,7 +15287,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Before using a custom script, make sure it is executable and test it with the limited set of environment variables set by cron. To replicate the environment that would be used to run the above cron entry, use:</p>
+<p>在使用自定义脚本之前，请确保它是可执行的，并使用 cron 设置的有限环境变量集进行测试。要复制用于运行上述 cron 条目的环境，请使用：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15295,14 +15295,14 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 </div>
 </div>
 <div class="paragraph">
-<p>The environment set by cron is discussed in <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a>. Checking that scripts operate correctly in a cron environment is especially important if they include any commands that delete files using wildcards.</p>
+<p>在 <a href="https://man.freebsd.org/cgi/man.cgi?query=crontab&amp;sektion=5&amp;format=html">crontab(5)</a> 中讨论了由 cron 设置的环境。如果脚本中包含使用通配符删除文件的命令，那么在 cron 环境中检查脚本的正确运行尤为重要。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>When finished editing the crontab, save the file. It will automatically be installed, and cron will read the crontab and run its cron jobs at their specified times. To list the cron jobs in a crontab, use this command:</p>
+<p>编辑完 crontab 后，保存文件。它将自动安装，并且 cron 将读取 crontab 并在指定的时间运行其 cron 作业。要列出 crontab 中的 cron 作业，请使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15310,7 +15310,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15318,7 +15318,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 </div>
 </div>
 <div class="paragraph">
-<p>To remove all of the cron jobs in a user crontab:</p>
+<p>要删除用户 crontab 中的所有 cron 作业：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15326,7 +15326,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15337,22 +15337,22 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 <div class="sect3">
 <h4 id="configtuning-periodic">14.4.3. Periodic<a class="anchor" href="#configtuning-periodic"></a></h4>
 <div class="paragraph">
-<p>FreeBSD provides a set of system management scripts to check status of various subsystems, perform security-related checks, rotate log files, etc. These scripts are run on a periodic basis: daily. weekly, or monthly. The management of these tasks is performed by <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> and its configuration resides in <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic.conf&amp;sektion=5&amp;format=html">periodic.conf(5)</a>. The periodic tasks are initiated by entries in the system crontab, shown above.</p>
+<p>FreeBSD 提供了一组系统管理脚本，用于检查各种子系统的状态，执行与安全相关的检查，轮转日志文件等。这些脚本定期运行：每天、每周或每月。这些任务的管理由 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 执行，并且其配置存储在 <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic.conf&amp;sektion=5&amp;format=html">periodic.conf(5)</a> 中。定期任务由系统 crontab 中的条目启动，如上所示。</p>
 </div>
 <div class="paragraph">
-<p>Scripts executed by <a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> are located in <span class="filename">/etc/periodic/</span> for base utilities and in <span class="filename">/usr/local/etc/periodic/</span> for third-party software.</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=periodic&amp;sektion=8&amp;format=html">periodic(8)</a> 执行的脚本位于基本工具的 <span class="filename">/etc/periodic/</span> 目录下，第三方软件的脚本位于 <span class="filename">/usr/local/etc/periodic/</span> 目录下。</p>
 </div>
 <div class="paragraph">
-<p>They are organized in 4 subdirectories, daily, weekly, monthly and security.</p>
+<p>它们被组织在 4 个子目录中，分别是 daily（每日）、weekly（每周）、monthly（每月）和 security（安全）。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="enable-disable-periodic">14.4.4. Enable or Disable Periodic Tasks<a class="anchor" href="#enable-disable-periodic"></a></h4>
+<h4 id="enable-disable-periodic">14.4.4. 启用或禁用定期任务<a class="anchor" href="#enable-disable-periodic"></a></h4>
 <div class="paragraph">
-<p>FreeBSD has some scripts enabled by default to run periodically.</p>
+<p>FreeBSD 默认启用了一些定期运行的脚本。</p>
 </div>
 <div class="paragraph">
-<p>To enable or disable a task, the first step is to edit <span class="filename">/etc/periodic.conf</span> executing the following command:</p>
+<p>要启用或禁用任务，第一步是编辑 <span class="filename">/etc/periodic.conf</span> 文件，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15360,7 +15360,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 </div>
 </div>
 <div class="paragraph">
-<p>And then to enable, for example, <code>daily_status_zfs_enable</code> put the following content in the file:</p>
+<p>然后，要启用 <code>daily_status_zfs_enable</code>，请将以下内容放入文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15368,19 +15368,19 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 </div>
 </div>
 <div class="paragraph">
-<p>To disable a task that is active by default, all that needs to be done is to change <code>YES</code> to <code>NO</code>.</p>
+<p>要禁用默认情况下处于活动状态的任务，只需将 <code>YES</code> 更改为 <code>NO</code> 即可。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-output-periodic-tasks">14.4.5. Configuring the Output of Periodic Tasks<a class="anchor" href="#configuring-output-periodic-tasks"></a></h4>
+<h4 id="configuring-output-periodic-tasks">14.4.5. 配置定期任务的输出<a class="anchor" href="#configuring-output-periodic-tasks"></a></h4>
 <div class="paragraph">
-<p>In <span class="filename">/etc/periodic.conf</span> the variables <code>daily_output</code>, <code>weekly_output</code> and <code>monthly_output</code> specifies where to send the results of the script execution.</p>
+<p>在 <span class="filename">/etc/periodic.conf</span> 文件中，变量 <code>daily_output</code>、<code>weekly_output</code> 和 <code>monthly_output</code> 指定了脚本执行结果的发送位置。</p>
 </div>
 <div class="paragraph">
-<p>By default the output of the periodic scripts are emailed to root, and therefore it is best to read root’s mail or alias root to a mailbox that is monitored.</p>
+<p>默认情况下，周期性脚本的输出会发送到 root 的邮箱，因此最好阅读 root 的邮件或将 root 的别名设置为一个被监控的邮箱。</p>
 </div>
 <div class="paragraph">
-<p>To send the results to another email or to other emails, add the email addresses separated by spaces to <span class="filename">/etc/periodic.conf</span>:</p>
+<p>要将结果发送到另一个电子邮件或其他电子邮件，请将电子邮件地址以空格分隔添加到 <span class="filename">/etc/periodic.conf</span> 中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15390,7 +15390,7 @@ monthly_output=&#34;email1@example.com email2@example.com&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To log periodic output instead of receiving it as email, add the following lines to <span class="filename">/etc/periodic.conf</span>. <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog&amp;sektion=8&amp;format=html">newsyslog(8)</a> will rotate these files at the appropriate times:</p>
+<p>要将周期性的输出记录到日志文件而不是通过电子邮件接收，将以下行添加到 <span class="filename">/etc/periodic.conf</span> 文件中。 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog&amp;sektion=8&amp;format=html">newsyslog(8)</a> 会在适当的时间对这些文件进行轮转：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15402,26 +15402,26 @@ monthly_output=/var/log/monthly.log</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configtuning-syslog">14.5. Configuring System Logging<a class="anchor" href="#configtuning-syslog"></a></h3>
+<h3 id="configtuning-syslog">14.5. 配置系统日志<a class="anchor" href="#configtuning-syslog"></a></h3>
 <div class="paragraph">
-<p>Generating and reading system logs is an important aspect of system administration. The information in system logs can be used to detect hardware and software issues as well as application and system configuration errors. This information also plays an important role in security auditing and incident response. Most system daemons and applications will generate log entries.</p>
+<p>生成和读取系统日志是系统管理的重要方面。系统日志中的信息可以用于检测硬件和软件问题，以及应用程序和系统配置错误。这些信息在安全审计和事件响应中也起着重要作用。大多数系统守护进程和应用程序都会生成日志条目。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD provides a system logger, <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a>, to manage logging. By default, syslogd is enabled and started when the system boots.</p>
+<p>FreeBSD 提供了一个系统日志记录器，<a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a>，用于管理日志记录。默认情况下，系统启动时会启用和启动 syslogd。</p>
 </div>
 <div class="paragraph">
-<p>This section describes how to configure the FreeBSD system logger for both local and remote logging and how to perform log rotation and log management.</p>
+<p>本节介绍了如何配置 FreeBSD 系统日志记录器以进行本地和远程日志记录，以及如何执行日志轮转和日志管理。</p>
 </div>
 <div class="sect3">
-<h4 id="_configuring_local_logging">14.5.1. Configuring Local Logging<a class="anchor" href="#_configuring_local_logging"></a></h4>
+<h4 id="_配置本地日志记录">14.5.1. 配置本地日志记录<a class="anchor" href="#_配置本地日志记录"></a></h4>
 <div class="paragraph">
-<p>The configuration file, <span class="filename">/etc/syslog.conf</span>, controls what syslogd does with log entries as they are received. There are several parameters to control the handling of incoming events. The <em>facility</em> describes which subsystem generated the message, such as the kernel or a daemon, and the <em>level</em> describes the severity of the event that occurred. This makes it possible to configure if and where a log message is logged, depending on the facility and level. It is also possible to take action depending on the application that sent the message, and in the case of remote logging, the hostname of the machine generating the logging event.</p>
+<p>配置文件 <span class="filename">/etc/syslog.conf</span> 控制着 syslogd 在接收到日志条目时的处理方式。有几个参数用于控制处理传入事件的方式。<em>facility</em> 描述了生成消息的子系统，例如内核或守护进程，而 <em>level</em> 描述了发生事件的严重程度。这使得可以根据 facility 和 level 配置是否以及在哪里记录日志消息。还可以根据发送消息的应用程序以及远程日志记录的情况下生成日志事件的机器的主机名来采取行动。</p>
 </div>
 <div class="paragraph">
-<p>This configuration file contains one line per action, where the syntax for each line is a selector field followed by an action field. The syntax of the selector field is <em>facility.level</em> which will match log messages from <em>facility</em> at level <em>level</em> or higher. It is also possible to add an optional comparison flag before the level to specify more precisely what is logged. Multiple selector fields can be used for the same action, and are separated with a semicolon (<code>;</code>). Using <code>*</code> will match everything. The action field denotes where to send the log message, such as to a file or remote log host.</p>
+<p>该配置文件每行包含一个操作，每行的语法是选择器字段后跟一个操作字段。选择器字段的语法是 <em>facility.level</em>，它将匹配 <em>facility</em> 在 <em>level</em> 或更高级别的日志消息。还可以在级别之前添加一个可选的比较标志，以更精确地指定记录的内容。可以为同一个操作使用多个选择器字段，并用分号 (<code>;</code>) 分隔。使用 <code>*</code> 将匹配所有内容。操作字段表示将日志消息发送到何处，例如文件或远程日志主机。</p>
 </div>
 <div class="paragraph">
-<p>As an example, here is the default <span class="filename">/etc/syslog.conf</span> from FreeBSD:</p>
+<p>以下是 FreeBSD 的默认 <span class="filename">/etc/syslog.conf</span> 示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15466,167 +15466,167 @@ include                                         /usr/local/etc/syslog.d</pre>
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Matches all messages with a level of <code>err</code> or higher, as well as <code>kern.warning</code>, <code>auth.notice</code> and <code>mail.crit</code>, and sends these log messages to the console (<span class="filename">/dev/console</span>). &lt;.&gt; Matches all messages from the <code>mail</code> facility at level <code>info</code> or above and logs the messages to <span class="filename">/var/log/maillog</span>. &lt;.&gt; Uses a comparison flag (<code>=</code>) to only match messages at level <code>debug</code> and logs them to <span class="filename">/var/log/debug.log</span>. &lt;.&gt; Is an example usage of a program specification. This makes the rules following it only valid for the specified program. In this case, only the messages generated by <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> are logged to <span class="filename">/var/log/devd.log</span>.</td>
+<td>匹配所有级别为 <code>err</code> 或更高的消息，以及 <code>kern.warning</code>、<code>auth.notice</code> 和 <code>mail.crit</code> ，并将这些日志消息发送到控制台（<span class="filename">/dev/console</span>）。 &lt;.&gt; 匹配所有级别为 <code>info</code> 或更高的 <code>mail</code> 设施的消息，并将这些消息记录到 <span class="filename">/var/log/maillog</span> 。 &lt;.&gt; 使用比较标志（<code>=</code>）仅匹配级别为 <code>debug</code> 的消息，并将其记录到 <span class="filename">/var/log/debug.log</span> 。 &lt;.&gt; 是程序规范的示例用法。这使得其后的规则仅对指定的程序有效。在这种情况下，只有由 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 生成的消息被记录到 <span class="filename">/var/log/devd.log</span> 。</td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>For more information about <span class="filename">/etc/syslog.conf</span>, its syntax, and more advanced usage examples, see <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog.conf&amp;sektion=5&amp;format=html">syslog.conf(5)</a>.</p>
+<p>有关 <span class="filename">/etc/syslog.conf</span> 的更多信息，包括其语法和更高级的用法示例，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog.conf&amp;sektion=5&amp;format=html">syslog.conf(5)</a>。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="logging-facilities">14.5.2. Logging Facilities<a class="anchor" href="#logging-facilities"></a></h4>
+<h4 id="logging-facilities">14.5.2. 日志记录设施<a class="anchor" href="#logging-facilities"></a></h4>
 <div class="paragraph">
-<p>A facility describes the part of the system generating the message. Facilities are a way of separating the different messages so that it is easier for the user to consult the logs.</p>
+<p>设施描述了系统生成消息的部分。设施是一种将不同的消息分开的方式，以便用户更容易查阅日志。</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">表 24. syslog facilities</caption>
+<caption class="title">表 24. syslog 设施</caption>
 <colgroup>
 <col style="width: 50%;"/>
 <col style="width: 50%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">名称</th>
+<th class="tableblock halign-left valign-top">描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The authorization system: <a href="https://man.freebsd.org/cgi/man.cgi?query=login&amp;sektion=1&amp;format=html">login(1)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=su&amp;sektion=1&amp;format=html">su(1)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=getty&amp;sektion=8&amp;format=html">getty(8)</a>, etc.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">认证</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">授权系统：<a href="https://man.freebsd.org/cgi/man.cgi?query=login&amp;sektion=1&amp;format=html">login(1)</a>，<a href="https://man.freebsd.org/cgi/man.cgi?query=su&amp;sektion=1&amp;format=html">su(1)</a>，<a href="https://man.freebsd.org/cgi/man.cgi?query=getty&amp;sektion=8&amp;format=html">getty(8)</a> 等。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">authpriv</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The same as auth, but logged to a file readable only by root.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">与 auth 相同，但日志记录到一个只有 root 用户可读的文件中。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">console</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Messages written to <span class="filename">/dev/console</span> by the kernel console output driver.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由内核控制台输出驱动程序写入到 <span class="filename">/dev/console</span> 的消息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">cron</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Messages written by the <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> daemon.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 守护进程编写的消息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">daemon</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">System daemons, such as <a href="https://man.freebsd.org/cgi/man.cgi?query=routed&amp;sektion=8&amp;format=html">routed(8)</a>, that are not provided for explicitly by other facilities.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">系统守护进程，例如 <a href="https://man.freebsd.org/cgi/man.cgi?query=routed&amp;sektion=8&amp;format=html">routed(8)</a>，这些进程不是由其他设施明确提供的。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ftp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The file transfer protocol daemons: <a href="https://man.freebsd.org/cgi/man.cgi?query=ftpd&amp;sektion=8&amp;format=html">ftpd(8)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=tftpd&amp;sektion=8&amp;format=html">tftpd(8)</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">文件传输协议守护进程：<a href="https://man.freebsd.org/cgi/man.cgi?query=ftpd&amp;sektion=8&amp;format=html">ftpd(8)</a>，<a href="https://man.freebsd.org/cgi/man.cgi?query=tftpd&amp;sektion=8&amp;format=html">tftpd(8)</a>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">kern</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Messages generated by the kernel. These cannot be generated by any user processes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由内核生成的消息。这些消息不能由任何用户进程生成。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">lpr</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The line printer spooling system: <a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a>, etc.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">行式打印机的排队系统：<a href="https://man.freebsd.org/cgi/man.cgi?query=lpr&amp;sektion=1&amp;format=html">lpr(1)</a>，<a href="https://man.freebsd.org/cgi/man.cgi?query=lpc&amp;sektion=8&amp;format=html">lpc(8)</a>，<a href="https://man.freebsd.org/cgi/man.cgi?query=lpd&amp;sektion=8&amp;format=html">lpd(8)</a> 等等。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mail</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The mail system.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">邮件系统。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mark</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This facility adds a record every 20 minutes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">该设施每 20 分钟添加一条记录。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">news</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The network news system.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络新闻系统。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ntp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The network time protocol system.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">网络时间协议系统。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">security</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security subsystems, such as <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=4&amp;format=html">ipfw(4)</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">安全子系统，如 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=4&amp;format=html">ipfw(4)</a>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">syslog</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Messages generated internally by syslogd(8).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">man:syslogd(8) 内部生成的消息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Messages generated by random user processes. <strong>This is the default facility identifier if none is specified</strong>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由随机用户进程生成的消息。<strong>如果未指定，则为默认的设施标识符</strong>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">uucp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Unix-to-Unix Copy system. An ancient protocol. Really weird to see messages from this facility.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unix 到 Unix 复制系统。一个古老的协议。真的很奇怪看到来自这个设施的消息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">local0 through local7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for local use.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">保留供本地使用。</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="logging-levels">14.5.3. Logging Levels<a class="anchor" href="#logging-levels"></a></h4>
+<h4 id="logging-levels">14.5.3. 日志级别<a class="anchor" href="#logging-levels"></a></h4>
 <div class="paragraph">
-<p>The level describes the severity of the message, and is a keyword from the following ordered list (higher to lower):</p>
+<p>级别描述了消息的严重程度，并且是以下有序列表中的关键字（从高到低）：</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">表 25. syslog levels</caption>
+<caption class="title">表 25. syslog 级别</caption>
 <colgroup>
 <col style="width: 50%;"/>
 <col style="width: 50%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">名称</th>
+<th class="tableblock halign-left valign-top">描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">emerg</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A panic condition. This is normally broadcast to all users.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">一种恐慌的情况。通常会向所有用户广播。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">alert</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A condition that should be corrected immediately, such as a corrupted system database.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">应立即纠正的条件，例如系统数据库损坏。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">crit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Critical conditions, e.g., hard device errors.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">关键条件，例如硬件设备错误。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">err</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Errors.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">错误。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">warning</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Warning messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">警告信息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">notice</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Conditions that are not error conditions, but should possibly be handled specially.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">不是错误条件，但可能需要特殊处理的条件。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">info</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Informational messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">信息性消息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">debug</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Messages that contain information normally of use only when debugging a program.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">包含通常仅在调试程序时有用的信息的消息。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This special level disables a particular facility.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">这个特殊级别禁用了一个特定的功能。</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="read-log-messages">14.5.4. Read Log Messages<a class="anchor" href="#read-log-messages"></a></h4>
+<h4 id="read-log-messages">14.5.4. 阅读日志消息<a class="anchor" href="#read-log-messages"></a></h4>
 <div class="paragraph">
-<p>By default FreeBSD log files use the format <a href="https://datatracker.ietf.org/doc/html/rfc3164">rfc3164</a>, also known as The BSD syslog Protocol. Learn more about other formats and how to use them at <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=8&amp;format=html">syslog(8)</a>.</p>
+<p>默认情况下，FreeBSD 日志文件使用 <a href="https://datatracker.ietf.org/doc/html/rfc3164">rfc3164</a> 格式，也被称为 BSD syslog 协议。了解更多关于其他格式以及如何使用它们的信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=8&amp;format=html">syslog(8)</a>。</p>
 </div>
 <div class="paragraph">
-<p>Typically the logs have the following syntax:</p>
+<p>通常日志具有以下语法：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15634,7 +15634,7 @@ include                                         /usr/local/etc/syslog.d</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output of the <span class="filename">/var/log/cron</span> file will be used as an example:</p>
+<p>将使用 <span class="filename">/var/log/cron</span> 文件的输出作为示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15645,7 +15645,7 @@ Jul 16 12:44:00 FreeBSD /usr/sbin/cron[83072]: (operator) CMD (/usr/libexec/save
 </div>
 </div>
 <div class="paragraph">
-<p>Verbose logging, so the facility and the level on each message will be added, can be enabled in <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=8&amp;format=html">syslog(8)</a> by running the following command:</p>
+<p>可以通过运行以下命令在 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog&amp;sektion=8&amp;format=html">syslog(8)</a> 中启用详细日志记录，这样每条消息的设施和级别都会被添加：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15653,7 +15653,7 @@ Jul 16 12:44:00 FreeBSD /usr/sbin/cron[83072]: (operator) CMD (/usr/libexec/save
 </div>
 </div>
 <div class="paragraph">
-<p>Once the function is activated, the facility and the level will be displayed in the log as shown in the following example:</p>
+<p>一旦函数被激活，设施和级别将会在日志中显示，如下面的示例所示：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15665,15 +15665,15 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="sect3">
-<h4 id="_log_management_and_rotation">14.5.5. Log Management and Rotation<a class="anchor" href="#_log_management_and_rotation"></a></h4>
+<h4 id="_日志管理和轮转">14.5.5. 日志管理和轮转<a class="anchor" href="#_日志管理和轮转"></a></h4>
 <div class="paragraph">
-<p>Log files can grow quickly, taking up disk space and making it more difficult to locate useful information.</p>
+<p>日志文件可以快速增长，占用磁盘空间，并且使得查找有用信息变得更加困难。</p>
 </div>
 <div class="paragraph">
-<p>In FreeBSD, <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog&amp;sektion=8&amp;format=html">newsyslog(8)</a> is used to manage log files and attempt to mitigate this.</p>
+<p>在 FreeBSD 中，<a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog&amp;sektion=8&amp;format=html">newsyslog(8)</a> 用于管理日志文件并尝试减轻这个问题。</p>
 </div>
 <div class="paragraph">
-<p>This built-in program periodically rotates and compresses log files, and optionally creates missing log files and signals programs when log files are moved.</p>
+<p>这个内置程序定期轮转和压缩日志文件，并可选择创建丢失的日志文件，并在日志文件移动时向程序发送信号。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -15683,14 +15683,14 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Since newsyslog is run from <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>, it cannot rotate files more often than it is scheduled to run from <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a>. In the default configuration, it runs every hour.</p>
+<p>由于 newsyslog 是从 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 运行的，它不能比从 <a href="https://man.freebsd.org/cgi/man.cgi?query=cron&amp;sektion=8&amp;format=html">cron(8)</a> 计划运行的频率更频繁地旋转文件。在默认配置中，它每小时运行一次。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Here is the default configuration in FreeBSD, more information in <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a>:</p>
+<p>以下是 FreeBSD 中的默认配置，在 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 中可以找到更多信息：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15735,31 +15735,31 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>logfilename</code> - Name of the system log file to be archived.</p>
+<p><code>logfilename</code> - 要归档的系统日志文件的名称。</p>
 </li>
 <li>
-<p><code>[owner:group]</code> - This optional field specifies the owner and group for the archive file.</p>
+<p><code>[owner:group]</code> - 这个可选字段指定了存档文件的所有者和组。</p>
 </li>
 <li>
-<p><code>mode</code> - Specify the file mode of the log file and archives. Valid mode bits are 0666. (That is, read and write permissions for the rotated log may be specified for the owner, group, and others.)</p>
+<p><code>mode</code> - 指定日志文件和归档文件的文件模式。有效的模式位是 0666 （即，可以为所有者、组和其他用户指定旋转日志的读写权限）。</p>
 </li>
 <li>
-<p><code>count</code> - Specify the maximum number of archive files which may exist.</p>
+<p><code>count</code> - 指定允许存在的归档文件的最大数量。</p>
 </li>
 <li>
-<p><code>size</code> - When the size of the log file reaches size in kilobytes, the log file will be trimmed as described above. If this field contains an asterisk (&#39;*&#39;), the log file will not be trimmed based on size.</p>
+<p><code>size</code> - 当日志文件的大小达到指定的大小（以千字节为单位）时，将按照上述描述进行修剪。如果该字段包含星号（&#39;*&#39;），则不会根据大小来修剪日志文件。</p>
 </li>
 <li>
-<p><code>when</code> - Consist of an interval, a specific time, or both. Supported options in <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a>.</p>
+<p><code>when</code> - 由一个时间间隔、一个特定时间或两者组成。在 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 中支持的选项。</p>
 </li>
 <li>
-<p><code>flags</code> - Indicates the flags that newsyslog accepts, supported options in <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a>.</p>
+<p><code>flags</code> - 表示 newsyslog 接受的标志，<a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 中支持的选项。</p>
 </li>
 <li>
-<p><code>[/pid_file]</code> - This optional field specifies the file name containing a daemon’s process ID or to find a group process ID.</p>
+<p><code>[/pid_file]</code> - 这个可选字段指定包含守护进程的进程 ID 或查找进程组 ID 的文件名。</p>
 </li>
 <li>
-<p><code>[sig_num]</code> - This optional field specifies the signal that will be sent to the daemon process.</p>
+<p><code>[sig_num]</code> - 这个可选字段指定将发送给守护进程的信号。</p>
 </li>
 </ol>
 </div>
@@ -15771,7 +15771,7 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The last two fields are optional and specify the name of the Process ID (PID) file of a process and a signal number to send to that process when the file is rotated.</p>
+<p>最后两个字段是可选的，用于指定进程的进程 ID（PID）文件的名称以及在文件轮转时发送给该进程的信号编号。</p>
 </div>
 </td>
 </tr>
@@ -15779,42 +15779,42 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="sect3">
-<h4 id="network-syslogd">14.5.6. Configuring Remote Logging<a class="anchor" href="#network-syslogd"></a></h4>
+<h4 id="network-syslogd">14.5.6. 配置远程日志记录<a class="anchor" href="#network-syslogd"></a></h4>
 <div class="paragraph">
-<p>Monitoring the log files of multiple hosts can become unwieldy as the number of systems increases. Configuring centralized logging can reduce some of the administrative burden of log file administration.</p>
+<p>随着系统数量的增加，监控多个主机的日志文件可能变得难以管理。配置集中式日志记录可以减轻一些日志文件管理的行政负担。</p>
 </div>
 <div class="paragraph">
-<p>In FreeBSD, centralized log file aggregation, merging, and rotation can be configured using syslogd and newsyslog.</p>
+<p>在 FreeBSD 中，可以使用 syslogd 和 newsyslog 来配置集中式日志文件聚合、合并和轮转。</p>
 </div>
 <div class="paragraph">
-<p>This section demonstrates an example configuration, where host <code>A</code>, named <code>logserv.example.com</code>, will collect logging information for the local network.</p>
+<p>本节演示了一个示例配置，其中主机 <code>A</code>，名为 <code>logserv.example.com</code>，将收集本地网络的日志信息。</p>
 </div>
 <div class="paragraph">
-<p>Host <code>B</code>, named <code>logclient.example.com</code>, will be configured to pass logging information to the logging server.</p>
+<p>主机 <code>B</code>，名为 <code>logclient.example.com</code>，将被配置为将日志信息传递给日志服务器。</p>
 </div>
 <div class="sect4">
-<h5 id="_log_server_configuration">14.5.6.1. Log Server Configuration<a class="anchor" href="#_log_server_configuration"></a></h5>
+<h5 id="_日志服务器配置">14.5.6.1. 日志服务器配置<a class="anchor" href="#_日志服务器配置"></a></h5>
 <div class="paragraph">
-<p>A log server is a system that has been configured to accept logging information from other hosts.</p>
+<p>日志服务器是一个已配置好的系统，用于接收来自其他主机的日志信息。</p>
 </div>
 <div class="paragraph">
-<p>Before configuring a log server, check the following:</p>
+<p>在配置日志服务器之前，请检查以下内容：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>If there is a firewall between the logging server and any logging clients, ensure that the firewall ruleset allows UDP port 514 for both the clients and the server.</p>
+<p>如果在日志服务器和任何日志客户端之间存在防火墙，请确保防火墙规则集允许客户端和服务器的 UDP 端口 514。</p>
 </li>
 <li>
-<p>The logging server and all client machines must have forward and reverse entries in the local DNS. If the network does not have a DNS server, create entries in each system’s <span class="filename">/etc/hosts</span>. Proper name resolution is required so that log entries are not rejected by the logging server.</p>
+<p>日志服务器和所有客户端机器必须在本地 DNS 中具有正向和反向条目。如果网络没有 DNS 服务器，请在每个系统的 <span class="filename">/etc/hosts</span> 中创建条目。正确的名称解析是必需的，以便日志条目不会被日志服务器拒绝。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>On the log server, edit <span class="filename">/etc/syslog.conf</span> to specify the name of the client to receive log entries from, the logging facility to be used, and the name of the log to store the host’s log entries. This example adds the hostname of <code>B</code>, logs all facilities, and stores the log entries in <span class="filename">/var/log/logclient.log</span>.</p>
+<p>在日志服务器上，编辑 <span class="filename">/etc/syslog.conf</span> 文件，指定要接收日志条目的客户端名称，要使用的日志设施以及存储主机日志条目的日志名称。此示例将主机名 <code>B</code> 添加到日志中，记录所有设施，并将日志条目存储在 <span class="filename">/var/log/logclient.log</span> 文件中。</p>
 </div>
 <div class="exampleblock">
-<div class="title">例 22. Sample Log Server Configuration</div>
+<div class="title">例 22. 示例日志服务器配置</div>
 <div class="content">
 <div class="literalblock programlisting">
 <div class="content">
@@ -15825,10 +15825,10 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>When adding multiple log clients, add a similar two-line entry for each client. More information about the available facilities may be found in <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog.conf&amp;sektion=5&amp;format=html">syslog.conf(5)</a>.</p>
+<p>当添加多个日志客户端时，为每个客户端添加类似的两行条目。有关可用设施的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslog.conf&amp;sektion=5&amp;format=html">syslog.conf(5)</a>。</p>
 </div>
 <div class="paragraph">
-<p>Next, execute the following commands:</p>
+<p>接下来，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15837,13 +15837,13 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>The first entry starts syslogd at system boot. The second entry allows log entries from the specified client. The <code>-v -v</code> increases the verbosity of logged messages. This is useful for tweaking facilities as administrators are able to see what type of messages are being logged under each facility.</p>
+<p>第一条条目在系统启动时启动 syslogd 。第二条条目允许来自指定客户端的日志条目。 <code>-v -v</code> 增加了日志消息的详细程度。这对于调整设施非常有用，因为管理员可以看到每个设施下记录了什么类型的消息。</p>
 </div>
 <div class="paragraph">
-<p>Multiple <code>-a</code> options may be specified to allow logging from multiple clients. IP addresses and whole netblocks may also be specified. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a> for a full list of possible options.</p>
+<p>可以指定多个 <code>-a</code> 选项来允许从多个客户端进行日志记录。还可以指定 IP 地址和整个网络块。有关可能选项的完整列表，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=syslogd&amp;sektion=8&amp;format=html">syslogd(8)</a>。</p>
 </div>
 <div class="paragraph">
-<p>Finally, create the log file:</p>
+<p>最后，创建日志文件：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15851,7 +15851,7 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>At this point, syslogd should be restarted and verified:</p>
+<p>此时，应重新启动并验证 syslogd ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15860,16 +15860,16 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>If a PID is returned, the server restarted successfully, and client configuration can begin. If the server did not restart, consult <span class="filename">/var/log/messages</span> for the error.</p>
+<p>如果返回了一个 PID，则表示服务器成功重启，可以开始客户端配置。如果服务器没有重启，请查看错误信息，请参考 <span class="filename">/var/log/messages</span> 文件。</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_log_client_configuration">14.5.6.2. Log Client Configuration<a class="anchor" href="#_log_client_configuration"></a></h5>
+<h5 id="_日志客户端配置">14.5.6.2. 日志客户端配置<a class="anchor" href="#_日志客户端配置"></a></h5>
 <div class="paragraph">
-<p>A logging client sends log entries to a logging server on the network. The client also keeps a local copy of its own logs.</p>
+<p>一个日志客户端将日志条目发送到网络上的日志服务器。客户端还保留了自己日志的本地副本。</p>
 </div>
 <div class="paragraph">
-<p>Once a logging server has been configured, execute the following commands on the logging client:</p>
+<p>一旦配置了日志服务器，就在日志客户端上执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15878,10 +15878,10 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>The first entry enables syslogd on boot up. The second entry prevents logs from being accepted by this client from other hosts (<code>-s</code>) and increases the verbosity of logged messages.</p>
+<p>第一项启用了系统启动时的 syslogd。第二项阻止其他主机向此客户端接受日志（<code>-s</code>），并增加了日志消息的详细程度。</p>
 </div>
 <div class="paragraph">
-<p>Next, define the logging server in the client’s <span class="filename">/etc/syslog.conf</span>. In this example, all logged facilities are sent to a remote system, denoted by the <code>@</code> symbol, with the specified hostname:</p>
+<p>接下来，在客户端的 <span class="filename">/etc/syslog.conf</span> 文件中定义日志服务器。在这个例子中，所有记录的设施都会被发送到一个远程系统，用 <code>@</code> 符号表示，并指定主机名：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15889,7 +15889,7 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>After saving the edit, restart syslogd for the changes to take effect:</p>
+<p>保存编辑后，重新启动 syslogd 以使更改生效：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15897,7 +15897,7 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>To test that log messages are being sent across the network, use <a href="https://man.freebsd.org/cgi/man.cgi?query=logger&amp;sektion=1&amp;format=html">logger(1)</a> on the client to send a message to syslogd:</p>
+<p>为了测试日志消息是否通过网络发送，可以在客户端使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=logger&amp;sektion=1&amp;format=html">logger(1)</a> 命令向 syslogd 发送一条消息。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15905,19 +15905,19 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>This message should now exist both in <span class="filename">/var/log/messages</span> on the client and <span class="filename">/var/log/logclient.log</span> on the log server.</p>
+<p>此消息现在应该同时存在于客户端的 <span class="filename">/var/log/messages</span> 和日志服务器的 <span class="filename">/var/log/logclient.log</span> 中。</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_debugging_log_servers">14.5.6.3. Debugging Log Servers<a class="anchor" href="#_debugging_log_servers"></a></h5>
+<h5 id="_调试日志服务器">14.5.6.3. 调试日志服务器<a class="anchor" href="#_调试日志服务器"></a></h5>
 <div class="paragraph">
-<p>If no messages are being received on the log server, the cause is most likely a network connectivity issue, a hostname resolution issue, or a typo in a configuration file. To isolate the cause, ensure that both the logging server and the logging client are able to <code>ping</code> each other using the hostname specified in their <span class="filename">/etc/rc.conf</span>. If this fails, check the network cabling, the firewall ruleset, and the hostname entries in the DNS server or <span class="filename">/etc/hosts</span> on both the logging server and clients. Repeat until the <code>ping</code> is successful from both hosts.</p>
+<p>如果日志服务器上没有接收到任何消息，原因很可能是网络连接问题、主机名解析问题或配置文件中的拼写错误。为了确定原因，确保日志服务器和日志客户端都能够使用它们在 <span class="filename">/etc/rc.conf</span> 中指定的主机名相互 <code>ping</code>。如果失败，请检查网络电缆、防火墙规则集以及 DNS 服务器或日志服务器和客户端上的 <span class="filename">/etc/hosts</span> 中的主机名条目。重复此过程，直到从两个主机都成功 <code>ping</code>。</p>
 </div>
 <div class="paragraph">
-<p>If the <code>ping</code> succeeds on both hosts but log messages are still not being received, temporarily increase logging verbosity to narrow down the configuration issue. In the following example, <span class="filename">/var/log/logclient.log</span> on the logging server is empty and <span class="filename">/var/log/messages</span> on the logging client does not indicate a reason for the failure.</p>
+<p>如果在两台主机上都成功执行了 <code>ping</code> 命令，但仍然无法接收到日志消息，则可以暂时增加日志的详细程度以缩小配置问题的范围。在下面的示例中，日志服务器上的 <span class="filename">/var/log/logclient.log</span> 文件为空，而日志客户端上的 <span class="filename">/var/log/messages</span> 文件没有显示失败的原因。</p>
 </div>
 <div class="paragraph">
-<p>To increase debugging output, edit the <code>syslogd_flags</code> entry on the logging server and issue a restart:</p>
+<p>为了增加调试输出，编辑日志服务器上的 <code>syslogd_flags</code> 条目并执行重启操作：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15930,7 +15930,7 @@ Jul 16 17:44:00 &lt;cron.info&gt; FreeBSD /usr/sbin/cron[1030]: (operator) CMD (
 </div>
 </div>
 <div class="paragraph">
-<p>Debugging data similar to the following will flash on the console immediately after the restart:</p>
+<p>在重新启动后，类似以下的调试数据将立即在控制台上闪现：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15945,7 +15945,7 @@ rejected in rule 0 due to name mismatch.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In this example, the log messages are being rejected due to a typo which results in a hostname mismatch. The client’s hostname should be <code>logclient</code>, not <code>logclien</code>. Fix the typo, issue a restart, and verify the results:</p>
+<p>在这个例子中，由于一个拼写错误导致日志消息被拒绝，从而导致主机名不匹配。客户端的主机名应该是 <code>logclient</code>，而不是 <code>logclien</code>。修复拼写错误，重新启动，并验证结果。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15953,7 +15953,7 @@ rejected in rule 0 due to name mismatch.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -15972,29 +15972,29 @@ Logging to FILE /var/log/messages</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>At this point, the messages are being properly received and placed in the correct file.</p>
+<p>目前，消息已经被正确接收并放置在正确的文件中。</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_security_considerations">14.5.6.4. Security Considerations<a class="anchor" href="#_security_considerations"></a></h5>
+<h5 id="_安全考虑">14.5.6.4. 安全考虑<a class="anchor" href="#_安全考虑"></a></h5>
 <div class="paragraph">
-<p>As with any network service, security requirements should be considered before implementing a logging server. Log files may contain sensitive data about services enabled on the local host, user accounts, and configuration data. Network data sent from the client to the server will not be encrypted or password protected. If a need for encryption exists, consider using <a class="package" href="https://cgit.freebsd.org/ports/tree/security/stunnel/">security/stunnel</a>, which will transmit the logging data over an encrypted tunnel.</p>
+<p>与任何网络服务一样，在实施日志服务器之前应考虑安全要求。日志文件可能包含有关本地主机上启用的服务、用户帐户和配置数据的敏感信息。从客户端发送到服务器的网络数据将不会进行加密或密码保护。如果需要加密，请考虑使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/security/stunnel/">security/stunnel</a>，它将通过加密隧道传输日志数据。</p>
 </div>
 <div class="paragraph">
-<p>Local security is also an issue. Log files are not encrypted during use or after log rotation. Local users may access log files to gain additional insight into system configuration. Setting proper permissions on log files is critical. The built-in log rotator, newsyslog, supports setting permissions on newly created and rotated log files. Setting log files to mode <code>600</code> should prevent unwanted access by local users. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> for additional information.</p>
+<p>本地安全性也是一个问题。日志文件在使用过程中或在日志轮换后都没有加密。本地用户可以访问日志文件以获取有关系统配置的更多信息。在日志文件上设置适当的权限至关重要。内置的日志轮换程序 newsyslog 支持在新创建和轮换的日志文件上设置权限。将日志文件设置为 <code>600</code> 模式应该可以防止本地用户的非法访问。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=newsyslog.conf&amp;sektion=5&amp;format=html">newsyslog.conf(5)</a> 。</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="acpi-overview">14.6. Power and Resource Management<a class="anchor" href="#acpi-overview"></a></h3>
+<h3 id="acpi-overview">14.6. 功耗和资源管理<a class="anchor" href="#acpi-overview"></a></h3>
 <div class="paragraph">
-<p>It is important to utilize hardware resources in an efficient manner. Power and resource management allows the operating system to monitor system limits and to possibly run some actions triggered by events related to those limits.</p>
+<p>高效利用硬件资源是非常重要的。功耗和资源管理使操作系统能够监控系统限制，并可能根据与这些限制相关的事件运行一些操作。</p>
 </div>
 <div class="sect3">
-<h4 id="acpi-config">14.6.1. ACPI configuration<a class="anchor" href="#acpi-config"></a></h4>
+<h4 id="acpi-config">14.6.1. ACPI 配置<a class="anchor" href="#acpi-config"></a></h4>
 <div class="paragraph">
-<p>On FreeBSD the management of these resources is managed by the <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> kernel device.</p>
+<p>在 FreeBSD 上，这些资源的管理由 <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> 内核设备管理。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -16004,20 +16004,20 @@ Logging to FILE /var/log/messages</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>In FreeBSD the <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> driver is loaded by default at system boot.</p>
+<p>在 FreeBSD 中，默认情况下，在系统启动时加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> 驱动程序。</p>
 </div>
 <div class="paragraph">
-<p>This driver <strong>cannot be unloaded after boot</strong> because the system bus uses it for various hardware interactions.</p>
+<p>由于系统总线在各种硬件交互中使用该驱动程序，因此此驱动程序在引导后 <strong>无法卸载</strong>。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>In addition to <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a>, FreeBSD has several dedicated kernel modules for various ACPI vendor subsystems. These modules will add some extra functionality like fan speed, keyboard backlit or screen brightness.</p>
+<p>除了 <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> 之外，FreeBSD 还有几个专门的内核模块用于各种 ACPI 供应商子系统。这些模块将添加一些额外的功能，如风扇速度、键盘背光或屏幕亮度。</p>
 </div>
 <div class="paragraph">
-<p>The list can be obtained by running the following command:</p>
+<p>可以通过运行以下命令获取列表：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16025,7 +16025,7 @@ Logging to FILE /var/log/messages</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16045,7 +16045,7 @@ uacpi.ko</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In the event that, for example, an IBM/Lenovo laptop is used, it will be necessary to load the module <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi_ibm&amp;sektion=4&amp;format=html">acpi_ibm(4)</a> by executing the following command:</p>
+<p>例如，如果使用 IBM/Lenovo 笔记本电脑，则需要通过执行以下命令加载模块 <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi_ibm&amp;sektion=4&amp;format=html">acpi_ibm(4)</a>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16053,7 +16053,7 @@ uacpi.ko</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And add this line to <span class="filename">/boot/loader.conf</span> to load it at boot:</p>
+<p>并将以下行添加到 <span class="filename">/boot/loader.conf</span> 文件中，以在启动时加载它：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16061,7 +16061,7 @@ uacpi.ko</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>An alternative to the <a href="https://man.freebsd.org/cgi/man.cgi?query=acpi_video&amp;sektion=4&amp;format=html">acpi_video(4)</a> module is the <a href="https://man.freebsd.org/cgi/man.cgi?query=backlight&amp;sektion=9&amp;format=html">backlight(9)</a> driver. It provides a generic way for handling a panel backlight. The default GENERIC kernel includes this driver. The <a href="https://man.freebsd.org/cgi/man.cgi?query=backlight&amp;sektion=8&amp;format=html">backlight(8)</a> utility can be used to query and adjust the brightness of the panel backlight. In this example the brightness is decreased by 10%:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpi_video&amp;sektion=4&amp;format=html">acpi_video(4)</a> 模块的替代方案是 <a href="https://man.freebsd.org/cgi/man.cgi?query=backlight&amp;sektion=9&amp;format=html">backlight(9)</a> 驱动程序。它提供了一种通用的处理面板背光的方式。默认的 GENERIC 内核包含了这个驱动程序。<a href="https://man.freebsd.org/cgi/man.cgi?query=backlight&amp;sektion=8&amp;format=html">backlight(8)</a> 实用程序可用于查询和调整面板背光的亮度。在这个示例中，亮度减少了 10% ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16070,31 +16070,26 @@ uacpi.ko</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cpu-power-management">14.6.2. CPU Power Management<a class="anchor" href="#cpu-power-management"></a></h4>
+<h4 id="cpu-power-management">14.6.2. CPU 功耗管理<a class="anchor" href="#cpu-power-management"></a></h4>
 <div class="paragraph">
-<p>CPU is the most consuming part of the system. Knowing how to improve CPU efficiency is a fundamental part of our system in order to save energy.</p>
+<p>CPU 是系统中最消耗资源的部分。了解如何提高 CPU 效率是我们系统中节省能源的基本部分。</p>
 </div>
 <div class="paragraph">
-<p>In order to make proper use of the machine’s resources in a correct way, FreeBSD supports technologies such as Intel Turbo Boost, AMD Turbo Core, Intel Speed Shift among others through the use of <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> and cpufreq[4].</p>
+<p>为了正确地充分利用机器的资源，FreeBSD 通过使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 和 cpufreq[4] 等技术来支持诸如 Intel Turbo Boost、AMD Turbo Core、Intel Speed Shift 等技术。</p>
 </div>
 <div class="paragraph">
-<p>The first step will be to obtain the CPU information by executing the following command:</p>
+<p>第一步是通过执行以下命令来获取 CPU 信息：</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>sysctl dev.cpu.0 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tbody><tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>In this case the <code>0</code> digit represents the first core of the CPU.</td>
-</tr>
-</tbody></table>
+<div class="paragraph">
+<p>在这种情况下，数字 <code>0</code> 代表 CPU 的第一个核心。</p>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16121,23 +16116,23 @@ dev.cpu.0.%desc: ACPI CPU</pre>
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Lowest Cx state to use for idling the CPU.</td>
+<td>用于使 CPU 处于空闲状态的最低 Cx 状态。</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>CPU supported Cx states.</td>
+<td>CPU 支持的 Cx 状态。</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Currently available levels for the CPU (frequency/power usage).</td>
+<td>当前可用的 CPU 级别（频率 / 功耗）。</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Current active CPU frequency in MHz.</td>
+<td>当前活动的 CPU 频率（以 MHz 为单位）。</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Current temperature of the CPU.</td>
+<td>CPU 的当前温度。</td>
 </tr>
 </tbody></table>
 </div>
@@ -16149,17 +16144,17 @@ dev.cpu.0.%desc: ACPI CPU</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the temperature information is not displayed, load the <a href="https://man.freebsd.org/cgi/man.cgi?query=coretemp&amp;sektion=4&amp;format=html">coretemp(4)</a> module. In case of using an AMD CPU, load the <a href="https://man.freebsd.org/cgi/man.cgi?query=amdtemp&amp;sektion=4&amp;format=html">amdtemp(4)</a> module.</p>
+<p>如果温度信息未显示，请加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=coretemp&amp;sektion=4&amp;format=html">coretemp(4)</a> 模块。如果使用 AMD CPU，请加载 <a href="https://man.freebsd.org/cgi/man.cgi?query=amdtemp&amp;sektion=4&amp;format=html">amdtemp(4)</a> 模块。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Once the CPU information is available the easiest way to configure power saving is to let <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> take over.</p>
+<p>一旦 CPU 信息可用，配置节能的最简单方法是让 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 接管。</p>
 </div>
 <div class="paragraph">
-<p>Enable <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> service in <span class="filename">/etc/rc.conf</span> to start at system boot:</p>
+<p>在 <span class="filename">/etc/rc.conf</span> 中启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 服务，使其在系统启动时启动：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16167,7 +16162,7 @@ dev.cpu.0.%desc: ACPI CPU</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It will also be necessary to indicate certain parameters to <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> to tell it how to manage the state of the CPU executing the following command:</p>
+<p>还需要向 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 指定一些参数，以告诉它如何管理执行以下命令的 CPU 的状态：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16177,24 +16172,24 @@ dev.cpu.0.%desc: ACPI CPU</pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>-a</code>: Selects the mode to use while on AC power.</p>
+<p><code>-a</code>：选择在交流电源下使用的模式。</p>
 </li>
 <li>
-<p><code>hiadaptive</code>: Operation mode. More info at <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a>.</p>
+<p><code>hiadaptive</code>：操作模式。更多信息请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a>。</p>
 </li>
 <li>
-<p><code>-i</code>: Specifies the CPU load percent level when adaptive mode should begin to degrade performance to save power.</p>
+<p><code>-i</code>：指定当自适应模式开始降低性能以节省电力时的 CPU 负载百分比水平。</p>
 </li>
 <li>
-<p><code>-r</code>: Specifies the CPU load percent level where adaptive mode should consider the CPU running and increase performance.</p>
+<p><code>-r</code>：指定自适应模式应该考虑 CPU 运行并提高性能的 CPU 负载百分比水平。</p>
 </li>
 <li>
-<p><code>-N</code>: Treat &#34;nice&#34; time as idle for the purpose of load calculation; i.e., do not increase the CPU frequency if the CPU is only busy with &#34;nice&#34; processes.</p>
+<p><code>-N</code>：将“nice”时间视为空闲时间，用于负载计算；即，如果 CPU 仅忙于“nice”进程，则不增加 CPU 频率。</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>And then enable the service executing the following command:</p>
+<p>然后执行以下命令启用服务：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16203,18 +16198,18 @@ dev.cpu.0.%desc: ACPI CPU</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cpufreq">14.6.3. CPU Frequency Control<a class="anchor" href="#cpufreq"></a></h4>
+<h4 id="cpufreq">14.6.3. CPU 频率控制<a class="anchor" href="#cpufreq"></a></h4>
 <div class="paragraph">
-<p>FreeBSD includes a generic <a href="https://man.freebsd.org/cgi/man.cgi?query=cpufreq&amp;sektion=4&amp;format=html">cpufreq(4)</a> driver to allow the administrator, or software such as <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> and <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a>, to manage the frequency of the CPU to achieve the desired balance between performance and economy. A lower setting will save power while reducing the heat generated by the CPU. A higher setting will increase performance at the cost of using additional power and generating more heat.</p>
+<p>FreeBSD 包含一个通用的 <a href="https://man.freebsd.org/cgi/man.cgi?query=cpufreq&amp;sektion=4&amp;format=html">cpufreq(4)</a> 驱动程序，允许管理员或者像 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 和 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a> 这样的软件来管理 CPU 的频率，以实现性能和经济之间的理想平衡。降低设置可以节省电力，同时减少 CPU 产生的热量。提高设置可以增加性能，但会消耗额外的电力并产生更多的热量。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="est">14.6.4. Intel® Enhanced Speed Step™<a class="anchor" href="#est"></a></h4>
 <div class="paragraph">
-<p>The Intel® Enhanced Speed Step™ driver, <a href="https://man.freebsd.org/cgi/man.cgi?query=est&amp;sektion=4&amp;format=html">est(4)</a>, replaces the generic <a href="https://man.freebsd.org/cgi/man.cgi?query=cpufreq&amp;sektion=4&amp;format=html">cpufreq(4)</a> driver for CPUs that provide this feature. The CPU frequency can be statically adjusted using <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a>, or with the <code>/etc/rc.d/power_profile</code> startup script. Additional software, such as <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a>, can be used to automatically adjust the CPU frequency based on processor utilization.</p>
+<p>Intel® Enhanced Speed Step™ 驱动程序，<a href="https://man.freebsd.org/cgi/man.cgi?query=est&amp;sektion=4&amp;format=html">est(4)</a>，用于替代提供此功能的 CPU 的通用 <a href="https://man.freebsd.org/cgi/man.cgi?query=cpufreq&amp;sektion=4&amp;format=html">cpufreq(4)</a> 驱动程序。可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 或 <code>/etc/rc.d/power_profile</code> 启动脚本静态调整 CPU 频率。还可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a> 等其他软件根据处理器利用率自动调整 CPU 频率。</p>
 </div>
 <div class="paragraph">
-<p>Each supported frequency, along with its expected power consumption, can be listed by examining the <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=3&amp;format=html">sysctl(3)</a> tree:</p>
+<p>可以通过检查 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=3&amp;format=html">sysctl(3)</a> 树来列出每个支持的频率及其预期的功耗。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16222,7 +16217,7 @@ dev.cpu.0.%desc: ACPI CPU</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16232,16 +16227,16 @@ dev.cpu.0.freq: 800</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A frequency 1 MHz higher than the maximum frequency of the CPU indicates the Intel® Turbo Boost™ feature.</p>
+<p>CPU 的最大频率加 1 MHz 表示 Intel® Turbo Boost™ 功能。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="hwpstate_intel">14.6.5. Intel Speed Shift™<a class="anchor" href="#hwpstate_intel"></a></h4>
 <div class="paragraph">
-<p>Users running newer Intel® CPUs may find some differences in dynamic frequency control when upgrading to FreeBSD 13. A new driver for the Intel® Speed Shift™ feature set, available on certain SKUs, exposes the ability for the hardware to dynamically vary the core frequencies, including on a per core basis. FreeBSD 13 comes with the <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> driver to automatically enable Speed Shift™ control on equipped CPUs, replacing the older Enhanced Speed Step™ <a href="https://man.freebsd.org/cgi/man.cgi?query=est&amp;sektion=4&amp;format=html">est(4)</a> driver. The <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> <code>dev.cpufreq.%d.freq_driver</code> will indicate if the system is using Speed Shift.</p>
+<p>运行较新的 Intel® CPU 的用户在升级到 FreeBSD 13 时可能会发现动态频率控制方面存在一些差异。针对某些 SKU 可用的 Intel® Speed Shift™ 功能集，提供了一种新的驱动程序，可以使硬件能够动态地变化核心频率，包括每个核心的频率。FreeBSD 13 配备了 <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> 驱动程序，可以自动启用配备了 Speed Shift™ 控制功能的 CPU，取代了较旧的 Enhanced Speed Step™ <a href="https://man.freebsd.org/cgi/man.cgi?query=est&amp;sektion=4&amp;format=html">est(4)</a> 驱动程序。<a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> <code>dev.cpufreq.%d.freq_driver</code> 将指示系统是否正在使用 Speed Shift。</p>
 </div>
 <div class="paragraph">
-<p>To determine which frequency control driver is being used, examining the <code>dev.cpufreq.0.freq_driver</code> oid.</p>
+<p>要确定正在使用哪个频率控制驱动程序，请检查 <code>dev.cpufreq.0.freq_driver</code> oid 。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16249,7 +16244,7 @@ dev.cpu.0.freq: 800</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16257,10 +16252,10 @@ dev.cpu.0.freq: 800</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This indicates that the new <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> driver is in use. On such systems, the oid <code>dev.cpu.%d.freq_levels</code> will show only the maximum CPU frequency, and will indicate a power consumption level of <code>-1</code>.</p>
+<p>这表示正在使用新的 <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> 驱动程序。在这种系统上，oid <code>dev.cpu.%d.freq_levels</code> 只会显示最大的 CPU 频率，并且会显示一个功耗级别为 <code>-1</code>。</p>
 </div>
 <div class="paragraph">
-<p>The current CPU frequency can be determined by examining the <code>dev.cpu.%d.freq</code> oid.</p>
+<p>可以通过检查 <code>dev.cpu.%d.freq</code> oid 来确定当前的 CPU 频率。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16268,7 +16263,7 @@ dev.cpu.0.freq: 800</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16277,7 +16272,7 @@ dev.cpu.0.freq: 898</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For more information, including on how to balance performance and energy use, and on how to disable this driver, refer to the man page <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a>.</p>
+<p>有关更多信息，包括如何平衡性能和能源使用，以及如何禁用此驱动程序，请参阅手册页面 <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a>。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -16287,7 +16282,7 @@ dev.cpu.0.freq: 898</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Users accustomed to using <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> or <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a> will find these utilities have been superseded by the <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> driver and no longer work as expected.</p>
+<p>习惯使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=powerd&amp;sektion=8&amp;format=html">powerd(8)</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/powerdxx/">sysutils/powerdxx</a> 的用户会发现这些实用程序已被 <a href="https://man.freebsd.org/cgi/man.cgi?query=hwpstate_intel&amp;sektion=4&amp;format=html">hwpstate_intel(4)</a> 驱动程序取代，并且不再按预期工作。</p>
 </div>
 </td>
 </tr>
@@ -16295,12 +16290,12 @@ dev.cpu.0.freq: 898</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="graphics-card-power-management">14.6.6. Graphics Card Power Management<a class="anchor" href="#graphics-card-power-management"></a></h4>
+<h4 id="graphics-card-power-management">14.6.6. 图形卡功耗管理<a class="anchor" href="#graphics-card-power-management"></a></h4>
 <div class="paragraph">
-<p>Graphics cards have become a fundamental part of computing in recent years. Some graphics cards may have excessive power consumption. FreeBSD allows certain configurations to improve power consumption.</p>
+<p>近年来，显卡已成为计算机的基本组成部分。一些显卡可能具有过高的功耗。FreeBSD 允许进行某些配置以改善功耗。</p>
 </div>
 <div class="paragraph">
-<p>In case of using a Intel® graphics card with the <a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> driver these options can be added to <span class="filename">/boot/loader.conf</span>:</p>
+<p>如果使用 Intel® 显卡与 <a class="package" href="https://cgit.freebsd.org/ports/tree/graphics/drm-kmod/">graphics/drm-kmod</a> 驱动程序，可以将以下选项添加到 <span class="filename">/boot/loader.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16313,15 +16308,15 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Try to skip unnecessary mode sets at boot time. &lt;.&gt; Enable power-saving display C-states. &lt;.&gt; Enable frame buffer compression for power savings</td>
+<td>尝试在启动时跳过不必要的模式设置。 &lt;.&gt; 启用省电显示 C 状态。 &lt;.&gt; 启用帧缓冲压缩以节省电量。</td>
 </tr>
 </tbody></table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_suspendresume">14.6.7. Suspend/Resume<a class="anchor" href="#_suspendresume"></a></h4>
+<h4 id="_挂起恢复">14.6.7. 挂起/恢复<a class="anchor" href="#_挂起恢复"></a></h4>
 <div class="paragraph">
-<p>The suspend/resume function allows the machine to be kept in a state in which there is no a big energy consumption and allows the system to be resumed without having to lose the state of the running programs.</p>
+<p>挂起/恢复功能允许机器保持在低能耗状态，并且在不丢失运行程序状态的情况下恢复系统。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -16331,20 +16326,20 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </td>
 <td class="content">
 <div class="paragraph">
-<p>In order for the suspend/resume functionality to work correctly the graphics drivers must be loaded on the system. In non-KMS-supported graphics cards <a href="https://man.freebsd.org/cgi/man.cgi?query=sc&amp;sektion=4&amp;format=html">sc(4)</a> must be used not to break the suspend/resume functionality.</p>
+<p>为了使挂起/恢复功能正常工作，必须在系统上加载图形驱动程序。在不支持 KMS 的图形卡上，必须使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sc&amp;sektion=4&amp;format=html">sc(4)</a> 来避免破坏挂起/恢复功能。</p>
 </div>
 <div class="paragraph">
-<p>More information about which driver to use and how to configure it can be found at the <a href="./#x11">The X Window System chapter</a>.</p>
+<p>有关使用哪个驱动程序以及如何配置它的更多信息，请参阅 <a href="./#X11">X Window 系统章节</a>。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> supports the next list of sleep states:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpi&amp;sektion=4&amp;format=html">acpi(4)</a> 支持以下睡眠状态的列表：</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">表 26. Supported Sleep States</caption>
+<caption class="title">表 26. 支持的睡眠状态</caption>
 <colgroup>
 <col style="width: 50%;"/>
 <col style="width: 50%;"/>
@@ -16352,32 +16347,32 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">S1</th>
-<th class="tableblock halign-left valign-top">Quick suspend to RAM. The CPU enters a lower power state, but most peripherals are left running.</th>
+<th class="tableblock halign-left valign-top">快速挂起到 RAM。CPU 进入较低的功耗状态，但大多数外设仍然保持运行。</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Lower power state than S1, but with the same basic characteristics. Not supported by many systems.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">比 S1 更低的功耗状态，但具有相同的基本特征。不被许多系统支持。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S3 (Sleep mode)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Suspend to RAM. Most devices are powered off, and the system stops running except for memory refresh.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">挂起到 RAM。大多数设备都关闭电源，系统停止运行，只进行内存刷新。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S4 (Hibernation)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Suspend to disk. All devices are powered off, and the system stops running. When resuming, the system starts as if from a cold power on. <strong>Not yet supported by FreeBSD</strong>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">磁盘挂起。所有设备都被关闭，系统停止运行。在恢复时，系统会像从冷启动一样启动。<strong>FreeBSD 尚不支持此功能</strong>。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">System shuts down cleanly and powers off.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">系统正常关闭并关闭电源。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="configure-suspend-resume">14.6.7.1. Configuring Suspend/Resume<a class="anchor" href="#configure-suspend-resume"></a></h5>
+<h5 id="configure-suspend-resume">14.6.7.1. 配置挂起/恢复<a class="anchor" href="#configure-suspend-resume"></a></h5>
 <div class="paragraph">
-<p>The first step will be to know which type of sleep states supports the hardware we are using executing the following command:</p>
+<p>第一步是要知道我们正在使用的硬件支持哪种类型的睡眠状态，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16385,7 +16380,7 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </div>
 </div>
 <div class="paragraph">
-<p>The output should be similar to the following:</p>
+<p>输出应该类似于以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16400,14 +16395,14 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </td>
 <td class="content">
 <div class="paragraph">
-<p>As stated above FreeBSD does <strong>not</strong> yet support the <code>S4</code> state.</p>
+<p>如上所述， FreeBSD 目前 <strong>不支持</strong> <code>S4</code> 状态。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpiconf&amp;sektion=8&amp;format=html">acpiconf(8)</a> can be used to check if the <code>S3</code> state works correctly by running the following command, if it succeeds, the screen should go black and the machine will turn off:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=acpiconf&amp;sektion=8&amp;format=html">acpiconf(8)</a> 可以通过运行以下命令来检查 <code>S3</code> 状态是否正常工作，如果成功，屏幕应该变黑，机器将关闭：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16415,10 +16410,10 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </div>
 </div>
 <div class="paragraph">
-<p>In the vast majority of cases the Suspend/Resume functionality wants to be used on a laptop.</p>
+<p>在绝大多数情况下，挂起/恢复功能是用于笔记本电脑的。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD can be configured to enter the <code>S3</code> state when closing the lid by adding the following line to the <span class="filename">/etc/sysctl.conf</span> file.</p>
+<p>在关闭笔记本盖子时，可以通过在 <span class="filename">/etc/sysctl.conf</span> 文件中添加以下行来配置 FreeBSD 进入 <code>S3</code> 状态。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16427,34 +16422,34 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </div>
 </div>
 <div class="sect4">
-<h5 id="troubleshooting-suspend-resume">14.6.7.2. Troubleshooting in Suspend/Resume<a class="anchor" href="#troubleshooting-suspend-resume"></a></h5>
+<h5 id="troubleshooting-suspend-resume">14.6.7.2. 挂起/恢复的故障排除<a class="anchor" href="#troubleshooting-suspend-resume"></a></h5>
 <div class="paragraph">
-<p>A lot of effort has been made to make the Suspend and Resume functions work properly and in the best way on FreeBSD. But currently the Suspend and Resume functions only work properly on some specific laptops.</p>
+<p>为了使 FreeBSD 上的挂起和恢复功能正常工作并以最佳方式运行，已经付出了很多努力。但目前，挂起和恢复功能只在一些特定的笔记本电脑上正常工作。</p>
 </div>
 <div class="paragraph">
-<p>Some checks can be done in case it doesn’t work properly.</p>
+<p>如果它无法正常工作，可以进行一些检查。</p>
 </div>
 <div class="paragraph">
-<p>In some cases it is enough to turn off the bluetooth. In others it is enough loading the correct driver for the graphics card, etc.</p>
+<p>在某些情况下，关闭蓝牙就足够了。在其他情况下，只需加载正确的显卡驱动程序等即可。</p>
 </div>
 <div class="paragraph">
-<p>In case it doesn’t work correctly, some tips can be found on the FreeBSD Wiki in the section <a href="https://wiki.freebsd.org/SuspendResume">Suspend/Resume</a>.</p>
+<p>如果它不能正常工作，可以在 FreeBSD Wiki 的 <a href="https://wiki.freebsd.org/SuspendResume">Suspend/Resume</a> 部分找到一些提示。</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-swap-space">14.7. Adding Swap Space<a class="anchor" href="#adding-swap-space"></a></h3>
+<h3 id="adding-swap-space">14.7. 添加交换空间<a class="anchor" href="#adding-swap-space"></a></h3>
 <div class="paragraph">
-<p>Sometimes a FreeBSD system requires more swap space. This section describes two methods to increase swap space: adding swap to an existing partition or new hard drive, and creating a swap file on an existing file system.</p>
+<p>有时候 FreeBSD 系统需要更多的交换空间。本节介绍了两种增加交换空间的方法：在现有分区或新硬盘上添加交换空间，以及在现有文件系统上创建交换文件。</p>
 </div>
 <div class="paragraph">
-<p>For information on how to encrypt swap space, which options exist, and why it should be done, refer to <a href="./#swap-encrypting">“Encrypting Swap”</a>.</p>
+<p>有关如何加密交换空间、存在哪些选项以及为什么应该这样做的信息，请参考 <a href="./#swap-encrypting">“加密交换空间”</a>。</p>
 </div>
 <div class="sect3">
-<h4 id="new-drive-swap">14.7.1. Swap on a New Hard Drive or Existing Partition<a class="anchor" href="#new-drive-swap"></a></h4>
+<h4 id="new-drive-swap">14.7.1. 在新硬盘或现有分区上进行交换<a class="anchor" href="#new-drive-swap"></a></h4>
 <div class="paragraph">
-<p>Adding a new drive for swap gives better performance than using a partition on an existing drive. Setting up partitions and drives is explained in <a href="./#disks-adding">Adding Disks</a> while <a href="./#configtuning-initial">Designing the Partition Layout</a> discusses partition layouts and swap partition size considerations.</p>
+<p>在现有驱动器上使用分区相比使用新的驱动器进行交换会提供更好的性能。在 <a href="./#disks-adding">“添加磁盘”</a> 中解释了如何设置分区和驱动器，而 <a href="./#configtuning-initial">“设计分区布局”</a> 则讨论了分区布局和交换分区大小的考虑事项。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -16464,14 +16459,14 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </td>
 <td class="content">
 <div class="paragraph">
-<p>It is possible to use any partition not currently mounted, even if it already contains data. Using <code>swapon</code> on a partition that contains data will overwrite and destroy that data. Make sure that the partition to be added as swap is really the intended partition before running <code>swapon</code>.</p>
+<p>可以使用任何当前未挂载的分区，即使它已经包含数据。在包含数据的分区上使用 <code>swapon</code> 命令将覆盖并销毁该数据。在运行 <code>swapon</code> 之前，请确保要添加为交换分区的分区确实是预期的分区。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=swapon&amp;sektion=8&amp;format=html">swapon(8)</a> can be used to add a swap partition to the system executing the following command:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=swapon&amp;sektion=8&amp;format=html">swapon(8)</a> 可以用于向执行以下命令的系统添加交换分区：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16479,7 +16474,7 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </div>
 </div>
 <div class="paragraph">
-<p>To automatically add this swap partition on boot, add an entry to <span class="filename">/etc/fstab</span>:</p>
+<p>要在启动时自动添加此交换分区，请在 <span class="filename">/etc/fstab</span> 中添加一个条目：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16487,13 +16482,13 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </div>
 </div>
 <div class="paragraph">
-<p>See <a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> for an explanation of the entries in <span class="filename">/etc/fstab</span>.</p>
+<p>请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a>，了解 <span class="filename">/etc/fstab</span> 中条目的解释。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-swapfile">14.7.2. Creating a Swap File<a class="anchor" href="#create-swapfile"></a></h4>
+<h4 id="create-swapfile">14.7.2. 创建交换文件<a class="anchor" href="#create-swapfile"></a></h4>
 <div id="swapfile-10-and-later" class="paragraph">
-<p>These examples create a 512M swap file called <span class="filename">/usr/swap0</span>.</p>
+<p>这些示例创建一个名为 <span class="filename">/usr/swap0</span> 的 512M 交换文件。</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -16503,14 +16498,14 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Swap files on ZFS file systems are strongly discouraged, as swapping can lead to system hangs.</p>
+<p>强烈不建议在 ZFS 文件系统上使用交换文件，因为交换可能导致系统挂起。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The first step is to create the swap file:</p>
+<p>第一步是创建交换文件：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16518,7 +16513,7 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </div>
 </div>
 <div class="paragraph">
-<p>The second step is to put the proper permissions on the new file:</p>
+<p>第二步是给新文件设置适当的权限：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -16526,7 +16521,7 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </div>
 </div>
 <div class="paragraph">
-<p>The third step is to inform the system about the swap file by adding a line to <span class="filename">/etc/fstab</span>:</p>
+<p>第三步是通过在 <span class="filename">/etc/fstab</span> 中添加一行来通知系统关于交换文件的信息：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -16534,7 +16529,7 @@ compat.linuxkpi.enable_fbc=1 <i class="conum" data-value="3"></i><b>(3)</b></pre
 </div>
 </div>
 <div class="paragraph">
-<p>Swap space will be added on system startup. To add swap space immediately, use <a href="https://man.freebsd.org/cgi/man.cgi?query=swapon&amp;sektion=8&amp;format=html">swapon(8)</a>:</p>
+<p>系统启动时将添加交换空间。要立即添加交换空间，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=swapon&amp;sektion=8&amp;format=html">swapon(8)</a> 命令。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -49265,7 +49260,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: January 22, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=4435de7" target="_blank">fiercex</a></p>
+      <p><strong>上次修改时间</strong>: January 26, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=fcb8ba1" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
@@ -49322,7 +49317,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     </li>
     <li><a href="#system-administration">Part III: 系统管理</a>
       <ul>
-        <li><a href="#config-tuning">Chapter 14. Configuration, Services, Logging and Power Management</a></li>
+        <li><a href="#config-tuning">Chapter 14. 配置、服务、日志和电源管理</a></li>
         <li><a href="#boot">Chapter 15. FreeBSD 的引导过程</a></li>
         <li><a href="#security">Chapter 16. 安全</a></li>
         <li><a href="#jails">Chapter 17. Jails 和容器</a></li>
