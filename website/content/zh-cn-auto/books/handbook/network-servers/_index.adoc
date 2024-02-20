@@ -1,7 +1,7 @@
 ---
 description: '本章介绍了 UNIX 系统上一些常用的网络服务。'
 next: books/handbook/firewalls
-part: 'IV. 网络通信'
+part: 第四部分：网络通信
 path: /books/handbook/
 prev: books/handbook/mail
 showBookMenu: true
@@ -53,52 +53,52 @@ endif::[]
 到本章结束时，读者将会了解：
 
 * 如何管理 inetd 守护进程。
-* 如何设置网络文件系统（ NFS ）。
-* 如何设置网络信息服务器（ NIS ）以实现用户账户的集中和共享。
+* 如何设置网络文件系统（NFS）。
+* 如何设置网络信息服务器（NIS）以实现用户账户的集中和共享。
 * 如何将 FreeBSD 设置为 LDAP 服务器或客户端
 * 如何使用 DHCP 设置自动网络设置。
-* 如何设置域名服务器（ DNS ）。
+* 如何设置域名服务器（DNS）。
 * 如何设置 Apache HTTP 服务器。
-* 如何设置一个文件传输协议（ FTP ）服务器。
+* 如何设置一个文件传输协议（FTP）服务器。
 * 如何使用 Samba 为 Windows(R) 客户端设置文件和打印服务器。
-* 如何使用网络时间协议（ NTP ）同步时间和日期，并设置时间服务器。
-* 如何设置 iSCSI 。
+* 如何使用网络时间协议（NTP）同步时间和日期，并设置时间服务器。
+* 如何设置 iSCSI。
 
 本章假设读者具备以下基本知识：
 
 * [.filename]#/etc/rc# 脚本。
 * 网络术语。
-* 安装额外的第三方软件（参考： ports[ports ，安装应用程序：软件包和端口] ）。
+* 安装额外的第三方软件（crossref:ports[ports,安装应用程序：软件包和 Ports]）。
 
 [[network-inetd]]
 == inetd 超级服务器
 
 man:inetd[8] 守护进程有时被称为超级服务器，因为它管理许多服务的连接。不需要启动多个应用程序，只需启动 inetd 服务即可。当 inetd 接收到由其管理的服务的连接时，它确定连接所需的程序，为该程序生成一个进程，并为该程序分配一个套接字。与在独立模式下单独运行每个守护进程相比，使用 inetd 来处理不常用的服务可以减少系统负载。
 
-inetd 主要用于生成其他守护进程，但也会处理一些内部的简单协议，例如 chargen 、 auth 、 time 、 echo 、 discard 和 daytime 。
+inetd 主要用于生成其他守护进程，但也会处理一些内部的简单协议，例如 chargen、auth、time、echo、discard 和 daytime。
 
 本节介绍了配置 inetd 的基础知识。
 
 [[network-inetd-conf]]
 === 配置文件
 
-配置 inetd 是通过编辑 /etc/inetd.conf 文件来完成的。该配置文件的每一行表示一个可以由 inetd 启动的应用程序。默认情况下，每一行都以注释（ # + # ）开头，表示 inetd 不监听任何应用程序。要配置 inetd 监听应用程序的连接，请删除该应用程序行开头的 # + # 。
+配置 inetd 是通过编辑 [.filename]#/etc/inetd.conf# 文件来完成的。该配置文件的每一行表示一个可以由 inetd 启动的应用程序。默认情况下，每一行都以注释（`+#+`）开头，表示 inetd 不监听任何应用程序。要配置 inetd 监听应用程序的连接，请删除该应用程序行开头的 `+#+`。
 
-在保存您的编辑后，通过编辑 [/etc/rc.conf] 配置 inetd 在系统启动时启动：
+在保存您的编辑后，通过编辑 [.filename]#/etc/rc.conf# 配置 inetd 在系统启动时启动：
 
 [.programlisting]
 ....
 inetd_enable="YES"
 ....
 
-要立即启动 inetd ，以便它监听您配置的服务，请键入：
+要立即启动 inetd，以便它监听您配置的服务，请键入：
 
 [source, shell]
 ....
 # service inetd start
 ....
 
-一旦 inetd 启动，每当对 /etc/inetd.conf 文件进行修改时，需要通知它。
+一旦 inetd 启动，每当对 [.filename]#/etc/inetd.conf# 文件进行修改时，需要通知它。
 
 [[network-inetd-reread]]
 .重新加载 inetd 配置文件
@@ -152,36 +152,32 @@ server-program-arguments
 | 解释
 
 
-|tcp 或 tcp4
-|TCP （传输控制协议）是一种用于在计算机网络中传输数据的协议。它提供了可靠的、面向连接的通信，确保数据的可靠性和顺序性。 IPv4 （互联网协议版本 4 ）是一种用于在互联网上进行数据传输的协议。它定义了互联网上的设备如何寻址和路由数据包。
+|tcp or tcp4
+|TCP IPv4
 
-|UDP 或 UDP4
-|UDP 是用户数据报协议（ User Datagram Protocol ）的缩写，它是一种在计算机网络中常用的传输协议。 UDP 提供了一种无连接、不可靠的数据传输方式，适用于对数据传输延迟要求较低的应用场景。
+|udp or udp4
+|UDP IPv4
 
- IPv4 是互联网协议第四版（ Internet Protocol version 4 ）的缩写，它是目前广泛使用的互联网协议之一。 IPv4 使用 32 位地址来标识网络上的设备，它定义了数据在网络中的传输方式和路由规则。
+|tcp6
+|TCP IPv6
 
-在计算机网络中， UDP 和 IPv4 通常一起使用， UDP 负责提供数据传输的功能，而 IPv4 负责定义数据在网络中的传输路径。这种组合常用于实时音视频传输、网络游戏等应用中。
+|udp6
+|UDP IPv6
 
-|TCP6 是指 IPv6 上的 TCP 协议。
-|TCP IPv6 是一种基于 IPv6 协议的传输控制协议。
+|tcp46
+|Both TCP IPv4 and IPv6
 
-|UDP6 是 IPv6 上的用户数据报协议。
-|UDP 是一种传输层协议，用于在计算机网络中传输数据。 IPv6 是 Internet 协议的第六个版本，用于在互联网上唯一标识和定位设备。
-
-|TCP46 是一种网络传输协议，它是 TCP/IP 协议族中的一部分。它是 IPv6 （ Internet Protocol version 6 ）的一种扩展，用于在 IPv6 网络中进行可靠的数据传输。 TCP46 提供了面向连接的、可靠的、有序的数据传输服务，以及流量控制和拥塞控制机制，确保数据的可靠性和稳定性。与 IPv4 相比， TCP46 支持更大的地址空间和更高的安全性，是未来互联网发展的重要组成部分。
-|TCP IPv4 和 IPv6 都是网络协议。
-
-|UDP46 是一种基于 IPv6 的用户数据报协议。
-|UDP IPv4 和 IPv6 都支持。
+|udp46
+|Both UDP IPv4 and IPv6
 |===
 
-在这个字段中，必须指定 `wait` 或 `nowait` 。 `max-child` 、 `max-connections-per-ip-per-minute` 和 `max-child-per-ip` 是可选的。
+{wait|nowait}[/max-child[/max-connections-per-ip-per-minute[/max-child-per-ip]]]:: 在这个字段中，必须指定 `wait` 或 `nowait`。`max-child`、`max-connections-per-ip-per-minute` 和 `max-child-per-ip` 是可选的。
 +
-`wait | nowait` 表示服务是否能够处理自己的套接字。 `dgram` 套接字类型必须使用 `wait` ，而通常是多线程的 `stream` 守护进程应该使用 `nowait` 。 `wait` 通常将多个套接字交给单个守护进程处理，而 `nowait` 则为每个新套接字生成一个子守护进程。
+`wait|nowait` 表示服务是否能够处理自己的套接字。`dgram` 套接字类型必须使用 `wait`，而通常是多线程的 `stream` 守护进程应该使用 `nowait`。`wait` 通常将多个套接字交给单个守护进程处理，而 `nowait` 则为每个新套接字生成一个子守护进程。
 +
-`max-child` 参数设置了 inetd 可以生成的子守护进程的最大数量。例如，要限制守护进程的实例数为十个，可以在 `nowait` 后面加上 `/10` 。指定 `/0` 允许无限数量的子进程。
+`max-child` 参数设置了 inetd 可以生成的子守护进程的最大数量。例如，要限制守护进程的实例数为十个，可以在 `nowait` 后面加上 `/10`。指定 `/0` 允许无限数量的子进程。
 +
-`max-connections-per-ip-per-minute` 限制每个特定 IP 地址每分钟的连接数。一旦达到限制，该 IP 地址的进一步连接将被丢弃，直到分钟结束。例如，值为 `/10` 将限制每个特定 IP 地址每分钟的连接尝试次数为十次。 `max-child-per-ip` 限制在任何单个 IP 地址上代表启动的子进程数量。这些选项可以限制过度的资源消耗，并帮助防止拒绝服务攻击。
+`max-connections-per-ip-per-minute` 限制每个特定 IP 地址每分钟的连接数。一旦达到限制，该 IP 地址的进一步连接将被丢弃，直到分钟结束。例如，值为 `/10` 将限制每个特定 IP 地址每分钟的连接尝试次数为十次。`max-child-per-ip` 限制在任何单个 IP 地址上代表启动的子进程数量。这些选项可以限制过度的资源消耗，并帮助防止拒绝服务攻击。
 +
 在 man:fingerd[8] 的默认设置中可以看到一个示例：
 +
@@ -191,7 +187,7 @@ finger stream  tcp     nowait/3/10 nobody /usr/libexec/fingerd fingerd -k -s
 ....
 
 用户::
-守护进程将以哪个用户名运行。守护进程通常以 `root` 、 `daemon` 或 `nobody` 运行。
+守护进程将以哪个用户名运行。守护进程通常以 `root`、`daemon` 或 `nobody` 运行。
 
 服务器程序::
 守护进程的完整路径。如果守护进程是由 inetd 内部提供的服务，请使用 `internal` 。
@@ -202,37 +198,37 @@ finger stream  tcp     nowait/3/10 nobody /usr/libexec/fingerd fingerd -k -s
 [[network-inetd-cmdline]]
 === 命令行选项
 
-像大多数服务器守护程序一样， inetd 有一些选项可以用来修改其行为。默认情况下， inetd 使用 `-wW -C 60` 启动。这些选项启用了所有服务的 TCP 包装器，包括内部服务，并防止任何 IP 地址在一分钟内请求超过 60 次的服务。
+像大多数服务器守护程序一样， inetd 有一些选项可以用来修改其行为。默认情况下，inetd 使用 `-wW -C 60` 启动。这些选项启用了所有服务的 TCP 包装器，包括内部服务，并防止任何 IP 地址在一分钟内请求超过 60 次的服务。
 
 要更改传递给 inetd 的默认选项，请在 `/etc/rc.conf` 中添加一个 `inetd_flags` 条目。如果 inetd 已经在运行，请使用 `service inetd restart` 重新启动它。
 
 可用的速率限制选项有：
 
 -c 最大值::
-指定每个服务的默认最大并发调用数，其中默认值为无限制。可以通过在 `/etc/inetd.conf` 中使用 `max-child` 来对每个服务进行单独设置。
+指定每个服务的默认最大并发调用数，其中默认值为无限制。可以通过在 [.filename]#/etc/inetd.conf# 中使用 `max-child` 来对每个服务进行单独设置。
 
 -C 速率::
-指定单个 IP 地址每分钟可以调用服务的默认最大次数。可以通过在 `/etc/inetd.conf` 中使用 `max-connections-per-ip-per-minute` 来覆盖每个服务的基础上。
+指定单个 IP 地址每分钟可以调用服务的默认最大次数。可以通过在 [.filename]#/etc/inetd.conf# 中使用 `max-connections-per-ip-per-minute` 来覆盖每个服务的基础上。
 
--R rate::
+-R 速率::
 指定一个服务在一分钟内可以被调用的最大次数，其中默认值为 `256` 。设置为 `0` 表示允许无限次调用。
 
--s maximum 的中文翻译是“ -s 最大值”。::
-指定单个 IP 地址在任何一次中可以调用服务的最大次数，其中默认值为无限。可以通过在 `/etc/inetd.conf` 中使用 `max-child-per-ip` 来覆盖每个服务的基础设置。
+-s 最大值::
+指定单个 IP 地址在任何一次中可以调用服务的最大次数，其中默认值为无限。可以通过在 [.filename]#/etc/inetd.conf# 中使用 `max-child-per-ip` 来覆盖每个服务的基础设置。
 
 还有其他选项可用。请参考 man:inetd[8] 获取完整的选项列表。
 
 [[network-inetd-security]]
 === 安全考虑
 
-许多可以由 inetd 管理的守护进程并不注重安全性。一些守护进程，比如 fingerd ，可能提供对攻击者有用的信息。只启用所需的服务，并监控系统是否存在过多的连接尝试。可以使用 `max-connections-per-ip-per-minute` 、 `max-child` 和 `max-child-per-ip` 来限制此类攻击。
+许多可以由 inetd 管理的守护进程并不注重安全性。一些守护进程，比如 fingerd，可能提供对攻击者有用的信息。只启用所需的服务，并监控系统是否存在过多的连接尝试。可以使用 `max-connections-per-ip-per-minute`、`max-child` 和 `max-child-per-ip` 来限制此类攻击。
 
-默认情况下， TCP 包装器是启用的。请参考 man:hosts_access[5] 了解如何在各种 inetd 调用的守护进程上设置 TCP 限制的更多信息。
+默认情况下，TCP 包装器是启用的。请参考 man:hosts_access[5] 了解如何在各种 inetd 调用的守护进程上设置 TCP 限制的更多信息。
 
 [[network-nfs]]
-== 网络文件系统（ NFS ）
+== 网络文件系统（NFS）
 
-FreeBSD 支持网络文件系统（ NFS ），它允许服务器通过网络与客户端共享目录和文件。使用 NFS ，用户和程序可以像访问本地存储的文件一样访问远程系统上的文件。
+FreeBSD 支持网络文件系统（NFS），它允许服务器通过网络与客户端共享目录和文件。使用 NFS，用户和程序可以像访问本地存储的文件一样访问远程系统上的文件。
 
 NFS 有许多实际用途。其中一些常见的用途包括：
 
@@ -253,13 +249,13 @@ NFS 由一个服务器和一个或多个客户端组成。客户端远程访问�
 | 描述
 
 
-|nfsd 是 Network File System （网络文件系统）的守护进程。
+|nfsd
 |NFS 守护进程负责为 NFS 客户端提供服务。
 
-|mountd 是一个在 Unix 和类 Unix 系统上运行的守护进程，它负责处理文件系统的挂载和卸载操作。它接收来自客户端的挂载请求，并将其转发给相应的文件系统。 mountd 还负责维护挂载表，记录当前已挂载的文件系统信息。
+|mountd
 |NFS 挂载守护进程负责处理从 nfsd 接收到的请求。
 
-|rpcbind 是一个用于绑定远程过程调用（ RPC ）服务的工具。它允许客户端程序通过网络连接到服务器上的 RPC 服务，并调用远程过程。 rpcbind 在服务器上监听指定的端口，以便客户端可以找到并连接到 RPC 服务。它还负责将 RPC 程序的端口号映射到相应的 RPC 程序版本。 rpcbind 在计算机网络中起到了重要的作用，使得不同计算机之间可以进行远程过程调用。
+|rpcbind
 | 该守护进程允许 NFS 客户端发现 NFS 服务器正在使用的端口。
 |===
 
@@ -268,7 +264,7 @@ NFS 由一个服务器和一个或多个客户端组成。客户端远程访问�
 [[network-configuring-nfs]]
 === 配置服务器
 
-NFS 服务器将共享的文件系统在 [/etc/exports] 文件中指定。该文件中的每一行都指定了要导出的文件系统，客户端对该文件系统的访问权限以及任何访问选项。在向该文件添加条目时，每个导出的文件系统、其属性和允许的主机必须出现在同一行上。如果条目中没有列出客户端，则任何网络上的客户端都可以挂载该文件系统。
+NFS 服务器将共享的文件系统在 [.filename]#/etc/exports# 文件中指定。该文件中的每一行都指定了要导出的文件系统，客户端对该文件系统的访问权限以及任何访问选项。在向该文件添加条目时，每个导出的文件系统、其属性和允许的主机必须出现在同一行上。如果条目中没有列出客户端，则任何网络上的客户端都可以挂载该文件系统。
 
 以下是示例的 [.filename]#/etc/exports# 条目，演示了如何导出文件系统。这些示例可以根据读者网络上的文件系统和客户端名称进行修改。在此文件中可以使用许多选项，但这里只提到了一些。有关所有选项的完整列表，请参阅 man:exports[5] 。
 
@@ -279,16 +275,16 @@ NFS 服务器将共享的文件系统在 [/etc/exports] 文件中指定。该文
 /cdrom -ro alpha bravo charlie
 ....
 
-`-ro` 标志使文件系统变为只读，防止客户端对导出的文件系统进行任何更改。此示例假设主机名要么在 DNS 中，要么在 `/etc/hosts` 文件中。如果网络没有 DNS 服务器，请参考 `man:hosts[5]` 。
+`-ro` 标志使文件系统变为只读，防止客户端对导出的文件系统进行任何更改。此示例假设主机名要么在 DNS 中，要么在 [.filename]#/etc/hosts# 文件中。如果网络没有 DNS 服务器，请参考 `man:hosts[5]`。
 
-下面的示例通过 IP 地址将 `/home` 导出给三个客户端。这对于没有 DNS 或 `/etc/hosts` 条目的网络非常有用。 `-alldirs` 标志允许子目录作为挂载点。换句话说，它不会自动挂载子目录，但会允许客户端根据需要挂载所需的目录。
+下面的示例通过 IP 地址将 [.filename]#/home# 导出给三个客户端。这对于没有 DNS 或 [.filename]#/etc/hosts# 条目的网络非常有用。 `-alldirs` 标志允许子目录作为挂载点。换句话说，它不会自动挂载子目录，但会允许客户端根据需要挂载所需的目录。
 
 [.programlisting]
 ....
 /usr/home  -alldirs  10.0.0.2 10.0.0.3 10.0.0.4
 ....
 
-下一个示例将 [.filename]#/a# 导出，以便来自不同域的两个客户端可以访问该文件系统。 `-maproot = root` 允许远程系统上的 `root` 用户以 `root` 身份在导出的文件系统上写入数据。如果未指定 `-maproot = root` ，客户端的 `root` 用户将被映射到服务器的 `nobody` 账户，并受到为 `nobody` 定义的访问限制的约束。
+下一个示例将 [.filename]#/a# 导出，以便来自不同域的两个客户端可以访问该文件系统。`-maproot=root` 允许远程系统上的 `root` 用户以 `root` 身份在导出的文件系统上写入数据。如果未指定 `-maproot=root` ，客户端的 `root` 用户将被映射到服务器的 `nobody` 账户，并受到为 `nobody` 定义的访问限制的约束。
 
 [.programlisting]
 ....
@@ -325,7 +321,7 @@ NFS 服务器将共享的文件系统在 [/etc/exports] 文件中指定。该文
 /exports/obj -ro
 ....
 
-要在启动时启用 NFS 服务器所需的进程，请将以下选项添加到 /etc/rc.conf 文件中：
+要在启动时启用 NFS 服务器所需的进程，请将以下选项添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
@@ -341,7 +337,7 @@ mountd_enable="YES"
 # service nfsd start
 ....
 
-每当 NFS 服务器启动时， mountd 也会自动启动。然而， mountd 只在启动时读取 /etc/exports 文件。为了使后续对 /etc/exports 文件的编辑立即生效，强制 mountd 重新读取它：
+每当 NFS 服务器启动时，mountd 也会自动启动。然而，mountd 只在启动时读取 [.filename]#/etc/exports# 文件。为了使后续对 [.filename]#/etc/exports# 文件的编辑立即生效，强制 mountd 重新读取它：
 
 [source, shell]
 ....
@@ -352,7 +348,7 @@ mountd_enable="YES"
 
 === 配置客户端
 
-要启用 NFS 客户端，请在每个客户端的 /etc/rc.conf 文件中设置此选项：
+要启用 NFS 客户端，请在每个客户端的 [.filename]#/etc/rc.conf# 文件中设置此选项：
 
 [.programlisting]
 ....
@@ -366,23 +362,23 @@ nfs_client_enable="YES"
 # service nfsclient start
 ....
 
-客户端现在已经拥有了挂载远程文件系统所需的一切。在这些示例中，服务器的名称是 `server` ，客户端的名称是 `client` 。要将 `server` 上的 [.filename]#/home# 挂载到 `client` 上的 [.filename]#/mnt# 挂载点，可以执行以下操作：
+客户端现在已经拥有了挂载远程文件系统所需的一切。在这些示例中，服务器的名称是 `server`，客户端的名称是 `client`。要将 `server` 上的 [.filename]#/home# 挂载到 `client` 上的 [.filename]#/mnt# 挂载点，可以执行以下操作：
 
 [source, shell]
 ....
 # mount server:/home /mnt
 ....
 
-现在，位于 [/home] 目录中的文件和目录将在 `client` 上的 [/mnt] 目录中可用。
+现在，位于 [.filename]#/home# 目录中的文件和目录将在 `client` 上的 [.filename]#/mnt# 目录中可用。
 
-要在每次客户端启动时挂载远程文件系统，请将其添加到 [/etc/fstab] 文件中：
+要在每次客户端启动时挂载远程文件系统，请将其添加到 [.filename]#/etc/fstab# 文件中：
 
 [.programlisting]
 ....
 server:/home	/mnt	nfs	rw	0	0
 ....
 
-请参考 man:fstab[5] ，了解所有可用选项的描述。
+请参考 man:fstab[5]，了解所有可用选项的描述。
 
 === 锁定
 
@@ -407,23 +403,23 @@ server:/home	/mnt	nfs	rw	0	0
 
 [NOTE]
 ====
-man:autofs[5] 自动挂载功能从 FreeBSD 10.1-RELEASE 开始得到支持。要在旧版本的 FreeBSD 中使用自动挂载功能，请使用 man:amd[8] 。本章仅描述 man:autofs[5] 自动挂载器。
+man:autofs[5] 自动挂载功能从 FreeBSD 10.1-RELEASE 开始得到支持。要在旧版本的 FreeBSD 中使用自动挂载功能，请使用 man:amd[8]。本章仅描述 man:autofs[5] 自动挂载器。
 ====
 
-man:autofs[5] 设施是几个组件的通用名称，这些组件一起允许在访问文件系统中的文件或目录时自动挂载远程和本地文件系统。它由内核组件 man:autofs[5] 和几个用户空间应用程序 man:automount[8] 、 man:automountd[8] 和 man:autounmountd[8] 组成。它作为先前的 FreeBSD 版本中 man:amd[8] 的替代品。 amd 仍然提供向后兼容性，因为两者使用不同的映射格式； autofs 使用的映射格式与其他 SVR4 自动挂载程序（如 Solaris 、 MacOS X 和 Linux 中的自动挂载程序）相同。
+man:autofs[5] 设施是几个组件的通用名称，这些组件一起允许在访问文件系统中的文件或目录时自动挂载远程和本地文件系统。它由内核组件 man:autofs[5] 和几个用户空间应用程序 man:automount[8]、man:automountd[8] 和 man:autounmountd[8] 组成。它作为先前的 FreeBSD 版本中 man:amd[8] 的替代品。amd 仍然提供向后兼容性，因为两者使用不同的映射格式；autofs 使用的映射格式与其他 SVR4 自动挂载程序（如 Solaris、MacOS X 和 Linux 中的自动挂载程序）相同。
 
 man:autofs[5] 虚拟文件系统由 man:automount[8] 在指定的挂载点上挂载，通常在启动过程中调用。
 
 每当一个进程尝试访问 man:autofs[5] 挂载点中的文件时，内核将通知 man:automountd[8] 守护进程并暂停触发进程。 man:automountd[8] 守护进程将通过查找正确的映射并根据其挂载文件系统来处理内核请求，然后向内核发出释放被阻塞进程的信号。 man:autounmountd[8] 守护进程会在一段时间后自动卸载自动挂载的文件系统，除非它们仍在使用中。
 
-主要的 autofs 配置文件是 `/etc/auto_master` 。它将各个映射分配给顶级挂载点。有关 `auto_master` 和映射语法的解释，请参考 `man:auto_master[5]` 。
+主要的 autofs 配置文件是 [.filename]#/etc/auto_master#。它将各个映射分配给顶级挂载点。有关 [.filename]#auto_master# 和映射语法的解释，请参考 `man:auto_master[5]` 。
 
-在 [.filename]#/net# 上挂载了一个特殊的自动挂载映射。当在该目录中访问文件时， man:autofs[5] 会查找相应的远程挂载并自动挂载它。例如，尝试访问 [.filename]#/net/foobar/usr# 中的文件会告诉 man:automountd[8] 从主机 `foobar` 挂载 [.filename]#/usr# 导出。
+在 [.filename]#/net# 上挂载了一个特殊的自动挂载映射。当在该目录中访问文件时，man:autofs[5] 会查找相应的远程挂载并自动挂载它。例如，尝试访问 [.filename]#/net/foobar/usr# 中的文件会告诉 man:automountd[8] 从主机 `foobar` 挂载 [.filename]#/usr# 导出。
 
 .使用 man:autofs[5] 挂载一个导出目录
 [example]
 ====
-在这个例子中， `showmount -e` 显示了可以从 NFS 服务器 `foobar` 挂载的导出文件系统。
+在这个例子中，`showmount -e` 显示了可以从 NFS 服务器 `foobar` 挂载的导出文件系统。
 
 [source, shell]
 ....
@@ -436,16 +432,16 @@ Exports list on foobar:
 
 ====
 
-`showmount` 命令的输出显示 [/usr] 目录被导出。当切换到 [/host/foobar/usr] 目录时， man:automountd[8] 会拦截请求并尝试解析主机名 `foobar` 。如果成功， man:automountd[8] 会自动挂载源导出。
+`showmount` 命令的输出显示 [.filename]#/usr# 目录被导出。当切换到 [.filename]#/host/foobar/usr# 目录时， man:automountd[8] 会拦截请求并尝试解析主机名 `foobar`。如果成功，man:automountd[8] 会自动挂载源导出。
 
-要在启动时启用 man:autofs[5] ，请将以下行添加到 [.filename]#/etc/rc.conf# 中：
+要在启动时启用 man:autofs[5]，请将以下行添加到 [.filename]#/etc/rc.conf# 中：
 
 [.programlisting]
 ....
 autofs_enable="YES"
 ....
 
-然后可以通过运行 man:autofs[5] 来启动 autofs[5] 。
+然后可以通过运行 man:autofs[5] 来启动 autofs[5]。
 
 [source, shell]
 ....
@@ -456,14 +452,14 @@ autofs_enable="YES"
 
 man:autofs[5] 映射格式与其他操作系统相同。来自其他来源的关于该格式的信息可能会很有用，比如 http://web.archive.org/web/20160813071113/http://images.apple.com/business/docs/Autofs.pdf[Mac OS X 文档] 。
 
-请参考 man:automount[8] 、 man:automountd[8] 、 man:autounmountd[8] 和 man:auto_master[5] 手册页面获取更多信息。
+请参考 man:automount[8]、man:automountd[8]、man:autounmountd[8] 和 man:auto_master[5] 手册页面获取更多信息。
 
 [[network-nis]]
-== 网络信息系统（ NIS ）
+== 网络信息系统（NIS）
 
-网络信息系统（ NIS ）旨在集中管理类 UNIX(R) 系统，如 Solaris(TM) 、 HP-UX 、 AIX(R) 、 Linux 、 NetBSD 、 OpenBSD 和 FreeBSD 。 NIS 最初被称为 Yellow Pages ，但由于商标问题而更改了名称。这就是为什么 NIS 命令以 `yp` 开头的原因。
+网络信息系统（NIS）旨在集中管理类 UNIX(R) 系统，如 Solaris(TM)、HP-UX、AIX(R)、Linux、NetBSD、OpenBSD 和 FreeBSD。NIS 最初被称为 Yellow Pages，但由于商标问题而更改了名称。这就是为什么 NIS 命令以 `yp` 开头的原因。
 
-NIS 是一种基于远程过程调用（ RPC ）的客户端 / 服务器系统，允许 NIS 域内的一组机器共享一组公共的配置文件。这使得系统管理员可以仅使用最少的配置数据设置 NIS 客户端系统，并且可以从单一位置添加、删除或修改配置数据。
+NIS 是一种基于远程过程调用（RPC）的客户端/服务器系统，允许 NIS 域内的一组机器共享一组公共的配置文件。这使得系统管理员可以仅使用最少的配置数据设置 NIS 客户端系统，并且可以从单一位置添加、删除或修改配置数据。
 
 FreeBSD 使用 NIS 协议的第 2 版本。
 
@@ -477,19 +473,19 @@ FreeBSD 使用 NIS 协议的第 2 版本。
 | 术语
 | 描述
 
-|NIS 域名
+|NIS domain name
 |NIS 服务器和客户端共享一个 NIS 域名。通常，这个域名与 DNS 无关。
 
-|手册： rpcbind[8]
+|man:rpcbind[8]
 |此服务启用了 RPC ，并且必须在运行 NIS 服务器或充当 NIS 客户端时才能运行。
 
 |man:ypbind[8]
-|该服务将 NIS 客户端绑定到其 NIS 服务器。它将获取 NIS 域名并使用 RPC 连接到服务器。它是 NIS 环境中客户端 / 服务器通信的核心。如果客户端机器上没有运行此服务，将无法访问 NIS 服务器。
+|该服务将 NIS 客户端绑定到其 NIS 服务器。它将获取 NIS 域名并使用 RPC 连接到服务器。它是 NIS 环境中客户端/服务器通信的核心。如果客户端机器上没有运行此服务，将无法访问 NIS 服务器。
 
 |man:ypserv[8]
-|这是 NIS 服务器的流程。如果该服务停止运行，服务器将无法响应 NIS 请求，因此希望有一个从服务器接管。一些非 FreeBSD 客户端可能不会尝试使用从服务器重新连接，这些客户端可能需要重新启动 ypbind 进程。
+|这是 NIS 服务器的进程。如果该服务停止运行，服务器将无法响应 NIS 请求，因此希望有一个从服务器接管。一些非 FreeBSD 客户端可能不会尝试使用从服务器重新连接，这些客户端可能需要重新启动 ypbind 进程。
 
-|man:rpc.yppasswdd[8] 是一个手册页，它提供了有关 rpc.yppasswdd 命令的详细信息。
+|man:rpc.yppasswdd[8]
 |这个进程只在 NIS 主服务器上运行。这个守护进程允许 NIS 客户端更改他们的 NIS 密码。如果这个守护进程没有运行，用户将不得不登录到 NIS 主服务器并在那里更改他们的密码。
 |===
 
@@ -499,7 +495,7 @@ FreeBSD 使用 NIS 协议的第 2 版本。
 
 * NIS 主服务器
 +
-该服务器充当主机配置信息的中央存储库，并维护所有 NIS 客户端使用的文件的权威副本。 NIS 客户端使用的 [.filename]#passwd# 、 [.filename]#group# 和其他各种文件存储在主服务器上。虽然一个机器可以成为多个 NIS 域的 NIS 主服务器，但本章不涵盖这种类型的配置，因为它假设一个相对规模较小的 NIS 环境。
+该服务器充当主机配置信息的中央存储库，并维护所有 NIS 客户端使用的文件的权威副本。NIS 客户端使用的 [.filename]#passwd#、[.filename]#group# 和其他各种文件存储在主服务器上。虽然一个机器可以成为多个 NIS 域的 NIS 主服务器，但本章不涵盖这种类型的配置，因为它假设一个相对规模较小的 NIS 环境。
 * NIS 从服务器
 +
 NIS 从服务器维护 NIS 主服务器数据文件的副本，以提供冗余。从服务器还有助于平衡主服务器的负载，因为 NIS 客户端总是连接到首先响应的 NIS 服务器。
@@ -507,11 +503,11 @@ NIS 从服务器维护 NIS 主服务器数据文件的副本，以提供冗余�
 +
 NIS 客户端在登录时对 NIS 服务器进行身份验证。
 
-许多文件的信息可以通过 NIS 共享。 [.filename]#master.passwd# 、 [.filename]#group# 和 [.filename]#hosts# 文件通常通过 NIS 共享。每当客户端上的进程需要通常在这些文件中找到的信息时，它会向绑定的 NIS 服务器发出查询。
+许多文件的信息可以通过 NIS 共享。[.filename]#master.passwd#、[.filename]#group# 和 [.filename]#hosts# 文件通常通过 NIS 共享。每当客户端上的进程需要通常在这些文件中找到的信息时，它会向绑定的 NIS 服务器发出查询。
 
 === 规划考虑因素
 
-本节描述了一个示例的 NIS 环境，该环境由 15 台 FreeBSD 机器组成，没有集中的管理点。每台机器都有自己的 /etc/passwd 和 /etc/master.passwd 文件。这些文件只能通过手动干预来保持同步。目前，当在实验室中添加用户时，这个过程必须在所有 15 台机器上重复执行。
+本节描述了一个示例的 NIS 环境，该环境由 15 台 FreeBSD 机器组成，没有集中的管理点。每台机器都有自己的 [.filename]#/etc/passwd# 和 [.filename]#/etc/master.passwd# 文件。这些文件只能通过手动干预来保持同步。目前，当在实验室中添加用户时，这个过程必须在所有 15 台机器上重复执行。
 
 实验室的配置如下：
 
@@ -523,11 +519,11 @@ NIS 客户端在登录时对 NIS 服务器进行身份验证。
 | 机器角色
 
 
-|`ellington`
+|``
 |`10.0.0.2`
 |NIS 主服务器
 
-|`coltrane` 是一个英文单词，没有明确的中文翻译。它可能是一个人名、地名或者其他专有名词。如果有上下文提供更多信息，我可以帮助提供更准确的翻译。
+|`coltrane`
 |`10.0.0.3`
 |NIS 从服务器
 
@@ -535,12 +531,12 @@ NIS 客户端在登录时对 NIS 服务器进行身份验证。
 |`10.0.0.4`
 |教职员工工作站
 
-|`bird` 是英文中的一个词，意思是鸟。
+|`bird`
 |`10.0.0.5`
 |客户端机器
 
 |`cli[1-11]`
-|`10.0.0.[6-17]` 表示一个 IP 地址范围，从 `10.0.0.6` 到 `10.0.0.17` 。
+|`10.0.0.[6-17]`
 |其他客户机
 |===
 
@@ -550,13 +546,13 @@ NIS 客户端在登录时对 NIS 服务器进行身份验证。
 
 当客户端广播其信息请求时，它会包含其所属的 NIS 域的名称。这就是在一个网络上多个服务器如何知道哪个服务器应该回答哪个请求的方式。将 NIS 域名视为一组主机的名称。
 
-一些组织选择使用其互联网域名作为 NIS 域名。这并不推荐，因为在调试网络问题时可能会引起混淆。 NIS 域名应在网络中是唯一的，并且如果能描述它所代表的机器组，那将会很有帮助。例如， Acme 公司的艺术部门可能在"acme-art"的 NIS 域中。本示例将使用域名 `test-domain` 。
+一些组织选择使用其互联网域名作为 NIS 域名。这并不推荐，因为在调试网络问题时可能会引起混淆。NIS 域名应在网络中是唯一的，并且如果能描述它所代表的机器组，那将会很有帮助。例如，Acme 公司的艺术部门可能在"acme-art"的 NIS 域中。本示例将使用域名 `test-domain` 。
 
 然而，一些非 FreeBSD 操作系统要求 NIS 域名与互联网域名相同。如果网络中的一个或多个机器有此限制，则必须使用互联网域名作为 NIS 域名。
 
 ==== 物理服务器要求
 
-选择用作 NIS 服务器的机器时，有几个要注意的事项。由于 NIS 客户端依赖于服务器的可用性，因此选择一台不经常重新启动的机器。 NIS 服务器最好是一台独立的机器，其唯一目的就是作为 NIS 服务器。如果网络使用率不高，可以将 NIS 服务器放在运行其他服务的机器上。然而，如果 NIS 服务器不可用，将会对所有 NIS 客户端产生不利影响。
+选择用作 NIS 服务器的机器时，有几个要注意的事项。由于 NIS 客户端依赖于服务器的可用性，因此选择一台不经常重新启动的机器。NIS 服务器最好是一台独立的机器，其唯一目的就是作为 NIS 服务器。如果网络使用率不高，可以将 NIS 服务器放在运行其他服务的机器上。然而，如果 NIS 服务器不可用，将会对所有 NIS 客户端产生不利影响。
 
 === 配置 NIS 主服务器
 
@@ -564,7 +560,7 @@ NIS 客户端在登录时对 NIS 服务器进行身份验证。
 
 NIS 主服务器和从服务器通过 man:ypserv[8] 处理所有 NIS 请求。该守护进程负责接收来自 NIS 客户端的传入请求，将请求的域和映射名称转换为相应数据库文件的路径，并将数据库中的数据传输回客户端。
 
-根据环境需求，设置主 NIS 服务器可以相对简单。由于 FreeBSD 提供了内置的 NIS 支持，只需要通过将以下行添加到 [/etc/rc.conf] 来启用 NIS ：
+根据环境需求，设置主 NIS 服务器可以相对简单。由于 FreeBSD 提供了内置的 NIS 支持，只需要通过将以下行添加到 [.filename]#/etc/rc.conf# 来启用 NIS ：
 
 [.programlisting]
 ....
@@ -573,11 +569,11 @@ nis_server_enable="YES"		<.>
 nis_yppasswdd_enable="YES"	<.>
 ....
 
-<.> 这行代码将 NIS 域名设置为 `test-domain` 。 <.> 这将在系统启动时自动启动 NIS 服务器进程。 <.> 这将启用 man:rpc.yppasswdd[8] 守护进程，以便用户可以从客户端机器上更改他们的 NIS 密码。
+<.> 这行代码将 NIS 域名设置为 `test-domain`。 <.> 这将在系统启动时自动启动 NIS 服务器进程。 <.> 这将启用 man:rpc.yppasswdd[8] 守护进程，以便用户可以从客户端机器上更改他们的 NIS 密码。
 
 在一个多服务器域中，需要注意服务器机器也是 NIS 客户端的情况。通常最好强制服务器绑定到自己，而不是允许它们广播绑定请求并可能相互绑定。如果一个服务器崩溃，其他服务器依赖于它，可能会出现奇怪的故障模式。最终，所有客户端都会超时并尝试绑定到其他服务器，但涉及的延迟可能相当大，并且故障模式仍然存在，因为服务器可能会再次相互绑定。
 
-一个既是服务器又是客户端的服务器可以通过在 [/etc/rc.conf] 中添加以下额外的行来强制绑定到特定的服务器：
+一个既是服务器又是客户端的服务器可以通过在 [.filename]#/etc/rc.conf# 中添加以下额外的行来强制绑定到特定的服务器：
 
 [.programlisting]
 ....
@@ -587,7 +583,7 @@ nis_client_flags="-S test-domain,server"	<.>
 
 <.> 这样可以运行客户端的内容。 <.> 这行代码将 NIS 域名设置为 `test-domain` 并绑定到自身。
 
-保存编辑后，输入 `/etc/netstart` 来重新启动网络并应用在 `/etc/rc.conf` 中定义的值。在初始化 NIS 映射之前，启动 `ypserv[8]` 。
+保存编辑后，输入 `/etc/netstart` 来重新启动网络并应用在 [.filename]#/etc/rc.conf# 中定义的值。在初始化 NIS 映射之前，启动 man:ypserv[8]：
 
 [source, shell]
 ....
@@ -597,7 +593,7 @@ nis_client_flags="-S test-domain,server"	<.>
 
 ==== 初始化 NIS 映射
 
-NIS 映射是从 NIS 主服务器上的配置文件 [/etc] 生成的，只有一个例外： [/etc/master.passwd] 。这是为了防止密码传播到 NIS 域中的所有服务器。因此，在初始化 NIS 映射之前，请配置主密码文件：
+NIS 映射是从 NIS 主服务器上的配置文件 [.filename]#/etc# 生成的，只有一个例外：[.filename]#/etc/master.passwd#。这是为了防止密码传播到 NIS 域中的所有服务器。因此，在初始化 NIS 映射之前，请配置主密码文件：
 
 [source, shell]
 ....
@@ -610,10 +606,10 @@ NIS 映射是从 NIS 主服务器上的配置文件 [/etc] 生成的，只有一
 
 [NOTE]
 ====
-通过将 [.filename]#/var/yp/master.passwd# 的权限设置为 `600` ，确保它既不可由组读取，也不可由其他用户读取。
+通过将 [.filename]#/var/yp/master.passwd# 的权限设置为 `600`，确保它既不可由组读取，也不可由其他用户读取。
 ====
 
-完成此任务后，初始化 NIS 映射。 FreeBSD 包含 man:ypinit[8] 脚本来完成此操作。在为主服务器生成映射时，包括 `-m` 选项并指定 NIS 域名：
+完成此任务后，初始化 NIS 映射。FreeBSD 包含 man:ypinit[8] 脚本来完成此操作。在为主服务器生成映射时，包括 `-m` 选项并指定 NIS 域名：
 
 [source, shell]
 ....
@@ -642,7 +638,7 @@ NIS Map update completed.
 ellington has been setup as an YP master server without any errors.
 ....
 
-这将从 [.filename]#/var/yp/Makefile.dist# 创建 [.filename]#/var/yp/Makefile# 。默认情况下，此文件假设环境中只有一个 NIS 服务器和仅有 FreeBSD 客户端。由于 `test-domain` 有一个从服务器，因此请编辑 [.filename]#/var/yp/Makefile# 中的此行，使其以注释 (`+#+`) 开头：
+这将从 [.filename]#/var/yp/Makefile.dist# 创建 [.filename]#/var/yp/Makefile# 。默认情况下，此文件假设环境中只有一个 NIS 服务器和仅有 FreeBSD 客户端。由于 `test-domain` 有一个从服务器，因此请编辑 [.filename]#/var/yp/Makefile# 中的此行，使其以注释（`+#+`）开头：
 
 [.programlisting]
 ....
@@ -665,7 +661,7 @@ NOPUSH = "True"
 
 === 设置一个 NIS 从服务器
 
-要设置一个 NIS 从服务器，登录到从服务器并像主服务器一样编辑 [/etc/rc.conf] 。不要生成任何 NIS 映射，因为这些映射已经存在于主服务器上。在从服务器上运行 `ypinit` 时，使用 `-s` （代表从服务器）而不是 `-m` （代表主服务器）。此选项除了域名外，还需要提供 NIS 主服务器的名称，如下例所示：
+要设置一个 NIS 从服务器，登录到从服务器并像主服务器一样编辑 [.filename]#/etc/rc.conf#。不要生成任何 NIS 映射，因为这些映射已经存在于主服务器上。在从服务器上运行 `ypinit` 时，使用 `-s`（代表从服务器）而不是 `-m` （代表主服务器）。此选项除了域名外，还需要提供 NIS 主服务器的名称，如下例所示：
 
 [source, shell]
 ....
@@ -727,7 +723,7 @@ coltrane has been setup as an YP slave server without any errors.
 Remember to update map ypservers on ellington.
 ....
 
-这将在从服务器上生成一个名为 [/var/yp/test-domain] 的目录，其中包含 NIS 主服务器映射的副本。在每个从服务器上添加这些 [/etc/crontab] 条目将强制从服务器将其映射与主服务器上的映射同步：
+这将在从服务器上生成一个名为 [.filename]#/var/yp/test-domain# 的目录，其中包含 NIS 主服务器映射的副本。在每个从服务器上添加这些 [.filename]#/etc/crontab# 条目将强制从服务器将其映射与主服务器上的映射同步：
 
 [.programlisting]
 ....
@@ -735,19 +731,19 @@ Remember to update map ypservers on ellington.
 21      *       *       *       *       root   /usr/libexec/ypxfr passwd.byuid
 ....
 
-这些条目不是强制性的，因为主服务器会自动尝试将任何地图更改推送到从服务器。然而，由于客户端可能依赖从服务器提供正确的密码信息，建议强制频繁更新密码映射。这在繁忙的网络上尤为重要，因为地图更新可能并不总是完成。
+这些条目不是强制性的，因为主服务器会自动尝试将任何映射更改推送到从服务器。然而，由于客户端可能依赖从服务器提供正确的密码信息，建议强制频繁更新密码映射。这在繁忙的网络上尤为重要，因为映射更新可能并不总是完成。
 
 要完成配置，请在从服务器上运行 `/etc/netstart` 以启动 NIS 服务。
 
 === 设置 NIS 客户端
 
-一个 NIS 客户端使用 man:ypbind[8] 绑定到一个 NIS 服务器。这个守护进程在本地网络上广播 RPC 请求。这些请求指定了客户端上配置的域名。如果同一域中的一个 NIS 服务器接收到其中一个广播，它将回应 ypbind ，并记录服务器的地址。如果有多个可用的服务器，客户端将使用第一个回应的服务器的地址，并将所有的 NIS 请求定向到该服务器。客户端会定期自动 ping 服务器，以确保它仍然可用。如果在合理的时间内未收到回复， ypbind 将标记该域为未绑定，并重新开始广播，希望找到另一个服务器。
+一个 NIS 客户端使用 man:ypbind[8] 绑定到一个 NIS 服务器。这个守护进程在本地网络上广播 RPC 请求。这些请求指定了客户端上配置的域名。如果同一域中的一个 NIS 服务器接收到其中一个广播，它将回应 ypbind，并记录服务器的地址。如果有多个可用的服务器，客户端将使用第一个回应的服务器的地址，并将所有的 NIS 请求定向到该服务器。客户端会定期自动 ping 服务器，以确保它仍然可用。如果在合理的时间内未收到回复，ypbind 将标记该域为未绑定，并重新开始广播，希望找到另一个服务器。
 
 要将 FreeBSD 机器配置为 NIS 客户端：
 
 [.procedure]
 ====
-. 编辑 [.filename]#/etc/rc.conf# 文件，并按照以下顺序添加以下行，以设置 NIS 域名并在网络启动时启动 man:ypbind[8] ：
+. 编辑 [.filename]#/etc/rc.conf# 文件，并按照以下顺序添加以下行，以设置 NIS 域名并在网络启动时启动 man:ypbind[8]：
 +
 [.programlisting]
 ....
@@ -762,8 +758,8 @@ nis_client_enable="YES"
 +:::::::::
 ....
 +
-这行配置将使客户端为 NIS 服务器密码映射中具有有效帐户的任何人在客户端上提供一个帐户。有许多方法可以通过修改这行来配置 NIS 客户端。其中一种方法在 <<network-netgroups>> 中有描述。如需更详细的阅读，请参考 O'Reilly Media 出版的《 Managing NFS and NIS 》一书。
-. 要从 NIS 服务器导入所有可能的组条目，请将以下行添加到 [/etc/group] 文件中：
+这行配置将使客户端为 NIS 服务器密码映射中具有有效帐户的任何人在客户端上提供一个帐户。有许多方法可以通过修改这行来配置 NIS 客户端。其中一种方法在 <<network-netgroups>> 中有描述。如需更详细的阅读，请参考 O'Reilly Media 出版的 `Managing NFS and NIS` 一书。
+. 要从 NIS 服务器导入所有可能的组条目，请将以下行添加到 [.filename]#/etc/group# 文件中：
 +
 [.programlisting]
 ....
@@ -798,19 +794,19 @@ nis_client_enable="YES"
 10.0.0.0      255.255.240.0
 ....
 
-如果 man:ypserv[8] 接收到与这些规则匹配的地址的请求，它将正常处理该请求。如果地址未能匹配规则，请求将被忽略，并记录一条警告信息。如果 [.filename]#securenets# 不存在， `ypserv` 将允许来自任何主机的连接。
+如果 man:ypserv[8] 接收到与这些规则匹配的地址的请求，它将正常处理该请求。如果地址未能匹配规则，请求将被忽略，并记录一条警告信息。如果 [.filename]#securenets# 不存在，`ypserv` 将允许来自任何主机的连接。
 
-crossref:security[tcpwrappers ,"TCP Wrapper"] 是一种替代的访问控制机制，用于提供对 .securenets# 的访问控制。虽然这两种访问控制机制都增加了一定的安全性，但它们都容易受到"IP 欺骗"攻击的影响。所有与 NIS 相关的流量都应该在防火墙上被阻止。
+crossref:security[tcpwrappers,"TCP Wrapper"] 是一种替代的访问控制机制，用于提供对 [.filename]#securenets# 的访问控制。虽然这两种访问控制机制都增加了一定的安全性，但它们都容易受到“IP 欺骗”攻击的影响。所有与 NIS 相关的流量都应该在防火墙上被阻止。
 
-使用 [.filename]#securenets# 的服务器可能无法为使用过时的 TCP/IP 实现的合法 NIS 客户端提供服务。其中一些实现在进行广播时将所有主机位设置为零，或者在计算广播地址时未观察子网掩码。虽然可以通过更改客户端配置来解决其中一些问题，但其他问题可能会迫使退役这些客户端系统或放弃 [.filename]#securenets# 。
+使用 [.filename]#securenets# 的服务器可能无法为使用过时的 TCP/IP 实现的合法 NIS 客户端提供服务。其中一些实现在进行广播时将所有主机位设置为零，或者在计算广播地址时未观察子网掩码。虽然可以通过更改客户端配置来解决其中一些问题，但其他问题可能会迫使退役这些客户端系统或放弃 [.filename]#securenets#。
 
 使用 TCP Wrapper 会增加 NIS 服务器的延迟。额外的延迟可能足够长，以至于在繁忙的网络中，特别是在速度较慢的 NIS 服务器上，会导致客户端程序超时。如果一个或多个客户端受到延迟的影响，将这些客户端转换为 NIS 从服务器，并强制它们绑定到自己。
 
-==== 除了某些用户
+==== 禁止某些用户
 
-在这个例子中， `basie` 系统是 NIS 域中的一个教职工工作站。主 NIS 服务器上的 [.filename]#passwd# 映射包含了教职工和学生的账户。本节演示了如何允许教职工登录这个系统，同时拒绝学生登录。
+在这个例子中，`basie` 系统是 NIS 域中的一个教职工工作站。主 NIS 服务器上的 [.filename]#passwd# 映射包含了教职工和学生的账户。本节演示了如何允许教职工登录这个系统，同时拒绝学生登录。
 
-为了防止指定的用户登录系统，即使他们在 NIS 数据库中存在，使用 `vipw` 在客户端的 [.filename]#/etc/master.passwd# 末尾添加 `-_username_` ，其中 `_username_` 是要禁止登录的用户的用户名，并且正确的冒号数量。被阻止用户的行必须在允许 NIS 用户的 ` + ` 行之前。在这个例子中， `bill` 被禁止登录到 `basie` 。
+为了防止指定的用户登录系统，即使他们在 NIS 数据库中存在，使用 `vipw` 在客户端的 [.filename]#/etc/master.passwd# 末尾添加 `-_username_`，其中 `_username_` 是要禁止登录的用户的用户名，并且正确的冒号数量。被阻止用户的行必须在允许 NIS 用户的 `+` 行之前。在这个例子中，`bill` 被禁止登录到 `basie`。
 
 [source, shell]
 ....
@@ -838,67 +834,57 @@ basie#
 
 
 [[network-netgroups]]
-=== 使用 Netgroups 
-
- Netgroups 是一种在计算机网络中组织和管理用户、主机和域的方法。它允许管理员将一组相关的用户、主机或域定义为一个组，并为该组分配特定的权限和访问控制规则。
-
- Netgroups 可以用于各种用途，例如控制访问权限、配置网络服务和管理用户组。它们可以在操作系统级别或应用程序级别使用。
-
-要使用 Netgroups ，首先需要在网络中的每个主机上配置 Netgroup 数据库。这可以通过编辑 `/etc/netgroup` 文件来完成。在该文件中，可以定义 Netgroups 及其成员。每个 Netgroup 由一个名称和一个成员列表组成。
-
-一旦 Netgroup 数据库配置完成，就可以在系统中使用 Netgroups 了。可以通过在配置文件中引用 Netgroup 名称来控制访问权限，或者在命令行中使用 Netgroup 名称来限制特定操作的范围。
-
-总的来说， Netgroups 是一种强大的工具，可以帮助管理员更好地组织和管理网络中的用户、主机和域。它提供了一种灵活的方式来控制访问权限，并简化了配置和管理过程。
+=== 使用 Netgroups
 
 在较大的网络上，禁止特定用户登录到个别系统变得不可扩展，并且很快失去了 NIS 的主要优势：_集中化_管理。
 
-Netgroups 是为处理具有数百个用户和机器的大型复杂网络而开发的。它们的使用类似于 UNIX(R) 组，主要区别在于缺乏数字 ID ，并且可以通过包含用户账户和其他 netgroups 来定义 netgroup 。
+Netgroups 是为处理具有数百个用户和机器的大型复杂网络而开发的。它们的使用类似于 UNIX(R) 组，主要区别在于缺乏数字 ID，并且可以通过包含用户账户和其他 netgroups 来定义 netgroup。
 
-为了扩展本章中使用的示例， NIS 域将被扩展以添加表 28.2 和 28.3 中显示的用户和系统。
+为了扩展本章中使用的示例，NIS 域将被扩展以添加表 28.2 和 28.3 中显示的用户和系统。
 
 .附加用户
 [cols="1,1", frame="none", options="header"]
 |===
-| 用户名（们）
+| 用户名
 | 描述
 
-|`alpha` , `beta`
+|`alpha`, `beta`
 |IT 部门员工
 
-|`charlie` , `delta`
+|`charlie`, `delta`
 |IT 部门学徒
 
-|`echo` , `foxtrott` , `golf` , ...
+|`echo`, `foxtrott`, `golf`, ...
 |员工
 
-|`able` , `baker` , ... 可以翻译为中文为 `able` , `baker` , ...
+|`able`, `baker`, ...
 |实习生
 |===
 
 .其他系统
 [cols="1,1", frame="none", options="header"]
 |===
-| 机器名称（们）
+| 机器名称
 | 描述
 
-|战争，死亡，饥荒，污染
+|`war`, `death`, `famine`, `pollution`
 |只有 IT 员工才能登录这些服务器。
 
-|` 骄傲 ` , ` 贪婪 ` , ` 嫉妒 ` , ` 愤怒 ` , ` 欲望 ` , ` 懒惰 `
+|`pride`, `greed`, `envy`, `wrath`, `lust`, `sloth`
 |IT 部门的所有成员都被允许登录这些服务器。
 
-|` 一 ` ， ` 二 ` ， ` 三 ` ， ` 四 ` ， ...
+|`one`, `two`, `three`, `four`, ...
 |员工使用的普通工作站。
 
-|`trashcan` 的中文翻译是 ` 垃圾桶 ` 。
+|`trashcan`
 |一台非常老旧的机器，没有任何关键数据。甚至实习生都可以使用这个系统。
 |===
 
-在使用 netgroups 配置这种情况时，每个用户都被分配到一个或多个 netgroups ，并且登录权限会对 netgroup 的所有成员进行允许或禁止。当添加一个新的机器时，必须为所有 netgroups 定义登录限制。当添加一个新用户时，必须将该账户添加到一个或多个 netgroups 中。如果 NIS 设置得当，只需要修改一个中央配置文件就可以授予或拒绝对机器的访问权限。
+在使用 netgroups 配置这种情况时，每个用户都被分配到一个或多个 netgroups，并且登录权限会对 netgroup 的所有成员进行允许或禁止。当添加一个新的机器时，必须为所有 netgroups 定义登录限制。当添加一个新用户时，必须将该账户添加到一个或多个 netgroups 中。如果 NIS 设置得当，只需要修改一个中央配置文件就可以授予或拒绝对机器的访问权限。
 
-第一步是初始化 NIS 的 `netgroup` 映射。在 FreeBSD 中，默认情况下不会创建此映射。在 NIS 主服务器上，使用编辑器创建一个名为 `/var/yp/netgroup` 的映射。
+第一步是初始化 NIS 的 `netgroup` 映射。在 FreeBSD 中，默认情况下不会创建此映射。在 NIS 主服务器上，使用编辑器创建一个名为 [.filename]#/var/yp/netgroup# 的映射。
 
-这个例子创建了四个网络组，分别代表 IT 员工、 IT 学徒、员工和实习生：
+这个例子创建了四个网络组，分别代表 IT 员工、IT 学徒、员工和实习生：
 
 [.programlisting]
 ....
@@ -909,17 +895,17 @@ USERS   (,echo,test-domain)     (,foxtrott,test-domain) \
 INTERNS (,able,test-domain)     (,baker,test-domain)
 ....
 
-每个条目配置一个 netgroup 。条目中的第一列是 netgroup 的名称。每对括号表示一个或多个用户的组或另一个 netgroup 的名称。在指定用户时，每个组内的三个逗号分隔字段表示：
+每个条目配置一个 netgroup。条目中的第一列是 netgroup 的名称。每对括号表示一个或多个用户的组或另一个 netgroup 的名称。在指定用户时，每个组内的三个逗号分隔字段表示：
 
 . 表示用户有效的其他字段所在的主机名。如果未指定主机名，则条目在所有主机上有效。
 . 属于此网络组的帐户的名称。
 . 帐户的 NIS 域。可以将帐户从其他 NIS 域导入到网络组中。
 
-如果一个组包含多个用户，请使用空格分隔每个用户。此外，每个字段可以包含通配符。有关详细信息，请参阅 man:netgroup[5] 。
+如果一个组包含多个用户，请使用空格分隔每个用户。此外，每个字段可以包含通配符。有关详细信息，请参阅 man:netgroup[5]。
 
 不应使用超过 8 个字符的 Netgroup 名称。这些名称区分大小写，使用大写字母作为 Netgroup 名称是区分用户、机器和 Netgroup 名称的简单方法。
 
-一些非 FreeBSD 的 NIS 客户端无法处理包含超过 15 个条目的 netgroup 。可以通过创建多个包含 15 个或更少用户的子 netgroup 以及一个由子 netgroup 组成的真正的 netgroup 来绕过此限制，如下面的示例所示：
+一些非 FreeBSD 的 NIS 客户端无法处理包含超过 15 个条目的 netgroup。可以通过创建多个包含 15 个或更少用户的子 netgroup 以及一个由子 netgroup 组成的真正的 netgroup 来绕过此限制，如下面的示例所示：
 
 [.programlisting]
 ....
@@ -929,7 +915,7 @@ BIGGRP3  (,joe31,domain)  (,joe32,domain)
 BIGGROUP  BIGGRP1 BIGGRP2 BIGGRP3
 ....
 
-如果单个网络组中存在超过 225 个（ 15 乘以 15 ）用户，请重复此过程。
+如果单个网络组中存在超过 225 个（15 乘以 15）用户，请重复此过程。
 
 要激活和分发新的 NIS 映射：
 
@@ -939,7 +925,7 @@ ellington# cd /var/yp
 ellington# make
 ....
 
-这将生成三个 NIS 映射文件 [.filename]#netgroup# 、 [.filename]#netgroup.byhost# 和 [.filename]#netgroup.byuser# 。使用 man:ypcat[1] 的映射键选项来检查新的 NIS 映射文件是否可用：
+这将生成三个 NIS 映射文件 [.filename]#netgroup#、[.filename]#netgroup.byhost# 和 [.filename]#netgroup.byuser#。使用 man:ypcat[1] 的映射键选项来检查新的 NIS 映射文件是否可用：
 
 [source, shell]
 ....
@@ -950,7 +936,7 @@ ellington% ypcat -k netgroup.byuser
 
 第一个命令的输出应该类似于 [.filename]#/var/yp/netgroup# 文件的内容。只有在创建了特定主机的 netgroup 时，第二个命令才会产生输出。第三个命令用于获取用户的 netgroup 列表。
 
-要配置客户端，请使用 man:vipw[8] 来指定 netgroup 的名称。例如，在名为“ war ”的服务器上，替换这一行：
+要配置客户端，请使用 man:vipw[8] 来指定 netgroup 的名称。例如，在名为 `war` 的服务器上，替换这一行：
 
 [.programlisting]
 ....
@@ -966,18 +952,18 @@ with
 
 这指定只有在 netgroup `IT_EMP` 中定义的用户将被导入到此系统的密码数据库中，并且只有这些用户被允许登录到此系统。
 
-此配置也适用于 shell 的 ` ~ ` 函数和所有在用户名称和数字用户 ID 之间转换的例程。换句话说， `cd ~_user_` 将无法工作， `ls -l` 将显示数字 ID 而不是用户名， `find . -user joe -print` 将以 `No such user` 的消息失败。要解决此问题，导入所有用户条目时不允许它们登录到服务器。可以通过添加额外的一行来实现这一点：
+此配置也适用于 shell 的 `~` 函数和所有在用户名称和数字用户 ID 之间转换的例程。换句话说，`cd ~_user_` 将无法工作，`ls -l` 将显示数字 ID 而不是用户名，`find . -user joe -print` 将以 `No such user` 的消息失败。要解决此问题，导入所有用户条目时不允许它们登录到服务器。可以通过添加额外的一行来实现这一点：
 
 [.programlisting]
 ....
 +:::::::::/usr/sbin/nologin
 ....
 
-这行配置将客户端配置为导入所有条目，但将这些条目中的 shell 替换为 [.filename]#/usr/sbin/nologin# 。
+这行配置将客户端配置为导入所有条目，但将这些条目中的 shell 替换为 [.filename]#/usr/sbin/nologin#。
 
-请确保在 ` +@ IT_EMP:::::::::` 之后放置额外的空行。否则，从 NIS 导入的所有用户帐户将将 [.filename]#/usr/sbin/nologin# 作为其登录 shell ，而没有人将能够登录到系统。
+请确保在 `+@IT_EMP:::::::::` _之后_放置额外的空行。否则，从 NIS 导入的所有用户帐户将将 [.filename]#/usr/sbin/nologin# 作为其登录 shell，而没有人将能够登录到系统。
 
-要配置较不重要的服务器，请将服务器上的旧 ` + :::::::::` 替换为以下行：
+要配置较不重要的服务器，请将服务器上的旧 `+:::::::::` 替换为以下行：
 
 [.programlisting]
 ....
@@ -995,7 +981,7 @@ with
 +:::::::::/usr/sbin/nologin
 ....
 
-NIS 支持从其他 netgroups 创建 netgroups ，这在用户访问策略发生变化时非常有用。一个可能的情况是创建基于角色的 netgroups 。例如，可以创建一个名为 `BIGSRV` 的 netgroup 来定义重要服务器的登录限制，另一个名为 `SMALLSRV` 的 netgroup 用于不太重要的服务器，以及一个名为 `USERBOX` 的 netgroup 用于工作站。每个 netgroup 都包含被允许登录到这些机器上的 netgroups 。 NIS`netgroup` 映射的新条目如下所示：
+NIS 支持从其他 netgroups 创建 netgroups，这在用户访问策略发生变化时非常有用。一个可能的情况是创建基于角色的 netgroups。例如，可以创建一个名为 `BIGSRV` 的 netgroup 来定义重要服务器的登录限制，另一个名为 `SMALLSRV` 的 netgroup 用于不太重要的服务器，以及一个名为 `USERBOX` 的 netgroup 用于工作站。每个 netgroup 都包含被允许登录到这些机器上的 netgroups。NIS`netgroup` 映射的新条目如下所示：
 
 [.programlisting]
 ....
@@ -1006,7 +992,7 @@ USERBOX   IT_EMP  ITINTERN USERS
 
 当能够定义具有相同限制的机器组时，这种定义登录限制的方法运作得相当不错。不幸的是，这只是个例而不是规则。大多数情况下，需要能够按照每台机器的基础定义登录限制。
 
-机器特定的网络组定义是处理策略变更的另一种可能性。在这种情况下，每个系统的 /etc/master.passwd 文件包含两行以"+"开头的内容。第一行添加了一个允许登录到该机器的帐户的网络组，第二行添加了所有其他帐户，并将其 shell 设置为 /usr/sbin/nologin 。建议使用主机名的大写版本作为网络组的名称：
+机器特定的网络组定义是处理策略变更的另一种可能性。在这种情况下，每个系统的 [.filename]#/etc/master.passwd# 文件包含两行以"+"开头的内容。第一行添加了一个允许登录到该机器的帐户的网络组，第二行添加了所有其他帐户，并将其 shell 设置为 [.filename]#/usr/sbin/nologin#。建议使用主机名的大写版本作为网络组的名称：
 
 [.programlisting]
 ....
@@ -1014,7 +1000,7 @@ USERBOX   IT_EMP  ITINTERN USERS
 +:::::::::/usr/sbin/nologin
 ....
 
-一旦在所有机器上完成了这个任务，就不再需要再次修改本地版本的 `/etc/master.passwd` 文件了。所有后续的更改都可以通过修改 NIS 映射来处理。以下是一个可能的 `netgroup` 映射的示例：
+一旦在所有机器上完成了这个任务，就不再需要再次修改本地版本的 [.filename]#/etc/master.passwd# 文件了。所有后续的更改都可以通过修改 NIS 映射来处理。以下是一个可能的 `netgroup` 映射的示例：
 
 [.programlisting]
 ....
@@ -1059,20 +1045,6 @@ TWO       (,hotel,test-domain)
 
 === 密码格式
 
-密码是用于验证用户身份和保护个人信息的重要工具。为了确保密码的安全性，常见的密码格式包括以下几种：
-
- 1. 长度要求：密码必须具有一定的长度要求，通常要求在 8 到 16 个字符之间。
-
- 2. 复杂性要求：密码必须包含不同类型的字符，如大写字母、小写字母、数字和特殊字符。
-
- 3. 避免常见密码：密码不能使用常见的密码，如"password"或"123456"等。
-
- 4. 定期更换密码：为了增加密码的安全性，建议定期更换密码，通常是每 3 个月或 6 个月更换一次。
-
- 5. 多因素认证：除了密码，还可以使用其他因素进行认证，如指纹识别、面部识别或短信验证码等。
-
-请注意，选择一个强密码并遵循密码格式要求是保护个人信息安全的重要步骤。
-
 NIS 要求 NIS 域内的所有主机使用相同的密码加密格式。如果用户在 NIS 客户端上认证时遇到问题，可能是由于密码格式不同。在异构网络中，该格式必须由所有操作系统支持，其中 DES 是最低公共标准。
 
 要检查服务器或客户端使用的格式，请查看 [.filename]#/etc/login.conf# 文件的这个部分：
@@ -1085,7 +1057,7 @@ default:\
 	[Further entries elided]
 ....
 
-在这个例子中，系统使用 DES 格式进行密码哈希。其他可能的值包括 `blf` 表示 Blowfish ， `md5` 表示 MD5 ， `sha256` 和 `sha512` 分别表示 SHA-256 和 SHA-512 。要获取更多信息和系统上可用选项的最新列表，请参考 man:crypt[3] 手册页。
+在这个例子中，系统使用 DES 格式进行密码哈希。其他可能的值包括 `blf` 表示 Blowfish，`md5` 表示 MD5，`sha256` 和 `sha512` 分别表示 SHA-256 和 SHA-512。要获取更多信息和系统上可用选项的最新列表，请参考 man:crypt[3] 手册页。
 
 如果需要编辑主机上的格式以匹配在 NIS 域中使用的格式，则在保存更改后必须重新构建登录能力数据库。
 
@@ -1100,17 +1072,17 @@ default:\
 ====
 
 [[network-ldap]]
-== 轻量级目录访问协议（ LDAP ）
+== 轻量级目录访问协议（LDAP）
 
-轻量级目录访问协议（ LDAP ）是一种应用层协议，用于访问、修改和认证使用分布式目录信息服务的对象。可以将其视为存储多个层次结构、同质信息的电话簿或记录簿。它在 Active Directory 和 OpenLDAP 网络中使用，并允许用户使用单个帐户访问多个层次的内部信息。例如，电子邮件认证、获取员工联系信息和内部网站认证可能都会使用 LDAP 服务器记录库中的单个用户帐户。
+轻量级目录访问协议（LDAP）是一种应用层协议，用于访问、修改和认证使用分布式目录信息服务的对象。可以将其视为存储多个层次结构、同质信息的电话簿或记录簿。它在 Active Directory 和 OpenLDAP 网络中使用，并允许用户使用单个帐户访问多个层次的内部信息。例如，电子邮件认证、获取员工联系信息和内部网站认证可能都会使用 LDAP 服务器记录库中的单个用户帐户。
 
 本节提供了在 FreeBSD 系统上配置 LDAP 服务器的快速入门指南。它假设管理员已经有了一个设计计划，其中包括要存储的信息类型，该信息将用于什么目的，哪些用户应该访问该信息，以及如何保护该信息免受未经授权的访问。
 
 === LDAP 术语和结构
 
-在开始配置之前，需要了解 LDAP 使用的几个术语。所有目录条目由一组“属性”组成。每个属性集都包含一个称为“ Distinguished Name ”（ DN ）的唯一标识符，通常由其他属性（如常见的或“ Relative Distinguished Name ”（ RDN ））构建而成。类似于目录具有绝对路径和相对路径，可以将 DN 视为绝对路径，将 RDN 视为相对路径。
+在开始配置之前，需要了解 LDAP 使用的几个术语。所有目录条目由一组_属性_组成。每个属性集都包含一个称为_Distinguished Name_（DN）的唯一标识符，通常由其他属性（如常见的或_Relative Distinguished Name_ （RDN））构建而成。类似于目录具有绝对路径和相对路径，可以将 DN 视为绝对路径，将 RDN 视为相对路径。
 
-一个示例 LDAP 条目如下所示。此示例搜索指定用户帐户（ `uid` ）、组织单位（ `ou` ）和组织（ `o` ）的条目：
+一个示例 LDAP 条目如下所示。此示例搜索指定用户帐户（`uid`）、组织单位（`ou`）和组织（`o`）的条目：
 
 [source, shell]
 ....
@@ -1138,21 +1110,21 @@ result: 0 Success
 # numEntries: 1
 ....
 
-这个示例条目显示了 `dn` 、 `mail` 、 `cn` 、 `uid` 和 `telephoneNumber` 属性的值。 `cn` 属性是 RDN 。
+这个示例条目显示了 `dn`、`mail`、`cn`、`uid` 和 `telephoneNumber` 属性的值。`cn` 属性是 RDN。
 
-有关 LDAP 及其术语的更多信息，请访问 http://www.openldap.org/doc/admin24/intro.html[http://www.openldap.org/doc/admin24/intro.html] 。
+有关 LDAP 及其术语的更多信息，请访问 http://www.openldap.org/doc/admin24/intro.html[http://www.openldap.org/doc/admin24/intro.html]。
 
 [[ldap-config]]
 === 配置 LDAP 服务器
 
-FreeBSD 没有提供内置的 LDAP 服务器。开始配置过程，需要安装 `net/openldap-server` 包或者使用端口进行安装。
+FreeBSD 没有提供内置的 LDAP 服务器。开始配置过程，需要安装 `net/openldap-server` 包或者使用 port 进行安装。
 
 [source, shell]
 ....
 # pkg install openldap-server
 ....
 
-在 extref:{linux-users}[package , software] 中启用了一组大量的默认选项。通过运行 `pkg info openldap-server` 来查看它们。如果它们不足够（例如需要 SQL 支持），请考虑使用适当的 crossref:ports[ports-using , framework] 重新编译该端口。
+在 extref:{linux-users}[package, software] 中启用了一组大量的默认选项。通过运行 `pkg info openldap-server` 来查看它们。如果它们不足够（例如需要 SQL 支持），请考虑使用适当的 crossref:ports[ports-using, framework] 重新编译该 port。
 
 安装过程会创建目录 [.filename]#/var/db/openldap-data# 来存储数据。必须创建用于存储证书的目录：
 
@@ -1161,14 +1133,14 @@ FreeBSD 没有提供内置的 LDAP 服务器。开始配置过程，需要安装
 # mkdir /usr/local/etc/openldap/private
 ....
 
-下一步是配置证书颁发机构。以下命令必须从 [.filename]#/usr/local/etc/openldap/private# 目录下执行。这很重要，因为文件权限需要限制，并且用户不应该访问这些文件。有关证书及其参数的更详细信息，请参阅 crossref:security[openssl ,"OpenSSL"] 。要创建证书颁发机构，请使用以下命令并按照提示进行操作：
+下一步是配置证书颁发机构。以下命令必须从 [.filename]#/usr/local/etc/openldap/private# 目录下执行。这很重要，因为文件权限需要限制，并且用户不应该访问这些文件。有关证书及其参数的更详细信息，请参阅 crossref:security[openssl,"OpenSSL"]。要创建证书颁发机构，请使用以下命令并按照提示进行操作：
 
 [source, shell]
 ....
 # openssl req -days 365 -nodes -new -x509 -keyout ca.key -out ../ca.crt
 ....
 
-提示的条目可以是通用的，除了“ Common Name ”（公共名称）之外。这个条目必须与系统主机名不同。如果这将是一个自签名证书，请在主机名前加上“ CA ”表示证书颁发机构。
+提示的条目可以是通用的，除了 `Common Name` 之外。这个条目必须与系统主机名_不同_。如果这将是一个自签名证书，请在主机名前加上 `CA` 表示证书颁发机构。
 
 下一步是创建证书签名请求和私钥。输入以下命令并按照提示进行操作：
 
@@ -1177,7 +1149,7 @@ FreeBSD 没有提供内置的 LDAP 服务器。开始配置过程，需要安装
 # openssl req -days 365 -nodes -new -keyout server.key -out server.csr
 ....
 
-在证书生成过程中，请确保正确设置“通用名称”属性。证书签名请求必须由证书颁发机构签名，才能用作有效证书。
+在证书生成过程中，请确保正确设置 `Common Name` 属性。证书签名请求必须由证书颁发机构签名，才能用作有效证书。
 
 [source, shell]
 ....
@@ -1192,11 +1164,11 @@ FreeBSD 没有提供内置的 LDAP 服务器。开始配置过程，需要安装
 # openssl x509 -req -days 3650 -in client.csr -out ../client.crt -CA ../ca.crt -CAkey ca.key
 ....
 
-在提示时，请记得使用相同的“ Common Name ”属性。完成后，请确保通过前面的命令生成了总共八（ 8 ）个新文件。
+在提示时，请记得使用相同的 `Common Name` 属性。完成后，请确保通过前面的命令生成了总共八（8）个新文件。
 
-运行 OpenLDAP 服务器的守护进程是 [.filename]#slapd# 。它的配置是通过 [.filename]#slapd.ldif# 文件进行的：旧的 [.filename]#slapd.conf# 已被 OpenLDAP 弃用。
+运行 OpenLDAP 服务器的守护进程是 [.filename]#slapd#。它的配置是通过 [.filename]#slapd.ldif# 文件进行的：旧的 [.filename]#slapd.conf# 已被 OpenLDAP 弃用。
 
-[配置示例] 可以在 [.filename]#slapd.ldif# 中找到，并且还可以在 [.filename]#/usr/local/etc/openldap/slapd.ldif.sample# 中找到。选项在 slapd-config(5) 中有文档记录。 [.filename]#slapd.ldif# 的每个部分，就像所有其他 LDAP 属性集一样，都通过 DN 唯一标识。请确保在 `dn:` 语句和所需部分的末尾之间没有空行。在下面的示例中，将使用 TLS 来实现安全通道。第一部分表示全局配置：
+http://www.openldap.org/doc/admin24/slapdconf2.html[配置示例] 可以在 [.filename]#slapd.ldif# 中找到，并且还可以在 [.filename]#/usr/local/etc/openldap/slapd.ldif.sample# 中找到。选项在 slapd-config(5) 中有文档记录。[.filename]#slapd.ldif# 的每个部分，就像所有其他 LDAP 属性集一样，都通过 DN 唯一标识。请确保在 `dn:` 语句和所需部分的末尾之间没有空行。在下面的示例中，将使用 TLS 来实现安全通道。第一部分表示全局配置：
 
 [.programlisting]
 ....
@@ -1221,7 +1193,7 @@ olcTLSProtocolMin: 3.1
 olcTLSVerifyClient: never
 ....
 
-在这里必须指定证书颁发机构、服务器证书和服务器私钥文件。建议让客户端选择安全密码并省略选项 `olcTLSCipherSuite` （与除 [.filename]#openssl# 之外的 TLS 客户端不兼容）。选项 `olcTLSProtocolMin` 允许服务器要求最低安全级别：建议使用。虽然服务器必须进行验证，但客户端不需要： `olcTLSVerifyClient: never` 。
+在这里必须指定证书颁发机构、服务器证书和服务器私钥文件。建议让客户端选择安全密码并省略选项 `olcTLSCipherSuite` （与除 [.filename]#openssl# 之外的 TLS 客户端不兼容）。选项 `olcTLSProtocolMin` 允许服务器要求最低安全级别：建议使用。虽然服务器必须进行验证，但客户端不需要：`olcTLSVerifyClient: never`。
 
 第二部分是关于后端模块的，可以按照以下方式进行配置：
 
@@ -1293,7 +1265,7 @@ olcPasswordHash: {SSHA}
 # {SSHA} is already the default for olcPasswordHash
 ....
 
-另一个部分专门介绍了“配置后端”，这是以全局超级用户的身份访问 OpenLDAP 服务器配置的唯一方式。
+另一个部分专门介绍了 _配置后端_，这是以全局超级用户的身份访问 OpenLDAP 服务器配置的唯一方式。
 
 [.programlisting]
 ....
@@ -1304,7 +1276,7 @@ olcAccess: to * by * none
 olcRootPW: {SSHA}iae+lrQZILpiUdf16Z9KmDmSwT77Dj4U
 ....
 
-默认管理员用户名是 `cn = config` 。在 shell 中输入 [.filename]#slappasswd# ，选择一个密码并使用其哈希值填写到 `olcRootPW` 中。如果在导入 [.filename]#slapd.ldif# 之前没有指定此选项，将来将无法修改 _全局配置_ 部分。
+默认管理员用户名是 `cn=config`。在 shell 中输入 [.filename]#slappasswd# ，选择一个密码并使用其哈希值填写到 `olcRootPW` 中。如果在导入 [.filename]#slapd.ldif# 之前没有指定此选项，将来将无法修改 _全局配置_ 部分。
 
 最后一节是关于数据库后端的内容：
 
@@ -1333,9 +1305,9 @@ olcDbDirectory:	/var/db/openldap-data
 olcDbIndex: objectClass eq
 ....
 
-该数据库托管了 LDAP 目录的实际内容。除了 `mdb` 之外，还有其他类型可用。它的超级用户（与全局用户不同）在这里进行配置： `olcRootDN` 中是一个（可能是自定义的）用户名， `olcRootPW` 中是密码哈希值；可以像以前一样使用 [.filename]#slappasswd# 。
+该数据库托管了 LDAP 目录的实际内容。除了 `mdb` 之外，还有其他类型可用。它的超级用户（与全局用户不同）在这里进行配置： `olcRootDN` 中是一个（可能是自定义的）用户名，`olcRootPW` 中是密码哈希值；可以像以前一样使用 [.filename]#slappasswd#。
 
-这个 [仓库](http://www.openldap.org/devel/gitweb.cgi ? p = openldap.git ; a = tree ; f = tests/data/regressions/its8444 ; h = 8a5e808e63b0de3d2bdaf2cf34fecca8577ca7fd ; hb = HEAD) 包含了四个 [.filename]#slapd.ldif# 的示例。要将现有的 [.filename]#slapd.conf# 转换为 [.filename]#slapd.ldif# ，请参考 [此页面](http://www.openldap.org/doc/admin24/slapdconf2.html) （请注意，这可能会引入一些无用的选项）。
+这个 http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=tree;f=tests/data/regressions/its8444;h=8a5e808e63b0de3d2bdaf2cf34fecca8577ca7fd;hb=HEAD[仓库] 包含了四个 [.filename]#slapd.ldif# 的示例。要将现有的 [.filename]#slapd.conf# 转换为 [.filename]#slapd.ldif# ，请参考 http://www.openldap.org/doc/admin24/slapdconf2.html[此页面] （请注意，这可能会引入一些无用的选项）。
 
 配置完成后，必须将 [.filename]#slapd.ldif# 放置在一个空目录中。建议将其创建为：
 
@@ -1383,14 +1355,14 @@ result: 0 Success
 # numEntries: 1
 ....
 
-服务器仍然必须是可信的。如果之前从未进行过此操作，请按照以下说明进行操作。安装 OpenSSL 软件包或端口：
+服务器仍然必须是可信的。如果之前从未进行过此操作，请按照以下说明进行操作。安装 OpenSSL 软件包或 port：
 
 [source, shell]
 ....
 # pkg install openssl
 ....
 
-从存储 [.filename]#ca.crt# 的目录（在本例中为 [.filename]#/usr/local/etc/openldap# ）中运行：
+从存储 [.filename]#ca.crt# 的目录（在本例中为 [.filename]#/usr/local/etc/openldap#）中运行：
 
 [source, shell]
 ....
@@ -1404,7 +1376,7 @@ CA 证书和服务器证书现在在各自的角色中被正确识别。要验�
 # openssl verify -verbose -CApath . server.crt
 ....
 
-如果 [.filename]#slapd# 正在运行，请重新启动它。如 [.filename]#/usr/local/etc/rc.d/slapd# 中所述，为了在启动时正确运行 [.filename]#slapd# ，必须将以下行添加到 [.filename]#/etc/rc.conf# ：
+如果 [.filename]#slapd# 正在运行，请重新启动它。如 [.filename]#/usr/local/etc/rc.d/slapd# 中所述，为了在启动时正确运行 [.filename]#slapd# ，必须将以下行添加到 [.filename]#/etc/rc.conf#：
 
 [.programlisting]
 ....
@@ -1415,9 +1387,9 @@ slapd_sockets="/var/run/openldap/ldapi"
 slapd_cn_config="YES"
 ....
 
-[.filename]#slapd# 在启动时不提供调试功能。请检查 [.filename]#/var/log/debug.log# 、 [.filename]#dmesg -a# 和 [.filename]#/var/log/messages# 以进行调试。
+[.filename]#slapd# 在启动时不提供调试功能。请检查 [.filename]#/var/log/debug.log#、[.filename]#dmesg -a# 和 [.filename]#/var/log/messages# 以进行调试。
 
-以下示例将组 `team` 和用户 `john` 添加到仍为空的 `domain.example` LDAP 数据库中。首先，创建文件 [.filename]#domain.ldif# ：
+以下示例将组 `team` 和用户 `john` 添加到仍为空的 `domain.example` LDAP 数据库中。首先，创建文件 [.filename]#domain.ldif#：
 
 [source, shell]
 ....
@@ -1465,7 +1437,7 @@ userPassword: secret
 # ldapadd -W -D "cn=mdbadmin,dc=domain,dc=example" -f domain.ldif
 ....
 
-只有全局超级用户才能对_global configuration_部分进行修改。例如，假设最初指定了选项 `olcTLSCipherSuite: HIGH:MEDIUM:SSLv3` ，现在必须删除该选项。首先，创建一个包含以下内容的文件：
+只有全局超级用户才能对 _global configuration_ 部分进行修改。例如，假设最初指定了选项 `olcTLSCipherSuite: HIGH:MEDIUM:SSLv3`，现在必须删除该选项。首先，创建一个包含以下内容的文件：
 
 [source, shell]
 ....
@@ -1482,7 +1454,7 @@ delete: olcTLSCipherSuite
 # ldapmodify -f global_mod -x -D "cn=config" -W
 ....
 
-当被询问时，请提供在“配置后端”部分选择的密码。用户名不是必需的：在这里，“ cn = config ”表示要修改的数据库部分的 DN 。或者，使用“ ldapmodify ”删除数据库的单行，“ ldapdelete ”删除整个条目。
+当被询问时，请提供在 _configuration backend_ 部分选择的密码。用户名不是必需的：在这里，`cn=config` 表示要修改的数据库部分的 DN。或者，使用 `ldapmodify` 删除数据库的单行，`ldapdelete` 删除整个条目。
 
 如果出现问题，或者全局超级用户无法访问配置后端，可以删除并重新编写整个配置：
 
@@ -1496,29 +1468,29 @@ delete: olcTLSCipherSuite
 这仅是服务器的配置。同一台机器还可以托管一个 LDAP 客户端，具有独立的配置。
 
 [[network-dhcp]]
-== 动态主机配置协议（ DHCP ）
+== 动态主机配置协议（DHCP）
 
-动态主机配置协议（ DHCP ）允许系统连接到网络，以便为在该网络上进行通信所需的寻址信息分配地址。 FreeBSD 包含了 OpenBSD 版本的 `dhclient` ，客户端使用它来获取寻址信息。 FreeBSD 没有安装 DHCP 服务器，但在 FreeBSD Ports Collection 中提供了几个服务器可供选择。 DHCP 协议的完整描述可在 http://www.freesoft.org/CIE/RFC/2131/[RFC 2131] 中找到。还可以在 http://www.isc.org/downloads/dhcp/[isc.org/downloads/dhcp/] 上找到相关的信息资源。
+动态主机配置协议（DHCP）允许系统连接到网络，以便为在该网络上进行通信所需的寻址信息分配地址。FreeBSD 包含了 OpenBSD 版本的 `dhclient`，客户端使用它来获取寻址信息。FreeBSD 没有安装 DHCP 服务器，但在 FreeBSD Ports Collection 中提供了几个服务器可供选择。 DHCP 协议的完整描述可在 http://www.freesoft.org/CIE/RFC/2131/[RFC 2131] 中找到。还可以在 http://www.isc.org/downloads/dhcp/[isc.org/downloads/dhcp/] 上找到相关的信息资源。
 
 本节介绍了如何使用内置的 DHCP 客户端。然后介绍了如何安装和配置 DHCP 服务器。
 
 [NOTE]
 ====
-在 FreeBSD 中， man:bpf[4] 设备同时被 DHCP 服务器和 DHCP 客户端所需。这个设备已经包含在 FreeBSD 安装的 [.filename]#GENERIC# 内核中。如果用户选择创建自定义内核，并且使用 DHCP ，需要保留这个设备。
+在 FreeBSD 中，man:bpf[4] 设备同时被 DHCP 服务器和 DHCP 客户端所需。这个设备已经包含在 FreeBSD 安装的 [.filename]#GENERIC# 内核中。如果用户选择创建自定义内核，并且使用 DHCP，需要保留这个设备。
 
-需要注意的是， [.filename]#bpf# 还允许特权用户在该系统上运行网络数据包嗅探器。
+需要注意的是，[.filename]#bpf# 还允许特权用户在该系统上运行网络数据包嗅探器。
 ====
 
 
 === 配置 DHCP 客户端
 
-FreeBSD 安装程序中包含了 DHCP 客户端支持，这使得配置新安装的系统从现有的 DHCP 服务器自动获取网络地址信息变得非常容易。有关网络配置的示例，请参考 crossref:bsdinstall[bsdinstall-post ,"帐户、时区、服务和加固"] 。
+FreeBSD 安装程序中包含了 DHCP 客户端支持，这使得配置新安装的系统从现有的 DHCP 服务器自动获取网络地址信息变得非常容易。有关网络配置的示例，请参考 crossref:bsdinstall[bsdinstall-post,"帐户、时区、服务和加固"]。
 
-当在客户端机器上执行 `dhclient` 命令时，它开始广播请求配置信息。默认情况下，这些请求使用 UDP 端口 68 。服务器在 UDP 端口 67 上回复，给客户端分配一个 IP 地址和其他相关的网络信息，如子网掩码、默认网关和 DNS 服务器地址。这些信息以 DHCP "租约"的形式存在，并且在可配置的时间内有效。这样可以自动重用不再连接到网络的客户端的过时 IP 地址。 DHCP 客户端可以从服务器获取大量信息。详细列表可在 man:dhcp-options[5] 中找到。
+当在客户端机器上执行 `dhclient` 命令时，它开始广播请求配置信息。默认情况下，这些请求使用 UDP 端口 68 。服务器在 UDP 端口 67 上回复，给客户端分配一个 IP 地址和其他相关的网络信息，如子网掩码、默认网关和 DNS 服务器地址。这些信息以 DHCP "租约"的形式存在，并且在可配置的时间内有效。这样可以自动重用不再连接到网络的客户端的过时 IP 地址。DHCP 客户端可以从服务器获取大量信息。详细列表可在 man:dhcp-options[5] 中找到。
 
 默认情况下，当 FreeBSD 系统启动时，它的 DHCP 客户端在后台或异步运行。在 DHCP 过程完成时，其他启动脚本继续运行，从而加快了系统的启动速度。
 
-背景 DHCP 在 DHCP 服务器快速响应客户端请求时运行良好。然而，在某些系统上， DHCP 可能需要很长时间才能完成。如果网络服务在 DHCP 分配网络地址信息之前尝试运行，它们将失败。使用同步模式的 DHCP 可以解决这个问题，因为它会暂停启动过程，直到 DHCP 配置完成。
+后台 DHCP 在 DHCP 服务器快速响应客户端请求时运行良好。然而，在某些系统上，DHCP 可能需要很长时间才能完成。如果网络服务在 DHCP 分配网络地址信息之前尝试运行，它们将失败。使用同步模式的 DHCP 可以解决这个问题，因为它会暂停启动过程，直到 DHCP 配置完成。
 
 这行代码在 [.filename]#/etc/rc.conf# 文件中用于配置后台或异步模式：
 
@@ -1527,7 +1499,7 @@ FreeBSD 安装程序中包含了 DHCP 客户端支持，这使得配置新安装
 ifconfig_fxp0="DHCP"
 ....
 
-如果系统在安装过程中配置为使用 DHCP ，则此行可能已经存在。在这些示例中，将_fxp0_替换为要动态配置的接口的名称，如 crossref:config[config-network-setup ,“设置网络接口卡”] 中所述。
+如果系统在安装过程中配置为使用 DHCP，则此行可能已经存在。在这些示例中，将 _fxp0_ 替换为要动态配置的接口的名称，如 crossref:config[config-network-setup,“设置网络接口卡”] 中所述。
 
 要配置系统使用同步模式，并在启动过程中暂停，直到 DHCP 完成，请使用"`SYNCDHCP`"。
 
@@ -1557,9 +1529,9 @@ DHCP 客户端在此文件中保留了一个有效租约的数据库，该文件
 [[network-dhcp-server]]
 === 安装和配置 DHCP 服务器
 
-本节演示了如何使用 Internet Systems Consortium (ISC) 实现的 DHCP 服务器将 FreeBSD 系统配置为 DHCP 服务器。可以使用 package:net/isc-dhcp44-server[] 软件包或端口安装此实现及其文档。
+本节演示了如何使用 Internet Systems Consortium (ISC) 实现的 DHCP 服务器将 FreeBSD 系统配置为 DHCP 服务器。可以使用 package:net/isc-dhcp44-server[] 软件包或 port 安装此实现及其文档。
 
-安装包： net/isc-dhcp44-server[] 将安装一个示例配置文件。将 [.filename]#/usr/local/etc/dhcpd.conf.example# 复制到 [.filename]#/usr/local/etc/dhcpd.conf# ，并对这个新文件进行任何编辑。
+package:net/isc-dhcp44-server[] 将安装一个示例配置文件。将 [.filename]#/usr/local/etc/dhcpd.conf.example# 复制到 [.filename]#/usr/local/etc/dhcpd.conf#，并对这个新文件进行任何编辑。
 
 配置文件由子网和主机的声明组成，这些声明定义了提供给 DHCP 客户端的信息。例如，以下行配置了以下内容：
 
@@ -1584,9 +1556,9 @@ host fantasia {
 }
 ....
 
-<.> 此选项指定将提供给客户端的默认搜索域。有关更多信息，请参阅 man:resolv.conf[5] 。 <.> 此选项指定客户端应使用的逗号分隔的 DNS 服务器列表。它们可以按照完全限定域名（ FQDN ）列出，如示例中所示，也可以按照它们的 IP 地址列出。 <.> 提供给客户端的子网掩码。 <.> 默认租约到期时间（以秒为单位）。客户端可以配置为覆盖此值。 <.> 租约的最大允许时间长度（以秒为单位）。如果客户端请求更长的租约，租约仍将发放，但仅在 `max-lease-time` 内有效。 <.> `none` 的默认值禁用动态 DNS 更新。将其更改为 `interim` 会配置 DHCP 服务器在发放租约时更新 DNS 服务器，以便 DNS 服务器知道哪些 IP 地址与网络中的哪些计算机相关联。除非已配置 DNS 服务器支持动态 DNS ，否则不要更改默认设置。 <.> 此行创建一个可用 IP 地址池，用于分配给 DHCP 客户端。地址范围必须对先前行中指定的网络或子网有效。 <.> 声明对于在开放的 `{` 括号之前指定的网络或子网有效的默认网关。 <.> 指定客户端的硬件 MAC 地址，以便 DHCP 服务器在其发出请求时能够识别客户端。 <.> 指定此主机始终应获得相同的 IP 地址。使用主机名是正确的，因为 DHCP 服务器将在返回租约信息之前解析主机名。
+<.> 此选项指定将提供给客户端的默认搜索域。有关更多信息，请参阅 man:resolv.conf[5]。 <.> 此选项指定客户端应使用的逗号分隔的 DNS 服务器列表。它们可以按照完全限定域名（FQDN）列出，如示例中所示，也可以按照它们的 IP 地址列出。 <.> 提供给客户端的子网掩码。 <.> 默认租约到期时间（以秒为单位）。客户端可以配置为覆盖此值。 <.> 租约的最大允许时间长度（以秒为单位）。如果客户端请求更长的租约，租约仍将发放，但仅在 `max-lease-time` 内有效。 <.> `none` 的默认值禁用动态 DNS 更新。将其更改为 `interim` 会配置 DHCP 服务器在发放租约时更新 DNS 服务器，以便 DNS 服务器知道哪些 IP 地址与网络中的哪些计算机相关联。除非已配置 DNS 服务器支持动态 DNS，否则不要更改默认设置。 <.> 此行创建一个可用 IP 地址池，用于分配给 DHCP 客户端。地址范围必须对先前行中指定的网络或子网有效。 <.> 声明对于在开放的 `{` 括号之前指定的网络或子网有效的默认网关。 <.> 指定客户端的硬件 MAC 地址，以便 DHCP 服务器在其发出请求时能够识别客户端。 <.> 指定此主机始终应获得相同的 IP 地址。使用主机名是正确的，因为 DHCP 服务器将在返回租约信息之前解析主机名。
 
-此配置文件支持更多选项。有关详细信息和示例，请参阅与服务器一起安装的 dhcpd.conf(5) 。
+此配置文件支持更多选项。有关详细信息和示例，请参阅与服务器一起安装的 dhcpd.conf(5)。
 
 完成 [.filename]#dhcpd.conf# 的配置后，在 [.filename]#/etc/rc.conf# 中启用 DHCP 服务器：
 
@@ -1617,16 +1589,16 @@ DHCP 服务器使用以下文件。请注意，手册页面已与服务器软件
 服务器配置文件需要包含所有应提供给客户端的信息，以及有关服务器操作的信息。此配置文件在 dhcpd.conf(5) 中有详细描述。
 * [.filename]#/var/db/dhcpd.leases#
 +
-DHCP 服务器将其发放的租约记录在此文件中，该文件被写入为日志。请参考 dhcpd.leases(5) ，其中提供了稍长一些的描述。
+DHCP 服务器将其发放的租约记录在此文件中，该文件被写入为日志。请参考 dhcpd.leases(5)，其中提供了稍长一些的描述。
 * [.filename]#/usr/local/sbin/dhcrelay#
 +
-这个守护进程用于高级环境中，其中一个 DHCP 服务器将客户端的请求转发到另一个位于不同网络上的 DHCP 服务器。如果需要这个功能，请安装 package:net/isc-dhcp44-relay[] 包或端口。安装包括了提供更多详细信息的 dhcrelay(8) 。
+这个守护进程用于高级环境中，其中一个 DHCP 服务器将客户端的请求转发到另一个位于不同网络上的 DHCP 服务器。如果需要这个功能，请安装 package:net/isc-dhcp44-relay[] 包或 port。安装包括了提供更多详细信息的 dhcrelay(8)。
 
 
 [[network-dns]]
-== 域名系统（ DNS ）
+== 域名系统（DNS）
 
-域名系统（ DNS ）是一种将域名映射到 IP 地址，反之亦然的协议。 DNS 通过一个相对复杂的系统来协调互联网上的域名，包括权威根域名服务器、顶级域名（ TLD ）和其他规模较小的名称服务器，这些服务器托管和缓存各个域名的信息。在系统上执行 DNS 查找时，不需要运行名称服务器。
+域名系统（DNS）是一种将域名映射到 IP 地址，反之亦然的协议。DNS 通过一个相对复杂的系统来协调互联网上的域名，包括权威根域名服务器、顶级域名（TLD）和其他规模较小的名称服务器，这些服务器托管和缓存各个域名的信息。在系统上执行 DNS 查找时，不需要运行名称服务器。
 
 下表描述了与 DNS 相关的一些术语：
 
@@ -1636,56 +1608,42 @@ DHCP 服务器将其发放的租约记录在此文件中，该文件被写入为
 | 术语
 | 定义
 
-|正向 DNS
+|正向（Forward） DNS
 |主机名到 IP 地址的映射。
 
-|起源
+|起源（Origin）
 |指的是特定区域文件中涵盖的域名。
 
-|解析器
+|解析器（Resolver）
 |系统进程通过向名称服务器查询区域信息的方式进行。
 
-|反向 DNS
+|反向（Reverse） DNS
 |IP 地址到主机名的映射。
 
-|根区
+|根区（Root zone）
 |互联网区域层次结构的起始点。所有区域都属于根区域，类似于文件系统中所有文件都属于根目录。
 
-|区域
+|区域（Zone）
 |由同一管理机构管理的个人域、子域或 DNS 的一部分。
 |===
 
 区域的示例：
 
-* “。”通常在文档中用来指代根区域。
-* `org.` 是根域下的顶级域名（ TLD ）。
+* `.` 通常在文档中用来指代根区域。
+* `org.` 是根域下的顶级域名（TLD）。
 * `example.org.` 是 `org.` 顶级域名下的一个区域。
 * `1.168.192.in-addr.arpa` 是一个区域，引用了所有属于 `192.168.1.*`IP 地址空间的 IP 地址。
 
-正如我们所看到的，主机名的更具体部分出现在其左侧。例如， `example.org.` 比 `org.` 更具体，而 `org.` 比根域更具体。主机名的每个部分的布局很像文件系统： [.filename]#/dev# 目录位于根目录下，依此类推。
+正如我们所看到的，主机名的更具体部分出现在其左侧。例如，`example.org.` 比 `org.` 更具体，而 `org.` 比根域更具体。主机名的每个部分的布局很像文件系统： [.filename]#/dev# 目录位于根目录下，依此类推。
 
 === 运行名称服务器的原因
-
-有许多原因可以选择运行名称服务器。以下是一些常见的原因：
-
- 1. 网络性能：通过运行自己的名称服务器，您可以提高网络性能。名称服务器可以缓存 DNS 查询结果，从而减少对外部 DNS 服务器的依赖，并加快域名解析的速度。
-
- 2. 安全性：运行自己的名称服务器可以提高网络的安全性。您可以实施安全策略，例如阻止恶意域名或 IP 地址，并监控 DNS 查询以检测潜在的安全威胁。
-
- 3. 私有网络：如果您拥有一个私有网络，运行自己的名称服务器可以提供更好的控制和管理。您可以自定义域名解析规则，并确保只有授权的设备可以访问您的网络资源。
-
- 4. 自定义域名：运行自己的名称服务器可以让您创建自定义的域名，并将其映射到您的网络资源。这样，您可以使用自己的域名来访问您的网站、电子邮件服务器等。
-
- 5. 网络稳定性：通过运行自己的名称服务器，您可以减少对外部 DNS 服务器的依赖，从而提高网络的稳定性。即使外部 DNS 服务器出现故障，您的网络仍然可以正常工作。
-
-总之，运行自己的名称服务器可以提供更好的网络性能、安全性和控制权。无论是个人用户还是企业用户，都可以从中受益。
 
 名称服务器通常有两种形式：权威名称服务器和缓存（也称为解析）名称服务器。
 
 当需要一个权威名称服务器时：
 
 * 一个想要向世界提供 DNS 信息，并对查询进行权威回复的服务。
-* 一个域名，比如 `example.org` ，已经注册，需要为其下的主机名分配 IP 地址。
+* 一个域名，比如 `example.org`，已经注册，需要为其下的主机名分配 IP 地址。
 * 一个 IP 地址块需要反向 DNS 条目（ IP 到主机名）。
 * 备份或第二名称服务器，称为从服务器，将回复查询。
 
@@ -1699,18 +1657,18 @@ DHCP 服务器将其发放的租约记录在此文件中，该文件被写入为
 
 Unbound 在 FreeBSD 基本系统中提供。默认情况下，它只为本地机器提供 DNS 解析。虽然基本系统包可以配置为提供超出本地机器的解析服务，但建议通过从 FreeBSD Ports Collection 安装 Unbound 来满足此类需求。
 
-要启用 Unbound ，请将以下内容添加到 [/etc/rc.conf] 文件中：
+要启用 Unbound ，请将以下内容添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
 local_unbound_enable="YES"
 ....
 
-在新的 Unbound 配置中，任何已存在的名字服务器在 /etc/resolv.conf 文件中将被配置为转发器。
+在新的 Unbound 配置中，任何已存在的名字服务器在 [.filename]#/etc/resolv.conf# 文件中将被配置为转发器。
 
 [NOTE]
 ====
-如果列出的任何一个名称服务器不支持 DNSSEC ，本地 DNS 解析将失败。请确保测试每个名称服务器并删除测试失败的名称服务器。以下命令将显示运行在 `192.168.1.1` 上的名称服务器的信任树或失败情况：
+如果列出的任何一个名称服务器不支持 DNSSEC，本地 DNS 解析将失败。请确保测试每个名称服务器并删除测试失败的名称服务器。以下命令将显示运行在 `192.168.1.1` 上的名称服务器的信任树或失败情况：
 
 [source, shell]
 ....
@@ -1718,14 +1676,14 @@ local_unbound_enable="YES"
 ....
 ====
 
-一旦确认每个域名服务器都支持 DNSSEC ，启动 Unbound ：
+一旦确认每个域名服务器都支持 DNSSEC，启动 Unbound ：
 
 [source, shell]
 ....
 # service local_unbound onestart
 ....
 
-这将负责更新 [/etc/resolv.conf](文件名) 以便查询 DNSSEC 安全域名能够正常工作。例如，运行以下命令来验证 FreeBSD.org 的 DNSSEC 信任树：
+这将负责更新 [.filename]#/etc/resolv.conf# 以便查询 DNSSEC 安全域名能够正常工作。例如，运行以下命令来验证 FreeBSD.org 的 DNSSEC 信任树：
 
 [source, shell]
 ....
@@ -1751,41 +1709,41 @@ freebsd.org. (A)
 ....
 
 === 权威名称服务器配置
-FreeBSD 在基本系统中不提供权威名称服务器软件。鼓励用户安装第三方应用程序，如 package:dns/nsd[] 或 package:dns/bind918[] 包或端口。
+FreeBSD 在基本系统中不提供权威名称服务器软件。鼓励用户安装第三方应用程序，如 package:dns/nsd[] 或 package:dns/bind918[] 包或 port。
 
 [[network-apache]]
-== Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows 、 Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用， Apache HTTP Server 都是一个可靠和强大的选择。
+== Apache HTTP Server 是一个开源的 Web 服务器软件，它是目前最流行的 Web 服务器之一。它由 Apache 软件基金会开发和维护，可运行在多种操作系统上，包括 Windows、Linux 和 Unix 等。 Apache HTTP Server 具有高度可扩展性和灵活性，支持多种模块和插件，可以实现各种功能，如动态内容生成、虚拟主机配置和安全性控制等。它还提供了丰富的文档和社区支持，使得用户能够轻松地学习和使用。无论是个人网站还是大型企业应用，Apache HTTP Server 都是一个可靠和强大的选择。
 
-开源的 Apache HTTP 服务器是最广泛使用的 Web 服务器。 FreeBSD 默认不安装这个 Web 服务器，但可以通过包 :www/apache24[] 包或端口进行安装。
+开源的 Apache HTTP 服务器是最广泛使用的 Web 服务器。FreeBSD 默认不安装这个 Web 服务器，但可以通过包 :www/apache24[] 包或 port 进行安装。
 
-本节概述了如何在 FreeBSD 上配置和启动 Apache HTTP Server 的 2.x 版本。有关 Apache 2.X 及其配置指令的更详细信息，请参阅 http://httpd.apache.org/[httpd.apache.org] 。
+本节概述了如何在 FreeBSD 上配置和启动 Apache HTTP Server 的 2.x 版本。有关 Apache 2.X 及其配置指令的更详细信息，请参阅 http://httpd.apache.org/[httpd.apache.org]。
 
 === 配置和启动 Apache
 
-在 FreeBSD 中，主要的 Apache HTTP 服务器配置文件被安装在 [/usr/local/etc/apache2x/httpd.conf] ，其中_x_代表版本号。这个 ASCII 文本文件以 `+#+` 开头的行作为注释。最经常修改的指令有：
+在 FreeBSD 中，主要的 Apache HTTP 服务器配置文件被安装在 [.filename]#/usr/local/etc/apache2x/httpd.conf#，其中 _x_ 代表版本号。这个 ASCII 文本文件以 `+#+` 开头的行作为注释。最经常修改的指令有：
 
-`ServerRoot "/usr/local"` 的译文为： `ServerRoot "/usr/local"`::
+`ServerRoot "/usr/local"`::
 指定 Apache 安装的默认目录层次结构。二进制文件存储在服务器根目录的 [.filename]#bin# 和 [.filename]#sbin# 子目录中，配置文件存储在 [.filename]#etc/apache2x# 子目录中。
 
-`ServerAdmin you @ example.com` 的中文翻译为： `ServerAdmin you @ example.com`::
+`ServerAdmin you@example.com`::
 将此更改为接收服务器问题的电子邮件地址。此地址还会出现在一些由服务器生成的页面上，例如错误文档。
 
-`ServerName www.example.com:80` 表示服务器的主机名为 www.example.com ，端口号为 80 。::
+`ServerName www.example.com:80`::
 允许管理员设置一个主机名，该主机名将发送给服务器的客户端。例如，可以使用 `www` 代替实际的主机名。如果系统没有注册的 DNS 名称，请输入其 IP 地址。如果服务器将监听一个替代端口，请将 `80` 更改为替代端口号。
 
-`DocumentRoot "/usr/local/www/apache2_x_/data"` 的译文为： ` 文档根目录 "/usr/local/www/apache2_x_/data"` 。::
+`DocumentRoot "/usr/local/www/apache2_x_/data"`::
 文档将被提供的目录。默认情况下，所有请求都从此目录获取，但可以使用符号链接和别名指向其他位置。
 
-在进行更改之前，始终将默认的 Apache 配置文件备份是一个好主意。当 Apache 的配置完成后，保存文件并使用 `apachectl` 验证配置。运行 `apachectl configtest` 应该返回 `Syntax OK` 。
+在进行更改之前，始终将默认的 Apache 配置文件备份是一个好主意。当 Apache 的配置完成后，保存文件并使用 `apachectl` 验证配置。运行 `apachectl configtest` 应该返回 `Syntax OK`。
 
-要在系统启动时启动 Apache ，请将以下行添加到 [/etc/rc.conf] 文件中：
+要在系统启动时启动 Apache，请将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
 apache24_enable="YES"
 ....
 
-如果要使用非默认选项启动 Apache ，则可以将以下行添加到 [/etc/rc.conf]# 以指定所需的标志：
+如果要使用非默认选项启动 Apache，则可以将以下行添加到 [.filename]#/etc/rc.conf# 以指定所需的标志：
 
 [.programlisting]
 ....
@@ -1799,7 +1757,7 @@ apache24_flags=""
 # service apache24 start
 ....
 
-可以通过在 Web 浏览器中输入 `http://_localhost_` 来测试 `httpd` 服务，将 _localhost_ 替换为运行 `httpd` 的机器的完全限定域名。显示的默认网页是 [.filename]#/usr/local/www/apache24/data/index.html# 。
+可以通过在 Web 浏览器中输入 `http://_localhost_` 来测试 `httpd` 服务，将 _localhost_ 替换为运行 `httpd` 的机器的完全限定域名。显示的默认网页是 [.filename]#/usr/local/www/apache24/data/index.html#。
 
 在 `httpd` 运行时，可以使用以下命令测试 Apache 配置是否存在错误：
 
@@ -1810,14 +1768,14 @@ apache24_flags=""
 
 [NOTE]
 ====
-需要注意的是， `configtest` 不是一个标准的 `man:rc[8]` ，并且不应该期望它能够适用于所有的启动脚本。
+需要注意的是，`configtest` 不是一个标准的 `man:rc[8]`，并且不应该期望它能够适用于所有的启动脚本。
 ====
 
 === 虚拟主机
 
 虚拟主机允许多个网站在一个 Apache 服务器上运行。虚拟主机可以是基于 IP 的或基于名称的。基于 IP 的虚拟主机为每个网站使用不同的 IP 地址。基于名称的虚拟主机使用客户端的 HTTP/1.1 头部来确定主机名，这样可以让多个网站共享同一个 IP 地址。
 
-要设置 Apache 使用基于名称的虚拟主机，为每个网站添加一个 `VirtualHost` 块。例如，对于名为 `www.domain.tld` 的 Web 服务器，其虚拟域为 `www.someotherdomain.tld` ，请将以下条目添加到 [.filename]#httpd.conf# 文件中：
+要设置 Apache 使用基于名称的虚拟主机，为每个网站添加一个 `VirtualHost` 块。例如，对于名为 `www.domain.tld` 的 Web 服务器，其虚拟域为 `www.someotherdomain.tld`，请将以下条目添加到 [.filename]#httpd.conf# 文件中：
 
 [.programlisting]
 ....
@@ -1834,17 +1792,17 @@ apache24_flags=""
 
 对于每个虚拟主机，请将 `ServerName` 和 `DocumentRoot` 的值替换为要使用的值。
 
-有关设置虚拟主机的更多信息，请参阅官方 Apache 文档： http://httpd.apache.org/docs/vhosts/ 。
+有关设置虚拟主机的更多信息，请参阅官方 Apache 文档：http://httpd.apache.org/docs/vhosts/[http://httpd.apache.org/docs/vhosts/]。
 
 === Apache 模块
 
-Apache 使用模块来增强基本服务器提供的功能。请参考 http://httpd.apache.org/docs/current/mod/ ，了解可用模块的完整列表和配置细节。
+Apache 使用模块来增强基本服务器提供的功能。请参考 http://httpd.apache.org/docs/current/mod/[http://httpd.apache.org/docs/current/mod/]，了解可用模块的完整列表和配置细节。
 
-在 FreeBSD 中，一些模块可以使用 package:www/apache24[] 端口进行编译。在 [.filename]#/usr/ports/www/apache24# 目录下输入 `make config` 命令可以查看可用的模块以及默认启用的模块。如果模块没有与端口一起编译， FreeBSD Ports Collection 提供了一种简单的方法来安装许多模块。本节介绍了三个最常用的模块。
+在 FreeBSD 中，一些模块可以使用 package:www/apache24[] port 进行编译。在 [.filename]#/usr/ports/www/apache24# 目录下输入 `make config` 命令可以查看可用的模块以及默认启用的模块。如果模块没有与端口一起编译，FreeBSD Ports Collection 提供了一种简单的方法来安装许多模块。本节介绍了三个最常用的模块。
 
 ==== SSL 支持
 
-在某个时间点上， Apache 中支持 SSL 需要一个名为 [.filename]#mod_ssl# 的辅助模块。但现在情况已经改变， Apache 的默认安装中已经内置了 SSL 功能。在安装的文件中有一个示例，可以了解如何启用 SSL 网站支持，该文件位于 [.filename]#/usr/local/etc/apache24/extra# 目录下的 [.filename]#httpd-ssl.conf# 文件中。在这个目录中还有一个名为 [.filename]#ssl.conf-sample# 的示例文件。建议同时评估这两个文件，以正确设置 Apache Web 服务器中的安全网站。
+在某个时间点上，Apache 中支持 SSL 需要一个名为 [.filename]#mod_ssl# 的辅助模块。但现在情况已经改变，Apache 的默认安装中已经内置了 SSL 功能。在安装的文件中有一个示例，可以了解如何启用 SSL 网站支持，该文件位于 [.filename]#/usr/local/etc/apache24/extra# 目录下的 [.filename]#httpd-ssl.conf# 文件中。在这个目录中还有一个名为 [.filename]#ssl.conf-sample# 的示例文件。建议同时评估这两个文件，以正确设置 Apache Web 服务器中的安全网站。
 
 在 SSL 配置完成后，必须取消注释主要的 [.filename]#http.conf# 文件中的以下行，以便在下次重新启动或重新加载 Apache 时激活更改：
 
@@ -1855,7 +1813,7 @@ Apache 使用模块来增强基本服务器提供的功能。请参考 http://ht
 
 [WARNING]
 ====
-SSL 版本 2 和版本 3 存在已知的漏洞问题。强烈建议在旧的 SSL 选项之外启用 TLS 版本 1.2 和 1.3 。可以通过在 [.filename]#ssl.conf# 中设置以下选项来实现：
+SSL 版本 2 和版本 3 存在已知的漏洞问题。强烈建议在旧的 SSL 选项之外启用 TLS 版本 1.2 和 1.3。可以通过在 [.filename]#ssl.conf# 中设置以下选项来实现：
 ====
 
 
@@ -1873,7 +1831,7 @@ SSLProxyProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
 Include etc/apache24/extra/httpd-ssl.conf
 ....
 
-在 [.filename]#httpd.conf# 文件中，还必须取消以下行的注释，以完全支持 Apache 中的 SSL ：
+在 [.filename]#httpd.conf# 文件中，还必须取消以下行的注释，以完全支持 Apache 中的 SSL：
 
 [.programlisting]
 ....
@@ -1888,11 +1846,11 @@ LoadModule ssl_module libexec/apache24/mod_ssl.so
 
 [.filename]#mod_perl# 模块使得可以用 Perl 编写 Apache 模块。此外，嵌入在服务器中的持久解释器避免了启动外部解释器的开销和 Perl 启动时间的惩罚。
 
-可以使用包 :www/mod_perl2[] 包或端口安装 [.filename]#mod_perl# 。有关使用此模块的文档可以在 http://perl.apache.org/docs/2.0/index.html[http://perl.apache.org/docs/2.0/index.html] 找到。
+可以使用 package:www/mod_perl2[] 包或 port 安装 [.filename]#mod_perl#。有关使用此模块的文档可以在 http://perl.apache.org/docs/2.0/index.html[http://perl.apache.org/docs/2.0/index.html] 找到。
 
 ==== [.filename]#mod_php#
 
-_PHP: Hypertext Preprocessor_（ PHP ）是一种通用的脚本语言，特别适用于网页开发。它可以嵌入到 HTML 中，其语法借鉴了 C 、 Java(TM) 和 Perl ，旨在让网页开发人员能够快速编写动态生成的网页。
+_PHP: Hypertext Preprocessor_（PHP）是一种通用的脚本语言，特别适用于网页开发。它可以嵌入到 HTML 中，其语法借鉴了 C、Java(TM) 和 Perl，旨在让网页开发人员能够快速编写动态生成的网页。
 
 通过安装适当的端口，可以为 Apache 和任何其他用 PHP 编写的功能添加支持。
 
@@ -1912,7 +1870,7 @@ _PHP: Hypertext Preprocessor_（ PHP ）是一种通用的脚本语言，特别�
 
 如果需要安装任何依赖包，它们也将被安装。
 
-默认情况下， PHP 将不会被启用。要使其生效，需要将以下行添加到位于 [/usr/local/etc/apache24] 目录中的 Apache 配置文件中：
+默认情况下，PHP 将不会被启用。要使其生效，需要将以下行添加到位于 [.filename]#/usr/local/etc/apache24# 目录中的 Apache 配置文件中：
 
 [.programlisting]
 ....
@@ -1926,7 +1884,7 @@ _PHP: Hypertext Preprocessor_（ PHP ）是一种通用的脚本语言，特别�
 
 此外，配置文件中的 `DirectoryIndex` 也需要更新，并且需要重新启动或重新加载 Apache 才能使更改生效。
 
-使用 `pkg` 也可以安装许多 PHP 功能的支持。例如，要安装 XML 或 SSL 的支持，请安装它们各自的端口：
+使用 `pkg` 也可以安装许多 PHP 功能的支持。例如，要安装 XML 或 SSL 的支持，请安装它们各自的 port：
 
 [source, shell]
 ....
@@ -1955,15 +1913,15 @@ _PHP: Hypertext Preprocessor_（ PHP ）是一种通用的脚本语言，特别�
 # php -i |less
 ....
 
-需要将输出传递给一个分页器，比如 `more` 或 `less` ，以便更容易地处理大量的输出。
+需要将输出传递给一个分页器，比如 `more` 或 `less`，以便更容易地处理大量的输出。
 
-最后，要对 PHP 的全局配置进行任何更改，需要使用一个文档完善的文件，安装在 [/usr/local/etc/php.ini] 。在安装时，该文件不存在，因为有两个版本可供选择，一个是 [php.ini-development] ，另一个是 [php.ini-production] 。这些是管理员在部署过程中的起点。
+最后，要对 PHP 的全局配置进行任何更改，需要使用一个文档完善的文件，安装在 [.filename]#/usr/local/etc/php.ini#。在安装时，该文件不存在，因为有两个版本可供选择，一个是 [.filename]#php.ini-development#，另一个是 [.filename]#php.ini-production#。这些是管理员在部署过程中的起点。
 
 ==== HTTP2 支持
 
-在使用 `pkg` 安装端口时，默认情况下， Apache 支持 HTTP2 协议。新版本的 HTTP 相比之前的版本有很多改进，包括利用单个连接访问网站，减少 TCP 连接的总往返次数。此外，数据包头部数据被压缩， HTTP2 默认要求加密。
+在使用 `pkg` 安装 port 时，默认情况下，Apache 支持 HTTP2 协议。新版本的 HTTP 相比之前的版本有很多改进，包括利用单个连接访问网站，减少 TCP 连接的总往返次数。此外，数据包头部数据被压缩，HTTP2 默认要求加密。
 
-当 Apache 配置为仅使用 HTTP2 时， Web 浏览器将需要安全的、加密的 HTTPS 连接。当 Apache 配置为同时使用两个版本时，如果在连接过程中出现任何问题， HTTP1.1 将被视为备选选项。
+当 Apache 配置为仅使用 HTTP2 时，Web 浏览器将需要安全的、加密的 HTTPS 连接。当 Apache 配置为同时使用两个版本时，如果在连接过程中出现任何问题，HTTP1.1 将被视为备选选项。
 
 虽然这个变化确实需要管理员进行一些改动，但这些改动是积极的，并且对于每个人来说都意味着一个更安全的互联网。这些改动只需要对目前没有实施 SSL 和 TLS 的网站进行。
 
@@ -1972,7 +1930,7 @@ _PHP: Hypertext Preprocessor_（ PHP ）是一种通用的脚本语言，特别�
 此配置依赖于前面的部分，包括 TLS 支持。建议在继续进行此配置之前按照那些说明进行操作。
 ====
 
-通过取消注释 [.filename]#/usr/local/etc/apache24/httpd.conf# 中的一行来启用 http2 模块，并将 mpm_prefork 模块替换为 mpm_event 模块，因为前者不支持 HTTP2 。
+通过取消注释 [.filename]#/usr/local/etc/apache24/httpd.conf# 中的一行来启用 http2 模块，并将 mpm_prefork 模块替换为 mpm_event 模块，因为前者不支持 HTTP2。
 
 [.programlisting]
 ....
@@ -1982,10 +1940,10 @@ LoadModule mpm_event_module libexec/apache24/mod_mpm_event.so
 
 [NOTE]
 ====
-有一个单独的 [.filename]#mod_http2# 端口可用。它的存在是为了更快地提供安全性和错误修复，而不是使用捆绑的 [.filename]#apache24# 端口安装的模块。它不是必需的 HTTP2 支持，但可供选择。安装后，应在 Apache 配置中使用 [.filename]#mod_h2.so# 替代 [.filename]#mod_http2.so# 。
+有一个单独的 [.filename]#mod_http2# port 可用。它的存在是为了更快地提供安全性和错误修复，而不是使用捆绑的 [.filename]#apache24# port 安装的模块。它不是必需的 HTTP2 支持，但可供选择。安装后，应在 Apache 配置中使用 [.filename]#mod_h2.so# 替代 [.filename]#mod_http2.so#。
 ====
 
-在 Apache 中实现 HTTP2 有两种方法；一种是全局应用于所有站点和系统上运行的每个 VirtualHost 。要在全局启用 HTTP2 ，请在 ServerName 指令下添加以下行：
+在 Apache 中实现 HTTP2 有两种方法；一种是全局应用于所有站点和系统上运行的每个 VirtualHost。要在全局启用 HTTP2，请在 ServerName 指令下添加以下行：
 
 [.programlisting]
 ....
@@ -1994,12 +1952,12 @@ Protocols h2 http/1.1
 
 [NOTE]
 ====
-要在明文上启用 HTTP2 ，请在 `.filename`#httpd.conf# 中使用 `h2h2chttp/1.1` 。
+要在明文上启用 HTTP2，请在 [.filename]#httpd.conf# 中使用 h2h2chttp/1.1。
 ====
 
 在这里使用 h2c 将允许明文的 HTTP2 数据在系统中传递，但不推荐这样做。此外，在这里使用 http/1.1 将允许系统在需要时回退到 HTTP1.1 版本的协议。
 
-要为单个虚拟主机启用 HTTP2 ，请在 [.filename]#httpd.conf# 或 [.filename]#httpd-ssl.conf# 中的 VirtualHost 指令中添加相同的行。
+要为单个虚拟主机启用 HTTP2，请在 [.filename]#httpd.conf# 或 [.filename]#httpd-ssl.conf# 中的 VirtualHost 指令中添加相同的行。
 
 使用 `apachectl`[parameter]#reload# 命令重新加载配置，并在访问托管页面之后使用以下任一方法测试配置：
 
@@ -2018,23 +1976,23 @@ Protocols h2 http/1.1
 192.0.2.205 - - [18/Oct/2020:19:23:10 -0400] "GET / HTTP/2.0" 304 -
 ....
 
-另一种方法是使用网页浏览器内置的站点调试器或 `tcpdump` ；然而，使用任何一种方法都超出了本文档的范围。
+另一种方法是使用网页浏览器内置的站点调试器或 `tcpdump`；然而，使用任何一种方法都超出了本文档的范围。
 
 通过使用 [.filename]#mod_proxy_http2.so# 模块支持 HTTP2 反向代理连接。在配置 ProxyPass 或 RewriteRules [P] 语句时，应使用 h2:// 作为连接。
 
 === 动态网站
 
-除了 mod_perl 和 mod_php 之外，还有其他语言可用于创建动态网页内容。这些包括 Django 和 Ruby on Rails 。
+除了 mod_perl 和 mod_php 之外，还有其他语言可用于创建动态网页内容。这些包括 Django 和 Ruby on Rails。
 
-==== Django 是一个开源的 Web 应用框架，使用 Python 编写。它遵循了 MVC （模型 - 视图 - 控制器）的设计模式，提供了一套强大的工具和功能，用于快速开发高质量的 Web 应用程序。 Django 具有灵活的 URL 路由、模板系统、表单处理、数据库访问等功能，使开发人员能够轻松构建功能丰富的网站。它还提供了强大的管理后台，用于管理网站的内容和数据。 Django 的设计理念是 DRY （ Don't Repeat Yourself ），通过提供一致的开发模式和自动化的任务，帮助开发人员提高效率。它也是一个非常受欢迎的框架，被广泛应用于各种规模的 Web 项目中。
+==== Django
 
-Django 是一个 BSD 许可的框架，旨在让开发人员快速编写高性能、优雅的 Web 应用程序。它提供了一个对象关系映射器，使得数据类型可以作为 Python 对象进行开发。它还提供了一个丰富的动态数据库访问 API ，开发人员无需编写 SQL 语句即可对这些对象进行操作。此外，它还提供了一个可扩展的模板系统，使得应用程序的逻辑与 HTML 的呈现分离。
+Django 是一个 BSD 许可的框架，旨在让开发人员快速编写高性能、优雅的 Web 应用程序。它提供了一个对象关系映射器，使得数据类型可以作为 Python 对象进行开发。它还提供了一个丰富的动态数据库访问 API，开发人员无需编写 SQL 语句即可对这些对象进行操作。此外，它还提供了一个可扩展的模板系统，使得应用程序的逻辑与 HTML 的呈现分离。
 
-Django 依赖于 mod_python 和一个 SQL 数据库引擎。在 FreeBSD 中，包 www/py-django 的端口会自动安装 mod_python ，并支持 PostgreSQL 、 MySQL 或 SQLite 数据库，默认为 SQLite 。要更改数据库引擎，请在 /usr/ports/www/py-django 目录下输入 `make config` ，然后安装端口。
+Django 依赖于 mod_python 和一个 SQL 数据库引擎。在 FreeBSD 中，包 www/py-django 的端口会自动安装 mod_python，并支持 PostgreSQL、MySQL 或 SQLite 数据库，默认为 SQLite。要更改数据库引擎，请在 /usr/ports/www/py-django 目录下输入 `make config`，然后安装 port。
 
-一旦安装了 Django ，应用程序将需要一个项目目录以及 Apache 配置，以便使用嵌入式 Python 解释器。该解释器用于调用站点上特定 URL 的应用程序。
+一旦安装了 Django，应用程序将需要一个项目目录以及 Apache 配置，以便使用嵌入式 Python 解释器。该解释器用于调用站点上特定 URL 的应用程序。
 
-要配置 Apache 将某些 URL 的请求传递给 Web 应用程序，请将以下内容添加到 [.filename]#httpd.conf# ，并指定项目目录的完整路径：
+要配置 Apache 将某些 URL 的请求传递给 Web 应用程序，请将以下内容添加到 [.filename]#httpd.conf#，并指定项目目录的完整路径：
 
 [.programlisting]
 ....
@@ -2050,28 +2008,28 @@ Django 依赖于 mod_python 和一个 SQL 数据库引擎。在 FreeBSD 中，�
 
 请参考 https://docs.djangoproject.com[https://docs.djangoproject.com] 获取有关如何使用 Django 的更多信息。
 
-==== Ruby on Rails 是一种开发 Web 应用程序的开源框架，使用 Ruby 编程语言。它遵循 MVC （模型 - 视图 - 控制器）架构模式，提供了许多内置功能和约定，使开发过程更加简单和高效。 Ruby on Rails 具有简洁的语法和强大的功能，可以快速构建可扩展和可维护的应用程序。它被广泛用于构建各种类型的 Web 应用程序，从小型博客到大型电子商务平台。
+==== Ruby on Rails
 
-Ruby on Rails 是另一个开源的 Web 框架，提供了完整的开发堆栈。它经过优化，可以使 Web 开发人员更加高效和能够快速编写强大的应用程序。在 FreeBSD 上，可以使用 package:www/rubygem-rails[] 包或端口进行安装。
+Ruby on Rails 是另一个开源的 Web 框架，提供了完整的开发堆栈。它经过优化，可以使 Web 开发人员更加高效和能够快速编写强大的应用程序。在 FreeBSD 上，可以使用 package:www/rubygem-rails[] 包或 port 进行安装。
 
-请参考 http://guides.rubyonrails.org[http://guides.rubyonrails.org] ，了解如何使用 Ruby on Rails 的更多信息。
+请参考 http://guides.rubyonrails.org[http://guides.rubyonrails.org]，了解如何使用 Ruby on Rails 的更多信息。
 
 [[network-ftp]]
-== 文件传输协议（ FTP ）
+== 文件传输协议（FTP）
 
-文件传输协议（ FTP ）为用户提供了一种简单的方式来在 FTP 服务器之间传输文件。 FreeBSD 在基本系统中包含了 FTP 服务器软件 ftpd 。
+文件传输协议（FTP）为用户提供了一种简单的方式来在 FTP 服务器之间传输文件。FreeBSD 在基本系统中包含了 FTP 服务器软件 ftpd。
 
-FreeBSD 提供了几个配置文件来控制对 FTP 服务器的访问。本节概述了这些文件。有关内置 FTP 服务器的更多详细信息，请参阅 man:ftpd[8] 。
+FreeBSD 提供了几个配置文件来控制对 FTP 服务器的访问。本节概述了这些文件。有关内置 FTP 服务器的更多详细信息，请参阅 man:ftpd[8]。
 
 === 配置
 
-最重要的配置步骤是决定哪些账户将被允许访问 FTP 服务器。 FreeBSD 系统有许多系统账户，不应该允许 FTP 访问。不允许任何 FTP 访问的用户列表可以在 [/etc/ftpusers] 中找到。默认情况下，它包括系统账户。可以添加其他不允许访问 FTP 的用户。
+最重要的配置步骤是决定哪些账户将被允许访问 FTP 服务器。FreeBSD 系统有许多系统账户，不应该允许 FTP 访问。不允许任何 FTP 访问的用户列表可以在 [.filename]#/etc/ftpusers# 中找到。默认情况下，它包括系统账户。可以添加其他不允许访问 FTP 的用户。
 
-在某些情况下，可能希望限制某些用户的访问权限，而不完全阻止他们使用 FTP 。可以通过创建 [.filename]#/etc/ftpchroot# 文件来实现，如 man:ftpchroot[5] 中所述。该文件列出了受 FTP 访问限制的用户和组。
+在某些情况下，可能希望限制某些用户的访问权限，而不完全阻止他们使用 FTP。可以通过创建 [.filename]#/etc/ftpchroot# 文件来实现，如 man:ftpchroot[5] 中所述。该文件列出了受 FTP 访问限制的用户和组。
 
-要启用服务器的匿名 FTP 访问，请在 FreeBSD 系统上创建一个名为 `ftp` 的用户。然后用户将能够使用用户名 `ftp` 或 `anonymous` 登录到 FTP 服务器。当提示输入密码时，任何输入都将被接受，但按照惯例，应将电子邮件地址用作密码。当匿名用户登录时， FTP 服务器将调用 man:chroot[2] 来限制访问仅限于 `ftp` 用户的主目录。
+要启用服务器的匿名 FTP 访问，请在 FreeBSD 系统上创建一个名为 `ftp` 的用户。然后用户将能够使用用户名 `ftp` 或 `anonymous` 登录到 FTP 服务器。当提示输入密码时，任何输入都将被接受，但按照惯例，应将电子邮件地址用作密码。当匿名用户登录时，FTP 服务器将调用 man:chroot[2] 来限制访问仅限于 `ftp` 用户的主目录。
 
-有两个文本文件可以创建，用于指定要显示给 FTP 客户端的欢迎消息。 [.filename]#/etc/ftpwelcome# 的内容将在用户到达登录提示之前显示给他们。成功登录后，将显示 [.filename]#/etc/ftpmotd# 的内容。请注意，该文件的路径是相对于登录环境的，因此对于匿名用户，将显示 [.filename]# ~ ftp/etc/ftpmotd# 的内容。
+有两个文本文件可以创建，用于指定要显示给 FTP 客户端的欢迎消息。[.filename]#/etc/ftpwelcome# 的内容将在用户到达登录提示之前显示给他们。成功登录后，将显示 [.filename]#/etc/ftpmotd# 的内容。请注意，该文件的路径是相对于登录环境的，因此对于匿名用户，将显示 [.filename]#~ftp/etc/ftpmotd# 的内容。
 
 一旦配置了 FTP 服务器，将适当的变量设置在 [.filename]#/etc/rc.conf# 中，以便在启动时启动该服务：
 
@@ -2094,7 +2052,7 @@ ftpd_enable="YES"
 % ftp localhost
 ....
 
-ftpd 守护进程使用 man:syslog[3] 来记录日志消息。默认情况下，系统日志守护进程将会将与 FTP 相关的消息写入到 [/var/log/xferlog] 文件中。 FTP 日志的位置可以通过修改 [/etc/syslog.conf] 文件中的以下行来进行更改：
+ftpd 守护进程使用 man:syslog[3] 来记录日志消息。默认情况下，系统日志守护进程将会将与 FTP 相关的消息写入到 [.filename]#/var/log/xferlog# 文件中。FTP 日志的位置可以通过修改 [.filename]#/etc/syslog.conf# 文件中的以下行来进行更改：
 
 [.programlisting]
 ....
@@ -2108,17 +2066,17 @@ ftp.info      /var/log/xferlog
 ====
 
 [[network-samba]]
-== 适用于 Microsoft(R) Windows(R) 客户端的文件和打印服务（ Samba ）
+== 适用于 Microsoft(R) Windows(R) 客户端的文件和打印服务（Samba）
 
 Samba 是一个流行的开源软件包，使用 SMB/CIFS 协议提供文件和打印服务。该协议内置于 Microsoft(R) Windows(R) 系统中。通过安装 Samba 客户端库，它可以添加到非 Microsoft(R) Windows(R) 系统中。该协议允许客户端访问共享的数据和打印机。这些共享可以映射为本地磁盘驱动器，共享的打印机可以像本地打印机一样使用。
 
-在 FreeBSD 上，可以使用 package:net/samba413[] 端口或包来安装 Samba 客户端库。该客户端提供了 FreeBSD 系统访问 Microsoft(R) Windows(R) 网络中的 SMB/CIFS 共享的能力。
+在 FreeBSD 上，可以使用 package:net/samba413[] 端口或 port 来安装 Samba 客户端库。该客户端提供了 FreeBSD 系统访问 Microsoft(R) Windows(R) 网络中的 SMB/CIFS 共享的能力。
 
-通过安装相同的软件包： net/samba413[] ， FreeBSD 系统也可以配置为 Samba 服务器。这使得管理员可以在 FreeBSD 系统上创建 SMB/CIFS 共享，这些共享可以被运行 Microsoft(R) Windows(R) 或 Samba 客户端库的客户端访问。
+通过安装相同的 package:net/samba413[] 包或 port， FreeBSD 系统也可以配置为 Samba 服务器。这使得管理员可以在 FreeBSD 系统上创建 SMB/CIFS 共享，这些共享可以被运行 Microsoft(R) Windows(R) 或 Samba 客户端库的客户端访问。
 
 === 服务器配置
 
-Samba 的配置文件位于 `/usr/local/etc/smb4.conf` 。在使用 Samba 之前，必须先创建该文件。
+Samba 的配置文件位于 [.filename]#/usr/local/etc/smb4.conf#。在使用 Samba 之前，必须先创建该文件。
 
 这里展示了一个简单的 [.filename]#smb4.conf# 文件，用于在工作组中与 Windows(R) 客户端共享目录和打印机。对于涉及 LDAP 或 Active Directory 的更复杂设置，使用 man:samba-tool[8] 创建初始的 [.filename]#smb4.conf# 更为简便。
 
@@ -2148,18 +2106,18 @@ directory mask = 0755
 
 ==== 全局设置
 
-在 [/usr/local/etc/smb4.conf] 中添加描述网络的设置：
+在 [.filename]#/usr/local/etc/smb4.conf# 中添加描述网络的设置：
 
-`workgroup` 是一个计算机网络术语，指的是一个小型的、自主管理的网络。在工作组中，多台计算机可以共享文件、打印机和其他资源，而无需依赖于集中式的服务器。工作组通常用于小型办公室或家庭网络中，提供简单的文件共享和协作功能。::
+`workgroup`::
 要服务的工作组的名称。
 
-`netbios name` 是一个计算机网络中的参数，用于指定计算机在 NetBIOS 网络中的名称。 NetBIOS 是一种用于在局域网中进行通信的协议，它使用名称来标识计算机和资源。通过设置 `netbios name` 参数，可以为计算机指定一个唯一的名称，以便其他计算机可以通过该名称来访问它。::
+`netbios name`::
 Samba 服务器所知的 NetBIOS 名称。默认情况下，它与主机的 DNS 名称的第一个组件相同。
 
-`server string` 指的是服务器字符串。::
+`server string`::
 在 `net view` 和其他一些网络工具的输出中显示的字符串，这些工具旨在显示有关服务器的描述性文本。
 
-`wins support` 的中文翻译是 ` 获得支持 ` 。::
+`wins support`::
 Samba 是否将作为 WINS 服务器。请勿在网络上的多个服务器上启用对 WINS 的支持。
 
 
@@ -2167,17 +2125,17 @@ Samba 是否将作为 WINS 服务器。请勿在网络上的多个服务器上�
 
 [.filename]#/usr/local/etc/smb4.conf# 中最重要的设置是安全模型和后端密码格式。这些指令控制以下选项：
 
-`security` 的中文翻译是 ` 安全 ` 。::
-最常见的设置是 `security = share` 和 `security = user` 。如果客户端使用的用户名与其在 FreeBSD 机器上的用户名相同，则应使用用户级安全性。这是默认的安全策略，它要求客户端在访问共享资源之前先登录。
+`security`::
+最常见的设置是 `security = share` 和 `security = user`。如果客户端使用的用户名与其在 FreeBSD 机器上的用户名相同，则应使用用户级安全性。这是默认的安全策略，它要求客户端在访问共享资源之前先登录。
 +
 在共享级别安全中，客户端在尝试连接到共享资源之前不需要使用有效的用户名和密码登录服务器。这是旧版本 Samba 的默认安全模型。
 
-`passdb backend` 是一个计算机术语，指的是密码数据库后端。::
-Samba 有几种不同的后端身份验证模型。客户端可以使用 LDAP 、 NIS +、 SQL 数据库或修改后的密码文件进行身份验证。推荐的身份验证方法是 `tdbsam` ，适用于简单的网络环境，本文将介绍该方法。对于更大或更复杂的网络，推荐使用 `ldapsam` 。 `smbpasswd` 曾经是默认选项，但现在已经过时。
+`passdb backend`::
+Samba 有几种不同的后端身份验证模型。客户端可以使用 LDAP、NIS+、SQL 数据库或修改后的密码文件进行身份验证。推荐的身份验证方法是 `tdbsam`，适用于简单的网络环境，本文将介绍该方法。对于更大或更复杂的网络，推荐使用 `ldapsam`。`smbpasswd` 曾经是默认选项，但现在已经过时。
 
 ==== Samba 用户
 
-为了让 Windows(R) 客户端能够访问共享文件夹， FreeBSD 用户账户必须映射到 `SambaSAMAccount` 数据库中。使用 man:pdbedit[8] 命令来映射已存在的 FreeBSD 用户账户。
+为了让 Windows(R) 客户端能够访问共享文件夹，FreeBSD 用户账户必须映射到 `SambaSAMAccount` 数据库中。使用 man:pdbedit[8] 命令来映射已存在的 FreeBSD 用户账户。
 
 [source, shell]
 ....
@@ -2188,14 +2146,14 @@ Samba 有几种不同的后端身份验证模型。客户端可以使用 LDAP �
 
 === 启动 Samba
 
-要在启动时启用 Samba ，请将以下行添加到 [/etc/rc.conf] 文件中：
+要在启动时启用 Samba ，请将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
 samba_server_enable="YES"
 ....
 
-立即启动 Samba ：
+立即启动 Samba：
 
 [source, shell]
 ....
@@ -2205,14 +2163,14 @@ Starting nmbd.
 Starting smbd.
 ....
 
-Samba 由三个独立的守护进程组成。 nmbd 和 smbd 守护进程都由 `samba_enable` 启动。如果还需要 winbind 名称解析，请设置：
+Samba 由三个独立的守护进程组成。nmbd 和 smbd 守护进程都由 `samba_enable` 启动。如果还需要 winbind 名称解析，请设置：
 
 [.programlisting]
 ....
 winbindd_enable="YES"
 ....
 
-可以随时通过键入以下命令停止 Samba ：
+可以随时通过键入以下命令停止 Samba：
 
 [source, shell]
 ....
@@ -2224,21 +2182,21 @@ Samba 是一个复杂的软件套件，具有与 Microsoft(R) Windows(R) 网络�
 [[network-ntp]]
 == 使用 NTP 进行时钟同步
 
-随着时间的推移，计算机的时钟容易偏离。这是一个问题，因为许多网络服务要求网络上的计算机共享相同准确的时间。准确的时间也需要确保文件时间戳保持一致。网络时间协议（ NTP ）是在网络中提供时钟准确性的一种方式。
+随着时间的推移，计算机的时钟容易偏离。这是一个问题，因为许多网络服务要求网络上的计算机共享相同准确的时间。准确的时间也需要确保文件时间戳保持一致。网络时间协议（NTP）是在网络中提供时钟准确性的一种方式。
 
-FreeBSD 包含 man:ntpd[8] ，可以配置为查询其他 NTP 服务器以同步该机器上的时钟，或为网络中的其他计算机提供时间服务。
+FreeBSD 包含 man:ntpd[8]，可以配置为查询其他 NTP 服务器以同步该机器上的时钟，或为网络中的其他计算机提供时间服务。
 
-本节介绍了如何在 FreeBSD 上配置 ntpd 。更多的文档可以在 HTML 格式的 [.filename]#/usr/share/doc/ntp/# 中找到。
+本节介绍了如何在 FreeBSD 上配置 ntpd。更多的文档可以在 HTML 格式的 [.filename]#/usr/share/doc/ntp/# 中找到。
 
 === NTP 配置
 
-在 FreeBSD 上，可以使用内置的 ntpd 来同步系统的时钟。 ntpd 是使用 man:rc.conf[5] 变量和 [.filename]#/etc/ntp.conf# 进行配置的，详细信息请参见以下章节。
+在 FreeBSD 上，可以使用内置的 ntpd 来同步系统的时钟。ntpd 是使用 man:rc.conf[5] 变量和 [.filename]#/etc/ntp.conf# 进行配置的，详细信息请参见以下章节。
 
 ntpd 通过 UDP 数据包与其网络对等方进行通信。您的机器与其 NTP 对等方之间的任何防火墙都必须配置为允许端口 123 上的 UDP 数据包的进出。
 
 ==== [.filename]#/etc/ntp.conf# 文件
 
-ntpd 读取 /etc/ntp.conf 文件来确定要查询的 NTP 服务器。建议选择多个 NTP 服务器，以防其中一个服务器无法访问或其时钟不可靠。当 ntpd 接收到响应时，它会优先选择可靠的服务器而不是不可靠的服务器。被查询的服务器可以是本地网络的服务器、由 ISP 提供的服务器，或者从一个在线的公共可访问的 NTP 服务器列表中选择。选择公共 NTP 服务器时，选择地理位置接近的服务器并查看其使用政策。"pool"配置关键字从服务器池中选择一个或多个服务器。有一个在线的公共可访问的 NTP 池列表，按地理区域组织。此外， FreeBSD 提供了一个由项目赞助的池，即"0.freebsd.pool.ntp.org"。
+ntpd 读取 [.filename]#/etc/ntp.conf# 文件来确定要查询的 NTP 服务器。建议选择多个 NTP 服务器，以防其中一个服务器无法访问或其时钟不可靠。当 ntpd 接收到响应时，它会优先选择可靠的服务器而不是不可靠的服务器。被查询的服务器可以是本地网络的服务器、由 ISP 提供的服务器，或者从一个 http://support.ntp.org/bin/view/Servers/WebHome[在线的公共可访问的 NTP 服务器列表] 中选择。选择公共 NTP 服务器时，选择地理位置接近的服务器并查看其使用政策。`pool` 配置关键字从服务器池中选择一个或多个服务器。有一个 http://support.ntp.org/bin/view/Servers/NTPPoolServers[在线的公共可访问的 NTP 池列表]，按地理区域组织。此外，FreeBSD 提供了一个由项目赞助的池，即 `0.freebsd.pool.ntp.org`。
 
 .示例 [.filename]#/etc/ntp.conf#
 [example]
@@ -2272,64 +2230,64 @@ leapfile "/var/db/ntpd.leap-seconds.list"
 
 该文件的格式在 man:ntp.conf[5] 中有描述。下面的描述仅提供了上面示例文件中使用的关键字的快速概述。
 
-默认情况下， NTP 服务器对任何网络主机都是可访问的。 `restrict` 关键字用于控制哪些系统可以访问该服务器。支持多个 `restrict` 条目，每个条目都可以细化之前语句中给出的限制。示例中显示的值允许本地系统完全查询和控制访问，而只允许远程系统查询时间。有关更多详细信息，请参阅 man:ntp.conf[5] 中的“访问控制支持”子节。
+默认情况下，NTP 服务器对任何网络主机都是可访问的。`restrict` 关键字用于控制哪些系统可以访问该服务器。支持多个 `restrict` 条目，每个条目都可以细化之前语句中给出的限制。示例中显示的值允许本地系统完全查询和控制访问，而只允许远程系统查询时间。有关更多详细信息，请参阅 man:ntp.conf[5] 中的 `访问控制支持（Access Control Support）` 子节。
 
-`server` 关键字指定要查询的单个服务器。文件可以包含多个 `server` 关键字，每行列出一个服务器。 `pool` 关键字指定服务器池。 ntpd 将根据需要从该池中添加一个或多个服务器，以达到使用 `tos minclock` 值指定的对等体数量。 `iburst` 关键字指示 ntpd 在首次建立联系时与服务器执行八次快速数据包交换，以帮助快速同步系统时间。
+`server` 关键字指定要查询的单个服务器。文件可以包含多个 `server` 关键字，每行列出一个服务器。`pool` 关键字指定服务器池。 ntpd 将根据需要从该池中添加一个或多个服务器，以达到使用 `tos minclock` 值指定的对等体数量。`iburst` 关键字指示 ntpd 在首次建立联系时与服务器执行八次快速数据包交换，以帮助快速同步系统时间。
 
 `leapfile` 关键字指定了一个包含闰秒信息的文件的位置。该文件由 man:periodic[8] 自动更新。此关键字指定的文件位置必须与 [.filename]#/etc/rc.conf# 中的 `ntp_db_leapfile` 变量设置的位置匹配。
 
-==== 在 /etc/rc.conf 文件中的 NTP 条目
+==== 在 [.filename]#/etc/rc.conf# 文件中的 NTP 条目
 
-将 `ntpd_enable = YES` 设置为在启动时启动 ntpd 。一旦将 `ntpd_enable = YES` 添加到 [/etc/rc.conf](/etc/rc.conf) 文件中，可以通过输入以下命令立即启动 ntpd 而无需重新启动系统：
+将 `ntpd_enable=YES` 设置为在启动时启动 ntpd。一旦将 `ntpd_enable=YES` 添加到 [.filename]#/etc/rc.conf# 文件中，可以通过输入以下命令立即启动 ntpd 而无需重新启动系统：
 
 [source, shell]
 ....
 # service ntpd start
 ....
 
-只需设置 `ntpd_enable` 就可以使用 ntpd 。下面列出的 [.filename]#rc.conf# 变量也可以根据需要进行设置。
+只需设置 `ntpd_enable` 就可以使用 ntpd。下面列出的 [.filename]#rc.conf# 变量也可以根据需要进行设置。
 
-将 `ntpd_sync_on_start = YES` 设置为允许 ntpd 在启动时一次性调整时钟的任意量。通常情况下，如果时钟偏差超过 1000 秒， ntpd 会记录错误消息并退出。此选项在没有电池备份的实时时钟的系统上特别有用。
+将 `ntpd_sync_on_start=YES` 设置为允许 ntpd 在启动时一次性调整时钟的任意量。通常情况下，如果时钟偏差超过 1000 秒，ntpd 会记录错误消息并退出。此选项在没有电池备份的实时时钟的系统上特别有用。
 
-将 `ntpd_oomprotect = YES` 设置为保护 ntpd 守护进程免受系统尝试从内存不足（ OOM ）条件中恢复时被终止。
+将 `ntpd_oomprotect=YES` 设置为保护 ntpd 守护进程免受系统尝试从内存不足（OOM）条件中恢复时被终止。
 
-将 `ntpd_config = ` 设置为备用的 [.filename]#ntp.conf# 文件的位置。
+将 `ntpd_config=` 设置为备用的 [.filename]#ntp.conf# 文件的位置。
 
-将 `ntpd_flags = ` 设置为包含所需的任何其他 ntpd 标志，但避免使用这些由 `/etc/rc.d/ntpd` 内部管理的标志。
+将 `ntpd_flags=` 设置为包含所需的任何其他 ntpd 标志，但避免使用这些由 [.filename]#/etc/rc.d/ntpd# 内部管理的标志。
 
-* `-p` （ pid 文件位置）
-* `-c` （使用 `ntpd_config = ` 代替）
+* `-p`（pid 文件位置）
+* `-c`（设置 `ntpd_config=` 代替）
 
 
 ==== ntpd 和非特权的 `ntpd` 用户
 
-在 FreeBSD 上， ntpd 可以作为非特权用户启动和运行。这需要使用 man:mac_ntpd[4] 策略模块。 [.filename]#/etc/rc.d/ntpd# 启动脚本首先检查 NTP 配置。如果可能，它会加载 `mac_ntpd` 模块，然后以非特权用户 `ntpd` （用户 ID 为 123 ）启动 ntpd 。为了避免文件和目录访问的问题，当配置中包含任何与文件相关的选项时，启动脚本不会自动以 `ntpd` 身份启动 ntpd 。
+在 FreeBSD 上，ntpd 可以作为非特权用户启动和运行。这需要使用 man:mac_ntpd[4] 策略模块。[.filename]#/etc/rc.d/ntpd# 启动脚本首先检查 NTP 配置。如果可能，它会加载 `mac_ntpd` 模块，然后以非特权用户 `ntpd`（用户 ID 为 123 ）启动 ntpd。为了避免文件和目录访问的问题，当配置中包含任何与文件相关的选项时，启动脚本不会自动以 `ntpd` 身份启动 ntpd。
 
 如果 `ntpd_flags` 中存在以下任何一项，则需要按照下面描述的手动配置来以 `ntpd` 用户身份运行：
 
-* -f 或 --driftfile
-* -i 或 --jaildir
-* -k 或 --keyfile
-* -l 或 --logfile
-* -s 或 --statsdir
+* -f or --driftfile
+* -i or --jaildir
+* -k or --keyfile
+* -l or --logfile
+* -s or --statsdir
 
 在 [.filename]#ntp.conf# 文件中出现以下关键字之一，需要按照下面描述的方式手动配置才能以 `ntpd` 用户身份运行：
 
-* 加密
-* 漂移文件
+* crypto
+* driftfile
 * key
-* 日志目录
-* statsdir 是一个计算机术语，指的是统计数据存储目录。
+* logdir
+* statsdir
 
 要手动配置 ntpd 以用户 `ntpd` 运行，您必须：
 
 * 确保 `ntpd` 用户可以访问配置中指定的所有文件和目录。
-* 安排加载或编译 `mac_ntpd` 模块到内核中。详细信息请参阅 man:mac_ntpd[4] 。
-* 在 [.filename]#/etc/rc.conf# 中设置 `ntpd_user ="ntpd"` 。
+* 安排加载或编译 `mac_ntpd` 模块到内核中。详细信息请参阅 man:mac_ntpd[4]。
+* 在 [.filename]#/etc/rc.conf# 中设置 `ntpd_user ="ntpd"`。
 
 === 使用 PPP 连接的 NTP
 
-ntpd 在正常运行时不需要与互联网保持永久连接。然而，如果配置了 PPP 连接以按需拨号，应该阻止 NTP 流量触发拨号或保持连接活动。这可以通过在 `/etc/ppp/ppp.conf` 文件中使用 `filter` 指令进行配置。例如：
+ntpd 在正常运行时不需要与互联网保持永久连接。然而，如果配置了 PPP 连接以按需拨号，应该阻止 NTP 流量触发拨号或保持连接活动。这可以通过在 [.filename]#/etc/ppp/ppp.conf# 文件中使用 `filter` 指令进行配置。例如：
 
 [.programlisting]
 ....
@@ -2343,7 +2301,7 @@ set filter alive 1 deny udp dst eq 123
 set filter alive 2 permit 0/0 0/0
 ....
 
-有关更多详细信息，请参阅 man:ppp[8] 中的 `PACKET FILTERING` 部分以及 [/usr/share/examples/ppp/] 中的示例。
+有关更多详细信息，请参阅 man:ppp[8] 中的 `PACKET FILTERING` 部分以及 [.filename]#/usr/share/examples/ppp/# 中的示例。
 
 [NOTE]
 ====
@@ -2351,20 +2309,20 @@ set filter alive 2 permit 0/0 0/0
 ====
 
 [[network-iscsi]]
-== iSCSI 发起者和目标配置
+== iSCSI 启动程序和目标配置
 
-iSCSI 是一种通过网络共享存储的方式。与在文件系统级别工作的 NFS 不同， iSCSI 在块设备级别工作。
+iSCSI 是一种通过网络共享存储的方式。与在文件系统级别工作的 NFS 不同，iSCSI 在块设备级别工作。
 
-在 iSCSI 术语中，共享存储的系统被称为“目标”（ target ）。存储可以是物理磁盘，也可以是表示多个磁盘或物理磁盘部分的区域。例如，如果磁盘使用 ZFS 格式化，可以创建一个 zvol 作为 iSCSI 存储使用。
+在 iSCSI 术语中，共享存储的系统被称为 _目标（target）_。存储可以是物理磁盘，也可以是表示多个磁盘或物理磁盘部分的区域。例如，如果磁盘使用 ZFS 格式化，可以创建一个 zvol 作为 iSCSI 存储使用。
 
-访问 iSCSI 存储的客户端被称为 _发起者_。对于发起者来说，通过 iSCSI 可用的存储看起来像一个未格式化的原始磁盘，称为逻辑单元 (LUN) 。磁盘的设备节点出现在 [.filename]#/dev/# 中，设备必须单独进行格式化和挂载。
+访问 iSCSI 存储的客户端被称为 _发起者（initiators）_。对于发起者来说，通过 iSCSI 可用的存储看起来像一个未格式化的原始磁盘，称为逻辑单元 (LUN) 。磁盘的设备节点出现在 [.filename]#/dev/# 中，设备必须单独进行格式化和挂载。
 
 FreeBSD 提供了本地的基于内核的 iSCSI 目标和发起者。本节描述了如何将 FreeBSD 系统配置为目标或发起者。
 
 [[network-iscsi-target]]
 === 配置 iSCSI 目标
 
-要配置一个 iSCSI 目标，需要创建一个名为 `/etc/ctl.conf` 的配置文件，然后在 `/etc/rc.conf` 中添加一行，以确保 `ctld[8]` 守护进程在启动时自动启动，最后启动守护进程。
+要配置一个 iSCSI 目标，需要创建一个名为 [.filename]#/etc/ctl.conf# 的配置文件，然后在 [.filename]#/etc/rc.conf# 中添加一行，以确保 man:ctld[8] 守护进程在启动时自动启动，最后启动守护进程。
 
 以下是一个简单的 [.filename]#/etc/ctl.conf# 配置文件的示例。有关此文件可用选项的更完整描述，请参阅 man:ctl.conf[5] 。
 
@@ -2387,15 +2345,15 @@ target iqn.2012-06.com.example:target0 {
 }
 ....
 
-第一个条目定义了 `pg0` 门户组。门户组定义了 man:ctld[8] 守护进程将监听哪些网络地址。 `discovery-auth-group no-authentication` 条目表示任何发起者都可以在没有身份验证的情况下执行 iSCSI 目标发现。第三和第四行配置 man:ctld[8] 在默认端口 3260 上监听所有 IPv4 （ `listen 0.0.0.0` ）和 IPv6 （ `listen [::]` ）地址。
+第一个条目定义了 `pg0` 门户组。门户组定义了 man:ctld[8] 守护进程将监听哪些网络地址。`discovery-auth-group no-authentication` 条目表示任何发起者都可以在没有身份验证的情况下执行 iSCSI 目标发现。第三和第四行配置 man:ctld[8] 在默认端口 3260 上监听所有 IPv4（`listen 0.0.0.0`）和 IPv6（`listen [::]`）地址。
 
-不需要定义一个门户组，因为有一个内置的门户组叫做 `default` 。在这种情况下， `default` 和 `pg0` 的区别在于，使用 `default` 时，目标发现始终被拒绝，而使用 `pg0` 时，目标发现始终被允许。
+不需要定义一个门户组，因为有一个内置的门户组叫做 `default`。在这种情况下，`default` 和 `pg0` 的区别在于，使用 `default` 时，目标发现始终被拒绝，而使用 `pg0` 时，目标发现始终被允许。
 
-第二个条目定义了一个单一的目标。目标有两个可能的含义：一个用于提供 iSCSI 服务的机器，或者是一个命名的 LUN 组。这个示例使用了后者的含义，其中 `iqn.2012-06.com.example:target0` 是目标名称。这个目标名称适用于测试目的。实际使用时，将 `com.example` 更改为真实的域名，反转过来。 `2012-06` 代表获取该域名控制权的年份和月份，而 `target0` 可以是任何值。在这个配置文件中可以定义任意数量的目标。
+第二个条目定义了一个单一的目标。目标有两个可能的含义：一个用于提供 iSCSI 服务的机器，或者是一个命名的 LUN 组。这个示例使用了后者的含义，其中 `iqn.2012-06.com.example:target0` 是目标名称。这个目标名称适用于测试目的。实际使用时，将 `com.example` 更改为真实的域名，反转过来。`2012-06` 代表获取该域名控制权的年份和月份，而 `target0` 可以是任何值。在这个配置文件中可以定义任意数量的目标。
 
 `auth-group no-authentication` 行允许所有发起者连接到指定的目标，而 `portal-group pg0` 则通过 `pg0` 门户组使目标可访问。
 
-下一节定义了逻辑单元（ LUN ）。对于发起者来说，每个 LUN 将被视为一个独立的磁盘设备。每个目标可以定义多个 LUN 。每个 LUN 由一个数字标识，其中 LUN 0 是必需的。 `path /data/target0-0` 行定义了支持 LUN 的文件或 zvol 的完整路径。在启动 man:ctld[8] 之前，该路径必须存在。第二行是可选的，用于指定 LUN 的大小。
+下一节定义了 LUN。对于发起者来说，每个 LUN 将被视为一个独立的磁盘设备。每个目标可以定义多个 LUN。每个 LUN 由一个数字标识，其中 LUN 0 是必需的。`path /data/target0-0` 行定义了支持 LUN 的文件或 zvol 的完整路径。在启动 man:ctld[8] 之前，该路径必须存在。第二行是可选的，用于指定 LUN 的大小。
 
 接下来，为了确保 man:ctld[8] 守护进程在启动时自动启动，请将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
 
@@ -2411,7 +2369,7 @@ ctld_enable="YES"
 # service ctld start
 ....
 
-当启动 man:ctld[8] 守护进程时，它会读取 .filename#/etc/ctl.conf# 文件。如果在守护进程启动后编辑了此文件，请使用此命令使更改立即生效：
+当启动 man:ctld[8] 守护进程时，它会读取 [.filename]#/etc/ctl.conf# 文件。如果在守护进程启动后编辑了此文件，请使用此命令使更改立即生效：
 
 [source, shell]
 ....
@@ -2446,7 +2404,7 @@ target iqn.2012-06.com.example:target0 {
 }
 ....
 
-`auth-group` 部分定义了用户名和密码对。试图连接到 `iqn.2012-06.com.example:target0` 的发起者必须首先指定一个已定义的用户名和密码。然而，目标发现仍然允许在没有身份验证的情况下进行。要求目标发现进行身份验证，请将 `discovery-auth-group` 设置为已定义的 `auth-group` 名称，而不是 `no-authentication` 。
+`auth-group` 部分定义了用户名和密码对。试图连接到 `iqn.2012-06.com.example:target0` 的发起者必须首先指定一个已定义的用户名和密码。然而，目标发现仍然允许在没有身份验证的情况下进行。要求目标发现进行身份验证，请将 `discovery-auth-group` 设置为已定义的 `auth-group` 名称，而不是 `no-authentication`。
 
 通常为每个发起者定义一个单独的导出目标是很常见的。作为上述语法的简写，用户名和密码可以直接在目标条目中指定：
 
@@ -2469,17 +2427,17 @@ target iqn.2012-06.com.example:target0 {
 
 [NOTE]
 ====
-本节中描述的 iSCSI initiator 从 FreeBSD 10.0-RELEASE 开始得到支持。要使用旧版本中提供的 iSCSI initiator ，请参考 man:iscontrol[8] 。
+本节中描述的 iSCSI 发起者从 FreeBSD 10.0-RELEASE 开始得到支持。要使用旧版本中提供的 iSCSI initiator，请参考 man:iscontrol[8] 。
 ====
 
-iSCSI initiator 要求 man:iscsid[8] 守护进程正在运行。该守护进程不使用配置文件。要在启动时自动启动它，请将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
+iSCSI 发起者要求 man:iscsid[8] 守护进程正在运行。该守护进程不使用配置文件。要在启动时自动启动它，请将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
 iscsid_enable="YES"
 ....
 
-要启动 man:iscsid[8] ，请运行以下命令：
+要启动 man:iscsid[8]，请运行以下命令：
 
 [source, shell]
 ....
@@ -2505,7 +2463,7 @@ Target name                                     Target portal   State
 iqn.2012-06.com.example:target0                 10.10.10.10     Connected: da0
 ....
 
-在这个例子中， iSCSI 会话成功建立，其中 [.filename]#/dev/da0# 代表已连接的逻辑单元（ LUN ）。如果 `iqn.2012-06.com.example:target0` 目标导出多个 LUN ，则输出的该部分将显示多个设备节点。
+在这个例子中， iSCSI 会话成功建立，其中 [.filename]#/dev/da0# 代表已连接的逻辑单元（ LUN ）。如果 `iqn.2012-06.com.example:target0` 目标导出多个 LUN，则输出的该部分将显示多个设备节点。
 
 [source, shell]
 ....
@@ -2554,7 +2512,7 @@ iqn.2012-06.com.example:target0                 10.10.10.10     Authentication f
 
 ==== 使用配置文件连接到目标
 
-要使用配置文件进行连接，请创建一个名为 `/etc/iscsi.conf` 的文件，并将其内容设置为以下内容：
+要使用配置文件进行连接，请创建一个名为 [.filename]#/etc/iscsi.conf# 的文件，并将其内容设置为以下内容：
 
 [.programlisting]
 ....
@@ -2567,7 +2525,7 @@ t0 {
 }
 ....
 
-`t0` 指定了配置文件部分的别名。它将被发起者用来指定要使用的配置。其他行指定了连接过程中要使用的参数。 `TargetAddress` 和 `TargetName` 是必需的，而其他选项是可选的。在这个例子中，显示了 CHAP 用户名和密码。
+`t0` 指定了配置文件部分的别名。它将被发起者用来指定要使用的配置。其他行指定了连接过程中要使用的参数。`TargetAddress` 和 `TargetName` 是必需的，而其他选项是可选的。在这个例子中，显示了 CHAP 用户名和密码。
 
 要连接到定义的目标，请指定昵称：
 
@@ -2583,7 +2541,7 @@ t0 {
 # iscsictl -Aa
 ....
 
-要使发起者自动连接到 [/etc/iscsi.conf] 中的所有目标，请将以下内容添加到 [/etc/rc.conf] 中：
+要使发起者自动连接到 [.filename]#/etc/iscsi.conf# 中的所有目标，请将以下内容添加到 [.filename]#/etc/rc.conf# 中：
 
 [.programlisting]
 ....
