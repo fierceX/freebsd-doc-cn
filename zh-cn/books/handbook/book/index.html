@@ -318,7 +318,7 @@
         <li><a href="#mail">Chapter 31. Electronic Mail</a></li>
         <li><a href="#network-servers">Chapter 32. 网络服务器</a></li>
         <li><a href="#firewalls">Chapter 33. 防火墙</a></li>
-        <li><a href="#advanced-networking">Chapter 34. Advanced Networking</a></li>
+        <li><a href="#advanced-networking">Chapter 34. 高级网络</a></li>
       </ul>
     </li>
     <li><a href="#appendices">Part V: 附录</a>
@@ -43466,79 +43466,79 @@ pass out</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="advanced-networking">Chapter 34. Advanced Networking<a class="anchor" href="#advanced-networking"></a></h2>
+<h2 id="advanced-networking">Chapter 34. 高级网络<a class="anchor" href="#advanced-networking"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="advanced-networking-synopsis">34.1. Synopsis<a class="anchor" href="#advanced-networking-synopsis"></a></h3>
+<h3 id="advanced-networking-synopsis">34.1. 简介<a class="anchor" href="#advanced-networking-synopsis"></a></h3>
 <div class="paragraph">
-<p>This chapter covers a number of advanced networking topics.</p>
+<p>本章涵盖了一些高级网络主题。</p>
 </div>
 <div class="paragraph">
-<p>After reading this chapter, you will know:</p>
+<p>阅读完本章后，您将了解：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The basics of gateways and routes.</p>
+<p>网关和路由的基础知识。</p>
 </li>
 <li>
-<p>How to set up USB tethering.</p>
+<p>如何设置 USB 网络共享。</p>
 </li>
 <li>
-<p>How to set up IEEE® 802.11 and Bluetooth® devices.</p>
+<p>如何设置 IEEE® 802.11 和 Bluetooth® 设备。</p>
 </li>
 <li>
-<p>How to make FreeBSD act as a bridge.</p>
+<p>如何将 FreeBSD 配置为桥接模式。</p>
 </li>
 <li>
-<p>How to set up network PXE booting.</p>
+<p>如何设置网络 PXE 引导。</p>
 </li>
 <li>
-<p>How to enable and utilize the features of the Common Address Redundancy Protocol (CARP) in FreeBSD.</p>
+<p>如何在 FreeBSD 中启用和利用 Common Address Redundancy Protocol (CARP) 的功能。</p>
 </li>
 <li>
-<p>How to configure multiple VLANs on FreeBSD.</p>
+<p>如何在 FreeBSD 上配置多个 VLAN。</p>
 </li>
 <li>
-<p>Configure bluetooth headset.</p>
+<p>配置蓝牙耳机。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Before reading this chapter, you should:</p>
+<p>在阅读本章之前，你应该：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Understand the basics of the <span class="filename">/etc/rc</span> scripts.</p>
+<p>了解 <span class="filename">/etc/rc</span> 脚本的基础知识。</p>
 </li>
 <li>
-<p>Be familiar with basic network terminology.</p>
+<p>熟悉基本的网络术语。</p>
 </li>
 <li>
-<p>Understand basic network configuration on FreeBSD (<a href="./#network">FreeBSD network</a>).</p>
+<p>了解 FreeBSD 上的基本网络配置（<a href="./#network">FreeBSD 网络</a>）。</p>
 </li>
 <li>
-<p>Know how to configure and install a new FreeBSD kernel (<a href="./#kernelconfig">Configuring the FreeBSD Kernel</a>).</p>
+<p>了解如何配置和安装新的 FreeBSD 内核（<a href="./#kernelconfig">配置 FreeBSD 内核</a>）。</p>
 </li>
 <li>
-<p>Know how to install additional third-party software (<a href="./#ports">Installing Applications: Packages and Ports</a>).</p>
+<p>了解如何安装额外的第三方软件（<a href="./#ports">安装应用程序：软件包和 Ports</a>）。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-routing">34.2. Gateways and Routes<a class="anchor" href="#network-routing"></a></h3>
+<h3 id="network-routing">34.2. 网关和路由<a class="anchor" href="#network-routing"></a></h3>
 <div class="paragraph">
-<p><em>Routing</em> is the mechanism that allows a system to find the network path to another system. A <em>route</em> is a defined pair of addresses which represent the &#34;destination&#34; and a &#34;gateway&#34;. The route indicates that when trying to get to the specified destination, send the packets through the specified gateway. There are three types of destinations: individual hosts, subnets, and &#34;default&#34;. The &#34;default route&#34; is used if no other routes apply. There are also three types of gateways: individual hosts, interfaces, also called links, and Ethernet hardware (MAC) addresses. Known routes are stored in a routing table.</p>
+<p><em>路由</em> 是一种机制，允许系统找到到另一个系统的网络路径。<em>路由</em> 是一对定义好的地址，表示“目标（destination）”和“网关（gateway）”。路由指示当尝试到达指定的目标时，通过指定的网关发送数据包。目标有三种类型：单个主机、子网和“默认”。如果没有其他路由适用，将使用“默认路由”。网关也有三种类型：单个主机、接口（也称为链路）和以太网硬件（MAC）地址。已知的路由存储在路由表中。</p>
 </div>
 <div class="paragraph">
-<p>This section provides an overview of routing basics. It then demonstrates how to configure a FreeBSD system as a router and offers some troubleshooting tips.</p>
+<p>本节提供了路由基础知识的概述。然后演示了如何将 FreeBSD 系统配置为路由器，并提供了一些故障排除技巧。</p>
 </div>
 <div class="sect3">
-<h4 id="network-routing-default">34.2.1. Routing Basics<a class="anchor" href="#network-routing-default"></a></h4>
+<h4 id="network-routing-default">34.2.1. 路由基础知识<a class="anchor" href="#network-routing-default"></a></h4>
 <div class="paragraph">
-<p>To view the routing table of a FreeBSD system, use <a href="https://man.freebsd.org/cgi/man.cgi?query=netstat&amp;sektion=1&amp;format=html">netstat(1)</a>:</p>
+<p>要查看 FreeBSD 系统的路由表，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=netstat&amp;sektion=1&amp;format=html">netstat(1)</a> 命令。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43559,96 +43559,96 @@ host2.example.com link#1            UC          0        0
 </div>
 </div>
 <div class="paragraph">
-<p>The entries in this example are as follows:</p>
+<p>这个示例中的条目如下：</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">default</dt>
+<dt class="hdlist1">默认</dt>
 <dd>
-<p>The first route in this table specifies the <code>default</code> route. When the local system needs to make a connection to a remote host, it checks the routing table to determine if a known path exists. If the remote host matches an entry in the table, the system checks to see if it can connect using the interface specified in that entry.</p>
+<p>这个表中的第一条路由指定了 <code>默认（default）</code> 路由。当本地系统需要与远程主机建立连接时，它会检查路由表以确定是否存在已知路径。如果远程主机与表中的条目匹配，系统会检查是否可以使用该条目中指定的接口进行连接。</p>
 <div class="paragraph">
-<p>If the destination does not match an entry, or if all known paths fail, the system uses the entry for the default route. For hosts on a local area network, the <code>Gateway</code> field in the default route is set to the system which has a direct connection to the Internet. When reading this entry, verify that the <code>Flags</code> column indicates that the gateway is usable (<code>UG</code>).</p>
+<p>如果目标与任何条目都不匹配，或者所有已知路径都失败，则系统将使用默认路由的条目。对于局域网上的主机， 默认路由中的 <code>网关（Gateway）</code> 字段设置为直接连接到互联网的系统。在阅读此条目时，请验证 <code>Flags</code> 列是否指示网关可用（<code>UG</code>）。</p>
 </div>
 <div class="paragraph">
-<p>The default route for a machine which itself is functioning as the gateway to the outside world will be the gateway machine at the Internet Service Provider (ISP).</p>
+<p>如果一台机器本身作为外部世界的网关，那么它的默认路由将是互联网服务提供商（ISP）的网关机器。</p>
 </div>
 </dd>
-<dt class="hdlist1">localhost</dt>
+<dt class="hdlist1">本地主机</dt>
 <dd>
-<p>The second route is the <code>localhost</code> route. The interface specified in the <code>Netif</code> column for <code>localhost</code> is <span class="filename">lo0</span>, also known as the loopback device. This indicates that all traffic for this destination should be internal, rather than sending it out over the network.</p>
+<p>第二条路由是 <code>localhost（本地主机）</code> 路由。在 <code>Netif</code> 列中指定的接口为 <span class="filename">lo0</span> ，也被称为环回设备。这表示所有发送到该目的地的流量都应该是内部流量，而不是通过网络发送出去。</p>
 </dd>
-<dt class="hdlist1">MAC address</dt>
+<dt class="hdlist1">MAC 地址</dt>
 <dd>
-<p>The addresses beginning with <code>0:e0:</code> are MAC addresses. FreeBSD will automatically identify any hosts, <code>test0</code> in the example, on the local Ethernet and add a route for that host over the Ethernet interface, <span class="filename">re0</span>. This type of route has a timeout, seen in the <code>Expire</code> column, which is used if the host does not respond in a specific amount of time. When this happens, the route to this host will be automatically deleted. These hosts are identified using the Routing Information Protocol (RIP), which calculates routes to local hosts based upon a shortest path determination.</p>
+<p>以 <code>0:e0:</code> 开头的地址是 MAC 地址。在 FreeBSD 中，它会自动识别本地以太网上的任何主机（例如 <code>test0</code>），并在以太网接口（<code>re0</code>）上添加一个用于该主机的路由。这种类型的路由有一个超时时间，在 <code>Expire</code> 列中显示，如果主机在特定时间内没有响应，路由将被自动删除。这些主机是使用路由信息协议（RIP）进行识别的，该协议根据最短路径确定计算到本地主机的路由。</p>
 </dd>
-<dt class="hdlist1">subnet</dt>
+<dt class="hdlist1">子网</dt>
 <dd>
-<p>FreeBSD will automatically add subnet routes for the local subnet. In this example, <code>10.20.30.255</code> is the broadcast address for the subnet <code>10.20.30</code> and <code>example.com</code> is the domain name associated with that subnet. The designation <code>link#1</code> refers to the first Ethernet card in the machine.</p>
+<p>FreeBSD 会自动为本地子网添加子网路由。在这个例子中，<code>10.20.30.255</code> 是子网 <code>10.20.30</code> 的广播地址，<code>example.com</code> 是与该子网关联的域名。<code>link#1</code> 表示机器上的第一个以太网卡。</p>
 <div class="paragraph">
-<p>Local network hosts and local subnets have their routes automatically configured by a daemon called <a href="https://man.freebsd.org/cgi/man.cgi?query=routed&amp;sektion=8&amp;format=html">routed(8)</a>. If it is not running, only routes which are statically defined by the administrator will exist.</p>
+<p>本地网络主机和本地子网的路由由一个名为 <a href="https://man.freebsd.org/cgi/man.cgi?query=routed&amp;sektion=8&amp;format=html">routed(8)</a> 的守护进程自动配置。如果该进程未运行，则只会存在由管理员静态定义的路由。</p>
 </div>
 </dd>
-<dt class="hdlist1">host</dt>
+<dt class="hdlist1">主机</dt>
 <dd>
-<p>The <code>host1</code> line refers to the host by its Ethernet address. Since it is the sending host, FreeBSD knows to use the loopback interface (<span class="filename">lo0</span>) rather than the Ethernet interface.</p>
+<p><code>host1</code> 行是通过其以太网地址引用主机。由于它是发送主机，FreeBSD 知道要使用回环接口（<span class="filename">lo0</span>），而不是以太网接口。</p>
 <div class="paragraph">
-<p>The two <code>host2</code> lines represent aliases which were created using <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a>. The <code>⇒</code> symbol after the <span class="filename">lo0</span> interface says that an alias has been set in addition to the loopback address. Such routes only show up on the host that supports the alias and all other hosts on the local network will have a <code>link#1</code> line for such routes.</p>
+<p>两个 <code>host2</code> 行表示使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 创建的别名。在 <span class="filename">lo0</span> 接口之后的 <code>⇒</code> 符号表示除了环回地址之外，还设置了一个别名。这样的路由只会出现在支持别名的主机上，而本地网络上的所有其他主机将会有一个 <code>link#1</code> 行用于这样的路由。</p>
 </div>
 </dd>
 <dt class="hdlist1">224</dt>
 <dd>
-<p>The final line (destination subnet <code>224</code>) deals with multicasting.</p>
+<p>最后一行（目标子网 <code>224</code> ）处理多播。</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>Various attributes of each route can be seen in the <code>Flags</code> column. <a href="#routeflags">Commonly Seen Routing Table Flags</a> summarizes some of these flags and their meanings:</p>
+<p>每个路由的各种属性可以在 <code>Flags</code> 列中看到。 <a href="#routeflags">常见的路由表标志</a> 总结了一些这些标志及其含义：</p>
 </div>
 <table id="routeflags" class="tableblock frame-none grid-all stretch">
-<caption class="title">表 47. Commonly Seen Routing Table Flags</caption>
+<caption class="title">表 47. 常见的路由表标志</caption>
 <colgroup>
 <col style="width: 50%;"/>
 <col style="width: 50%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Flag</th>
-<th class="tableblock halign-left valign-top">Purpose</th>
+<th class="tableblock halign-left valign-top">标志</th>
+<th class="tableblock halign-left valign-top">目的</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">U</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The route is active (up).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">路由已激活（上行）。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The route destination is a single host.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">路由目的地是一个单独的主机。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">G</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Send anything for this destination on to this gateway, which will figure out from there where to send it.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">将任何东西发送到这个目的地，然后由这个网关决定从哪里发送。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This route was statically configured.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">此路由是静态配置的。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">C</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Clones a new route based upon this route for machines to connect to. This type of route is normally used for local networks.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">为机器连接克隆一个基于此路由的新路由。这种类型的路由通常用于本地网络。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">W</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The route was auto-configured based upon a local area network (clone) route.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">该路由是基于本地区域网络（克隆）路由进行自动配置的。</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">L</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Route involves references to Ethernet (link) hardware.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">路由涉及对以太网（链路）硬件的引用。</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>On a FreeBSD system, the default route can defined in <span class="filename">/etc/rc.conf</span> by specifying the IP address of the default gateway:</p>
+<p>在 FreeBSD 系统上，可以通过在 <span class="filename">/etc/rc.conf</span> 文件中指定默认网关的 IP 地址来定义默认路由：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43656,7 +43656,7 @@ host2.example.com link#1            UC          0        0
 </div>
 </div>
 <div class="paragraph">
-<p>It is also possible to manually add the route using <code>route</code>:</p>
+<p>还可以使用 <code>route</code> 命令手动添加路由：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43664,16 +43664,16 @@ host2.example.com link#1            UC          0        0
 </div>
 </div>
 <div class="paragraph">
-<p>Note that manually added routes will not survive a reboot. For more information on manual manipulation of network routing tables, refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=route&amp;sektion=8&amp;format=html">route(8)</a>.</p>
+<p>请注意，手动添加的路由在重新启动后将不会保留。有关手动操作网络路由表的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=route&amp;sektion=8&amp;format=html">route(8)</a> 。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="network-static-routes">34.2.2. Configuring a Router with Static Routes<a class="anchor" href="#network-static-routes"></a></h4>
+<h4 id="network-static-routes">34.2.2. 使用静态路由配置路由器<a class="anchor" href="#network-static-routes"></a></h4>
 <div class="paragraph">
-<p>A FreeBSD system can be configured as the default gateway, or router, for a network if it is a dual-homed system. A dual-homed system is a host which resides on at least two different networks. Typically, each network is connected to a separate network interface, though IP aliasing can be used to bind multiple addresses, each on a different subnet, to one physical interface.</p>
+<p>如果一个 FreeBSD 系统是一个双主机系统，它可以被配置为网络的默认网关或路由器。双主机系统是指至少连接在两个不同网络上的主机。通常，每个网络都连接到一个独立的网络接口，尽管可以使用 IP 别名来将多个地址绑定到一个物理接口上，每个地址位于不同的子网上。</p>
 </div>
 <div class="paragraph">
-<p>In order for the system to forward packets between interfaces, FreeBSD must be configured as a router. Internet standards and good engineering practice prevent the FreeBSD Project from enabling this feature by default, but it can be configured to start at boot by adding this line to <span class="filename">/etc/rc.conf</span>:</p>
+<p>为了使系统在接口之间转发数据包，FreeBSD 必须配置为路由器。互联网标准和良好的工程实践阻止了 FreeBSD 项目默认启用此功能，但可以通过将以下行添加到 [/etc/rc.conf] 来配置在启动时启动：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43681,10 +43681,10 @@ host2.example.com link#1            UC          0        0
 </div>
 </div>
 <div class="paragraph">
-<p>To enable routing now, set the <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> variable <code>net.inet.ip.forwarding</code> to <code>1</code>. To stop routing, reset this variable to <code>0</code>.</p>
+<p>要立即启用路由功能，请将 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 变量 <code>net.inet.ip.forwarding</code> 设置为 <code>1</code> 。要停止路由功能，请将此变量重置为 <code>0</code>。</p>
 </div>
 <div class="paragraph">
-<p>The routing table of a router needs additional routes so it knows how to reach other networks. Routes can be either added manually using static routes or routes can be automatically learned using a routing protocol. Static routes are appropriate for small networks and this section describes how to add a static routing entry for a small network.</p>
+<p>路由器的路由表需要额外的路由，以便知道如何到达其他网络。路由可以通过手动添加静态路由或使用路由协议自动学习来添加。静态路由适用于小型网络，本节描述了如何为小型网络添加静态路由条目。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -43694,14 +43694,14 @@ host2.example.com link#1            UC          0        0
 </td>
 <td class="content">
 <div class="paragraph">
-<p>For large networks, static routes quickly become unscalable. FreeBSD comes with the standard BSD routing daemon <a href="https://man.freebsd.org/cgi/man.cgi?query=routed&amp;sektion=8&amp;format=html">routed(8)</a>, which provides the routing protocols RIP, versions 1 and 2, and IRDP. Support for the BGP and OSPF routing protocols can be installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/net/quagga/">net/quagga</a> package or port.</p>
+<p>对于大型网络来说，静态路由很快就变得不可扩展。 FreeBSD 附带了标准的 BSD 路由守护程序 <a href="https://man.freebsd.org/cgi/man.cgi?query=routed&amp;sektion=8&amp;format=html">routed(8)</a>，它提供了 RIP 协议的版本 1 和 2 以及 IRDP 协议。可以使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/net/quagga/">net/quagga</a> 包或端口安装 BGP 和 OSPF 路由协议的支持。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Consider the following network:</p>
+<p>考虑以下网络：</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -43709,10 +43709,10 @@ host2.example.com link#1            UC          0        0
 </div>
 </div>
 <div class="paragraph">
-<p>In this scenario, <code>RouterA</code> is a FreeBSD machine that is acting as a router to the rest of the Internet. It has a default route set to <code>10.0.0.1</code> which allows it to connect with the outside world. <code>RouterB</code> is already configured to use <code>192.168.1.1</code> as its default gateway.</p>
+<p>在这种情况下，<code>RouterA</code> 是一台充当互联网路由器的 FreeBSD 机器。它设置了一个默认路由到 <code>10.0.0.1</code> ，使其能够与外部世界连接。<code>RouterB</code> 已经配置为使用 <code>192.168.1.1</code> 作为其默认网关。</p>
 </div>
 <div class="paragraph">
-<p>Before adding any static routes, the routing table on <code>RouterA</code> looks like this:</p>
+<p>在添加任何静态路由之前，<code>RouterA</code> 上的路由表如下所示：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43728,7 +43728,7 @@ default            10.0.0.1           UGS         0    49378    xl0
 </div>
 </div>
 <div class="paragraph">
-<p>With the current routing table, <code>RouterA</code> does not have a route to the <code>192.168.2.0/24</code> network. The following command adds the <code>Internal Net 2</code> network to <code>RouterA</code>&#39;s routing table using <code>192.168.1.2</code> as the next hop:</p>
+<p>根据当前的路由表，<code>RouterA</code> 没有到达 <code>192.168.2.0/24</code> 网络的路由。以下命令将使用 <code>192.168.1.2</code> 作为下一跳，将 <code>Internal Net 2</code> 网络添加到 <code>RouterA</code> 的路由表中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43736,7 +43736,7 @@ default            10.0.0.1           UGS         0    49378    xl0
 </div>
 </div>
 <div class="paragraph">
-<p>Now, <code>RouterA</code> can reach any host on the <code>192.168.2.0/24</code> network. However, the routing information will not persist if the FreeBSD system reboots. If a static route needs to be persistent, add it to <span class="filename">/etc/rc.conf</span>:</p>
+<p>现在，<code>RouterA</code> 可以访问 <code>192.168.2.0/24</code> 网络上的任何主机。然而，如果 FreeBSD 系统重新启动，路由信息将不会持久化。如果需要静态路由持久化，将其添加到 <span class="filename">/etc/rc.conf</span> 文件中。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43746,10 +43746,10 @@ route_internalnet2=&#34;-net 192.168.2.0/24 192.168.1.2&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>static_routes</code> configuration variable is a list of strings separated by a space, where each string references a route name. The variable <code>route_internalnet2</code> contains the static route for that route name.</p>
+<p><code>static_routes</code> 配置变量是一个由空格分隔的字符串列表，其中每个字符串引用一个路由名称。变量 <code>route_internalnet2</code> 包含了该路由名称的静态路由。</p>
 </div>
 <div class="paragraph">
-<p>Using more than one string in <code>static_routes</code> creates multiple static routes. The following shows an example of adding static routes for the <code>192.168.0.0/24</code> and <code>192.168.1.0/24</code> networks:</p>
+<p>在 <code>static_routes</code> 中使用多个字符串可以创建多个静态路由。以下是添加 <code>192.168.0.0/24</code> 和 <code>192.168.1.0/24</code> 网络的静态路由的示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43760,27 +43760,27 @@ route_net2=&#34;-net 192.168.1.0/24 192.168.1.1&#34;</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="network-routing-troubleshooting">34.2.3. Troubleshooting<a class="anchor" href="#network-routing-troubleshooting"></a></h4>
+<h4 id="network-routing-troubleshooting">34.2.3. 故障排除<a class="anchor" href="#network-routing-troubleshooting"></a></h4>
 <div class="paragraph">
-<p>When an address space is assigned to a network, the service provider configures their routing tables so that all traffic for the network will be sent to the link for the site. But how do external sites know to send their packets to the network’s ISP?</p>
+<p>当一个地址空间被分配给一个网络时，服务提供商会配置他们的路由表，以便将所有网络流量发送到该站点的链路上。但是外部站点如何知道将其数据包发送到网络的 ISP 呢？</p>
 </div>
 <div class="paragraph">
-<p>There is a system that keeps track of all assigned address spaces and defines their point of connection to the Internet backbone, or the main trunk lines that carry Internet traffic across the country and around the world. Each backbone machine has a copy of a master set of tables, which direct traffic for a particular network to a specific backbone carrier, and from there down the chain of service providers until it reaches a particular network.</p>
+<p>有一个系统负责跟踪所有分配的地址空间，并定义它们与互联网骨干网的连接点，即负责在国内外承载互联网流量的主干线路。每个骨干机器都有一个主表的副本，该表将特定网络的流量引导到特定的骨干运营商，然后通过服务提供商链路一直传递，直到到达特定的网络。</p>
 </div>
 <div class="paragraph">
-<p>It is the task of the service provider to advertise to the backbone sites that they are the point of connection, and thus the path inward, for a site. This is known as route propagation.</p>
+<p>服务提供商的任务是向骨干站点宣传他们是连接点，从而为站点提供内部路径。这被称为路由传播。</p>
 </div>
 <div class="paragraph">
-<p>Sometimes, there is a problem with route propagation and some sites are unable to connect. Perhaps the most useful command for trying to figure out where routing is breaking down is <code>traceroute</code>. It is useful when <code>ping</code> fails.</p>
+<p>有时候，路由传播存在问题，导致一些站点无法连接。也许最有用的用于尝试找出路由中断位置的命令是 <code>traceroute</code>。当 <code>ping</code> 失败时，它非常有用。</p>
 </div>
 <div class="paragraph">
-<p>When using <code>traceroute</code>, include the address of the remote host to connect to. The output will show the gateway hosts along the path of the attempt, eventually either reaching the target host, or terminating because of a lack of connection. For more information, refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=traceroute&amp;sektion=8&amp;format=html">traceroute(8)</a>.</p>
+<p>使用 <code>traceroute</code> 命令时，需要指定要连接的远程主机的地址。输出结果将显示沿着尝试路径的网关主机，最终要么到达目标主机，要么因为连接不上而终止。更多信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=traceroute&amp;sektion=8&amp;format=html">traceroute(8)</a>。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="network-routing-multicast">34.2.4. Multicast Considerations<a class="anchor" href="#network-routing-multicast"></a></h4>
+<h4 id="network-routing-multicast">34.2.4. 多播考虑因素<a class="anchor" href="#network-routing-multicast"></a></h4>
 <div class="paragraph">
-<p>FreeBSD natively supports both multicast applications and multicast routing. Multicast applications do not require any special configuration in order to run on FreeBSD. Support for multicast routing requires that the following option be compiled into a custom kernel:</p>
+<p>FreeBSD 原生支持多播应用程序和多播路由。在 FreeBSD 上运行多播应用程序不需要任何特殊配置。支持多播路由需要将以下选项编译到自定义内核中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43788,7 +43788,7 @@ route_net2=&#34;-net 192.168.1.0/24 192.168.1.1&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The multicast routing daemon, mrouted can be installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/net/mrouted/">net/mrouted</a> package or port. This daemon implements the DVMRP multicast routing protocol and is configured by editing <span class="filename">/usr/local/etc/mrouted.conf</span> in order to set up the tunnels and DVMRP. The installation of mrouted also installs map-mbone and mrinfo, as well as their associated man pages. Refer to these for configuration examples.</p>
+<p>可以使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/net/mrouted/">net/mrouted</a> 包或 port 安装多播路由守护程序 mrouted。该守护程序实现了 DVMRP 多播路由协议，并通过编辑 <span class="filename">/usr/local/etc/mrouted.conf</span> 来配置以设置隧道和 DVMRP。安装 mrouted 还会安装 map-mbone 和 mrinfo，以及它们的相关手册页。请参考这些手册页获取配置示例。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -43798,7 +43798,7 @@ route_net2=&#34;-net 192.168.1.0/24 192.168.1.1&#34;</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>DVMRP has largely been replaced by the PIM protocol in many multicast installations. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=pim&amp;sektion=4&amp;format=html">pim(4)</a> for more information.</p>
+<p>在许多多播安装中，DVMRP 协议大多被 PIM 协议取代。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=pim&amp;sektion=4&amp;format=html">pim(4)</a> 。</p>
 </div>
 </td>
 </tr>
@@ -43807,12 +43807,12 @@ route_net2=&#34;-net 192.168.1.0/24 192.168.1.1&#34;</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configtuning-virtual-hosts">34.3. Virtual Hosts<a class="anchor" href="#configtuning-virtual-hosts"></a></h3>
+<h3 id="configtuning-virtual-hosts">34.3. 虚拟主机<a class="anchor" href="#configtuning-virtual-hosts"></a></h3>
 <div class="paragraph">
-<p>A common use of FreeBSD is virtual site hosting, where one server appears to the network as many servers. This is achieved by assigning multiple network addresses to a single interface.</p>
+<p>FreeBSD 的常见用途之一是虚拟站点托管，其中一个服务器在网络上表现为多个服务器。这是通过将多个网络地址分配给单个接口来实现的。</p>
 </div>
 <div class="paragraph">
-<p>A given network interface has one &#34;real&#34; address, and may have any number of &#34;alias&#34; addresses. These aliases are normally added by placing alias entries in <span class="filename">/etc/rc.conf</span>, as seen in this example:</p>
+<p>一个给定的网络接口有一个“真实”的地址，可以有任意数量的“别名”地址。这些别名通常是通过在 <span class="filename">/etc/rc.conf</span> 中添加别名条目来添加的，如下面的示例所示：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43820,16 +43820,16 @@ route_net2=&#34;-net 192.168.1.0/24 192.168.1.1&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Alias entries must start with <code>alias<em>0</em></code> using a sequential number such as <code>alias0</code>, <code>alias1</code>, and so on. The configuration process will stop at the first missing number.</p>
+<p>别名条目必须以 <code>alias<em>0</em></code> 开头，使用连续的数字，例如 <code>alias0</code>，<code>alias1</code> 等等。配置过程将在第一个缺失的数字处停止。</p>
 </div>
 <div class="paragraph">
-<p>The calculation of alias netmasks is important. For a given interface, there must be one address which correctly represents the network’s netmask. Any other addresses which fall within this network must have a netmask of all <code>1</code>s, expressed as either <code>255.255.255.255</code> or <code>0xffffffff</code>.</p>
+<p>别名网络掩码的计算非常重要。对于给定的接口，必须有一个地址能正确表示网络的网络掩码。任何其他落在该网络内的地址都必须具有全为 <code>1</code> 的网络掩码，可以表示为 <code>255.255.255.255</code> 或 <code>0xffffffff</code>。</p>
 </div>
 <div class="paragraph">
-<p>For example, consider the case where the <code>fxp0</code> interface is connected to two networks: <code>10.1.1.0</code> with a netmask of <code>255.255.255.0</code> and <code>202.0.75.16</code> with a netmask of <code>255.255.255.240</code>. The system is to be configured to appear in the ranges <code>10.1.1.1</code> through <code>10.1.1.5</code> and <code>202.0.75.17</code> through <code>202.0.75.20</code>. Only the first address in a given network range should have a real netmask. All the rest (<code>10.1.1.2</code> through <code>10.1.1.5</code> and <code>202.0.75.18</code> through <code>202.0.75.20</code>) must be configured with a netmask of <code>255.255.255.255</code>.</p>
+<p>例如，考虑 <code>fxp0</code> 接口连接到两个网络的情况：<code>10.1.1.0</code> 的子网掩码为 <code>255.255.255.0</code>，<code>202.0.75.16</code> 的子网掩码为 <code>255.255.255.240</code>。系统需要配置为出现在范围 <code>10.1.1.1</code> 到 <code>10.1.1.5</code> 和 <code>202.0.75.17</code> 到 <code>202.0.75.20</code> 中。给定网络范围中只有第一个地址应具有真实的子网掩码。其余的地址（<code>10.1.1.2</code> 到 <code>10.1.1.5</code> 和 <code>202.0.75.18</code> 到 <code>202.0.75.20</code>）必须配置为子网掩码 <code>255.255.255.255</code>。</p>
 </div>
 <div class="paragraph">
-<p>The following <span class="filename">/etc/rc.conf</span> entries configure the adapter correctly for this scenario:</p>
+<p>以下是配置适配器以适应此场景的 <span class="filename">/etc/rc.conf</span> 条目：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43845,7 +43845,7 @@ route_net2=&#34;-net 192.168.1.0/24 192.168.1.1&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A simpler way to express this is with a space-separated list of IP address ranges. The first address will be given the indicated subnet mask and the additional addresses will have a subnet mask of <code>255.255.255.255</code>.</p>
+<p>用空格分隔的 IP 地址范围列表更简单地表达这个概念。第一个地址将使用指定的子网掩码，而其他地址将使用子网掩码 <code>255.255.255.255</code>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43854,26 +43854,26 @@ route_net2=&#34;-net 192.168.1.0/24 192.168.1.1&#34;</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-advanced-wireless">34.4. Wireless Advanced Authentication<a class="anchor" href="#network-advanced-wireless"></a></h3>
+<h3 id="network-advanced-wireless">34.4. 无线高级认证<a class="anchor" href="#network-advanced-wireless"></a></h3>
 <div class="paragraph">
-<p>FreeBSD supports different ways of connecting to a wireless network. This section describes how to perform advanced authentication to a Wireless Network.</p>
+<p>FreeBSD 支持多种连接无线网络的方式。本节介绍如何进行高级身份验证以连接无线网络。</p>
 </div>
 <div class="paragraph">
-<p>To make a connection and basic authentication to a wireless network the section <a href="./#wireless-authentication">Connection and Authentication to a Wireless Network</a> in the Network Chapter describes how to do it.</p>
+<p>要建立连接并进行基本身份验证以连接到无线网络，可以参考网络章节中的 <a href="./#wireless-authentication">Connection and Authentication to a Wireless Network</a> 部分来了解如何操作。</p>
 </div>
 <div class="sect3">
-<h4 id="network-wireless-wpa-eap-tls">34.4.1. WPA with EAP-TLS<a class="anchor" href="#network-wireless-wpa-eap-tls"></a></h4>
+<h4 id="network-wireless-wpa-eap-tls">34.4.1. WPA 与 EAP-TLS<a class="anchor" href="#network-wireless-wpa-eap-tls"></a></h4>
 <div class="paragraph">
-<p>The second way to use WPA is with an 802.1X backend authentication server. In this case, WPA is called WPA Enterprise to differentiate it from the less secure WPA Personal. Authentication in WPA Enterprise is based on the Extensible Authentication Protocol (EAP).</p>
+<p>使用 WPA 的第二种方式是通过 802.1X 后端认证服务器。在这种情况下，WPA 被称为 WPA 企业版，以区别于较不安全的 WPA 个人版。WPA 企业版中的认证是基于可扩展认证协议（EAP）的。</p>
 </div>
 <div class="paragraph">
-<p>EAP does not come with an encryption method. Instead, EAP is embedded inside an encrypted tunnel. There are many EAP authentication methods, but EAP-TLS, EAP-TTLS, and EAP-PEAP are the most common.</p>
+<p>EAP 不带有加密方法。相反，EAP 被嵌入在一个加密隧道中。有许多 EAP 认证方法，但 EAP-TLS、EAP-TTLS 和 EAP-PEAP 是最常见的。</p>
 </div>
 <div class="paragraph">
-<p>EAP with Transport Layer Security (EAP-TLS) is a well-supported wireless authentication protocol since it was the first EAP method to be certified by the <a href="http://www.wi-fi.org/">Wi-Fi Alliance</a>. EAP-TLS requires three certificates to run: the certificate of the Certificate Authority (CA) installed on all machines, the server certificate for the authentication server, and one client certificate for each wireless client. In this EAP method, both the authentication server and wireless client authenticate each other by presenting their respective certificates, and then verify that these certificates were signed by the organization’s CA.</p>
+<p>EAP 与传输层安全性（EAP-TLS）是一种得到广泛支持的无线认证协议，因为它是第一个被 <a href="http://www.wi-fi.org/">Wi-Fi 联盟</a> 认证的 EAP 方法。EAP-TLS 需要三个证书来运行：安装在所有设备上的证书颁发机构（CA）的证书，用于认证服务器的服务器证书，以及每个无线客户端的一个客户端证书。在这种 EAP 方法中，认证服务器和无线客户端通过展示各自的证书来相互认证，然后验证这些证书是由组织的 CA 签名的。</p>
 </div>
 <div class="paragraph">
-<p>As previously, the configuration is done via <span class="filename">/etc/wpa_supplicant.conf</span>:</p>
+<p>与以前一样，配置是通过 <span class="filename">/etc/wpa_supplicant.conf</span> 进行的：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43894,12 +43894,12 @@ route_net2=&#34;-net 192.168.1.0/24 192.168.1.1&#34;</pre>
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This field indicates the network name (SSID). &lt;.&gt; This example uses the RSN IEEE® 802.11i protocol, also known as WPA2. &lt;.&gt; The <code>key_mgmt</code> line refers to the key management protocol to use. In this example, it is WPA using EAP authentication. &lt;.&gt; This field indicates the EAP method for the connection. &lt;.&gt; The <code>identity</code> field contains the identity string for EAP. &lt;.&gt; The <code>ca_cert</code> field indicates the pathname of the CA certificate file. This file is needed to verify the server certificate. &lt;.&gt; The <code>client_cert</code> line gives the pathname to the client certificate file. This certificate is unique to each wireless client of the network. &lt;.&gt; The <code>private_key</code> field is the pathname to the client certificate private key file. &lt;.&gt; The <code>private_key_passwd</code> field contains the passphrase for the private key.</td>
+<td>这个字段表示网络名称（ SSID ）。 &lt;.&gt; 这个示例使用了 RSN IEEE® 802.11i 协议，也被称为 WPA2。 &lt;.&gt; <code>key_mgmt</code> 行指定了要使用的密钥管理协议。在这个示例中，使用的是使用 EAP 认证的 WPA。 &lt;.&gt; 这个字段表示连接的 EAP 方法。 &lt;.&gt; <code>identity</code> 字段包含了 EAP 的身份字符串。 &lt;.&gt; <code>ca_cert</code> 字段指定了 CA 证书文件的路径名。这个文件用于验证服务器证书。 &lt;.&gt; <code>client_cert</code> 行给出了客户端证书文件的路径名。这个证书是每个无线客户端的独特证书。 &lt;.&gt; <code>private_key</code> 字段是客户端证书私钥文件的路径名。 &lt;.&gt; <code>private_key_passwd</code> 字段包含了私钥的密码短语。</td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Then, add the following lines to <span class="filename">/etc/rc.conf</span>:</p>
+<p>然后，将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43908,7 +43908,7 @@ ifconfig_wlan0=&#34;WPA DHCP&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The next step is to bring up the interface:</p>
+<p>下一步是启动界面：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43931,16 +43931,16 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>It is also possible to bring up the interface manually using <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a>.</p>
+<p>还可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant&amp;sektion=8&amp;format=html">wpa_supplicant(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 手动启动接口。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="network-wireless-wpa-eap-ttls">34.4.2. WPA with EAP-TTLS<a class="anchor" href="#network-wireless-wpa-eap-ttls"></a></h4>
+<h4 id="network-wireless-wpa-eap-ttls">34.4.2. WPA 与 EAP-TTLS<a class="anchor" href="#network-wireless-wpa-eap-ttls"></a></h4>
 <div class="paragraph">
-<p>With EAP-TLS, both the authentication server and the client need a certificate. With EAP-TTLS, a client certificate is optional. This method is similar to a web server which creates a secure SSL tunnel even if visitors do not have client-side certificates. EAP-TTLS uses an encrypted TLS tunnel for safe transport of the authentication data.</p>
+<p>使用 EAP-TLS，认证服务器和客户端都需要证书。使用 EAP-TTLS，客户端证书是可选的。这种方法类似于一个 Web 服务器，即使访问者没有客户端证书，也会创建一个安全的 SSL 隧道。EAP-TTLS 使用加密的 TLS 隧道来安全传输认证数据。</p>
 </div>
 <div class="paragraph">
-<p>The required configuration can be added to <span class="filename">/etc/wpa_supplicant.conf</span>:</p>
+<p>所需的配置可以添加到 <span class="filename">/etc/wpa_supplicant.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43960,12 +43960,12 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This field specifies the EAP method for the connection. &lt;.&gt; The <code>identity</code> field contains the identity string for EAP authentication inside the encrypted TLS tunnel. &lt;.&gt; The <code>password</code> field contains the passphrase for the EAP authentication. &lt;.&gt; The <code>ca_cert</code> field indicates the pathname of the CA certificate file. This file is needed to verify the server certificate. &lt;.&gt; This field specifies the authentication method used in the encrypted TLS tunnel. In this example, EAP with MD5-Challenge is used. The &#34;inner authentication&#34; phase is often called &#34;phase2&#34;.</td>
+<td>这个字段指定了连接的 EAP 方法。 &lt;.&gt; <code>identity</code> 字段包含了在加密的 TLS 隧道内进行 EAP 身份验证的身份字符串。&lt;.&gt; <code>password</code> 字段包含了 EAP 身份验证的密码。 &lt;.&gt; <code>ca_cert</code> 字段指示 CA 证书文件的路径名。这个文件用于验证服务器证书。 &lt;.&gt; 这个字段指定了在加密的 TLS 隧道中使用的身份验证方法。在这个例子中，使用了 EAP 和 MD5-Challenge 。“内部身份验证”阶段通常被称为“第二阶段”。</td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Next, add the following lines to <span class="filename">/etc/rc.conf</span>:</p>
+<p>接下来，将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -43974,7 +43974,7 @@ ifconfig_wlan0=&#34;WPA DHCP&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The next step is to bring up the interface:</p>
+<p>下一步是启动界面：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43999,7 +43999,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="sect3">
-<h4 id="network-wireless-wpa-eap-peap">34.4.3. WPA with EAP-PEAP<a class="anchor" href="#network-wireless-wpa-eap-peap"></a></h4>
+<h4 id="network-wireless-wpa-eap-peap">34.4.3. WPA 与 EAP-PEAP<a class="anchor" href="#network-wireless-wpa-eap-peap"></a></h4>
 <div class="admonitionblock note">
 <table>
 <tbody><tr>
@@ -44008,20 +44008,20 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </td>
 <td class="content">
 <div class="paragraph">
-<p>PEAPv0/EAP-MSCHAPv2 is the most common PEAP method. In this chapter, the term PEAP is used to refer to that method.</p>
+<p>PEAPv0/EAP-MSCHAPv2 是最常见的 PEAP 方法。在本章中，术语 PEAP 用于指代该方法。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Protected EAP (PEAP) is designed as an alternative to EAP-TTLS and is the most used EAP standard after EAP-TLS. In a network with mixed operating systems, PEAP should be the most supported standard after EAP-TLS.</p>
+<p>Protected EAP（PEAP）是作为 EAP-TTLS 的替代方案而设计的，在 EAP-TLS 之后是最常用的 EAP 标准。在一个混合操作系统的网络中，PEAP 应该是仅次于 EAP-TLS 的最受支持的标准。</p>
 </div>
 <div class="paragraph">
-<p>PEAP is similar to EAP-TTLS as it uses a server-side certificate to authenticate clients by creating an encrypted TLS tunnel between the client and the authentication server, which protects the ensuing exchange of authentication information. PEAP authentication differs from EAP-TTLS as it broadcasts the username in the clear and only the password is sent in the encrypted TLS tunnel. EAP-TTLS will use the TLS tunnel for both the username and password.</p>
+<p>PEAP 与 EAP-TTLS 类似，它使用服务器端证书来通过在客户端和认证服务器之间创建加密的 TLS 隧道来验证客户端，从而保护后续的认证信息交换。 PEAP 认证与 EAP-TTLS 不同之处在于，它以明文方式广播用户名，只有密码在加密的 TLS 隧道中发送。而 EAP-TTLS 将同时使用 TLS 隧道传输用户名和密码。</p>
 </div>
 <div class="paragraph">
-<p>Add the following lines to <span class="filename">/etc/wpa_supplicant.conf</span> to configure the EAP-PEAP related settings:</p>
+<p>将以下行添加到 <span class="filename">/etc/wpa_supplicant.conf</span> 以配置 EAP-PEAP 相关设置：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44042,12 +44042,12 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This field specifies the EAP method for the connection. &lt;.&gt; The <code>identity</code> field contains the identity string for EAP authentication inside the encrypted TLS tunnel. &lt;.&gt; The <code>password</code> field contains the passphrase for the EAP authentication. &lt;.&gt; The <code>ca_cert</code> field indicates the pathname of the CA certificate file. This file is needed to verify the server certificate. &lt;.&gt; This field contains the parameters for the first phase of authentication, the TLS tunnel. According to the authentication server used, specify a specific label for authentication. Most of the time, the label will be &#34;client EAP encryption&#34; which is set by using <code>peaplabel=0</code>. More information can be found in <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant.conf&amp;sektion=5&amp;format=html">wpa_supplicant.conf(5)</a>. &lt;.&gt; This field specifies the authentication protocol used in the encrypted TLS tunnel. In the case of PEAP, it is <code>auth=MSCHAPV2</code>.</td>
+<td>这个字段指定了连接的 EAP 方法。 &lt;.&gt; <code>identity</code> 字段包含了在加密的 TLS 隧道内进行 EAP 认证的身份字符串。 &lt;.&gt; <code>password</code> 字段包含了 EAP 认证的密码。 &lt;.&gt; <code>ca_cert</code> 字段指示了 CA 证书文件的路径名。这个文件用于验证服务器证书。 &lt;.&gt; 这个字段包含了第一阶段认证的参数，即 TLS 隧道。根据使用的认证服务器，指定一个特定的标签进行认证。大多数情况下，标签将是&#34;client EAP encryption&#34;，可以通过使用 <code>peaplabel = 0</code> 来设置。更多信息可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=wpa_supplicant.conf&amp;sektion=5&amp;format=html">wpa_supplicant.conf(5)</a> 中找到。 &lt;.&gt; 这个字段指定了在加密的 TLS 隧道中使用的认证协议。在 PEAP 的情况下，它是 <code>auth = MSCHAPV2</code>。</td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Add the following to <span class="filename">/etc/rc.conf</span>:</p>
+<p>将以下内容添加到 [/etc/rc.conf] 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44056,7 +44056,7 @@ ifconfig_wlan0=&#34;WPA DHCP&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then, bring up the interface:</p>
+<p>然后，启动界面：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44082,12 +44082,12 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="sect2">
-<h3 id="wireless-ad-hoc-mode">34.5. Wireless Ad-hoc Mode<a class="anchor" href="#wireless-ad-hoc-mode"></a></h3>
+<h3 id="wireless-ad-hoc-mode">34.5. 无线自组网模式<a class="anchor" href="#wireless-ad-hoc-mode"></a></h3>
 <div class="paragraph">
-<p>IBSS mode, also called ad-hoc mode, is designed for point to point connections. For example, to establish an ad-hoc network between the machines <code>A</code> and <code>B</code>, choose two IP addresses and a SSID.</p>
+<p>IBSS 模式，也称为自组网模式，旨在用于点对点连接。例如，要在机器 A 和 B 之间建立一个自组网，选择两个 IP 地址和一个 SSID。</p>
 </div>
 <div class="paragraph">
-<p>On <code>A</code>:</p>
+<p>在 <code>A</code> 上：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44105,10 +44105,10 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>adhoc</code> parameter indicates that the interface is running in IBSS mode.</p>
+<p><code>adhoc</code> 参数表示接口正在以 IBSS 模式运行。</p>
 </div>
 <div class="paragraph">
-<p><code>B</code> should now be able to detect <code>A</code>:</p>
+<p><code>B</code> 现在应该能够检测到 <code>A</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44119,7 +44119,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>I</code> in the output confirms that <code>A</code> is in ad-hoc mode. Now, configure <code>B</code> with a different IP address:</p>
+<p>输出中的 <code>I</code> 确认了 <code>A</code> 处于自组网模式。现在，将 <code>B</code> 配置为不同的 IP 地址：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44136,17 +44136,17 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Both <code>A</code> and <code>B</code> are now ready to exchange information.</p>
+<p>现在，<code>A</code> 和 <code>B</code> 都准备好交换信息了。</p>
 </div>
 <div class="sect3">
-<h4 id="network-wireless-ap">34.5.1. FreeBSD Host Access Points<a class="anchor" href="#network-wireless-ap"></a></h4>
+<h4 id="network-wireless-ap">34.5.1. FreeBSD 主机访问点<a class="anchor" href="#network-wireless-ap"></a></h4>
 <div class="paragraph">
-<p>FreeBSD can act as an Access Point (AP) which eliminates the need to buy a hardware AP or run an ad-hoc network. This can be particularly useful when a FreeBSD machine is acting as a gateway to another network such as the Internet.</p>
+<p>FreeBSD 可以充当访问点（AP），从而无需购买硬件 AP 或运行自组网。当 FreeBSD 机器充当网关连接到另一个网络（如互联网）时，这一点尤其有用。</p>
 </div>
 <div class="sect4">
-<h5 id="network-wireless-ap-basic">34.5.1.1. Basic Settings<a class="anchor" href="#network-wireless-ap-basic"></a></h5>
+<h5 id="network-wireless-ap-basic">34.5.1.1. 基本设置<a class="anchor" href="#network-wireless-ap-basic"></a></h5>
 <div class="paragraph">
-<p>Before configuring a FreeBSD machine as an AP, the kernel must be configured with the appropriate networking support for the wireless card as well as the security protocols being used. For more details, see <a href="#network-wireless-basic">[network-wireless-basic]</a>.</p>
+<p>在将 FreeBSD 机器配置为 AP 之前，必须为无线网卡配置适当的网络支持和所使用的安全协议。有关更多详细信息，请参阅 <a href="#network-wireless-basic">[network-wireless-basic]</a> 。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -44156,14 +44156,14 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The NDIS driver wrapper for Windows® drivers does not currently support AP operation. Only native FreeBSD wireless drivers support AP mode.</p>
+<p>目前，用于 Windows® 驱动程序的 NDIS 驱动程序包装器不支持 AP 操作。只有原生的 FreeBSD 无线驱动程序支持 AP 模式。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Once wireless networking support is loaded, check if the wireless device supports the host-based access point mode, also known as hostap mode:</p>
+<p>一旦加载了无线网络支持，检查无线设备是否支持主机模式接入点模式，也称为 hostap 模式：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44174,10 +44174,10 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>This output displays the card’s capabilities. The <code>HOSTAP</code> word confirms that this wireless card can act as an AP. Various supported ciphers are also listed: WEP, TKIP, and AES. This information indicates which security protocols can be used on the AP.</p>
+<p>此输出显示了该卡的功能。<code>HOSTAP</code> 一词确认了该无线网卡可以充当 AP 。还列出了各种支持的加密算法：WEP、TKIP 和 AES。这些信息表明可以在 AP 上使用哪些安全协议。</p>
 </div>
 <div class="paragraph">
-<p>The wireless device can only be put into hostap mode during the creation of the network pseudo-device, so a previously created device must be destroyed first:</p>
+<p>在创建网络伪设备时，无线设备只能被设置为 hostap 模式，因此必须先销毁先前创建的设备：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44185,7 +44185,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>then regenerated with the correct option before setting the other parameters:</p>
+<p>在设置其他参数之前，使用正确的选项重新生成。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44194,7 +44194,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Use <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> again to see the status of the <span class="filename">wlan0</span> interface:</p>
+<p>再次使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 命令查看 wlan0 接口的状态：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44210,10 +44210,10 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>hostap</code> parameter indicates the interface is running in the host-based access point mode.</p>
+<p><code>hostap</code> 参数表示接口正在以基于主机的访问点模式运行。</p>
 </div>
 <div class="paragraph">
-<p>The interface configuration can be done automatically at boot time by adding the following lines to <span class="filename">/etc/rc.conf</span>:</p>
+<p>可以通过在 <span class="filename">/etc/rc.conf</span> 文件中添加以下行来在启动时自动进行接口配置：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44224,12 +44224,12 @@ ifconfig_wlan0=&#34;inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode 1
 </div>
 </div>
 <div class="sect4">
-<h5 id="_host_based_access_point_without_authentication_or_encryption">34.5.1.2. Host-based Access Point Without Authentication or Encryption<a class="anchor" href="#_host_based_access_point_without_authentication_or_encryption"></a></h5>
+<h5 id="_无身份验证或加密的基于主机的接入点">34.5.1.2. 无身份验证或加密的基于主机的接入点<a class="anchor" href="#_无身份验证或加密的基于主机的接入点"></a></h5>
 <div class="paragraph">
-<p>Although it is not recommended to run an AP without any authentication or encryption, this is a simple way to check if the AP is working. This configuration is also important for debugging client issues.</p>
+<p>虽然不建议在没有任何身份验证或加密的情况下运行 AP，但这是检查 AP 是否工作的简单方法。这种配置对于调试客户端问题也很重要。</p>
 </div>
 <div class="paragraph">
-<p>Once the AP is configured, initiate a scan from another wireless machine to find the AP:</p>
+<p>一旦配置了 AP，从另一台无线机器上发起扫描以找到 AP：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44240,7 +44240,7 @@ freebsdap       00:11:95:c3:0d:ac    1   54M -66:-96  100 ES   WME</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The client machine found the AP and can be associated with it:</p>
+<p>客户端机器找到了 AP 并且可以与其关联：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44259,15 +44259,15 @@ freebsdap       00:11:95:c3:0d:ac    1   54M -66:-96  100 ES   WME</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="network-wireless-ap-wpa">34.5.1.3. WPA2 Host-based Access Point<a class="anchor" href="#network-wireless-ap-wpa"></a></h5>
+<h5 id="network-wireless-ap-wpa">34.5.1.3. WPA2 基于主机的接入点<a class="anchor" href="#network-wireless-ap-wpa"></a></h5>
 <div class="paragraph">
-<p>This section focuses on setting up a FreeBSD access point using the WPA2 security protocol. More details regarding WPA and the configuration of WPA-based wireless clients can be found in <a href="#network-wireless-wpa">[network-wireless-wpa]</a>.</p>
+<p>本节重点介绍使用 WPA2 安全协议设置 FreeBSD 访问点。有关 WPA 和基于 WPA 的无线客户端配置的更多详细信息，请参阅 <a href="#network-wireless-wpa">[network-wireless-wpa]</a> 。</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a> daemon is used to deal with client authentication and key management on the WPA2-enabled AP.</p>
+<p>hostapd[8] 守护进程用于处理 WPA2 启用的访问点上的客户端身份验证和密钥管理。</p>
 </div>
 <div class="paragraph">
-<p>The following configuration operations are performed on the FreeBSD machine acting as the AP. Once the AP is correctly working, <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a> can be automatically started at boot with this line in <span class="filename">/etc/rc.conf</span>:</p>
+<p>在充当 AP 的 FreeBSD 机器上执行以下配置操作。一旦 AP 正确工作，可以在启动时通过在 <span class="filename">/etc/rc.conf</span> 文件中添加以下行来自动启动 <code><a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a></code> ：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44275,15 +44275,15 @@ freebsdap       00:11:95:c3:0d:ac    1   54M -66:-96  100 ES   WME</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Before trying to configure <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a>, first configure the basic settings introduced in <a href="#network-wireless-ap-basic">Basic Settings</a>.</p>
+<p>在尝试配置 <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a> 之前，请先配置 <a href="#network-wireless-ap-basic">基本设置</a> 中介绍的基本设置。</p>
 </div>
 <div class="sect5">
-<h6 id="_wpa2_psk">34.5.1.3.1. WPA2-PSK<a class="anchor" href="#_wpa2_psk"></a></h6>
+<h6 id="_wpa2_psk_是一种_wi_fi_网络安全协议它使用预共享密钥psk来进行身份验证和加密">34.5.1.3.1. WPA2-PSK 是一种 Wi-Fi 网络安全协议，它使用预共享密钥（PSK）来进行身份验证和加密。<a class="anchor" href="#_wpa2_psk_是一种_wi_fi_网络安全协议它使用预共享密钥psk来进行身份验证和加密"></a></h6>
 <div class="paragraph">
-<p>WPA2-PSK is intended for small networks where the use of a backend authentication server is not possible or desired.</p>
+<p>WPA2-PSK 适用于无法或不希望使用后端认证服务器的小型网络。</p>
 </div>
 <div class="paragraph">
-<p>The configuration is done in <span class="filename">/etc/hostapd.conf</span>:</p>
+<p>配置是在 <span class="filename">/etc/hostapd.conf</span> 中完成的：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44302,12 +44302,12 @@ wpa_pairwise=CCMP                <i class="conum" data-value="9"></i><b>(9)</b><
 <table>
 <tbody><tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Wireless interface used for the access point. &lt;.&gt; Level of verbosity used during the execution of <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a>. A value of <code>1</code> represents the minimal level. &lt;.&gt; Pathname of the directory used by <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a> to store domain socket files for communication with external programs such as <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd_cli&amp;sektion=8&amp;format=html">hostapd_cli(8)</a>. The default value is used in this example. &lt;.&gt; The group allowed to access the control interface files. &lt;.&gt; The wireless network name, or SSID, that will appear in wireless scans. &lt;.&gt; Enable WPA and specify which WPA authentication protocol will be required. A value of <code>2</code> configures the AP for WPA2 and is recommended. Set to <code>1</code> only if the obsolete WPA is required. &lt;.&gt; ASCII passphrase for WPA authentication. &lt;.&gt; The key management protocol to use. This example sets WPA-PSK. &lt;.&gt; Encryption algorithms accepted by the access point. In this example, only the CCMP (AES) cipher is accepted. CCMP is an alternative to TKIP and is strongly preferred when possible. TKIP should be allowed only when there are stations incapable of using CCMP.</td>
+<td>用于访问点的无线接口。 &lt;.&gt; 在执行 <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a> 期间使用的详细程度。值为 <code>1</code> 表示最低级别。 &lt;.&gt; <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a> 用于存储与外部程序（如 <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd_cli&amp;sektion=8&amp;format=html">hostapd_cli(8)</a>）通信的域套接字文件的路径名。在此示例中使用默认值。 &lt;.&gt; 允许访问控制接口文件的组。 &lt;.&gt; 将出现在无线扫描中的无线网络名称或 SSID。 &lt;.&gt; 启用 WPA 并指定所需的 WPA 身份验证协议。值为 <code>2</code> 配置 AP 为 WPA2，推荐使用。仅在需要过时的 WPA 时设置为 <code>1</code>。 &lt;.&gt; 用于 WPA 身份验证的 ASCII 密码。 &lt;.&gt; 要使用的密钥管理协议。此示例设置为 WPA-PSK 。 &lt;.&gt; 访问点接受的加密算法。在此示例中，仅接受 CCMP （AES）密码。 CCMP 是 TKIP 的替代方案，在可能的情况下强烈推荐使用。仅当有无法使用 CCMP 的设备时才应允许使用 TKIP。</td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The next step is to start <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a>:</p>
+<p>下一步是启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=hostapd&amp;sektion=8&amp;format=html">hostapd(8)</a> ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44332,32 +44332,32 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8943&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Once the AP is running, the clients can associate with it. See <a href="#network-wireless-wpa">[network-wireless-wpa]</a> for more details. It is possible to see the stations associated with the AP using <code>ifconfig <em>wlan0</em> list sta</code>.</p>
+<p>一旦 AP 运行起来，客户端就可以与其关联。更多详细信息请参见 <a href="#network-wireless-wpa">[network-wireless-wpa]</a>。可以使用 <code>ifconfig <em>wlan0</em> list sta</code> 命令查看与 AP 关联的设备。</p>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-usb-tethering">34.6. USB Tethering<a class="anchor" href="#network-usb-tethering"></a></h3>
+<h3 id="network-usb-tethering">34.6. USB 网络共享<a class="anchor" href="#network-usb-tethering"></a></h3>
 <div class="paragraph">
-<p>Many cellphones provide the option to share their data connection over USB (often called &#34;tethering&#34;). This feature uses one of RNDIS, CDC, or a custom Apple® iPhone®/iPad® protocol.</p>
+<p>许多手机提供通过 USB 共享数据连接的选项（通常称为“网络共享”）。此功能使用 RNDIS、CDC 或自定义的 Apple® iPhone®/iPad® 协议之一。</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Android™ devices generally use the <a href="https://man.freebsd.org/cgi/man.cgi?query=urndis&amp;sektion=4&amp;format=html">urndis(4)</a> driver.</p>
+<p>Android™ 设备通常使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=urndis&amp;sektion=4&amp;format=html">urndis(4)</a> 驱动程序。</p>
 </li>
 <li>
-<p>Apple® devices use the <a href="https://man.freebsd.org/cgi/man.cgi?query=ipheth&amp;sektion=4&amp;format=html">ipheth(4)</a> driver.</p>
+<p>Apple® 设备使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipheth&amp;sektion=4&amp;format=html">ipheth(4)</a> 驱动程序。</p>
 </li>
 <li>
-<p>Older devices will often use the <a href="https://man.freebsd.org/cgi/man.cgi?query=cdce&amp;sektion=4&amp;format=html">cdce(4)</a> driver.</p>
+<p>较旧的设备通常使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=cdce&amp;sektion=4&amp;format=html">cdce(4)</a> 驱动程序。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Before attaching a device, load the appropriate driver into the kernel:</p>
+<p>在连接设备之前，将适当的驱动程序加载到内核中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44367,10 +44367,10 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8943&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Once the device is attached <code>ue</code><em>0</em> will be available for use like a normal network device. Be sure that the &#34;USB tethering&#34; option is enabled on the device.</p>
+<p>一旦设备连接上，<code>ue_0_</code> 将可用于像普通网络设备一样使用。请确保设备上已启用“USB 网络共享”选项。</p>
 </div>
 <div class="paragraph">
-<p>To make this change permanent and load the driver as a module at boot time, place the appropriate line of the following in <span class="filename">/boot/loader.conf</span>:</p>
+<p>要使此更改永久生效并在启动时将驱动程序作为模块加载，将以下适当的行放置在 <span class="filename">/boot/loader.conf</span> 中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44381,20 +44381,20 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8943&lt;UP,BROADCAST
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-bluetooth">34.7. Bluetooth<a class="anchor" href="#network-bluetooth"></a></h3>
+<h3 id="network-bluetooth">34.7. 蓝牙<a class="anchor" href="#network-bluetooth"></a></h3>
 <div class="paragraph">
-<p>Bluetooth is a wireless technology for creating personal networks operating in the 2.4 GHz unlicensed band, with a range of 10 meters. Networks are usually formed ad-hoc from portable devices such as cellular phones, handhelds, and laptops. Unlike Wi-Fi wireless technology, Bluetooth offers higher level service profiles, such as FTP-like file servers, file pushing, voice transport, serial line emulation, and more.</p>
+<p>蓝牙是一种无线技术，用于在 2.4 GHz 无线频段中创建个人网络，其范围为 10 米。网络通常是由便携设备（如手机、手持设备和笔记本电脑）自动形成的。与 Wi-Fi 无线技术不同，蓝牙提供更高级的服务配置文件，例如类似 FTP 的文件服务器、文件推送、语音传输、串行线仿真等。</p>
 </div>
 <div class="paragraph">
-<p>This section describes the use of a USB Bluetooth dongle on a FreeBSD system. It then describes the various Bluetooth protocols and utilities.</p>
+<p>本节描述了在 FreeBSD 系统上使用 USB 蓝牙适配器的方法。然后，它介绍了各种蓝牙协议和实用工具。</p>
 </div>
 <div class="sect3">
-<h4 id="_loading_bluetooth_support">34.7.1. Loading Bluetooth Support<a class="anchor" href="#_loading_bluetooth_support"></a></h4>
+<h4 id="_加载蓝牙支持">34.7.1. 加载蓝牙支持<a class="anchor" href="#_加载蓝牙支持"></a></h4>
 <div class="paragraph">
-<p>The Bluetooth stack in FreeBSD is implemented using the <a href="https://man.freebsd.org/cgi/man.cgi?query=netgraph&amp;sektion=4&amp;format=html">netgraph(4)</a> framework. A broad variety of Bluetooth USB dongles is supported by <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_ubt&amp;sektion=4&amp;format=html">ng_ubt(4)</a>. Broadcom BCM2033 based Bluetooth devices are supported by the <a href="https://man.freebsd.org/cgi/man.cgi?query=ubtbcmfw&amp;sektion=4&amp;format=html">ubtbcmfw(4)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_ubt&amp;sektion=4&amp;format=html">ng_ubt(4)</a> drivers. The 3Com Bluetooth PC Card 3CRWB60-A is supported by the <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_bt3c&amp;sektion=4&amp;format=html">ng_bt3c(4)</a> driver. Serial and UART based Bluetooth devices are supported by <a href="https://man.freebsd.org/cgi/man.cgi?query=sio&amp;sektion=4&amp;format=html">sio(4)</a>, <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_h4&amp;sektion=4&amp;format=html">ng_h4(4)</a>, and <a href="https://man.freebsd.org/cgi/man.cgi?query=hcseriald&amp;sektion=8&amp;format=html">hcseriald(8)</a>.</p>
+<p>在 FreeBSD 中，蓝牙堆栈是使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=netgraph&amp;sektion=4&amp;format=html">netgraph(4)</a> 框架实现的。<a href="https://man.freebsd.org/cgi/man.cgi?query=ng_ubt&amp;sektion=4&amp;format=html">ng_ubt(4)</a> 支持各种各样的蓝牙 USB 适配器。基于 Broadcom BCM2033 的蓝牙设备由 <a href="https://man.freebsd.org/cgi/man.cgi?query=ubtbcmfw&amp;sektion=4&amp;format=html">ubtbcmfw(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_ubt&amp;sektion=4&amp;format=html">ng_ubt(4)</a> 驱动程序支持。3Com 蓝牙 PC 卡 3CRWB60-A 由 <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_bt3c&amp;sektion=4&amp;format=html">ng_bt3c(4)</a> 驱动程序支持。基于串口和 UART 的蓝牙设备由 <a href="https://man.freebsd.org/cgi/man.cgi?query=sio&amp;sektion=4&amp;format=html">sio(4)</a>、 <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_h4&amp;sektion=4&amp;format=html">ng_h4(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=hcseriald&amp;sektion=8&amp;format=html">hcseriald(8)</a> 驱动程序支持。</p>
 </div>
 <div class="paragraph">
-<p>Before attaching a device, determine which of the above drivers it uses, then load the driver. For example, if the device uses the <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_ubt&amp;sektion=4&amp;format=html">ng_ubt(4)</a> driver:</p>
+<p>在连接设备之前，确定设备使用的是上述驱动程序中的哪一个，然后加载该驱动程序。例如，如果设备使用的是 <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_ubt&amp;sektion=4&amp;format=html">ng_ubt(4)</a> 驱动程序：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44402,7 +44402,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8943&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>If the Bluetooth device will be attached to the system during system startup, the system can be configured to load the module at boot time by adding the driver to <span class="filename">/boot/loader.conf</span>:</p>
+<p>如果在系统启动期间将蓝牙设备连接到系统上，可以通过将驱动程序添加到 <span class="filename">/boot/loader.conf</span> 来配置系统在引导时加载模块。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44410,7 +44410,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8943&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Once the driver is loaded, plug in the USB dongle. If the driver load was successful, output similar to the following should appear on the console and in <span class="filename">/var/log/messages</span>:</p>
+<p>一旦驱动程序加载完成，插入 USB dongle。如果驱动程序加载成功，类似以下内容的输出将出现在控制台和 <span class="filename">/var/log/messages</span> 文件中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44421,7 +44421,7 @@ ubt0: Interface 1 <span class="o">(</span>alt.config 5<span class="o">)</span> e
 </div>
 </div>
 <div class="paragraph">
-<p>To start and stop the Bluetooth stack, use its startup script. It is a good idea to stop the stack before unplugging the device. Starting the bluetooth stack might require <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> to be started. When starting the stack, the output should be similar to the following:</p>
+<p>要启动和停止蓝牙堆栈，请使用其启动脚本。在拔下设备之前停止堆栈是一个好主意。启动蓝牙堆栈可能需要启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> 。启动堆栈时，输出应类似于以下内容：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44441,12 +44441,12 @@ Number of SCO packets: 8</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_finding_other_bluetooth_devices">34.7.2. Finding Other Bluetooth Devices<a class="anchor" href="#_finding_other_bluetooth_devices"></a></h4>
+<h4 id="_查找其他蓝牙设备">34.7.2. 查找其他蓝牙设备<a class="anchor" href="#_查找其他蓝牙设备"></a></h4>
 <div class="paragraph">
-<p>The Host Controller Interface (HCI) provides a uniform method for accessing Bluetooth baseband capabilities. In FreeBSD, a netgraph HCI node is created for each Bluetooth device. For more details, refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_hci&amp;sektion=4&amp;format=html">ng_hci(4)</a>.</p>
+<p>主机控制器接口（HCI）提供了一种统一的方法来访问蓝牙基带功能。在 FreeBSD 中，为每个蓝牙设备创建一个 netgraph HCI 节点。有关更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_hci&amp;sektion=4&amp;format=html">ng_hci(4)</a>。</p>
 </div>
 <div class="paragraph">
-<p>One of the most common tasks is discovery of Bluetooth devices within RF proximity. This operation is called <em>inquiry</em>. Inquiry and other HCI related operations are done using <a href="https://man.freebsd.org/cgi/man.cgi?query=hccontrol&amp;sektion=8&amp;format=html">hccontrol(8)</a>. The example below shows how to find out which Bluetooth devices are in range. The list of devices should be displayed in a few seconds. Note that a remote device will only answer the inquiry if it is set to <em>discoverable</em> mode.</p>
+<p>发现 RF 附近的蓝牙设备是最常见的任务之一。这个操作被称为“查询”。查询和其他 HCI 相关的操作是使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=hccontrol&amp;sektion=8&amp;format=html">hccontrol(8)</a> 完成的。下面的示例显示了如何查找在范围内的蓝牙设备。设备列表应该在几秒钟内显示出来。请注意，只有在远程设备设置为“可发现”模式时，它才会回答查询。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44463,7 +44463,7 @@ Inquiry complete. Status: No error <span class="o">[</span>00]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>BD_ADDR</code> is the unique address of a Bluetooth device, similar to the MAC address of a network card. This address is needed for further communication with a device and it is possible to assign a human readable name to a <code>BD_ADDR</code>. Information regarding the known Bluetooth hosts is contained in <span class="filename">/etc/bluetooth/hosts</span>. The following example shows how to obtain the human readable name that was assigned to the remote device:</p>
+<p><code>BD_ADDR</code> 是蓝牙设备的唯一地址，类似于网络卡的 MAC 地址。这个地址在与设备进行进一步通信时是必需的，并且可以为 <code>BD_ADDR</code> 分配一个可读的名称。已知的蓝牙主机的信息包含在 <span class="filename">/etc/bluetooth/hosts</span> 文件中。以下示例显示了如何获取分配给远程设备的可读名称：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44473,13 +44473,13 @@ Name: Pav<span class="s1">&#39;s T39</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If an inquiry is performed on a remote Bluetooth device, it will find the computer as &#34;your.host.name (ubt0)&#34;. The name assigned to the local device can be changed at any time.</p>
+<p>如果对远程蓝牙设备进行查询，将会以&#34;your.host.name (ubt0)&#34;的形式找到计算机。本地设备的名称可以随时更改。</p>
 </div>
 <div class="paragraph">
-<p>Remote devices can be assigned aliases in <span class="filename">/etc/bluetooth/hosts</span>. More information about <span class="filename">/etc/bluetooth/hosts</span> file might be found in <a href="https://man.freebsd.org/cgi/man.cgi?query=bluetooth.hosts&amp;sektion=5&amp;format=html">bluetooth.hosts(5)</a>.</p>
+<p>远程设备可以在 <span class="filename">/etc/bluetooth/hosts</span> 中分配别名。有关 <span class="filename">/etc/bluetooth/hosts</span> 文件的更多信息可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=bluetooth.hosts&amp;sektion=5&amp;format=html">bluetooth.hosts(5)</a> 中找到。</p>
 </div>
 <div class="paragraph">
-<p>The Bluetooth system provides a point-to-point connection between two Bluetooth units, or a point-to-multipoint connection which is shared among several Bluetooth devices. The following example shows how to create a connection to a remote device:</p>
+<p>蓝牙系统提供了两个蓝牙设备之间的点对点连接，或者在多个蓝牙设备之间共享的点对多点连接。以下示例展示了如何创建与远程设备的连接：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44487,10 +44487,10 @@ Name: Pav<span class="s1">&#39;s T39</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>create_connection</code> accepts <code>BT_ADDR</code> as well as host aliases in <span class="filename">/etc/bluetooth/hosts</span>.</p>
+<p><code>create_connection</code> 函数接受 <code>BT_ADDR</code> 和主机别名作为参数，在 <span class="filename">/etc/bluetooth/hosts</span> 文件中定义。</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how to obtain the list of active baseband connections for the local device:</p>
+<p>以下示例显示了如何获取本地设备的活动基带连接列表：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44500,7 +44500,7 @@ Remote BD_ADDR    Handle Type Mode Role Encrypt Pending Queue State
 </div>
 </div>
 <div class="paragraph">
-<p>A <em>connection handle</em> is useful when termination of the baseband connection is required, though it is normally not required to do this by hand. The stack will automatically terminate inactive baseband connections.</p>
+<p>当需要终止基带连接时，<em>连接句柄（connection handle）</em> 非常有用，尽管通常不需要手动执行此操作。堆栈会自动终止不活动的基带连接。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44510,16 +44510,16 @@ Reason: Connection terminated by <span class="nb">local </span>host <span class=
 </div>
 </div>
 <div class="paragraph">
-<p>Type <code>hccontrol help</code> for a complete listing of available HCI commands. Most of the HCI commands do not require superuser privileges.</p>
+<p>输入 <code>hccontrol help</code> 以获取可用 HCI 命令的完整列表。大多数 HCI 命令不需要超级用户权限。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_device_pairing">34.7.3. Device Pairing<a class="anchor" href="#_device_pairing"></a></h4>
+<h4 id="_设备配对">34.7.3. 设备配对<a class="anchor" href="#_设备配对"></a></h4>
 <div class="paragraph">
-<p>By default, Bluetooth communication is not authenticated, and any device can talk to any other device. A Bluetooth device, such as a cellular phone, may choose to require authentication to provide a particular service. Bluetooth authentication is normally done with a <em>PIN code</em>, an ASCII string up to 16 characters in length. The user is required to enter the same PIN code on both devices. Once the user has entered the PIN code, both devices will generate a <em>link key</em>. After that, the link key can be stored either in the devices or in a persistent storage. Next time, both devices will use the previously generated link key. This procedure is called <em>pairing</em>. Note that if the link key is lost by either device, the pairing must be repeated.</p>
+<p>默认情况下，蓝牙通信不需要进行身份验证，任何设备都可以与其他设备进行通信。蓝牙设备（如手机）可以选择要求进行身份验证以提供特定服务。蓝牙身份验证通常使用一个最长为 16 个字符的 ASCII 字符串作为 <em>PIN 码</em>。用户需要在两台设备上输入相同的 PIN 码。用户输入 PIN 码后，两台设备将生成一个 <em>链接密钥</em>。之后，链接密钥可以存储在设备或持久存储中。下次，两台设备将使用先前生成的链接密钥。这个过程称为 <em>配对</em>。请注意，如果链接密钥被任一设备丢失，配对必须重新进行。</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> daemon is responsible for handling Bluetooth authentication requests. The default configuration file is <span class="filename">/etc/bluetooth/hcsecd.conf</span>. An example section for a cellular phone with the PIN code set to <code>1234</code> is shown below:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> 守护进程负责处理蓝牙认证请求。默认的配置文件是 <span class="filename">/etc/bluetooth/hcsecd.conf</span>。下面是一个示例部分，其中手机的 PIN 码设置为 <code>1234</code>：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44532,10 +44532,10 @@ Reason: Connection terminated by <span class="nb">local </span>host <span class=
 </div>
 </div>
 <div class="paragraph">
-<p>The only limitation on PIN codes is length. Some devices, such as Bluetooth headsets, may have a fixed PIN code built in. The <code>-d</code> switch forces <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> to stay in the foreground, so it is easy to see what is happening. Set the remote device to receive pairing and initiate the Bluetooth connection to the remote device. The remote device should indicate that pairing was accepted and request the PIN code. Enter the same PIN code listed in <span class="filename">hcsecd.conf</span>. Now the computer and the remote device are paired. Alternatively, pairing can be initiated on the remote device.</p>
+<p>对于 PIN 码，唯一的限制是长度。一些设备，如蓝牙耳机，可能有一个固定的内置 PIN 码。<code>-d</code> 开关强制 <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> 保持在前台，以便可以清楚地看到发生了什么。将远程设备设置为接收配对并启动与远程设备的蓝牙连接。远程设备应指示接受配对并请求 PIN 码。输入与 <span class="filename">hcsecd.conf</span> 中列出的相同的 PIN 码。现在计算机和远程设备已配对。或者，可以在远程设备上启动配对。</p>
 </div>
 <div class="paragraph">
-<p>The following line can be added to <span class="filename">/etc/rc.conf</span> to configure <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> to start automatically on system start:</p>
+<p>可以将以下行添加到 <span class="filename">/etc/rc.conf</span> 中，以配置 <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> 在系统启动时自动启动：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44543,7 +44543,7 @@ Reason: Connection terminated by <span class="nb">local </span>host <span class=
 </div>
 </div>
 <div class="paragraph">
-<p>The following is a sample of the <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> daemon output:</p>
+<p>以下是 <a href="https://man.freebsd.org/cgi/man.cgi?query=hcsecd&amp;sektion=8&amp;format=html">hcsecd(8)</a> 守护进程输出的示例：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44557,18 +44557,18 @@ hcsecd[16484]: Sending PIN_Code_Reply to &#39;ubt0hci&#39; for remote bdaddr 0:8
 </div>
 </div>
 <div class="sect3">
-<h4 id="_network_access_with_ppp_profiles">34.7.4. Network Access with PPP Profiles<a class="anchor" href="#_network_access_with_ppp_profiles"></a></h4>
+<h4 id="_使用_ppp_配置文件的网络访问">34.7.4. 使用 PPP 配置文件的网络访问<a class="anchor" href="#_使用_ppp_配置文件的网络访问"></a></h4>
 <div class="paragraph">
-<p>A Dial-Up Networking (DUN) profile can be used to configure a cellular phone as a wireless modem for connecting to a dial-up Internet access server. It can also be used to configure a computer to receive data calls from a cellular phone.</p>
+<p>可以使用拨号网络（DUN）配置文件将手机配置为无线调制解调器，以连接到拨号上网服务器。它还可以用于配置计算机接收来自手机的数据呼叫。</p>
 </div>
 <div class="paragraph">
-<p>Network access with a PPP profile can be used to provide LAN access for a single Bluetooth device or multiple Bluetooth devices. It can also provide PC to PC connection using PPP networking over serial cable emulation.</p>
+<p>使用 PPP 配置文件进行网络访问可以为单个蓝牙设备或多个蓝牙设备提供局域网访问。它还可以使用 PPP 网络通过串行电缆仿真实现 PC 与 PC 之间的连接。</p>
 </div>
 <div class="paragraph">
-<p>In FreeBSD, these profiles are implemented with <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> and the <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> wrapper which converts a Bluetooth connection into something PPP can use. Before a profile can be used, a new PPP label must be created in <span class="filename">/etc/ppp/ppp.conf</span>. Consult <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> for examples.</p>
+<p>在 FreeBSD 中，这些配置文件是通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=ppp&amp;sektion=8&amp;format=html">ppp(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> 包装器实现的，该包装器将蓝牙连接转换为 PPP 可以使用的内容。在使用配置文件之前，必须在 <span class="filename">/etc/ppp/ppp.conf</span> 中创建一个新的 PPP 标签。请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> 中的示例。</p>
 </div>
 <div class="paragraph">
-<p>In this example, <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> is used to open a connection to a remote device with a <code>BD_ADDR</code> of <code>00:80:37:29:19:a4</code> on a DUNRFCOMM channel:</p>
+<p>在这个例子中，使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> 来打开与远程设备的连接，其 <code>BD_ADDR</code> 为 <code>00:80:37:29:19:a4</code> ，在一个 DUNRFCOMM 通道上。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44576,10 +44576,10 @@ hcsecd[16484]: Sending PIN_Code_Reply to &#39;ubt0hci&#39; for remote bdaddr 0:8
 </div>
 </div>
 <div class="paragraph">
-<p>The actual channel number will be obtained from the remote device using the SDP protocol. It is possible to specify the RFCOMM channel by hand, and in this case <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> will not perform the SDP query. Use <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpcontrol&amp;sektion=8&amp;format=html">sdpcontrol(8)</a> to find out the RFCOMM channel on the remote device.</p>
+<p>实际的通道号将通过使用 SDP 协议从远程设备获取。可以手动指定 RFCOMM 通道，在这种情况下，<a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> 将不执行 SDP 查询。使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpcontrol&amp;sektion=8&amp;format=html">sdpcontrol(8)</a> 来查找远程设备上的 RFCOMM 通道。</p>
 </div>
 <div class="paragraph">
-<p>In order to provide network access with the PPPLAN service, <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a> must be running and a new entry for LAN clients must be created in <span class="filename">/etc/ppp/ppp.conf</span>. Consult <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> for examples. Finally, start the RFCOMMPPP server on a valid RFCOMM channel number. The RFCOMMPPP server will automatically register the Bluetooth LAN service with the local SDP daemon. The example below shows how to start the RFCOMMPPP server.</p>
+<p>为了使用 PPPLAN 服务提供网络访问，必须运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a> 并在 <span class="filename">/etc/ppp/ppp.conf</span> 中创建一个新的 LAN 客户端条目。请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> 中的示例。最后，在有效的 RFCOMM 通道号上启动 RFCOMMPPP 服务器。RFCOMMPPP 服务器将自动在本地 SDP 守护进程中注册蓝牙 LAN 服务。下面的示例显示了如何启动 RFCOMMPPP 服务器。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44588,23 +44588,23 @@ hcsecd[16484]: Sending PIN_Code_Reply to &#39;ubt0hci&#39; for remote bdaddr 0:8
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bluetooth_protocols">34.7.5. Bluetooth Protocols<a class="anchor" href="#_bluetooth_protocols"></a></h4>
+<h4 id="_蓝牙协议">34.7.5. 蓝牙协议<a class="anchor" href="#_蓝牙协议"></a></h4>
 <div class="paragraph">
-<p>This section provides an overview of the various Bluetooth protocols, their function, and associated utilities.</p>
+<p>本节提供了各种蓝牙协议的概述，包括它们的功能和相关工具。</p>
 </div>
 <div class="sect4">
-<h5 id="_logical_link_control_and_adaptation_protocol_l2cap">34.7.5.1. Logical Link Control and Adaptation Protocol (L2CAP)<a class="anchor" href="#_logical_link_control_and_adaptation_protocol_l2cap"></a></h5>
+<h5 id="_逻辑链路控制和适配协议l2cap">34.7.5.1. 逻辑链路控制和适配协议（L2CAP）<a class="anchor" href="#_逻辑链路控制和适配协议l2cap"></a></h5>
 <div class="paragraph">
-<p>The Logical Link Control and Adaptation Protocol (L2CAP) provides connection-oriented and connectionless data services to upper layer protocols. L2CAP permits higher level protocols and applications to transmit and receive L2CAP data packets up to 64 kilobytes in length.</p>
+<p>逻辑链路控制和适配协议（L2CAP）为上层协议提供面向连接和无连接的数据服务。L2CAP 允许更高级的协议和应用程序传输和接收最长为 64 千字节的 L2CAP 数据包。</p>
 </div>
 <div class="paragraph">
-<p>L2CAP is based around the concept of <em>channels</em>. A channel is a logical connection on top of a baseband connection, where each channel is bound to a single protocol in a many-to-one fashion. Multiple channels can be bound to the same protocol, but a channel cannot be bound to multiple protocols. Each L2CAP packet received on a channel is directed to the appropriate higher level protocol. Multiple channels can share the same baseband connection.</p>
+<p>L2CAP 基于 <em>通道（channels）</em> 概念。通道是在基带连接之上的逻辑连接，每个通道以多对一的方式绑定到单个协议上。多个通道可以绑定到同一个协议，但一个通道不能绑定到多个协议。在通道上接收到的每个 L2CAP 数据包都会被传递给相应的高层协议。多个通道可以共享同一个基带连接。</p>
 </div>
 <div class="paragraph">
-<p>In FreeBSD, a netgraph L2CAP node is created for each Bluetooth device. This node is normally connected to the downstream Bluetooth HCI node and upstream Bluetooth socket nodes. The default name for the L2CAP node is &#34;devicel2cap&#34;. For more details refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_l2cap&amp;sektion=4&amp;format=html">ng_l2cap(4)</a>.</p>
+<p>在 FreeBSD 中，为每个蓝牙设备创建一个 netgraph L2CAP 节点。该节点通常连接到下游的蓝牙 HCI 节点和上游的蓝牙套接字节点。 L2CAP 节点的默认名称为&#34;devicel2cap&#34;。有关更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_l2cap&amp;sektion=4&amp;format=html">ng_l2cap(4)</a> 。</p>
 </div>
 <div class="paragraph">
-<p>A useful command is <a href="https://man.freebsd.org/cgi/man.cgi?query=l2ping&amp;sektion=8&amp;format=html">l2ping(8)</a>, which can be used to ping other devices. Some Bluetooth implementations might not return all of the data sent to them, so <code>0 bytes</code> in the following example is normal.</p>
+<p>一个有用的命令是 <a href="https://man.freebsd.org/cgi/man.cgi?query=l2ping&amp;sektion=8&amp;format=html">l2ping(8)</a>，它可以用来 ping 其他设备。一些蓝牙实现可能不会返回所有发送给它们的数据，所以在下面的示例中 <code>0 bytes</code> 是正常的。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44616,7 +44616,7 @@ hcsecd[16484]: Sending PIN_Code_Reply to &#39;ubt0hci&#39; for remote bdaddr 0:8
 </div>
 </div>
 <div class="paragraph">
-<p>The <a href="https://man.freebsd.org/cgi/man.cgi?query=l2control&amp;sektion=8&amp;format=html">l2control(8)</a> utility is used to perform various operations on L2CAP nodes. This example shows how to obtain the list of logical connections (channels) and the list of baseband connections for the local device:</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=l2control&amp;sektion=8&amp;format=html">l2control(8)</a> 实用程序用于对 L2CAP 节点执行各种操作。此示例演示了如何获取本地设备的逻辑连接（通道）列表和基带连接列表。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44631,7 +44631,7 @@ Remote BD_ADDR    Handle Flags Pending State
 </div>
 </div>
 <div class="paragraph">
-<p>Another diagnostic tool is <a href="https://man.freebsd.org/cgi/man.cgi?query=btsockstat&amp;sektion=1&amp;format=html">btsockstat(1)</a>. It is similar to <a href="https://man.freebsd.org/cgi/man.cgi?query=netstat&amp;sektion=1&amp;format=html">netstat(1)</a>, but for Bluetooth network-related data structures. The example below shows the same logical connection as <a href="https://man.freebsd.org/cgi/man.cgi?query=l2control&amp;sektion=8&amp;format=html">l2control(8)</a> above.</p>
+<p>另一个诊断工具是 <a href="https://man.freebsd.org/cgi/man.cgi?query=btsockstat&amp;sektion=1&amp;format=html">btsockstat(1)</a>。它类似于 <a href="https://man.freebsd.org/cgi/man.cgi?query=netstat&amp;sektion=1&amp;format=html">netstat(1)</a>，但用于蓝牙网络相关的数据结构。下面的示例显示了与上面的 <a href="https://man.freebsd.org/cgi/man.cgi?query=l2control&amp;sektion=8&amp;format=html">l2control(8)</a> 相同的逻辑连接。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44649,33 +44649,33 @@ c2e8bc80      0    250 00:02:72:00:d4:1a 00:07:e0:00:0b:ca 3    6    OPEN</code>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_radio_frequency_communication_rfcomm">34.7.5.2. Radio Frequency Communication (RFCOMM)<a class="anchor" href="#_radio_frequency_communication_rfcomm"></a></h5>
+<h5 id="_无线电频率通信rfcomm">34.7.5.2. 无线电频率通信（RFCOMM）<a class="anchor" href="#_无线电频率通信rfcomm"></a></h5>
 <div class="paragraph">
-<p>The RFCOMM protocol provides emulation of serial ports over the L2CAP protocol. RFCOMM is a simple transport protocol, with additional provisions for emulating the 9 circuits of RS-232 (EIATIA-232-E) serial ports. It supports up to 60 simultaneous connections (RFCOMM channels) between two Bluetooth devices.</p>
+<p>RFCOMM 协议通过 L2CAP 协议提供串口的仿真。RFCOMM 是一个简单的传输协议，还提供了模拟 RS-232（EIATIA-232-E）串口的 9 个电路的附加功能。它支持两个蓝牙设备之间的最多 60 个同时连接（RFCOMM 通道）。</p>
 </div>
 <div class="paragraph">
-<p>For the purposes of RFCOMM, a complete communication path involves two applications running on the communication endpoints with a communication segment between them. RFCOMM is intended to cover applications that make use of the serial ports of the devices in which they reside. The communication segment is a direct connect Bluetooth link from one device to another.</p>
+<p>对于 RFCOMM 而言，一个完整的通信路径涉及到两个在通信端点上运行的应用程序，它们之间有一个通信段。RFCOMM 旨在覆盖利用设备串口的应用程序。通信段是从一个设备直接连接到另一个设备的蓝牙链路。</p>
 </div>
 <div class="paragraph">
-<p>RFCOMM is only concerned with the connection between the devices in the direct connect case, or between the device and a modem in the network case. RFCOMM can support other configurations, such as modules that communicate via Bluetooth wireless technology on one side and provide a wired interface on the other side.</p>
+<p>RFCOMM 只关注直接连接情况下设备之间的连接，或者设备与网络情况下的调制解调器之间的连接。RFCOMM 可以支持其他配置，例如通过蓝牙无线技术在一侧进行通信并在另一侧提供有线接口的模块。</p>
 </div>
 <div class="paragraph">
-<p>In FreeBSD, RFCOMM is implemented at the Bluetooth sockets layer.</p>
+<p>在 FreeBSD 中，RFCOMM 是在蓝牙套接字层实现的。</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_service_discovery_protocol_sdp">34.7.5.3. Service Discovery Protocol (SDP)<a class="anchor" href="#_service_discovery_protocol_sdp"></a></h5>
+<h5 id="_服务发现协议sdp">34.7.5.3. 服务发现协议（SDP）<a class="anchor" href="#_服务发现协议sdp"></a></h5>
 <div class="paragraph">
-<p>The Service Discovery Protocol (SDP) provides the means for client applications to discover the existence of services provided by server applications as well as the attributes of those services. The attributes of a service include the type or class of service offered and the mechanism or protocol information needed to utilize the service.</p>
+<p>服务发现协议（SDP）提供了客户端应用程序发现由服务器应用程序提供的服务的存在以及这些服务的属性的方法。服务的属性包括提供的服务类型或类别以及利用该服务所需的机制或协议信息。</p>
 </div>
 <div class="paragraph">
-<p>SDP involves communication between a SDP server and a SDP client. The server maintains a list of service records that describe the characteristics of services associated with the server. Each service record contains information about a single service. A client may retrieve information from a service record maintained by the SDP server by issuing a SDP request. If the client, or an application associated with the client, decides to use a service, it must open a separate connection to the service provider in order to utilize the service. SDP provides a mechanism for discovering services and their attributes, but it does not provide a mechanism for utilizing those services.</p>
+<p>SDP 涉及 SDP 服务器和 SDP 客户端之间的通信。服务器维护一个描述与服务器相关的服务特性的服务记录列表。每个服务记录包含有关单个服务的信息。客户端可以通过发出 SDP 请求从 SDP 服务器维护的服务记录中检索信息。如果客户端或与客户端相关的应用程序决定使用某个服务，则必须打开与服务提供者的单独连接以利用该服务。SDP 提供了一种发现服务及其属性的机制，但不提供利用这些服务的机制。</p>
 </div>
 <div class="paragraph">
-<p>Normally, a SDP client searches for services based on some desired characteristics of the services. However, there are times when it is desirable to discover which types of services are described by an SDP server’s service records without any prior information about the services. This process of looking for any offered services is called <em>browsing</em>.</p>
+<p>通常，SDP 客户端根据服务的某些期望特征来搜索服务。然而，有时候希望在没有关于服务的任何先前信息的情况下，发现 SDP 服务器的服务记录描述了哪些类型的服务。这个寻找任何提供的服务的过程被称为 <em>浏览</em>。</p>
 </div>
 <div class="paragraph">
-<p>The Bluetooth SDP server, <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a>, and command line client, <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpcontrol&amp;sektion=8&amp;format=html">sdpcontrol(8)</a>, are included in the standard FreeBSD installation. The following example shows how to perform a SDP browse query.</p>
+<p>蓝牙 SDP 服务器（<a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a>）和命令行客户端（<a href="https://man.freebsd.org/cgi/man.cgi?query=sdpcontrol&amp;sektion=8&amp;format=html">sdpcontrol(8)</a>）已包含在标准的 FreeBSD 安装中。以下示例展示了如何执行 SDP 浏览查询。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44704,7 +44704,7 @@ Bluetooth Profile Descriptor List:
 </div>
 </div>
 <div class="paragraph">
-<p>Note that each service has a list of attributes, such as the RFCOMM channel. Depending on the service, the user might need to make note of some of the attributes. Some Bluetooth implementations do not support service browsing and may return an empty list. In this case, it is possible to search for the specific service. The example below shows how to search for the OBEX Object Push (OPUSH) service:</p>
+<p>请注意，每个服务都有一系列属性，例如 RFCOMM 通道。根据服务的不同，用户可能需要注意其中一些属性。某些蓝牙实现不支持服务浏览，并可能返回一个空列表。在这种情况下，可以搜索特定的服务。下面的示例演示了如何搜索 OBEX 对象推送（OPUSH）服务：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44712,7 +44712,7 @@ Bluetooth Profile Descriptor List:
 </div>
 </div>
 <div class="paragraph">
-<p>Offering services on FreeBSD to Bluetooth clients is done with the <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a> server. The following line can be added to <span class="filename">/etc/rc.conf</span>:</p>
+<p>在 FreeBSD 上为蓝牙客户端提供服务是通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a> 服务器完成的。可以将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44720,7 +44720,7 @@ Bluetooth Profile Descriptor List:
 </div>
 </div>
 <div class="paragraph">
-<p>Then the <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a> daemon can be started with:</p>
+<p>然后可以使用以下命令启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a> 守护进程：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44728,10 +44728,10 @@ Bluetooth Profile Descriptor List:
 </div>
 </div>
 <div class="paragraph">
-<p>The local server application that wants to provide a Bluetooth service to remote clients will register the service with the local SDP daemon. An example of such an application is <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a>. Once started, it will register the Bluetooth LAN service with the local SDP daemon.</p>
+<p>希望为远程客户端提供蓝牙服务的本地服务器应用程序将在本地 SDP 守护进程中注册该服务。这样的应用程序示例是 <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_pppd&amp;sektion=8&amp;format=html">rfcomm_pppd(8)</a> 。一旦启动，它将在本地 SDP 守护进程中注册蓝牙局域网服务。</p>
 </div>
 <div class="paragraph">
-<p>The list of services registered with the local SDP server can be obtained by issuing a SDP browse query via the local control channel:</p>
+<p>可以通过在本地控制通道上发出 SDP 浏览查询来获取注册到本地 SDP 服务器的服务列表。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44740,15 +44740,15 @@ Bluetooth Profile Descriptor List:
 </div>
 </div>
 <div class="sect4">
-<h5 id="_obex_object_push_opush">34.7.5.4. OBEX Object Push (OPUSH)<a class="anchor" href="#_obex_object_push_opush"></a></h5>
+<h5 id="_obex_对象推送opush">34.7.5.4. OBEX 对象推送（OPUSH）<a class="anchor" href="#_obex_对象推送opush"></a></h5>
 <div class="paragraph">
-<p>Object Exchange (OBEX) is a widely used protocol for simple file transfers between mobile devices. Its main use is in infrared communication, where it is used for generic file transfers between notebooks or PDAs, and for sending business cards or calendar entries between cellular phones and other devices with Personal Information Manager (PIM) applications.</p>
+<p>Object Exchange（OBEX）是一种广泛使用的协议，用于移动设备之间的简单文件传输。它主要用于红外通信，用于笔记本电脑或个人数字助理（PDA）之间的通用文件传输，以及在手机和其他具有个人信息管理（PIM）应用程序的设备之间发送名片或日历条目。</p>
 </div>
 <div class="paragraph">
-<p>The OBEX server and client are implemented by obexapp, which can be installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/comms/obexapp/">comms/obexapp</a> package or port.</p>
+<p>OBEX 服务器和客户端是由 obexapp 实现的，可以使用 comms/obexapp[] 软件包或 port 进行安装。</p>
 </div>
 <div class="paragraph">
-<p>The OBEX client is used to push and/or pull objects from the OBEX server. An example object is a business card or an appointment. The OBEX client can obtain the RFCOMM channel number from the remote device via SDP. This can be done by specifying the service name instead of the RFCOMM channel number. Supported service names are: <code>IrMC</code>, <code>FTRN</code>, and <code>OPUSH</code>. It is also possible to specify the RFCOMM channel as a number. Below is an example of an OBEX session where the device information object is pulled from the cellular phone, and a new object, the business card, is pushed into the phone’s directory.</p>
+<p>OBEX 客户端用于从 OBEX 服务器推送或拉取对象。一个示例对象可以是名片或约会。OBEX 客户端可以通过 SDP 从远程设备获取 RFCOMM 通道号。这可以通过指定服务名称而不是 RFCOMM 通道号来完成。支持的服务名称有：<code>IrMC</code>，<code>FTRN</code> 和 <code>OPUSH</code>。还可以将 RFCOMM 通道指定为数字。下面是一个 OBEX 会话的示例，其中从手机中提取设备信息对象，并将一个新对象，名片，推送到手机的目录中。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44762,7 +44762,7 @@ Success, response: OK, Success <span class="o">(</span>0x20<span class="o">)</sp
 </div>
 </div>
 <div class="paragraph">
-<p>In order to provide the OPUSH service, <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a> must be running and a root folder, where all incoming objects will be stored, must be created. The default path to the root folder is <span class="filename">/var/spool/obex</span>. Finally, start the OBEX server on a valid RFCOMM channel number. The OBEX server will automatically register the OPUSH service with the local SDP daemon. The example below shows how to start the OBEX server.</p>
+<p>为了提供 OPUSH 服务，必须运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=sdpd&amp;sektion=8&amp;format=html">sdpd(8)</a> 并创建一个根文件夹，用于存储所有传入的对象。根文件夹的默认路径是 <span class="filename">/var/spool/obex</span>。最后，在有效的 RFCOMM 通道号上启动 OBEX 服务器。OBEX 服务器将自动在本地 SDP 守护进程中注册 OPUSH 服务。下面的示例显示了如何启动 OBEX 服务器。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44771,12 +44771,12 @@ Success, response: OK, Success <span class="o">(</span>0x20<span class="o">)</sp
 </div>
 </div>
 <div class="sect4">
-<h5 id="_serial_port_profile_spp">34.7.5.5. Serial Port Profile (SPP)<a class="anchor" href="#_serial_port_profile_spp"></a></h5>
+<h5 id="_串口配置文件spp">34.7.5.5. 串口配置文件（SPP）<a class="anchor" href="#_串口配置文件spp"></a></h5>
 <div class="paragraph">
-<p>The Serial Port Profile (SPP) allows Bluetooth devices to perform serial cable emulation. This profile allows legacy applications to use Bluetooth as a cable replacement, through a virtual serial port abstraction.</p>
+<p>串口配置文件（SPP）允许蓝牙设备执行串行电缆仿真。该配置文件允许传统应用程序通过虚拟串口抽象将蓝牙用作电缆替代品。</p>
 </div>
 <div class="paragraph">
-<p>In FreeBSD, <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_sppd&amp;sektion=1&amp;format=html">rfcomm_sppd(1)</a> implements SPP and a pseudo tty is used as a virtual serial port abstraction. The example below shows how to connect to a remote device’s serial port service. A RFCOMM channel does not have to be specified as <a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_sppd&amp;sektion=1&amp;format=html">rfcomm_sppd(1)</a> can obtain it from the remote device via SDP. To override this, specify a RFCOMM channel on the command line.</p>
+<p>在 FreeBSD 中，<a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_sppd&amp;sektion=1&amp;format=html">rfcomm_sppd(1)</a> 实现了 SPP ，并且使用伪终端作为虚拟串口抽象。下面的示例展示了如何连接到远程设备的串口服务。<a href="https://man.freebsd.org/cgi/man.cgi?query=rfcomm_sppd&amp;sektion=1&amp;format=html">rfcomm_sppd(1)</a> 不需要指定 RFCOMM 通道，它可以通过 SDP 从远程设备获取。如果要覆盖这个行为，可以在命令行上指定一个 RFCOMM 通道。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44786,7 +44786,7 @@ rfcomm_sppd[94692]: Starting on /dev/pts/6...
 </div>
 </div>
 <div class="paragraph">
-<p>Once connected, the pseudo tty can be used as serial port:</p>
+<p>一旦连接成功，伪终端可以被用作串口。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44794,7 +44794,7 @@ rfcomm_sppd[94692]: Starting on /dev/pts/6...
 </div>
 </div>
 <div class="paragraph">
-<p>The pseudo tty is printed on stdout and can be read by wrapper scripts:</p>
+<p>伪终端会被打印到标准输出，并可以被包装脚本读取。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44805,9 +44805,9 @@ cu -l $PTS</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_troubleshooting_3">34.7.6. Troubleshooting<a class="anchor" href="#_troubleshooting_3"></a></h4>
+<h4 id="_故障排除">34.7.6. 故障排除<a class="anchor" href="#_故障排除"></a></h4>
 <div class="paragraph">
-<p>By default, when FreeBSD is accepting a new connection, it tries to perform a role switch and become master. Some older Bluetooth devices which do not support role switching will not be able to connect. Since role switching is performed when a new connection is being established, it is not possible to ask the remote device if it supports role switching. However, there is a HCI option to disable role switching on the local side:</p>
+<p>默认情况下，当 FreeBSD 接受新连接时，它会尝试执行角色切换并成为主设备。一些不支持角色切换的较旧的蓝牙设备将无法连接。由于角色切换是在建立新连接时执行的，因此无法询问远程设备是否支持角色切换。然而，有一个 HCI 选项可以在本地禁用角色切换：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44815,50 +44815,50 @@ cu -l $PTS</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To display Bluetooth packets, use the third-party package hcidump, which can be installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/comms/hcidump/">comms/hcidump</a> package or port. This utility is similar to <a href="https://man.freebsd.org/cgi/man.cgi?query=tcpdump&amp;sektion=1&amp;format=html">tcpdump(1)</a> and can be used to display the contents of Bluetooth packets on the terminal and to dump the Bluetooth packets to a file.</p>
+<p>要显示蓝牙数据包，请使用第三方软件包 hcidump，可以使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/comms/hcidump/">comms/hcidump</a> 软件包或 port 进行安装。该实用程序类似于 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcpdump&amp;sektion=1&amp;format=html">tcpdump(1)</a>，可用于在终端上显示蓝牙数据包的内容，并将蓝牙数据包转储到文件中。</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-bridging">34.8. Bridging<a class="anchor" href="#network-bridging"></a></h3>
+<h3 id="network-bridging">34.8. 桥接<a class="anchor" href="#network-bridging"></a></h3>
 <div class="paragraph">
-<p>It is sometimes useful to divide a network, such as an Ethernet segment, into network segments without having to create IP subnets and use a router to connect the segments together. A device that connects two networks together in this fashion is called a &#34;bridge&#34;.</p>
+<p>有时候，将一个网络（比如以太网段）划分为网络段，而无需创建 IP 子网并使用路由器将这些网络段连接起来，是非常有用的。以这种方式连接两个网络的设备被称为“桥接器”。</p>
 </div>
 <div class="paragraph">
-<p>A bridge works by learning the MAC addresses of the devices on each of its network interfaces. It forwards traffic between networks only when the source and destination MAC addresses are on different networks. In many respects, a bridge is like an Ethernet switch with very few ports. A FreeBSD system with multiple network interfaces can be configured to act as a bridge.</p>
+<p>桥接器通过学习每个网络接口上设备的 MAC 地址来工作。只有当源 MAC 地址和目标 MAC 地址位于不同的网络上时，它才会在网络之间转发流量。在许多方面，桥接器类似于只有很少端口的以太网交换机。可以配置具有多个网络接口的 FreeBSD 系统来充当桥接器。</p>
 </div>
 <div class="paragraph">
-<p>Bridging can be useful in the following situations:</p>
+<p>桥接在以下情况下非常有用：</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Connecting Networks</dt>
+<dt class="hdlist1">连接网络</dt>
 <dd>
-<p>The basic operation of a bridge is to join two or more network segments. There are many reasons to use a host-based bridge instead of networking equipment, such as cabling constraints or firewalling. A bridge can also connect a wireless interface running in hostap mode to a wired network and act as an access point.</p>
+<p>桥接的基本操作是连接两个或多个网络段。使用主机级桥接而不是网络设备有许多原因，例如布线限制或防火墙。桥接还可以将以 hostap 模式运行的无线接口连接到有线网络，并充当访问点。</p>
 </dd>
-<dt class="hdlist1">Filtering/Traffic Shaping Firewall</dt>
+<dt class="hdlist1">过滤/流量整形防火墙</dt>
 <dd>
-<p>A bridge can be used when firewall functionality is needed without routing or Network Address Translation (NAT).</p>
+<p>当需要防火墙功能而不需要路由或网络地址转换（NAT）时，可以使用桥接。</p>
 <div class="paragraph">
-<p>An example is a small company that is connected via DSL or ISDN to an ISP. There are thirteen public IP addresses from the ISP and ten computers on the network. In this situation, using a router-based firewall is difficult because of subnetting issues. A bridge-based firewall can be configured without any IP addressing issues.</p>
+<p>一个例子是一个通过 DSL 或 ISDN 连接到 ISP 的小公司。ISP 提供了 13 个公共 IP 地址，网络上有 10 台计算机。在这种情况下，由于子网划分问题，使用基于路由器的防火墙是困难的。而基于桥接的防火墙可以在没有任何 IP 地址问题的情况下进行配置。</p>
 </div>
 </dd>
-<dt class="hdlist1">Network Tap</dt>
+<dt class="hdlist1">网络分流器</dt>
 <dd>
-<p>A bridge can join two network segments in order to inspect all Ethernet frames that pass between them using <a href="https://man.freebsd.org/cgi/man.cgi?query=bpf&amp;sektion=4&amp;format=html">bpf(4)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=tcpdump&amp;sektion=1&amp;format=html">tcpdump(1)</a> on the bridge interface, or by sending a copy of all frames out on an additional interface known as a span port.</p>
+<p>桥接器可以连接两个网络段，以便使用桥接接口上的 <a href="https://man.freebsd.org/cgi/man.cgi?query=bpf&amp;sektion=4&amp;format=html">bpf(4)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcpdump&amp;sektion=1&amp;format=html">tcpdump(1)</a> 来检查它们之间传递的所有以太网帧，或者通过将所有帧的副本发送到一个额外的接口，即监控端口。</p>
 </dd>
-<dt class="hdlist1">Layer 2 VPN</dt>
+<dt class="hdlist1">二层虚拟专用网络（Layer 2 VPN）</dt>
 <dd>
-<p>Two Ethernet networks can be joined across an IP link by bridging the networks to an EtherIP tunnel or a <a href="https://man.freebsd.org/cgi/man.cgi?query=tap&amp;sektion=4&amp;format=html">tap(4)</a> based solution such as OpenVPN.</p>
+<p>通过将网络桥接到 EtherIP 隧道或基于 <a href="https://man.freebsd.org/cgi/man.cgi?query=tap&amp;sektion=4&amp;format=html">tap(4)</a> 的解决方案（如 OpenVPN），可以通过 IP 链接将两个以太网网络连接起来。</p>
 </dd>
-<dt class="hdlist1">Layer 2 Redundancy</dt>
+<dt class="hdlist1">二层冗余</dt>
 <dd>
-<p>A network can be connected together with multiple links and use the Spanning Tree Protocol (STP) to block redundant paths.</p>
+<p>一个网络可以通过多个链路连接在一起，并使用生成树协议（STP）来阻塞冗余路径。</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>This section describes how to configure a FreeBSD system as a bridge using <a href="https://man.freebsd.org/cgi/man.cgi?query=if_bridge&amp;sektion=4&amp;format=html">if_bridge(4)</a>. A netgraph bridging driver is also available, and is described in <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_bridge&amp;sektion=4&amp;format=html">ng_bridge(4)</a>.</p>
+<p>本节介绍了如何使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=if_bridge&amp;sektion=4&amp;format=html">if_bridge(4)</a> 将 FreeBSD 系统配置为桥接模式。还提供了 netgraph 桥接驱动程序的配置方法，详见 <a href="https://man.freebsd.org/cgi/man.cgi?query=ng_bridge&amp;sektion=4&amp;format=html">ng_bridge(4)</a> 。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -44868,19 +44868,19 @@ cu -l $PTS</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Packet filtering can be used with any firewall package that hooks into the <a href="https://man.freebsd.org/cgi/man.cgi?query=pfil&amp;sektion=9&amp;format=html">pfil(9)</a> framework. The bridge can be used as a traffic shaper with <a href="https://man.freebsd.org/cgi/man.cgi?query=altq&amp;sektion=4&amp;format=html">altq(4)</a> or <a href="https://man.freebsd.org/cgi/man.cgi?query=dummynet&amp;sektion=4&amp;format=html">dummynet(4)</a>.</p>
+<p>数据包过滤可以与任何钩入 <a href="https://man.freebsd.org/cgi/man.cgi?query=pfil&amp;sektion=9&amp;format=html">pfil(9)</a> 框架的防火墙软件包一起使用。桥接可以与 <a href="https://man.freebsd.org/cgi/man.cgi?query=altq&amp;sektion=4&amp;format=html">altq(4)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=dummynet&amp;sektion=4&amp;format=html">dummynet(4)</a> 一起用作流量整形器。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="_enabling_the_bridge">34.8.1. Enabling the Bridge<a class="anchor" href="#_enabling_the_bridge"></a></h4>
+<h4 id="_启用桥接功能">34.8.1. 启用桥接功能<a class="anchor" href="#_启用桥接功能"></a></h4>
 <div class="paragraph">
-<p>In FreeBSD, <a href="https://man.freebsd.org/cgi/man.cgi?query=if_bridge&amp;sektion=4&amp;format=html">if_bridge(4)</a> is a kernel module which is automatically loaded by <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> when creating a bridge interface. It is also possible to compile bridge support into a custom kernel by adding <code>device if_bridge</code> to the custom kernel configuration file.</p>
+<p>在 FreeBSD 中，<a href="https://man.freebsd.org/cgi/man.cgi?query=if_bridge&amp;sektion=4&amp;format=html">if_bridge(4)</a> 是一个内核模块，当创建一个桥接接口时，<a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 会自动加载它。也可以通过在自定义内核配置文件中添加 <code>device if_bridge</code> 来编译桥接支持到自定义内核中。</p>
 </div>
 <div class="paragraph">
-<p>The bridge is created using interface cloning. To create the bridge interface:</p>
+<p>使用接口克隆来创建桥接。要创建桥接接口：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44895,10 +44895,10 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8802&lt;BROADCAST,
 </div>
 </div>
 <div class="paragraph">
-<p>When a bridge interface is created, it is automatically assigned a randomly generated Ethernet address. The <code>maxaddr</code> and <code>timeout</code> parameters control how many MAC addresses the bridge will keep in its forwarding table and how many seconds before each entry is removed after it is last seen. The other parameters control how STP operates.</p>
+<p>当创建一个桥接接口时，它会自动分配一个随机生成的以太网地址。<code>maxaddr</code> 和 <code>timeout</code> 参数控制桥接将保留多少个 MAC 地址在其转发表中，以及每个条目在最后一次被检测到后多少秒后被删除。其他参数控制 STP 的操作方式。</p>
 </div>
 <div class="paragraph">
-<p>Next, specify which network interfaces to add as members of the bridge. For the bridge to forward packets, all member interfaces and the bridge need to be up:</p>
+<p>接下来，指定要添加为桥接成员的网络接口。为了使桥接转发数据包，所有成员接口和桥接都需要处于启动状态：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44908,7 +44908,7 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8802&lt;BROADCAST,
 </div>
 </div>
 <div class="paragraph">
-<p>The bridge can now forward Ethernet frames between <span class="filename">fxp0</span> and <span class="filename">fxp1</span>. Add the following lines to <span class="filename">/etc/rc.conf</span> so the bridge is created at startup:</p>
+<p>桥接器现在可以在 <span class="filename">fxp0</span> 和 <span class="filename">fxp1</span> 之间转发以太网帧。在 <span class="filename">/etc/rc.conf</span> 中添加以下行，以便在启动时创建桥接器：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -44919,7 +44919,7 @@ ifconfig_fxp1=&#34;up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If the bridge host needs an IP address, set it on the bridge interface, not on the member interfaces. The address can be set statically or via DHCP. This example sets a static IP address:</p>
+<p>如果桥接主机需要一个 IP 地址，请在桥接接口上设置，而不是在成员接口上设置。该地址可以静态设置或通过 DHCP 设置。以下示例设置了一个静态 IP 地址：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44927,7 +44927,7 @@ ifconfig_fxp1=&#34;up&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It is also possible to assign an IPv6 address to a bridge interface. To make the changes permanent, add the addressing information to <span class="filename">/etc/rc.conf</span>.</p>
+<p>还可以将 IPv6 地址分配给桥接口。要使更改永久生效，请将寻址信息添加到 <span class="filename">/etc/rc.conf</span> 文件中。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -44937,10 +44937,10 @@ ifconfig_fxp1=&#34;up&#34;</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>When packet filtering is enabled, bridged packets will pass through the filter inbound on the originating interface on the bridge interface, and outbound on the appropriate interfaces. Either stage can be disabled. When direction of the packet flow is important, it is best to firewall on the member interfaces rather than the bridge itself.</p>
+<p>当启用数据包过滤时，桥接的数据包将通过过滤器从桥接接口的原始接口进入，并通过适当的接口出去。任何一个阶段都可以被禁用。当数据包流向很重要时，最好在成员接口上设置防火墙，而不是在桥接本身上设置。</p>
 </div>
 <div class="paragraph">
-<p>The bridge has several configurable settings for passing non-IP and IP packets, and layer2 firewalling with <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a>. See <a href="https://man.freebsd.org/cgi/man.cgi?query=if_bridge&amp;sektion=4&amp;format=html">if_bridge(4)</a> for more information.</p>
+<p>该桥接器具有多个可配置的设置，用于传递非 IP 和 IP 数据包，并使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ipfw&amp;sektion=8&amp;format=html">ipfw(8)</a> 进行第二层防火墙设置。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=if_bridge&amp;sektion=4&amp;format=html">if_bridge(4)</a> 。</p>
 </div>
 </td>
 </tr>
@@ -44948,15 +44948,15 @@ ifconfig_fxp1=&#34;up&#34;</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_enabling_spanning_tree">34.8.2. Enabling Spanning Tree<a class="anchor" href="#_enabling_spanning_tree"></a></h4>
+<h4 id="_启用生成树">34.8.2. 启用生成树<a class="anchor" href="#_启用生成树"></a></h4>
 <div class="paragraph">
-<p>For an Ethernet network to function properly, only one active path can exist between two devices. The STP protocol detects loops and puts redundant links into a blocked state. Should one of the active links fail, STP calculates a different tree and enables one of the blocked paths to restore connectivity to all points in the network.</p>
+<p>为了使以太网网络正常运行，两个设备之间只能存在一条活动路径。 STP 协议可以检测到环路，并将冗余链路置于阻塞状态。如果其中一条活动链路失败，STP 会计算出一棵不同的树，并启用一条被阻塞的路径，以恢复网络中所有节点的连接。</p>
 </div>
 <div class="paragraph">
-<p>The Rapid Spanning Tree Protocol (RSTP or 802.1w) provides backwards compatibility with legacy STP. RSTP provides faster convergence and exchanges information with neighboring switches to quickly transition to forwarding mode without creating loops. FreeBSD supports RSTP and STP as operating modes, with RSTP being the default mode.</p>
+<p>快速生成树协议（RSTP 或 802.1w）与传统的生成树协议（STP）向后兼容。RSTP 提供更快的收敛速度，并与相邻交换机交换信息，以便快速转换到转发模式，而不会创建环路。FreeBSD 支持 RSTP 和 STP 作为操作模式，其中 RSTP 是默认模式。</p>
 </div>
 <div class="paragraph">
-<p>STP can be enabled on member interfaces using <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a>. For a bridge with <span class="filename">fxp0</span> and <span class="filename">fxp1</span> as the current interfaces, enable STP with:</p>
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 在成员接口上启用 STP。对于具有 <span class="filename">fxp0</span> 和 <span class="filename">fxp1</span> 作为当前接口的桥接，可以使用以下命令启用 STP ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44975,10 +44975,10 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </div>
 </div>
 <div class="paragraph">
-<p>This bridge has a spanning tree ID of <code>00:01:02:4b:d4:50</code> and a priority of <code>32768</code>. As the <code>root id</code> is the same, it indicates that this is the root bridge for the tree.</p>
+<p>这个桥的生成树 ID 是 <code>00:01:02:4b:d4:50</code>，优先级是 <code>32768</code>。由于根 ID 相同，这表明这是生成树的根桥。</p>
 </div>
 <div class="paragraph">
-<p>Another bridge on the network also has STP enabled:</p>
+<p>网络上的另一座桥梁也启用了 STP ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -44996,23 +44996,23 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </div>
 </div>
 <div class="paragraph">
-<p>The line <code>root id 00:01:02:4b:d4:50 priority 32768 ifcost 400000 port 4</code> shows that the root bridge is <code>00:01:02:4b:d4:50</code> and has a path cost of <code>400000</code> from this bridge. The path to the root bridge is via <code>port 4</code> which is <span class="filename">fxp0</span>.</p>
+<p>该行 <code>root id 00:01:02:4b:d4:50 priority 32768 ifcost 400000 port 4</code> 显示根桥为 <code>00:01:02:4b:d4:50</code>，从该桥到根桥的路径成本为 <code>400000</code>。到达根桥的路径通过 <code>port 4</code>，即 <span class="filename">fxp0</span>。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bridge_interface_parameters">34.8.3. Bridge Interface Parameters<a class="anchor" href="#_bridge_interface_parameters"></a></h4>
+<h4 id="_桥接接口参数">34.8.3. 桥接接口参数<a class="anchor" href="#_桥接接口参数"></a></h4>
 <div class="paragraph">
-<p>Several <code>ifconfig</code> parameters are unique to bridge interfaces. This section summarizes some common uses for these parameters. The complete list of available parameters is described in <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a>.</p>
+<p>几个 <code>ifconfig</code> 参数是专门用于桥接接口的。本节概述了这些参数的一些常见用法。完整的可用参数列表在 <a href="https://man.freebsd.org/cgi/man.cgi?query=ifconfig&amp;sektion=8&amp;format=html">ifconfig(8)</a> 中有描述。</p>
 </div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">private</dt>
 <dd>
-<p>A private interface does not forward any traffic to any other port that is also designated as a private interface. The traffic is blocked unconditionally so no Ethernet frames will be forwarded, including ARP packets. If traffic needs to be selectively blocked, a firewall should be used instead.</p>
+<p>私有接口不会将任何流量转发到其他被指定为私有接口的端口。流量会被无条件地阻塞，因此不会转发任何以太网帧，包括 ARP 数据包。如果需要选择性地阻止流量，应该使用防火墙。</p>
 </dd>
 <dt class="hdlist1">span</dt>
 <dd>
-<p>A span port transmits a copy of every Ethernet frame received by the bridge. The number of span ports configured on a bridge is unlimited, but if an interface is designated as a span port, it cannot also be used as a regular bridge port. This is most useful for snooping a bridged network passively on another host connected to one of the span ports of the bridge. For example, to send a copy of all frames out the interface named <span class="filename">fxp4</span>:</p>
+<p>一个 SPAN 端口会传输桥接器接收到的每个以太网帧的副本。一个桥接器上配置的 SPAN 端口数量是无限的，但是如果一个接口被指定为 SPAN 端口，它就不能再被用作常规的桥接端口。这对于在连接到桥接器的 SPAN 端口之一的另一台主机上被动地监听桥接网络非常有用。例如，要将所有帧的副本发送到名为 <span class="filename">fxp4</span> 的接口上。</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># ifconfig bridge0 span fxp4</span></code></pre>
@@ -45021,9 +45021,9 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </dd>
 <dt class="hdlist1">sticky</dt>
 <dd>
-<p>If a bridge member interface is marked as sticky, dynamically learned address entries are treated as static entries in the forwarding cache. Sticky entries are never aged out of the cache or replaced, even if the address is seen on a different interface. This gives the benefit of static address entries without the need to pre-populate the forwarding table. Clients learned on a particular segment of the bridge cannot roam to another segment.</p>
+<p>如果桥接成员接口被标记为粘性（sticky），动态学习的地址条目将被视为转发缓存中的静态条目。粘性条目不会因为地址在不同接口上出现而被清除或替换。这提供了静态地址条目的好处，而无需预先填充转发表。在桥接的特定段上学习的客户端不能漫游到另一个段。</p>
 <div class="paragraph">
-<p>An example of using sticky addresses is to combine the bridge with VLANs in order to isolate customer networks without wasting IP address space. Consider that <code>CustomerA</code> is on <code>vlan100</code>, <code>CustomerB</code> is on <code>vlan101</code>, and the bridge has the address <code>192.168.0.1</code>:</p>
+<p>使用粘性地址的一个例子是将桥接器与 VLAN 结合使用，以便在不浪费 IP 地址空间的情况下隔离客户网络。假设 <code>CustomerA</code> 位于 <code>vlan100</code>，<code>CustomerB</code> 位于 <code>vlan101</code>，桥接器的地址为 <code>192.168.0.1</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45032,10 +45032,10 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </div>
 </div>
 <div class="paragraph">
-<p>In this example, both clients see <code>192.168.0.1</code> as their default gateway. Since the bridge cache is sticky, one host cannot spoof the MAC address of the other customer in order to intercept their traffic.</p>
+<p>在这个例子中，两个客户端都将 <code>192.168.0.1</code> 视为它们的默认网关。由于桥接缓存是粘性的，一个主机无法伪造另一个客户的 MAC 地址以拦截其流量。</p>
 </div>
 <div class="paragraph">
-<p>Any communication between the VLANs can be blocked using a firewall or, as seen in this example, private interfaces:</p>
+<p>可以使用防火墙或私有接口来阻止 VLAN 之间的任何通信，就像在这个例子中所看到的那样：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45043,13 +45043,13 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </div>
 </div>
 <div class="paragraph">
-<p>The customers are completely isolated from each other and the full <code>/24</code> address range can be allocated without subnetting.</p>
+<p>客户之间完全隔离，可以分配整个 <code>/24</code> 地址范围而无需进行子网划分。</p>
 </div>
 <div class="paragraph">
-<p>The number of unique source MAC addresses behind an interface can be limited. Once the limit is reached, packets with unknown source addresses are dropped until an existing host cache entry expires or is removed.</p>
+<p>接口后面的唯一源 MAC 地址数量可以被限制。一旦达到限制，具有未知源地址的数据包将被丢弃，直到现有的主机缓存条目过期或被删除。</p>
 </div>
 <div class="paragraph">
-<p>The following example sets the maximum number of Ethernet devices for <code>CustomerA</code> on <code>vlan100</code> to 10:</p>
+<p>以下示例将 <code>vlan100</code> 上 <code>CustomerA</code> 的以太网设备的最大数量设置为 10 ：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45060,7 +45060,7 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </dl>
 </div>
 <div class="paragraph">
-<p>Bridge interfaces also support monitor mode, where the packets are discarded after <a href="https://man.freebsd.org/cgi/man.cgi?query=bpf&amp;sektion=4&amp;format=html">bpf(4)</a> processing and are not processed or forwarded further. This can be used to multiplex the input of two or more interfaces into a single <a href="https://man.freebsd.org/cgi/man.cgi?query=bpf&amp;sektion=4&amp;format=html">bpf(4)</a> stream. This is useful for reconstructing the traffic for network taps that transmit the RX/TX signals out through two separate interfaces. For example, to read the input from four network interfaces as one stream:</p>
+<p>桥接接口还支持监控模式，在 <a href="https://man.freebsd.org/cgi/man.cgi?query=bpf&amp;sektion=4&amp;format=html">bpf(4)</a> 处理后丢弃数据包，不再进行进一步处理或转发。这可以用于将两个或多个接口的输入多路复用到单个 <a href="https://man.freebsd.org/cgi/man.cgi?query=bpf&amp;sektion=4&amp;format=html">bpf(4)</a> 流中。这对于重构通过两个独立接口传输 RX/TX 信号的网络监听器的流量非常有用。例如，要将四个网络接口的输入作为一个流进行读取：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45070,12 +45070,12 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </div>
 </div>
 <div class="sect3">
-<h4 id="_snmp_monitoring">34.8.4. SNMP Monitoring<a class="anchor" href="#_snmp_monitoring"></a></h4>
+<h4 id="_snmp_监控">34.8.4. SNMP 监控<a class="anchor" href="#_snmp_监控"></a></h4>
 <div class="paragraph">
-<p>The bridge interface and STP parameters can be monitored via <a href="https://man.freebsd.org/cgi/man.cgi?query=bsnmpd&amp;sektion=1&amp;format=html">bsnmpd(1)</a> which is included in the FreeBSD base system. The exported bridge MIBs conform to IETF standards so any SNMP client or monitoring package can be used to retrieve the data.</p>
+<p>桥接接口和 STP 参数可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsnmpd&amp;sektion=1&amp;format=html">bsnmpd(1)</a> 进行监控，该工具包含在 FreeBSD 基本系统中。导出的桥接 MIB 符合 IETF 标准，因此可以使用任何 SNMP 客户端或监控软件来检索数据。</p>
 </div>
 <div class="paragraph">
-<p>To enable monitoring on the bridge, uncomment this line in <span class="filename">/etc/snmpd.config</span> by removing the beginning <code>#</code> symbol:</p>
+<p>要在桥接器上启用监控，请取消注释 <span class="filename">/etc/snmpd.config</span> 中的此行，即删除开头的 <code>#</code> 符号：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45083,7 +45083,7 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </div>
 </div>
 <div class="paragraph">
-<p>Other configuration settings, such as community names and access lists, may need to be modified in this file. See <a href="https://man.freebsd.org/cgi/man.cgi?query=bsnmpd&amp;sektion=1&amp;format=html">bsnmpd(1)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=snmp_bridge&amp;sektion=3&amp;format=html">snmp_bridge(3)</a> for more information. Once these edits are saved, add this line to <span class="filename">/etc/rc.conf</span>:</p>
+<p>其他配置设置，如社区名称和访问列表，可能需要在此文件中进行修改。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsnmpd&amp;sektion=1&amp;format=html">bsnmpd(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=snmp_bridge&amp;sektion=3&amp;format=html">snmp_bridge(3)</a>。保存这些编辑后，将此行添加到 <span class="filename">/etc/rc.conf</span>：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45091,7 +45091,7 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </div>
 </div>
 <div class="paragraph">
-<p>Then, start <a href="https://man.freebsd.org/cgi/man.cgi?query=bsnmpd&amp;sektion=1&amp;format=html">bsnmpd(1)</a>:</p>
+<p>然后，启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsnmpd&amp;sektion=1&amp;format=html">bsnmpd(1)</a>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45099,7 +45099,7 @@ bridge0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCA
 </div>
 </div>
 <div class="paragraph">
-<p>The following examples use the Net-SNMP software (<a class="package" href="https://cgit.freebsd.org/ports/tree/net-mgmt/net-snmp/">net-mgmt/net-snmp</a>) to query a bridge from a client system. The <a class="package" href="https://cgit.freebsd.org/ports/tree/net-mgmt/bsnmptools/">net-mgmt/bsnmptools</a> port can also be used. From the SNMP client which is running Net-SNMP, add the following lines to <span class="filename">$HOME/.snmp/snmp.conf</span> in order to import the bridge MIB definitions:</p>
+<p>以下示例使用 Net-SNMP 软件（<a class="package" href="https://cgit.freebsd.org/ports/tree/net-mgmt/net-snmp/">net-mgmt/net-snmp</a>）从客户端系统查询桥接。也可以使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/net-mgmt/bsnmptools/">net-mgmt/bsnmptools</a> port。从运行 Net-SNMP 的 SNMP 客户端，在 <span class="filename">$HOME/.snmp/snmp.conf</span> 中添加以下行以导入桥接 MIB 定义：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45108,7 +45108,7 @@ mibs +BRIDGE-MIB:RSTP-MIB:BEGEMOT-MIB:BEGEMOT-BRIDGE-MIB</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To monitor a single bridge using the IETF BRIDGE-MIB (RFC4188):</p>
+<p>使用 IETF BRIDGE-MIB（RFC4188）监控单个桥接设备：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45131,10 +45131,10 @@ RSTP-MIB::dot1dStpVersion.0 <span class="o">=</span> INTEGER: rstp<span class="o
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>dot1dStpTopChanges.0</code> value is two, indicating that the STP bridge topology has changed twice. A topology change means that one or more links in the network have changed or failed and a new tree has been calculated. The <code>dot1dStpTimeSinceTopologyChange.0</code> value will show when this happened.</p>
+<p><code>dot1dStpTopChanges.0</code> 的值为 2，表示 STP 桥接拓扑已经发生了两次变化。拓扑变化意味着网络中的一个或多个链路发生了变化或故障，并重新计算了新的树形结构。<code>dot1dStpTimeSinceTopologyChange.0</code> 的值将显示这一事件发生的时间。</p>
 </div>
 <div class="paragraph">
-<p>To monitor multiple bridge interfaces, the private BEGEMOT-BRIDGE-MIB can be used:</p>
+<p>要监控多个桥接口，可以使用私有的 BEGEMOT-BRIDGE-MIB。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45156,7 +45156,7 @@ BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.<span class="s2">&#34;bridge2
 </div>
 </div>
 <div class="paragraph">
-<p>To change the bridge interface being monitored via the <code>mib-2.dot1dBridge</code> subtree:</p>
+<p>要通过 <code>mib-2.dot1dBridge</code> 子树更改被监视的桥接口：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45167,56 +45167,56 @@ BEGEMOT-BRIDGE-MIB::begemotBridgeDefaultBridgeIf.0 s bridge2</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-aggregation">34.9. Link Aggregation and Failover<a class="anchor" href="#network-aggregation"></a></h3>
+<h3 id="network-aggregation">34.9. 链路聚合和故障转移<a class="anchor" href="#network-aggregation"></a></h3>
 <div class="paragraph">
-<p>FreeBSD provides the <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> interface which can be used to aggregate multiple network interfaces into one virtual interface in order to provide failover and link aggregation. Failover allows traffic to continue to flow as long as at least one aggregated network interface has an established link. Link aggregation works best on switches which support LACP, as this protocol distributes traffic bi-directionally while responding to the failure of individual links.</p>
+<p>FreeBSD 提供了 <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> 接口，可以将多个网络接口聚合成一个虚拟接口，以实现故障转移和链路聚合。故障转移允许流量在至少一个聚合网络接口建立连接时继续传输。链路聚合在支持 LACP 的交换机上效果最佳，因为该协议可以在双向传输流量的同时响应单个链路的故障。</p>
 </div>
 <div class="paragraph">
-<p>The aggregation protocols supported by the lagg interface determine which ports are used for outgoing traffic and whether or not a specific port accepts incoming traffic. The following protocols are supported by <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a>:</p>
+<p>lagg 接口支持的聚合协议决定了哪些端口用于出站流量，以及特定端口是否接受入站流量。<a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> 支持以下协议：</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">failover</dt>
+<dt class="hdlist1">故障转移（failover）</dt>
 <dd>
-<p>This mode sends and receives traffic only through the master port. If the master port becomes unavailable, the next active port is used. The first interface added to the virtual interface is the master port and all subsequently added interfaces are used as failover devices. If failover to a non-master port occurs, the original port becomes master once it becomes available again.</p>
+<p>这种模式只通过主端口发送和接收流量。如果主端口不可用，将使用下一个活动端口。添加到虚拟接口的第一个接口是主端口，随后添加的接口将用作故障转移设备。如果故障转移到非主端口，原始端口在再次可用时将恢复为主端口。</p>
 </dd>
-<dt class="hdlist1">loadbalance</dt>
+<dt class="hdlist1">负载均衡（loadbalance）</dt>
 <dd>
-<p>This provides a static setup and does not negotiate aggregation with the peer or exchange frames to monitor the link. If the switch supports LACP, that should be used instead.</p>
+<p>这提供了一个静态设置，并且不与对等方协商聚合或交换帧以监视链路。如果交换机支持 LACP，则应使用该协议。</p>
 </dd>
 <dt class="hdlist1">lacp</dt>
 <dd>
-<p>The IEEE® 802.3ad Link Aggregation Control Protocol (LACP) negotiates a set of aggregable links with the peer into one or more Link Aggregated Groups (LAGs). Each LAG is composed of ports of the same speed, set to full-duplex operation, and traffic is balanced across the ports in the LAG with the greatest total speed. Typically, there is only one LAG which contains all the ports. In the event of changes in physical connectivity, LACP will quickly converge to a new configuration.</p>
+<p>IEEE® 802.3ad 链路聚合控制协议（LACP）与对等方协商一组可聚合的链路，形成一个或多个链路聚合组（LAG）。每个 LAG 由相同速度的端口组成，设置为全双工操作，并且流量在 LAG 中的端口之间进行平衡，以获得最大总速度。通常，只有一个包含所有端口的 LAG 。在物理连接发生变化时，LACP 将迅速收敛到新的配置。</p>
 <div class="paragraph">
-<p>LACP balances outgoing traffic across the active ports based on hashed protocol header information and accepts incoming traffic from any active port. The hash includes the Ethernet source and destination address and, if available, the VLAN tag, and the IPv4 or IPv6 source and destination address.</p>
+<p>LACP 根据哈希协议头信息平衡传出流量，并从任何活动端口接受传入流量。哈希包括以太网源地址和目的地址，如果可用，还包括 VLAN 标签以及 IPv4 或 IPv6 源地址和目的地址。</p>
 </div>
 </dd>
 <dt class="hdlist1">roundrobin</dt>
 <dd>
-<p>This mode distributes outgoing traffic using a round-robin scheduler through all active ports and accepts incoming traffic from any active port. Since this mode violates Ethernet frame ordering, it should be used with caution.</p>
+<p>这种模式通过循环调度器将出站流量分发到所有活动端口，并接受来自任何活动端口的入站流量。由于这种模式违反了以太网帧的顺序，因此应谨慎使用。</p>
 </dd>
 <dt class="hdlist1">broadcast</dt>
 <dd>
-<p>This mode sends outgoing traffic to all ports configured on the lagg interface, and receives frames on any port.</p>
+<p>该模式将出站流量发送到 lagg 接口上配置的所有端口，并在任何端口上接收帧。</p>
 </dd>
 </dl>
 </div>
 <div class="sect3">
-<h4 id="_configuration_examples">34.9.1. Configuration Examples<a class="anchor" href="#_configuration_examples"></a></h4>
+<h4 id="_配置示例">34.9.1. 配置示例<a class="anchor" href="#_配置示例"></a></h4>
 <div class="paragraph">
-<p>This section demonstrates how to configure a Cisco® switch and a FreeBSD system for LACP load balancing. It then shows how to configure two Ethernet interfaces in failover mode as well as how to configure failover mode between an Ethernet and a wireless interface.</p>
+<p>本节演示了如何配置 Cisco® 交换机和 FreeBSD 系统以实现 LACP 负载均衡。然后，它展示了如何配置两个以故障转移模式工作的以太网接口，以及如何在以太网接口和无线接口之间配置故障转移模式。</p>
 </div>
 <div id="networking-lacp-aggregation-cisco" class="exampleblock">
-<div class="title">例 38. LACP Aggregation with a Cisco® Switch</div>
+<div class="title">例 38. 使用 Cisco® 交换机进行 LACP 聚合</div>
 <div class="content">
 <div class="paragraph">
-<p>This example connects two <a href="https://man.freebsd.org/cgi/man.cgi?query=fxp&amp;sektion=4&amp;format=html">fxp(4)</a> Ethernet interfaces on a FreeBSD machine to the first two Ethernet ports on a Cisco® switch as a single load balanced and fault tolerant link. More interfaces can be added to increase throughput and fault tolerance. Replace the names of the Cisco® ports, Ethernet devices, channel group number, and IP address shown in the example to match the local configuration.</p>
+<p>这个例子将一个 FreeBSD 机器上的两个 <a href="https://man.freebsd.org/cgi/man.cgi?query=fxp&amp;sektion=4&amp;format=html">fxp(4)</a> 以太网接口连接到 Cisco® 交换机的前两个以太网端口，作为一个负载均衡和容错链接。可以添加更多接口以增加吞吐量和容错性。请根据本地配置替换示例中显示的 Cisco® 端口名称、以太网设备、通道组号和 IP 地址的名称。</p>
 </div>
 <div class="paragraph">
-<p>Frame ordering is mandatory on Ethernet links and any traffic between two stations always flows over the same physical link, limiting the maximum speed to that of one interface. The transmit algorithm attempts to use as much information as it can to distinguish different traffic flows and balance the flows across the available interfaces.</p>
+<p>以太网链路上的帧排序是强制性的，任何两个站点之间的流量总是通过同一物理链路传输，这限制了最大速度为一个接口的速度。传输算法尝试使用尽可能多的信息来区分不同的流量，并在可用接口之间平衡流量。</p>
 </div>
 <div class="paragraph">
-<p>On the Cisco® switch, add the <em>FastEthernet0/1</em> and <em>FastEthernet0/2</em> interfaces to channel group <em>1</em>:</p>
+<p>在 Cisco® 交换机上，将 <em>FastEthernet0/1</em> 和 <em>FastEthernet0/2</em> 接口添加到通道组 <em>1</em> 中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45230,7 +45230,7 @@ interface FastEthernet0/2
 </div>
 </div>
 <div class="paragraph">
-<p>On the FreeBSD system, create the <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> interface using the physical interfaces <em>fxp0</em> and <em>fxp1</em> and bring the interfaces up with an IP address of <em>10.0.0.3/24</em>:</p>
+<p>在 FreeBSD 系统上，使用物理接口 <em>fxp0</em> 和 <em>fxp1</em> 创建 <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> 接口，并使用 IP 地址 <em>10.0.0.3/24</em> 将接口启动：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45241,7 +45241,7 @@ interface FastEthernet0/2
 </div>
 </div>
 <div class="paragraph">
-<p>Next, verify the status of the virtual interface:</p>
+<p>接下来，验证虚拟接口的状态：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45258,10 +45258,10 @@ lagg0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Ports marked as <code>ACTIVE</code> are part of the LAG that has been negotiated with the remote switch. Traffic will be transmitted and received through these active ports. Add <code>-v</code> to the above command to view the LAG identifiers.</p>
+<p>标记为“ ACTIVE ”的端口是与远程交换机协商的链路聚合组（LAG）的一部分。通过这些活动端口传输和接收流量。在上述命令中添加 <code>-v</code> 以查看 LAG 标识符。</p>
 </div>
 <div class="paragraph">
-<p>To see the port status on the Cisco® switch:</p>
+<p>查看 Cisco® 交换机上的端口状态：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45281,10 +45281,10 @@ Fa0/2     SA      32768     0005.5d71.8db8  29s    0x146   0x4      0x3D</span><
 </div>
 </div>
 <div class="paragraph">
-<p>For more detail, type <code>show lacp neighbor detail</code>.</p>
+<p>要获取更详细的信息，请输入 <code>show lacp neighbor detail</code> 。</p>
 </div>
 <div class="paragraph">
-<p>To retain this configuration across reboots, add the following entries to <span class="filename">/etc/rc.conf</span> on the FreeBSD system:</p>
+<p>要在重新启动后保留此配置，请将以下条目添加到 FreeBSD 系统上的 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45297,10 +45297,10 @@ ifconfig_lagg0=&#34;laggproto lacp laggport fxp0 laggport fxp1 10.0.0.3/24&#34;<
 </div>
 </div>
 <div id="networking-lagg-failover" class="exampleblock">
-<div class="title">例 39. Failover Mode</div>
+<div class="title">例 39. 故障转移模式</div>
 <div class="content">
 <div class="paragraph">
-<p>Failover mode can be used to switch over to a secondary interface if the link is lost on the master interface. To configure failover, make sure that the underlying physical interfaces are up, then create the <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> interface. In this example, <em>fxp0</em> is the master interface, <em>fxp1</em> is the secondary interface, and the virtual interface is assigned an IP address of <em>10.0.0.15/24</em>:</p>
+<p>如果主接口丢失连接，可以使用故障转移模式切换到备用接口。要配置故障转移，请确保底层物理接口正常工作，然后创建 <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> 接口。在这个例子中，<em>fxp0</em> 是主接口，<em>fxp1</em> 是备用接口，虚拟接口被分配了一个 IP 地址为 <em>10.0.0.15/24</em>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45311,7 +45311,7 @@ ifconfig_lagg0=&#34;laggproto lacp laggport fxp0 laggport fxp1 10.0.0.3/24&#34;<
 </div>
 </div>
 <div class="paragraph">
-<p>The virtual interface should look something like this:</p>
+<p>虚拟接口应该类似于这样：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45328,10 +45328,10 @@ lagg0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Traffic will be transmitted and received on <em>fxp0</em>. If the link is lost on <em>fxp0</em>, <em>fxp1</em> will become the active link. If the link is restored on the master interface, it will once again become the active link.</p>
+<p>流量将在 <em>fxp0</em> 上进行传输和接收。如果 <em>fxp0</em> 上的连接丢失，<em>fxp1</em> 将成为活动连接。如果主接口上的连接恢复，它将再次成为活动连接。</p>
 </div>
 <div class="paragraph">
-<p>To retain this configuration across reboots, add the following entries to <span class="filename">/etc/rc.conf</span>:</p>
+<p>要在重新启动后保留此配置，请将以下条目添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45344,30 +45344,30 @@ ifconfig_lagg0=&#34;laggproto failover laggport fxp0 laggport fxp1 10.0.0.15/24&
 </div>
 </div>
 <div id="networking-lagg-wired-and-wireless" class="exampleblock">
-<div class="title">例 40. Failover Mode Between Ethernet and Wireless Interfaces</div>
+<div class="title">例 40. 以太网和无线接口之间的故障转移模式</div>
 <div class="content">
 <div class="paragraph">
-<p>For laptop users, it is usually desirable to configure the wireless device as a secondary which is only used when the Ethernet connection is not available. With <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a>, it is possible to configure a failover which prefers the Ethernet connection for both performance and security reasons, while maintaining the ability to transfer data over the wireless connection.</p>
+<p>对于笔记本电脑用户来说，通常希望将无线设备配置为次要设备，仅在以太网连接不可用时使用。通过使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> ，可以配置故障转移，优先选择以太网连接，以提高性能和安全性，同时保持通过无线连接传输数据的能力。</p>
 </div>
 <div class="paragraph">
-<p>This is achieved by overriding the Ethernet interface’s MAC address with that of the wireless interface.</p>
+<p>这是通过使用无线接口的 MAC 地址覆盖以太网接口的 MAC 地址来实现的。</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="paragraph">
-<p>In theory, either the Ethernet or wireless MAC address can be changed to match the other. However, some popular wireless interfaces lack support for overriding the MAC address. We therefore recommend overriding the Ethernet MAC address for this purpose.</p>
+<p>理论上，以太网或无线网络的 MAC 地址都可以更改以匹配另一个。然而，一些常用的无线接口不支持覆盖 MAC 地址。因此，我们建议为此目的覆盖以太网的 MAC 地址。</p>
 </div>
 </div>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="paragraph">
-<p>If the driver for the wireless interface is not loaded in the <code>GENERIC</code> or custom kernel, and the computer is running FreeBSD 12.1, load the corresponding <span class="filename">.ko</span> in <span class="filename">/boot/loader.conf</span> by adding <code><strong>driver_load=&#34;YES&#34;</strong></code> to that file and rebooting. Another, better way is to load the driver in <span class="filename">/etc/rc.conf</span> by adding it to <code>kld_list</code> (see <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a> for details) in that file and rebooting. This is needed because otherwise the driver is not loaded yet at the time the <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> interface is set up.</p>
+<p>如果在 <code>GENERIC</code> 或自定义内核中没有加载无线接口的驱动程序，并且计算机正在运行 FreeBSD 12.1 ，则可以通过在 <span class="filename">/boot/loader.conf</span> 文件中添加 <code><strong>driver_load =&#34;YES&#34;</strong></code> 来加载相应的 <span class="filename">.ko</span> 文件，并重新启动计算机。另一种更好的方法是通过将驱动程序添加到 <span class="filename">/etc/rc.conf</span> 文件中的 <code>kld_list</code>（详见 <a href="https://man.freebsd.org/cgi/man.cgi?query=rc.conf&amp;sektion=5&amp;format=html">rc.conf(5)</a>）并重新启动来加载驱动程序。这是必需的，因为否则在设置 <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> 接口时驱动程序尚未加载。</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>In this example, the Ethernet interface, <em>re0</em>, is the master and the wireless interface, <em>wlan0</em>, is the failover. The <em>wlan0</em> interface was created from the <em>ath0</em> physical wireless interface, and the Ethernet interface will be configured with the MAC address of the wireless interface. First, bring the wireless interface up (replacing <em>FR</em> with your own 2-letter country code), but do not set an IP address. Replace <em>wlan0</em> to match the system’s wireless interface name:</p>
+<p>在这个例子中，以太网接口 <em>re0</em> 是主接口，无线接口 <em>wlan0</em> 是备份接口。<em>wlan0</em> 接口是从 <em>ath0</em> 物理无线接口创建的，并且以太网接口将配置无线接口的 MAC 地址。首先，将无线接口启动（将 <em>FR</em> 替换为您自己的两个字母的国家代码），但不设置 IP 地址。将 <em>wlan0</em> 替换为与系统的无线接口名称匹配的名称：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45375,7 +45375,7 @@ ifconfig_lagg0=&#34;laggproto failover laggport fxp0 laggport fxp1 10.0.0.15/24&
 </div>
 </div>
 <div class="paragraph">
-<p>Now you can determine the MAC address of the wireless interface:</p>
+<p>现在您可以确定无线接口的 MAC 地址：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45394,7 +45394,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>ether</code> line will contain the MAC address of the specified interface. Now, change the MAC address of the Ethernet interface to match:</p>
+<p><code>ether</code> 行将包含指定接口的 MAC 地址。现在，将以太网接口的 MAC 地址更改为匹配的地址：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45402,7 +45402,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Make sure the <em>re0</em> interface is up, then create the <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> interface with <em>re0</em> as master with failover to <em>wlan0</em>:</p>
+<p>确保 <em>re0</em> 接口处于启动状态，然后使用 <em>re0</em> 作为主接口创建 <a href="https://man.freebsd.org/cgi/man.cgi?query=lagg&amp;sektion=4&amp;format=html">lagg(4)</a> 接口，并设置故障转移至 <em>wlan0</em>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45412,7 +45412,7 @@ wlan0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>The virtual interface should look something like this:</p>
+<p>虚拟接口应该类似于这样：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45429,7 +45429,7 @@ lagg0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>Then, start the DHCP client to obtain an IP address:</p>
+<p>然后，启动 DHCP 客户端以获取 IP 地址：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45437,7 +45437,7 @@ lagg0: <span class="nv">flags</span><span class="o">=</span>8843&lt;UP,BROADCAST
 </div>
 </div>
 <div class="paragraph">
-<p>To retain this configuration across reboots, add the following entries to <span class="filename">/etc/rc.conf</span>:</p>
+<p>要在重新启动后保留此配置，请将以下条目添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45454,28 +45454,28 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-diskless">34.10. Diskless Operation with PXE<a class="anchor" href="#network-diskless"></a></h3>
+<h3 id="network-diskless">34.10. 使用 PXE 进行无盘操作<a class="anchor" href="#network-diskless"></a></h3>
 <div class="paragraph">
-<p>The Intel® Preboot eXecution Environment (PXE) allows an operating system to boot over the network. For example, a FreeBSD system can boot over the network and operate without a local disk, using file systems mounted from an NFS server. PXE support is usually available in the BIOS. To use PXE when the machine starts, select the <code>Boot from network</code> option in the BIOS setup or type a function key during system initialization.</p>
+<p>Intel® Preboot eXecution Environment (PXE) 允许操作系统通过网络引导。例如，FreeBSD 系统可以通过网络引导并在没有本地磁盘的情况下运行，使用从 NFS 服务器挂载的文件系统。PXE 支持通常在 BIOS 中可用。要在机器启动时使用 PXE，在 BIOS 设置中选择 <code>从网络引导（Boot from network）</code> 选项或在系统初始化期间键入功能键。</p>
 </div>
 <div class="paragraph">
-<p>In order to provide the files needed for an operating system to boot over the network, a PXE setup also requires properly configured DHCP, TFTP, and NFS servers, where:</p>
+<p>为了提供操作系统在网络上启动所需的文件，PXE 设置还需要正确配置的 DHCP、TFTP 和 NFS 服务器，其中：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Initial parameters, such as an IP address, executable boot filename and location, server name, and root path are obtained from the DHCP server.</p>
+<p>初始参数，如 IP 地址、可执行的引导文件名和位置、服务器名称和根路径，是从 DHCP 服务器获取的。</p>
 </li>
 <li>
-<p>The operating system loader file is booted using TFTP.</p>
+<p>操作系统加载程序文件使用 TFTP 进行引导。</p>
 </li>
 <li>
-<p>The file systems are loaded using NFS.</p>
+<p>文件系统使用 NFS 加载。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>When a computer PXE boots, it receives information over DHCP about where to obtain the initial boot loader file. After the host computer receives this information, it downloads the boot loader via TFTP and then executes the boot loader. In FreeBSD, the boot loader file is <span class="filename">/boot/pxeboot</span>. After <span class="filename">/boot/pxeboot</span> executes, the FreeBSD kernel is loaded and the rest of the FreeBSD bootup sequence proceeds, as described in <a href="./#boot">The FreeBSD Booting Process</a>.</p>
+<p>当计算机进行 PXE 引导时，它通过 DHCP 接收关于获取初始引导加载程序文件的信息。主机计算机接收到这些信息后，通过 TFTP 下载引导加载程序，然后执行引导加载程序。在 FreeBSD 中，引导加载程序文件是 <span class="filename">/boot/pxeboot</span>。在 <span class="filename">/boot/pxeboot</span> 执行后，FreeBSD 内核被加载，随后进行 FreeBSD 的引导过程，如 <a href="./#boot">FreeBSD引导过程</a> 中所述。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -45485,14 +45485,14 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </td>
 <td class="content">
 <div class="paragraph">
-<p>For UEFI PXE based boot, the actual boot loader file to use is <span class="filename">/boot/loader.efi</span>. See the below section <a href="./#_debugging_pxe_problems">Debugging PXE Problems</a> on how to use <span class="filename">/boot/loader.efi</span>.</p>
+<p>对于基于 UEFI PXE 的引导，要使用的实际引导加载程序文件是 <span class="filename">/boot/loader.efi</span> 。请参阅下面的章节 <a href="./#_debugging_pxe_problems">调试 PXE 问题</a>，了解如何使用 <span class="filename">/boot/loader.efi</span> 。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>This section describes how to configure these services on a FreeBSD system so that other systems can PXE boot into FreeBSD. Refer to <a href="https://man.freebsd.org/cgi/man.cgi?query=diskless&amp;sektion=8&amp;format=html">diskless(8)</a> for more information.</p>
+<p>本节介绍了如何在 FreeBSD 系统上配置这些服务，以便其他系统可以通过 PXE 引导进入 FreeBSD。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=diskless&amp;sektion=8&amp;format=html">diskless(8)</a>。</p>
 </div>
 <div class="admonitionblock caution">
 <table>
@@ -45502,16 +45502,16 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </td>
 <td class="content">
 <div class="paragraph">
-<p>As described, the system providing these services is insecure. It should live in a protected area of a network and be untrusted by other hosts.</p>
+<p>如上所述，提供这些服务的系统是不安全的。它应该存在于网络的受保护区域，并且其他主机不应信任它。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="sect3">
-<h4 id="network-pxe-nfs">34.10.1. Setting Up the PXE Environment<a class="anchor" href="#network-pxe-nfs"></a></h4>
+<h4 id="network-pxe-nfs">34.10.1. 设置 PXE 环境<a class="anchor" href="#network-pxe-nfs"></a></h4>
 <div class="paragraph">
-<p>The steps shown in this section configure the built-in NFS and TFTP servers. The next section demonstrates how to install and configure the DHCP server. In this example, the directory which will contain the files used by PXE users is <span class="filename">/b/tftpboot/FreeBSD/install</span>. It is important that this directory exists and that the same directory name is set in both <span class="filename">/etc/inetd.conf</span> and <span class="filename">/usr/local/etc/dhcpd.conf</span>.</p>
+<p>本节中显示的步骤配置了内置的 NFS 和 TFTP 服务器。下一节演示了如何安装和配置 DHCP 服务器。在本示例中，用于 PXE 用户的文件的目录是 <span class="filename">/b/tftpboot/FreeBSD/install</span>。重要的是，该目录存在，并且在 <span class="filename">/etc/inetd.conf</span> 和 <span class="filename">/usr/local/etc/dhcpd.conf</span> 中设置了相同的目录名。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -45521,7 +45521,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The command examples below assume use of the <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> shell. <a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> users will need to start a <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> shell or adapt the commands to <a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> syntax.</p>
+<p>下面的命令示例假设使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> shell。<a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=tcsh&amp;sektion=1&amp;format=html">tcsh(1)</a> 用户需要启动一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=sh&amp;sektion=1&amp;format=html">sh(1)</a> shell 或者根据 <a href="https://man.freebsd.org/cgi/man.cgi?query=csh&amp;sektion=1&amp;format=html">csh(1)</a> 语法调整命令。</p>
 </div>
 </td>
 </tr>
@@ -45530,7 +45530,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 <div class="olist arabic procedure">
 <ol class="arabic">
 <li>
-<p>Create the root directory which will contain a FreeBSD installation to be NFS mounted:</p>
+<p>创建根目录，该目录将包含一个要进行 NFS 挂载的 FreeBSD 安装。</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># export NFSROOTDIR=/b/tftpboot/FreeBSD/install</span>
@@ -45539,7 +45539,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </div>
 </li>
 <li>
-<p>Enable the NFS server by adding this line to <span class="filename">/etc/rc.conf</span>:</p>
+<p>通过将以下行添加到 <span class="filename">/etc/rc.conf</span> 来启用 NFS 服务器：</p>
 <div class="literalblock programlisting">
 <div class="content">
 <pre>nfs_server_enable=&#34;YES&#34;</pre>
@@ -45547,7 +45547,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </div>
 </li>
 <li>
-<p>Export the diskless root directory via NFS by adding the following to <span class="filename">/etc/exports</span>:</p>
+<p>通过将以下内容添加到 <span class="filename">/etc/exports</span>，将无磁盘根目录通过 NFS 导出：</p>
 <div class="literalblock programlisting">
 <div class="content">
 <pre>/b -ro -alldirs -maproot=root</pre>
@@ -45555,7 +45555,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </div>
 </li>
 <li>
-<p>Start the NFS server:</p>
+<p>启动 NFS 服务器：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># service nfsd start</span></code></pre>
@@ -45563,7 +45563,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </div>
 </li>
 <li>
-<p>Enable <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a> by adding the following line to <span class="filename">/etc/rc.conf</span>:</p>
+<p>通过将以下行添加到 <span class="filename">/etc/rc.conf</span> 来启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a>：</p>
 <div class="literalblock programlisting">
 <div class="content">
 <pre>inetd_enable=&#34;YES&#34;</pre>
@@ -45571,7 +45571,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </div>
 </li>
 <li>
-<p>Uncomment the following line in <span class="filename">/etc/inetd.conf</span> by making sure it does not start with a <code>#</code> symbol:</p>
+<p>请取消注释 <span class="filename">/etc/inetd.conf</span> 中的以下行，确保它不以 <code>#</code> 符号开头：</p>
 <div class="literalblock programlisting">
 <div class="content">
 <pre>tftp dgram udp wait root /usr/libexec/tftpd tftpd blocksize 1468 -l -s /b/tftpboot</pre>
@@ -45585,7 +45585,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The specified tftp blocksize, e.g. 1468 bytes, replaces the default size 512 bytes. Some PXE versions require the TCP version of TFTP. In this case, uncomment the second <code>tftp</code> line which contains <code>stream tcp</code>.</p>
+<p>指定的 tftp 块大小，例如 1468 字节，替换了默认大小 512 字节。某些 PXE 版本要求使用 TCP 版本的 TFTP 。在这种情况下，取消注释包含 <code>stream tcp</code> 的第二个 <code>tftp</code> 行。</p>
 </div>
 </td>
 </tr>
@@ -45593,7 +45593,7 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </div>
 </li>
 <li>
-<p>Start <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a>:</p>
+<p>启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=inetd&amp;sektion=8&amp;format=html">inetd(8)</a>：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># service inetd start</span></code></pre>
@@ -45601,10 +45601,10 @@ ifconfig_lagg0=&#34;up laggproto failover laggport re0 laggport wlan0 DHCP&#34;<
 </div>
 </li>
 <li>
-<p>Install the base system into <span class="filename">${NFSROOTDIR}</span>, either by decompressing the official archives or by rebuilding the FreeBSD kernel and userland (refer to <a href="./#makeworld">“Updating FreeBSD from Source”</a> for more detailed instructions, but do not forget to add <code>DESTDIR=<em>${NFSROOTDIR}</em></code> when running the <code>make installkernel</code> and <code>make installworld</code> commands.</p>
+<p>将基本系统安装到 <span class="filename">${NFSROOTDIR}</span> 中，可以通过解压官方存档或重新构建 FreeBSD 内核和用户空间来完成（有关更详细的说明，请参阅 <a href="./#makeworld">“从源代码更新 FreeBSD”</a> ，但在运行 <code>make installkernel</code> 和 <code>make installworld</code> 命令时不要忘记添加 <code>DESTDIR =<em>${NFSROOTDIR}</em></code> 。</p>
 </li>
 <li>
-<p>Test that the TFTP server works and can download the boot loader which will be obtained via PXE:</p>
+<p>测试 TFTP 服务器是否正常工作，并且能够通过 PXE 下载引导加载程序：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># tftp localhost</span>
@@ -45614,7 +45614,7 @@ Received 264951 bytes <span class="k">in </span>0.1 seconds</code></pre>
 </div>
 </li>
 <li>
-<p>Edit <span class="filename">${NFSROOTDIR}/etc/fstab</span> and create an entry to mount the root file system over NFS:</p>
+<p>编辑 <span class="filename">${NFSROOTDIR}/etc/fstab</span> 并创建一个条目以通过 NFS 挂载根文件系统：</p>
 <div class="literalblock programlisting">
 <div class="content">
 <pre># Device                                         Mountpoint    FSType   Options  Dump Pass
@@ -45622,11 +45622,11 @@ myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro      
 </div>
 </div>
 <div class="paragraph">
-<p>Replace <em>myhost.example.com</em> with the hostname or IP address of the NFS server. In this example, the root file system is mounted read-only in order to prevent NFS clients from potentially deleting the contents of the root file system.</p>
+<p>将 <em>myhost.example.com</em> 替换为 NFS 服务器的主机名或 IP 地址。在这个例子中，根文件系统以只读方式挂载，以防止 NFS 客户端可能删除根文件系统的内容。</p>
 </div>
 </li>
 <li>
-<p>Set the root password in the PXE environment for client machines which are PXE booting :</p>
+<p>为通过 PXE 引导的客户机在 PXE 环境中设置根密码：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># chroot ${NFSROOTDIR}</span>
@@ -45635,15 +45635,15 @@ myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro      
 </div>
 </li>
 <li>
-<p>If needed, enable <a href="https://man.freebsd.org/cgi/man.cgi?query=ssh&amp;sektion=1&amp;format=html">ssh(1)</a> root logins for client machines which are PXE booting by editing <span class="filename">${NFSROOTDIR}/etc/ssh/sshd_config</span> and enabling <code>PermitRootLogin</code>. This option is documented in <a href="https://man.freebsd.org/cgi/man.cgi?query=sshd_config&amp;sektion=5&amp;format=html">sshd_config(5)</a>.</p>
+<p>如有需要，通过编辑 <span class="filename">${NFSROOTDIR}/etc/ssh/sshd_config</span> 文件并启用 <code>PermitRootLogin</code> 选项，可以为使用 PXE 引导的客户机启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ssh&amp;sektion=1&amp;format=html">ssh(1)</a> <code>PermitRootLogin</code>。该选项在 <a href="https://man.freebsd.org/cgi/man.cgi?query=sshd_config&amp;sektion=5&amp;format=html">sshd_config(5)</a> 中有详细说明。</p>
 </li>
 <li>
-<p>Perform any other needed customizations of the PXE environment in <span class="filename">${NFSROOTDIR}</span>. These customizations could include things like installing packages or editing the password file with <a href="https://man.freebsd.org/cgi/man.cgi?query=vipw&amp;sektion=8&amp;format=html">vipw(8)</a>.</p>
+<p>在 <span class="filename">${NFSROOTDIR}</span> 中进行任何其他所需的 PXE 环境自定义。这些自定义可能包括安装软件包或使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=vipw&amp;sektion=8&amp;format=html">vipw(8)</a> 编辑密码文件。</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>When booting from an NFS root volume, <span class="filename">/etc/rc</span> detects the NFS boot and runs <span class="filename">/etc/rc.initdiskless</span>. In this case, <span class="filename">/etc</span> and <span class="filename">/var</span> need to be memory backed file systems so that these directories are writable but the NFS root directory is read-only:</p>
+<p>当从 NFS 根卷引导时，<span class="filename">/etc/rc</span> 检测到 NFS 引导并运行 <span class="filename">/etc/rc.initdiskless</span>。在这种情况下，<span class="filename">/etc</span> 和 <span class="filename">/var</span> 需要是内存支持的文件系统，以便这些目录可写，但 NFS 根目录是只读的。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45654,19 +45654,19 @@ myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro      
 </div>
 </div>
 <div class="paragraph">
-<p>When the system boots, memory file systems for <span class="filename">/etc</span> and <span class="filename">/var</span> will be created and mounted and the contents of the <span class="filename">cpio.gz</span> files will be copied into them. By default, these file systems have a maximum capacity of 5 megabytes. If your archives do not fit, which is usually the case for <span class="filename">/var</span> when binary packages have been installed, request a larger size by putting the number of 512 byte sectors needed (e.g., 5 megabytes is 10240 sectors) in <span class="filename">${NFSROOTDIR}/conf/base/etc/md_size</span> and <span class="filename">${NFSROOTDIR}/conf/base/var/md_size</span> files for <span class="filename">/etc</span> and <span class="filename">/var</span> file systems respectively.</p>
+<p>当系统启动时，将创建并挂载 <span class="filename">/etc</span> 和 <span class="filename">/var</span> 的内存文件系统，并将 <span class="filename">cpio.gz</span> 文件的内容复制到其中。默认情况下，这些文件系统的最大容量为 5 兆字节。如果您的存档不适合，通常是 <span class="filename">/var</span> 安装了二进制包的情况下，可以通过在 <span class="filename">${NFSROOTDIR}/conf/base/etc/md_size</span> 和 <span class="filename">${NFSROOTDIR}/conf/base/var/md_size</span> 文件中放入所需的 512 字节扇区数（例如，5 兆字节为 10240 扇区）来请求更大的大小，分别用于 <span class="filename">/etc</span> 和 <span class="filename">/var</span> 文件系统。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="network-pxe-setting-up-dhcp">34.10.2. Configuring the DHCP Server<a class="anchor" href="#network-pxe-setting-up-dhcp"></a></h4>
+<h4 id="network-pxe-setting-up-dhcp">34.10.2. 配置 DHCP 服务器<a class="anchor" href="#network-pxe-setting-up-dhcp"></a></h4>
 <div class="paragraph">
-<p>The DHCP server does not need to be the same machine as the TFTP and NFS server, but it needs to be accessible in the network.</p>
+<p>DHCP 服务器不需要与 TFTP 和 NFS 服务器位于同一台机器上，但它需要在网络中可访问。</p>
 </div>
 <div class="paragraph">
-<p>DHCP is not part of the FreeBSD base system but can be installed using the <a class="package" href="https://cgit.freebsd.org/ports/tree/net/isc-dhcp44-server/">net/isc-dhcp44-server</a> port or package.</p>
+<p>DHCP 不是 FreeBSD 基本系统的一部分，但可以使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/net/isc-dhcp44-server/">net/isc-dhcp44-server</a> 端口或 port 进行安装。</p>
 </div>
 <div class="paragraph">
-<p>Once installed, edit the configuration file, <span class="filename">/usr/local/etc/dhcpd.conf</span>. Configure the <code>next-server</code>, <code>filename</code>, and <code>root-path</code> settings as seen in this example:</p>
+<p>安装完成后，编辑配置文件 <span class="filename">/usr/local/etc/dhcpd.conf</span>。根据以下示例配置 <code>next-server</code>、<code>filename</code> 和 <code>root-path</code> 设置：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45691,16 +45691,16 @@ myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro      
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>next-server</code> directive is used to specify the IP address of the TFTP server.</p>
+<p><code>next-server</code> 指令用于指定 TFTP 服务器的 IP 地址。</p>
 </div>
 <div class="paragraph">
-<p>The <code>filename</code> directive defines the path to <span class="filename">/boot/pxeboot</span>. A relative filename is used, meaning that <span class="filename">/b/tftpboot</span> is not included in the path.</p>
+<p><code>filename</code> 指令定义了路径为 <span class="filename">/boot/pxeboot</span> 的文件名。使用的是相对路径，这意味着路径中不包括 <span class="filename">/b/tftpboot</span>。</p>
 </div>
 <div class="paragraph">
-<p>The <code>root-path</code> option defines the path to the NFS root file system.</p>
+<p><code>root-path</code> 选项定义了 NFS 根文件系统的路径。</p>
 </div>
 <div class="paragraph">
-<p>Once the edits are saved, enable DHCP at boot time by adding the following line to <span class="filename">/etc/rc.conf</span>:</p>
+<p>在保存编辑后，通过将以下行添加到 <span class="filename">/etc/rc.conf</span> 来在启动时启用 DHCP ：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45708,7 +45708,7 @@ myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro      
 </div>
 </div>
 <div class="paragraph">
-<p>Then start the DHCP service:</p>
+<p>然后启动 DHCP 服务：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45717,47 +45717,47 @@ myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro      
 </div>
 </div>
 <div class="sect3">
-<h4 id="_debugging_pxe_problems">34.10.3. Debugging PXE Problems<a class="anchor" href="#_debugging_pxe_problems"></a></h4>
+<h4 id="_调试_pxe_问题">34.10.3. 调试 PXE 问题<a class="anchor" href="#_调试_pxe_问题"></a></h4>
 <div class="paragraph">
-<p>Once all of the services are configured and started, PXE clients should be able to automatically load FreeBSD over the network. If a particular client is unable to connect, when that client machine boots up, enter the BIOS configuration menu and confirm that it is set to boot from the network.</p>
+<p>一旦所有服务都配置并启动完成， PXE 客户端应该能够通过网络自动加载 FreeBSD 。如果某个特定的客户端无法连接，当该客户端机器启动时，进入 BIOS 配置菜单并确认其设置为从网络启动。</p>
 </div>
 <div class="paragraph">
-<p>This section describes some troubleshooting tips for isolating the source of the configuration problem should no clients be able to PXE boot.</p>
+<p>本节介绍了一些故障排除技巧，用于确定配置问题的根源，以防止任何客户端无法进行 PXE 引导。</p>
 </div>
 <div class="sidebarblock procedure">
 <div class="content">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Use the <a class="package" href="https://cgit.freebsd.org/ports/tree/net/wireshark/">net/wireshark</a> package or port to debug the network traffic involved during the PXE booting process, which is illustrated in the diagram below.</p>
+<p>使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/net/wireshark/">net/wireshark</a> 包或 port 来调试 PXE 引导过程中涉及的网络流量，如下图所示。</p>
 <div class="imageblock">
 <div class="content">
 <img src="../../../../images/books/handbook/advanced-networking/pxe-nfs.png" alt="pxe nfs"/>
 </div>
-<div class="title">图 61. PXE Booting Process with NFS Root Mount</div>
+<div class="title">图 61. PXE 引导过程与 NFS 根目录挂载</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Client broadcasts a DHCPDISCOVER message.</p>
+<p>客户端广播一个 DHCPDISCOVER 消息。</p>
 </li>
 <li>
-<p>The DHCP server responds with the IP address, next-server, filename, and root-path values.</p>
+<p>DHCP 服务器响应 IP 地址、next-server、filename 和 root-path 的值。</p>
 </li>
 <li>
-<p>The client sends a TFTP request to next-server, asking to retrieve filename.</p>
+<p>客户端向 next-server 发送一个 TFTP 请求，请求检索文件名。</p>
 </li>
 <li>
-<p>The TFTP server responds and sends filename to client.</p>
+<p>TFTP 服务器响应并向客户端发送文件名。</p>
 </li>
 <li>
-<p>The client executes filename, which is pxeboot(8), which then loads the kernel. When the kernel executes, the root file system specified by root-path is mounted over NFS.</p>
+<p>客户端执行文件名为 pxeboot(8)，然后加载内核。当内核执行时，通过 root-path 指定的根文件系统将通过 NFS 挂载。</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>On the TFTP server, read <span class="filename">/var/log/xferlog</span> to ensure that <span class="filename">pxeboot</span> is being retrieved from the correct location. To test this example configuration:</p>
+<p>在 TFTP 服务器上，读取 <span class="filename">/var/log/xferlog</span> 以确保从正确的位置检索到 <span class="filename">pxeboot</span>。要测试此示例配置：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># tftp 192.168.0.1</span>
@@ -45766,11 +45766,11 @@ Received 264951 bytes <span class="k">in </span>0.1 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>BUGS</code> sections in <a href="https://man.freebsd.org/cgi/man.cgi?query=tftpd&amp;sektion=8&amp;format=html">tftpd(8)</a> and <a href="https://man.freebsd.org/cgi/man.cgi?query=tftp&amp;sektion=1&amp;format=html">tftp(1)</a> document some limitations with TFTP.</p>
+<p>在 <a href="https://man.freebsd.org/cgi/man.cgi?query=tftpd&amp;sektion=8&amp;format=html">tftpd(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=tftp&amp;sektion=1&amp;format=html">tftp(1)</a> 中的 <code>BUGS</code> 部分记录了 TFTP 的一些限制。</p>
 </div>
 </li>
 <li>
-<p>Make sure that the root file system can be mounted via NFS. To test this example configuration:</p>
+<p>确保可以通过 NFS 挂载根文件系统。要测试此示例配置，请执行以下操作：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># mount -t nfs 192.168.0.1:/b/tftpboot/FreeBSD/install /mnt</span></code></pre>
@@ -45778,7 +45778,7 @@ Received 264951 bytes <span class="k">in </span>0.1 seconds</code></pre>
 </div>
 </li>
 <li>
-<p>For UEFI PXE based booting, replace the <span class="filename">boot/pxeboot</span> file with the <span class="filename">boot/loader.efi</span> file:</p>
+<p>对于基于 UEFI PXE 的引导，请将 <span class="filename">boot/pxeboot</span> 文件替换为 <span class="filename">boot/loader.efi</span> 文件：</p>
 </li>
 </ol>
 </div>
@@ -45794,26 +45794,26 @@ Received 264951 bytes <span class="k">in </span>0.1 seconds</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="carp">34.11. Common Address Redundancy Protocol (CARP)<a class="anchor" href="#carp"></a></h3>
+<h3 id="carp">34.11. 通用地址冗余协议（CARP）<a class="anchor" href="#carp"></a></h3>
 <div class="paragraph">
-<p>The Common Address Redundancy Protocol (CARP) allows multiple hosts to share the same IP address and Virtual Host ID (VHID) in order to provide <em>high availability</em> for one or more services. This means that one or more hosts can fail, and the other hosts will transparently take over so that users do not see a service failure.</p>
+<p>通用地址冗余协议（CARP）允许多个主机共享相同的 IP 地址和虚拟主机 ID（VHID），以提供一个或多个服务的高可用性。这意味着一个或多个主机可能会失败，而其他主机将自动接管，使用户无法看到服务中断。</p>
 </div>
 <div class="paragraph">
-<p>In addition to the shared IP address, each host has its own IP address for management and configuration. All of the machines that share an IP address have the same VHID. The VHID for each virtual IP address must be unique across the broadcast domain of the network interface.</p>
+<p>除了共享的 IP 地址外，每个主机还有自己的 IP 地址用于管理和配置。共享同一个 IP 地址的所有机器具有相同的 VHID 。每个虚拟 IP 地址的 VHID 必须在网络接口的广播域中是唯一的。</p>
 </div>
 <div class="paragraph">
-<p>High availability using CARP is built into FreeBSD, though the steps to configure it vary slightly depending upon the FreeBSD version. This section provides the same example configuration for versions before and equal to or after FreeBSD 10.</p>
+<p>在 FreeBSD 中，使用 CARP 实现高可用性是内置的，尽管根据 FreeBSD 的版本不同，配置步骤可能略有不同。本节提供了适用于 FreeBSD 10 版本之前、以及等于或之后版本的相同示例配置。</p>
 </div>
 <div class="paragraph">
-<p>This example configures failover support with three hosts, all with unique IP addresses, but providing the same web content. It has two different masters named <code>hosta.example.org</code> and <code>hostb.example.org</code>, with a shared backup named <code>hostc.example.org</code>.</p>
+<p>这个示例配置了三个主机的故障转移支持，每个主机都有唯一的 IP 地址，但提供相同的网页内容。它有两个不同的主服务器，分别命名为 <code>hosta.example.org</code> 和 <code>hostb.example.org</code> ，还有一个共享备份命名为 <code>hostc.example.org</code> 。</p>
 </div>
 <div class="paragraph">
-<p>These machines are load balanced with a Round Robin DNS configuration. The master and backup machines are configured identically except for their hostnames and management IP addresses. These servers must have the same configuration and run the same services. When the failover occurs, requests to the service on the shared IP address can only be answered correctly if the backup server has access to the same content. The backup machine has two additional CARP interfaces, one for each of the master content server’s IP addresses. When a failure occurs, the backup server will pick up the failed master machine’s IP address.</p>
+<p>这些机器使用循环轮询 DNS 配置进行负载均衡。主备机器的配置完全相同，只是主机名和管理 IP 地址不同。这些服务器必须具有相同的配置并运行相同的服务。当发生故障切换时，只有当备份服务器可以访问相同的内容时，才能正确地回答共享 IP 地址上的服务请求。备份机器还有两个额外的 CARP 接口，分别用于主内容服务器的每个 IP 地址。当发生故障时，备份服务器将接管失败的主机器的 IP 地址。</p>
 </div>
 <div class="sect3">
-<h4 id="carp-10x">34.11.1. Using CARP on FreeBSD 10 and Later<a class="anchor" href="#carp-10x"></a></h4>
+<h4 id="carp-10x">34.11.1. 在 FreeBSD 10 及更高版本上使用 CARP<a class="anchor" href="#carp-10x"></a></h4>
 <div class="paragraph">
-<p>Enable boot-time support for CARP by adding an entry for the <span class="filename">carp.ko</span> kernel module in <span class="filename">/boot/loader.conf</span>:</p>
+<p>通过在 <span class="filename">/boot/loader.conf</span> 中为 <span class="filename">carp.ko</span> 内核模块添加条目，启用 CARP 的启动时支持。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45821,7 +45821,7 @@ Received 264951 bytes <span class="k">in </span>0.1 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To load the module now without rebooting:</p>
+<p>立即加载模块而无需重新启动：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45829,7 +45829,7 @@ Received 264951 bytes <span class="k">in </span>0.1 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For users who prefer to use a custom kernel, include the following line in the custom kernel configuration file and compile the kernel as described in <a href="./#kernelconfig">Configuring the FreeBSD Kernel</a>:</p>
+<p>对于喜欢使用自定义内核的用户，请在自定义内核配置文件中包含以下行，并按照 <a href="./#kernelconfig">配置 FreeBSD 内核</a> 中描述的方式编译内核。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45837,7 +45837,7 @@ Received 264951 bytes <span class="k">in </span>0.1 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The hostname, management IP address and subnet mask, shared IP address, and VHID are all set by adding entries to <span class="filename">/etc/rc.conf</span>. This example is for <code>hosta.example.org</code>:</p>
+<p>主机名、管理 IP 地址和子网掩码、共享 IP 地址以及 VHID 都是通过向 <span class="filename">/etc/rc.conf</span> 添加条目来设置的。以下示例适用于 <code>hosta.example.org</code>：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45847,7 +45847,7 @@ ifconfig_em0_alias0=&#34;inet vhid 1 pass testpass alias 192.168.1.50/32&#34;</p
 </div>
 </div>
 <div class="paragraph">
-<p>The next set of entries are for <code>hostb.example.org</code>. Since it represents a second master, it uses a different shared IP address and VHID. However, the passwords specified with <code>pass</code> must be identical as CARP will only listen to and accept advertisements from machines with the correct password.</p>
+<p>下一组条目是针对 <code>hostb.example.org</code> 的。由于它代表了第二个主机，所以它使用了不同的共享 IP 地址和 VHID 。然而，使用 <code>pass</code> 指定的密码必须相同，因为 CARP 只会监听和接受来自具有正确密码的机器的广告。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45857,7 +45857,7 @@ ifconfig_em0_alias0=&#34;inet vhid 2 pass testpass alias 192.168.1.51/32&#34;</p
 </div>
 </div>
 <div class="paragraph">
-<p>The third machine, <code>hostc.example.org</code>, is configured to handle failover from either master. This machine is configured with two CARPVHIDs, one to handle the virtual IP address for each of the master hosts. The CARP advertising skew, <code>advskew</code>, is set to ensure that the backup host advertises later than the master, since <code>advskew</code> controls the order of precedence when there are multiple backup servers.</p>
+<p>第三台机器 <code>hostc.example.org</code> 配置为处理来自任一主机的故障转移。该机器配置了两个 CARPVHID，一个用于处理每个主机的虚拟 IP 地址。 CARP 广告偏差 <code>advskew</code> 被设置为确保备份主机比主机广告晚，因为 <code>advskew</code> 控制多个备份服务器时的优先顺序。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45868,7 +45868,7 @@ ifconfig_em0_alias1=&#34;inet vhid 2 advskew 100 pass testpass alias 192.168.1.5
 </div>
 </div>
 <div class="paragraph">
-<p>Having two CARPVHIDs configured means that <code>hostc.example.org</code> will notice if either of the master servers becomes unavailable. If a master fails to advertise before the backup server, the backup server will pick up the shared IP address until the master becomes available again.</p>
+<p>配置了两个 CARPVHID 意味着 <code>hostc.example.org</code> 将会注意到主服务器中的任何一个不可用。如果主服务器在备份服务器之前无法进行广告宣传，备份服务器将会接管共享 IP 地址，直到主服务器再次可用。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -45878,7 +45878,7 @@ ifconfig_em0_alias1=&#34;inet vhid 2 advskew 100 pass testpass alias 192.168.1.5
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the original master server becomes available again, <code>hostc.example.org</code> will not release the virtual IP address back to it automatically. For this to happen, preemption has to be enabled. The feature is disabled by default, it is controlled via the <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> variable <code>net.inet.carp.preempt</code>. The administrator can force the backup server to return the IP address to the master:</p>
+<p>如果原始主服务器再次可用，<code>hostc.example.org</code> 不会自动将虚拟 IP 地址释放给它。要实现这一点，必须启用抢占功能。该功能默认情况下是禁用的，可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 变量 <code>net.inet.carp.preempt</code> 来控制。管理员可以强制备份服务器将 IP 地址返回给主服务器：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45890,19 +45890,19 @@ ifconfig_em0_alias1=&#34;inet vhid 2 advskew 100 pass testpass alias 192.168.1.5
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Once the configuration is complete, either restart networking or reboot each system. High availability is now enabled.</p>
+<p>配置完成后，要么重新启动网络，要么重新启动每个系统。高可用性现在已启用。</p>
 </div>
 <div class="paragraph">
-<p>CARP functionality can be controlled via several <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> variables documented in the <a href="https://man.freebsd.org/cgi/man.cgi?query=carp&amp;sektion=4&amp;format=html">carp(4)</a> manual pages. Other actions can be triggered from CARP events by using <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a>.</p>
+<p>CARP 功能可以通过 <a href="https://man.freebsd.org/cgi/man.cgi?query=sysctl&amp;sektion=8&amp;format=html">sysctl(8)</a> 变量来控制，这些变量在 <a href="https://man.freebsd.org/cgi/man.cgi?query=carp&amp;sektion=4&amp;format=html">carp(4)</a> 手册页中有详细说明。还可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 来触发 CARP 事件的其他操作。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="carp-9x">34.11.2. Using CARP on FreeBSD 9 and Earlier<a class="anchor" href="#carp-9x"></a></h4>
+<h4 id="carp-9x">34.11.2. 在 FreeBSD 9 及更早版本上使用 CARP<a class="anchor" href="#carp-9x"></a></h4>
 <div class="paragraph">
-<p>The configuration for these versions of FreeBSD is similar to the one described in the previous section, except that a CARP device must first be created and referred to in the configuration.</p>
+<p>这些版本的 FreeBSD 的配置与前一节中描述的类似，只是首先必须创建一个 CARP 设备并在配置中引用它。</p>
 </div>
 <div class="paragraph">
-<p>Enable boot-time support for CARP by loading the <span class="filename">if_carp.ko</span> kernel module in <span class="filename">/boot/loader.conf</span>:</p>
+<p>通过在 <span class="filename">/boot/loader.conf</span> 中加载 <span class="filename">if_carp.ko</span> 内核模块，启用 CARP 的启动时支持。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45910,7 +45910,7 @@ ifconfig_em0_alias1=&#34;inet vhid 2 advskew 100 pass testpass alias 192.168.1.5
 </div>
 </div>
 <div class="paragraph">
-<p>To load the module now without rebooting:</p>
+<p>立即加载模块而无需重新启动：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45918,7 +45918,7 @@ ifconfig_em0_alias1=&#34;inet vhid 2 advskew 100 pass testpass alias 192.168.1.5
 </div>
 </div>
 <div class="paragraph">
-<p>For users who prefer to use a custom kernel, include the following line in the custom kernel configuration file and compile the kernel as described in <a href="./#kernelconfig">Configuring the FreeBSD Kernel</a>:</p>
+<p>对于喜欢使用自定义内核的用户，请在自定义内核配置文件中包含以下行，并按照 <a href="./#kernelconfig">配置 FreeBSD 内核</a> 中描述的方式编译内核。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45926,7 +45926,7 @@ ifconfig_em0_alias1=&#34;inet vhid 2 advskew 100 pass testpass alias 192.168.1.5
 </div>
 </div>
 <div class="paragraph">
-<p>Next, on each host, create a CARP device:</p>
+<p>接下来，在每台主机上创建一个 CARP 设备：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45934,7 +45934,7 @@ ifconfig_em0_alias1=&#34;inet vhid 2 advskew 100 pass testpass alias 192.168.1.5
 </div>
 </div>
 <div class="paragraph">
-<p>Set the hostname, management IP address, the shared IP address, and VHID by adding the required lines to <span class="filename">/etc/rc.conf</span>. Since a virtual CARP device is used instead of an alias, the actual subnet mask of <code>/24</code> is used instead of <code>/32</code>. Here are the entries for <code>hosta.example.org</code>:</p>
+<p>通过在 <span class="filename">/etc/rc.conf</span> 中添加所需的行，设置主机名、管理 IP 地址、共享 IP 地址和 VHID。由于使用虚拟 CARP 设备而不是别名，所以使用实际的子网掩码 <code>/24</code> 而不是 <code>/32</code>。以下是 <code>hosta.example.org</code> 的条目：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45945,7 +45945,7 @@ ifconfig_carp0=&#34;vhid 1 pass testpass 192.168.1.50/24&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>On <code>hostb.example.org</code>:</p>
+<p>在 <code>hostb.example.org</code> 上：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45956,7 +45956,7 @@ ifconfig_carp0=&#34;vhid 2 pass testpass 192.168.1.51/24&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The third machine, <code>hostc.example.org</code>, is configured to handle failover from either of the master hosts:</p>
+<p>第三台机器 <code>hostc.example.org</code> 配置为处理来自任一主机的故障转移：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -45975,7 +45975,7 @@ ifconfig_carp1=&#34;vhid 2 advskew 100 pass testpass 192.168.1.51/24&#34;</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Preemption is disabled in the <span class="filename">GENERIC</span> FreeBSD kernel. If preemption has been enabled with a custom kernel, <code>hostc.example.org</code> may not release the IP address back to the original content server. The administrator can force the backup server to return the IP address to the master with the command:</p>
+<p>在 <span class="filename">GENERIC</span> FreeBSD 内核中禁用了抢占。如果使用自定义内核启用了抢占，<code>hostc.example.org</code> 可能无法将 IP 地址释放回原始内容服务器。管理员可以使用以下命令强制备份服务器将 IP 地址返回给主服务器：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -45983,30 +45983,30 @@ ifconfig_carp1=&#34;vhid 2 advskew 100 pass testpass 192.168.1.51/24&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This should be done on the <span class="filename">carp</span> interface which corresponds to the correct host.</p>
+<p>这应该在与正确主机对应的 <span class="filename">carp</span> 接口上完成。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Once the configuration is complete, either restart networking or reboot each system. High availability is now enabled.</p>
+<p>配置完成后，要么重新启动网络，要么重新启动每个系统。高可用性现在已启用。</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="network-vlan">34.12. VLANs<a class="anchor" href="#network-vlan"></a></h3>
+<h3 id="network-vlan">34.12. 虚拟局域网（VLANs）<a class="anchor" href="#network-vlan"></a></h3>
 <div class="paragraph">
-<p>VLANs are a way of virtually dividing up a network into many different subnetworks, also referred to as segmenting. Each segment will have its own broadcast domain and be isolated from other VLANs.</p>
+<p>VLAN（虚拟局域网）是一种将网络虚拟分割成许多不同子网络的方法，也被称为分段。每个分段都有自己的广播域，并与其他 VLAN 隔离开来。</p>
 </div>
 <div class="paragraph">
-<p>On FreeBSD, VLANs must be supported by the network card driver. To see which drivers support vlans, refer to the <a href="https://man.freebsd.org/cgi/man.cgi?query=vlan&amp;sektion=4&amp;format=html">vlan(4)</a> manual page.</p>
+<p>在 FreeBSD 上，VLAN 必须由网络适配器驱动程序支持。要查看哪些驱动程序支持 VLAN ，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=vlan&amp;sektion=4&amp;format=html">vlan(4)</a> 手册页。</p>
 </div>
 <div class="paragraph">
-<p>When configuring a VLAN, a couple pieces of information must be known. First, which network interface? Second, what is the VLAN tag?</p>
+<p>配置 VLAN 时，需要了解一些信息。首先，是哪个网络接口？其次， VLAN 标签是什么？</p>
 </div>
 <div class="paragraph">
-<p>To configure VLANs at run time, with a NIC of <code>em0</code> and a VLAN tag of <code>5</code> the command would look like this:</p>
+<p>要在运行时配置 VLAN ，使用网卡 <code>em0</code> 和 VLAN 标签 <code>5</code> ，命令如下：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -46021,14 +46021,14 @@ ifconfig_carp1=&#34;vhid 2 advskew 100 pass testpass 192.168.1.51/24&#34;</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>See how the interface name includes the NIC driver name and the VLAN tag, separated by a period? This is a best practice to make maintaining the VLAN configuration easy when many VLANs are present on a machine.</p>
+<p>看到接口名称包括了网卡驱动名称和 VLAN 标签，用句点分隔吗？这是一种最佳实践，可以在一个机器上存在多个 VLAN 时，方便维护 VLAN 配置。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>To configure VLANs at boot time, <span class="filename">/etc/rc.conf</span> must be updated. To duplicate the configuration above, the following will need to be added:</p>
+<p>要在启动时配置 VLAN ，必须更新 <span class="filename">/etc/rc.conf</span> 文件。要复制上述配置，需要添加以下内容：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -46037,13 +46037,13 @@ ifconfig_em0_5=&#34;inet 192.168.20.20/24&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Additional VLANs may be added, by simply adding the tag to the <code>vlans_em0</code> field and adding an additional line configuring the network on that VLAN tag’s interface.</p>
+<p>可以通过简单地将标签添加到 <code>vlans_em0</code> 字段，并添加一行额外的配置网络的代码来添加其他 VLAN。</p>
 </div>
 <div class="paragraph">
-<p>It is useful to assign a symbolic name to an interface so that when the associated hardware is changed, only a few configuration variables need to be updated. For example, security cameras need to be run over VLAN 1 on <code>em0</code>. Later, if the <code>em0</code> card is replaced with a card that uses the <a href="https://man.freebsd.org/cgi/man.cgi?query=ixgb&amp;sektion=4&amp;format=html">ixgb(4)</a> driver, all references to <code>em0.1</code> will not have to change to <code>ixgb0.1</code>.</p>
+<p>为了在关联的硬件发生更改时只需要更新少量配置变量，给接口分配一个符号名称是很有用的。例如，安全摄像头需要在 <code>em0</code> 上运行 VLAN 1 。如果以后将 <code>em0</code> 卡替换为使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=ixgb&amp;sektion=4&amp;format=html">ixgb(4)</a> 驱动程序的卡，所有对 <code>em0.1</code> 的引用都不需要更改为 <code>ixgb0.1</code>。</p>
 </div>
 <div class="paragraph">
-<p>To configure VLAN <code>5</code>, on the NIC <code>em0</code>, assign the interface name <code>cameras</code>, and assign the interface an IP address of <code><em>192.168.20.20</em></code> with a <code>24</code>-bit prefix, use this command:</p>
+<p>要配置 VLAN <code>5</code>，在网卡 <code>em0</code> 上分配接口名称 <code>cameras</code>，并为接口分配 IP 地址 <code><em>192.168.20.20</em></code> ，使用 <code>24</code> 位前缀，使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -46051,7 +46051,7 @@ ifconfig_em0_5=&#34;inet 192.168.20.20/24&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For an interface named <code>video</code>, use the following:</p>
+<p>对于名为 <code>video</code> 的接口，请使用以下内容：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -46059,7 +46059,7 @@ ifconfig_em0_5=&#34;inet 192.168.20.20/24&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To apply the changes at boot time, add the following lines to <span class="filename">/etc/rc.conf</span>:</p>
+<p>要在启动时应用更改，请将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -49260,7 +49260,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: February 20, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=84bfbc5" target="_blank">fiercex</a></p>
+      <p><strong>上次修改时间</strong>: March 20, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=1791636" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
@@ -49341,7 +49341,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
         <li><a href="#mail">Chapter 31. Electronic Mail</a></li>
         <li><a href="#network-servers">Chapter 32. 网络服务器</a></li>
         <li><a href="#firewalls">Chapter 33. 防火墙</a></li>
-        <li><a href="#advanced-networking">Chapter 34. Advanced Networking</a></li>
+        <li><a href="#advanced-networking">Chapter 34. 高级网络</a></li>
       </ul>
     </li>
     <li><a href="#appendices">Part V: 附录</a>
