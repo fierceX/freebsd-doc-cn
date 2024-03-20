@@ -65,7 +65,7 @@ po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件�
 |mail|✅||
 |network-servers|✅|✅|
 |firewalls|✅|✅|
-|advanced-networking|✅||
+|advanced-networking|✅|✅|
 |第五部分|||
 |partv|✅|✅|
 |mirrors|✅||
