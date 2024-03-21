@@ -1,7 +1,15 @@
+---
+description: '翻译说明'
+part: 翻译说明
+path: /translators
+showBookMenu: true
+title: '翻译说明'
+weight: 5
+---
+
 # freebsd 文档翻译计划
 
 freebsd 官方文档的中文文档年久失修，由于 freebsd 官方文档使用的是 asciidoctor (.adoc) 格式文档，并且已经有 po4a 工具进行辅助翻译，所以目前该项目仍然使用该工具进行翻译，并且使用官方网站模板进行静态部署。  
-当前部署地址：[https://free.bsd-doc.org](https://free.bsd-doc.org)
 
 ## 翻译流程
 
@@ -19,6 +27,8 @@ po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件�
    github action会对文档进行自动部署，在目前部署中，会生成`自动翻译`语言选项的内容，该内容会将无校对带有`fuzzy`标记的文本也进行翻译显示。
 
 ## 翻译进度
+
+我们首先对 HandBook 进行了翻译，目前进度如下：
 
 |章节|自动翻译|第一轮校对|
 |-|-|-|
@@ -74,3 +84,7 @@ po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件�
 |pgpkeys|✅||
 |glossary|✅||
 |colophon|✅||
+
+# 参与
+
+目前仅我一个人对上述进行翻译的文档进行校验，欢迎小伙伴一起进行翻译校验，直接提交PR即可。
