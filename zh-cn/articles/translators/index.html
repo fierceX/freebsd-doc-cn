@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="翻译说明"/>
+  <meta name="keywords" content=""/>
+  <meta name="copyright" content="1995-2024 The FreeBSD Foundation" />
+  <link rel="canonical" href="https://free.bsd-doc.org/zh-cn/articles/translators/" />
+
+  <title>翻译说明 |  FreeBSD 中文文档</title>
+
+  <meta name="theme-color" content="#790000">
+  <meta name="color-scheme" content="system light dark high-contrast">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.0/fuse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+
+
+    <link rel="shortcut icon" href="https://free.bsd-doc.org/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.min.css">
+    <link rel="stylesheet" href="https://free.bsd-doc.org/css/font-awesome-min.css">
+    <script defer src="/js/theme-chooser.min.js"></script>
+    <script defer src="/js/copy-clipboard.min.js"></script>
+    <script defer src="/js/search.min.js"></script>
+    <script defer src="/js/fssearch.min.js"></script>
+
+  
+  
+    
+    <meta property="og:title" content="翻译说明" />
+    <meta property="og:description" content="翻译说明" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://free.bsd-doc.orgfavicon.ico"/>
+    <meta property="og:image:alt" content="FreeBSD Logo">
+    <meta property="og:locale" content="zh-cn" />
+    <meta property="og:url" content="https://free.bsd-doc.org/zh-cn/articles/translators/" />
+    <meta property="og:site_name" content="FreeBSD 中文文档" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "url": "https:\/\/free.bsd-doc.org\/zh-cn\/articles\/translators\/",
+        "name": "FreeBSD 中文文档",
+        "headline": "FreeBSD 中文文档",
+        "description": "FreeBSD 中文文档"
+      }
+    </script>
+    
+
+  
+</head>
+
+
+  <body>
+    <header>
+  <div class="header-container">
+    <div class="logo-menu-bars-container">
+      <a href="https://free.bsd-doc.org" class="logo">
+        <img src="https://free.bsd-doc.org/images/FreeBSD-monochromatic.svg" width="160" height="50" alt="FreeBSD logo" />
+      </a>
+      <label class="menu-bars" for="menu-bars">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </label>
+    </div>
+    <input id="menu-bars" type="checkbox" />
+    
+    <div class="search-donate-container">
+      
+      <form class="search" method="get" id="search-header-form" action="https://free.bsd-doc.org/zh-cn/search" name="search-header-form">
+        <input id="search-query" name="s" type="text" size="20" maxlength="255" value="" />
+        <button>
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </form>
+      <div class="donate">
+        <a href="https://github.com/fierceX/freebsd-doc-cn" target="_blank">
+          <span class="heart">♥</span>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+    
+<main class="main-wrapper-article">
+  <div class="article">
+    <h1 class="title">翻译说明</h1>
+    
+    
+      <div class="admonitionblock note">
+        <p>
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          如果发现翻译错误，请直接 <a href="https://github.com/fierceX/freebsd-doc-cn/pulls" target="_blank">发起PR修改</a>。
+        </p>
+      </div>
+    
+    
+    
+    
+    <div class="toc-mobile">
+      <h3>目录</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#翻译流程">翻译流程</a></li>
+    <li><a href="#翻译进度">翻译进度</a></li>
+  </ul>
+</nav>
+    </div>
+    <h1 id="freebsd-文档翻译计划">freebsd 文档翻译计划</h1>
+<p>freebsd 官方文档的中文文档年久失修，由于 freebsd 官方文档使用的是 asciidoctor (.adoc) 格式文档，并且已经有 po4a 工具进行辅助翻译，所以目前该项目仍然使用该工具进行翻译，并且使用官方网站模板进行静态部署。</p>
+<h2 id="翻译流程">翻译流程</h2>
+<p>po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件，该文件只包含一对对需要翻译的文档块，屏蔽了格式细节（仍有少量格式出现在翻译块中），那么只需要对 po 文件进行翻译，然后再使用 po4a 工具对源文档进行还原翻译即可。po 文件可以采用翻译引擎的 api 进行自动机器翻译，加快翻译效率，人工只需要进行校对即可。</p>
+<ol>
+<li>定期同步<br>
+上游子模块在<code>Upstream</code>，定期对上游文档同步，将原始英文文档复制到website目录下，并且生成待翻译的 po 文件。</li>
+<li>自动翻译<br>
+对上一步生成的 po 文件，使用翻译存储器对 po 文件进行自动翻译，该步骤会将历史翻译过的译文直接进行翻译，并将处理后的 po 文件写入<code>zh-cn</code>目录中。</li>
+<li>机器翻译<br>
+使用机器翻译引擎，对待翻译的 po 文件进行翻译，并打上<code>fuzzy</code>标签，结果会写入源文件。</li>
+<li>人工校验<br>
+人工对<code>zh-cn</code>中的 po 文件进行校验，对带有<code>fuzzy</code>标记的文档对进行校对，若涉及到一些链接或不需要翻译的术语，可将<code>msgstr</code>中的内容置空，当一个文档对校对完毕时，删除其<code>fuzzy</code>标记。并进行PR。</li>
+<li>自动构建部署<br>
+github action会对文档进行自动部署，在目前部署中，会生成<code>自动翻译</code>语言选项的内容，该内容会将无校对带有<code>fuzzy</code>标记的文本也进行翻译显示。</li>
+</ol>
+<h2 id="翻译进度">翻译进度</h2>
+<p>我们首先对 HandBook 进行了翻译，目前进度如下：</p>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>自动翻译</th>
+<th>第一轮校对</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>introduction</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>preface</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>第一部分</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>parti</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>introduction</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>bsdinstall</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>basics</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ports</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>x11</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>wayland</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>network</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>第二部分</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>partii</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>desktop</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>multimedia</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>kernelconfig</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>printing</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>linuxemu</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>wine</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>第三部分</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>partiii</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>config</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>boot</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>security</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>jails</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>mac</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>audit</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>disks</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>geom</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>zfs</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>filesystems</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>virtualization</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>l10n</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>cutting</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>dtrace</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>usb</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>第四部分</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>partiv</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>serialcomms</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>ppp-and-slip</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>mail</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>network-servers</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>firewalls</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>advanced-networking</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>第五部分</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>partv</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>mirrors</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>bibliography</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>eresources</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>pgpkeys</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>glossary</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>colophon</td>
+<td>✅</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="参与">参与</h1>
+<p>目前仅我一个人对上述进行翻译的文档进行校验，欢迎小伙伴一起进行翻译校验，直接提交PR即可。</p>
+
+    
+    <hr />
+    <div class="last-modified">
+      <p><strong>上次修改时间</strong>: March 21, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=0aafe98" target="_blank">fiercex</a></p>
+    </div>
+    
+  </div>
+  <aside class="toc">
+    <div class="toc-content">
+      <h3>目录</h3>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#翻译流程">翻译流程</a></li>
+    <li><a href="#翻译进度">翻译进度</a></li>
+  </ul>
+</nav>
+      <hr />
+      <div class="resources">
+        <h3>Resources</h3>
+        
+      </div>
+    </div>
+  </aside>
+</main>
+
+    <footer>
+  <div class="footer-container">
+    <section class="logo-column">
+          <img src="https://free.bsd-doc.org/images/FreeBSD-colors.svg" width="160" height="50" alt="FreeBSD logo" />
+        <div class="options-container">
+          
+            <div class="language-container">
+              <a id="languages" href="https://free.bsd-doc.org/zh-cn/languages">
+                
+                <img src="https://free.bsd-doc.org/images/language.png" class="language-image" alt="Choose language">
+                <span>简体中文</span>
+              </a>
+            </div>
+          
+          <div class="theme-container">
+            <select id="theme-chooser">
+	      <option value="theme-system">System</option>
+              <option value="theme-light">Light</option>
+              <option value="theme-dark">Dark</option>
+              <option value="theme-high-contrast">High contrast</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <section class="copyright-column">
+        <p>&copy; 1994-2024 The FreeBSD Project. All rights reserved</p>
+        <span>Made with <span class="heart">♥</span> by the FreeBSD Community</span>
+      </section>
+  </div>
+</footer>
+
+  </body>
+</html>
