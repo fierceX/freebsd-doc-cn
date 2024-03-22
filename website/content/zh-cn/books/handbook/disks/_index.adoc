@@ -1,17 +1,17 @@
 ---
-description: 'This chapter covers the use of disks and storage media in FreeBSD. This includes SCSI and IDE disks, CD and DVD media, memory-backed disks, and USB storage devices.'
+description: '本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、 CD 和 DVD 介质、内存支持的磁盘以及 USB 存储设备。'
 next: books/handbook/geom
-part: 'Part III. System Administration'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/audit
 showBookMenu: true
 tags: ["storage", "disks", "gpart", "mount", "quotas", "encrypt", "GPT", "cdrecord", "NTFS", "quotas", "swap", "HAST", "CD", "DVD", "resizing", "growing"]
-title: 'Chapter 20. Storage'
+title: '第 20 章 存储'
 weight: 24
 ---
 
 [[disks]]
-= Storage
+= 存储
 :doctype: book
 :toc: macro
 :toclevels: 2
@@ -46,42 +46,42 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[disks-synopsis]]
-== Synopsis
+== 简介
 
-This chapter covers the use of disks and storage media in FreeBSD. This includes SCSI and IDE disks, CD and DVD media, memory-backed disks, and USB storage devices.
+本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、CD 和 DVD 媒体、内存支持的磁盘以及 USB 存储设备。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* How to add additional hard disks to a FreeBSD system.
-* How to grow the size of a disk's partition on FreeBSD.
-* How to configure FreeBSD to use USB storage devices.
-* How to use CD and DVD media on a FreeBSD system.
-* How to use the backup programs available under FreeBSD.
-* How to set up memory disks.
-* What file system snapshots are and how to use them efficiently.
-* How to use quotas to limit disk space usage.
-* How to encrypt disks and swap to secure them against attackers.
-* How to configure a highly available storage network.
+* 如何向 FreeBSD 系统添加额外的硬盘。
+* 如何在 FreeBSD 上扩大磁盘分区的大小。
+* 如何配置 FreeBSD 以使用 USB 存储设备。
+* 如何在 FreeBSD 系统上使用 CD 和 DVD 媒体。
+* 如何使用 FreeBSD 下可用的备份程序。
+* 如何设置内存磁盘。
+* 文件系统快照是什么以及如何高效使用它们。
+* 如何使用配额限制磁盘空间使用。
+* 如何加密磁盘和交换空间以防止攻击者的攻击。
+* 如何配置高可用存储网络。
 
-Before reading this chapter, you should:
+在阅读本章之前，您应该：
 
-* Know how to crossref:kernelconfig[kernelconfig,configure and install a new FreeBSD kernel].
+* 了解如何 crossref:kernelconfig[kernelconfig,配置和安装新的 FreeBSD 内核]。
 
 [[disks-adding]]
-== Adding Disks
+== 添加磁盘
 
-This section describes how to add a new SATA disk to a machine that currently only has a single drive. First, turn off the computer and install the drive in the computer following the instructions of the computer, controller, and drive manufacturers. Reboot the system and become `root`.
+本节描述了如何将一个新的 SATA 硬盘添加到目前只有一个驱动器的计算机中。首先，关闭计算机，并按照计算机、控制器和硬盘制造商的说明将硬盘安装到计算机中。重新启动系统并成为 `root` 用户。
 
-Inspect [.filename]#/var/run/dmesg.boot# to ensure the new disk was found. In this example, the newly added SATA drive will appear as [.filename]#ada1#.
+检查 [.filename]#/var/run/dmesg.boot# 确保新的磁盘被找到。在这个例子中，新添加的 SATA 驱动器将会显示为 [.filename]#ada1#。
 
-For this example, a single large partition will be created on the new disk. The http://en.wikipedia.org/wiki/GUID_Partition_Table[GPT] partitioning scheme will be used in preference to the older and less versatile MBR scheme.
+对于这个示例，将在新磁盘上创建一个单独的大分区。优先使用 http://en.wikipedia.org/wiki/GUID_Partition_Table[GPT] 分区方案，而不是较旧且功能较少的 MBR 方案。
 
 [NOTE]
 ====
-If the disk to be added is not blank, old partition information can be removed with `gpart delete`. See man:gpart[8] for details.
+如果要添加的磁盘不是空白的，则可以使用 `gpart delete` 命令删除旧的分区信息。有关详细信息，请参阅 man:gpart[8]。
 ====
 
-The partition scheme is created, and then a single partition is added. To improve performance on newer disks with larger hardware block sizes, the partition is aligned to one megabyte boundaries:
+创建了分区方案，然后添加了一个单独的分区。为了提高在具有更大硬件块大小的新磁盘上的性能，该分区被对齐到每个一兆字节边界。
 
 [source, shell]
 ....
@@ -89,9 +89,9 @@ The partition scheme is created, and then a single partition is added. To improv
 # gpart add -t freebsd-ufs -a 1M ada1
 ....
 
-Depending on use, several smaller partitions may be desired. See man:gpart[8] for options to create partitions smaller than a whole disk.
+根据使用情况，可能需要创建几个较小的分区。有关创建小于整个磁盘的分区的选项，请参阅 man:gpart[8]。
 
-The disk partition information can be viewed with `gpart show`:
+可以使用 `gpart show` 命令查看磁盘分区信息：
 
 [source, shell]
 ....
@@ -102,14 +102,14 @@ The disk partition information can be viewed with `gpart show`:
   1465145344        1678        - free -  (839K)
 ....
 
-A file system is created in the new partition on the new disk:
+在新磁盘的新分区上创建了一个文件系统：
 
 [source, shell]
 ....
 # newfs -U /dev/ada1p1
 ....
 
-An empty directory is created as a _mountpoint_, a location for mounting the new disk in the original disk's file system:
+一个空目录被创建为 _mountpoint_，用于在原始磁盘的文件系统中挂载新的磁盘：
 
 [source, shell]
 ....
