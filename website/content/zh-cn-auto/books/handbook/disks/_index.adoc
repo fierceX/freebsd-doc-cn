@@ -32,7 +32,10 @@ ifndef::book[]
 include::shared/authors.adoc[]
 include::shared/mirrors.adoc[]
 include::shared/releases.adoc[]
-include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/{{% lang %}}/teams.adoc[] include::shared/{{% lang %}}/mailing-lists.adoc[] include::shared/{{% lang %}}/urls.adoc[]
+include::shared/attributes/attributes-{{% lang %}}.adoc[]
+include::shared/{{% lang %}}/teams.adoc[]
+include::shared/{{% lang %}}/mailing-lists.adoc[]
+include::shared/{{% lang %}}/urls.adoc[]
 toc::[]
 endif::[]
 ifdef::backend-pdf,backend-epub3[]
@@ -116,7 +119,7 @@ endif::[]
 # mkdir /newdisk
 ....
 
-最后，将一个条目添加到 [/etc/fstab] 文件中，以便新的磁盘在启动时自动挂载：
+最后，将一个条目添加到 [.filename]#/etc/fstab# 文件中，以便新的磁盘在启动时自动挂载：
 
 [.programlisting]
 ....
@@ -133,9 +136,9 @@ endif::[]
 [[disks-growing]]
 == 调整和扩展磁盘大小
 
-磁盘的容量可以增加而不影响已有的数据。这在虚拟机中经常发生，当虚拟磁盘太小而需要扩大时。有时候，磁盘镜像被写入到 USB 存储设备中，但没有使用完整的容量。在这里，我们将描述如何调整或“增加”磁盘内容以利用增加的容量。
+磁盘的容量可以增加而不影响已有的数据。这在虚拟机中经常发生，当虚拟磁盘太小而需要扩大时。有时候，磁盘镜像被写入到 USB 存储设备中，但没有使用完整的容量。在这里，我们将描述如何调整或 _增加_ 磁盘内容以利用增加的容量。
 
-通过检查 [/var/run/dmesg.boot] 来确定要调整大小的磁盘的设备名称。在这个例子中，系统中只有一个 SATA 磁盘，所以该驱动器将显示为 ada0 。
+通过检查 [.filename]#/var/run/dmesg.boot# 来确定要调整大小的磁盘的设备名称。在这个例子中，系统中只有一个 SATA 磁盘，所以该驱动器将显示为 ada0 。
 
 列出磁盘上的分区以查看当前配置：
 
@@ -151,7 +154,7 @@ endif::[]
 
 [NOTE]
 ====
-如果磁盘使用 http://en.wikipedia.org/wiki/GUID_Partition_Table[GPT] 分区方案进行格式化，可能会显示为“损坏”，因为 GPT 备份分区表不再位于驱动器的末尾。使用 `gpart` 修复备份分区表。
+如果磁盘使用 http://en.wikipedia.org/wiki/GUID_Partition_Table[GPT] 分区方案进行格式化，可能会显示为 _损坏（corrupted）_，因为 GPT 备份分区表不再位于驱动器的末尾。使用 `gpart` 修复备份分区表。
 
 [source, shell]
 ....
