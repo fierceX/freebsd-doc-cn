@@ -55,7 +55,7 @@ po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件�
 |filesystems|✅|✅|
 |virtualization|✅||
 |l10n|✅||
-|cutting|✅||
+|cutting|✅|✅|
 |dtrace|✅|✅|
 |usb|✅||
 |第四部分|||
