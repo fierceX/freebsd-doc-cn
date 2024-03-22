@@ -59,7 +59,7 @@ fixup_includes()
 {
 	# Replace ...shared/en/... with shared/$LANGUAGE
 	# content/en with content/$LANGUAGE in includes
-	sed -i '' -E -e "s,include::(.*)shared/en/,include::\1shared/${2}/," \
+	sed -i -E -e "s,include::(.*)shared/en/,include::\1shared/${2}/," \
 		-e "s,\{include-path\}(contrib*),content/en/articles/contributors/\1," \
 		-e "s,include-path: content/en/,include-path: content/${2}/," \
 		-e "s,(include::.*)contrib-develinmemoriam(.*),include::{include-path}contrib-develinmemoriam\2," \
@@ -130,6 +130,6 @@ for adoc_orig in $(find "$COMPONENT/content/en/$SEARCH_RESTRICT" -name "*.adoc")
 	fixup_lists "${adoc_lang}"
 	fixup_Meun "${adoc_lang}"
 	fixup_Toc "${adoc_lang}"
-	# fixup_includes "${adoc_lang}" "${LANGUAGE}"
+	fixup_includes "${adoc_lang}" "${LANGUAGE}"
 done
 
