@@ -1409,7 +1409,7 @@
   <ul>
     <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-synopsis">20.1. 简介</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-adding">20.2. 添加磁盘</a></li>
-    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-growing">20.3. Resizing and Growing Disks</a></li>
+    <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
     <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#usb-disks">20.4. USB Storage Devices</a>
       <ul>
         <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/disks/#_device_configuration">20.4.1. Device Configuration</a></li>
@@ -2514,10 +2514,10 @@
   <ul>
     <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#pgpkeys-officers">D.1. Officers</a>
       <ul>
-        <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#_security_officer_name_security_officer_email">D.1.1. {security-officer-name} <code><{security-officer-email}></code></a></li>
-        <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#_core_secretary_name_core_secretaryfreebsd_org">D.1.2. {core-secretary-name} <code><core-secretary@FreeBSD.org></code></a></li>
-        <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#_portmgr_secretary_name_portmgr_secretary_email">D.1.3. {portmgr-secretary-name} <code><{portmgr-secretary-email}></code></a></li>
-        <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#_doceng_secretaryfreebsd_org">D.1.4. <code><doceng-secretary@FreeBSD.org></code></a></li>
+        <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#_security_officer_team_security_officerfreebsd_org">D.1.1. Security Officer Team <code><security-officer@FreeBSD.org></code></a></li>
+        <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#_core_team_secretary_core_secretaryfreebsd_org">D.1.2. Core Team Secretary <code><core-secretary@FreeBSD.org></code></a></li>
+        <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#_ports_management_team_secretary_portmgr_secretaryfreebsd_org">D.1.3. Ports Management Team Secretary <code><portmgr-secretary@FreeBSD.org></code></a></li>
+        <li><a href="https://free.bsd-doc.org/zh-cn/books/handbook/pgpkeys/#_doceng_secretaryfreebsd_org">D.1.4. <code>doceng-secretary@FreeBSD.org</code></a></li>
       </ul>
     </li>
   </ul>
@@ -2633,7 +2633,7 @@
   <ul>
     <li><a href="#disks-synopsis">20.1. 简介</a></li>
     <li><a href="#disks-adding">20.2. 添加磁盘</a></li>
-    <li><a href="#disks-growing">20.3. Resizing and Growing Disks</a></li>
+    <li><a href="#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
     <li><a href="#usb-disks">20.4. USB Storage Devices</a>
       <ul>
         <li><a href="#_device_configuration">20.4.1. Device Configuration</a></li>
@@ -2841,7 +2841,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, an entry is added to <span class="filename">/etc/fstab</span> so the new disk will be mounted automatically at startup:</p>
+<p>最后，将一个条目添加到 <span class="filename">/etc/fstab</span> 文件中，以便新的磁盘在启动时自动挂载：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -2849,7 +2849,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>The new disk can be mounted manually, without restarting the system:</p>
+<p>新的磁盘可以手动挂载，无需重新启动系统：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2859,16 +2859,16 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="disks-growing">20.3. Resizing and Growing Disks<a class="anchor" href="#disks-growing"></a></h2>
+<h2 id="disks-growing">20.3. 调整和扩展磁盘大小<a class="anchor" href="#disks-growing"></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A disk’s capacity can increase without any changes to the data already present. This happens commonly with virtual machines, when the virtual disk turns out to be too small and is enlarged. Sometimes a disk image is written to a USB memory stick, but does not use the full capacity. Here we describe how to resize or <em>grow</em> disk contents to take advantage of increased capacity.</p>
+<p>磁盘的容量可以增加而不影响已有的数据。这在虚拟机中经常发生，当虚拟磁盘太小而需要扩大时。有时候，磁盘镜像被写入到 USB 存储设备中，但没有使用完整的容量。在这里，我们将描述如何调整或 <em>增加</em> 磁盘内容以利用增加的容量。</p>
 </div>
 <div class="paragraph">
-<p>Determine the device name of the disk to be resized by inspecting <span class="filename">/var/run/dmesg.boot</span>. In this example, there is only one SATA disk in the system, so the drive will appear as <span class="filename">ada0</span>.</p>
+<p>通过检查 <span class="filename">/var/run/dmesg.boot</span> 来确定要调整大小的磁盘的设备名称。在这个例子中，系统中只有一个 SATA 磁盘，所以该驱动器将显示为 ada0 。</p>
 </div>
 <div class="paragraph">
-<p>List the partitions on the disk to see the current configuration:</p>
+<p>列出磁盘上的分区以查看当前配置：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2888,7 +2888,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the disk was formatted with the <a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> partitioning scheme, it may show as &#34;corrupted&#34; because the GPT backup partition table is no longer at the end of the drive. Fix the backup partition table with <code>gpart</code>:</p>
+<p>如果磁盘使用 <a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> 分区方案进行格式化，可能会显示为 <em>损坏（corrupted）</em>，因为 GPT 备份分区表不再位于驱动器的末尾。使用 <code>gpart</code> 修复备份分区表。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2901,7 +2901,7 @@ ada0 recovered</code></pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>Now the additional space on the disk is available for use by a new partition, or an existing partition can be expanded:</p>
+<p>现在，磁盘上的额外空间可供新分区使用，或者可以扩展现有分区：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5701,7 +5701,7 @@ esac</pre>
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: March 22, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=6b52021" target="_blank">github actions</a></p>
+      <p><strong>上次修改时间</strong>: March 22, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=e4a5121" target="_blank">github actions</a></p>
     </div>
     
     <div class="buttons">
@@ -5743,7 +5743,7 @@ esac</pre>
   <ul>
     <li><a href="#disks-synopsis">20.1. 简介</a></li>
     <li><a href="#disks-adding">20.2. 添加磁盘</a></li>
-    <li><a href="#disks-growing">20.3. Resizing and Growing Disks</a></li>
+    <li><a href="#disks-growing">20.3. 调整和扩展磁盘大小</a></li>
     <li><a href="#usb-disks">20.4. USB Storage Devices</a>
       <ul>
         <li><a href="#_device_configuration">20.4.1. Device Configuration</a></li>
