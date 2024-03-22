@@ -335,7 +335,7 @@
         <li><a href="#jails">Chapter 17. Jails 和容器</a></li>
         <li><a href="#mac">Chapter 18. 强制访问控制</a></li>
         <li><a href="#audit">Chapter 19. 安全事件审计</a></li>
-        <li><a href="#disks">Chapter 20. Storage</a></li>
+        <li><a href="#disks">Chapter 20. 存储</a></li>
         <li><a href="#geom">Chapter 21. GEOM: Modular Disk Transformation Framework</a></li>
         <li><a href="#zfs">Chapter 22. Z 文件系统（ZFS）</a></li>
         <li><a href="#filesystems">Chapter 23. 其他文件系统</a></li>
@@ -22665,71 +22665,71 @@ fi</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="disks">Chapter 20. Storage<a class="anchor" href="#disks"></a></h2>
+<h2 id="disks">Chapter 20. 存储<a class="anchor" href="#disks"></a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="disks-synopsis">20.1. Synopsis<a class="anchor" href="#disks-synopsis"></a></h3>
+<h3 id="disks-synopsis">20.1. 简介<a class="anchor" href="#disks-synopsis"></a></h3>
 <div class="paragraph">
-<p>This chapter covers the use of disks and storage media in FreeBSD. This includes SCSI and IDE disks, CD and DVD media, memory-backed disks, and USB storage devices.</p>
+<p>本章介绍了在 FreeBSD 中使用磁盘和存储介质的方法。这包括 SCSI 和 IDE 磁盘、CD 和 DVD 媒体、内存支持的磁盘以及 USB 存储设备。</p>
 </div>
 <div class="paragraph">
-<p>After reading this chapter, you will know:</p>
+<p>阅读完本章后，您将了解：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>How to add additional hard disks to a FreeBSD system.</p>
+<p>如何向 FreeBSD 系统添加额外的硬盘。</p>
 </li>
 <li>
-<p>How to grow the size of a disk’s partition on FreeBSD.</p>
+<p>如何在 FreeBSD 上扩大磁盘分区的大小。</p>
 </li>
 <li>
-<p>How to configure FreeBSD to use USB storage devices.</p>
+<p>如何配置 FreeBSD 以使用 USB 存储设备。</p>
 </li>
 <li>
-<p>How to use CD and DVD media on a FreeBSD system.</p>
+<p>如何在 FreeBSD 系统上使用 CD 和 DVD 媒体。</p>
 </li>
 <li>
-<p>How to use the backup programs available under FreeBSD.</p>
+<p>如何使用 FreeBSD 下可用的备份程序。</p>
 </li>
 <li>
-<p>How to set up memory disks.</p>
+<p>如何设置内存磁盘。</p>
 </li>
 <li>
-<p>What file system snapshots are and how to use them efficiently.</p>
+<p>文件系统快照是什么以及如何高效使用它们。</p>
 </li>
 <li>
-<p>How to use quotas to limit disk space usage.</p>
+<p>如何使用配额限制磁盘空间使用。</p>
 </li>
 <li>
-<p>How to encrypt disks and swap to secure them against attackers.</p>
+<p>如何加密磁盘和交换空间以防止攻击者的攻击。</p>
 </li>
 <li>
-<p>How to configure a highly available storage network.</p>
+<p>如何配置高可用存储网络。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Before reading this chapter, you should:</p>
+<p>在阅读本章之前，您应该：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Know how to <a href="./#kernelconfig">configure and install a new FreeBSD kernel</a>.</p>
+<p>了解如何 <a href="./#kernelconfig">配置和安装新的 FreeBSD 内核</a>。</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="disks-adding">20.2. Adding Disks<a class="anchor" href="#disks-adding"></a></h3>
+<h3 id="disks-adding">20.2. 添加磁盘<a class="anchor" href="#disks-adding"></a></h3>
 <div class="paragraph">
-<p>This section describes how to add a new SATA disk to a machine that currently only has a single drive. First, turn off the computer and install the drive in the computer following the instructions of the computer, controller, and drive manufacturers. Reboot the system and become <code>root</code>.</p>
+<p>本节描述了如何将一个新的 SATA 硬盘添加到目前只有一个驱动器的计算机中。首先，关闭计算机，并按照计算机、控制器和硬盘制造商的说明将硬盘安装到计算机中。重新启动系统并成为 <code>root</code> 用户。</p>
 </div>
 <div class="paragraph">
-<p>Inspect <span class="filename">/var/run/dmesg.boot</span> to ensure the new disk was found. In this example, the newly added SATA drive will appear as <span class="filename">ada1</span>.</p>
+<p>检查 <span class="filename">/var/run/dmesg.boot</span> 确保新的磁盘被找到。在这个例子中，新添加的 SATA 驱动器将会显示为 <span class="filename">ada1</span>。</p>
 </div>
 <div class="paragraph">
-<p>For this example, a single large partition will be created on the new disk. The <a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> partitioning scheme will be used in preference to the older and less versatile MBR scheme.</p>
+<p>对于这个示例，将在新磁盘上创建一个单独的大分区。优先使用 <a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> 分区方案，而不是较旧且功能较少的 MBR 方案。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22739,14 +22739,14 @@ fi</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the disk to be added is not blank, old partition information can be removed with <code>gpart delete</code>. See <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> for details.</p>
+<p>如果要添加的磁盘不是空白的，则可以使用 <code>gpart delete</code> 命令删除旧的分区信息。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a>。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>The partition scheme is created, and then a single partition is added. To improve performance on newer disks with larger hardware block sizes, the partition is aligned to one megabyte boundaries:</p>
+<p>创建了分区方案，然后添加了一个单独的分区。为了提高在具有更大硬件块大小的新磁盘上的性能，该分区被对齐到每个一兆字节边界。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22755,10 +22755,10 @@ fi</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Depending on use, several smaller partitions may be desired. See <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a> for options to create partitions smaller than a whole disk.</p>
+<p>根据使用情况，可能需要创建几个较小的分区。有关创建小于整个磁盘的分区的选项，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gpart&amp;sektion=8&amp;format=html">gpart(8)</a>。</p>
 </div>
 <div class="paragraph">
-<p>The disk partition information can be viewed with <code>gpart show</code>:</p>
+<p>可以使用 <code>gpart show</code> 命令查看磁盘分区信息：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22770,7 +22770,7 @@ fi</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A file system is created in the new partition on the new disk:</p>
+<p>在新磁盘的新分区上创建了一个文件系统：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22778,7 +22778,7 @@ fi</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>An empty directory is created as a <em>mountpoint</em>, a location for mounting the new disk in the original disk’s file system:</p>
+<p>一个空目录被创建为 <em>mountpoint</em>，用于在原始磁盘的文件系统中挂载新的磁盘：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23037,7 +23037,7 @@ ugen0.3: &lt;Simple Drive STECH&gt; at usbus0, <span class="nv">cfg</span><span 
 </div>
 </div>
 <div class="paragraph">
-<p>If the device has not been formatted, refer to <a href="#disks-adding">Adding Disks</a> for instructions on how to format and create partitions on the USB drive. If the drive comes with a file system, it can be mounted by <code>root</code> using the instructions in <a href="./#mount-unmount">“Mounting and Unmounting File Systems”</a>.</p>
+<p>If the device has not been formatted, refer to <a href="#disks-adding">添加磁盘</a> for instructions on how to format and create partitions on the USB drive. If the drive comes with a file system, it can be mounted by <code>root</code> using the instructions in <a href="./#mount-unmount">“Mounting and Unmounting File Systems”</a>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -24729,7 +24729,7 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 <li>
 <p>Add the New Hard Drive</p>
 <div class="paragraph">
-<p>Install the new drive to the system as explained in <a href="#disks-adding">Adding Disks</a>. For the purposes of this example, a new hard drive partition has been added as <span class="filename">/dev/ad4s1c</span> and <span class="filename">/dev/ad0s1*</span> represents the existing standard FreeBSD partitions.</p>
+<p>Install the new drive to the system as explained in <a href="#disks-adding">添加磁盘</a>. For the purposes of this example, a new hard drive partition has been added as <span class="filename">/dev/ad4s1c</span> and <span class="filename">/dev/ad0s1*</span> represents the existing standard FreeBSD partitions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -49298,7 +49298,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: March 22, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=50a5975" target="_blank">fiercex</a></p>
+      <p><strong>上次修改时间</strong>: March 22, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=404b01b" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
@@ -49361,7 +49361,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
         <li><a href="#jails">Chapter 17. Jails 和容器</a></li>
         <li><a href="#mac">Chapter 18. 强制访问控制</a></li>
         <li><a href="#audit">Chapter 19. 安全事件审计</a></li>
-        <li><a href="#disks">Chapter 20. Storage</a></li>
+        <li><a href="#disks">Chapter 20. 存储</a></li>
         <li><a href="#geom">Chapter 21. GEOM: Modular Disk Transformation Framework</a></li>
         <li><a href="#zfs">Chapter 22. Z 文件系统（ZFS）</a></li>
         <li><a href="#filesystems">Chapter 23. 其他文件系统</a></li>
