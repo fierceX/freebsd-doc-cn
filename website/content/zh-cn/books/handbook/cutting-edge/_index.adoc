@@ -1,17 +1,17 @@
 ---
-description: 'Information about how to keep a FreeBSD system up-to-date with freebsd-update or Git, how to rebuild and reinstall the entire base system, etc'
+description: '关于如何使用 freebsd-update 或 Git 来保持 FreeBSD 系统最新的信息，以及如何重新构建和重新安装整个基本系统等。'
 next: books/handbook/dtrace
-part: 'Part III. System Administration'
+part: 第三部分：系统管理
 path: /books/handbook/
 prev: books/handbook/l10n
 showBookMenu: true
 tags: ["updating", "upgrading", "documentation", "FreeBSD-STABLE", "FreeBSD-CURRENT", "Security Patches"]
-title: 'Chapter 26. Updating and Upgrading FreeBSD'
+title: '第 26 章 更新和升级 FreeBSD'
 weight: 30
 ---
 
 [[updating-upgrading]]
-= Updating and Upgrading FreeBSD
+= 更新和升级 FreeBSD
 :doctype: book
 :toc: macro
 :toclevels: 2
@@ -46,48 +46,48 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[updating-upgrading-synopsis]]
-== Synopsis
+== 简介
 
-FreeBSD is under constant development between releases. Some people prefer to use the officially released versions, while others prefer to keep in sync with the latest developments. However, even official releases are often updated with security and other critical fixes. Regardless of the version used, FreeBSD provides all the necessary tools to keep the system updated, and allows for easy upgrades between versions. This chapter describes how to track the development system and the basic tools for keeping a FreeBSD system up-to-date.
+FreeBSD 在发布之间处于不断的开发中。有些人喜欢使用官方发布的版本，而其他人则喜欢与最新的开发保持同步。然而，即使是官方发布的版本也经常会更新以修复安全和其他关键问题。无论使用哪个版本， FreeBSD 都提供了所有必要的工具来保持系统更新，并允许在版本之间进行轻松升级。本章介绍如何跟踪开发系统以及保持 FreeBSD 系统最新的基本工具。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* How to keep a FreeBSD system up-to-date with freebsd-update or Git.
-* How to compare the state of an installed system against a known pristine copy.
-* How to keep the installed documentation up-to-date with Git or documentation ports.
-* The difference between the two development branches: FreeBSD-STABLE and FreeBSD-CURRENT.
-* How to rebuild and reinstall the entire base system.
+* 如何使用 freebsd-update 或 Git 来保持 FreeBSD 系统的最新状态。
+* 如何将已安装系统的状态与已知的原始副本进行比较。
+* 如何使用 Git 或文档 port 来保持已安装文档的最新状态。
+* 两个开发分支之间的区别：FreeBSD-STABLE 和 FreeBSD-CURRENT。
+* 如何重建和重新安装整个基础系统。
 
-Before reading this chapter, you should:
+在阅读本章之前，您应该：
 
-* Properly set up the network connection (crossref:advanced-networking[advanced-networking,Advanced Networking]).
-* Know how to install additional third-party software (crossref:ports[ports,Installing Applications: Packages and Ports]).
+* 正确设置网络连接（crossref:advanced-networking[advanced-networking,高级网络设置]）。
+* 了解如何安装额外的第三方软件（crossref:ports[ports,安装应用程序：软件包和 port]）。
 
 [NOTE]
 ====
-Throughout this chapter, `git` is used to obtain and update FreeBSD sources. Optionally, the package:devel/git[] port or package may be used.
+在本章中，使用 `git` 来获取和更新 FreeBSD 源代码。可选地，可以使用 `package:devel/git[]` port 或软件包。
 ====
 
 [[updating-upgrading-freebsdupdate]]
-== FreeBSD Update
+== FreeBSD 更新
 
-Applying security patches in a timely manner and upgrading to a newer release of an operating system are important aspects of ongoing system administration. FreeBSD includes a utility called `freebsd-update` which can be used to perform both these tasks.
+及时应用安全补丁和升级到操作系统的新版本是系统管理的重要方面。FreeBSD 包含一个名为 `freebsd-update` 的实用程序，可用于执行这两个任务。
 
-This utility supports binary security and errata updates to FreeBSD, without the need to manually compile and install the patch or a new kernel. Binary updates are available for all architectures and releases currently supported by the security team. The list of supported releases and their estimated end-of-life dates are listed at https://www.FreeBSD.org/security/[https://www.FreeBSD.org/security/].
+该实用程序支持对 FreeBSD 进行二进制安全性和勘误更新，无需手动编译和安装补丁或新内核。二进制更新适用于安全团队当前支持的所有架构和版本。支持的版本列表及其预计的生命周期日期可在 https://www.FreeBSD.org/security/[https://www.FreeBSD.org/security/] 上找到。
 
-This utility also supports operating system upgrades to minor point releases as well as upgrades to another release branch. Before upgrading to a new release, review its release announcement as it contains important information pertinent to the release. Release announcements are available from https://www.FreeBSD.org/releases/[https://www.FreeBSD.org/releases/].
+该实用程序还支持将操作系统升级到次要点版本以及升级到另一个发布分支。在升级到新版本之前，请查看其发布公告，因为其中包含与该版本相关的重要信息。发布公告可从 https://www.FreeBSD.org/releases/[https://www.FreeBSD.org/releases/] 获取。
 
 [NOTE]
 ====
-If a man:crontab[5] utilizing the features of man:freebsd-update[8] exists, it must be disabled before upgrading the operating system.
+如果存在使用 man:freebsd-update[8] 功能的 man:crontab[5]，在升级操作系统之前必须将其禁用。
 ====
 
-This section describes the configuration file used by `freebsd-update`, demonstrates how to apply a security patch and how to upgrade to a minor or major operating system release, and discusses some of the considerations when upgrading the operating system.
+本节描述了 `freebsd-update` 使用的配置文件，演示了如何应用安全补丁以及如何升级到次要或主要操作系统版本，并讨论了升级操作系统时的一些考虑因素。
 
 [[freebsdupdate-config-file]]
-=== The Configuration File
+=== 配置文件
 
-The default configuration file for `freebsd-update` works as-is. Some users may wish to tweak the default configuration in [.filename]#/etc/freebsd-update.conf#, allowing better control of the process. The comments in this file explain the available options, but the following may require a bit more explanation:
+`freebsd-update` 的默认配置文件可以直接使用。一些用户可能希望调整默认配置文件 `/etc/freebsd-update.conf` ，以便更好地控制该过程。该文件中的注释解释了可用的选项，但以下内容可能需要更多的解释：
 
 [.programlisting]
 ....
@@ -95,7 +95,7 @@ The default configuration file for `freebsd-update` works as-is. Some users may 
 Components world kernel
 ....
 
-This parameter controls which parts of FreeBSD will be kept up-to-date. The default is to update the entire base system and the kernel. Individual components can instead be specified, such as `src/base` or `src/sys`. However, the best option is to leave this at the default as changing it to include specific items requires every needed item to be listed. Over time, this could have disastrous consequences as source code and binaries may become out of sync.
+该参数控制着哪些部分的 FreeBSD 将保持最新。默认情况下，会更新整个基础系统和内核。也可以指定单个组件，例如 `src/base` 或 `src/sys` 。然而，最好的选择是将其保持默认状态，因为更改它以包括特定项需要列出每个所需的项。随着时间的推移，这可能会导致源代码和二进制文件不同步，从而产生灾难性后果。
 
 [.programlisting]
 ....
@@ -104,7 +104,7 @@ This parameter controls which parts of FreeBSD will be kept up-to-date. The defa
 IgnorePaths /boot/kernel/linker.hints
 ....
 
-To leave specified directories, such as [.filename]#/bin# or [.filename]#/sbin#, untouched during the update process, add their paths to this statement. This option may be used to prevent `freebsd-update` from overwriting local modifications.
+为了在更新过程中保留指定目录，例如 [.filename]#/bin# 或 [.filename]#/sbin# 的内容不变，可以将它们的路径添加到此语句中。此选项可用于防止 `freebsd-update` 覆盖本地修改。
 
 [.programlisting]
 ....
@@ -114,7 +114,7 @@ To leave specified directories, such as [.filename]#/bin# or [.filename]#/sbin#,
 UpdateIfUnmodified /etc/ /var/ /root/ /.cshrc /.profile
 ....
 
-This option will only update unmodified configuration files in the specified directories. Any changes made by the user will prevent the automatic updating of these files. There is another option, `KeepModifiedMetadata`, which will instruct `freebsd-update` to save the changes during the merge.
+此选项仅会更新指定目录中未修改的配置文件。用户所做的任何更改都会阻止这些文件的自动更新。还有另一个选项 `KeepModifiedMetadata` ，它会指示 `freebsd-update` 在合并过程中保存更改。
 
 [.programlisting]
 ....
@@ -123,7 +123,7 @@ This option will only update unmodified configuration files in the specified dir
 MergeChanges /etc/ /var/named/etc/ /boot/device.hints
 ....
 
-List of directories with configuration files that `freebsd-update` should attempt to merge. The file merge process is a series of man:diff[1] patches similar to man:mergemaster[8], but with fewer options. Merges are either accepted, open an editor, or cause `freebsd-update` to abort. When in doubt, backup [.filename]#/etc# and just accept the merges. See man:mergemaster[8] for more information about `mergemaster`.
+`freebsd-update` 应尝试合并的配置文件目录列表。文件合并过程是一系列类似于 `mergemaster` 的 man:diff[1] 补丁，但选项较少。合并可以被接受、打开编辑器或导致 `freebsd-update` 中止。如果不确定，备份 [.filename]#/etc# 并接受合并。有关 `mergemaster` 的更多信息，请参阅 man:mergemaster[8]。
 
 [.programlisting]
 ....
@@ -132,7 +132,7 @@ List of directories with configuration files that `freebsd-update` should attemp
 # WorkDir /var/db/freebsd-update
 ....
 
-This directory is where all patches and temporary files are placed. In cases where the user is doing a version upgrade, this location should have at least a gigabyte of disk space available.
+该目录是用于存放所有补丁和临时文件的位置。在用户进行版本升级的情况下，该位置应至少有 1GB 的可用磁盘空间。
 
 [.programlisting]
 ....
@@ -143,16 +143,16 @@ This directory is where all patches and temporary files are placed. In cases whe
 # StrictComponents no
 ....
 
-When this option is set to `yes`, `freebsd-update` will assume that the `Components` list is complete and will not attempt to make changes outside of the list. Effectively, `freebsd-update` will attempt to update every file which belongs to the `Components` list.
+当将此选项设置为 `yes` 时，`freebsd-update` 将假设 `Components` 列表是完整的，并且不会尝试在列表之外进行更改。实际上，`freebsd-update` 将尝试更新属于 `Components` 列表的每个文件。
 
-Refer to man:freebsd-update.conf[5] for more details.
+请参考 man:freebsd-update.conf[5] 获取更多详细信息。
 
 [[freebsdupdate-security-patches]]
-=== Applying Security Patches
+=== 应用安全补丁
 
-The process of applying FreeBSD security patches has been simplified, allowing an administrator to keep a system fully patched using `freebsd-update`. More information about FreeBSD security advisories can be found in crossref:security[security-advisories,"FreeBSD Security Advisories"].
+应用 FreeBSD 安全补丁的过程已经简化，管理员可以使用 `freebsd-update` 来保持系统完全更新。有关 FreeBSD 安全公告的更多信息，请参阅 crossref:security[security-advisories,“FreeBSD 安全公告”]。
 
-FreeBSD security patches may be downloaded and installed using the following commands. The first command will determine if any outstanding patches are available, and if so, will list the files that will be modifed if the patches are applied. The second command will apply the patches.
+可以使用以下命令下载和安装 FreeBSD 安全补丁。第一个命令将确定是否有可用的未解决补丁，并且如果应用了这些补丁，将列出将被修改的文件。第二个命令将应用这些补丁。
 
 [source, shell]
 ....
@@ -160,23 +160,23 @@ FreeBSD security patches may be downloaded and installed using the following com
 # freebsd-update install
 ....
 
-If the update applies any kernel patches, the system will need a reboot in order to boot into the patched kernel. If the patch was applied to any running binaries, the affected applications should be restarted so that the patched version of the binary is used.
+如果更新应用了任何内核补丁，系统将需要重新启动以引导到已打补丁的内核。如果补丁被应用于正在运行的二进制文件，受影响的应用程序应该重新启动，以便使用已打补丁的二进制版本。
 
 [NOTE]
 ====
-Usually, the user needs to be prepared to reboot the system. To know if the system requires a reboot due to a kernel update, execute the commands `freebsd-version -k` and `uname -r`. Reboot the system if the outputs differ.
+通常，用户需要准备好重新启动系统。要知道系统是否需要由于内核更新而重新启动，请执行命令 `freebsd-version -k` 和 `uname -r`。如果输出不同，请重新启动系统。
 ====
 
-The system can be configured to automatically check for updates once every day by adding this entry to [.filename]#/etc/crontab#:
+系统可以通过将以下条目添加到 [.filename]#/etc/crontab# 来配置每天自动检查更新：
 
 [.programlisting]
 ....
 @daily                                  root    freebsd-update cron
 ....
 
-If patches exist, they will automatically be downloaded but will not be applied. The `root` user will be sent an email so that the patches may be reviewed and manually installed with `freebsd-update install`.
+如果存在补丁，它们将会自动下载但不会被应用。系统会向 `root` 用户发送一封电子邮件，以便可以审查这些补丁，并使用 `freebsd-update install` 命令手动安装它们。
 
-If anything goes wrong, `freebsd-update` has the ability to roll back the last set of changes with the following command:
+如果出现任何问题，`freebsd-update` 可以使用以下命令回滚最后一组更改：
 
 [source, shell]
 ....
@@ -184,61 +184,61 @@ If anything goes wrong, `freebsd-update` has the ability to roll back the last s
 Uninstalling updates... done.
 ....
 
-Again, the system should be restarted if the kernel or any kernel modules were modified and any affected binaries should be restarted.
+如果内核或任何内核模块被修改，系统应该重新启动，并且应该重新启动任何受影响的二进制文件。
 
-Only the [.filename]#GENERIC# kernel can be automatically updated by `freebsd-update`. If a custom kernel is installed, it will have to be rebuilt and reinstalled after `freebsd-update` finishes installing the updates. The default kernel name is _GENERIC_. The man:uname[1] command may be used to verify its installation.
+只有 [.filename]#GENERIC# 内核可以被 `freebsd-update` 自动更新。如果安装了自定义内核，则需要在 `freebsd-update` 完成更新后重新构建和安装它。默认的内核名称是 _GENERIC_。可以使用 man:uname[1] 命令来验证其安装情况。
 
 [NOTE]
 ====
-Always keep a copy of the [.filename]#GENERIC# kernel in [.filename]#/boot/GENERIC#. It will be helpful in diagnosing a variety of problems and in performing version upgrades. Refer to <<freebsd-update-custom-kernel-9x>> for instructions on how to get a copy of the [.filename]#GENERIC# kernel.
+始终保留一个 [.filename]#GENERIC# 内核的副本在 [.filename]#/boot/GENERIC# 中。这对于诊断各种问题和进行版本升级非常有帮助。请参考 <<freebsd-update-custom-kernel-9x>> 了解如何获取 [.filename]#GENERIC# 内核的副本的说明。
 ====
 
-Unless the default configuration in [.filename]#/etc/freebsd-update.conf# has been changed, `freebsd-update` will install the updated kernel sources along with the rest of the updates. Rebuilding and reinstalling a new custom kernel can then be performed in the usual way.
+除非已更改 [.filename]#/etc/freebsd-update.conf# 中的默认配置，否则 `freebsd-update` 将与其他更新一起安装更新的内核源代码。然后可以按照通常的方式重新构建和重新安装新的自定义内核。
 
-The updates distributed by `freebsd-update` do not always involve the kernel. It is not necessary to rebuild a custom kernel if the kernel sources have not been modified by `freebsd-update install`. However, `freebsd-update` will always update [.filename]#/usr/src/sys/conf/newvers.sh#. The current patch level, as indicated by the `-p` number reported by `uname -r`, is obtained from this file. Rebuilding a custom kernel, even if nothing else changed, allows `uname` to accurately report the current patch level of the system. This is particularly helpful when maintaining multiple systems, as it allows for a quick assessment of the updates installed in each one.
+`freebsd-update` 分发的更新并不总是涉及内核。如果内核源代码没有被 `freebsd-update install` 修改过，那么重新构建自定义内核是不必要的。然而，`freebsd-update` 总是会更新 [.filename]#/usr/src/sys/conf/newvers.sh# 文件。通过 `uname -r` 命令报告的 `-p` 数字表示的当前补丁级别是从这个文件中获取的。即使没有其他变化，重新构建自定义内核也可以使 `uname` 准确地报告系统的当前补丁级别。这在维护多个系统时特别有帮助，因为它可以快速评估每个系统中安装的更新。
 
 [[freebsdupdate-upgrade]]
-=== Performing Minor and Major Version Upgrades
+=== 执行次要和主要版本升级
 
-Upgrades from one minor version of FreeBSD to another are called _minor version_ upgrades. An example:
+从一个 FreeBSD 的次要版本升级到另一个次要版本被称为 _次要版本_ 升级。一个例子：
 
-- FreeBSD 13.1 to 13.2.
+- 从 FreeBSD 13.1 升级到 13.2 。
 
-_Major version_ upgrades increase the major version number. An example:
+主要版本升级会增加主要版本号。一个例子：
 
-- FreeBSD 13.2 to 14.0.
+- FreeBSD 13.2 升级至 14.0。
 
-Both types of upgrade can be performed by providing `freebsd-update` with a release version target.
+通过为 `freebsd-update` 提供一个发布版本目标，可以执行两种类型的升级。
 
 [WARNING]
 ====
-After each new `RELEASE`, FreeBSD package build servers will, for a limited period, *not* use the newer version of the operating system. This provides continuity for the many users who do not upgrade immediately after a release announcement. For example:
+在每次新的 `RELEASE` 之后， FreeBSD 软件包构建服务器在有限的时间内 *不会* 使用较新的操作系统版本。这为许多用户提供了连续性，这些用户在发布公告后不会立即升级。例如：
 
-* packages for users of 13.1 and 13.2 will be built on a server running 13.1, until 13.1 reaches end of life
+* 在 13.1 版本达到生命周期结束之前，将在运行 13.1 的服务器上构建适用于 13.1 和 13.2 用户的软件包。
 
--- and, critically:
+-- 而且，至关重要的是：
 
-* a kernel module that is built on 13.1 might *not* be suitable for 13.2.
+* 在 13.1 上构建的内核模块可能 *不适用于* 13.2。
 
-So, with any minor or major OS upgrade, if your package requirements include any kernel module:
+因此，无论是小型还是大型操作系统升级，如果您的软件包要求包括任何内核模块：
 
-* *be prepared to build the module from source*.
+* *准备好从源代码构建模块*。
 
 ====
 
 [NOTE]
 ====
-If the system is running a custom kernel, make sure that a copy of the [.filename]#GENERIC# kernel exists in [.filename]#/boot/GENERIC# before starting the upgrade. Refer to <<freebsd-update-custom-kernel-9x>> for instructions on how to get a copy of the [.filename]#GENERIC# kernel.
+如果系统正在运行自定义内核，请确保在升级之前在 [.filename]#/boot/GENERIC# 目录下存在一个 [.filename]#GENERIC# 内核的副本。请参考 <<freebsd-update-custom-kernel-9x>> 以获取 [.filename]#GENERIC# 内核的副本的说明。
 ====
 
-The following command, when run on a FreeBSD 13.1 system, will upgrade it to FreeBSD 13.2:
+在 FreeBSD 13.1 系统上运行以下命令将升级到 FreeBSD 13.2：
 
 [source, shell]
 ....
 # freebsd-update -r 13.2-RELEASE upgrade
 ....
 
-After the command has been received, `freebsd-update` will evaluate the configuration file and current system in an attempt to gather the information necessary to perform the upgrade. A screen listing will display which components have and have not been detected. For example:
+在接收到命令后，`freebsd-update` 将评估配置文件和当前系统，以尝试收集执行升级所需的信息。屏幕上将显示一个列表，列出已检测到和未检测到的组件。例如：
 
 [source, shell]
 ....
@@ -260,9 +260,9 @@ world/proflibs
 Does this look reasonable (y/n)? y
 ....
 
-At this point, `freebsd-update` will attempt to download all files required for the upgrade. In some cases, the user may be prompted with questions regarding what to install or how to proceed.
+在这一点上，`freebsd-update` 将尝试下载升级所需的所有文件。在某些情况下，用户可能会被要求回答关于安装哪些文件或如何继续的问题。
 
-When using a custom kernel, the above step will produce a warning similar to the following:
+当使用自定义内核时，上述步骤将产生类似以下的警告：
 
 [source, shell]
 ....
@@ -272,13 +272,13 @@ This kernel will not be updated: you MUST update the kernel manually
 before running "/usr/sbin/freebsd-update install"
 ....
 
-This warning may be safely ignored at this point. The updated [.filename]#GENERIC# kernel will be used as an intermediate step in the upgrade process.
+此警告可以在此时安全地忽略。更新的 [.filename]#GENERIC# 内核将作为升级过程中的中间步骤使用。
 
-Once all the patches have been downloaded to the local system, they will be applied. This process may take a while, depending on the speed and workload of the machine. Configuration files will then be merged. The merging process requires some user intervention as a file may be merged or an editor may appear on screen for a manual merge. The results of every successful merge will be shown to the user as the process continues. A failed or ignored merge will cause the process to abort. Users may wish to make a backup of [.filename]#/etc# and manually merge important files, such as [.filename]#master.passwd# or [.filename]#group# at a later time.
+一旦所有补丁都下载到本地系统后，它们将被应用。这个过程可能需要一些时间，具体取决于机器的速度和工作负载。然后将合并配置文件。合并过程需要一些用户干预，因为可能需要合并文件或者在屏幕上出现编辑器进行手动合并。每次成功合并的结果都会在进程继续时显示给用户。如果合并失败或被忽略，进程将中止。用户可能希望在以后的某个时间备份 [.filename]#/etc# 目录并手动合并重要文件，例如 [.filename]#master.passwd# 或 [.filename]#group#。
 
 [NOTE]
 ====
-The system is not being altered yet as all patching and merging is happening in another directory. Once all patches have been applied successfully, all configuration files have been merged and it seems the process will go smoothly, the changes can be committed to disk by the user using the following command:
+系统尚未进行修改，因为所有的修补和合并都在另一个目录中进行。一旦所有的修补程序都成功应用，所有的配置文件都已经合并，并且看起来进程将顺利进行，用户可以使用以下命令将更改提交到磁盘：
 
 [source, shell]
 ....
@@ -287,7 +287,7 @@ The system is not being altered yet as all patching and merging is happening in 
 
 ====
 
-The kernel and kernel modules will be patched first. If the system is running with a custom kernel, use man:nextboot[8] to set the kernel for the next boot to the updated [.filename]#/boot/GENERIC#:
+首先，将对内核和内核模块进行补丁。如果系统正在运行自定义内核，请使用 man:nextboot[8] 命令将内核设置为下一次启动时更新的 [.filename]#/boot/GENERIC# 。
 
 [source, shell]
 ....
@@ -296,17 +296,17 @@ The kernel and kernel modules will be patched first. If the system is running wi
 
 [WARNING]
 ====
-Before rebooting with the [.filename]#GENERIC# kernel, make sure it contains all the drivers required for the system to boot properly and connect to the network, if the machine being updated is accessed remotely. In particular, if the running custom kernel contains built-in functionality usually provided by kernel modules, make sure to temporarily load these modules into the [.filename]#GENERIC# kernel using the [.filename]#/boot/loader.conf# facility. It is recommended to disable non-essential services as well as any disk and network mounts until the upgrade process is complete.
+在使用 [.filename]#GENERIC# 内核重新启动之前，请确保它包含了系统正常启动和连接到网络所需的所有驱动程序，如果正在更新的机器是远程访问的。特别是，如果正在运行的自定义内核包含通常由内核模块提供的内置功能，请确保使用 [.filename]#/boot/loader.conf# 工具将这些模块临时加载到 [.filename]#GENERIC# 内核中。建议在升级过程完成之前禁用非必要的服务以及任何磁盘和网络挂载。
 ====
 
-The machine should now be restarted with the updated kernel:
+现在应该使用更新的内核重新启动机器：
 
 [source, shell]
 ....
 # shutdown -r now
 ....
 
-Once the system has come back online, restart `freebsd-update` using the following command. Since the state of the process has been saved, `freebsd-update` will not start from the beginning, but will instead move on to the next phase and remove all old shared libraries and object files.
+一旦系统恢复在线状态，使用以下命令重新启动 `freebsd-update`。由于进程的状态已被保存，`freebsd-update` 将不会从头开始，而是继续进行下一阶段并删除所有旧的共享库和对象文件。
 
 [source, shell]
 ....
@@ -315,17 +315,17 @@ Once the system has come back online, restart `freebsd-update` using the followi
 
 [NOTE]
 ====
-Depending upon whether any library version numbers were bumped, there may only be two install phases instead of three.
+根据库版本号是否有所增加，安装过程可能只有两个阶段，而不是三个阶段。
 ====
 
-The upgrade is now complete. If this was a major version upgrade, reinstall all ports and packages as described in <<freebsdupdate-portsrebuild>>.
+升级已完成。如果这是一个主要版本的升级，请按照 <<freebsdupdate-portsrebuild>> 中描述的步骤重新安装所有端口和软件包。
 
 [[freebsd-update-custom-kernel-9x]]
-==== Custom Kernels with FreeBSD 9.X and Later
+==== 使用 FreeBSD 9.X 及更高版本的自定义内核
 
-Before using `freebsd-update`, ensure that a copy of the [.filename]#GENERIC# kernel exists in [.filename]#/boot/GENERIC#. If a custom kernel has only been built once, the kernel in [.filename]#/boot/kernel.old# is the `GENERIC` kernel. Simply rename this directory to [.filename]#/boot/GENERIC#.
+在使用 `freebsd-update` 前，请确保 [.filename]#/boot/GENERIC# 目录下存在一个 [.filename]#GENERIC# 内核的副本。如果只构建了一个自定义内核，那么 [.filename]#/boot/kernel.old# 目录下的内核就是 `GENERIC` 内核。只需将此目录重命名为 [.filename]#/boot/GENERIC#。
 
-If a custom kernel has been built more than once or if it is unknown how many times the custom kernel has been built, obtain a copy of the `GENERIC` kernel that matches the current version of the operating system. If physical access to the system is available, a copy of the `GENERIC` kernel can be installed from the installation media:
+如果自定义内核已经构建了多次，或者不知道自定义内核已经构建了多少次，请获取与当前操作系统版本匹配的 `GENERIC` 内核的副本。如果可以物理访问系统，则可以从安装介质中安装 `GENERIC` 内核的副本：
 
 [source, shell]
 ....
@@ -334,7 +334,7 @@ If a custom kernel has been built more than once or if it is unknown how many ti
 # tar -C/ -xvf kernel.txz boot/kernel/kernel
 ....
 
-Alternately, the `GENERIC` kernel may be rebuilt and installed from source:
+或者，也可以从源代码重新构建并安装 `GENERIC` 内核：
 
 [source, shell]
 ....
@@ -342,62 +342,62 @@ Alternately, the `GENERIC` kernel may be rebuilt and installed from source:
 # make kernel __MAKE_CONF=/dev/null SRCCONF=/dev/null
 ....
 
-For this kernel to be identified as the `GENERIC` kernel by `freebsd-update`, the [.filename]#GENERIC# configuration file must not have been modified in any way. It is also suggested that the kernel is built without any other special options.
+为了使这个内核被 `freebsd-update` 识别为 `GENERIC` 内核，必须确保 [.filename]#GENERIC# 配置文件没有被任何方式修改过。同时建议在构建内核时不使用任何其他特殊选项。
 
-Rebooting into the [.filename]#GENERIC# kernel is not required as `freebsd-update` only needs [.filename]#/boot/GENERIC# to exist.
+不需要重新启动到 [.filename]#GENERIC# kernel 内核，因为 `freebsd-update` 只需要存在 [.filename]#/boot/GENERIC# 文件。
 
 [[freebsdupdate-portsrebuild]]
-==== Upgrading Packages After a Major Version Upgrade
+==== 在主要版本升级后升级软件包
 
-Generally, installed applications will continue to work without problems after minor version upgrades. Major versions use different Application Binary Interfaces (ABIs), which will break most third-party applications. After a major version upgrade, all installed packages and ports need to be upgraded. Packages can be upgraded using `pkg upgrade`. To upgrade installed ports, use a utility such as package:ports-mgmt/portmaster[].
+通常，在小版本升级后，已安装的应用程序将继续正常工作，没有问题。主要版本使用不同的应用程序二进制接口（ABIs），这将导致大多数第三方应用程序无法正常工作。在进行主要版本升级后，所有已安装的软件包和端口都需要升级。可以使用 `pkg upgrade` 命令升级软件包。要升级已安装的端口，请使用类似于 package:ports-mgmt/portmaster[] 的实用工具。
 
-A forced upgrade of all installed packages will replace the packages with fresh versions from the repository even if the version number has not increased. This is required because of the ABI version change when upgrading between major versions of FreeBSD. The forced upgrade can be accomplished by performing:
+强制升级所有已安装的软件包将使用存储库中的新版本替换软件包，即使版本号没有增加。这是因为在升级 FreeBSD 的主要版本之间时，ABI 版本会发生变化。可以通过执行以下操作来完成强制升级：
 
 [source, shell]
 ....
 # pkg-static upgrade -f
 ....
 
-A rebuild of all installed applications can be accomplished with this command:
+使用以下命令可以重新构建所有已安装的应用程序：
 
 [source, shell]
 ....
 # portmaster -af
 ....
 
-This command will display the configuration screens for each application that has configurable options and wait for the user to interact with those screens. To prevent this behavior, and use only the default options, include `-G` in the above command.
+该命令将显示每个具有可配置选项的应用程序的配置屏幕，并等待用户与这些屏幕进行交互。为了防止这种行为，并仅使用默认选项，请在上述命令中包含 `-G`。
 
-Once the software upgrades are complete, finish the upgrade process with a final call to `freebsd-update` in order to tie up all the loose ends in the upgrade process:
+一旦软件升级完成，通过最后一次调用 `freebsd-update` 来完成升级过程，以解决升级过程中的所有问题。
 
 [source, shell]
 ....
 # freebsd-update install
 ....
 
-If the [.filename]#GENERIC# kernel was temporarily used, this is the time to build and install a new custom kernel using the instructions in crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel].
+如果临时使用了 [.filename]#GENERIC# 内核，现在是构建和安装新的自定义内核的时候了，可以按照 crossref:kernelconfig[kernelconfig,配置 FreeBSD 内核] 中的说明进行操作。
 
-Reboot the machine into the new FreeBSD version. The upgrade process is now complete.
+将机器重启到新的 FreeBSD 版本。升级过程现在已经完成。
 
 [[freebsdupdate-system-comparison]]
-=== System State Comparison
+=== 系统状态比较
 
-The state of the installed FreeBSD version against a known good copy can be tested using `freebsd-update IDS`. This command evaluates the current version of system utilities, libraries, and configuration files and can be used as a built-in Intrusion Detection System (IDS).
+可以使用 `freebsd-update IDS` 命令来测试已安装的 FreeBSD 版本与已知的良好副本之间的状态。该命令评估系统实用程序、库和配置文件的当前版本，并可用作内置的入侵检测系统（IDS）。
 
 [WARNING]
 ====
-This command is not a replacement for a real IDS such as package:security/snort[]. As `freebsd-update` stores data on disk, the possibility of tampering is evident. While this possibility may be reduced using `kern.securelevel` and by storing the `freebsd-update` data on a read-only file system when not in use, a better solution would be to compare the system against a secure disk, such as a DVD or securely stored external USB disk device. An alternative method for providing IDS functionality using a built-in utility is described in crossref:security[security-ids,"Binary Verification"]
+这个命令不能替代真正的入侵检测系统，比如 package:security/snort[]。由于 `freebsd-update` 将数据存储在磁盘上，篡改的可能性是显而易见的。虽然可以通过使用 `kern.securelevel` 和在不使用时将 `freebsd-update` 数据存储在只读文件系统上来减少这种可能性，但更好的解决方案是将系统与安全磁盘（如 DVD 或安全存储的外部 USB 磁盘设备）进行比较。使用内置工具提供 IDS 功能的替代方法在 crossref:security[security-ids,“二进制验证”] 中有描述。
 ====
 
-To begin the comparison, specify the output file to save the results to:
+开始比较之前，请指定要将结果保存到的输出文件：
 
 [source, shell]
 ....
 # freebsd-update IDS >> outfile.ids
 ....
 
-The system will now be inspected and a lengthy listing of files, along with the SHA256 hash values for both the known value in the release and the current installation, will be sent to the specified output file.
+系统将会被检查，并且会将文件的详细列表以及已知发布版本和当前安装版本的 SHA256 哈希值发送到指定的输出文件中。
 
-The entries in the listing are extremely long, but the output format may be easily parsed. For instance, to obtain a list of all files which differ from those in the release, issue the following command:
+列表中的条目非常长，但输出格式很容易解析。例如，要获取与发布版本不同的所有文件的列表，请执行以下命令：
 
 [source, shell]
 ....
@@ -408,46 +408,46 @@ The entries in the listing are extremely long, but the output format may be easi
 /etc/pf.conf
 ....
 
-This sample output has been truncated as many more files exist. Some files have natural modifications. For example, [.filename]#/etc/passwd# will be modified if users have been added to the system. Kernel modules may differ as `freebsd-update` may have updated them. To exclude specific files or directories, add them to the `IDSIgnorePaths` option in [.filename]#/etc/freebsd-update.conf#.
+由于存在更多的文件，此示例输出已被截断。一些文件具有自然的修改。例如，如果系统中添加了用户，[.filename]#/etc/passwd# 文件将被修改。内核模块可能会有所不同，因为 `freebsd-update` 可能已经对它们进行了更新。要排除特定的文件或目录，请将它们添加到 [.filename]#/etc/freebsd-update.conf# 文件中的 `IDSIgnorePaths` 选项中。
 
 [[updating-bootcode]]
-== Updating Bootcode
+== 更新引导代码
 
-The following manuals describe the upgrade process of bootcode and boot loaders: man:gpart[8], man:gptboot[8], man:gptzfsboot[8], and man:loader.efi[8].
+以下手册描述了引导代码和引导加载程序的升级过程：man:gpart[8]、man:gptboot[8]、man:gptzfsboot[8] 和 man:loader.efi[8]。
 
 [[updating-upgrading-documentation]]
-== Updating the Documentation Set
+== 更新文档集合
 
-Documentation is an integral part of the FreeBSD operating system. While an up-to-date version of the FreeBSD documentation is always available on the FreeBSD web site (link:https://docs.FreeBSD.org[Documentation Portal]), it can be handy to have an up-to-date, local copy of the FreeBSD website, handbooks, FAQ, and articles.
+文档是 FreeBSD 操作系统的一个重要组成部分。虽然 FreeBSD 网站上始终提供最新版本的文档（link:https://docs.FreeBSD.org[文档门户]），但拥有一个最新的本地副本也是很方便的，包括 FreeBSD 网站、手册、常见问题解答和文章。
 
-This section describes how to use either source or the FreeBSD Ports Collection to keep a local copy of the FreeBSD documentation up-to-date.
+本节介绍如何使用源代码或 FreeBSD Ports Collection 来保持本地的 FreeBSD 文档最新。
 
-For information on editing and submitting corrections to the documentation, refer to the FreeBSD Documentation Project Primer for New Contributors (extref:{fdp-primer}[FreeBSD Documentation Project Primer for New Contributors]).
+有关编辑和提交文档更正的信息，请参阅 FreeBSD 文档项目新贡献者入门指南（extref:{fdp-primer}[FreeBSD Documentation Project Primer for New Contributors]）。
 
 [[updating-installed-documentation]]
-=== Updating Documentation from Source
+=== 从源代码更新文档
 
-Rebuilding the FreeBSD documentation from source requires a collection of tools which are not part of the FreeBSD base system. The required tools can be installed following extref:{fdp-primer}[these steps, overview-quick-start] from the FreeBSD Documentation Project Primer.
+从源代码重新构建 FreeBSD 文档需要一系列工具，这些工具不是 FreeBSD 基本系统的一部分。可以按照 FreeBSD 文档项目入门指南中的 extref:{fdp-primer}[these steps,overview-quick-start] 来安装所需的工具。
 
-Once installed, use `git` to fetch a clean copy of the documentation source:
+安装完成后，使用 `git` 获取文档源代码的干净副本：
 
 [source, shell]
 ....
 # git clone https://git.FreeBSD.org/doc.git /usr/doc
 ....
 
-The initial download of the documentation sources may take a while. Let it run until it completes.
+下载文档源文件可能需要一些时间。请让它运行直到完成。
 
-Future updates of the documentation sources may be fetched by running:
+未来可以通过运行以下命令获取文档源的更新：
 
 [source, shell]
 ....
 # git pull
 ....
 
-Once an up-to-date snapshot of the documentation sources has been fetched to [.filename]#/usr/doc#, everything is ready for an update of the installed documentation.
+一旦文档源的最新快照被获取到 [.filename]#/usr/doc# 目录下，所有准备工作就完成了，可以更新已安装的文档。
 
-A full update may be performed by typing:
+可以通过输入以下命令来执行完整更新：
 
 [source, shell]
 ....
@@ -456,70 +456,70 @@ A full update may be performed by typing:
 ....
 
 [[current-stable]]
-== Tracking a Development Branch
+== 跟踪开发分支
 
-FreeBSD has two development branches: FreeBSD-CURRENT and FreeBSD-STABLE.
+FreeBSD 有两个开发分支：FreeBSD-CURRENT 和 FreeBSD-STABLE。
 
-This section provides an explanation of each branch and its intended audience, as well as how to keep a system up-to-date with each respective branch.
+本节提供了每个分支及其预期受众的解释，以及如何使系统与每个相应分支保持最新的说明。
 
 [[current]]
-=== Using FreeBSD-CURRENT
+=== 使用 FreeBSD-CURRENT
 
-FreeBSD-CURRENT is the "bleeding edge" of FreeBSD development and FreeBSD-CURRENT users are expected to have a high degree of technical skill. Less technical users who wish to track a development branch should track FreeBSD-STABLE instead.
+FreeBSD-CURRENT 是 FreeBSD 开发的“最前沿”，使用 FreeBSD-CURRENT 的用户需要具备较高的技术能力。希望跟踪开发分支但技术水平较低的用户应该选择跟踪 FreeBSD-STABLE。
 
-FreeBSD-CURRENT is the very latest source code for FreeBSD and includes works in progress, experimental changes, and transitional mechanisms that might or might not be present in the next official release. While many FreeBSD developers compile the FreeBSD-CURRENT source code daily, there are short periods of time when the source may not be buildable. These problems are resolved as quickly as possible, but whether or not FreeBSD-CURRENT brings disaster or new functionality can be a matter of when the source code was synced.
+FreeBSD-CURRENT 是 FreeBSD 的最新源代码，包括正在进行中的工作、实验性的更改以及可能存在于下一个官方发布版本中的过渡机制。虽然许多 FreeBSD 开发人员每天编译 FreeBSD-CURRENT 源代码，但在某些短暂的时间内，源代码可能无法构建。这些问题会尽快解决，但是 FreeBSD-CURRENT 是否带来灾难或新功能可能取决于源代码同步的时间。
 
-FreeBSD-CURRENT is made available for three primary interest groups:
+FreeBSD-CURRENT 提供给三个主要的利益群体使用：
 
-. Members of the FreeBSD community who are actively working on some part of the source tree.
-. Members of the FreeBSD community who are active testers. They are willing to spend time solving problems, making topical suggestions on changes and the general direction of FreeBSD, and submitting patches.
-. Users who wish to keep an eye on things, use the current source for reference purposes, or make the occasional comment or code contribution.
+. 活跃在 FreeBSD 社区中，正在积极参与源代码树某个部分工作的成员。
+. FreeBSD 社区的活跃测试人员。他们愿意花时间解决问题，就 FreeBSD 的变化和整体方向提出主题建议，并提交补丁。
+. 希望密切关注事物、使用当前源代码进行参考，或偶尔发表评论或贡献代码的用户。
 
-FreeBSD-CURRENT should _not_ be considered a fast-track to getting new features before the next release as pre-release features are not yet fully tested and most likely contain bugs. It is not a quick way of getting bug fixes as any given commit is just as likely to introduce new bugs as to fix existing ones. FreeBSD-CURRENT is not in any way "officially supported".
+FreeBSD-CURRENT 不应被视为在下一次发布之前获取新功能的快速途径，因为预发布功能尚未经过完全测试，很可能包含错误。它也不是获取错误修复的快速方式，因为每个提交都有可能引入新的错误而不是修复现有的错误。 FreeBSD-CURRENT 在任何情况下都不是“官方支持”的。
 
-To track FreeBSD-CURRENT:
+要追踪 FreeBSD-CURRENT：
 
-. Join the {freebsd-current} and the {dev-commits-src-main} lists. This is _essential_ in order to see the comments that people are making about the current state of the system and to receive important bulletins about the current state of FreeBSD-CURRENT.
+. 加入 {freebsd-current} 和 {dev-commits-src-main} 邮件列表。这是非常重要的，可以看到人们对系统当前状态的评论，并接收有关 FreeBSD-CURRENT 当前状态的重要公告。
 +
-The {dev-commits-src-main} list records the commit log entry for each change as it is made, along with any pertinent information on possible side effects.
+{dev-commits-src-main} 列表记录每次更改的提交日志条目，以及可能的副作用的相关信息。
 +
-To join these lists, go to {mailing-lists}, click on the list to subscribe to, and follow the instructions. In order to track changes to the whole source tree, not just the changes to FreeBSD-CURRENT, subscribe to the {dev-commits-src-all}.
-. Synchronize with the FreeBSD-CURRENT sources. Typically, `git` is used to check out the -CURRENT code from the `main` branch of the FreeBSD Git repository (see crossref:mirrors[git,“Using Git”] for details).
-. Due to the size of the repository, some users choose to only synchronize the sections of source that interest them or which they are contributing patches to. However, users that plan to compile the operating system from source must download _all_ of FreeBSD-CURRENT, not just selected portions.
+要加入这些邮件列表，请转到 {mailing-lists}，点击要订阅的列表，并按照说明进行操作。为了跟踪整个源代码树的变化，而不仅仅是 FreeBSD-CURRENT 的变化，请订阅 {dev-commits-src-all}。
+. 与 FreeBSD-CURRENT 源代码同步。通常情况下，使用 `git` 从 FreeBSD Git 存储库的 `main` 分支检出 -CURRENT 代码（请参阅 crossref:mirrors[git,“使用 Git”]）。
+. 由于存储库的大小，一些用户选择只同步他们感兴趣的或者他们正在贡献补丁的源代码部分。然而，计划从源代码编译操作系统的用户必须下载整个 FreeBSD-CURRENT，而不仅仅是选择的部分。
 +
-Before compiling FreeBSD-CURRENT, read [.filename]#/usr/src/Makefile# very carefully and follow the instructions in <<makeworld>>. Read the {freebsd-current} and [.filename]#/usr/src/UPDATING# to stay up-to-date on other bootstrapping procedures that sometimes become necessary on the road to the next release.
-. Be active! FreeBSD-CURRENT users are encouraged to submit their suggestions for enhancements or bug fixes. Suggestions with accompanying code are always welcome.
+在编译 FreeBSD-CURRENT 之前，请仔细阅读 [.filename]#/usr/src/Makefile# 文件，并按照 <<makeworld>> 中的说明进行操作。阅读 {freebsd-current} 和 [.filename]#/usr/src/UPDATING# 文件以了解其他引导程序的更新情况，有时在进行下一个版本发布的过程中可能需要这些更新。
+. 积极参与！鼓励 FreeBSD-CURRENT 用户提交他们对增强功能或修复错误的建议。附带代码的建议将会受到欢迎。
 
 [[stable]]
-=== Using FreeBSD-STABLE
+=== 使用 FreeBSD-STABLE
 
-FreeBSD-STABLE is the development branch from which major releases are made. Changes go into this branch at a slower pace and with the general assumption that they have first been tested in FreeBSD-CURRENT. This is _still_ a development branch and, at any given time, the sources for FreeBSD-STABLE may or may not be suitable for general use. It is simply another engineering development track, not a resource for end-users. Users who do not have the resources to perform testing should instead run the most recent release of FreeBSD.
+FreeBSD-STABLE 是用于制作主要发布版本的开发分支。更改以较慢的速度进入此分支，并且通常假定它们首先在 FreeBSD-CURRENT 中进行了测试。这仍然是一个开发分支，并且在任何给定时间，FreeBSD-STABLE 的源代码可能适用或不适用于一般使用。它只是另一个工程开发轨道，而不是面向最终用户的资源。没有资源进行测试的用户应该运行最新版本的 FreeBSD。
 
-Those interested in tracking or contributing to the FreeBSD development process, especially as it relates to the next release of FreeBSD, should consider following FreeBSD-STABLE.
+对于那些对追踪或参与 FreeBSD 开发过程感兴趣的人，尤其是与下一个 FreeBSD 版本相关的人，应该考虑关注 FreeBSD-STABLE。
 
-While the FreeBSD-STABLE branch should compile and run at all times, this cannot be guaranteed. Since more people run FreeBSD-STABLE than FreeBSD-CURRENT, it is inevitable that bugs and corner cases will sometimes be found in FreeBSD-STABLE that were not apparent in FreeBSD-CURRENT. For this reason, one should not blindly track FreeBSD-STABLE. It is particularly important _not_ to update any production servers to FreeBSD-STABLE without thoroughly testing the code in a development or testing environment.
+尽管 FreeBSD-STABLE 分支应该始终能够编译和运行，但无法保证这一点。由于运行 FreeBSD-STABLE 的人比运行 FreeBSD-CURRENT 的人更多，因此不可避免地会在 FreeBSD-STABLE 中发现一些在 FreeBSD-CURRENT 中不明显的错误和边界情况。因此，不应盲目跟踪 FreeBSD-STABLE 。特别重要的是，在没有在开发或测试环境中彻底测试代码的情况下，不要将任何生产服务器更新到 FreeBSD-STABLE。
 
-To track FreeBSD-STABLE:
+跟踪 FreeBSD-STABLE 的方法：
 
-. Join the {freebsd-stable} in order to stay informed of build dependencies that may appear in FreeBSD-STABLE or any other issues requiring special attention. Developers will also make announcements in this mailing list when they are contemplating some controversial fix or update, giving the users a chance to respond if they have any issues to raise concerning the proposed change.
+. 加入 {freebsd-stable} 以便及时了解在 FreeBSD-STABLE 中可能出现的构建依赖项或其他需要特别关注的问题。开发人员还会在这个邮件列表中发布公告，当他们考虑一些有争议的修复或更新时，给用户一个机会回应，如果他们有任何关于拟议变更的问题需要提出。
 +
-Join the relevant git list for the branch being tracked. For example, users tracking the {betarel-current-major}-STABLE branch should join the {dev-commits-src-branches}. This list records the commit log entry for each change as it is made, along with any pertinent information on possible side effects.
+加入与正在跟踪的分支相关的 git 列表。例如，跟踪 {betarel-current-major}-STABLE 分支的用户应该加入 {dev-commits-src-branches}。该列表记录每个更改的提交日志条目，以及可能的副作用的任何相关信息。
 +
-To join these lists, go to {mailing-lists}, click on the list to subscribe to, and follow the instructions. In order to track changes for the whole source tree, subscribe to {dev-commits-src-all}.
-. To install a new FreeBSD-STABLE system, install the most recent FreeBSD-STABLE release from the crossref:mirrors[mirrors,FreeBSD mirror sites] or use a monthly snapshot built from FreeBSD-STABLE. Refer to link:https://www.FreeBSD.org/snapshots/[www.freebsd.org/snapshots] for more information about snapshots.
+要加入这些列表，请转到 {mailing-lists}，点击要订阅的列表，并按照说明进行操作。为了跟踪整个源代码树的变化，请订阅 {dev-commits-src-all}。
+. 要安装一个新的 FreeBSD-STABLE 系统，请从 crossref:mirrors[FreeBSD mirror sites] 安装最新的 FreeBSD-STABLE 版本，或者使用从 FreeBSD-STABLE 构建的每月快照。有关快照的更多信息，请参考 link:https://www.FreeBSD.org/snapshots/[www.freebsd.org/snapshots]。
 +
-To compile or upgrade an existing FreeBSD system to FreeBSD-STABLE, use `git` to check out the source for the desired branch. Branch names, such as `stable/13`, are listed at link:https://www.FreeBSD.org/releng/[www.freebsd.org/releng].
-. Before compiling or upgrading to FreeBSD-STABLE , read [.filename]#/usr/src/Makefile# carefully and follow the instructions in <<makeworld>>. Read the {freebsd-stable} and [.filename]#/usr/src/UPDATING# to keep up-to-date on other bootstrapping procedures that sometimes become necessary on the road to the next release.
+要编译或升级现有的 FreeBSD 系统到 FreeBSD-STABLE，使用 `git` 来检出所需分支的源代码。分支名称，例如 `stable/13`，在 link:https://www.FreeBSD.org/releng/[www.freebsd.org/releng] 上列出。
+. 在编译或升级到 FreeBSD-STABLE 之前，请仔细阅读 [.filename]#/usr/src/Makefile# 并按照 <<makeworld>> 中的说明进行操作。阅读 {freebsd-stable} 和 [.filename]#/usr/src/UPDATING# 以了解其他引导程序的最新信息，有时在进行下一个版本发布的过程中可能需要这些信息。
 
 [[translate-n-number]]
 === The N-number
-When tracking down bugs it is important to know which versions of the source code have been used to create the system exhibiting an issue. FreeBSD provides version information compiled into the kernel. man:uname[1] retrieves this information, for example:
+在追踪错误时，了解使用哪些版本的源代码创建了出现问题的系统非常重要。 FreeBSD 在内核中提供了编译的版本信息。man:uname[1] 可以检索到这些信息，例如：
 [source, shell]
 ....
 % uname -v
 FreeBSD 14.0-CURRENT #112 main-n247514-031260d64c18: Tue Jun 22 20:43:19 MDT 2021     fred@machine:/usr/home/fred/obj/usr/home/fred/git/head/amd64.amd64/sys/FRED
 ....
-The final field gives information regarding the kernel name, the person that built it, and the location that it was compiled in. Looking at the 4th field, it is made up of several parts:
+最后一个字段提供了有关内核名称、构建内核的人以及编译位置的信息。观察第四个字段，它由几个部分组成：
 [source, shell]
 ....
 main-n247514-031260d64c18
@@ -529,31 +529,31 @@ n247514		<.>
 031260d64c18	<.>
 		<.>
 ....
-<.> Git branch name. Note: comparisons of n-numbers are only valid on branches published by the project (`main`, `stable/XX` and `releng/XX`). Local branches will have n-numbers that will overlap commits of their parent branch. <.> The n-number is a linear count of commits back to the start of the Git repository starting with the Git hash included in the line. <.> Git hash of the checked out tree <.> Sometimes a suffix of `-dirty` is present when the kernel was built in a tree with uncommitted changes. It is absent in this example because the FRED kernel was built from a pristine checkout.
+<.> Git 分支名称。注意：仅对项目发布的分支（`main`，`stable/XX` 和 `releng/XX`）进行 n-numbers 的比较才有效。本地分支的 n-numbers 将与其父分支的提交重叠。 <.> n-number 是从包含在该行中的 Git 哈希开始的 Git 存储库的提交线性计数。 <.> 检出树的 Git 哈希 <.> 当内核在具有未提交更改的树中构建时，有时会出现后缀 `-dirty` 。在此示例中，它不存在，因为 FRED 内核是从原始的检出构建的。
 
-The `git rev-list` command is used to find the n-number corresponding to a Git hash. For example:
+`git rev-list` 命令用于查找与 Git 哈希对应的 n-number。例如：
 [source, shell]
 ....
 % git rev-list --first-parent --count 031260d64c18 <.>
 247514 <.>
 ....
-<.> git hash to translate (the hash from the above example is reused) <.> The n-number.
+<.> 要翻译的 git 哈希（上面示例中的哈希被重用） <.> n-number。
 
-Usually this number is not all that important. However, when bug fixes are committed, this number makes it easy to quickly determine whether the fix is present in the currently running system. Developers will often refer to the hash of the commit (or provide a URL which has that hash), but not the n-number since the hash is the easily visible identifier for a change while the n-number is not. Security advisories and errata notices will also note an n-number, which can be directly compared against your system. When you need to use shallow Git clones, you cannot compare n-numbers reliably as the `git rev-list` command counts all the revisions in the repository which a shallow clone omits.
+通常这个数字并不是非常重要。然而，当提交了错误修复时，这个数字可以快速确定修复是否存在于当前运行的系统中。开发人员通常会引用提交的哈希值（或提供具有该哈希值的 URL），而不是 n-number，因为哈希值是一个易于识别的变更标识符，而 n-number 则不是。安全公告和勘误通知也会注明一个 n-number，可以直接与您的系统进行比较。当您需要使用浅层 Git 克隆时，您无法可靠地比较 n-number，因为 `git rev-list` 命令会计算仓库中的所有修订版本，而浅层克隆会省略一些修订版本。
 
 [[makeworld]]
-== Updating FreeBSD from Source
+== 从源代码更新 FreeBSD
 
-Updating FreeBSD by compiling from source offers several advantages over binary updates. Code can be built with options to take advantage of specific hardware. Parts of the base system can be built with non-default settings, or left out entirely where they are not needed or desired. The build process takes longer to update a system than just installing binary updates, but allows complete customization to produce a tailored version of FreeBSD.
+通过从源代码编译来更新 FreeBSD 相比二进制更新有几个优点。可以使用选项构建代码以充分利用特定的硬件。可以使用非默认设置构建基本系统的部分，或者在不需要或不希望的地方完全省略它们。与仅安装二进制更新相比，构建过程更新系统需要更长时间，但允许完全定制以生成定制版本的 FreeBSD。
 
 [[updating-src-quick-start]]
-=== Quick Start
+=== 快速入门
 
-This is a quick reference for the typical steps used to update FreeBSD by building from source. Later sections describe the process in more detail.
+这是一个快速参考，用于通过从源代码构建来更新 FreeBSD 的典型步骤。后面的章节将更详细地描述这个过程。
 
 [WARNING]
 ====
-When switching from man:mergemaster[8] to man:etcupdate[8], the first run might merge changes incorrectly generating spurious conflicts. To prevent this, perform the following steps *before* updating sources and building the new world:
+当从 man:mergemaster[8] 切换到 man:etcupdate[8] 时，第一次运行可能会错误地合并更改，从而生成虚假的冲突。为了防止这种情况发生，在更新源代码和构建新的系统之前，请执行以下步骤：
 
 [source, shell]
 ....
@@ -561,14 +561,14 @@ When switching from man:mergemaster[8] to man:etcupdate[8], the first run might 
 # etcupdate diff <.>
 ....
 
-<.> Bootstrap the database of stock [.filename]#/etc# files; for more information see man:etcupdate[8].
+<.> 引导数据库的股票 [.filename]#/etc# 文件；有关更多信息，请参阅 man:etcupdate[8]。
 
-<.> Check the diff after bootstrapping. Trim any local changes that are no longer needed to reduce the chance of conflicts in future updates.
+<.> 在引导完成后检查差异。修剪不再需要的本地更改，以减少将来更新中冲突的可能性。
 ====
 
 [.procedure]
 ====
-* Update and Build
+* 更新和构建
 +
 [source, shell]
 ....
@@ -585,38 +585,38 @@ check /usr/src/UPDATING  <.>
 # shutdown -r now      <.>
 ....
 
-<.> Get the latest version of the source. See <<updating-src-obtaining-src>> for more information on obtaining and updating source.
+<.> 获取最新版本的源代码。有关获取和更新源代码的更多信息，请参阅 <<updating-src-obtaining-src>> 。
 
-<.> Check [.filename]#/usr/src/UPDATING# for any manual steps required before or after building from source.
+<.> 在从源代码构建之前或之后，请检查 [.filename]#/usr/src/UPDATING# 是否有任何需要手动执行的步骤。
 
-<.> Go to the source directory.
+<.> 进入源代码目录。
 
-<.> Compile the world, everything except the kernel.
+编译整个世界，除了内核之外的一切。
 
-<.> Compile and install the kernel. This is equivalent to `make buildkernel installkernel`.
+<.> 编译并安装内核。这相当于执行 `make buildkernel installkernel` 命令。
 
-<.> Reboot the system to the new kernel.
+<.> 重新启动系统以加载新内核。
 
-<.> Update and merge configuration files in [.filename]#/etc/# required before installworld.
+<.> 在安装世界之前，需要更新和合并位于 [.filename]#/etc/# 的配置文件。
 
-<.> Go to the source directory.
+<.> 进入源代码目录。
 
-<.> Install the world.
+<.> 安装世界。
 
-<.> Update and merge configuration files in [.filename]#/etc/#.
+<.> 更新并合并 [.filename]#/etc/# 中的配置文件。
 
-<.> Restart the system to use the newly-built world and kernel.
+<.> 重新启动系统以使用新构建的世界和内核。
 ====
 
 [[updating-src-preparing]]
-=== Preparing for a Source Update
+=== 准备进行源代码更新
 
-Read [.filename]#/usr/src/UPDATING#. Any manual steps that must be performed before or after an update are described in this file.
+阅读 [.filename]#/usr/src/UPDATING# 文件。该文件描述了在更新之前或之后必须执行的任何手动步骤。
 
 [[updating-src-obtaining-src]]
-=== Updating the Source
+=== 更新源代码
 
-FreeBSD source code is located in [.filename]#/usr/src/#. The preferred method of updating this source is through the Git version control system. Verify that the source code is under version control:
+FreeBSD 源代码位于 [.filename]#/usr/src/# 目录下。更新源代码的首选方法是通过 Git 版本控制系统。请确认源代码已经处于版本控制下：
 
 [source, shell]
 ....
@@ -626,7 +626,7 @@ origin  https://git.freebsd.org/src.git (fetch)
 origin  https://git.freebsd.org/src.git (push)
 ....
 
-This indicates that [.filename]#/usr/src/# is under version control and can be updated with man:git[1]:
+这表示 [.filename]#/usr/src/# 已经受到版本控制，可以使用 man:git[1] 进行更新。
 
 [[synching]]
 [source, shell]
@@ -634,41 +634,41 @@ This indicates that [.filename]#/usr/src/# is under version control and can be u
 # git pull /usr/src
 ....
 
-The update process can take some time if the directory has not been updated recently. After it finishes, the source code is up to date and the build process described in the next section can begin.
+如果目录最近没有更新，更新过程可能需要一些时间。完成后，源代码将是最新的，可以开始下一节中描述的构建过程。
 
 [NOTE]
 ====
-Obtaining the source:
+获取源代码：
 
-If the output says `fatal: not a git repository`, the files there are missing or were installed with a different method. A new checkout of the source is required.
+如果输出显示 `fatal: not a git repository`，则表示文件丢失或使用了不同的安装方法。需要重新检出源代码。
 ====
 
 [[updating-src-obtaining-src-repopath]]
-.FreeBSD Versions and Repository Branches
+.FreeBSD 版本和存储库分支
 [cols="10%,10%,80%", options="header"]
 |===
-| uname&#160;&#8209;r Output
-| Repository Path
-| Description
+| uname -r 的输出结果
+| 仓库路径
+| 描述
 
 |`_X.Y_-RELEASE`
 |`releng/_X.Y_`
-|The Release version plus only critical security and bug fix patches. This branch is recommended for most users.
+|发布版本加上仅包含关键安全和错误修复补丁。这个分支推荐给大多数用户使用。
 
 |`_X.Y_-STABLE`
 |`stable/_X_`
 | 
 
-The Release version plus all additional development on that branch. _STABLE_ refers to the Applications Binary Interface (ABI) not changing, so software compiled for earlier versions still runs. For example, software compiled to run on FreeBSD 10.1 will still run on FreeBSD 10-STABLE compiled later.
+稳定版本加上该分支上的所有额外开发。_STABLE_ 指的是应用程序二进制接口（ABI）不会改变，因此为早期版本编译的软件仍然可以运行。例如，为了在 FreeBSD 10.1 上运行而编译的软件仍然可以在稍后编译的 FreeBSD 10-STABLE 上运行。
 
-STABLE branches occasionally have bugs or incompatibilities which might affect users, although these are typically fixed quickly.
+稳定分支偶尔会有错误或不兼容性，可能会影响用户，尽管这些问题通常会很快修复。
 
 |`_X_-CURRENT`
 |`main`
-|The latest unreleased development version of FreeBSD. The CURRENT branch can have major bugs or incompatibilities and is recommended only for advanced users.
+|最新的未发布开发版本的 FreeBSD。CURRENT 分支可能存在重大错误或不兼容性问题，仅推荐给高级用户使用。
 |===
 
-Determine which version of FreeBSD is being used with man:uname[1]:
+使用 man:uname[1] 命令确定正在使用的 FreeBSD 版本。
 
 [source, shell]
 ....
@@ -676,7 +676,7 @@ Determine which version of FreeBSD is being used with man:uname[1]:
 13.2-RELEASE
 ....
 
-Based on <<updating-src-obtaining-src-repopath>>, the source used to update `13.2-RELEASE` has a repository path of `releng/13.2`. That path is used when checking out the source:
+根据 <<updating-src-obtaining-src-repopath>>，用于更新 `13.2-RELEASE` 的源码具有存储路径 `releng/13.2` 。在检出源码时使用该路径：
 
 [source, shell]
 ....
@@ -684,14 +684,14 @@ Based on <<updating-src-obtaining-src-repopath>>, the source used to update `13.
 # git clone --branch releng/13.2 https://git.FreeBSD.org/src.git /usr/src <.>
 ....
 
-<.> Move the old directory out of the way. If there are no local modifications in this directory, it can be deleted.
+<.> 将旧目录移开。如果该目录没有本地修改，可以删除。
 
-<.> The path from <<updating-src-obtaining-src-repopath>> is added to the repository URL. The third parameter is the destination directory for the source code on the local system.
+<.> 将从 <<updating-src-obtaining-src-repopath>> 的路径添加到存储库 URL 中。第三个参数是本地系统上源代码的目标目录。
 
 [[updating-src-building]]
-=== Building from Source
+=== 从源代码构建
 
-The _world_, or all of the operating system except the kernel, is compiled. This is done first to provide up-to-date tools to build the kernel. Then the kernel itself is built:
+整个 _世界_ 或者说除了内核外的所有操作系统被编译。首先这样做是为了提供最新的工具来构建内核。然后构建内核本身：
 
 [source, shell]
 ....
@@ -700,14 +700,14 @@ The _world_, or all of the operating system except the kernel, is compiled. This
 # make buildkernel
 ....
 
-The compiled code is written to [.filename]#/usr/obj#.
+编译后的代码被写入到 [.filename]#/usr/obj# 。
 
-These are the basic steps. Additional options to control the build are described below.
+这些是基本步骤。下面描述了用于控制构建的其他选项。
 
 [[updating-src-building-clean-build]]
-==== Performing a Clean Build
+==== 执行清理构建
 
-Some versions of the FreeBSD build system leave previously-compiled code in the temporary object directory, [.filename]#/usr/obj#. This can speed up later builds by avoiding recompiling code that has not changed. To force a clean rebuild of everything, use `cleanworld` before starting a build:
+一些 FreeBSD 构建系统的版本会在临时对象目录 [.filename]#/usr/obj# 中保留先前编译的代码。这可以通过避免重新编译未更改的代码来加快后续的构建过程。要强制进行全面的清理重建，请在开始构建之前使用 `cleanworld` 命令。
 
 [source, shell]
 ....
@@ -715,15 +715,15 @@ Some versions of the FreeBSD build system leave previously-compiled code in the 
 ....
 
 [[updating-src-building-jobs]]
-==== Setting the Number of Jobs
+==== 设置作业数量
 
-Increasing the number of build jobs on multi-core processors can improve build speed. Determine the number of cores with `sysctl hw.ncpu`. Processors vary, as do the build systems used with different versions of FreeBSD, so testing is the only sure method to tell how a different number of jobs affects the build speed. For a starting point, consider values between half and double the number of cores. The number of jobs is specified with `-j`.
+增加多核处理器上的构建作业数量可以提高构建速度。使用 `sysctl hw.ncpu` 确定核心数。处理器和不同版本的 FreeBSD 使用的构建系统各不相同，因此测试是唯一确定不同作业数量如何影响构建速度的可靠方法。作为起点，考虑在核心数的一半和两倍之间选择值。作业数量使用 `-j` 参数指定。
 
 [[updating-src-building-jobs-example]]
-.Increasing the Number of Build Jobs
+.增加构建作业的数量
 [example]
 ====
-Building the world and kernel with four jobs:
+使用四个作业构建世界和内核：
 
 [source, shell]
 ....
@@ -733,9 +733,9 @@ Building the world and kernel with four jobs:
 ====
 
 [[updating-src-building-only-kernel]]
-==== Building Only the Kernel
+==== 仅构建内核
 
-A `buildworld` must be completed if the source code has changed. After that, a `buildkernel` to build a kernel can be run at any time. To build just the kernel:
+如果源代码发生了变化，必须完成 `buildworld`。之后，可以随时运行 `buildkernel` 来构建内核。要仅构建内核：
 
 [source, shell]
 ....
@@ -744,20 +744,20 @@ A `buildworld` must be completed if the source code has changed. After that, a `
 ....
 
 [[updating-src-building-custom-kernel]]
-==== Building a Custom Kernel
+==== 构建自定义内核
 
-The standard FreeBSD kernel is based on a _kernel config file_ called [.filename]#GENERIC#. The [.filename]#GENERIC# kernel includes the most commonly-needed device drivers and options. Sometimes it is useful or necessary to build a custom kernel, adding or removing device drivers or options to fit a specific need.
+标准的 FreeBSD 内核基于一个名为 [.filename]#GENERIC# 的_内核配置文件_。 [.filename]#GENERIC# 内核包含了最常用的设备驱动程序和选项。有时候，构建一个自定义内核是有用或必要的，可以添加或删除设备驱动程序或选项以满足特定需求。
 
-For example, someone developing a small embedded computer with severely limited RAM could remove unneeded device drivers or options to make the kernel slightly smaller.
+例如，某人正在开发一台内存严重有限的小型嵌入式计算机，可以删除不需要的设备驱动程序或选项，以使内核稍微变小。
 
-Kernel config files are located in [.filename]#/usr/src/sys/arch/conf/#, where _arch_ is the output from `uname -m`. On most computers, that is `amd64`, giving a config file directory of [.filename]#/usr/src/sys/amd64/conf/#.
+内核配置文件位于 [.filename]#/usr/src/sys/arch/conf/# ，其中 _arch_ 是从 `uname -m` 命令的输出中获取的。在大多数计算机上，这个值是 `amd64` ，因此配置文件目录为 [.filename]#/usr/src/sys/amd64/conf/# 。
 
 [TIP]
 ====
-[.filename]#/usr/src# can be deleted or recreated, so it is preferable to keep custom kernel config files in a separate directory, like [.filename]#/root#. Link the kernel config file into the [.filename]#conf# directory. If that directory is deleted or overwritten, the kernel config can be re-linked into the new one.
+[.filename]#/usr/src# 可以被删除或重新创建，因此最好将自定义内核配置文件保存在一个单独的目录中，比如 [.filename]#/root#。将内核配置文件链接到 [.filename]#conf# 目录中。如果该目录被删除或覆盖，可以将内核配置重新链接到新的目录中。
 ====
 
-A custom config file can be created by copying the [.filename]#GENERIC# config file. In this example, the new custom kernel is for a storage server, so is named [.filename]#STORAGESERVER#:
+可以通过复制 [.filename]#GENERIC# 配置文件来创建自定义配置文件。在这个例子中，新的自定义内核是用于存储服务器的，所以被命名为 [.filename]#STORAGESERVER#。
 
 [source, shell]
 ....
@@ -766,9 +766,9 @@ A custom config file can be created by copying the [.filename]#GENERIC# config f
 # ln -s /root/STORAGESERVER .
 ....
 
-[.filename]#/root/STORAGESERVER# is then edited, adding or removing devices or options as shown in man:config[5].
+然后编辑 [.filename]#/root/STORAGESERVER#，根据 man:config[5] 中所示的方式添加或删除设备或选项。
 
-The custom kernel is built by setting `KERNCONF` to the kernel config file on the command line:
+通过在命令行中设置 `KERNCONF` 为内核配置文件来构建自定义内核：
 
 [source, shell]
 ....
@@ -776,9 +776,9 @@ The custom kernel is built by setting `KERNCONF` to the kernel config file on th
 ....
 
 [[updating-src-installing]]
-=== Installing the Compiled Code
+=== 安装编译后的代码
 
-After the `buildworld` and `buildkernel` steps have been completed, the new kernel and world are installed:
+在完成 `buildworld` 和 `buildkernel` 步骤后，新的内核和系统已被安装：
 
 [source, shell]
 ....
@@ -790,7 +790,7 @@ After the `buildworld` and `buildkernel` steps have been completed, the new kern
 # shutdown -r now
 ....
 
-If a custom kernel was built, `KERNCONF` must also be set to use the new custom kernel:
+如果构建了自定义内核，则还必须设置 `KERNCONF` 以使用新的自定义内核：
 
 [source, shell]
 ....
@@ -803,28 +803,28 @@ If a custom kernel was built, `KERNCONF` must also be set to use the new custom 
 ....
 
 [[updating-src-completing]]
-=== Completing the Update
+=== 完成更新
 
-A few final tasks complete the update. Any modified configuration files are merged with the new versions, outdated libraries are located and removed, then the system is restarted.
+完成更新还需要进行一些最后的任务。任何已修改的配置文件都将与新版本合并，过时的库将被定位并删除，然后系统将重新启动。
 
 [[updating-src-completing-merge-etcupdate]]
-==== Merging Configuration Files with man:etcupdate[8]
+==== 使用 man:etcupdate[8] 合并配置文件
 
-man:etcupdate[8] is a tool for managing updates to files that are not updated as part of an installworld such as files located in [.filename]#/etc/#. It manages updates by doing a three-way merge of changes made to these files against the local versions. It is also designed to minimize the amount of user intervention, in contrast to man:mergemaster[8]'s interactive prompts.
+man:etcupdate[8] 是一个用于管理不作为 installworld 的一部分而更新的文件的工具，例如位于 [.filename]#/etc/# 中的文件。它通过对这些文件所做的更改与本地版本进行三方合并来管理更新。与 man:mergemaster[8] 的交互提示相比，它还旨在最小化用户干预的程度。
 
 [NOTE]
 ====
-In general, man:etcupdate[8] does not need any specific arguments for its job. There is however a handy in between command for sanity checking what will be done the first time man:etcupdate[8] is used:
+通常情况下，man:etcupdate[8] 在执行任务时不需要任何特定的参数。然而，第一次使用 man:etcupdate[8] 时，有一个方便的中间命令用于检查将要执行的操作：
 
 [source, shell]
 ....
 # etcupdate diff
 ....
 
-This command allows the user to audit configuration changes.
+该命令允许用户审计配置更改。
 ====
 
-If man:etcupdate[8] is not able to merge a file automatically, the merge conflicts can be resolved with manual interaction by issuing:
+如果 man:etcupdate[8] 无法自动合并文件，则可以通过手动交互来解决合并冲突，方法是执行以下命令：
 
 [source, shell]
 ....
@@ -833,7 +833,7 @@ If man:etcupdate[8] is not able to merge a file automatically, the merge conflic
 
 [WARNING]
 ====
-When switching from man:mergemaster[8] to man:etcupdate[8], the first run might merge changes incorrectly generating spurious conflicts. To prevent this, perform the following steps *before* updating sources and building the new world:
+当从 man:mergemaster[8] 切换到 man:etcupdate[8] 时，第一次运行可能会错误地合并更改，从而生成虚假的冲突。为了防止这种情况发生，在更新源代码和构建新的系统之前，请执行以下步骤：
 
 [source, shell]
 ....
@@ -841,24 +841,24 @@ When switching from man:mergemaster[8] to man:etcupdate[8], the first run might 
 # etcupdate diff <.>
 ....
 
-<.> Bootstrap the database of stock [.filename]#/etc# files; for more information see man:etcupdate[8].
+<.> 引导数据库的股票 [.filename]#/etc# 文件；有关更多信息，请参阅 man:etcupdate[8]。
 
-<.> Check the diff after bootstrapping. Trim any local changes that are no longer needed to reduce the chance of conflicts in future updates.
+<.> 在引导完成后检查差异。修剪不再需要的本地更改，以减少将来更新中冲突的可能性。
 ====
 
 [[updating-src-completing-merge-mergemaster]]
-==== Merging Configuration Files with man:mergemaster[8]
+==== 使用 man:mergemaster[8] 合并配置文件
 
-man:mergemaster[8] provides a way to merge changes that have been made to system configuration files with new versions of those files. man:mergemaster[8] is an alternative to the preferred man:etcupdate[8] With `-Ui`, man:mergemaster[8] automatically updates files that have not been user-modified and installs new files that are not already present:
+man:mergemaster[8] 提供了一种将对系统配置文件所做的更改与这些文件的新版本合并的方法。 man:mergemaster[8] 是 man:etcupdate[8] 的替代方法。使用 `-Ui` 选项，man:mergemaster[8] 会自动更新未被用户修改的文件，并安装尚未存在的新文件。
 
 [source, shell]
 ....
 # mergemaster -Ui
 ....
 
-If a file must be manually merged, an interactive display allows the user to choose which portions of the files are kept. See man:mergemaster[8] for more information.
+如果一个文件需要手动合并，交互式显示将允许用户选择保留文件的哪些部分。有关更多信息，请参阅 man:mergemaster[8]。
 
-If the standard [.filename]#/usr/src# was not used, another parameter must be passed to man:mergemaster[8]:
+如果没有使用标准的 [.filename]#/usr/src# 路径，必须向 man:mergemaster[8] 传递另一个参数：
 
 [source, shell]
 ....
@@ -866,41 +866,41 @@ If the standard [.filename]#/usr/src# was not used, another parameter must be pa
 ....
 
 [[updating-src-completing-check-old]]
-==== Checking for Outdated Files and Libraries
+==== 检查过时的文件和库
 
-Some obsolete files or directories can remain after an update. These files can be located:
+更新后可能会保留一些过时的文件或目录。这些文件可以位于以下位置：
 
 [source, shell]
 ....
 # make check-old
 ....
 
-and deleted:
+删除：
 
 [source, shell]
 ....
 # make delete-old
 ....
 
-Some obsolete libraries can also remain. These can be detected with:
+还可能存在一些过时的库。可以使用以下方法检测到这些库：
 
 [source, shell]
 ....
 # make check-old-libs
 ....
 
-and deleted with
+也删除
 
 [source, shell]
 ....
 # make delete-old-libs
 ....
 
-Programs which were still using those old libraries will stop working when the library has been deleted. These programs must be rebuilt or replaced after deleting the old libraries.
+当删除了这些旧库后，仍在使用这些旧库的程序将停止工作。这些程序必须在删除旧库后重新构建或替换。
 
 [TIP]
 ====
-When all the old files or directories are known to be safe to delete, pressing kbd:[y] and kbd:[Enter] to delete each file can be avoided by setting `BATCH_DELETE_OLD_FILES` in the command. For example:
+当所有旧文件或目录都被确认为安全可删除时，可以通过在命令中设置 `BATCH_DELETE_OLD_FILES` 来避免按下 kbd:[y] 和 kbd:[Enter] 来删除每个文件。例如：
 
 [source, shell]
 ....
@@ -910,9 +910,9 @@ When all the old files or directories are known to be safe to delete, pressing k
 ====
 
 [[updating-src-completing-restart]]
-==== Restarting After the Update
+==== 更新后重新启动
 
-The last step after updating is to restart the computer so all the changes take effect:
+更新完成后的最后一步是重新启动计算机，以使所有更改生效：
 
 [source, shell]
 ....
@@ -920,56 +920,56 @@ The last step after updating is to restart the computer so all the changes take 
 ....
 
 [[small-lan]]
-== Tracking for Multiple Machines
+== 多台机器的追踪
 
-When multiple machines need to track the same source tree, it is a waste of disk space, network bandwidth, and CPU cycles to have each system download the sources and rebuild everything. The solution is to have one machine do most of the work, while the rest of the machines mount that work via NFS. This section outlines a method of doing so. For more information about using NFS, refer to crossref:network-servers[network-nfs,"Network File System (NFS)"].
+当多台机器需要跟踪同一个源代码树时，让每台系统都下载源代码并重新构建会浪费磁盘空间、网络带宽和 CPU 周期。解决方案是让一台机器完成大部分工作，而其他机器通过 NFS 挂载这个工作。本节介绍了一种实现方法。有关使用 NFS 的更多信息，请参考 crossref:network-servers[network-nfs,“网络文件系统（NFS）”]。
 
-First, identify a set of machines which will run the same set of binaries, known as a _build set_. Each machine can have a custom kernel, but will run the same userland binaries. From that set, choose a machine to be the _build machine_ that the world and kernel are built on. Ideally, this is a fast machine that has sufficient spare CPU to run `make buildworld` and `make buildkernel`.
+首先，确定一组将运行相同二进制文件的机器，称为 _构建集_。每台机器可以有自定义的内核，但将运行相同的用户空间二进制文件。从该集合中选择一台机器作为 _构建机器_，用于构建世界和内核。理想情况下，这是一台速度快且具有足够空闲 CPU 来运行 `make buildworld` 和 `make buildkernel` 的机器。
 
-Select a machine to be the _test machine_, which will test software updates before they are put into production. This _must_ be a machine that can afford to be down for an extended period of time. It can be the build machine, but need not be.
+选择一台机器作为 _测试机器_，在将软件更新投入生产之前对其进行测试。这台机器必须能够承受较长时间的停机。它可以是构建机器，但不一定是。
 
-All the machines in this build set need to mount [.filename]#/usr/obj# and [.filename]#/usr/src# from the build machine via NFS. For multiple build sets, [.filename]#/usr/src# should be on one build machine, and NFS mounted on the rest.
+此构建集中的所有机器都需要通过 NFS 从构建机器挂载 [.filename]#/usr/obj# 和 [.filename]#/usr/src#。对于多个构建集，[.filename]#/usr/src# 应该在一个构建机器上，并在其他机器上通过 NFS 挂载。
 
-Ensure that [.filename]#/etc/make.conf# and [.filename]#/etc/src.conf# on all the machines in the build set agree with the build machine. That means that the build machine must build all the parts of the base system that any machine in the build set is going to install. Also, each build machine should have its kernel name set with `KERNCONF` in [.filename]#/etc/make.conf#, and the build machine should list them all in its `KERNCONF`, listing its own kernel first. The build machine must have the kernel configuration files for each machine in its [.filename]#/usr/src/sys/arch/conf#.
+确保构建集中所有机器上的 [.filename]#/etc/make.conf# 和 [.filename]#/etc/src.conf# 与构建机器保持一致。这意味着构建机器必须构建基本系统的所有部分，以便构建集中的任何机器都可以安装。此外，每个构建机器应该使用 [.filename]#/etc/make.conf# 中的 `KERNCONF` 设置其内核名称，并且构建机器应该在其 `KERNCONF` 中列出所有这些内核，将自己的内核列在第一位。构建机器必须在 [.filename]#/usr/src/sys/arch/conf# 中拥有每个机器的内核配置文件。
 
-On the build machine, build the kernel and world as described in <<makeworld>>, but do not install anything on the build machine. Instead, install the built kernel on the test machine. On the test machine, mount [.filename]#/usr/src# and [.filename]#/usr/obj# via NFS. Then, run `shutdown now` to go to single-user mode in order to install the new kernel and world and run `mergemaster` as usual. When done, reboot to return to normal multi-user operations.
+在构建机上，按照 <<makeworld>> 中描述的方式构建内核和世界，但不要在构建机上安装任何东西。相反，将构建好的内核安装在测试机上。在测试机上，通过 NFS 挂载 [.filename]#/usr/src# 和 [.filename]#/usr/obj#。然后，运行 `shutdown now` 进入单用户模式，以便安装新的内核和世界，并像往常一样运行 `mergemaster`。完成后，重新启动以返回到正常的多用户操作。
 
-After verifying that everything on the test machine is working properly, use the same procedure to install the new software on each of the other machines in the build set.
+在验证测试机上的一切正常工作后，使用相同的步骤在构建集中的每台其他机器上安装新软件。
 
-The same methodology can be used for the ports tree. The first step is to share [.filename]#/usr/ports# via NFS to all the machines in the build set. To configure [.filename]#/etc/make.conf# to share distfiles, set `DISTDIR` to a common shared directory that is writable by whichever user `root` is mapped to by the NFS mount. Each machine should set `WRKDIRPREFIX` to a local build directory, if ports are to be built locally. Alternately, if the build system is to build and distribute packages to the machines in the build set, set `PACKAGES` on the build system to a directory similar to `DISTDIR`.
+相同的方法可以用于 ports 树。第一步是通过 NFS 将 [.filename]#/usr/ports# 共享给构建集中的所有机器。要配置 [.filename]#/etc/make.conf# 以共享 distfiles，将 `DISTDIR` 设置为一个由 NFS 挂载映射到 `root` 用户的可写共享目录。如果要在本地构建端口，则每台机器应将 `WRKDIRPREFIX` 设置为本地构建目录。或者，如果构建系统要构建并分发软件包给构建集中的机器，则在构建系统上将 `PACKAGES` 设置为类似于 `DISTDIR` 的目录。
 
 [[building-on-non-freebsd-hosts]]
-== Building on non-FreeBSD Hosts
+== 在非 FreeBSD 主机上构建
 
-Historically, building FreeBSD required a FreeBSD host. Nowadays, the FreeBSD can be build on Linux distributions and macOS.
+从历史上看，构建 FreeBSD 需要一个 FreeBSD 主机。如今，FreeBSD 可以在 Linux 发行版和 macOS 上构建。
 
-To build FreeBSD on non-FreeBSD hosts, the recommendation is to use the `tools/build/make.py` script. This script acts as a wrapper around `bmake`, which is the make implementation used by FreeBSD. It ensures that the necessary tooling, including the actual FreeBSD's man:make[1], is bootstrapped and that the build environment is properly configured. In particular, it sets the external toolchain variables, such as `XCC`, `XLD`, and others. Additionally, the script can pass any additional command arguments, such as `-j 4` for parallel builds or specific make targets, to `bmake`.
+在非 FreeBSD 主机上构建 FreeBSD 的推荐方法是使用 `tools/build/make.py` 脚本。该脚本作为 `bmake` 的包装器，`bmake` 是 FreeBSD 使用的 make 实现。它确保了必要的工具，包括实际的 FreeBSD 的 `man:make[1]` ，被引导并且构建环境被正确配置。特别是，它设置了外部工具链变量，如 `XCC`、`XLD` 等。此外，该脚本可以将任何额外的命令参数，如 `-j 4` 用于并行构建或特定的 make 目标，传递给 `bmake`。
 
 [NOTE]
 ====
-A recent version of `bmake` can be used instead of the `tools/build/make.py` script as well. In that case, however, required environment variables need to be set manually (the easiest way to obtain a list of them is by running `tools/build/make.py --debug`).
+最近版本的 `bmake` 也可以替代 `tools/build/make.py` 脚本。但在这种情况下，需要手动设置所需的环境变量（最简单的方法是运行 `tools/build/make.py --debug` 来获取它们的列表）。
 ====
 
-Otherwise, the list of prerequisites for building FreeBSD is rather short. In fact, it boils down to installing a couple of dependencies.
+否则，构建 FreeBSD 所需的先决条件列表相当简短。实际上，它只需要安装几个依赖项。
 
-On macOS, the only dependency LLVM. The necessary dependencies can be installed with package manager (e.g., link:https://brew.sh/[Homebrew]):
+在 macOS 上，唯一的依赖是 LLVM。必要的依赖项可以通过包管理器（例如，link:https://brew.sh/[Homebrew]）进行安装。
 
 [source, shell]
 ....
 brew install llvm
 ....
 
-On a Linux distributions, install link:https://clang.llvm.org/[Clang] version 10.0 or newer and the headers for libarchive and libbz2 (often packaged as libarchive-dev and libbz2-dev).
+在 Linux 发行版上，安装 Clang 10.0 或更新版本，以及 libarchive 和 libbz2 的头文件（通常打包为 libarchive-dev 和 libbz2-dev）。
 
-Once the dependencies are installed, the host should be able to build FreeBSD.
+一旦安装了依赖项，主机就应该能够构建 FreeBSD。
 
-For example, the following `tools/build/make.py` invocation builds the world:
+例如，下面的 `tools/build/make.py` 命令构建整个项目：
 
 [source, shell]
 ....
 MAKEOBJDIRPREFIX=/tmp/obj tools/build/make.py -j 8 TARGET=arm64 TARGET_ARCH=aarch64 buildworld
 ....
 
-It builds the world for target `aarch64:arm64` on 8 CPUs and uses [.filename]#/tmp/obj# for object files. Note that the variables `MAKEOBJDIRPREFIX`, `TARGET`, and `TARGET_ARCH` are mandatory when building on non-FreeBSD hosts. Also, make sure to create the object directory pointed to by the `MAKEOBJDIRPREFIX` environment variable.
+它在 8 个 CPU 上为目标 `aarch64:arm64` 构建世界，并使用 [.filename]#/tmp/obj# 作为对象文件。请注意，在非 FreeBSD 主机上构建时，变量 `MAKEOBJDIRPREFIX`、`TARGET` 和 `TARGET_ARCH` 是必需的。此外，请确保创建由 `MAKEOBJDIRPREFIX` 环境变量指向的对象目录。
 
-Refer to man:arch[7] and man:build[7] for more details.
+请参考 man:arch[7] 和 man:build[7] 以获取更多详细信息。
