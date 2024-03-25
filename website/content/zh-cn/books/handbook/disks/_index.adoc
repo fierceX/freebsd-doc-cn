@@ -176,16 +176,16 @@ ada0 recovered
    83886046   18513921        - free -  (8.8G)
 ....
 
-Partitions can only be resized into contiguous free space. Here, the last partition on the disk is the swap partition, but the second partition is the one that needs to be resized. Swap partitions only contain temporary data, so it can safely be unmounted, deleted, and then recreate the third partition after resizing the second partition.
+分区只能调整为连续的空闲空间。在这里，磁盘上的最后一个分区是交换分区，但需要调整大小的是第二个分区。交换分区只包含临时数据，因此可以安全地卸载、删除，然后在调整第二个分区大小后重新创建第三个分区。
 
-Disable the swap partition:
+禁用交换分区：
 
 [source, shell]
 ....
 # swapoff /dev/ada0p3
 ....
 
-Delete the third partition, specified by the `-i` flag, from the disk _ada0_.
+从磁盘 _ada0_ 中删除由 `-i` 标志指定的第三个分区。
 
 [source, shell]
 ....
@@ -201,7 +201,7 @@ ada0p3 deleted
 [WARNING]
 ====
 
-There is risk of data loss when modifying the partition table of a mounted file system. It is best to perform the following steps on an unmounted file system while running from a live CD-ROM or USB device. However, if absolutely necessary, a mounted file system can be resized after disabling GEOM safety features:
+在修改挂载文件系统的分区表时存在数据丢失的风险。最好在从 Live CD-ROM 或 USB 设备运行时，对未挂载的文件系统执行以下步骤。然而，如果绝对必要，可以在禁用 GEOM 安全功能后调整挂载的文件系统的大小：
 
 [source, shell]
 ....
@@ -210,7 +210,7 @@ There is risk of data loss when modifying the partition table of a mounted file 
 
 ====
 
-Resize the partition, leaving room to recreate a swap partition of the desired size. The partition to resize is specified with `-i`, and the new desired size with `-s`. Optionally, alignment of the partition is controlled with `-a`. This only modifies the size of the partition. The file system in the partition will be expanded in a separate step.
+调整分区大小，留出空间以重新创建所需大小的交换分区。使用 `-i` 指定要调整大小的分区，使用 `-s` 指定新的所需大小。可选地，使用 `-a` 控制分区的对齐方式。这仅修改分区的大小。分区中的文件系统将在单独的步骤中扩展。
 
 [source, shell]
 ....
@@ -223,7 +223,7 @@ ada0p2 resized
    98566306    3833661        - free -  (1.8G)
 ....
 
-Recreate the swap partition and activate it. If no size is specified with `-s`, all remaining space is used:
+重新创建交换分区并激活它。如果没有使用 `-s` 指定大小，则使用所有剩余空间。
 
 [source, shell]
 ....
@@ -237,7 +237,7 @@ ada0p3 added
 # swapon /dev/ada0p3
 ....
 
-Grow the UFS file system to use the new capacity of the resized partition:
+将 UFS 文件系统扩展到重新调整大小的分区的新容量。
 
 [source, shell]
 ....
@@ -250,26 +250,26 @@ super-block backups (for fsck -b #) at:
  89756992, 91039232, 92321472, 93603712, 94885952, 96168192, 97450432
 ....
 
-If the file system is ZFS, the resize is triggered by running the `online` subcommand with `-e`:
+如果文件系统是 ZFS ，则通过运行带有 `-e` 选项的 `online` 子命令来触发调整大小：
 
 [source, shell]
 ....
 # zpool online -e zroot /dev/ada0p2
 ....
 
-Both the partition and the file system on it have now been resized to use the newly-available disk space.
+分区和其上的文件系统现在已经调整大小，以利用新可用的磁盘空间。
 
 [[usb-disks]]
-== USB Storage Devices
+== USB 存储设备
 
-Many external storage solutions, such as hard drives, USB thumbdrives, and CD and DVD burners, use the Universal Serial Bus (USB). FreeBSD provides support for USB 1.x, 2.0, and 3.0 devices.
+许多外部存储解决方案，如硬盘、USB 闪存驱动器以及 CD 和 DVD 刻录机，使用通用串行总线（USB）。FreeBSD 支持 USB 1.x、2.0 和 3.0 设备。
 
 [NOTE]
 ====
-USB 3.0 support is not compatible with some hardware, including Haswell (Lynx point) chipsets. If FreeBSD boots with a `failed with error 19` message, disable xHCI/USB3 in the system BIOS.
+USB 3.0 支持不兼容一些硬件，包括 Haswell（Lynx Point）芯片组。如果 FreeBSD 启动时出现 `failed with error 19` 的消息，请在系统 BIOS 中禁用 xHCI/USB3。
 ====
 
-Support for USB storage devices is built into the [.filename]#GENERIC# kernel. For a custom kernel, be sure that the following lines are present in the kernel configuration file:
+对 USB 存储设备的支持已经集成到 [.filename]#GENERIC# 内核中。对于自定义内核，请确保以下行在内核配置文件中存在：
 
 [.programlisting]
 ....
@@ -285,13 +285,13 @@ device umass	# Disks/Mass storage - Requires scbus and da
 device cd	# needed for CD and DVD burners
 ....
 
-FreeBSD uses the man:umass[4] driver which uses the SCSI subsystem to access USB storage devices. Since any USB device will be seen as a SCSI device by the system, if the USB device is a CD or DVD burner, do _not_ include `device atapicam` in a custom kernel configuration file.
+FreeBSD 使用 man:umass[4] 驱动程序，该驱动程序使用 SCSI 子系统来访问 USB 存储设备。由于系统将任何 USB 设备视为 SCSI 设备，如果 USB 设备是 CD 或 DVD 刻录机，请在自定义内核配置文件中 _不要_ 包含 `device atapicam`。
 
-The rest of this section demonstrates how to verify that a USB storage device is recognized by FreeBSD and how to configure the device so that it can be used.
+本节的其余部分演示了如何验证 FreeBSD 是否识别 USB 存储设备以及如何配置设备以便使用。
 
-=== Device Configuration
+=== 设备配置
 
-To test the USB configuration, plug in the USB device. Use `dmesg` to confirm that the drive appears in the system message buffer. It should look something like this:
+为了测试 USB 配置，请插入 USB 设备。使用 `dmesg` 命令确认驱动器是否出现在系统消息缓冲区中。它应该看起来像这样：
 
 [source, shell]
 ....
@@ -306,9 +306,9 @@ da0: 152627MB (312581808 512 byte sectors: 255H 63S/T 19457C)
 da0: quirks=0x2<NO_6_BYTE>
 ....
 
-The brand, device node ([.filename]#da0#), speed, and size will differ according to the device.
+品牌、设备节点（[.filename]#da0#）、速度和大小将根据设备而异。
 
-Since the USB device is seen as a SCSI one, `camcontrol` can be used to list the USB storage devices attached to the system:
+由于 USB 设备被视为 SCSI 设备，可以使用 `camcontrol` 命令列出连接到系统的 USB 存储设备：
 
 [source, shell]
 ....
@@ -316,7 +316,7 @@ Since the USB device is seen as a SCSI one, `camcontrol` can be used to list the
 <STECH Simple Drive 1.04>          at scbus4 target 0 lun 0 (pass3,da0)
 ....
 
-Alternately, `usbconfig` can be used to list the device. Refer to man:usbconfig[8] for more information about this command.
+另外，可以使用 `usbconfig` 命令列出设备。有关该命令的更多信息，请参阅 man:usbconfig[8]。
 
 [source, shell]
 ....
@@ -324,14 +324,14 @@ Alternately, `usbconfig` can be used to list the device. Refer to man:usbconfig[
 ugen0.3: <Simple Drive STECH> at usbus0, cfg=0 md=HOST spd=HIGH (480Mbps) pwr=ON (2mA)
 ....
 
-If the device has not been formatted, refer to <<disks-adding>> for instructions on how to format and create partitions on the USB drive. If the drive comes with a file system, it can be mounted by `root` using the instructions in crossref:basics[mount-unmount,“Mounting and Unmounting File Systems”].
+如果设备尚未格式化，请参考 <<disks-adding>> 中的说明，了解如何对 USB 驱动器进行格式化和创建分区的操作。如果驱动器已经带有文件系统，可以使用 crossref:basics[mount-unmount,“挂载和卸载文件系统”] 中的指示，由 `root` 用户进行挂载。
 
 [WARNING]
 ====
-Allowing untrusted users to mount arbitrary media, by enabling `vfs.usermount` as described below, should not be considered safe from a security point of view. Most file systems were not built to safeguard against malicious devices.
+从安全角度来看，不应该认为通过启用 `vfs.usermount` 来允许不受信任的用户挂载任意媒体是安全的。大多数文件系统并不具备防范恶意设备的能力。
 ====
 
-To make the device mountable as a normal user, one solution is to make all users of the device a member of the `operator` group using man:pw[8]. Next, ensure that `operator` is able to read and write the device by adding these lines to [.filename]#/etc/devfs.rules#:
+为了使设备能够以普通用户的身份挂载，一种解决方案是使用 man:pw[8] 将设备的所有用户都添加到 `operator` 组中。接下来，通过将以下行添加到 [.filename]#/etc/devfs.rules# 来确保 `operator` 能够读写设备：
 
 [.programlisting]
 ....
@@ -341,31 +341,31 @@ add path 'da*' mode 0660 group operator
 
 [NOTE]
 ====
-If internal SCSI disks are also installed in the system, change the second line as follows:
+如果系统中还安装了内部 SCSI 硬盘，请将第二行更改如下：
 
 [.programlisting]
 ....
 add path 'da[3-9]*' mode 0660 group operator
 ....
 
-This will exclude the first three SCSI disks ([.filename]#da0# to [.filename]#da2#) from belonging to the `operator` group. Replace _3_ with the number of internal SCSI disks. Refer to man:devfs.rules[5] for more information about this file.
+这将排除前三个 SCSI 磁盘（[.filename]#da0# 到 [.filename]#da2#）不属于 `operator` 组。将 _3_ 替换为内部 SCSI 磁盘的数量。有关此文件的更多信息，请参阅 man:devfs.rules[5] 。
 ====
 
-Next, enable the ruleset in [.filename]#/etc/rc.conf#:
+接下来，在 [.filename]#/etc/rc.conf# 文件中启用规则集：
 
 [.programlisting]
 ....
 devfs_system_ruleset="localrules"
 ....
 
-Then, instruct the system to allow regular users to mount file systems by adding the following line to [.filename]#/etc/sysctl.conf#:
+然后，通过将以下行添加到 [.filename]#/etc/sysctl.conf#，指示系统允许普通用户挂载文件系统：
 
 [.programlisting]
 ....
 vfs.usermount=1
 ....
 
-Since this only takes effect after the next reboot, use `sysctl` to set this variable now:
+由于此设置仅在下次重新启动后生效，请使用 `sysctl` 立即设置此变量：
 
 [source, shell]
 ....
@@ -373,7 +373,7 @@ Since this only takes effect after the next reboot, use `sysctl` to set this var
 vfs.usermount: 0 -> 1
 ....
 
-The final step is to create a directory where the file system is to be mounted. This directory needs to be owned by the user that is to mount the file system. One way to do that is for `root` to create a subdirectory owned by that user as [.filename]#/mnt/username#. In the following example, replace _username_ with the login name of the user and _usergroup_ with the user's primary group:
+最后一步是创建一个目录，用于挂载文件系统。这个目录需要由将要挂载文件系统的用户拥有。一种方法是让 `root` 用户创建一个由该用户拥有的子目录，例如 [.filename]#/mnt/username# 。在下面的示例中，将 _username_ 替换为用户的登录名，将 _usergroup_ 替换为用户的主要组名：
 
 [source, shell]
 ....
@@ -381,21 +381,21 @@ The final step is to create a directory where the file system is to be mounted. 
 # chown username:usergroup /mnt/username
 ....
 
-Suppose a USB thumbdrive is plugged in, and a device [.filename]#/dev/da0s1# appears. If the device is formatted with a FAT file system, the user can mount it using:
+假设插入了一个 USB 闪存驱动器，并出现了一个设备 [.filename]#/dev/da0s1#。如果该设备使用 FAT 文件系统格式化，用户可以使用以下命令挂载它：
 
 [source, shell]
 ....
 % mount -t msdosfs -o -m=644,-M=755 /dev/da0s1 /mnt/username
 ....
 
-Before the device can be unplugged, it _must_ be unmounted first:
+在设备被拔出之前，必须首先卸载设备：
 
 [source, shell]
 ....
 % umount /mnt/username
 ....
 
-After device removal, the system message buffer will show messages similar to the following:
+设备移除后，系统消息缓冲区将显示类似以下的消息：
 
 [source, shell]
 ....
@@ -405,16 +405,16 @@ da0: <STECH Simple Drive 1.04> s/n WD-WXE508CAN263          detached
 (da0:umass-sim0:0:0:0): Periph destroyed
 ....
 
-=== Automounting Removable Media
+=== 自动挂载可移动介质
 
-USB devices can be automatically mounted by uncommenting this line in [.filename]#/etc/auto_master#:
+取消注释 [.filename]#/etc/auto_master# 中的这行代码可以自动挂载 USB 设备：
 
 [source, shell]
 ....
 /media		-media		-nosuid
 ....
 
-Then add these lines to [.filename]#/etc/devd.conf#:
+然后将以下行添加到 [.filename]#/etc/devd.conf# 文件中：
 
 [source, shell]
 ....
@@ -425,7 +425,7 @@ notify 100 {
 };
 ....
 
-Reload the configuration if man:autofs[5] and man:devd[8] are already running:
+如果 man:autofs[5] 和 man:devd[8] 已经在运行，请重新加载配置。
 
 [source, shell]
 ....
@@ -433,16 +433,16 @@ Reload the configuration if man:autofs[5] and man:devd[8] are already running:
 # service devd restart
 ....
 
-man:autofs[5] can be set to start at boot by adding this line to [.filename]#/etc/rc.conf#:
+man:autofs[5] 可以通过将以下行添加到 [.filename]#/etc/rc.conf# 来设置在启动时启动：
 
 [.programlisting]
 ....
 autofs_enable="YES"
 ....
 
-man:autofs[5] requires man:devd[8] to be enabled, as it is by default.
+man:autofs[5] 要求启用 man:devd[8]，默认情况下它是启用的。
 
-Start the services immediately with:
+立即启动服务：
 
 [source, shell]
 ....
@@ -452,30 +452,30 @@ Start the services immediately with:
 # service devd start
 ....
 
-Each file system that can be automatically mounted appears as a directory in [.filename]#/media/#. The directory is named after the file system label. If the label is missing, the directory is named after the device node.
+每个可以自动挂载的文件系统都会在 [.filename]#/media/# 中以目录的形式显示。该目录的名称与文件系统的标签相同。如果标签缺失，则目录的名称与设备节点相同。
 
-The file system is transparently mounted on the first access, and unmounted after a period of inactivity. Automounted drives can also be unmounted manually:
+文件系统在第一次访问时透明地挂载，并在一段时间的不活动后卸载。自动挂载的驱动器也可以手动卸载：
 
 [source, shell]
 ....
 # automount -fu
 ....
 
-This mechanism is typically used for memory cards and USB memory sticks. It can be used with any block device, including optical drives or iSCSILUNs.
+这种机制通常用于存储卡和 USB 存储设备。它可以与任何块设备一起使用，包括光驱或 iSCSI 逻辑单元。
 
 [[creating-cds]]
-== Creating and Using CD Media
+== 创建和使用 CD 媒体
 
-Compact Disc (CD) media provide a number of features that differentiate them from conventional disks. They are designed so that they can be read continuously without delays to move the head between tracks. While CD media do have tracks, these refer to a section of data to be read continuously, and not a physical property of the disk. The ISO 9660 file system was designed to deal with these differences.
+紧凑型光盘（CD）介质具有一些与传统磁盘不同的特点。它们被设计成可以连续读取，无需在轨道之间移动磁头造成延迟。虽然 CD 介质确实有轨道，但这些轨道指的是要连续读取的数据部分，而不是磁盘的物理属性。ISO 9660 文件系统是为处理这些差异而设计的。
 
-The FreeBSD Ports Collection provides several utilities for burning and duplicating audio and data CDs. This chapter demonstrates the use of several command line utilities. For CD burning software with a graphical utility, consider installing the package:sysutils/xcdroast[] or package:sysutils/k3b[] packages or ports.
+FreeBSD Ports Collection 提供了几个用于刻录和复制音频和数据 CD 的实用工具。本章演示了几个命令行实用程序的使用方法。如果需要带有图形界面的 CD 刻录软件，请考虑安装 package:sysutils/xcdroast[] 或 package:sysutils/k3b[] 包或 ports。
 
 [[atapicam]]
-=== Supported Devices
+=== 支持的设备
 
-The [.filename]#GENERIC# kernel provides support for SCSI, USB, and ATAPICD readers and burners. If a custom kernel is used, the options that need to be present in the kernel configuration file vary by the type of device.
+[.filename]#GENERIC# 内核提供了对 SCSI、USB 和 ATAPICD 读写器的支持。如果使用自定义内核，则需要在内核配置文件中根据设备类型添加相应的选项。
 
-For a SCSI burner, make sure these options are present:
+对于 SCSI 刻录机，请确保以下选项存在：
 
 [.programlisting]
 ....
@@ -485,7 +485,7 @@ device pass	# Passthrough device (direct ATA/SCSI access)
 device cd	# needed for CD and DVD burners
 ....
 
-For a USB burner, make sure these options are present:
+对于一个 USB 刻录机，确保以下选项存在：
 
 [.programlisting]
 ....
@@ -501,7 +501,7 @@ device usb	# USB Bus (required)
 device umass	# Disks/Mass storage - Requires scbus and da
 ....
 
-For an ATAPI burner, make sure these options are present:
+对于一个 ATAPI 刻录机，请确保以下选项存在：
 
 [.programlisting]
 ....
@@ -513,24 +513,24 @@ device cd	# needed for CD and DVD burners
 
 [NOTE]
 ====
-On FreeBSD versions prior to 10.x, this line is also needed in the kernel configuration file if the burner is an ATAPI device:
+在 FreeBSD 10.x 之前的版本中，如果刻录机是 ATAPI 设备，则还需要在内核配置文件中添加此行：
 
 [.programlisting]
 ....
 device atapicam
 ....
 
-Alternately, this driver can be loaded at boot time by adding the following line to [.filename]#/boot/loader.conf#:
+或者，可以通过在 [.filename]#/boot/loader.conf# 中添加以下行来在启动时加载此驱动程序：
 
 [.programlisting]
 ....
 atapicam_load="YES"
 ....
 
-This will require a reboot of the system as this driver can only be loaded at boot time.
+这将需要系统重新启动，因为这个驱动程序只能在启动时加载。
 ====
 
-To verify that FreeBSD recognizes the device, run `dmesg` and look for an entry for the device. On systems prior to 10.x, the device name in the first line of the output will be [.filename]#acd0# instead of [.filename]#cd0#.
+要验证 FreeBSD 是否识别设备，请运行 `dmesg` 命令并查找设备的条目。在 10.x 之前的系统中，输出的第一行中设备名称将是 [.filename]#acd0#，而不是 [.filename]#cd0#。
 
 [source, shell]
 ....
@@ -543,18 +543,18 @@ cd0: Attempt to query device size failed: NOT READY, Medium not present - tray c
 ....
 
 [[cdrecord]]
-=== Burning a CD
+=== 刻录光盘
 
-In FreeBSD, `cdrecord` can be used to burn CDs. This command is installed with the package:sysutils/cdrtools[] package or port.
+在 FreeBSD 中，可以使用 `cdrecord` 来刻录光盘。这个命令是通过 `sysutils/cdrtools` 包或端口安装的。
 
-While `cdrecord` has many options, basic usage is simple. Specify the name of the ISO file to burn and, if the system has multiple burner devices, specify the name of the device to use:
+虽然 `cdrecord` 有很多选项，但基本用法很简单。只需指定要刻录的 ISO 文件的名称，如果系统有多个刻录设备，则还需指定要使用的设备的名称：
 
 [source, shell]
 ....
 # cdrecord dev=device imagefile.iso
 ....
 
-To determine the device name of the burner, use `-scanbus` which might produce results like this:
+要确定刻录机的设备名称，请使用 `-scanbus` 命令，可能会产生如下结果：
 
 [source, shell]
 ....
@@ -581,9 +581,9 @@ scsibus1:
         1,7,0   107) *
 ....
 
-Locate the entry for the CD burner and use the three numbers separated by commas as the value for `dev`. In this case, the Yamaha burner device is `1,5,0`, so the appropriate input to specify that device is `dev=1,5,0`. Refer to the manual page for `cdrecord` for other ways to specify this value and for information on writing audio tracks and controlling the write speed.
+找到 CD 刻录机的条目，并使用逗号分隔的三个数字作为 `dev` 的值。在这种情况下，Yamaha 刻录机设备是 `1,5,0` ，因此指定该设备的适当输入是 `dev = 1,5,0`。请参考 `cdrecord` 的手册页面，了解其他指定该值的方法以及有关写入音轨和控制写入速度的信息。
 
-Alternately, run the following command to get the device address of the burner:
+或者，运行以下命令以获取刻录机的设备地址：
 
 [source, shell]
 ....
@@ -591,32 +591,32 @@ Alternately, run the following command to get the device address of the burner:
 <MATSHITA CDRW/DVD UJDA740 1.00>   at scbus1 target 0 lun 0 (cd0,pass0)
 ....
 
-Use the numeric values for `scbus`, `target`, and `lun`. For this example, `1,0,0` is the device name to use.
+使用 `scbus`、`target` 和 `lun` 的数值。对于这个例子，`1,0,0` 是要使用的设备名称。
 
 [[mkisofs]]
-=== Writing Data to an ISO File System
+=== 将数据写入 ISO 文件系统
 
-In order to produce a data CD, the data files that are going to make up the tracks on the CD must be prepared before they can be burned to the CD. In FreeBSD, package:sysutils/cdrtools[] installs `mkisofs`, which can be used to produce an ISO 9660 file system that is an image of a directory tree within a UNIX(R) file system. The simplest usage is to specify the name of the ISO file to create and the path to the files to place into the ISO 9660 file system:
+为了制作数据光盘，必须在将数据文件刻录到光盘之前对其进行准备。在 FreeBSD 中，安装了 `mkisofs` 的 package:sysutils/cdrtools[] 可以用来生成一个 ISO 9660 文件系统，该文件系统是 UNIX(R) 文件系统中目录树的镜像。最简单的用法是指定要创建的 ISO 文件的名称和要放入 ISO 9660 文件系统的文件路径：
 
 [source, shell]
 ....
 # mkisofs -o imagefile.iso /path/to/tree
 ....
 
-This command maps the file names in the specified path to names that fit the limitations of the standard ISO 9660 file system, and will exclude files that do not meet the standard for ISO file systems.
+该命令将指定路径中的文件名映射为符合标准 ISO 9660 文件系统限制的名称，并且将排除不符合 ISO 文件系统标准的文件。
 
-A number of options are available to overcome the restrictions imposed by the standard. In particular, `-R` enables the Rock Ridge extensions common to UNIX(R) systems and `-J` enables Joliet extensions used by Microsoft(R) systems.
+有多种选项可用于克服标准所施加的限制。特别地，`-R` 启用了在 UNIX(R) 系统中常见的 Rock Ridge 扩展，而 `-J` 启用了 Microsoft(R) 系统中使用的 Joliet 扩展。
 
-For CDs that are going to be used only on FreeBSD systems, `-U` can be used to disable all filename restrictions. When used with `-R`, it produces a file system image that is identical to the specified FreeBSD tree, even if it violates the ISO 9660 standard.
+对于仅在 FreeBSD 系统上使用的 CD，可以使用 `-U` 来禁用所有文件名限制。当与 `-R` 一起使用时，它会生成一个文件系统镜像，即使违反 ISO 9660 标准，也与指定的 FreeBSD 树完全相同。
 
-The last option of general use is `-b`. This is used to specify the location of a boot image for use in producing an "El Torito" bootable CD. This option takes an argument which is the path to a boot image from the top of the tree being written to the CD. By default, `mkisofs` creates an ISO image in "floppy disk emulation" mode, and thus expects the boot image to be exactly 1200, 1440 or 2880 KB in size. Some boot loaders, like the one used by the FreeBSD distribution media, do not use emulation mode. In this case, `-no-emul-boot` should be used. So, if [.filename]#/tmp/myboot# holds a bootable FreeBSD system with the boot image in [.filename]#/tmp/myboot/boot/cdboot#, this command would produce [.filename]#/tmp/bootable.iso#:
+通用用途的最后一个选项是 `-b`。它用于指定用于生成 “El Torito” 可引导 CD 的引导映像的位置。此选项接受一个参数，即从要写入 CD 的树的顶部到引导映像的路径。默认情况下，`mkisofs` 以“软盘仿真（floppy disk emulation）”模式创建 ISO 映像，因此期望引导映像的大小为 1200、1440 或 2880 KB。某些引导加载程序（如 FreeBSD 发行版媒体使用的加载程序）不使用仿真模式。在这种情况下，应使用 `-no-emul-boot` 选项。因此，如果 [.filename]#/tmp/myboot# 中包含一个可引导的 FreeBSD 系统，并且引导映像位于 [.filename]#/tmp/myboot/boot/cdboot# 中，此命令将生成 [.filename]#/tmp/bootable.iso#：
 
 [source, shell]
 ....
 # mkisofs -R -no-emul-boot -b boot/cdboot -o /tmp/bootable.iso /tmp/myboot
 ....
 
-The resulting ISO image can be mounted as a memory disk with:
+生成的 ISO 镜像可以通过以下方式挂载为内存磁盘：
 
 [source, shell]
 ....
@@ -624,248 +624,248 @@ The resulting ISO image can be mounted as a memory disk with:
 # mount -t cd9660 /dev/md0 /mnt
 ....
 
-One can then verify that [.filename]#/mnt# and [.filename]#/tmp/myboot# are identical.
+然后可以验证 [.filename]#/mnt# 和 [.filename]#/tmp/myboot# 是相同的。
 
-There are many other options available for `mkisofs` to fine-tune its behavior. Refer to man:mkisofs[8] for details.
+有许多其他选项可用于细调 `mkisofs` 的行为。有关详细信息，请参阅 man:mkisofs[8]。
 
 [NOTE]
 ====
-It is possible to copy a data CD to an image file that is functionally equivalent to the image file created with `mkisofs`. To do so, use [.filename]#dd# with the device name as the input file and the name of the ISO to create as the output file:
+可以将数据光盘复制到一个与使用 `mkisofs` 创建的镜像文件在功能上等效的镜像文件中。要做到这一点，使用 `dd` 命令，将设备名称作为输入文件，将要创建的 ISO 文件的名称作为输出文件：
 
 [source, shell]
 ....
 # dd if=/dev/cd0 of=file.iso bs=2048
 ....
 
-The resulting image file can be burned to CD as described in <<cdrecord>>.
+生成的图像文件可以按照 <<cdrecord>> 中描述的方式刻录到 CD 上。
 ====
 
 [[mounting-cd]]
-=== Using Data CDs
+=== 使用数据光盘
 
-Once an ISO has been burned to a CD, it can be mounted by specifying the file system type, the name of the device containing the CD, and an existing mount point:
+一旦 ISO 文件被刻录到光盘上，可以通过指定文件系统类型、包含光盘的设备名称和已存在的挂载点来挂载。
 
 [source, shell]
 ....
 # mount -t cd9660 /dev/cd0 /mnt
 ....
 
-Since `mount` assumes that a file system is of type `ufs`, an `Incorrect super block` error will occur if `-t cd9660` is not included when mounting a data CD.
+由于 `mount` 假设文件系统的类型是 `ufs`，如果在挂载数据光盘时没有包含 `-t cd9660`，将会出现 `Incorrect super block` 错误。
 
-While any data CD can be mounted this way, disks with certain ISO 9660 extensions might behave oddly. For example, Joliet disks store all filenames in two-byte Unicode characters. If some non-English characters show up as question marks, specify the local charset with `-C`. For more information, refer to man:mount_cd9660[8].
+虽然任何数据 CD 都可以通过这种方式挂载，但带有特定 ISO 9660 扩展的光盘可能会表现出奇怪的行为。例如，Joliet 光盘将所有文件名存储为两个字节的 Unicode 字符。如果一些非英文字符显示为问号，请使用 `-C` 参数指定本地字符集。有关更多信息，请参考 man:mount_cd9660[8]。
 
 [NOTE]
 ====
-In order to do this character conversion with the help of `-C`, the kernel requires the [.filename]#cd9660_iconv.ko# module to be loaded. This can be done either by adding this line to [.filename]#loader.conf#:
+为了使用 `-C` 选项进行字符转换，内核需要加载 [.filename]#cd9660_iconv.ko# 模块。可以通过将以下行添加到 [.filename]#loader.conf# 来实现：
 
 [.programlisting]
 ....
 cd9660_iconv_load="YES"
 ....
 
-and then rebooting the machine, or by directly loading the module with `kldload`.
+然后重新启动机器，或通过使用 `kldload` 命令直接加载模块。
 ====
 
-Occasionally, `Device not configured` will be displayed when trying to mount a data CD. This usually means that the CD drive has not detected a disk in the tray, or that the drive is not visible on the bus. It can take a couple of seconds for a CD drive to detect media, so be patient.
+在尝试挂载数据光盘时，有时会显示 `设备未配置（Device not configured）`。这通常意味着光驱没有检测到托盘中的光盘，或者该驱动器在总线上不可见。光驱可能需要几秒钟的时间来检测媒体，请耐心等待。
 
-Sometimes, a SCSICD drive may be missed because it did not have enough time to answer the bus reset. To resolve this, a custom kernel can be created which increases the default SCSI delay. Add the following option to the custom kernel configuration file and rebuild the kernel using the instructions in crossref:kernelconfig[kernelconfig-building,“Building and Installing a Custom Kernel”]:
+有时候，SCSICD 驱动器可能会被忽略，因为它没有足够的时间来回应总线复位。为了解决这个问题，可以创建一个自定义内核，增加默认的 SCSI 延迟。将以下选项添加到自定义内核配置文件中，并按照 crossref:kernelconfig[kernelconfig-building,“构建和安装自定义内核”] 中的说明重新构建内核。
 
 [.programlisting]
 ....
 options SCSI_DELAY=15000
 ....
 
-This tells the SCSI bus to pause 15 seconds during boot, to give the CD drive every possible chance to answer the bus reset.
+这将在启动过程中告诉 SCSI 总线暂停 15 秒，以便给 CD 驱动器尽可能多的机会来响应总线复位。
 
 [NOTE]
 ====
-It is possible to burn a file directly to CD, without creating an ISO 9660 file system. This is known as burning a raw data CD and some people do this for backup purposes.
+可以直接将文件刻录到光盘上，而无需创建 ISO 9660 文件系统。这被称为刻录原始数据光盘，有些人出于备份目的这样做。
 
-This type of disk can not be mounted as a normal data CD. In order to retrieve the data burned to such a CD, the data must be read from the raw device node. For example, this command will extract a compressed tar file located on the second CD device into the current working directory:
+这种类型的光盘不能像普通数据光盘一样挂载。为了获取烧录到这种光盘上的数据，必须从原始设备节点读取数据。例如，以下命令将从第二个光盘设备中提取一个压缩的 tar 文件到当前工作目录：
 
 [source, shell]
 ....
 # tar xzvf /dev/cd1
 ....
 
-In order to mount a data CD, the data must be written using `mkisofs`.
+为了挂载数据光盘，数据必须使用 `mkisofs` 进行写入。
 ====
 
 [[duplicating-audiocds]]
-=== Duplicating Audio CDs
+=== 复制音频 CDs
 
-To duplicate an audio CD, extract the audio data from the CD to a series of files, then write these files to a blank CD.
+要复制音频 CD，需要从 CD 中提取音频数据到一系列文件中，然后将这些文件写入空白 CD。
 
-<<using-cdrecord>> describes how to duplicate and burn an audio CD. If the FreeBSD version is less than 10.0 and the device is ATAPI, the `atapicam` module must be first loaded using the instructions in <<atapicam>>.
+<<using-cdrecord>> 描述了如何复制和刻录音频 CD。如果 FreeBSD 版本小于 10.0 且设备为 ATAPI，必须首先使用 <<atapicam>> 中的说明加载 `atapicam` 模块。
 
 [[using-cdrecord]]
 [.procedure]
-.Procedure: Duplicating an Audio CD
-. The package:sysutils/cdrtools[] package or port installs `cdda2wav`. This command can be used to extract all of the audio tracks, with each track written to a separate WAV file in the current working directory:
+.步骤：复制音频 CD
+. package:sysutils/cdrtools[] 包或 port 安装了 `cdda2wav`。此命令可用于提取所有音轨，每个音轨都会被写入当前工作目录中的单独的 WAV 文件中：
 +
 [source, shell]
 ....
 % cdda2wav -vall -B -Owav
 ....
 +
-A device name does not need to be specified if there is only one CD device on the system. Refer to the `cdda2wav` manual page for instructions on how to specify a device and to learn more about the other options available for this command.
-. Use `cdrecord` to write the [.filename]#.wav# files:
+如果系统上只有一个 CD 设备，则不需要指定设备名称。请参考 `cdda2wav` 手册页面，了解如何指定设备以及了解此命令的其他可用选项。
+. 使用 `cdrecord` 命令来写入 [.filename]#.wav# 文件：
 +
 [source, shell]
 ....
 % cdrecord -v dev=2,0 -dao -useinfo  *.wav
 ....
 +
-Make sure that _2,0_ is set appropriately, as described in <<cdrecord>>.
+请确保按照 <<cdrecord>> 中描述的方式适当设置 _2,0_。
 
 [[creating-dvds]]
-== Creating and Using DVD Media
+== 创建和使用 DVD 媒体
 
-Compared to the CD, the DVD is the next generation of optical media storage technology. The DVD can hold more data than any CD and is the standard for video publishing.
+与 CD 相比，DVD 是下一代光学媒体存储技术。DVD 可以容纳比任何 CD 更多的数据，并且是视频出版的标准。
 
-Five physical recordable formats can be defined for a recordable DVD:
+可为可记录的 DVD 定义五种物理可记录格式：
 
-* DVD-R: This was the first DVD recordable format available. The DVD-R standard is defined by the http://www.dvdforum.org/forum.shtml[DVD Forum]. This format is write once.
-* DVD-RW: This is the rewritable version of the DVD-R standard. A DVD-RW can be rewritten about 1000 times.
-* DVD-RAM: This is a rewritable format which can be seen as a removable hard drive. However, this media is not compatible with most DVD-ROM drives and DVD-Video players as only a few DVD writers support the DVD-RAM format. Refer to <<creating-dvd-ram>> for more information on DVD-RAM use.
-* DVD+RW: This is a rewritable format defined by the https://en.wikipedia.org/wiki/DVD%2BRW_Alliance[DVD+RW Alliance]. A DVD+RW can be rewritten about 1000 times.
-* DVD+R: This format is the write once variation of the DVD+RW format.
+* DVD-R：这是第一个可用的 DVD 可记录格式。DVD-R 标准由 http://www.dvdforum.org/forum.shtml[DVD 论坛]定义。这种格式只能写入一次。
+* DVD-RW：这是 DVD-R 标准的可重写版本。一个 DVD-RW 可以重写约 1000 次。
+* DVD-RAM：这是一种可重写的格式，可以看作是可移动硬盘。然而，这种介质与大多数 DVD-ROM 驱动器和 DVD 视频播放器不兼容，因为只有少数 DVD 刻录机支持 DVD-RAM 格式。有关 DVD-RAM 使用的更多信息，请参阅 <<creating-dvd-ram>> 。
+* DVD+RW ：这是由 https://en.wikipedia.org/wiki/DVD%2BRW_Alliance[DVD+RW 联盟] 定义的可重写格式。DVD+RW 可以重写约 1000 次。
+* DVD+R：这种格式是 DVD+RW 格式的一次写入变体。
 
-A single layer recordable DVD can hold up to 4,700,000,000 bytes which is actually 4.38 GB or 4485 MB as 1 kilobyte is 1024 bytes.
+一张单层可记录的 DVD 可以容纳高达 4,700,000,000 字节，实际上相当于 4.38 GB 或 4485 MB，因为 1 千字节等于 1024 字节。
 
 [NOTE]
 ====
-A distinction must be made between the physical media and the application. For example, a DVD-Video is a specific file layout that can be written on any recordable DVD physical media such as DVD-R, DVD+R, or DVD-RW. Before choosing the type of media, ensure that both the burner and the DVD-Video player are compatible with the media under consideration.
+必须区分物理介质和应用程序。例如，DVD-Video 是一种特定的文件布局，可以写入任何可记录的 DVD 物理介质，如 DVD-R、DVD+R 或 DVD-RW。在选择介质之前，请确保刻录机和 DVD-Video 播放器与所考虑的介质兼容。
 ====
 
-=== Configuration
+=== 配置
 
-To perform DVD recording, use man:growisofs[1]. This command is part of the package:sysutils/dvd+rw-tools[] utilities which support all DVD media types.
+要进行 DVD 录制，请使用 man:growisofs[1] 命令。该命令是 package:sysutils/dvd+rw-tools[] 工具包的一部分，支持所有 DVD 媒体类型。
 
-These tools use the SCSI subsystem to access the devices, therefore <<atapicam,ATAPI/CAM support>> must be loaded or statically compiled into the kernel. This support is not needed if the burner uses the USB interface. Refer to <<usb-disks>> for more details on USB device configuration.
+这些工具使用 SCSI 子系统来访问设备，因此必须加载或静态编译 <<atapicam,ATAPI/CAM support>> 到内核中。如果刻录机使用 USB 接口，则不需要此支持。有关 USB 设备配置的更多详细信息，请参阅 <<usb-disks>>。
 
-DMA access must also be enabled for ATAPI devices, by adding the following line to [.filename]#/boot/loader.conf#:
+还必须为 ATAPI 设备启用 DMA 访问，方法是在 [.filename]#/boot/loader.conf# 中添加以下行：
 
 [.programlisting]
 ....
 hw.ata.atapi_dma="1"
 ....
 
-Before attempting to use dvd+rw-tools, consult the http://fy.chalmers.se/~appro/linux/DVD+RW/hcn.html[Hardware Compatibility Notes].
+在尝试使用 dvd+rw-tools 之前，请参考 http://fy.chalmers.se/~appro/linux/DVD+RW/hcn.html[硬件兼容性说明]。
 
 [NOTE]
 ====
-For a graphical user interface, consider using package:sysutils/k3b[] which provides a user friendly interface to man:growisofs[1] and many other burning tools.
+对于图形用户界面，请考虑使用 package:sysutils/k3b[]，它提供了一个用户友好的界面来使用 man:growisofs[1] 和许多其他刻录工具。
 ====
 
-=== Burning Data DVDs
+=== 刻录数据 DVD
 
-Since man:growisofs[1] is a front-end to <<mkisofs,mkisofs>>, it will invoke man:mkisofs[8] to create the file system layout and perform the write on the DVD. This means that an image of the data does not need to be created before the burning process.
+由于 man:growisofs[1] 是 <<mkisofs,mkisofs>> 的前端，它将调用 man:mkisofs[8] 来创建文件系统布局并在 DVD 上执行写入操作。这意味着在刻录过程之前不需要创建数据的镜像。
 
-To burn to a DVD+R or a DVD-R the data in [.filename]#/path/to/data#, use the following command:
+要将位于 [.filename]#/path/to/data# 的数据刻录到 DVD+R 或 DVD-R 上，请使用以下命令：
 
 [source, shell]
 ....
 # growisofs -dvd-compat -Z /dev/cd0 -J -R /path/to/data
 ....
 
-In this example, `-J -R` is passed to man:mkisofs[8] to create an ISO 9660 file system with Joliet and Rock Ridge extensions. Refer to man:mkisofs[8] for more details.
+在这个例子中，`-J -R` 被传递给 man:mkisofs[8] 以创建一个带有 Joliet 和 Rock Ridge 扩展的 ISO 9660 文件系统。更多详细信息请参考 man:mkisofs[8]。
 
-For the initial session recording, `-Z` is used for both single and multiple sessions. Replace _/dev/cd0_, with the name of the DVD device. Using `-dvd-compat` indicates that the disk will be closed and that the recording will be unappendable. This should also provide better media compatibility with DVD-ROM drives.
+对于初始会话录制，`-Z` 用于单个和多个会话。将 _/dev/cd0_ 替换为 DVD 设备的名称。使用 `-dvd-compat` 表示光盘将被关闭，并且录制将无法追加。这还应该提供更好的与 DVD-ROM 驱动器的媒体兼容性。
 
-To burn a pre-mastered image, such as _imagefile.iso_, use:
+要烧录预制的镜像，比如 _imagefile.iso_，请使用以下命令：
 
 [source, shell]
 ....
 # growisofs -dvd-compat -Z /dev/cd0=imagefile.iso
 ....
 
-The write speed should be detected and automatically set according to the media and the drive being used. To force the write speed, use `-speed=`. Refer to man:growisofs[1] for example usage.
+应该检测并根据使用的媒体和驱动器自动设置写入速度。要强制设置写入速度，请使用 `-speed=`。有关示例用法，请参考 man:growisofs[1]。
 
 [NOTE]
 ====
-In order to support working files larger than 4.38GB, an UDF/ISO-9660 hybrid file system must be created by passing `-udf -iso-level 3` to man:mkisofs[8] and all related programs, such as man:growisofs[1]. This is required only when creating an ISO image file or when writing files directly to a disk. Since a disk created this way must be mounted as an UDF file system with man:mount_udf[8], it will be usable only on an UDF aware operating system. Otherwise it will look as if it contains corrupted files.
+为了支持大于 4.38GB 的工作文件，必须通过在 man:mkisofs[8] 和所有相关程序（如 man:growisofs[1] ）中传递 `-udf -iso-level 3` 来创建一个 UDF/ISO-9660 混合文件系统。只有在创建 ISO 映像文件或直接将文件写入磁盘时才需要这样做。由于以这种方式创建的磁盘必须以 man:mount_udf[8] 的 UDF 文件系统方式挂载，因此它只能在支持 UDF 的操作系统上使用。否则，它将看起来像包含损坏文件。
 
-To create this type of ISO file:
+要创建这种类型的 ISO 文件：
 
 [source, shell]
 ....
 % mkisofs -R -J -udf -iso-level 3 -o imagefile.iso /path/to/data
 ....
 
-To burn files directly to a disk:
+直接将文件刻录到光盘：
 
 [source, shell]
 ....
 # growisofs -dvd-compat -udf -iso-level 3 -Z /dev/cd0 -J -R /path/to/data
 ....
 
-When an ISO image already contains large files, no additional options are required for man:growisofs[1] to burn that image on a disk.
+当 ISO 镜像已经包含大文件时，man:growisofs[1] 在将该镜像刻录到光盘上时不需要额外的选项。
 
-Be sure to use an up-to-date version of package:sysutils/cdrtools[], which contains man:mkisofs[8], as an older version may not contain large files support. If the latest version does not work, install package:sysutils/cdrtools-devel[] and read its man:mkisofs[8].
+请确保使用最新版本的 package:sysutils/cdrtools[]，其中包含 man:mkisofs[8]，因为旧版本可能不支持大文件。如果最新版本无法工作，请安装 package:sysutils/cdrtools-devel[] 并阅读其 man:mkisofs[8]。
 ====
 
-=== Burning a DVD-Video
+=== 刻录 DVD 视频
 
-A DVD-Video is a specific file layout based on the ISO 9660 and micro-UDF (M-UDF) specifications. Since DVD-Video presents a specific data structure hierarchy, a particular program such as package:multimedia/dvdauthor[] is needed to author the DVD.
+DVD-Video 是基于 ISO 9660 和微型 UDF（M-UDF）规范的特定文件布局。由于 DVD-Video 呈现了特定的数据结构层次，因此需要使用特定的程序，如 package:multimedia/dvdauthor[] 来制作 DVD。
 
-If an image of the DVD-Video file system already exists, it can be burned in the same way as any other image. If `dvdauthor` was used to make the DVD and the result is in [.filename]#/path/to/video#, the following command should be used to burn the DVD-Video:
+如果已经存在 DVD-Video 文件系统的镜像，可以像其他镜像一样进行刻录。如果使用了 `dvdauthor` 制作了 DVD，并且结果保存在 [.filename]#/path/to/video# 中，应使用以下命令来刻录 DVD-Video：
 
 [source, shell]
 ....
 # growisofs -Z /dev/cd0 -dvd-video /path/to/video
 ....
 
-`-dvd-video` is passed to man:mkisofs[8] to instruct it to create a DVD-Video file system layout. This option implies the `-dvd-compat` man:growisofs[1] option.
+`-dvd-video` 被传递给 man:mkisofs[8]，用于指示它创建一个 DVD-Video 文件系统布局。此选项隐含了 `-dvd-compat` man:growisofs[1] 选项。
 
-=== Using a DVD+RW
+=== 使用 DVD+RW
 
-Unlike CD-RW, a virgin DVD+RW needs to be formatted before first use. It is _recommended_ to let man:growisofs[1] take care of this automatically whenever appropriate. However, it is possible to use `dvd+rw-format` to format the DVD+RW:
+与 CD-RW 不同，未使用过的 DVD+RW 需要在首次使用前进行格式化。强烈建议使用 man:growisofs[1] 在适当时自动处理此操作。然而，也可以使用 `dvd+rw-format` 来格式化 DVD+RW：
 
 [source, shell]
 ....
 # dvd+rw-format /dev/cd0
 ....
 
-Only perform this operation once and keep in mind that only virgin DVD+RW medias need to be formatted. Once formatted, the DVD+RW can be burned as usual.
+只需执行此操作一次，并记住只有全新的 DVD+RW 光盘需要进行格式化。一旦格式化完成，DVD+RW 光盘可以像往常一样进行刻录。
 
-To burn a totally new file system and not just append some data onto a DVD+RW, the media does not need to be blanked first. Instead, write over the previous recording like this:
+要烧录一个全新的文件系统，而不仅仅是将一些数据追加到 DVD+RW 上，媒体不需要先进行擦除。相反，可以像这样覆盖之前的记录：
 
 [source, shell]
 ....
 # growisofs -Z /dev/cd0 -J -R /path/to/newdata
 ....
 
-The DVD+RW format supports appending data to a previous recording. This operation consists of merging a new session to the existing one as it is not considered to be multi-session writing. man:growisofs[1] will _grow_ the ISO 9660 file system present on the media.
+DVD+RW 格式支持在之前的记录上追加数据。这个操作包括将新的会话合并到现有的会话中，因为它不被视为多会话写入。man:growisofs[1] 将会 _增长_ 媒体上存在的 ISO 9660 文件系统。
 
-For example, to append data to a DVD+RW, use the following:
+例如，要将数据追加到 DVD+RW 上，请使用以下方法：
 
 [source, shell]
 ....
 # growisofs -M /dev/cd0 -J -R /path/to/nextdata
 ....
 
-The same man:mkisofs[8] options used to burn the initial session should be used during next writes.
+在进行下一次写入时，应使用与烧录初始会话时相同的 mkisofs[8] 选项。
 
 [NOTE]
 ====
-Use `-dvd-compat` for better media compatibility with DVD-ROM drives. When using DVD+RW, this option will not prevent the addition of data.
+使用 `-dvd-compat` 选项可以提高与 DVD-ROM 驱动器的媒体兼容性。当使用 DVD+RW 时，此选项不会阻止添加数据。
 ====
 
-To blank the media, use:
+要清空媒体，请使用以下方法：
 
 [source, shell]
 ....
 # growisofs -Z /dev/cd0=/dev/zero
 ....
 
-=== Using a DVD-RW
+=== 使用 DVD-RW
 
-A DVD-RW accepts two disc formats: incremental sequential and restricted overwrite. By default, DVD-RW discs are in sequential format.
+DVD-RW 支持两种光盘格式：增量顺序和受限覆写。默认情况下，DVD-RW 光盘采用顺序格式。
 
-A virgin DVD-RW can be directly written without being formatted. However, a non-virgin DVD-RW in sequential format needs to be blanked before writing a new initial session.
+一个全新的 DVD-RW 可以直接写入而无需进行格式化。然而，一个已经使用过的顺序格式的 DVD-RW 在写入新的初始会话之前需要进行擦除。
 
-To blank a DVD-RW in sequential mode:
+要以顺序模式擦除 DVD-RW：
 
 [source, shell]
 ....
@@ -874,83 +874,83 @@ To blank a DVD-RW in sequential mode:
 
 [NOTE]
 ====
-A full blanking using `-blank=full` will take about one hour on a 1x media. A fast blanking can be performed using `-blank`, if the DVD-RW will be recorded in Disk-At-Once (DAO) mode. To burn the DVD-RW in DAO mode, use the command:
+使用 `-blank=full` 进行完全擦除在 1 倍速的媒体上大约需要一个小时。如果要在 Disk-At-Once （DAO）模式下记录 DVD-RW，则可以使用 `-blank` 进行快速擦除。要以 DAO 模式刻录 DVD-RW，请使用以下命令：
 
 [source, shell]
 ....
 # growisofs -use-the-force-luke=dao -Z /dev/cd0=imagefile.iso
 ....
 
-Since man:growisofs[1] automatically attempts to detect fast blanked media and engage DAO write, `-use-the-force-luke=dao` should not be required.
+由于 man:growisofs[1] 会自动尝试检测快速擦除的介质并启用 DAO 写入，因此不需要使用 `-use-the-force-luke=dao` 参数。
 
-One should instead use restricted overwrite mode with any DVD-RW as this format is more flexible than the default of incremental sequential.
+对于任何 DVD-RW，应该使用受限覆盖模式，而不是默认的增量顺序模式，因为受限覆盖模式更加灵活。
 ====
 
-To write data on a sequential DVD-RW, use the same instructions as for the other DVD formats:
+要在顺序 DVD-RW 上写入数据，使用与其他 DVD 格式相同的指令：
 
 [source, shell]
 ....
 # growisofs -Z /dev/cd0 -J -R /path/to/data
 ....
 
-To append some data to a previous recording, use `-M` with man:growisofs[1]. However, if data is appended on a DVD-RW in incremental sequential mode, a new session will be created on the disc and the result will be a multi-session disc.
+要将一些数据追加到先前的录制中，请使用 `-M` 参数和 `man:growisofs[1]` 命令。然而，如果在增量顺序模式下在 DVD-RW 上追加数据，将会在光盘上创建一个新的会话，结果将是一个多会话光盘。
 
-A DVD-RW in restricted overwrite format does not need to be blanked before a new initial session. Instead, overwrite the disc with `-Z`. It is also possible to grow an existing ISO 9660 file system written on the disc with `-M`. The result will be a one-session DVD.
+在受限覆写格式的 DVD-RW 上，不需要在开始新的初始会话之前将其擦除。相反，可以使用 `-Z` 来覆盖光盘。还可以使用 `-M` 来扩展已写入光盘上的现有 ISO 9660 文件系统。结果将是一个单会话的 DVD。
 
-To put a DVD-RW in restricted overwrite format, the following command must be used:
+要将 DVD-RW 格式化为受限覆写格式，必须使用以下命令：
 
 [source, shell]
 ....
 # dvd+rw-format /dev/cd0
 ....
 
-To change back to sequential format, use:
+要切换回顺序格式，请使用：
 
 [source, shell]
 ....
 # dvd+rw-format -blank=full /dev/cd0
 ....
 
-=== Multi-Session
+=== 多会话
 
-Few DVD-ROM drives support multi-session DVDs and most of the time only read the first session. DVD+R, DVD-R and DVD-RW in sequential format can accept multiple sessions. The notion of multiple sessions does not exist for the DVD+RW and the DVD-RW restricted overwrite formats.
+很少有 DVD-ROM 驱动器支持多会话 DVD，并且大多数情况下只能读取第一个会话。 DVD+R、DVD-R 和 DVD-RW 以顺序格式可以接受多个会话。对于 DVD+RW 和 DVD-RW 受限覆写格式，不存在多个会话的概念。
 
-Using the following command after an initial non-closed session on a DVD+R, DVD-R, or DVD-RW in sequential format, will add a new session to the disc:
+在使用 DVD+R、DVD-R 或 DVD-RW 顺序格式的初始非关闭会话后，使用以下命令将在光盘上添加一个新的会话：
 
 [source, shell]
 ....
 # growisofs -M /dev/cd0 -J -R /path/to/nextdata
 ....
 
-Using this command with a DVD+RW or a DVD-RW in restricted overwrite mode will append data while merging the new session to the existing one. The result will be a single-session disc. Use this method to add data after an initial write on these types of media.
+在使用此命令时，如果使用 DVD+RW 或 DVD-RW 处于受限覆写模式，将会在将新会话合并到现有会话时追加数据。结果将是一个单会话光盘。使用此方法在这些类型的介质上进行初始写入后添加数据。
 
 [NOTE]
 ====
-Since some space on the media is used between each session to mark the end and start of sessions, one should add sessions with a large amount of data to optimize media space. The number of sessions is limited to 154 for a DVD+R, about 2000 for a DVD-R, and 127 for a DVD+R Double Layer.
+由于在每个会话之间使用了一些空间来标记会话的结束和开始，因此应该添加大量数据的会话以优化媒体空间。 DVD+R 的会话数量限制为 154 个， DVD-R 约为 2000 个，DVD + R 双层为 127 个。
 ====
 
-=== For More Information
+=== 更多信息请参考
 
-To obtain more information about a DVD, use `dvd+rw-mediainfo _/dev/cd0_` while the disc in the specified drive.
+要获取有关 DVD 的更多信息，请在指定的驱动器中使用 `dvd+rw-mediainfo _/dev/cd0_` 命令，同时光盘在其中。
 
-More information about dvd+rw-tools can be found in man:growisofs[1], on the http://fy.chalmers.se/~appro/linux/DVD+RW/[dvd+rw-tools web site], and in the http://lists.debian.org/cdwrite/[cdwrite mailing list] archives.
+有关 dvd+rw-tools 的更多信息可以在 man:growisofs[1] 中找到，在 http://fy.chalmers.se/~appro/linux/DVD+RW/[dvd+rw-tools 网站] 上找到，并且在 http://lists.debian.org/cdwrite/[cdwrite 邮件列表] 的存档中也可以找到。
 
 [NOTE]
 ====
-When creating a problem report related to the use of dvd+rw-tools, always include the output of `dvd+rw-mediainfo`.
+创建与使用 dvd+rw-tools 相关的问题报告时，始终包括 `dvd+rw-mediainfo` 的输出。
 ====
 
 [[creating-dvd-ram]]
-=== Using a DVD-RAM
+=== 使用 DVD-RAM
 
-DVD-RAM writers can use either a SCSI or ATAPI interface. For ATAPI devices, DMA access has to be enabled by adding the following line to [.filename]#/boot/loader.conf#:
+DVD-RAM 写入器可以使用 SCSI 或 ATAPI 接口。对于 ATAPI 设备，必须通过在 [.filename]#/boot/loader.conf# 中添加以下行来启用 DMA 访问：
 
 [.programlisting]
 ....
 hw.ata.atapi_dma="1"
 ....
 
-A DVD-RAM can be seen as a removable hard drive. Like any other hard drive, the DVD-RAM must be formatted before it can be used. In this example, the whole disk space will be formatted with a standard UFS2 file system:
+DVD-RAM 可以被视为可移动硬盘。与任何其他硬盘一样， DVD-RAM 在使用之前必须进行格式化。在这个例子中，整个磁盘空间将使用标准的 UFS2 文件系统进行格式化：
 
 [source, shell]
 ....
@@ -959,47 +959,47 @@ A DVD-RAM can be seen as a removable hard drive. Like any other hard drive, the 
 # newfs /dev/acd0
 ....
 
-The DVD device, [.filename]#acd0#, must be changed according to the configuration.
+DVD 设备 [.filename]#acd0# 必须根据配置进行更改。
 
-Once the DVD-RAM has been formatted, it can be mounted as a normal hard drive:
+一旦 DVD-RAM 被格式化，它可以被挂载为普通硬盘：
 
 [source, shell]
 ....
 # mount /dev/acd0 /mnt
 ....
 
-Once mounted, the DVD-RAM will be both readable and writeable.
+一旦挂载，DVD-RAM 将可读可写。
 
 [[floppies]]
-== Creating and Using Floppy Disks
+== 创建和使用软盘
 
-This section explains how to format a 3.5 inch floppy disk in FreeBSD.
+本节介绍了如何在 FreeBSD 中格式化 3.5 英寸软盘。
 
 [.procedure]
 ====
-*Procedure: Steps to Format a Floppy*
+*步骤：格式化软盘的步骤*
 
-A floppy disk needs to be low-level formatted before it can be used. This is usually done by the vendor, but formatting is a good way to check media integrity. To low-level format the floppy disk on FreeBSD, use man:fdformat[1]. When using this utility, make note of any error messages, as these can help determine if the disk is good or bad.
+在使用软盘之前，需要进行低级格式化。通常由供应商完成，但格式化是检查介质完整性的好方法。在 FreeBSD 上进行软盘的低级格式化，可以使用 man:fdformat[1] 命令。在使用此实用程序时，请注意任何错误消息，因为它们可以帮助确定软盘是好的还是坏的。
 
-. To format the floppy, insert a new 3.5 inch floppy disk into the first floppy drive and issue:
+. 要格式化软盘，请将一个新的 3.5 英寸软盘插入第一个软盘驱动器，并输入以下命令：
 +
 [source, shell]
 ....
 # /usr/sbin/fdformat -f 1440 /dev/fd0
 ....
 +
-. After low-level formatting the disk, create a disk label as it is needed by the system to determine the size of the disk and its geometry. The supported geometry values are listed in [.filename]#/etc/disktab#.
+. 在低级格式化磁盘之后，根据系统需要创建磁盘标签，以确定磁盘的大小和几何结构。支持的几何结构值在 [.filename]#/etc/disktab# 中列出。
 +
-To write the disk label, use man:bsdlabel[8]:
+要编写磁盘标签，请使用 man:bsdlabel[8]。
 +
 [source, shell]
 ....
 # /sbin/bsdlabel -B -w /dev/fd0 fd1440
 ....
 +
-. The floppy is now ready to be high-level formatted with a file system. The floppy's file system can be either UFS or FAT, where FAT is generally a better choice for floppies.
+. 软盘现在可以进行高级格式化，并选择文件系统。软盘的文件系统可以是 UFS 或 FAT，其中 FAT 通常是软盘的更好选择。
 +
-To format the floppy with FAT, issue:
+要使用 FAT 格式化软盘，请执行以下操作：
 +
 [source, shell]
 ....
@@ -1007,48 +1007,48 @@ To format the floppy with FAT, issue:
 ....
 ====
 
-The disk is now ready for use. To use the floppy, mount it with man:mount_msdosfs[8]. One can also install and use package:emulators/mtools[] from the Ports Collection.
+磁盘现在已经准备好供使用。要使用软盘，请使用 man:mount_msdosfs[8] 命令进行挂载。也可以从 Ports Collection 安装和使用 package:emulators/mtools[]。
 
 [[using-ntfs]]
-== Using NTFS Disks
+== 使用 NTFS 磁盘
 
-This section explains how to mount NTFS disks in FreeBSD.
+本节介绍了如何在 FreeBSD 中挂载 NTFS 磁盘。
 
-NTFS (New Technology File System) is a proprietary journaling file system developed by Microsoft(R). It has been the default file system in Microsoft Windows(R) for many years. FreeBSD can mount NTFS volumes using a FUSE file system. These file systems are implemented as user space programs which interact with the man:fusefs[5] kernel module via a well defined interface.
+NTFS（新技术文件系统）是由微软开发的专有日志文件系统。多年来，它一直是微软 Windows 操作系统的默认文件系统。FreeBSD 可以使用 FUSE 文件系统挂载 NTFS 卷。这些文件系统是作为用户空间程序实现的，它们通过一个明确定义的接口与 man:fusefs[5] 内核模块进行交互。
 
 [.procedure]
 ====
-*Procedure: Steps to Mount a NTFS Disk*
+*过程：挂载 NTFS 磁盘的步骤*
 
-. Before using a FUSE file system we need to load the man:fusefs[5] kernel module:
+. 在使用 FUSE 文件系统之前，我们需要加载 man:fusefs[5] 内核模块：
 +
 [source, shell]
 ....
 # kldload fusefs
 ....
 +
-Use man:sysrc[8] to load the module at startup:
+使用 man:sysrc[8] 命令在启动时加载模块：
 +
 [source, shell]
 ....
 # sysrc kld_list+=fusefs
 ....
 
-. Install the actual NTFS file system from packages as in the example (see crossref:ports[pkgng-intro,Using pkg for Binary Package Management]) or from ports (see crossref:ports[ports-using,Using the Ports Collection]):
+. 按照示例中的方式（参见 crossref:ports[pkgng-intro,使用 pkg 进行二进制包管理]）或者从 ports（参见 crossref:ports[ports-using,使用 Ports Collection]）安装实际的 NTFS 文件系统。
 +
 [source, shell]
 ....
 # pkg install fusefs-ntfs
 ....
 
-. Last we need to create a directory where the file system will be mounted:
+. 最后，我们需要创建一个目录，用于挂载文件系统：
 +
 [source, shell]
 ....
 # mkdir /mnt/usb
 ....
 
-. Suppose a USB disk is plugged in. The disk partition information can be viewed with man:gpart[8]:
+. 假设插入了一个 USB 磁盘。可以使用 man:gpart[8] 命令查看磁盘分区信息。
 +
 [source, shell]
 ....
@@ -1057,29 +1057,29 @@ Use man:sysrc[8] to load the module at startup:
 	  63  1953525105    1 ntfs  (932G)
 ....
 
-. We can mount the disk using the following command:
+. 我们可以使用以下命令挂载磁盘：
 +
 [source, shell]
 ....
 # ntfs-3g /dev/da0s1 /mnt/usb/
 ....
-The disk is now ready to use.
+磁盘现已准备就绪，可以使用。
 +
-. Additionally, an entry can be added to /etc/fstab:
+. 此外，还可以将条目添加到 /etc/fstab 文件中：
 +
 [.programlisting]
 ....
 /dev/da0s1  /mnt/usb	ntfs mountprog=/usr/local/bin/ntfs-3g,noauto,rw  0 0
 ....
 +
-Now the disk can be now mounted with:
+现在可以使用以下命令挂载磁盘：
 +
 [source, shell]
 ....
 # mount /mnt/usb
 ....
 
-. The disk can be unmounted with:
+. 可以使用以下命令卸载磁盘：
 +
 [source, shell]
 ....
@@ -1088,39 +1088,39 @@ Now the disk can be now mounted with:
 ====
 
 [[backup-basics]]
-== Backup Basics
+== 备份基础知识
 
-Implementing a backup plan is essential in order to have the ability to recover from disk failure, accidental file deletion, random file corruption, or complete machine destruction, including destruction of on-site backups.
+实施备份计划是至关重要的，以便能够从磁盘故障、意外文件删除、随机文件损坏或完全机器破坏（包括现场备份的破坏）中恢复。
 
-The backup type and schedule will vary, depending upon the importance of the data, the granularity needed for file restores, and the amount of acceptable downtime. Some possible backup techniques include:
+备份类型和计划将根据数据的重要性、文件恢复所需的粒度以及可接受的停机时间而有所不同。一些可能的备份技术包括：
 
-* Archives of the whole system, backed up onto permanent, off-site media. This provides protection against all of the problems listed above, but is slow and inconvenient to restore from, especially for non-privileged users.
-* File system snapshots, which are useful for restoring deleted files or previous versions of files.
-* Copies of whole file systems or disks which are synchronized with another system on the network using a scheduled package:net/rsync[].
-* Hardware or software RAID, which minimizes or avoids downtime when a disk fails.
+* 整个系统的归档备份存储在永久的、离线的介质上。这种方式可以提供对上述所有问题的保护，但是恢复速度慢且不方便，特别是对于非特权用户来说。
+* 文件系统快照，用于恢复已删除的文件或文件的先前版本。
+* 使用计划 package:net/rsync[]，将整个文件系统或磁盘的副本与网络上的另一个系统进行同步。
+* 硬件或软件 RAID，可以在磁盘故障时最小化或避免停机时间。
 
-Typically, a mix of backup techniques is used. For example, one could create a schedule to automate a weekly, full system backup that is stored off-site and to supplement this backup with hourly ZFS snapshots. In addition, one could make a manual backup of individual directories or files before making file edits or deletions.
+通常，会使用多种备份技术的组合。例如，可以创建一个定期计划，自动进行每周一次的完整系统备份，并将其存储在离线位置，并通过每小时的 ZFS 快照来补充此备份。此外，在进行文件编辑或删除之前，还可以对单个目录或文件进行手动备份。
 
-This section describes some of the utilities which can be used to create and manage backups on a FreeBSD system.
+本节介绍了一些可用于在 FreeBSD 系统上创建和管理备份的实用工具。
 
-=== File System Backups
+=== 文件系统备份
 
-The traditional UNIX(R) programs for backing up a file system are man:dump[8], which creates the backup, and man:restore[8], which restores the backup. These utilities work at the disk block level, below the abstractions of the files, links, and directories that are created by file systems. Unlike other backup software, `dump` backs up an entire file system and is unable to backup only part of a file system or a directory tree that spans multiple file systems. Instead of writing files and directories, `dump` writes the raw data blocks that comprise files and directories.
+传统的 UNIX(R) 文件系统备份程序是 man:dump[8]，用于创建备份，和 man:restore[8]，用于恢复备份。这些工具在文件系统创建的文件、链接和目录的抽象层之下的磁盘块级别上工作。与其他备份软件不同，`dump` 备份整个文件系统，无法备份部分文件系统或跨多个文件系统的目录树的一部分。`dump` 不是写入文件和目录，而是写入组成文件和目录的原始数据块。
 
 [NOTE]
 ====
-If `dump` is used on the root directory, it will not back up [.filename]#/home#, [.filename]#/usr# or many other directories since these are typically mount points for other file systems or symbolic links into those file systems.
+如果在根目录上使用 `dump` 命令，它将不会备份 [.filename]#/home#、[.filename]#/usr# 或许多其他目录，因为这些通常是其他文件系统的挂载点或指向这些文件系统的符号链接。
 ====
 
-When used to restore data, `restore` stores temporary files in [.filename]#/tmp/# by default. When using a recovery disk with a small [.filename]#/tmp#, set `TMPDIR` to a directory with more free space in order for the restore to succeed.
+当用于恢复数据时，默认情况下，`restore` 将临时文件存储在 [.filename]#/tmp/# 中。如果使用具有较小 [.filename]#/tmp# 的恢复磁盘，请将 `TMPDIR` 设置为具有更多可用空间的目录，以确保恢复成功。
 
-When using `dump`, be aware that some quirks remain from its early days in Version 6 of AT&T UNIX(R),circa 1975. The default parameters assume a backup to a 9-track tape, rather than to another type of media or to the high-density tapes available today. These defaults must be overridden on the command line.
+在使用 `dump` 命令时，请注意一些来自 AT&T UNIX(R) 6 版本（约 1975 年）早期的怪异行为。默认参数假设备份是备份到 9 轨磁带，而不是备份到其他类型的介质或者今天可用的高密度磁带。这些默认值必须在命令行上进行覆盖。
 
-It is possible to backup a file system across the network to a another system or to a tape drive attached to another computer. While the man:rdump[8] and man:rrestore[8] utilities can be used for this purpose, they are not considered to be secure.
+可以通过网络将文件系统备份到另一个系统或连接到另一台计算机的磁带驱动器上。虽然可以使用 man:rdump[8] 和 man:rrestore[8] 工具来实现此目的，但它们被认为不安全。
 
-Instead, one can use `dump` and `restore` in a more secure fashion over an SSH connection. This example creates a full, compressed backup of [.filename]#/usr# and sends the backup file to the specified host over a SSH connection.
+相反，可以使用 `dump` 和 `restore` 以更安全的方式通过 SSH 连接进行操作。此示例创建了一个对 [.filename]#/usr# 目录进行完整压缩备份的文件，并通过 SSH 连接将备份文件发送到指定的主机。
 
-.Using `dump` over ssh
+.通过 ssh 使用 `dump` 命令
 [example]
 ====
 [source, shell]
@@ -1130,9 +1130,9 @@ Instead, one can use `dump` and `restore` in a more secure fashion over an SSH c
 ....
 ====
 
-This example sets `RSH` in order to write the backup to a tape drive on a remote system over a SSH connection:
+这个示例设置 `RSH`，以便通过 SSH 连接将备份写入远程系统上的磁带驱动器：
 
-.Using `dump` over ssh with `RSH` Set
+.使用 `RSH` 设置通过 ssh 使用 `dump` 命令
 [example]
 ====
 [source, shell]
@@ -1141,15 +1141,15 @@ This example sets `RSH` in order to write the backup to a tape drive on a remote
 ....
 ====
 
-=== Directory Backups
+=== 目录备份
 
-Several built-in utilities are available for backing up and restoring specified files and directories as needed.
+可以根据需要使用几个内置实用程序来备份和恢复指定的文件和目录。
 
-A good choice for making a backup of all of the files in a directory is man:tar[1]. This utility dates back to Version 6 of AT&T UNIX(R) and by default assumes a recursive backup to a local tape device. Switches can be used to instead specify the name of a backup file.
+备份目录中所有文件的一个好选择是 man:tar[1]。这个实用程序可以追溯到 AT&T UNIX(R) 的第 6 版，并且默认情况下假定对本地磁带设备进行递归备份。可以使用开关来指定备份文件的名称。
 
-This example creates a compressed backup of the current directory and saves it to [.filename]#/tmp/mybackup.tgz#. When creating a backup file, make sure that the backup is not saved to the same directory that is being backed up.
+这个例子创建了一个压缩的备份文件，将当前目录的内容保存到 [.filename]#/tmp/mybackup.tgz# 文件中。在创建备份文件时，请确保备份文件不要保存在被备份的目录中。
 
-.Backing Up the Current Directory with `tar`
+.使用 `tar` 备份当前目录
 [example]
 ====
 [source, shell]
@@ -1158,9 +1158,9 @@ This example creates a compressed backup of the current directory and saves it t
 ....
 ====
 
-To restore the entire backup, `cd` into the directory to restore into and specify the name of the backup. Note that this will overwrite any newer versions of files in the restore directory. When in doubt, restore to a temporary directory or specify the name of the file within the backup to restore.
+要恢复整个备份，请进入要恢复的目录并指定备份的名称。请注意，这将覆盖恢复目录中的任何更新版本的文件。如果不确定，请恢复到一个临时目录或指定要恢复的备份中的文件名称。
 
-.Restoring Up the Current Directory with `tar`
+.使用 `tar` 命令恢复当前目录
 [example]
 ====
 [source, shell]
@@ -1169,13 +1169,13 @@ To restore the entire backup, `cd` into the directory to restore into and specif
 ....
 ====
 
-There are dozens of available switches which are described in man:tar[1]. This utility also supports the use of exclude patterns to specify which files should not be included when backing up the specified directory or restoring files from a backup.
+有数十个可用的开关，这些开关在 man:tar[1] 中有描述。该实用程序还支持使用排除模式来指定在备份指定目录或从备份中恢复文件时不应包括哪些文件。
 
-To create a backup using a specified list of files and directories, man:cpio[1] is a good choice. Unlike `tar`, `cpio` does not know how to walk the directory tree and it must be provided the list of files to backup.
+要使用指定的文件和目录列表创建备份，man:cpio[1] 是一个不错的选择。与 `tar` 不同，`cpio` 不知道如何遍历目录树，必须提供备份文件的列表。
 
-For example, a list of files can be created using `ls` or `find`. This example creates a recursive listing of the current directory which is then piped to `cpio` in order to create an output backup file named [.filename]#/tmp/mybackup.cpio#.
+例如，可以使用 `ls` 或 `find` 创建文件列表。此示例创建了当前目录的递归列表，然后将其通过管道传输给 `cpio`，以创建一个名为 [.filename]#/tmp/mybackup.cpio# 的输出备份文件。
 
-.Using `ls` and `cpio` to Make a Recursive Backup of the Current Directory
+.使用 `ls` 和 `cpio` 来对当前目录进行递归备份
 [example]
 ====
 [source, shell]
@@ -1184,11 +1184,11 @@ For example, a list of files can be created using `ls` or `find`. This example c
 ....
 ====
 
-A backup utility which tries to bridge the features provided by `tar` and `cpio` is man:pax[1]. Over the years, the various versions of `tar` and `cpio` became slightly incompatible. POSIX(R) created `pax` which attempts to read and write many of the various `cpio` and `tar` formats, plus new formats of its own.
+一种备份工具，试图结合 `tar` 和 `cpio` 提供的功能是 man:pax[1]。多年来，各个版本的 `tar` 和 `cpio` 变得稍微不兼容。 POSIX(R) 创建了 `pax`，它尝试读取和写入许多不同的 `cpio` 和 `tar` 格式，以及自己的新格式。
 
-The `pax` equivalent to the previous examples would be:
+前面示例的 `pax` 等效方式如下：
 
-.Backing Up the Current Directory with `pax`
+.使用 `pax` 备份当前目录
 [example]
 ====
 [source, shell]
@@ -1198,43 +1198,43 @@ The `pax` equivalent to the previous examples would be:
 ====
 
 [[backups-tapebackups]]
-=== Using Data Tapes for Backups
+=== 使用数据磁带进行备份
 
-While tape technology has continued to evolve, modern backup systems tend to combine off-site backups with local removable media. FreeBSD supports any tape drive that uses SCSI, such as LTO or DAT. There is limited support for SATA and USB tape drives.
+尽管磁带技术不断发展，但现代备份系统往往将离线备份与本地可移动介质相结合。FreeBSD 支持使用 SCSI 的任何磁带驱动器，如 LTO 或 DAT。对于 SATA 和 USB 磁带驱动器的支持有限。
 
-For SCSI tape devices, FreeBSD uses the man:sa[4] driver and the [.filename]#/dev/sa0#, [.filename]#/dev/nsa0#, and [.filename]#/dev/esa0# devices. The physical device name is [.filename]#/dev/sa0#. When [.filename]#/dev/nsa0# is used, the backup application will not rewind the tape after writing a file, which allows writing more than one file to a tape. Using [.filename]#/dev/esa0# ejects the tape after the device is closed.
+对于 SCSI 磁带设备，FreeBSD 使用 man:sa[4] 驱动程序和 [.filename]#/dev/sa0#、[.filename]#/dev/nsa0# 和 [.filename]#/dev/esa0# 设备。物理设备名称是 [.filename]#/dev/sa0#。当使用 [.filename]#/dev/nsa0# 时，备份应用程序在写入文件后不会倒回磁带，这允许将多个文件写入磁带。使用 [.filename]#/dev/esa0# 在设备关闭后弹出磁带。
 
-In FreeBSD, `mt` is used to control operations of the tape drive, such as seeking through files on a tape or writing tape control marks to the tape. For example, the first three files on a tape can be preserved by skipping past them before writing a new file:
+在 FreeBSD 中，`mt` 用于控制磁带驱动器的操作，例如在磁带上寻找文件或向磁带写入磁带控制标记。例如，在写入新文件之前，可以通过跳过前三个文件来保留磁带上的文件。
 
 [source, shell]
 ....
 # mt -f /dev/nsa0 fsf 3
 ....
 
-This utility supports many operations. Refer to man:mt[1] for details.
+该实用程序支持许多操作。有关详细信息，请参阅 man:mt[1]。
 
-To write a single file to tape using `tar`, specify the name of the tape device and the file to backup:
+使用 `tar` 将单个文件写入磁带，需要指定磁带设备的名称和要备份的文件：
 
 [source, shell]
 ....
 # tar cvf /dev/sa0 file
 ....
 
-To recover files from a `tar` archive on tape into the current directory:
+将文件从磁带上的 `tar` 归档恢复到当前目录：
 
 [source, shell]
 ....
 # tar xvf /dev/sa0
 ....
 
-To backup a UFS file system, use `dump`. This examples backs up [.filename]#/usr# without rewinding the tape when finished:
+要备份 UFS 文件系统，请使用 `dump` 命令。以下示例备份了 [.filename]#/usr# 目录，备份完成后不会倒回磁带：
 
 [source, shell]
 ....
 # dump -0aL -b64 -f /dev/nsa0 /usr
 ....
 
-To interactively restore files from a `dump` file on tape into the current directory:
+要从磁带上的 `dump` 文件交互式地恢复文件到当前目录：
 
 [source, shell]
 ....
@@ -1242,34 +1242,34 @@ To interactively restore files from a `dump` file on tape into the current direc
 ....
 
 [[backups-programs-amanda]]
-=== Third-Party Backup Utilities
+=== 第三方备份工具
 
-The FreeBSD Ports Collection provides many third-party utilities which can be used to schedule the creation of backups, simplify tape backup, and make backups easier and more convenient. Many of these applications are client/server based and can be used to automate the backups of a single system or all of the computers in a network.
+FreeBSD Ports Collection 提供了许多第三方工具，可以用于安排备份的创建、简化磁带备份，并使备份更加方便。其中许多应用程序是基于客户端/服务器的，可以用于自动化单个系统或网络中所有计算机的备份。
 
-Popular utilities include Amanda, Bacula, rsync, and duplicity.
+常用的工具包括 Amanda、Bacula、rsync 和 duplicity。
 
-=== Emergency Recovery
+=== 紧急恢复
 
-In addition to regular backups, it is recommended to perform the following steps as part of an emergency preparedness plan.
+除了定期备份外，建议在紧急应急计划中执行以下步骤。
 
-Create a print copy of the output of the following commands:
+创建以下命令的输出的打印副本：
 
 * `gpart show`
 * `more /etc/fstab`
 * `dmesg`
 
-Store this printout and a copy of the installation media in a secure location. Should an emergency restore be needed, boot into the installation media and select `Live CD` to access a rescue shell. This rescue mode can be used to view the current state of the system, and if needed, to reformat disks and restore data from backups.
+将这份打印件和安装介质的副本存放在安全的地方。如果需要进行紧急恢复操作，启动安装介质并选择 `Live CD` 以访问救援 Shell。这个救援模式可以用来查看系统的当前状态，如果需要的话，还可以重新格式化磁盘并从备份中恢复数据。
 
-Next, test the rescue shell and the backups. Make notes of the procedure. Store these notes with the media, the printouts, and the backups. These notes may prevent the inadvertent destruction of the backups while under the stress of performing an emergency recovery.
+接下来，测试救援 shell 和备份。记录下操作步骤，并将这些记录与介质、打印件和备份一起存储。这些记录可以防止在紧急恢复过程中因压力而意外破坏备份。
 
-For an added measure of security, store the latest backup at a remote location which is physically separated from the computers and disk drives by a significant distance.
+为了增加安全性，将最新的备份存储在与计算机和磁盘驱动器相隔一定距离的远程位置。
 
 [[disks-virtual]]
-== Memory Disks
+== 内存磁盘
 
-In addition to physical disks, FreeBSD also supports the creation and use of memory disks. One possible use for a memory disk is to access the contents of an ISO file system without the overhead of first burning it to a CD or DVD, then mounting the CD/DVD media.
+除了物理磁盘外，FreeBSD 还支持创建和使用内存磁盘。内存磁盘的一个可能用途是在不先将其刻录到 CD 或 DVD 上，然后挂载 CD/DVD 媒体的情况下访问 ISO 文件系统的内容。
 
-In FreeBSD, the man:md[4] driver is used to provide support for memory disks. The [.filename]#GENERIC# kernel includes this driver. When using a custom kernel configuration file, ensure it includes this line:
+在 FreeBSD 中，man:md[4] 驱动程序用于提供对内存磁盘的支持。[.filename]#GENERIC# 内核包含了这个驱动程序。当使用自定义内核配置文件时，请确保包含以下行：
 
 [.programlisting]
 ....
@@ -1277,9 +1277,9 @@ device md
 ....
 
 [[disks-mdconfig]]
-=== Attaching and Detaching Existing Images
+=== 附加和分离现有镜像
 
-To mount an existing file system image, use `mdconfig` to specify the name of the ISO file and a free unit number. Then, refer to that unit number to mount it on an existing mount point. Once mounted, the files in the ISO will appear in the mount point. This example attaches _diskimage.iso_ to the memory device [.filename]#/dev/md0# then mounts that memory device on [.filename]#/mnt#:
+要挂载现有的文件系统镜像，使用 `mdconfig` 命令指定 ISO 文件的名称和一个空闲的设备号。然后，使用该设备号将其挂载到现有的挂载点上。一旦挂载成功，ISO 中的文件将会出现在挂载点上。以下示例将 _diskimage.iso_ 附加到内存设备 [.filename]#/dev/md0#，然后将该内存设备挂载到 [.filename]#/mnt#：
 
 [source, shell]
 ....
@@ -1287,9 +1287,9 @@ To mount an existing file system image, use `mdconfig` to specify the name of th
 # mount -t cd9660 /dev/md0 /mnt
 ....
 
-Notice that `-t cd9660` was used to mount an ISO format. If a unit number is not specified with `-u`, `mdconfig` will automatically allocate an unused memory device and output the name of the allocated unit, such as [.filename]#md4#. Refer to man:mdconfig[8] for more details about this command and its options.
+请注意，使用 `-t cd9660` 来挂载 ISO 格式的文件。如果没有使用 `-u` 指定设备号，`mdconfig` 将自动分配一个未使用的内存设备，并输出分配的单元号的名称，例如 [.filename]#md4#。有关此命令及其选项的更多详细信息，请参阅 man:mdconfig[8]。
 
-When a memory disk is no longer in use, its resources should be released back to the system. First, unmount the file system, then use `mdconfig` to detach the disk from the system and release its resources. To continue this example:
+当内存磁盘不再使用时，应该将其资源释放回系统。首先，卸载文件系统，然后使用 `mdconfig` 将磁盘从系统中分离并释放其资源。继续本示例：
 
 [source, shell]
 ....
@@ -1297,14 +1297,14 @@ When a memory disk is no longer in use, its resources should be released back to
 # mdconfig -d -u 0
 ....
 
-To determine if any memory disks are still attached to the system, type `mdconfig -l`.
+要确定系统是否仍连接有任何内存磁盘，请输入 `mdconfig -l`。
 
 [[disks-md-freebsd5]]
-=== Creating a File- or Memory-Backed Memory Disk
+=== 创建一个基于文件或内存的内存磁盘
 
-FreeBSD also supports memory disks where the storage to use is allocated from either a hard disk or an area of memory. The first method is commonly referred to as a file-backed file system and the second method as a memory-backed file system. Both types can be created using `mdconfig`.
+FreeBSD 还支持内存磁盘，其中存储空间可以从硬盘或内存区域分配。第一种方法通常称为基于文件的文件系统，第二种方法称为基于内存的文件系统。可以使用 `mdconfig` 创建这两种类型的磁盘。
 
-To create a new memory-backed file system, specify a type of `swap` and the size of the memory disk to create. Then, format the memory disk with a file system and mount as usual. This example creates a 5M memory disk on unit `1`. That memory disk is then formatted with the UFS file system before it is mounted:
+要创建一个新的基于内存的文件系统，需要指定 `swap` 类型和要创建的内存磁盘的大小。然后，像通常一样，对内存磁盘进行文件系统格式化和挂载。以下示例在单位 `1` 上创建了一个大小为 5M 的内存磁盘。然后，在挂载之前，该内存磁盘将被格式化为 UFS 文件系统：
 
 [source, shell]
 ....
@@ -1321,7 +1321,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 /dev/md1        4718    4  4338     0%    /mnt
 ....
 
-To create a new file-backed memory disk, first allocate an area of disk to use. This example creates an empty 5MB file named [.filename]#newimage#:
+要创建一个新的基于文件的内存磁盘，首先需要分配一个磁盘区域来使用。以下示例创建一个名为 [.filename]#newimage# 的空白 5MB 文件：
 
 [source, shell]
 ....
@@ -1330,7 +1330,7 @@ To create a new file-backed memory disk, first allocate an area of disk to use. 
 5120+0 records out
 ....
 
-Next, attach that file to a memory disk, label the memory disk and format it with the UFS file system, mount the memory disk, and verify the size of the file-backed disk:
+接下来，将该文件附加到一个内存磁盘上，为内存磁盘标记名称并使用 UFS 文件系统进行格式化，挂载内存磁盘，并验证文件支持的磁盘的大小。
 
 [source, shell]
 ....
@@ -1347,58 +1347,58 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 /dev/md0a       4710    4  4330     0%    /mnt
 ....
 
-It takes several commands to create a file- or memory-backed file system using `mdconfig`. FreeBSD also comes with `mdmfs` which automatically configures a memory disk, formats it with the UFS file system, and mounts it. For example, after creating _newimage_ with `dd`, this one command is equivalent to running the `bsdlabel`, `newfs`, and `mount` commands shown above:
+使用 `mdconfig` 命令创建一个基于文件或内存的文件系统需要多个命令。FreeBSD 还提供了 `mdmfs` 命令，它可以自动配置一个内存磁盘，使用 UFS 文件系统进行格式化，并挂载它。例如，在使用 `dd` 命令创建了名为 _newimage_ 的文件后，下面这个命令相当于运行上面显示的 `bsdlabel`、`newfs` 和 `mount` 命令：
 
 [source, shell]
 ....
 # mdmfs -F newimage -s 5m md0 /mnt
 ....
 
-To instead create a new memory-based memory disk with `mdmfs`, use this one command:
+要使用 `mdmfs` 创建一个新的基于内存的内存磁盘，只需使用以下命令：
 
 [source, shell]
 ....
 # mdmfs -s 5m md1 /mnt
 ....
 
-If the unit number is not specified, `mdmfs` will automatically select an unused memory device. For more details about `mdmfs`, refer to man:mdmfs[8].
+如果未指定设备号，`mdmfs` 将自动选择一个未使用的内存设备。有关 `mdmfs` 的更多详细信息，请参阅 man:mdmfs[8]。
 
 [[snapshots]]
-== File System Snapshots
+== 文件系统快照
 
-FreeBSD offers a feature in conjunction with crossref:config[soft-updates,Soft Updates]: file system snapshots.
+FreeBSD 提供了一个与 crossref:config[soft-updates, Soft Updates] 配合使用的功能：文件系统快照。
 
-UFS snapshots allow a user to create images of specified file systems, and treat them as a file. Snapshot files must be created in the file system that the action is performed on, and a user may create no more than 20 snapshots per file system. Active snapshots are recorded in the superblock so they are persistent across unmount and remount operations along with system reboots. When a snapshot is no longer required, it can be removed using man:rm[1]. While snapshots may be removed in any order, all the used space may not be acquired because another snapshot will possibly claim some of the released blocks.
+UFS 快照允许用户创建指定文件系统的镜像，并将其视为文件。快照文件必须在执行操作的文件系统中创建，并且用户每个文件系统最多可以创建 20 个快照。 活动快照在超级块中记录，因此它们在卸载和重新挂载操作以及系统重新启动时是持久的。当不再需要快照时，可以使用 man:rm[1] 命令将其删除。 尽管可以以任何顺序删除快照，但可能无法获取所有已释放块的使用空间，因为另一个快照可能会占用一些已释放的块。
 
-The un-alterable `snapshot` file flag is set by man:mksnap_ffs[8] after initial creation of a snapshot file. man:unlink[1] makes an exception for snapshot files since it allows them to be removed.
+在创建快照文件后，man:mksnap_ffs[8] 会设置不可更改的 `snapshot` 文件标志。man:unlink[1] 对于快照文件有一个例外，因为它允许将其删除。
 
-Snapshots are created using man:mount[8]. To place a snapshot of [.filename]#/var# in the file [.filename]#/var/snapshot/snap#, use the following command:
+使用 man:mount[8] 创建快照。要将 [.filename]#/var# 的快照放置在文件 [.filename]#/var/snapshot/snap# 中，请使用以下命令：
 
 [source, shell]
 ....
 # mount -u -o snapshot /var/snapshot/snap /var
 ....
 
-Alternatively, use man:mksnap_ffs[8] to create the snapshot:
+或者，使用 man:mksnap_ffs[8] 命令来创建快照：
 
 [source, shell]
 ....
 # mksnap_ffs /var /var/snapshot/snap
 ....
 
-One can find snapshot files on a file system, such as [.filename]#/var#, using man:find[1]:
+可以使用 man:find[1] 命令在文件系统上找到快照文件，例如 [.filename]#/var#。
 
 [source, shell]
 ....
 # find /var -flags snapshot
 ....
 
-Once a snapshot has been created, it has several uses:
+一旦创建了快照，它可以有多种用途：
 
-* Some administrators will use a snapshot file for backup purposes, because the snapshot can be transferred to CDs or tape.
-* The file system integrity checker, man:fsck[8], may be run on the snapshot. Assuming that the file system was clean when it was mounted, this should always provide a clean and unchanging result.
-* Running man:dump[8] on the snapshot will produce a dump file that is consistent with the file system and the timestamp of the snapshot. man:dump[8] can also take a snapshot, create a dump image, and then remove the snapshot in one command by using `-L`.
-* The snapshot can be mounted as a frozen image of the file system. To man:mount[8] the snapshot [.filename]#/var/snapshot/snap# run:
+* 一些管理员会使用快照文件进行备份，因为快照可以传输到光盘或磁带上。
+* 文件系统完整性检查器 man:fsck[8] 可以在快照上运行。假设文件系统在挂载时是干净的，这应该始终提供一个干净且不变的结果。
+* 在快照上运行 man:dump[8] 将生成一个与文件系统和快照的时间戳一致的转储文件。man:dump[8] 还可以使用 `-L` 选项一次性拍摄快照、创建转储镜像并删除快照。
+* 快照可以作为文件系统的冻结镜像进行挂载。要使用 man:mount[8] 挂载 [.filename]#/var/snapshot/snap# 快照，请运行：
 +
 [source, shell]
 ....
@@ -1406,7 +1406,7 @@ Once a snapshot has been created, it has several uses:
 # mount -r /dev/md4 /mnt
 ....
 
-The frozen [.filename]#/var# is now available through [.filename]#/mnt#. Everything will initially be in the same state it was during the snapshot creation time. The only exception is that any earlier snapshots will appear as zero length files. To unmount the snapshot, use:
+冻结的文件 [.filename]#/var# 现在可以通过 [.filename]#/mnt# 访问。一开始，所有内容都将保持与创建快照时相同的状态。唯一的例外是，任何早期的快照将显示为长度为零的文件。要卸载快照，请使用：
 
 [source, shell]
 ....
@@ -1414,18 +1414,18 @@ The frozen [.filename]#/var# is now available through [.filename]#/mnt#. Everyth
 # mdconfig -d -u 4
 ....
 
-For more information about `softupdates` and file system snapshots, including technical papers, visit Marshall Kirk McKusick's website at http://www.mckusick.com/[http://www.mckusick.com/].
+有关 `softupdates` 和文件系统快照的更多信息，包括技术论文，请访问 Marshall Kirk McKusick's 的网站：http://www.mckusick.com/[http://www.mckusick.com/]。
 
 [[quotas]]
-== Disk Quotas
+== 磁盘配额
 
-Disk quotas can be used to limit the amount of disk space or the number of files a user or members of a group may allocate on a per-file system basis. This prevents one user or group of users from consuming all of the available disk space.
+磁盘配额可以用于限制用户或用户组在每个文件系统上分配的磁盘空间或文件数量。这可以防止某个用户或用户组占用所有可用的磁盘空间。
 
-This section describes how to configure disk quotas for the UFS file system. To configure quotas on the ZFS file system, refer to crossref:zfs[zfs-zfs-quota,"Dataset, User, and Group Quotas"]
+本节介绍了如何配置 UFS 文件系统的磁盘配额。要在 ZFS 文件系统上配置配额，请参考 crossref:zfs[zfs-zfs-quota,“数据集、用户和组配额”]。
 
-=== Enabling Disk Quotas
+=== 启用磁盘配额
 
-To determine if the FreeBSD kernel provides support for disk quotas:
+要确定 FreeBSD 内核是否支持磁盘配额，请执行以下操作：
 
 [source, shell]
 ....
@@ -1433,67 +1433,67 @@ To determine if the FreeBSD kernel provides support for disk quotas:
 kern.features.ufs_quota: 1
 ....
 
-In this example, the `1` indicates quota support. If the value is instead `0`, add the following line to a custom kernel configuration file and rebuild the kernel using the instructions in crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel]:
+在这个例子中，`1` 表示支持配额。如果值是 `0`，请将以下行添加到自定义内核配置文件中，并按照 crossref:kernelconfig[kernelconfig,配置 FreeBSD 内核] 中的说明重新构建内核。
 
 [.programlisting]
 ....
 options QUOTA
 ....
 
-Next, enable disk quotas in [.filename]#/etc/rc.conf#:
+接下来，在 [.filename]#/etc/rc.conf# 中启用磁盘配额：
 
 [.programlisting]
 ....
 quota_enable="YES"
 ....
 
-Normally on bootup, the quota integrity of each file system is checked by man:quotacheck[8]. This program insures that the data in the quota database properly reflects the data on the file system. This is a time consuming process that will significantly affect the time the system takes to boot. To skip this step, add this variable to [.filename]#/etc/rc.conf#:
+通常在启动时，使用 man:quotacheck[8] 检查每个文件系统的配额完整性。该程序确保配额数据库中的数据正确反映文件系统上的数据。这是一个耗时的过程，会显著影响系统启动所需的时间。要跳过此步骤，请将此变量添加到 [.filename]#/etc/rc.conf# 中：
 
 [.programlisting]
 ....
 check_quotas="NO"
 ....
 
-Finally, edit [.filename]#/etc/fstab# to enable disk quotas on a per-file system basis. To enable per-user quotas on a file system, add `userquota` to the options field in the [.filename]#/etc/fstab# entry for the file system to enable quotas on. For example:
+最后，编辑 [.filename]#/etc/fstab# 文件以按文件系统启用磁盘配额。要在文件系统上启用每个用户的配额，请在 [.filename]#/etc/fstab# 文件中的文件系统条目的选项字段中添加 `userquota`。例如：
 
 [.programlisting]
 ....
 /dev/da1s2g   /home    ufs rw,userquota 1 2
 ....
 
-To enable group quotas, use `groupquota` instead. To enable both user and group quotas, separate the options with a comma:
+要启用组配额，请使用 `groupquota`。要同时启用用户和组配额，请使用逗号分隔选项：
 
 [.programlisting]
 ....
 /dev/da1s2g    /home    ufs rw,userquota,groupquota 1 2
 ....
 
-By default, quota files are stored in the root directory of the file system as [.filename]#quota.user# and [.filename]#quota.group#. Refer to man:fstab[5] for more information. Specifying an alternate location for the quota files is not recommended.
+默认情况下，配额文件存储在文件系统的根目录中，文件名为 [.filename]#quota.user# 和 [.filename]#quota.group#。有关更多信息，请参阅 man:fstab[5]。不建议指定配额文件的替代位置。
 
-Once the configuration is complete, reboot the system and [.filename]#/etc/rc# will automatically run the appropriate commands to create the initial quota files for all of the quotas enabled in [.filename]#/etc/fstab#.
+配置完成后，重新启动系统，[.filename]#/etc/rc# 将自动运行适当的命令，为 [.filename]#/etc/fstab# 中启用的所有配额创建初始配额文件。
 
-In the normal course of operations, there should be no need to manually run man:quotacheck[8], man:quotaon[8], or man:quotaoff[8]. However, one should read these manual pages to be familiar with their operation.
+在正常的操作过程中，通常不需要手动运行 man:quotacheck[8]、man:quotaon[8] 或 man:quotaoff[8]。然而，应该阅读这些手册页以熟悉它们的操作。
 
-=== Setting Quota Limits
+=== 设置配额限制
 
-To verify that quotas are enabled, run:
+要验证配额是否已启用，请运行以下命令：
 
 [source, shell]
 ....
 # quota -v
 ....
 
-There should be a one line summary of disk usage and current quota limits for each file system that quotas are enabled on.
+对于每个启用了配额的文件系统，应该有一个关于磁盘使用情况和当前配额限制的一行摘要。
 
-The system is now ready to be assigned quota limits with `edquota`.
+系统现在可以使用 `edquota` 来分配配额限制。
 
-Several options are available to enforce limits on the amount of disk space a user or group may allocate, and how many files they may create. Allocations can be limited based on disk space (block quotas), number of files (inode quotas), or a combination of both. Each limit is further broken down into two categories: hard and soft limits.
+有几种选项可用于限制用户或组分配的磁盘空间量以及他们可以创建的文件数量。分配可以基于磁盘空间（块配额）、文件数量（inode 配额）或两者的组合进行限制。每个限制进一步分为两个类别：硬限制和软限制。
 
-A hard limit may not be exceeded. Once a user reaches a hard limit, no further allocations can be made on that file system by that user. For example, if the user has a hard limit of 500 kbytes on a file system and is currently using 490 kbytes, the user can only allocate an additional 10 kbytes. Attempting to allocate an additional 11 kbytes will fail.
+硬限制不能超过。一旦用户达到硬限制，该用户在该文件系统上将无法再进行进一步的分配。例如，如果用户在文件系统上的硬限制是 500 kbytes ，并且当前正在使用 490 kbytes，那么用户只能再分配额外的 10 kbytes。尝试分配额外的 11 kbytes 将失败。
 
-Soft limits can be exceeded for a limited amount of time, known as the grace period, which is one week by default. If a user stays over their limit longer than the grace period, the soft limit turns into a hard limit and no further allocations are allowed. When the user drops back below the soft limit, the grace period is reset.
+软限制可以在有限的时间内超过，这被称为宽限期，默认为一周。如果用户超过限制的时间超过宽限期，软限制将变为硬限制，不再允许进一步的分配。当用户再次低于软限制时，宽限期将被重置。
 
-In the following example, the quota for the `test` account is being edited. When `edquota` is invoked, the editor specified by `EDITOR` is opened in order to edit the quota limits. The default editor is set to vi.
+在下面的示例中，正在编辑 `test` 账户的配额。当调用 `edquota` 时，会打开由 `EDITOR` 指定的编辑器，以便编辑配额限制。默认编辑器设置为 vi。
 
 [source, shell]
 ....
@@ -1505,29 +1505,29 @@ Quotas for user test:
         inodes in use: 0, limits (soft = 50, hard = 60)
 ....
 
-There are normally two lines for each file system that has quotas enabled. One line represents the block limits and the other represents the inode limits. Change the value to modify the quota limit. For example, to raise the block limit on [.filename]#/usr# to a soft limit of `500` and a hard limit of `600`, change the values in that line as follows:
+通常，每个启用了配额的文件系统通常有两行。一行表示块限制，另一行表示 inode 限制。更改值以修改配额限制。例如，要将 [.filename]#/usr# 的块限制提高到软限制 `500` 和硬限制 `600`，请按照以下方式更改该行中的值：
 
 [.programlisting]
 ....
 /usr: kbytes in use: 65, limits (soft = 500, hard = 600)
 ....
 
-The new quota limits take effect upon exiting the editor.
+新的配额限制在退出编辑器后生效。
 
-Sometimes it is desirable to set quota limits on a range of users. This can be done by first assigning the desired quota limit to a user. Then, use `-p` to duplicate that quota to a specified range of user IDs (UIDs). The following command will duplicate those quota limits for UIDs `10,000` through `19,999`:
+有时候，对一系列用户设置配额限制是可取的。首先，将所需的配额限制分配给一个用户。然后，使用 `-p` 选项将该配额复制到指定范围的用户 ID（UID）。以下命令将复制 UID 为 `10,000` 到 `19,999` 的用户的配额限制：
 
 [source, shell]
 ....
 # edquota -p test 10000-19999
 ....
 
-For more information, refer to man:edquota[8].
+有关更多信息，请参考 man:edquota[8]。
 
-=== Checking Quota Limits and Disk Usage
+=== 检查配额限制和磁盘使用情况
 
-To check individual user or group quotas and disk usage, use man:quota[1]. A user may only examine their own quota and the quota of a group they are a member of. Only the superuser may view all user and group quotas. To get a summary of all quotas and disk usage for file systems with quotas enabled, use man:repquota[8].
+要检查单个用户或组的配额和磁盘使用情况，请使用 man:quota[1]。用户只能查看自己的配额和所属组的配额。只有超级用户才能查看所有用户和组的配额。要获取启用了配额的文件系统的所有配额和磁盘使用情况的摘要，请使用 man:repquota[8]。
 
-Normally, file systems that the user is not using any disk space on will not show in the output of `quota`, even if the user has a quota limit assigned for that file system. Use `-v` to display those file systems. The following is sample output from `quota -v` for a user that has quota limits on two file systems.
+通常情况下，用户没有使用任何磁盘空间的文件系统在 `quota` 命令的输出中不会显示，即使用户对该文件系统有配额限制。使用 `-v` 选项可以显示这些文件系统。以下是一个用户在两个文件系统上设置了配额限制时，使用 `quota -v` 命令的示例输出。
 
 [.programlisting]
 ....
@@ -1537,20 +1537,20 @@ Disk quotas for user test (uid 1002):
        /usr/var       0      50      75               0      50      60
 ....
 
-In this example, the user is currently 15 kbytes over the soft limit of 50 kbytes on [.filename]#/usr# and has 5 days of grace period left. The asterisk `*` indicates that the user is currently over the quota limit.
+在这个例子中，用户当前超过了在 [.filename]#/usr# 目录下的 50 kbytes 的软限制，超出了 15 kbytes，并且还剩下 5 天的宽限期。星号 `*` 表示用户当前超过了配额限制。
 
-=== Quotas over NFS
+=== NFS 上的配额限制
 
-Quotas are enforced by the quota subsystem on the NFS server. The man:rpc.rquotad[8] daemon makes quota information available to `quota` on NFS clients, allowing users on those machines to see their quota statistics.
+配额由 NFS 服务器上的配额子系统强制执行。man:rpc.rquotad[8] 守护进程将配额信息提供给 NFS 客户端上的 `quota` 命令，使得这些机器上的用户可以查看他们的配额统计信息。
 
-On the NFS server, enable `rpc.rquotad` by removing the `+#+` from this line in [.filename]*/etc/inetd.conf*:
+在 NFS 服务器上，通过从 [.filename]*/etc/inetd.conf* 文件中的这一行中删除 `+#+` 来启用 `rpc.rquotad`。
 
 [.programlisting]
 ....
 rquotad/1      dgram rpc/udp wait root /usr/libexec/rpc.rquotad rpc.rquotad
 ....
 
-Then, restart `inetd`:
+然后，重新启动 `inetd`：
 
 [source, shell]
 ....
@@ -1558,38 +1558,38 @@ Then, restart `inetd`:
 ....
 
 [[disks-encrypting]]
-== Encrypting Disk Partitions
+== 加密磁盘分区
 
-FreeBSD offers excellent online protections against unauthorized data access. File permissions and crossref:mac[mac,Mandatory Access Control] (MAC) help prevent unauthorized users from accessing data while the operating system is active and the computer is powered up. However, the permissions enforced by the operating system are irrelevant if an attacker has physical access to a computer and can move the computer's hard drive to another system to copy and analyze the data.
+FreeBSD 提供了出色的在线保护措施，防止未经授权的数据访问。文件权限和强制访问控制（MAC）可以在操作系统处于活动状态且计算机已经启动时，防止未经授权的用户访问数据。然而，如果攻击者可以物理访问计算机并将计算机的硬盘移动到另一个系统以复制和分析数据，操作系统强制执行的权限就变得无关紧要了。
 
-Regardless of how an attacker may have come into possession of a hard drive or powered-down computer, the GEOM-based cryptographic subsystems built into FreeBSD are able to protect the data on the computer's file systems against even highly-motivated attackers with significant resources. Unlike encryption methods that encrypt individual files, the built-in `gbde` and `geli` utilities can be used to transparently encrypt entire file systems. No cleartext ever touches the hard drive's platter.
+无论攻击者如何获得硬盘或关闭电脑，FreeBSD 中内置的基于 GEOM 的加密子系统能够保护计算机文件系统上的数据，即使是对于拥有大量资源和高度动机的攻击者也是如此。与加密单个文件的加密方法不同，内置的 `gbde` 和 `geli` 实用程序可以用于透明地加密整个文件系统。明文永远不会接触到硬盘的盘片。
 
-This chapter demonstrates how to create an encrypted file system on FreeBSD. It first demonstrates the process using `gbde` and then demonstrates the same example using `geli`.
+本章介绍了如何在 FreeBSD 上创建加密文件系统。首先使用 `gbde` 演示了该过程，然后使用 `geli` 演示了相同的示例。
 
-=== Disk Encryption with gbde
+=== 使用 gbde 进行磁盘加密
 
-The objective of the man:gbde[4] facility is to provide a formidable challenge for an attacker to gain access to the contents of a _cold_ storage device. However, if the computer is compromised while up and running and the storage device is actively attached, or the attacker has access to a valid passphrase, it offers no protection to the contents of the storage device. Thus, it is important to provide physical security while the system is running and to protect the passphrase used by the encryption mechanism.
+man:gbde[4] 设施的目标是为攻击者提供一个巨大的挑战，以防止其获取冷存储设备的内容。然而，如果计算机在运行时被入侵并且存储设备被主动连接，或者攻击者拥有有效的密码短语，那么它对存储设备的内容提供不了任何保护。因此，在系统运行时提供物理安全性并保护加密机制使用的密码短语非常重要。
 
-This facility provides several barriers to protect the data stored in each disk sector. It encrypts the contents of a disk sector using 128-bit AES in CBC mode. Each sector on the disk is encrypted with a different AES key. For more information on the cryptographic design, including how the sector keys are derived from the user-supplied passphrase, refer to man:gbde[4].
+该设施提供了几个屏障来保护存储在每个磁盘扇区中的数据。它使用 128 位 AES 在 CBC 模式下对磁盘扇区的内容进行加密。磁盘上的每个扇区都使用不同的 AES 密钥进行加密。有关加密设计的更多信息，包括如何从用户提供的密码短语派生扇区密钥，请参阅 man:gbde[4]。
 
-FreeBSD provides a kernel module for gbde which can be loaded with this command:
+FreeBSD 提供了一个用于 gbde 的内核模块，可以使用以下命令加载：
 
 [source, shell]
 ....
 # kldload geom_bde
 ....
 
-If using a custom kernel configuration file, ensure it contains this line:
+如果使用自定义内核配置文件，请确保其中包含以下行：
 
 `options GEOM_BDE`
 
-The following example demonstrates adding a new hard drive to a system that will hold a single encrypted partition that will be mounted as [.filename]#/private#.
+下面的示例演示了向系统添加新的硬盘，该硬盘将容纳一个加密分区，并将其挂载为 [.filename]#/private#。
 
 [.procedure]
-.Procedure: Encrypting a Partition with gbde
-. Add the New Hard Drive
+.过程：使用 gbde 加密分区
+. 添加新的硬盘
 +
-Install the new drive to the system as explained in <<disks-adding>>. For the purposes of this example, a new hard drive partition has been added as [.filename]#/dev/ad4s1c# and [.filename]#/dev/ad0s1*# represents the existing standard FreeBSD partitions.
+按照 <<disks-adding>> 中所述的方法将新驱动器安装到系统中。对于本示例，已添加了一个新的硬盘分区，表示为 [.filename]#/dev/ad4s1c#，而 [.filename]#/dev/ad0s1*# 表示现有的标准 FreeBSD 分区。
 +
 [source, shell]
 ....
@@ -1599,17 +1599,17 @@ Install the new drive to the system as explained in <<disks-adding>>. For the pu
 /dev/ad0s1a     /dev/ad0s1d     /dev/ad4
 ....
 
-. Create a Directory to Hold `gbde` Lock Files
+. 创建一个目录来存放 `gbde` 锁文件。
 +
 [source, shell]
 ....
 # mkdir /etc/gbde
 ....
 +
-The gbde lock file contains information that gbde requires to access encrypted partitions. Without access to the lock file, gbde will not be able to decrypt the data contained in the encrypted partition without significant manual intervention which is not supported by the software. Each encrypted partition uses a separate lock file.
-. Initialize the `gbde` Partition
+gbde 锁定文件包含了 gbde 访问加密分区所需的信息。如果没有访问锁定文件的权限，gbde 将无法解密加密分区中的数据，除非进行大量的手动干预，而该软件不支持此操作。每个加密分区都使用一个单独的锁定文件。
+. 初始化 `gbde` 分区
 +
-A gbde partition must be initialized before it can be used. This initialization needs to be performed only once. This command will open the default editor, in order to set various configuration options in a template. For use with the UFS file system, set the sector_size to 2048:
+在使用之前，必须初始化 gbde 分区。这个初始化只需要执行一次。该命令将打开默认编辑器，以便在模板中设置各种配置选项。对于与 UFS 文件系统一起使用，请将 sector_size 设置为 2048：
 +
 [source, shell]
 ....
@@ -1625,23 +1625,23 @@ sector_size	=	2048
 [...]
 ....
 +
-Once the edit is saved, the user will be asked twice to type the passphrase used to secure the data. The passphrase must be the same both times. The ability of gbde to protect data depends entirely on the quality of the passphrase. For tips on how to select a secure passphrase that is easy to remember, see http://world.std.com/\~reinhold/diceware.html[http://world.std.com/~reinhold/diceware.htm].
+编辑保存后，用户将被要求两次输入用于保护数据的密码短语。两次输入的密码短语必须相同。Gbde 保护数据的能力完全取决于密码短语的质量。有关如何选择既安全又容易记住的密码短语的提示，请参阅 http://world.std.com/\~reinhold/diceware.html[http://world.std.com/~reinhold/diceware.htm]。
 +
-This initialization creates a lock file for the gbde partition. In this example, it is stored as [.filename]#/etc/gbde/ad4s1c.lock#. Lock files must end in ".lock" in order to be correctly detected by the [.filename]#/etc/rc.d/gbde# start up script.
+这个初始化操作创建了一个用于 gbde 分区的锁文件。在这个例子中，它被存储为 [.filename]#/etc/gbde/ad4s1c.lock# 。锁文件必须以 ".lock" 结尾，以便被 [.filename]#/etc/rc.d/gbde# 启动脚本正确地检测到。
 +
 [CAUTION]
 ====
-Lock files _must_ be backed up together with the contents of any encrypted partitions. Without the lock file, the legitimate owner will be unable to access the data on the encrypted partition.
+必须将锁定文件与任何加密分区的内容一起备份。如果没有锁定文件，合法的所有者将无法访问加密分区上的数据。
 ====
 
-. Attach the Encrypted Partition to the Kernel
+. 将加密分区附加到内核上
 +
 [source, shell]
 ....
 # gbde attach /dev/ad4s1c -l /etc/gbde/ad4s1c.lock
 ....
 +
-This command will prompt to input the passphrase that was selected during the initialization of the encrypted partition. The new encrypted device will appear in [.filename]#/dev# as [.filename]#/dev/device_name.bde#:
+这个命令会提示输入在加密分区初始化过程中选择的密码。新的加密设备将出现在 [.filename]#/dev# 中，命名为 [.filename]#/dev/device_name.bde# 。
 +
 [source, shell]
 ....
@@ -1651,18 +1651,18 @@ This command will prompt to input the passphrase that was selected during the in
 /dev/ad0s1a     /dev/ad0s1d     /dev/ad4        /dev/ad4s1c.bde
 ....
 
-. Create a File System on the Encrypted Device
+. 在加密设备上创建文件系统
 +
-Once the encrypted device has been attached to the kernel, a file system can be created on the device. This example creates a UFS file system with soft updates enabled. Be sure to specify the partition which has a [.filename]#*.bde# extension:
+一旦加密设备已经连接到内核，就可以在设备上创建文件系统。这个示例创建了一个启用了软更新的 UFS 文件系统。请确保指定具有 [.filename]#*.bde# 扩展名的分区：
 +
 [source, shell]
 ....
 # newfs -U /dev/ad4s1c.bde
 ....
 
-. Mount the Encrypted Partition
+. 挂载加密分区
 +
-Create a mount point and mount the encrypted file system:
+创建一个挂载点并挂载加密文件系统：
 +
 [source, shell]
 ....
@@ -1670,9 +1670,9 @@ Create a mount point and mount the encrypted file system:
 # mount /dev/ad4s1c.bde /private
 ....
 
-. Verify That the Encrypted File System is Available
+. 验证加密文件系统是否可用
 +
-The encrypted file system should now be visible and available for use:
+加密文件系统现在应该可见并可供使用：
 +
 [source, shell]
 ....
@@ -1686,7 +1686,7 @@ Filesystem        Size   Used  Avail Capacity  Mounted on
 /dev/ad4s1c.bde   150G   4.1K   138G     0%    /private
 ....
 
-After each boot, any encrypted file systems must be manually re-attached to the kernel, checked for errors, and mounted, before the file systems can be used. To configure these steps, add the following lines to [.filename]#/etc/rc.conf#:
+每次启动后，必须手动重新连接加密文件系统到内核，检查错误并挂载，然后才能使用这些文件系统。要配置这些步骤，请将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
@@ -1695,11 +1695,11 @@ gbde_devices="ad4s1c"
 gbde_lockdir="/etc/gbde"
 ....
 
-This requires that the passphrase be entered at the console at boot time. After typing the correct passphrase, the encrypted partition will be mounted automatically. Additional gbde boot options are available and listed in man:rc.conf[5].
+这要求在启动时在控制台输入密码短语。输入正确的密码短语后，加密分区将自动挂载。还有其他可用的 gbde 启动选项，可以在 man:rc.conf[5] 中找到并列出。
 
 [NOTE]
 ====
-sysinstall is incompatible with gbde-encrypted devices. All [.filename]#*.bde# devices must be detached from the kernel before starting sysinstall or it will crash during its initial probing for devices. To detach the encrypted device used in the example, use the following command:
+sysinstall 与 gbde 加密设备不兼容。在启动 sysinstall 之前，必须将所有的 [.filename]#*.bde# 设备从内核中分离，否则在设备的初始探测过程中，sysinstall 会崩溃。要分离示例中使用的加密设备，请使用以下命令：
 
 [source, shell]
 ....
@@ -1708,41 +1708,41 @@ sysinstall is incompatible with gbde-encrypted devices. All [.filename]#*.bde# d
 ====
 
 [[disks-encrypting-geli]]
-=== Disk Encryption with `geli`
+=== 使用 `geli` 进行磁盘加密
 
-An alternative cryptographic GEOM class is available using `geli`. This control utility adds some features and uses a different scheme for doing cryptographic work. It provides the following features:
+可以使用 `geli` 来使用另一种加密 GEOM 类。这个控制工具添加了一些功能，并使用了不同的加密方案来进行加密工作。它提供以下功能：
 
-* Utilizes the man:crypto[9] framework and automatically uses cryptographic hardware when it is available.
-* Supports multiple cryptographic algorithms such as AES, Blowfish, and 3DES.
-* Allows the root partition to be encrypted. The passphrase used to access the encrypted root partition will be requested during system boot.
-* Allows the use of two independent keys.
-* It is fast as it performs simple sector-to-sector encryption.
-* Allows backup and restore of master keys. If a user destroys their keys, it is still possible to get access to the data by restoring keys from the backup.
-* Allows a disk to attach with a random, one-time key which is useful for swap partitions and temporary file systems.
+* 当可用时，利用 man:crypto[9] 框架并自动使用加密硬件。
+* 支持多种加密算法，如 AES、Blowfish 和 3DES。
+* 允许对根分区进行加密。在系统启动期间，将要求输入用于访问加密根分区的密码短语。
+* 允许使用两个独立的键。
+* 它之所以快速，是因为它执行简单的扇区级加密。
+* 允许备份和恢复主密钥。如果用户销毁了他们的密钥，仍然可以通过从备份中恢复密钥来访问数据。
+* 允许磁盘使用随机的一次性密钥进行连接，这对于交换分区和临时文件系统非常有用。
 
-More features and usage examples can be found in man:geli[8].
+更多功能和使用示例可以在 man:geli[8] 中找到。
 
-The following example describes how to generate a key file which will be used as part of the master key for the encrypted provider mounted under [.filename]#/private#. The key file will provide some random data used to encrypt the master key. The master key will also be protected by a passphrase. The provider's sector size will be 4kB. The example describes how to attach to the `geli` provider, create a file system on it, mount it, work with it, and finally, how to detach it.
+下面的示例描述了如何生成一个密钥文件，该文件将作为加密提供者在 [.filename]#/private# 下挂载的主密钥的一部分。密钥文件将提供一些用于加密主密钥的随机数据。主密钥还将受到密码短语的保护。提供者的扇区大小将为 4kB 。该示例描述了如何连接到 `geli` 提供者，创建一个文件系统，挂载它，使用它，并最终如何卸载它。
 
 [.procedure]
-.Procedure: Encrypting a Partition with `geli`
-. Load `geli` Support
+.过程：使用 `geli` 加密分区
+. 加载 `geli` 支持
 +
-Support for `geli` is available as a loadable kernel module. To configure the system to automatically load the module at boot time, add the following line to [.filename]#/boot/loader.conf#:
+支持 `geli` 的功能作为可加载的内核模块提供。要配置系统在启动时自动加载该模块，请将以下行添加到 [.filename]#/boot/loader.conf# 文件中：
 +
 [.programlisting]
 ....
 geom_eli_load="YES"
 ....
 +
-To load the kernel module now:
+现在加载内核模块：
 +
 [source, shell]
 ....
 # kldload geom_eli
 ....
 +
-For a custom kernel, ensure the kernel configuration file contains these lines:
+对于自定义内核，请确保内核配置文件包含以下行：
 +
 [.programlisting]
 ....
@@ -1750,9 +1750,9 @@ options GEOM_ELI
 device crypto
 ....
 
-. Generate the Master Key
+. 生成主密钥
 +
-The following commands generate a master key that all data will be encrypted with. This key can never be changed. Rather than using it directly, it is encrypted with one or more user keys. The user keys are made up of an optional combination of random bytes from a file, [.filename]#/root/da2.key#, and/or a passphrase. In this case, the data source for the key file is [.filename]#/dev/random#. This command also configures the sector size of the provider ([.filename]#/dev/da2.eli#) as 4kB, for better performance:
+以下命令生成一个主密钥，所有数据都将使用该密钥进行加密。该密钥是不可更改的。与直接使用该密钥不同，它会被一个或多个用户密钥加密。用户密钥由来自文件 [.filename]#/root/da2.key# 的可选随机字节或者口令组成。在这种情况下，密钥文件的数据源是 [.filename]#/dev/random#。此命令还将提供者 ([.filename]#/dev/da2.eli#) 的扇区大小配置为 4kB ，以提高性能。
 +
 [source, shell]
 ....
@@ -1762,18 +1762,18 @@ Enter new passphrase:
 Reenter new passphrase:
 ....
 +
-It is not mandatory to use both a passphrase and a key file as either method of securing the master key can be used in isolation.
+不强制同时使用密码短语和密钥文件，因为可以单独使用其中一种方法来保护主密钥。
 +
-If the key file is given as "-", standard input will be used. For example, this command generates three key files:
+如果密钥文件以"-"表示，则使用标准输入。例如，以下命令将生成三个密钥文件：
 +
 [source, shell]
 ....
 # cat keyfile1 keyfile2 keyfile3 | geli init -K - /dev/da2
 ....
 
-. Attach the Provider with the Generated Key
+. 将生成的密钥与提供者关联。
 +
-To attach the provider, specify the key file, the name of the disk, and the passphrase:
+要附加提供者，请指定密钥文件、磁盘名称和密码短语：
 +
 [source, shell]
 ....
@@ -1781,7 +1781,7 @@ To attach the provider, specify the key file, the name of the disk, and the pass
 Enter passphrase:
 ....
 +
-This creates a new device with an [.filename]#.eli# extension:
+这将创建一个带有 [.filename]#.eli# 扩展名的新设备：
 +
 [source, shell]
 ....
@@ -1789,9 +1789,9 @@ This creates a new device with an [.filename]#.eli# extension:
 /dev/da2  /dev/da2.eli
 ....
 
-. Create the New File System
+. 创建新的文件系统
 +
-Next, format the device with the UFS file system and mount it on an existing mount point:
+接下来，使用 UFS 文件系统对设备进行格式化，并将其挂载到现有的挂载点上：
 +
 [source, shell]
 ....
@@ -1800,7 +1800,7 @@ Next, format the device with the UFS file system and mount it on an existing mou
 # mount /dev/da2.eli /private
 ....
 +
-The encrypted file system should now be available for use:
+加密文件系统现在可以使用了。
 +
 [source, shell]
 ....
@@ -1814,7 +1814,7 @@ Filesystem     Size   Used  Avail Capacity  Mounted on
 /dev/da2.eli   150G   4.1K   138G     0%    /private
 ....
 
-Once the work on the encrypted partition is done, and the [.filename]#/private# partition is no longer needed, it is prudent to put the device into cold storage by unmounting and detaching the `geli` encrypted partition from the kernel:
+一旦加密分区的工作完成，并且不再需要 [.filename]#/private# 分区，为了安全起见，应该将设备放入冷存储中，即卸载并从内核中分离 `geli` 加密分区：
 
 [source, shell]
 ....
@@ -1822,7 +1822,7 @@ Once the work on the encrypted partition is done, and the [.filename]#/private# 
 # geli detach da2.eli
 ....
 
-An [.filename]#rc.d# script is provided to simplify the mounting of `geli`-encrypted devices at boot time. For this example, add these lines to [.filename]#/etc/rc.conf#:
+为了简化启动时 `geli` 加密设备的挂载，提供了一个 [.filename]#rc.d# 脚本。对于这个示例，请将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
@@ -1830,25 +1830,25 @@ geli_devices="da2"
 geli_da2_flags="-k /root/da2.key"
 ....
 
-This configures [.filename]#/dev/da2# as a `geli` provider with a master key of [.filename]#/root/da2.key#. The system will automatically detach the provider from the kernel before the system shuts down. During the startup process, the script will prompt for the passphrase before attaching the provider. Other kernel messages might be shown before and after the password prompt. If the boot process seems to stall, look carefully for the password prompt among the other messages. Once the correct passphrase is entered, the provider is attached. The file system is then mounted, typically by an entry in [.filename]#/etc/fstab#. Refer to crossref:basics[mount-unmount,“Mounting and Unmounting File Systems”] for instructions on how to configure a file system to mount at boot time.
+这将 [.filename]#/dev/da2# 配置为具有 [.filename]#/root/da2.key# 作为主密钥的 `geli` 提供程序。系统将在关闭系统之前自动从内核中分离该提供程序。在启动过程中，脚本将在连接提供程序之前提示输入密码。在密码提示之前和之后可能会显示其他内核消息。如果启动过程似乎停滞不前，请仔细查找其他消息中的密码提示。一旦输入正确的密码，提供程序将被连接。然后文件系统通常会被挂载，通过 [.filename]#/etc/fstab# 中的条目进行。有关如何配置文件系统在启动时挂载的说明，请参阅crossref:basics[mount-unmount,“挂载和卸载文件系统”] 。
 
 [[swap-encrypting]]
-== Encrypting Swap
+== 加密交换分区
 
-Like the encryption of disk partitions, encryption of swap space is used to protect sensitive information. Consider an application that deals with passwords. As long as these passwords stay in physical memory, they are not written to disk and will be cleared after a reboot. However, if FreeBSD starts swapping out memory pages to free space, the passwords may be written to the disk unencrypted. Encrypting swap space can be a solution for this scenario.
+像磁盘分区的加密一样，交换空间的加密用于保护敏感信息。考虑一个处理密码的应用程序。只要这些密码保留在物理内存中，它们不会被写入磁盘，并且在重新启动后会被清除。然而，如果 FreeBSD 开始交换内存页面以释放空间，密码可能会以未加密的形式写入磁盘。对交换空间进行加密可以解决这种情况。
 
-This section demonstrates how to configure an encrypted swap partition using man:gbde[8] or man:geli[8] encryption. It assumes that [.filename]#/dev/ada0s1b# is the swap partition.
+本节演示如何使用 man:gbde[8] 或 man:geli[8] 加密配置交换分区。假设 [.filename]#/dev/ada0s1b# 是交换分区。
 
-=== Configuring Encrypted Swap
+=== 配置加密交换空间
 
-Swap partitions are not encrypted by default and should be cleared of any sensitive data before continuing. To overwrite the current swap partition with random garbage, execute the following command:
+默认情况下，交换分区不会被加密，应在继续之前清除其中的任何敏感数据。要用随机垃圾覆盖当前的交换分区，请执行以下命令：
 
 [source, shell]
 ....
 # dd if=/dev/random of=/dev/ada0s1b bs=1m
 ....
 
-To encrypt the swap partition using man:gbde[8], add the `.bde` suffix to the swap line in [.filename]#/etc/fstab#:
+要使用 man:gbde[8] 加密交换分区，请在 [.filename]#/etc/fstab# 中的交换行上添加 `.bde` 后缀。
 
 [.programlisting]
 ....
@@ -1856,7 +1856,7 @@ To encrypt the swap partition using man:gbde[8], add the `.bde` suffix to the sw
 /dev/ada0s1b.bde	none		swap	sw		0	0
 ....
 
-To instead encrypt the swap partition using man:geli[8], use the `.eli` suffix:
+要使用 man:geli[8] 来加密交换分区，可以使用 `.eli` 后缀：
 
 [.programlisting]
 ....
@@ -1864,21 +1864,21 @@ To instead encrypt the swap partition using man:geli[8], use the `.eli` suffix:
 /dev/ada0s1b.eli	none		swap	sw		0	0
 ....
 
-By default, man:geli[8] uses the AES algorithm with a key length of 128 bits. Normally the default settings will suffice. If desired, these defaults can be altered in the options field in [.filename]#/etc/fstab#. The possible flags are:
+默认情况下，man:geli[8] 使用 128 位密钥长度的 AES 算法。通常情况下，默认设置就足够了。如果需要的话，可以在 [.filename]#/etc/fstab# 中的选项字段中更改这些默认值。可能的标志有：
 
 aalgo::
-Data integrity verification algorithm used to ensure that the encrypted data has not been tampered with. See man:geli[8] for a list of supported algorithms.
+数据完整性验证算法用于确保加密数据没有被篡改。请参阅 man:geli[8] 以获取支持的算法列表。
 
 ealgo::
-Encryption algorithm used to protect the data. See man:geli[8] for a list of supported algorithms.
+用于保护数据的加密算法。请参阅 man:geli[8] 以获取支持的算法列表。
 
 keylen::
-The length of the key used for the encryption algorithm. See man:geli[8] for the key lengths that are supported by each encryption algorithm.
+用于加密算法的密钥长度。请参阅 man:geli[8] 以了解每个加密算法支持的密钥长度。
 
 sectorsize::
-The size of the blocks data is broken into before it is encrypted. Larger sector sizes increase performance at the cost of higher storage overhead. The recommended size is 4096 bytes.
+在加密之前，块数据的大小会被分割。较大的扇区大小可以提高性能，但会增加存储开销。推荐的大小是 4096 字节。
 
-This example configures an encrypted swap partition using the Blowfish algorithm with a key length of 128 bits and a sectorsize of 4 kilobytes:
+这个示例配置了一个使用 Blowfish 算法的加密交换分区，密钥长度为 128 位，扇区大小为 4 千字节。
 
 [.programlisting]
 ....
@@ -1886,11 +1886,11 @@ This example configures an encrypted swap partition using the Blowfish algorithm
 /dev/ada0s1b.eli	none		swap	sw,ealgo=blowfish,keylen=128,sectorsize=4096	0	0
 ....
 
-=== Encrypted Swap Verification
+=== 加密交换验证
 
-Once the system has rebooted, proper operation of the encrypted swap can be verified using `swapinfo`.
+系统重新启动后，可以使用 `swapinfo` 命令来验证加密交换空间的正常运行。
 
-If man:gbde[8] is being used:
+如果正在使用 man:gbde[8]：
 
 [source, shell]
 ....
@@ -1899,7 +1899,7 @@ Device          1K-blocks     Used    Avail Capacity
 /dev/ada0s1b.bde   542720        0   542720     0
 ....
 
-If man:geli[8] is being used:
+如果正在使用 man:geli[8]：
 
 [source, shell]
 ....
@@ -1909,70 +1909,70 @@ Device          1K-blocks     Used    Avail Capacity
 ....
 
 [[disks-hast]]
-== Highly Available Storage (HAST)
+== 高可用存储（Highly Available Storage，HAST）
 
-High availability is one of the main requirements in serious business applications and highly-available storage is a key component in such environments. In FreeBSD, the Highly Available STorage (HAST) framework allows transparent storage of the same data across several physically separated machines connected by a TCP/IP network. HAST can be understood as a network-based RAID1 (mirror), and is similar to the DRBD(R) storage system used in the GNU/Linux(R) platform. In combination with other high-availability features of FreeBSD like CARP, HAST makes it possible to build a highly-available storage cluster that is resistant to hardware failures.
+高可用性是严肃的商业应用程序的主要要求之一，而高可用性存储是这种环境中的关键组成部分。在 FreeBSD 中，高可用性存储（HAST）框架允许通过 TCP/IP 网络在多个物理分离的机器上透明地存储相同的数据。HAST 可以理解为基于网络的 RAID1（镜像），类似于在 GNU/Linux 平台上使用的 DRBD(R) 存储系统。结合 FreeBSD 的其他高可用性功能（如 CARP），HAST 使得构建一个抵抗硬件故障的高可用性存储集群成为可能。
 
-The following are the main features of HAST:
+以下是 HAST 的主要特点：
 
-* Can be used to mask I/O errors on local hard drives.
-* File system agnostic as it works with any file system supported by FreeBSD.
-* Efficient and quick resynchronization as only the blocks that were modified during the downtime of a node are synchronized.
-* Can be used in an already deployed environment to add additional redundancy.
-* Together with CARP, Heartbeat, or other tools, it can be used to build a robust and durable storage system.
+* 可用于掩盖本地硬盘的 I/O 错误。
+* 它与 FreeBSD 支持的任何文件系统兼容，与文件系统无关。
+* 只有在节点宕机期间被修改的块才会进行同步，从而实现高效快速的重新同步。
+* 可以在已部署的环境中使用，以增加额外的冗余性。
+* 与 CARP、Heartbeat 或其他工具一起，它可以用于构建强大和耐用的存储系统。
 
-After reading this section, you will know:
+阅读本节后，您将了解：
 
-* What HAST is, how it works, and which features it provides.
-* How to set up and use HAST on FreeBSD.
-* How to integrate CARP and man:devd[8] to build a robust storage system.
+* HAST 是什么，它是如何工作的，以及它提供了哪些功能。
+* 如何在 FreeBSD 上设置和使用 HAST 。
+* 如何集成 CARP 和 man:devd[8] 以构建一个强大的存储系统。
 
-Before reading this section, you should:
+在阅读本节之前，您应该：
 
-* Understand UNIX(R) and FreeBSD basics (crossref:basics[basics,FreeBSD Basics]).
-* Know how to configure network interfaces and other core FreeBSD subsystems (crossref:config[config-tuning,Configuration and Tuning]).
-* Have a good understanding of FreeBSD networking (crossref:partiv[network-communication,"Network Communication"]).
+* 了解 UNIX(R) 和 FreeBSD 基础知识（crossref:basics[basics,FreeBSD Basics]）。
+* 了解如何配置网络接口和其他核心的 FreeBSD 子系统（crossref:config[config-tuning,Configuration and Tuning]）。
+* 对 FreeBSD 网络有很好的理解（crossref:partiv[network-communication,“网络通信”]）。
 
-The HAST project was sponsored by The FreeBSD Foundation with support from http://www.omc.net/[http://www.omc.net/] and http://www.transip.nl/[http://www.transip.nl/].
+HAST 项目由 FreeBSD 基金会赞助，得到了 http://www.omc.net/[http://www.omc.net/] 和 http://www.transip.nl/[http://www.transip.nl/] 的支持。
 
-=== HAST Operation
+=== HAST 操作
 
-HAST provides synchronous block-level replication between two physical machines: the _primary_ node and the _secondary_ node. These two machines together are referred to as a cluster.
+HAST 提供了两台物理机之间的同步块级复制：_主节点_ 和_ 备节点_。这两台机器一起被称为一个集群。
 
-Since HAST works in a primary-secondary configuration, it allows only one of the cluster nodes to be active at any given time. The primary node, also called _active_, is the one which will handle all the I/O requests to HAST-managed devices. The secondary node is automatically synchronized from the primary node.
+由于 HAST 以主-备配置工作，所以在任何给定的时间内只允许集群中的一个节点处于活动状态。主节点，也称为“活动节点”，负责处理所有对 HAST 管理设备的 I/O 请求。备节点会自动从主节点同步。
 
-The physical components of the HAST system are the local disk on primary node, and the disk on the remote, secondary node.
+HAST 系统的物理组件包括主节点上的本地磁盘和远程次节点上的磁盘。
 
-HAST operates synchronously on a block level, making it transparent to file systems and applications. HAST provides regular GEOM providers in [.filename]#/dev/hast/# for use by other tools or applications. There is no difference between using HAST-provided devices and raw disks or partitions.
+HAST 在块级别上同步操作，对文件系统和应用程序透明。 HAST 在 [.filename]#/dev/hast/# 目录下提供常规的 GEOM 提供程序，供其他工具或应用程序使用。使用 HAST 提供的设备和原始磁盘或分区之间没有区别。
 
-Each write, delete, or flush operation is sent to both the local disk and to the remote disk over TCP/IP. Each read operation is served from the local disk, unless the local disk is not up-to-date or an I/O error occurs. In such cases, the read operation is sent to the secondary node.
+每个写入、删除或刷新操作都会通过 TCP/IP 同时发送到本地磁盘和远程磁盘。每个读取操作都会从本地磁盘提供，除非本地磁盘不是最新的或发生了 I/O 错误。在这种情况下，读取操作会被发送到辅助节点。
 
-HAST tries to provide fast failure recovery. For this reason, it is important to reduce synchronization time after a node's outage. To provide fast synchronization, HAST manages an on-disk bitmap of dirty extents and only synchronizes those during a regular synchronization, with an exception of the initial sync.
+HAST 试图提供快速的故障恢复。因此，在节点故障后减少同步时间非常重要。为了提供快速同步，HAST 管理一个磁盘上的脏扩展位图，并且只在定期同步期间同步这些扩展，初始同步除外。
 
-There are many ways to handle synchronization. HAST implements several replication modes to handle different synchronization methods:
+处理同步的方法有很多种。HAST 实现了几种复制模式来处理不同的同步方法：
 
-* _memsync_: This mode reports a write operation as completed when the local write operation is finished and when the remote node acknowledges data arrival, but before actually storing the data. The data on the remote node will be stored directly after sending the acknowledgement. This mode is intended to reduce latency, but still provides good reliability. This mode is the default.
-* _fullsync_: This mode reports a write operation as completed when both the local write and the remote write complete. This is the safest and the slowest replication mode.
-* _async_: This mode reports a write operation as completed when the local write completes. This is the fastest and the most dangerous replication mode. It should only be used when replicating to a distant node where latency is too high for other modes.
+* _memsync_：当本地写操作完成并且远程节点确认数据到达之后，但在实际存储数据之前，该模式将报告写操作已完成。在发送确认之后，远程节点上的数据将直接存储。该模式旨在减少延迟，但仍提供良好的可靠性。该模式是默认模式。
+* _fullsync_：当本地写操作和远程写操作都完成时，该模式将报告写操作已完成。这是最安全但也是最慢的复制模式。
+* _async_：此模式在本地写操作完成时报告写操作完成。这是最快速和最危险的复制模式。只有在复制到远程节点时延迟过高以至于其他模式无法使用时才应使用此模式。
 
-=== HAST Configuration
+=== HAST 配置
 
-The HAST framework consists of several components:
+HAST 框架由几个组件组成：
 
-* The man:hastd[8] daemon which provides data synchronization. When this daemon is started, it will automatically load `geom_gate.ko`.
-* The userland management utility, man:hastctl[8].
-* The man:hast.conf[5] configuration file. This file must exist before starting hastd.
+* man:hastd[8] 守护进程提供数据同步功能。当启动这个守护进程时，它会自动加载 `geom_gate.ko` 模块。
+* 用户空间管理实用程序，man:hastctl[8]。
+* man:hast.conf[5] 配置文件。在启动 hastd 之前，此文件必须存在。
 
-Users who prefer to statically build `GEOM_GATE` support into the kernel should add this line to the custom kernel configuration file, then rebuild the kernel using the instructions in crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel]:
+如果用户希望静态地在内核中内置 `GEOM_GATE` 支持，应该将以下行添加到自定义内核配置文件中，然后按照 crossref:kernelconfig[kernelconfig,配置 FreeBSD 内核] 中的说明重新构建内核。
 
 [.programlisting]
 ....
 options	GEOM_GATE
 ....
 
-The following example describes how to configure two nodes in primary-secondary operation using HAST to replicate the data between the two. The nodes will be called `hasta`, with an IP address of `172.16.0.1`, and `hastb`, with an IP address of `172.16.0.2`. Both nodes will have a dedicated hard drive [.filename]#/dev/ad6# of the same size for HAST operation. The HAST pool, sometimes referred to as a resource or the GEOM provider in [.filename]#/dev/hast/#, will be called `test`.
+以下示例描述了如何使用 HAST 在两个节点之间配置主备操作来复制数据。节点将被称为 `hasta`，IP 地址为 `172.16.0.1`，以及 `hastb`，IP 地址为 `172.16.0.2`。两个节点都将有一个专用硬盘 [.filename]#/dev/ad6#，大小相同，用于 HAST 操作。HAST 池，有时也称为资源或 GEOM 提供者，在 [.filename]#/dev/hast/# 中将被称为 `test`。
 
-Configuration of HAST is done using [.filename]#/etc/hast.conf#. This file should be identical on both nodes. The simplest configuration is:
+HAST 的配置是通过使用 [.filename]#/etc/hast.conf# 文件完成的。这个文件在两个节点上应该是相同的。最简单的配置如下：
 
 [.programlisting]
 ....
@@ -1988,14 +1988,14 @@ resource test {
 }
 ....
 
-For more advanced configuration, refer to man:hast.conf[5].
+有关更高级的配置，请参考 man:hast.conf[5]。
 
 [TIP]
 ====
-It is also possible to use host names in the `remote` statements if the hosts are resolvable and defined either in [.filename]#/etc/hosts# or in the local DNS.
+如果主机是可解析的，并且在 [.filename]#/etc/hosts# 或本地 DNS 中定义了，也可以在 `remote` 语句中使用主机名。
 ====
 
-Once the configuration exists on both nodes, the HAST pool can be created. Run these commands on both nodes to place the initial metadata onto the local disk and to start man:hastd[8]:
+一旦配置在两个节点上存在，就可以创建 HAST 池。在两个节点上运行以下命令，将初始元数据放置在本地磁盘上并启动 man:hastd[8]：
 
 [source, shell]
 ....
@@ -2005,33 +2005,33 @@ Once the configuration exists on both nodes, the HAST pool can be created. Run t
 
 [NOTE]
 ====
-It is _not_ possible to use GEOM providers with an existing file system or to convert an existing storage to a HAST-managed pool. This procedure needs to store some metadata on the provider and there will not be enough required space available on an existing provider.
+无法使用 GEOM 提供程序与现有文件系统一起使用，也无法将现有存储转换为 HAST 管理的池。此过程需要在提供程序上存储一些元数据，而现有提供程序上没有足够的空间可用。
 ====
 
-A HAST node's `primary` or `secondary` role is selected by an administrator, or software like Heartbeat, using man:hastctl[8]. On the primary node, `hasta`, issue this command:
+HAST 节点的 `primary` 或 `secondary` 角色由管理员或像 Heartbeat 这样的软件使用 man:hastctl[8] 选择。在主节点上，执行以下命令：
 
 [source, shell]
 ....
 # hastctl role primary test
 ....
 
-Run this command on the secondary node, `hastb`:
+在辅助节点上运行以下命令，`hastb`：
 
 [source, shell]
 ....
 # hastctl role secondary test
 ....
 
-Verify the result by running `hastctl` on each node:
+在每个节点上运行 `hastctl` 来验证结果：
 
 [source, shell]
 ....
 # hastctl status test
 ....
 
-Check the `status` line in the output. If it says `degraded`, something is wrong with the configuration file. It should say `complete` on each node, meaning that the synchronization between the nodes has started. The synchronization completes when `hastctl status` reports 0 bytes of `dirty` extents.
+检查输出中的 `status` 行。如果它显示为 `degraded`，则配置文件存在问题。每个节点上应该显示为 `complete`，表示节点之间的同步已经开始。当 `hastctl status` 报告 0 字节的 `dirty` extents 时，同步完成。
 
-The next step is to create a file system on the GEOM provider and mount it. This must be done on the `primary` node. Creating the file system can take a few minutes, depending on the size of the hard drive. This example creates a UFS file system on [.filename]#/dev/hast/test#:
+下一步是在 GEOM 提供程序上创建文件系统并挂载它。这必须在 `primary` 节点上完成。根据硬盘的大小，创建文件系统可能需要几分钟的时间。此示例在 [.filename]#/dev/hast/test# 上创建了一个 UFS 文件系统。
 
 [source, shell]
 ....
@@ -2040,24 +2040,24 @@ The next step is to create a file system on the GEOM provider and mount it. This
 # mount /dev/hast/test /hast/test
 ....
 
-Once the HAST framework is configured properly, the final step is to make sure that HAST is started automatically during system boot. Add this line to [.filename]#/etc/rc.conf#:
+一旦 HAST 框架正确配置完成，最后一步是确保在系统启动时自动启动 HAST。将以下行添加到 [.filename]#/etc/rc.conf# 文件中：
 
 [.programlisting]
 ....
 hastd_enable="YES"
 ....
 
-==== Failover Configuration
+==== 故障转移配置
 
-The goal of this example is to build a robust storage system which is resistant to the failure of any given node. If the primary node fails, the secondary node is there to take over seamlessly, check and mount the file system, and continue to work without missing a single bit of data.
+这个示例的目标是构建一个强大的存储系统，能够抵抗任何给定节点的故障。如果主节点发生故障，备用节点将无缝接管，检查和挂载文件系统，并继续工作，不会丢失任何一位数据。
 
-To accomplish this task, the Common Address Redundancy Protocol (CARP) is used to provide for automatic failover at the IP layer. CARP allows multiple hosts on the same network segment to share an IP address. Set up CARP on both nodes of the cluster according to the documentation available in crossref:advanced-networking[carp,“Common Address Redundancy Protocol (CARP)”]. In this example, each node will have its own management IP address and a shared IP address of _172.16.0.254_. The primary HAST node of the cluster must be the primary CARP node.
+为了完成这个任务，使用 Common Address Redundancy Protocol (CARP) 来提供 IP 层的自动故障转移。CARP 允许同一网络段上的多个主机共享一个 IP 地址。根据 crossref:advanced-networking[carp,“通用地址冗余协议（CARP)”] 中提供的文档，在集群的两个节点上设置 CARP 。在这个例子中，每个节点都有自己的管理 IP 地址和一个共享的 IP 地址为 _172.16.0.254_。集群的主要 HAST 节点必须是主要的 CARP 节点。
 
-The HAST pool created in the previous section is now ready to be exported to the other hosts on the network. This can be accomplished by exporting it through NFS or Samba, using the shared IP address _172.16.0.254_. The only problem which remains unresolved is an automatic failover should the primary node fail.
+在前一节中创建的 HAST 池现在已经准备好导出到网络上的其他主机。可以通过 NFS 或 Samba 将其导出，使用共享的 IP 地址 _172.16.0.254_。唯一尚未解决的问题是主节点故障时的自动故障转移。
 
-In the event of CARP interfaces going up or down, the FreeBSD operating system generates a man:devd[8] event, making it possible to watch for state changes on the CARP interfaces. A state change on the CARP interface is an indication that one of the nodes failed or came back online. These state change events make it possible to run a script which will automatically handle the HAST failover.
+当 CARP 接口上下线时，FreeBSD 操作系统会生成一个 man:devd[8] 事件，这样就可以监视 CARP 接口的状态变化。CARP 接口的状态变化表示其中一个节点失败或重新上线。这些状态变化事件使得可以运行一个脚本来自动处理 HAST 故障切换。
 
-To catch state changes on the CARP interfaces, add this configuration to [.filename]#/etc/devd.conf# on each node:
+要捕获 CARP 接口上的状态变化，请在每个节点的 [.filename]#/etc/devd.conf# 配置文件中添加以下配置：
 
 [.programlisting]
 ....
@@ -2078,19 +2078,19 @@ notify 30 {
 
 [NOTE]
 ====
-If the systems are running FreeBSD 10 or higher, replace [.filename]#carp0# with the name of the CARP-configured interface.
+如果系统运行的是 FreeBSD 10 或更高版本，请将 [.filename]#carp0# 替换为 CARP 配置接口的名称。
 ====
 
-Restart man:devd[8] on both nodes to put the new configuration into effect:
+在两个节点上重新启动 man:devd[8]，以使新配置生效：
 
 [source, shell]
 ....
 # service devd restart
 ....
 
-When the specified interface state changes by going up or down , the system generates a notification, allowing the man:devd[8] subsystem to run the specified automatic failover script, [.filename]#/usr/local/sbin/carp-hast-switch#. For further clarification about this configuration, refer to man:devd.conf[5].
+当指定的接口状态发生上升或下降变化时，系统会生成一个通知，允许 man:devd[8] 子系统运行指定的自动故障转移脚本 [.filename]#/usr/local/sbin/carp-hast-switch#。有关此配置的进一步说明，请参考 man:devd.conf[5]。
 
-Here is an example of an automated failover script:
+这是一个自动故障转移脚本的示例：
 
 [.programlisting]
 ....
@@ -2178,41 +2178,41 @@ case "$1" in
 esac
 ....
 
-In a nutshell, the script takes these actions when a node becomes primary:
+简而言之，当一个节点成为主节点时，脚本会执行以下操作：
 
-* Promotes the HAST pool to primary on the other node.
-* Checks the file system under the HAST pool.
-* Mounts the pool.
+* 将 HAST 池提升为另一节点上的主节点。
+* 检查 HAST 池下的文件系统。
+* 挂载存储池。
 
-When a node becomes secondary:
+当一个节点变为次要节点时：
 
-* Unmounts the HAST pool.
-* Degrades the HAST pool to secondary.
+* 卸载 HAST 池。
+* 将 HAST 池降级为辅助池。
 
 [CAUTION]
 ====
-This is just an example script which serves as a proof of concept. It does not handle all the possible scenarios and can be extended or altered in any way, for example, to start or stop required services.
+这只是一个作为概念验证的示例脚本。它并不能处理所有可能的情况，并且可以根据需要进行扩展或修改，例如启动或停止所需的服务。
 ====
 
 [TIP]
 ====
-For this example, a standard UFS file system was used. To reduce the time needed for recovery, a journal-enabled UFS or ZFS file system can be used instead.
+对于这个示例，使用了标准的 UFS 文件系统。为了减少恢复所需的时间，可以使用启用了日志的 UFS 或 ZFS 文件系统。
 ====
 
-More detailed information with additional examples can be found at http://wiki.FreeBSD.org/HAST[http://wiki.FreeBSD.org/HAST].
+更详细的信息和额外的示例可以在 http://wiki.FreeBSD.org/HAST[http://wiki.FreeBSD.org/HAST] 找到。
 
-=== Troubleshooting
+=== 故障排除
 
-HAST should generally work without issues. However, as with any other software product, there may be times when it does not work as supposed. The sources of the problems may be different, but the rule of thumb is to ensure that the time is synchronized between the nodes of the cluster.
+HAST 通常应该没有问题。然而，与任何其他软件产品一样，有时候它可能无法按照预期工作。问题的根源可能不同，但经验法则是确保集群节点之间的时间同步。
 
-When troubleshooting HAST, the debugging level of man:hastd[8] should be increased by starting `hastd` with `-d`. This argument may be specified multiple times to further increase the debugging level. Consider also using `-F`, which starts `hastd` in the foreground.
+在排除 HAST 问题时，应通过使用 `-d` 参数启动 `hastd` 来增加 man:hastd[8] 的调试级别。可以多次指定此参数以进一步增加调试级别。还可以考虑使用 `-F`，它会在前台启动 `hastd`。
 
 [[disks-hast-sb]]
-==== Recovering from the Split-brain Condition
+==== 从分裂脑状态中恢复
 
-_Split-brain_ occurs when the nodes of the cluster are unable to communicate with each other, and both are configured as primary. This is a dangerous condition because it allows both nodes to make incompatible changes to the data. This problem must be corrected manually by the system administrator.
+当集群的节点无法相互通信且都配置为主节点时，会发生 _分裂脑（Split-brain）_ 现象。这是一种危险的情况，因为它允许两个节点对数据进行不兼容的更改。系统管理员必须手动纠正这个问题。
 
-The administrator must either decide which node has more important changes, or perform the merge manually. Then, let HAST perform full synchronization of the node which has the broken data. To do this, issue these commands on the node which needs to be resynchronized:
+管理员必须要么决定哪个节点有更重要的更改，要么手动执行合并操作。然后，让 HAST 对具有损坏数据的节点执行完全同步。为此，请在需要重新同步的节点上执行以下命令：
 
 [source, shell]
 ....
