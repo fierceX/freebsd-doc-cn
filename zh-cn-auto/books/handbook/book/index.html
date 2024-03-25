@@ -76,7 +76,7 @@
             </label>
           </a>
           <ul class="sub-menu">
-            <li class="title"><a href=https://free.bsd-doc.org/zh-cn-auto/articles/translators target="_blank">翻译说明</a></li>
+            <li class="title"><a href=https://free.bsd-doc.org/zh-cn/articles/translators target="_blank">翻译说明</a></li>
             
             
             
@@ -22928,7 +22928,7 @@ ada0 recovered</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>从磁盘_ada0_中删除由 <code>-i</code> 标志指定的第三个分区。</p>
+<p>从磁盘 <em>ada0</em> 中删除由 <code>-i</code> 标志指定的第三个分区。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23018,7 +23018,7 @@ super-block backups (for fsck -b #) at:
 <div class="sect2">
 <h3 id="usb-disks">20.4. USB 存储设备<a class="anchor" href="#usb-disks"></a></h3>
 <div class="paragraph">
-<p>许多外部存储解决方案，如硬盘、 USB 闪存驱动器以及 CD 和 DVD 刻录机，使用通用串行总线（ USB ）。 FreeBSD 支持 USB 1.x 、 2.0 和 3.0 设备。</p>
+<p>许多外部存储解决方案，如硬盘、USB 闪存驱动器以及 CD 和 DVD 刻录机，使用通用串行总线（USB）。FreeBSD 支持 USB 1.x、2.0 和 3.0 设备。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23028,7 +23028,7 @@ super-block backups (for fsck -b #) at:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>USB 3.0 支持不兼容一些硬件，包括 Haswell （ Lynx Point ）芯片组。如果 FreeBSD 启动时出现“失败，错误代码 19 ”的消息，请在系统 BIOS 中禁用 xHCI/USB3 。</p>
+<p>USB 3.0 支持不兼容一些硬件，包括 Haswell（Lynx Point）芯片组。如果 FreeBSD 启动时出现 <code>failed with error 19</code> 的消息，请在系统 BIOS 中禁用 xHCI/USB3。</p>
 </div>
 </td>
 </tr>
@@ -23052,7 +23052,7 @@ device cd	# needed for CD and DVD burners</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=umass&amp;sektion=4&amp;format=html">umass(4)</a> 驱动程序，该驱动程序使用 SCSI 子系统来访问 USB 存储设备。由于系统将任何 USB 设备视为 SCSI 设备，如果 USB 设备是 CD 或 DVD 刻录机，请在自定义内核配置文件中 <em>不要</em> 包含 <code>device atapicam</code> 。</p>
+<p>FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=umass&amp;sektion=4&amp;format=html">umass(4)</a> 驱动程序，该驱动程序使用 SCSI 子系统来访问 USB 存储设备。由于系统将任何 USB 设备视为 SCSI 设备，如果 USB 设备是 CD 或 DVD 刻录机，请在自定义内核配置文件中 <em>不要</em> 包含 <code>device atapicam</code>。</p>
 </div>
 <div class="paragraph">
 <p>本节的其余部分演示了如何验证 FreeBSD 是否识别 USB 存储设备以及如何配置设备以便使用。</p>
@@ -23076,7 +23076,7 @@ da0: <span class="nv">quirks</span><span class="o">=</span>0x2&lt;NO_6_BYTE&gt;<
 </div>
 </div>
 <div class="paragraph">
-<p>品牌、设备节点（ <span class="filename">da0</span> ）、速度和大小将根据设备而异。</p>
+<p>品牌、设备节点（<span class="filename">da0</span>）、速度和大小将根据设备而异。</p>
 </div>
 <div class="paragraph">
 <p>由于 USB 设备被视为 SCSI 设备，可以使用 <code>camcontrol</code> 命令列出连接到系统的 USB 存储设备：</p>
@@ -23088,7 +23088,7 @@ da0: <span class="nv">quirks</span><span class="o">=</span>0x2&lt;NO_6_BYTE&gt;<
 </div>
 </div>
 <div class="paragraph">
-<p>另外，可以使用 <code>usbconfig</code> 命令列出设备。有关该命令的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=usbconfig&amp;sektion=8&amp;format=html">usbconfig(8)</a> 。</p>
+<p>另外，可以使用 <code>usbconfig</code> 命令列出设备。有关该命令的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=usbconfig&amp;sektion=8&amp;format=html">usbconfig(8)</a>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23138,14 +23138,14 @@ add path &#39;da*&#39; mode 0660 group operator</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>这将排除前三个 SCSI 磁盘（ <span class="filename">da0</span> 到 <span class="filename">da2</span> ）不属于 <code>operator</code> 组。将_3_替换为内部 SCSI 磁盘的数量。有关此文件的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=devfs.rules&amp;sektion=5&amp;format=html">devfs.rules(5)</a> 。</p>
+<p>这将排除前三个 SCSI 磁盘（<span class="filename">da0</span> 到 <span class="filename">da2</span>）不属于 <code>operator</code> 组。将 <em>3</em> 替换为内部 SCSI 磁盘的数量。有关此文件的更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=devfs.rules&amp;sektion=5&amp;format=html">devfs.rules(5)</a> 。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>接下来，在 [/etc/rc.conf] 文件中启用规则集：</p>
+<p>接下来，在 <span class="filename">/etc/rc.conf</span> 文件中启用规则集：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -23153,7 +23153,7 @@ add path &#39;da*&#39; mode 0660 group operator</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>然后，通过将以下行添加到 <span class="filename">/etc/sysctl.conf</span> ，指示系统允许普通用户挂载文件系统：</p>
+<p>然后，通过将以下行添加到 <span class="filename">/etc/sysctl.conf</span>，指示系统允许普通用户挂载文件系统：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -23170,7 +23170,7 @@ vfs.usermount: 0 -&gt; 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>最后一步是创建一个目录，用于挂载文件系统。这个目录需要由将要挂载文件系统的用户拥有。一种方法是让 <code>root</code> 用户创建一个由该用户拥有的子目录，例如 <span class="filename">/mnt/username</span> 。在下面的示例中，将_username_替换为用户的登录名，将_usergroup_替换为用户的主要组名：</p>
+<p>最后一步是创建一个目录，用于挂载文件系统。这个目录需要由将要挂载文件系统的用户拥有。一种方法是让 <code>root</code> 用户创建一个由该用户拥有的子目录，例如 <span class="filename">/mnt/username</span> 。在下面的示例中，将 <em>username</em> 替换为用户的登录名，将 <em>usergroup</em> 替换为用户的主要组名：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23179,7 +23179,7 @@ vfs.usermount: 0 -&gt; 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>假设插入了一个 USB 闪存驱动器，并出现了一个设备 <span class="filename">/dev/da0s1</span> 。如果该设备使用 FAT 文件系统格式化，用户可以使用以下命令挂载它：</p>
+<p>假设插入了一个 USB 闪存驱动器，并出现了一个设备 <span class="filename">/dev/da0s1</span>。如果该设备使用 FAT 文件系统格式化，用户可以使用以下命令挂载它：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23209,7 +23209,7 @@ da0: &lt;STECH Simple Drive 1.04&gt; s/n WD-WXE508CAN263          detached
 <div class="sect3">
 <h4 id="_自动挂载可移动介质">20.4.2. 自动挂载可移动介质<a class="anchor" href="#_自动挂载可移动介质"></a></h4>
 <div class="paragraph">
-<p>取消注释 [/etc/auto_master] 中的这行代码可以自动挂载 USB 设备：</p>
+<p>取消注释 <span class="filename">/etc/auto_master</span> 中的这行代码可以自动挂载 USB 设备：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23217,7 +23217,7 @@ da0: &lt;STECH Simple Drive 1.04&gt; s/n WD-WXE508CAN263          detached
 </div>
 </div>
 <div class="paragraph">
-<p>然后将以下行添加到 [/etc/devd.conf] 文件中：</p>
+<p>然后将以下行添加到 <span class="filename">/etc/devd.conf</span> 文件中：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23238,7 +23238,7 @@ da0: &lt;STECH Simple Drive 1.04&gt; s/n WD-WXE508CAN263          detached
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=autofs&amp;sektion=5&amp;format=html">autofs(5)</a> 可以通过将以下行添加到 [/etc/rc.conf] 来设置在启动时启动：</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=autofs&amp;sektion=5&amp;format=html">autofs(5)</a> 可以通过将以下行添加到 <span class="filename">/etc/rc.conf</span> 来设置在启动时启动：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -23246,7 +23246,7 @@ da0: &lt;STECH Simple Drive 1.04&gt; s/n WD-WXE508CAN263          detached
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://man.freebsd.org/cgi/man.cgi?query=autofs&amp;sektion=5&amp;format=html">autofs(5)</a> 要求启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> ，默认情况下它是启用的。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=autofs&amp;sektion=5&amp;format=html">autofs(5)</a> 要求启用 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a>，默认情况下它是启用的。</p>
 </div>
 <div class="paragraph">
 <p>立即启动服务：</p>
@@ -23278,15 +23278,15 @@ da0: &lt;STECH Simple Drive 1.04&gt; s/n WD-WXE508CAN263          detached
 <div class="sect2">
 <h3 id="creating-cds">20.5. 创建和使用 CD 媒体<a class="anchor" href="#creating-cds"></a></h3>
 <div class="paragraph">
-<p>紧凑型光盘（ CD ）介质具有一些与传统磁盘不同的特点。它们被设计成可以连续读取，无需在轨道之间移动磁头造成延迟。虽然 CD 介质确实有轨道，但这些轨道指的是要连续读取的数据部分，而不是磁盘的物理属性。 ISO 9660 文件系统是为处理这些差异而设计的。</p>
+<p>紧凑型光盘（CD）介质具有一些与传统磁盘不同的特点。它们被设计成可以连续读取，无需在轨道之间移动磁头造成延迟。虽然 CD 介质确实有轨道，但这些轨道指的是要连续读取的数据部分，而不是磁盘的物理属性。ISO 9660 文件系统是为处理这些差异而设计的。</p>
 </div>
 <div class="paragraph">
-<p>FreeBSD Ports Collection 提供了几个用于刻录和复制音频和数据 CD 的实用工具。本章演示了几个命令行实用程序的使用方法。如果需要带有图形界面的 CD 刻录软件，请考虑安装软件包： sysutils/xcdroast[] 或软件包： sysutils/k3b[] 。</p>
+<p>FreeBSD Ports Collection 提供了几个用于刻录和复制音频和数据 CD 的实用工具。本章演示了几个命令行实用程序的使用方法。如果需要带有图形界面的 CD 刻录软件，请考虑安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/xcdroast/">sysutils/xcdroast</a> 或 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/k3b/">sysutils/k3b</a> 包或 ports。</p>
 </div>
 <div class="sect3">
 <h4 id="atapicam">20.5.1. 支持的设备<a class="anchor" href="#atapicam"></a></h4>
 <div class="paragraph">
-<p><span class="filename">GENERIC</span> 内核提供了对 SCSI 、 USB 和 ATAPICD 读写器的支持。如果使用自定义内核，则需要在内核配置文件中根据设备类型添加相应的选项。</p>
+<p><span class="filename">GENERIC</span> 内核提供了对 SCSI、USB 和 ATAPICD 读写器的支持。如果使用自定义内核，则需要在内核配置文件中根据设备类型添加相应的选项。</p>
 </div>
 <div class="paragraph">
 <p>对于 SCSI 刻录机，请确保以下选项存在：</p>
@@ -23358,7 +23358,7 @@ device cd	# needed for CD and DVD burners</pre>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>要验证 FreeBSD 是否识别设备，请运行 <code>dmesg</code> 命令并查找设备的条目。在 10.x 之前的系统中，输出的第一行中设备名称将是 <span class="filename">acd0</span> ，而不是 <span class="filename">cd0</span> 。</p>
+<p>要验证 FreeBSD 是否识别设备，请运行 <code>dmesg</code> 命令并查找设备的条目。在 10.x 之前的系统中，输出的第一行中设备名称将是 <span class="filename">acd0</span>，而不是 <span class="filename">cd0</span>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23413,7 +23413,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>找到 CD 刻录机的条目，并使用逗号分隔的三个数字作为 <code>dev</code> 的值。在这种情况下， Yamaha 刻录机设备是 <code>1 , 5 , 0</code> ，因此指定该设备的适当输入是 <code>dev = 1 , 5 , 0</code> 。请参考 <code>cdrecord</code> 的手册页面，了解其他指定该值的方法以及有关写入音轨和控制写入速度的信息。</p>
+<p>找到 CD 刻录机的条目，并使用逗号分隔的三个数字作为 <code>dev</code> 的值。在这种情况下，Yamaha 刻录机设备是 <code>1,5,0</code> ，因此指定该设备的适当输入是 <code>dev = 1,5,0</code>。请参考 <code>cdrecord</code> 的手册页面，了解其他指定该值的方法以及有关写入音轨和控制写入速度的信息。</p>
 </div>
 <div class="paragraph">
 <p>或者，运行以下命令以获取刻录机的设备地址：</p>
@@ -23425,13 +23425,13 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>使用 <code>scbus</code> 、 <code>target</code> 和 <code>lun</code> 的数值。对于这个例子， <code>1 , 0 , 0</code> 是要使用的设备名称。</p>
+<p>使用 <code>scbus</code>、<code>target</code> 和 <code>lun</code> 的数值。对于这个例子，<code>1,0,0</code> 是要使用的设备名称。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="mkisofs">20.5.3. 将数据写入 ISO 文件系统<a class="anchor" href="#mkisofs"></a></h4>
 <div class="paragraph">
-<p>为了制作数据光盘，必须在将数据文件刻录到光盘之前对其进行准备。在 FreeBSD 中，安装了 <code>mkisofs</code> 的 <code><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools/">sysutils/cdrtools</a></code> 可以用来生成一个 ISO 9660 文件系统，该文件系统是 UNIX® 文件系统中目录树的镜像。最简单的用法是指定要创建的 ISO 文件的名称和要放入 ISO 9660 文件系统的文件路径：</p>
+<p>为了制作数据光盘，必须在将数据文件刻录到光盘之前对其进行准备。在 FreeBSD 中，安装了 <code>mkisofs</code> 的 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools/">sysutils/cdrtools</a> 可以用来生成一个 ISO 9660 文件系统，该文件系统是 UNIX® 文件系统中目录树的镜像。最简单的用法是指定要创建的 ISO 文件的名称和要放入 ISO 9660 文件系统的文件路径：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23442,13 +23442,13 @@ scsibus1:
 <p>该命令将指定路径中的文件名映射为符合标准 ISO 9660 文件系统限制的名称，并且将排除不符合 ISO 文件系统标准的文件。</p>
 </div>
 <div class="paragraph">
-<p>有多种选项可用于克服标准所施加的限制。特别地， <code>-R</code> 启用了在 UNIX® 系统中常见的 Rock Ridge 扩展，而 <code>-J</code> 启用了 Microsoft® 系统中使用的 Joliet 扩展。</p>
+<p>有多种选项可用于克服标准所施加的限制。特别地，<code>-R</code> 启用了在 UNIX® 系统中常见的 Rock Ridge 扩展，而 <code>-J</code> 启用了 Microsoft® 系统中使用的 Joliet 扩展。</p>
 </div>
 <div class="paragraph">
-<p>对于仅在 FreeBSD 系统上使用的 CD ，可以使用 <code>-U</code> 来禁用所有文件名限制。当与 <code>-R</code> 一起使用时，它会生成一个文件系统镜像，即使违反 ISO 9660 标准，也与指定的 FreeBSD 树完全相同。</p>
+<p>对于仅在 FreeBSD 系统上使用的 CD，可以使用 <code>-U</code> 来禁用所有文件名限制。当与 <code>-R</code> 一起使用时，它会生成一个文件系统镜像，即使违反 ISO 9660 标准，也与指定的 FreeBSD 树完全相同。</p>
 </div>
 <div class="paragraph">
-<p>通用用途的最后一个选项是 <code>-b</code> 。它用于指定用于生成“ El Torito ”可引导 CD 的引导映像的位置。此选项接受一个参数，即从要写入 CD 的树的顶部到引导映像的路径。默认情况下， <code>mkisofs</code> 以“软盘仿真”模式创建 ISO 映像，因此期望引导映像的大小为 1200 、 1440 或 2880 KB 。某些引导加载程序（如 FreeBSD 发行版媒体使用的加载程序）不使用仿真模式。在这种情况下，应使用 <code>-no-emul-boot</code> 选项。因此，如果 <code>.filename</code><mark>/tmp/myboot</mark> 中包含一个可引导的 FreeBSD 系统，并且引导映像位于 <code>.filename</code><mark>/tmp/myboot/boot/cdboot</mark> 中，此命令将生成 <code>.filename</code><mark>/tmp/bootable.iso</mark> ：</p>
+<p>通用用途的最后一个选项是 <code>-b</code>。它用于指定用于生成 “El Torito” 可引导 CD 的引导映像的位置。此选项接受一个参数，即从要写入 CD 的树的顶部到引导映像的路径。默认情况下，<code>mkisofs</code> 以“软盘仿真（floppy disk emulation）”模式创建 ISO 映像，因此期望引导映像的大小为 1200、1440 或 2880 KB。某些引导加载程序（如 FreeBSD 发行版媒体使用的加载程序）不使用仿真模式。在这种情况下，应使用 <code>-no-emul-boot</code> 选项。因此，如果 <span class="filename">/tmp/myboot</span> 中包含一个可引导的 FreeBSD 系统，并且引导映像位于 <span class="filename">/tmp/myboot/boot/cdboot</span> 中，此命令将生成 <span class="filename">/tmp/bootable.iso</span>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23468,7 +23468,7 @@ scsibus1:
 <p>然后可以验证 <span class="filename">/mnt</span> 和 <span class="filename">/tmp/myboot</span> 是相同的。</p>
 </div>
 <div class="paragraph">
-<p>有许多其他选项可用于细调 <code>mkisofs</code> 的行为。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 。</p>
+<p>有许多其他选项可用于细调 <code>mkisofs</code> 的行为。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a>。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23504,10 +23504,10 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>由于 <code>mount</code> 假设文件系统的类型是 <code>ufs</code> ，如果在挂载数据光盘时没有包含 <code>-t cd9660</code> ，将会出现 <code>Incorrect super block</code> 错误。</p>
+<p>由于 <code>mount</code> 假设文件系统的类型是 <code>ufs</code>，如果在挂载数据光盘时没有包含 <code>-t cd9660</code>，将会出现 <code>Incorrect super block</code> 错误。</p>
 </div>
 <div class="paragraph">
-<p>虽然任何数据 CD 都可以通过这种方式挂载，但带有特定 ISO 9660 扩展的光盘可能会表现出奇怪的行为。例如， Joliet 光盘将所有文件名存储为两个字节的 Unicode 字符。如果一些非英文字符显示为问号，请使用“ -C ”参数指定本地字符集。有关更多信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_cd9660&amp;sektion=8&amp;format=html">mount_cd9660(8)</a> 。</p>
+<p>虽然任何数据 CD 都可以通过这种方式挂载，但带有特定 ISO 9660 扩展的光盘可能会表现出奇怪的行为。例如，Joliet 光盘将所有文件名存储为两个字节的 Unicode 字符。如果一些非英文字符显示为问号，请使用 <code>-C</code> 参数指定本地字符集。有关更多信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_cd9660&amp;sektion=8&amp;format=html">mount_cd9660(8)</a>。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23517,7 +23517,7 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>为了使用 <code>-C</code> 选项进行字符转换，内核需要加载 <code>.filename#cd9660_iconv.ko#</code> 模块。可以通过将以下行添加到 <code>.filename#loader.conf#</code> 来实现：</p>
+<p>为了使用 <code>-C</code> 选项进行字符转换，内核需要加载 <span class="filename">cd9660_iconv.ko</span> 模块。可以通过将以下行添加到 <span class="filename">loader.conf</span> 来实现：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -23532,10 +23532,10 @@ scsibus1:
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>在尝试挂载数据光盘时，有时会显示“设备未配置”。这通常意味着光驱没有检测到托盘中的光盘，或者该驱动器在总线上不可见。光驱可能需要几秒钟的时间来检测媒体，请耐心等待。</p>
+<p>在尝试挂载数据光盘时，有时会显示 <code>设备未配置（Device not configured）</code>。这通常意味着光驱没有检测到托盘中的光盘，或者该驱动器在总线上不可见。光驱可能需要几秒钟的时间来检测媒体，请耐心等待。</p>
 </div>
 <div class="paragraph">
-<p>有时候， SCSICD 驱动器可能会被忽略，因为它没有足够的时间来回应总线复位。为了解决这个问题，可以创建一个自定义内核，增加默认的 SCSI 延迟。将以下选项添加到自定义内核配置文件中，并按照 <a href="./#kernelconfig-building">构建和安装自定义内核</a> 中的说明重新构建内核。</p>
+<p>有时候，SCSICD 驱动器可能会被忽略，因为它没有足够的时间来回应总线复位。为了解决这个问题，可以创建一个自定义内核，增加默认的 SCSI 延迟。将以下选项添加到自定义内核配置文件中，并按照 <a href="./#kernelconfig-building">“构建和安装自定义内核”</a> 中的说明重新构建内核。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -23574,16 +23574,16 @@ scsibus1:
 <div class="sect3">
 <h4 id="duplicating-audiocds">20.5.5. 复制音频 CDs<a class="anchor" href="#duplicating-audiocds"></a></h4>
 <div class="paragraph">
-<p>要复制音频 CD ，需要从 CD 中提取音频数据到一系列文件中，然后将这些文件写入空白 CD 。</p>
+<p>要复制音频 CD，需要从 CD 中提取音频数据到一系列文件中，然后将这些文件写入空白 CD。</p>
 </div>
 <div class="paragraph">
-<p><a href="#using-cdrecord">过程：复制音频 CD</a> 描述了如何复制和刻录音频 CD 。如果 FreeBSD 版本小于 10.0 且设备为 ATAPI ，必须首先使用 <a href="#atapicam">支持的设备</a> 中的说明加载 <code>atapicam</code> 模块。</p>
+<p><a href="#using-cdrecord">步骤：复制音频 CD</a> 描述了如何复制和刻录音频 CD。如果 FreeBSD 版本小于 10.0 且设备为 ATAPI，必须首先使用 <a href="#atapicam">支持的设备</a> 中的说明加载 <code>atapicam</code> 模块。</p>
 </div>
 <div id="using-cdrecord" class="olist arabic procedure">
-<div class="title">过程：复制音频 CD</div>
+<div class="title">步骤：复制音频 CD</div>
 <ol class="arabic">
 <li>
-<p>包： sysutils/cdrtools[] 包或端口安装了 <code>cdda2wav</code> 。此命令可用于提取所有音轨，每个音轨都会被写入当前工作目录中的单独的 WAV 文件中：</p>
+<p><a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools/">sysutils/cdrtools</a> 包或 port 安装了 <code>cdda2wav</code>。此命令可用于提取所有音轨，每个音轨都会被写入当前工作目录中的单独的 WAV 文件中：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="gp">% </span>cdda2wav -vall -B -Owav</code></pre>
@@ -23601,7 +23601,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>请确保按照 <a href="#cdrecord">刻录光盘</a> 中描述的方式适当设置 <em>2 , 0</em>。</p>
+<p>请确保按照 <a href="#cdrecord">刻录光盘</a> 中描述的方式适当设置 <em>2,0</em>。</p>
 </div>
 </li>
 </ol>
@@ -23611,7 +23611,7 @@ scsibus1:
 <div class="sect2">
 <h3 id="creating-dvds">20.6. 创建和使用 DVD 媒体<a class="anchor" href="#creating-dvds"></a></h3>
 <div class="paragraph">
-<p>与 CD 相比， DVD 是下一代光学媒体存储技术。 DVD 可以容纳比任何 CD 更多的数据，并且是视频出版的标准。</p>
+<p>与 CD 相比，DVD 是下一代光学媒体存储技术。DVD 可以容纳比任何 CD 更多的数据，并且是视频出版的标准。</p>
 </div>
 <div class="paragraph">
 <p>可为可记录的 DVD 定义五种物理可记录格式：</p>
@@ -23619,24 +23619,24 @@ scsibus1:
 <div class="ulist">
 <ul>
 <li>
-<p>DVD-R ：这是第一个可用的 DVD 可记录格式。 DVD-R 标准由 DVD 论坛定义。这种格式只能写入一次。</p>
+<p>DVD-R：这是第一个可用的 DVD 可记录格式。DVD-R 标准由 <a href="http://www.dvdforum.org/forum.shtml">DVD 论坛</a>定义。这种格式只能写入一次。</p>
 </li>
 <li>
-<p>DVD-RW ：这是 DVD-R 标准的可重写版本。一个 DVD-RW 可以重写约 1000 次。</p>
+<p>DVD-RW：这是 DVD-R 标准的可重写版本。一个 DVD-RW 可以重写约 1000 次。</p>
 </li>
 <li>
-<p>DVD-RAM ：这是一种可重写的格式，可以看作是可移动硬盘。然而，这种介质与大多数 DVD-ROM 驱动器和 DVD 视频播放器不兼容，因为只有少数 DVD 刻录机支持 DVD-RAM 格式。有关 DVD-RAM 使用的更多信息，请参阅 <a href="#creating-dvd-ram">使用 DVD-RAM</a> 。</p>
+<p>DVD-RAM：这是一种可重写的格式，可以看作是可移动硬盘。然而，这种介质与大多数 DVD-ROM 驱动器和 DVD 视频播放器不兼容，因为只有少数 DVD 刻录机支持 DVD-RAM 格式。有关 DVD-RAM 使用的更多信息，请参阅 <a href="#creating-dvd-ram">使用 DVD-RAM</a> 。</p>
 </li>
 <li>
-<p>DVD + RW ：这是由 DVD + RW 联盟定义的可重写格式。 DVD + RW 可以重写约 1000 次。</p>
+<p>DVD+RW ：这是由 <a href="https://en.wikipedia.org/wiki/DVD%2BRW_Alliance">DVD+RW 联盟</a> 定义的可重写格式。DVD+RW 可以重写约 1000 次。</p>
 </li>
 <li>
-<p>DVD + R ：这种格式是 DVD + RW 格式的一次写入变体。</p>
+<p>DVD+R：这种格式是 DVD+RW 格式的一次写入变体。</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>一张单层可记录的 DVD 可以容纳高达 4 , 700 , 000 , 000 字节，实际上相当于 4.38 GB 或 4485 MB ，因为 1 千字节等于 1024 字节。</p>
+<p>一张单层可记录的 DVD 可以容纳高达 4,700,000,000 字节，实际上相当于 4.38 GB 或 4485 MB，因为 1 千字节等于 1024 字节。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23646,7 +23646,7 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>必须区分物理介质和应用程序。例如， DVD-Video 是一种特定的文件布局，可以写入任何可记录的 DVD 物理介质，如 DVD-R 、 DVD + R 或 DVD-RW 。在选择介质之前，请确保刻录机和 DVD-Video 播放器与所考虑的介质兼容。</p>
+<p>必须区分物理介质和应用程序。例如，DVD-Video 是一种特定的文件布局，可以写入任何可记录的 DVD 物理介质，如 DVD-R、DVD+R 或 DVD-RW。在选择介质之前，请确保刻录机和 DVD-Video 播放器与所考虑的介质兼容。</p>
 </div>
 </td>
 </tr>
@@ -23655,13 +23655,13 @@ scsibus1:
 <div class="sect3">
 <h4 id="_配置">20.6.1. 配置<a class="anchor" href="#_配置"></a></h4>
 <div class="paragraph">
-<p>要进行 DVD 录制，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 命令。该命令是 package:sysutils/dvd + rw-tools[] 工具包的一部分，支持所有 DVD 媒体类型。</p>
+<p>要进行 DVD 录制，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 命令。该命令是 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/dvd+rw-tools/">sysutils/dvd+rw-tools</a> 工具包的一部分，支持所有 DVD 媒体类型。</p>
 </div>
 <div class="paragraph">
-<p>这些工具使用 SCSI 子系统来访问设备，因此必须加载或静态编译 <a href="#atapicam ">ATAPI/CAM 支持 </a> 到内核中。如果刻录机使用 USB 接口，则不需要此支持。有关 USB 设备配置的更多详细信息，请参阅 <a href="#usb-disks">USB 存储设备</a> 。</p>
+<p>这些工具使用 SCSI 子系统来访问设备，因此必须加载或静态编译 <a href="#atapicam">ATAPI/CAM support</a> 到内核中。如果刻录机使用 USB 接口，则不需要此支持。有关 USB 设备配置的更多详细信息，请参阅 <a href="#usb-disks">USB 存储设备</a>。</p>
 </div>
 <div class="paragraph">
-<p>还必须为 ATAPI 设备启用 DMA 访问，方法是在 [/boot/loader.conf] 中添加以下行：</p>
+<p>还必须为 ATAPI 设备启用 DMA 访问，方法是在 <span class="filename">/boot/loader.conf</span> 中添加以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -23669,7 +23669,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>在尝试使用 dvd + rw-tools 之前，请参考 <a href="http://fy.chalmers.se/" class="bare">http://fy.chalmers.se/</a> ~ appro/linux/DVD + RW/hcn.html[硬件兼容性说明] 。</p>
+<p>在尝试使用 dvd+rw-tools 之前，请参考 <a href="http://fy.chalmers.se/~appro/linux/DVD+RW/hcn.html">硬件兼容性说明</a>。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23679,7 +23679,7 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>对于图形用户界面，请考虑使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/k3b/">sysutils/k3b</a> ，它提供了一个用户友好的界面来使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 和许多其他刻录工具。</p>
+<p>对于图形用户界面，请考虑使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/k3b/">sysutils/k3b</a>，它提供了一个用户友好的界面来使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 和许多其他刻录工具。</p>
 </div>
 </td>
 </tr>
@@ -23689,10 +23689,10 @@ scsibus1:
 <div class="sect3">
 <h4 id="_刻录数据_dvd">20.6.2. 刻录数据 DVD<a class="anchor" href="#_刻录数据_dvd"></a></h4>
 <div class="paragraph">
-<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 是 <a href="#mkisofs ">mkisofs</a> 的前端，它将调用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 来创建文件系统布局并在 DVD 上执行写入操作。这意味着在刻录过程之前不需要创建数据的镜像。</p>
+<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 是 <a href="#mkisofs">mkisofs</a> 的前端，它将调用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 来创建文件系统布局并在 DVD 上执行写入操作。这意味着在刻录过程之前不需要创建数据的镜像。</p>
 </div>
 <div class="paragraph">
-<p>要将位于 <span class="filename">/path/to/data</span> 的数据刻录到 DVD + R 或 DVD-R 上，请使用以下命令：</p>
+<p>要将位于 <span class="filename">/path/to/data</span> 的数据刻录到 DVD+R 或 DVD-R 上，请使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23700,13 +23700,13 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中， <code>-J -R</code> 被传递给 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 以创建一个带有 Joliet 和 Rock Ridge 扩展的 ISO 9660 文件系统。更多详细信息请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 。</p>
+<p>在这个例子中，<code>-J -R</code> 被传递给 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 以创建一个带有 Joliet 和 Rock Ridge 扩展的 ISO 9660 文件系统。更多详细信息请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a>。</p>
 </div>
 <div class="paragraph">
-<p>对于初始会话录制， <code>-Z</code> 用于单个和多个会话。将 <em>/dev/cd0</em> 替换为 DVD 设备的名称。使用 <code>-dvd-compat</code> 表示光盘将被关闭，并且录制将无法追加。这还应该提供更好的与 DVD-ROM 驱动器的媒体兼容性。</p>
+<p>对于初始会话录制，<code>-Z</code> 用于单个和多个会话。将 <em>/dev/cd0</em> 替换为 DVD 设备的名称。使用 <code>-dvd-compat</code> 表示光盘将被关闭，并且录制将无法追加。这还应该提供更好的与 DVD-ROM 驱动器的媒体兼容性。</p>
 </div>
 <div class="paragraph">
-<p>要烧录预制的镜像，比如_imagefile.iso_，请使用以下命令：</p>
+<p>要烧录预制的镜像，比如 <em>imagefile.iso</em>，请使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23714,7 +23714,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>应该检测并根据使用的媒体和驱动器自动设置写入速度。要强制设置写入速度，请使用 `-speed = ` 。有关示例用法，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 。</p>
+<p>应该检测并根据使用的媒体和驱动器自动设置写入速度。要强制设置写入速度，请使用 <code>-speed=</code>。有关示例用法，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a>。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23724,7 +23724,7 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>为了支持大于 4.38GB 的工作文件，必须通过在 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 和所有相关程序（如 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> ）中传递&#34;-udf -iso-level 3&#34;来创建一个 UDF/ISO-9660 混合文件系统。只有在创建 ISO 映像文件或直接将文件写入磁盘时才需要这样做。由于以这种方式创建的磁盘必须以 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_udf&amp;sektion=8&amp;format=html">mount_udf(8)</a> 的 UDF 文件系统方式挂载，因此它只能在支持 UDF 的操作系统上使用。否则，它将看起来像包含损坏文件。</p>
+<p>为了支持大于 4.38GB 的工作文件，必须通过在 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 和所有相关程序（如 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> ）中传递 <code>-udf -iso-level 3</code> 来创建一个 UDF/ISO-9660 混合文件系统。只有在创建 ISO 映像文件或直接将文件写入磁盘时才需要这样做。由于以这种方式创建的磁盘必须以 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_udf&amp;sektion=8&amp;format=html">mount_udf(8)</a> 的 UDF 文件系统方式挂载，因此它只能在支持 UDF 的操作系统上使用。否则，它将看起来像包含损坏文件。</p>
 </div>
 <div class="paragraph">
 <p>要创建这种类型的 ISO 文件：</p>
@@ -23743,10 +23743,10 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>当 ISO 镜像已经包含大文件时， <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 在将该镜像刻录到光盘上时不需要额外的选项。</p>
+<p>当 ISO 镜像已经包含大文件时，<a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 在将该镜像刻录到光盘上时不需要额外的选项。</p>
 </div>
 <div class="paragraph">
-<p>请确保使用最新版本的 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools/">sysutils/cdrtools</a> ，其中包含 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> ，因为旧版本可能不支持大文件。如果最新版本无法工作，请安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools-devel/">sysutils/cdrtools-devel</a> 并阅读其 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> 。</p>
+<p>请确保使用最新版本的 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools/">sysutils/cdrtools</a>，其中包含 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a>，因为旧版本可能不支持大文件。如果最新版本无法工作，请安装 <a class="package" href="https://cgit.freebsd.org/ports/tree/sysutils/cdrtools-devel/">sysutils/cdrtools-devel</a> 并阅读其 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a>。</p>
 </div>
 </td>
 </tr>
@@ -23756,10 +23756,10 @@ scsibus1:
 <div class="sect3">
 <h4 id="_刻录_dvd_视频">20.6.3. 刻录 DVD 视频<a class="anchor" href="#_刻录_dvd_视频"></a></h4>
 <div class="paragraph">
-<p>DVD-Video 是基于 ISO 9660 和微型 UDF （ M-UDF ）规范的特定文件布局。由于 DVD-Video 呈现了特定的数据结构层次，因此需要使用特定的程序，如 <a class="package" href="https://cgit.freebsd.org/ports/tree/multimedia/dvdauthor/">multimedia/dvdauthor</a> 来制作 DVD 。</p>
+<p>DVD-Video 是基于 ISO 9660 和微型 UDF（M-UDF）规范的特定文件布局。由于 DVD-Video 呈现了特定的数据结构层次，因此需要使用特定的程序，如 <a class="package" href="https://cgit.freebsd.org/ports/tree/multimedia/dvdauthor/">multimedia/dvdauthor</a> 来制作 DVD。</p>
 </div>
 <div class="paragraph">
-<p>如果已经存在 DVD-Video 文件系统的镜像，可以像其他镜像一样进行刻录。如果使用了 <code>dvdauthor</code> 制作了 DVD ，并且结果保存在 <span class="filename">/path/to/video</span> 中，应使用以下命令来刻录 DVD-Video ：</p>
+<p>如果已经存在 DVD-Video 文件系统的镜像，可以像其他镜像一样进行刻录。如果使用了 <code>dvdauthor</code> 制作了 DVD，并且结果保存在 <span class="filename">/path/to/video</span> 中，应使用以下命令来刻录 DVD-Video：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23767,13 +23767,13 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p><code>-dvd-video</code> 被传递给 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a> ，用于指示它创建一个 DVD-Video 文件系统布局。此选项隐含了 <code>-dvd-compat</code> <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 选项。</p>
+<p><code>-dvd-video</code> 被传递给 <a href="https://man.freebsd.org/cgi/man.cgi?query=mkisofs&amp;sektion=8&amp;format=html">mkisofs(8)</a>，用于指示它创建一个 DVD-Video 文件系统布局。此选项隐含了 <code>-dvd-compat</code> <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 选项。</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_使用_dvd_rw">20.6.4. 使用 DVD + RW<a class="anchor" href="#_使用_dvd_rw"></a></h4>
+<h4 id="_使用_dvdrw">20.6.4. 使用 DVD+RW<a class="anchor" href="#_使用_dvdrw"></a></h4>
 <div class="paragraph">
-<p>与 CD-RW 不同，未使用过的 DVD + RW 需要在首次使用前进行格式化。强烈建议使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 在适当时自动处理此操作。然而，也可以使用 <code>dvd + rw-format</code> 来格式化 DVD + RW 。</p>
+<p>与 CD-RW 不同，未使用过的 DVD+RW 需要在首次使用前进行格式化。强烈建议使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 在适当时自动处理此操作。然而，也可以使用 <code>dvd+rw-format</code> 来格式化 DVD+RW：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23781,10 +23781,10 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>只需执行此操作一次，并记住只有全新的 DVD + RW 光盘需要进行格式化。一旦格式化完成， DVD + RW 光盘可以像往常一样进行刻录。</p>
+<p>只需执行此操作一次，并记住只有全新的 DVD+RW 光盘需要进行格式化。一旦格式化完成，DVD+RW 光盘可以像往常一样进行刻录。</p>
 </div>
 <div class="paragraph">
-<p>要烧录一个全新的文件系统，而不仅仅是将一些数据追加到 DVD + RW 上，媒体不需要先进行擦除。相反，可以像这样覆盖之前的记录：</p>
+<p>要烧录一个全新的文件系统，而不仅仅是将一些数据追加到 DVD+RW 上，媒体不需要先进行擦除。相反，可以像这样覆盖之前的记录：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23792,10 +23792,10 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>DVD + RW 格式支持在之前的记录上追加数据。这个操作包括将新的会话合并到现有的会话中，因为它不被视为多会话写入。 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 将会“增长”媒体上存在的 ISO 9660 文件系统。</p>
+<p>DVD+RW 格式支持在之前的记录上追加数据。这个操作包括将新的会话合并到现有的会话中，因为它不被视为多会话写入。<a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 将会 <em>增长</em> 媒体上存在的 ISO 9660 文件系统。</p>
 </div>
 <div class="paragraph">
-<p>例如，要将数据追加到 DVD + RW 上，请使用以下方法：</p>
+<p>例如，要将数据追加到 DVD+RW 上，请使用以下方法：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23813,7 +23813,7 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>使用 <code>-dvd-compat</code> 选项可以提高与 DVD-ROM 驱动器的媒体兼容性。当使用 DVD + RW 时，此选项不会阻止添加数据。</p>
+<p>使用 <code>-dvd-compat</code> 选项可以提高与 DVD-ROM 驱动器的媒体兼容性。当使用 DVD+RW 时，此选项不会阻止添加数据。</p>
 </div>
 </td>
 </tr>
@@ -23829,15 +23829,15 @@ scsibus1:
 </div>
 </div>
 <div class="sect3">
-<h4 id="_使用_dvd_rw_2">20.6.5. 使用 DVD-RW<a class="anchor" href="#_使用_dvd_rw_2"></a></h4>
+<h4 id="_使用_dvd_rw">20.6.5. 使用 DVD-RW<a class="anchor" href="#_使用_dvd_rw"></a></h4>
 <div class="paragraph">
-<p>DVD-RW 支持两种光盘格式：增量顺序和受限覆写。默认情况下， DVD-RW 光盘采用顺序格式。</p>
+<p>DVD-RW 支持两种光盘格式：增量顺序和受限覆写。默认情况下，DVD-RW 光盘采用顺序格式。</p>
 </div>
 <div class="paragraph">
 <p>一个全新的 DVD-RW 可以直接写入而无需进行格式化。然而，一个已经使用过的顺序格式的 DVD-RW 在写入新的初始会话之前需要进行擦除。</p>
 </div>
 <div class="paragraph">
-<p>要以顺序模式擦除 DVD-RW ：</p>
+<p>要以顺序模式擦除 DVD-RW：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23852,7 +23852,7 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>使用 <code>-blank = full</code> 进行完全擦除在 1 倍速的媒体上大约需要一个小时。如果要在 Disk-At-Once （ DAO ）模式下记录 DVD-RW ，则可以使用 <code>-blank</code> 进行快速擦除。要以 DAO 模式刻录 DVD-RW ，请使用以下命令：</p>
+<p>使用 <code>-blank=full</code> 进行完全擦除在 1 倍速的媒体上大约需要一个小时。如果要在 Disk-At-Once （DAO）模式下记录 DVD-RW，则可以使用 <code>-blank</code> 进行快速擦除。要以 DAO 模式刻录 DVD-RW，请使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23860,10 +23860,10 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 会自动尝试检测快速擦除的介质并启用 DAO 写入，因此不需要使用 <code>-use-the-force-luke = dao</code> 参数。</p>
+<p>由于 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 会自动尝试检测快速擦除的介质并启用 DAO 写入，因此不需要使用 <code>-use-the-force-luke=dao</code> 参数。</p>
 </div>
 <div class="paragraph">
-<p>对于任何 DVD-RW ，应该使用受限覆盖模式，而不是默认的增量顺序模式，因为受限覆盖模式更加灵活。</p>
+<p>对于任何 DVD-RW，应该使用受限覆盖模式，而不是默认的增量顺序模式，因为受限覆盖模式更加灵活。</p>
 </div>
 </td>
 </tr>
@@ -23881,7 +23881,7 @@ scsibus1:
 <p>要将一些数据追加到先前的录制中，请使用 <code>-M</code> 参数和 <code><a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a></code> 命令。然而，如果在增量顺序模式下在 DVD-RW 上追加数据，将会在光盘上创建一个新的会话，结果将是一个多会话光盘。</p>
 </div>
 <div class="paragraph">
-<p>在受限覆写格式的 DVD-RW 上，不需要在开始新的初始会话之前将其擦除。相反，可以使用 <code>-Z</code> 来覆盖光盘。还可以使用 <code>-M</code> 来扩展已写入光盘上的现有 ISO 9660 文件系统。结果将是一个单会话的 DVD 。</p>
+<p>在受限覆写格式的 DVD-RW 上，不需要在开始新的初始会话之前将其擦除。相反，可以使用 <code>-Z</code> 来覆盖光盘。还可以使用 <code>-M</code> 来扩展已写入光盘上的现有 ISO 9660 文件系统。结果将是一个单会话的 DVD。</p>
 </div>
 <div class="paragraph">
 <p>要将 DVD-RW 格式化为受限覆写格式，必须使用以下命令：</p>
@@ -23903,10 +23903,10 @@ scsibus1:
 <div class="sect3">
 <h4 id="_多会话">20.6.6. 多会话<a class="anchor" href="#_多会话"></a></h4>
 <div class="paragraph">
-<p>很少有 DVD-ROM 驱动器支持多会话 DVD ，并且大多数情况下只能读取第一个会话。 DVD + R 、 DVD-R 和 DVD-RW 以顺序格式可以接受多个会话。对于 DVD + RW 和 DVD-RW 受限覆写格式，不存在多个会话的概念。</p>
+<p>很少有 DVD-ROM 驱动器支持多会话 DVD，并且大多数情况下只能读取第一个会话。 DVD+R、DVD-R 和 DVD-RW 以顺序格式可以接受多个会话。对于 DVD+RW 和 DVD-RW 受限覆写格式，不存在多个会话的概念。</p>
 </div>
 <div class="paragraph">
-<p>在使用 DVD + R 、 DVD-R 或 DVD-RW 顺序格式的初始非关闭会话后，使用以下命令将在光盘上添加一个新的会话：</p>
+<p>在使用 DVD+R、DVD-R 或 DVD-RW 顺序格式的初始非关闭会话后，使用以下命令将在光盘上添加一个新的会话：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23914,7 +23914,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>在使用此命令时，如果使用 DVD + RW 或 DVD-RW 处于受限覆写模式，将会在将新会话合并到现有会话时追加数据。结果将是一个单会话光盘。使用此方法在这些类型的介质上进行初始写入后添加数据。</p>
+<p>在使用此命令时，如果使用 DVD+RW 或 DVD-RW 处于受限覆写模式，将会在将新会话合并到现有会话时追加数据。结果将是一个单会话光盘。使用此方法在这些类型的介质上进行初始写入后添加数据。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23924,7 +23924,7 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>由于在每个会话之间使用了一些空间来标记会话的结束和开始，因此应该添加大量数据的会话以优化媒体空间。 DVD + R 的会话数量限制为 154 个， DVD-R 约为 2000 个， DVD + R 双层为 127 个。</p>
+<p>由于在每个会话之间使用了一些空间来标记会话的结束和开始，因此应该添加大量数据的会话以优化媒体空间。 DVD+R 的会话数量限制为 154 个， DVD-R 约为 2000 个，DVD + R 双层为 127 个。</p>
 </div>
 </td>
 </tr>
@@ -23934,10 +23934,10 @@ scsibus1:
 <div class="sect3">
 <h4 id="_更多信息请参考">20.6.7. 更多信息请参考<a class="anchor" href="#_更多信息请参考"></a></h4>
 <div class="paragraph">
-<p>要获取有关 DVD 的更多信息，请在指定的驱动器中使用 <code>dvd + rw-mediainfo <em>/dev/cd0</em></code> 命令，同时光盘在其中。</p>
+<p>要获取有关 DVD 的更多信息，请在指定的驱动器中使用 <code>dvd+rw-mediainfo <em>/dev/cd0</em></code> 命令，同时光盘在其中。</p>
 </div>
 <div class="paragraph">
-<p>有关 dvd + rw-tools 的更多信息可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 中找到，在 <a href="http://fy.chalmers.se/" class="bare">http://fy.chalmers.se/</a> ~ appro/linux/DVD + RW/[dvd + rw-tools 网站] 上找到，并且在 <a href="http://lists.debian.org/cdwrite/">cdwrite 邮件列表</a> 的存档中也可以找到。</p>
+<p>有关 dvd+rw-tools 的更多信息可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=growisofs&amp;sektion=1&amp;format=html">growisofs(1)</a> 中找到，在 <a href="http://fy.chalmers.se/~appro/linux/DVD+RW/">dvd+rw-tools 网站</a> 上找到，并且在 <a href="http://lists.debian.org/cdwrite/">cdwrite 邮件列表</a> 的存档中也可以找到。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23947,7 +23947,7 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>创建与使用 dvd + rw-tools 相关的问题报告时，始终包括 <code>dvd + rw-mediainfo</code> 的输出。</p>
+<p>创建与使用 dvd+rw-tools 相关的问题报告时，始终包括 <code>dvd+rw-mediainfo</code> 的输出。</p>
 </div>
 </td>
 </tr>
@@ -23957,7 +23957,7 @@ scsibus1:
 <div class="sect3">
 <h4 id="creating-dvd-ram">20.6.8. 使用 DVD-RAM<a class="anchor" href="#creating-dvd-ram"></a></h4>
 <div class="paragraph">
-<p>DVD-RAM 写入器可以使用 SCSI 或 ATAPI 接口。对于 ATAPI 设备，必须通过在 [/boot/loader.conf] 中添加以下行来启用 DMA 访问：</p>
+<p>DVD-RAM 写入器可以使用 SCSI 或 ATAPI 接口。对于 ATAPI 设备，必须通过在 <span class="filename">/boot/loader.conf</span> 中添加以下行来启用 DMA 访问：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -23986,7 +23986,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>一旦挂载， DVD-RAM 将可读可写。</p>
+<p>一旦挂载，DVD-RAM 将可读可写。</p>
 </div>
 </div>
 </div>
@@ -23997,12 +23997,8 @@ scsibus1:
 </div>
 <div class="exampleblock procedure">
 <div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>过程：格式化软盘的步骤 *</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>步骤：格式化软盘的步骤</strong></p>
 </div>
 <div class="paragraph">
 <p>在使用软盘之前，需要进行低级格式化。通常由供应商完成，但格式化是检查介质完整性的好方法。在 FreeBSD 上进行软盘的低级格式化，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=fdformat&amp;sektion=1&amp;format=html">fdformat(1)</a> 命令。在使用此实用程序时，请注意任何错误消息，因为它们可以帮助确定软盘是好的还是坏的。</p>
@@ -24018,9 +24014,9 @@ scsibus1:
 </div>
 </li>
 <li>
-<p>在低级格式化磁盘之后，根据系统需要创建磁盘标签，以确定磁盘的大小和几何结构。支持的几何结构值在 [/etc/disktab] 中列出。</p>
+<p>在低级格式化磁盘之后，根据系统需要创建磁盘标签，以确定磁盘的大小和几何结构。支持的几何结构值在 <span class="filename">/etc/disktab</span> 中列出。</p>
 <div class="paragraph">
-<p>要编写磁盘标签，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdlabel&amp;sektion=8&amp;format=html">bsdlabel(8)</a> 。</p>
+<p>要编写磁盘标签，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=bsdlabel&amp;sektion=8&amp;format=html">bsdlabel(8)</a>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24029,7 +24025,7 @@ scsibus1:
 </div>
 </li>
 <li>
-<p>软盘现在可以进行高级格式化，并选择文件系统。软盘的文件系统可以是 UFS 或 FAT ，其中 FAT 通常是软盘的更好选择。</p>
+<p>软盘现在可以进行高级格式化，并选择文件系统。软盘的文件系统可以是 UFS 或 FAT，其中 FAT 通常是软盘的更好选择。</p>
 <div class="paragraph">
 <p>要使用 FAT 格式化软盘，请执行以下操作：</p>
 </div>
@@ -24044,7 +24040,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>磁盘现在已经准备好供使用。要使用软盘，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_msdosfs&amp;sektion=8&amp;format=html">mount_msdosfs(8)</a> 命令进行挂载。也可以从 Ports Collection 安装和使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/emulators/mtools/">emulators/mtools</a> 。</p>
+<p>磁盘现在已经准备好供使用。要使用软盘，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount_msdosfs&amp;sektion=8&amp;format=html">mount_msdosfs(8)</a> 命令进行挂载。也可以从 Ports Collection 安装和使用 <a class="package" href="https://cgit.freebsd.org/ports/tree/emulators/mtools/">emulators/mtools</a>。</p>
 </div>
 </div>
 <div class="sect2">
@@ -24053,14 +24049,13 @@ scsibus1:
 <p>本节介绍了如何在 FreeBSD 中挂载 NTFS 磁盘。</p>
 </div>
 <div class="paragraph">
-<p>NTFS （新技术文件系统）是由微软开发的专有日志文件系统。多年来，它一直是微软 Windows 操作系统的默认文件系统。 FreeBSD 可以使用 FUSE 文件系统挂载 NTFS 卷。这些文件系统是作为用户空间程序实现的，它们通过一个明确定义的接口与 <a href="https://man.freebsd.org/cgi/man.cgi?query=fusefs&amp;sektion=5&amp;format=html">fusefs(5)</a> 内核模块进行交互。</p>
+<p>NTFS（新技术文件系统）是由微软开发的专有日志文件系统。多年来，它一直是微软 Windows 操作系统的默认文件系统。FreeBSD 可以使用 FUSE 文件系统挂载 NTFS 卷。这些文件系统是作为用户空间程序实现的，它们通过一个明确定义的接口与 <a href="https://man.freebsd.org/cgi/man.cgi?query=fusefs&amp;sektion=5&amp;format=html">fusefs(5)</a> 内核模块进行交互。</p>
 </div>
 <div class="exampleblock procedure">
 <div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>过程：挂载 NTFS 磁盘的步骤 *</p>
+<div class="paragraph">
+<p><strong>过程：挂载 NTFS 磁盘的步骤</strong></p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -24080,7 +24075,7 @@ scsibus1:
 </div>
 </li>
 <li>
-<p>按照示例中的方式（参见 <a href="./#pkgng-intro">使用 pkg 进行二进制包管理</a> ）或者从 ports （参见 <a href="./#ports-using">使用 Ports Collection</a> ）安装实际的 NTFS 文件系统。</p>
+<p>按照示例中的方式（参见 <a href="./#pkgng-intro">使用 pkg 进行二进制包管理</a>）或者从 ports（参见 <a href="./#ports-using">使用 Ports Collection</a>）安装实际的 NTFS 文件系统。</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># pkg install fusefs-ntfs</span></code></pre>
@@ -24142,9 +24137,6 @@ scsibus1:
 </li>
 </ol>
 </div>
-</li>
-</ul>
-</div>
 </div>
 </div>
 </div>
@@ -24165,10 +24157,10 @@ scsibus1:
 <p>文件系统快照，用于恢复已删除的文件或文件的先前版本。</p>
 </li>
 <li>
-<p>使用预定的包： net/rsync[] ，将整个文件系统或磁盘的副本与网络上的另一个系统进行同步。</p>
+<p>使用计划 <a class="package" href="https://cgit.freebsd.org/ports/tree/net/rsync/">net/rsync</a>，将整个文件系统或磁盘的副本与网络上的另一个系统进行同步。</p>
 </li>
 <li>
-<p>硬件或软件 RAID ，可以在磁盘故障时最小化或避免停机时间。</p>
+<p>硬件或软件 RAID，可以在磁盘故障时最小化或避免停机时间。</p>
 </li>
 </ul>
 </div>
@@ -24181,7 +24173,7 @@ scsibus1:
 <div class="sect3">
 <h4 id="_文件系统备份">20.9.1. 文件系统备份<a class="anchor" href="#_文件系统备份"></a></h4>
 <div class="paragraph">
-<p>传统的 UNIX® 文件系统备份程序是 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> ，用于创建备份，和 <a href="https://man.freebsd.org/cgi/man.cgi?query=restore&amp;sektion=8&amp;format=html">restore(8)</a> ，用于恢复备份。这些工具在文件系统创建的文件、链接和目录的抽象层之下的磁盘块级别上工作。与其他备份软件不同， <code>dump</code> 备份整个文件系统，无法备份部分文件系统或跨多个文件系统的目录树的一部分。 <code>dump</code> 不是写入文件和目录，而是写入组成文件和目录的原始数据块。</p>
+<p>传统的 UNIX® 文件系统备份程序是 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a>，用于创建备份，和 <a href="https://man.freebsd.org/cgi/man.cgi?query=restore&amp;sektion=8&amp;format=html">restore(8)</a>，用于恢复备份。这些工具在文件系统创建的文件、链接和目录的抽象层之下的磁盘块级别上工作。与其他备份软件不同，<code>dump</code> 备份整个文件系统，无法备份部分文件系统或跨多个文件系统的目录树的一部分。<code>dump</code> 不是写入文件和目录，而是写入组成文件和目录的原始数据块。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -24191,23 +24183,23 @@ scsibus1:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>如果在根目录上使用 <code>dump</code> 命令，它将不会备份 /home 、 /usr 或许多其他目录，因为这些通常是其他文件系统的挂载点或指向这些文件系统的符号链接。</p>
+<p>如果在根目录上使用 <code>dump</code> 命令，它将不会备份 <span class="filename">/home</span>、<span class="filename">/usr</span> 或许多其他目录，因为这些通常是其他文件系统的挂载点或指向这些文件系统的符号链接。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>当用于恢复数据时，默认情况下， <code>restore</code> 将临时文件存储在 <span class="filename">/tmp/</span> 中。如果使用具有较小 <span class="filename">/tmp</span> 的恢复磁盘，请将 <code>TMPDIR</code> 设置为具有更多可用空间的目录，以确保恢复成功。</p>
+<p>当用于恢复数据时，默认情况下，<code>restore</code> 将临时文件存储在 <span class="filename">/tmp/</span> 中。如果使用具有较小 <span class="filename">/tmp</span> 的恢复磁盘，请将 <code>TMPDIR</code> 设置为具有更多可用空间的目录，以确保恢复成功。</p>
 </div>
 <div class="paragraph">
-<p>在使用 <code>dump</code> 命令时，请注意一些来自 AT &amp; T UNIX® 6 版本（约 1975 年）早期的怪异行为。默认参数假设备份是备份到 9 轨磁带，而不是备份到其他类型的介质或者今天可用的高密度磁带。这些默认值必须在命令行上进行覆盖。</p>
+<p>在使用 <code>dump</code> 命令时，请注意一些来自 AT&amp;T UNIX® 6 版本（约 1975 年）早期的怪异行为。默认参数假设备份是备份到 9 轨磁带，而不是备份到其他类型的介质或者今天可用的高密度磁带。这些默认值必须在命令行上进行覆盖。</p>
 </div>
 <div class="paragraph">
-<p>可以通过网络将文件系统备份到另一个系统或连接到另一台计算机的磁带驱动器上。虽然可以使用 rdump[8] 和 rrestore[8] 工具来实现此目的，但它们被认为不安全。</p>
+<p>可以通过网络将文件系统备份到另一个系统或连接到另一台计算机的磁带驱动器上。虽然可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rdump&amp;sektion=8&amp;format=html">rdump(8)</a> 和 <a href="https://man.freebsd.org/cgi/man.cgi?query=rrestore&amp;sektion=8&amp;format=html">rrestore(8)</a> 工具来实现此目的，但它们被认为不安全。</p>
 </div>
 <div class="paragraph">
-<p>相反，可以使用 <code>dump</code> 和 <code>restore</code> 以更安全的方式通过 SSH 连接进行操作。此示例创建了一个对 <code>/usr</code> 目录进行完整压缩备份的文件，并通过 SSH 连接将备份文件发送到指定的主机。</p>
+<p>相反，可以使用 <code>dump</code> 和 <code>restore</code> 以更安全的方式通过 SSH 连接进行操作。此示例创建了一个对 <span class="filename">/usr</span> 目录进行完整压缩备份的文件，并通过 SSH 连接将备份文件发送到指定的主机。</p>
 </div>
 <div class="exampleblock">
 <div class="title">例 26. 通过 ssh 使用 <code>dump</code> 命令</div>
@@ -24221,7 +24213,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>这个示例设置 <code>RSH</code> ，以便通过 SSH 连接将备份写入远程系统上的磁带驱动器：</p>
+<p>这个示例设置 <code>RSH</code>，以便通过 SSH 连接将备份写入远程系统上的磁带驱动器：</p>
 </div>
 <div class="exampleblock">
 <div class="title">例 27. 使用 <code>RSH</code> 设置通过 ssh 使用 <code>dump</code> 命令</div>
@@ -24240,10 +24232,10 @@ scsibus1:
 <p>可以根据需要使用几个内置实用程序来备份和恢复指定的文件和目录。</p>
 </div>
 <div class="paragraph">
-<p>备份目录中所有文件的一个好选择是 <a href="https://man.freebsd.org/cgi/man.cgi?query=tar&amp;sektion=1&amp;format=html">tar(1)</a> 。这个实用程序可以追溯到 AT &amp; T UNIX® 的第 6 版，并且默认情况下假定对本地磁带设备进行递归备份。可以使用开关来指定备份文件的名称。</p>
+<p>备份目录中所有文件的一个好选择是 <a href="https://man.freebsd.org/cgi/man.cgi?query=tar&amp;sektion=1&amp;format=html">tar(1)</a>。这个实用程序可以追溯到 AT&amp;T UNIX® 的第 6 版，并且默认情况下假定对本地磁带设备进行递归备份。可以使用开关来指定备份文件的名称。</p>
 </div>
 <div class="paragraph">
-<p>这个例子创建了一个压缩的备份文件，将当前目录的内容保存到 [/tmp/mybackup.tgz] 文件中。在创建备份文件时，请确保备份文件不要保存在被备份的目录中。</p>
+<p>这个例子创建了一个压缩的备份文件，将当前目录的内容保存到 <span class="filename">/tmp/mybackup.tgz</span> 文件中。在创建备份文件时，请确保备份文件不要保存在被备份的目录中。</p>
 </div>
 <div class="exampleblock">
 <div class="title">例 28. 使用 <code>tar</code> 备份当前目录</div>
@@ -24272,10 +24264,10 @@ scsibus1:
 <p>有数十个可用的开关，这些开关在 <a href="https://man.freebsd.org/cgi/man.cgi?query=tar&amp;sektion=1&amp;format=html">tar(1)</a> 中有描述。该实用程序还支持使用排除模式来指定在备份指定目录或从备份中恢复文件时不应包括哪些文件。</p>
 </div>
 <div class="paragraph">
-<p>要使用指定的文件和目录列表创建备份， <a href="https://man.freebsd.org/cgi/man.cgi?query=cpio&amp;sektion=1&amp;format=html">cpio(1)</a> 是一个不错的选择。与 <code>tar</code> 不同， <code>cpio</code> 不知道如何遍历目录树，必须提供备份文件的列表。</p>
+<p>要使用指定的文件和目录列表创建备份，<a href="https://man.freebsd.org/cgi/man.cgi?query=cpio&amp;sektion=1&amp;format=html">cpio(1)</a> 是一个不错的选择。与 <code>tar</code> 不同，<code>cpio</code> 不知道如何遍历目录树，必须提供备份文件的列表。</p>
 </div>
 <div class="paragraph">
-<p>例如，可以使用 <code>ls</code> 或 <code>find</code> 创建文件列表。此示例创建了当前目录的递归列表，然后将其通过管道传输给 <code>cpio</code> ，以创建一个名为 <code>/tmp/mybackup.cpio</code> 的输出备份文件。</p>
+<p>例如，可以使用 <code>ls</code> 或 <code>find</code> 创建文件列表。此示例创建了当前目录的递归列表，然后将其通过管道传输给 <code>cpio</code>，以创建一个名为 <span class="filename">/tmp/mybackup.cpio</span> 的输出备份文件。</p>
 </div>
 <div class="exampleblock">
 <div class="title">例 30. 使用 <code>ls</code> 和 <code>cpio</code> 来对当前目录进行递归备份</div>
@@ -24288,7 +24280,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>一种备份工具，试图结合 <code>tar</code> 和 <code>cpio</code> 提供的功能是 <code>pax</code> 。多年来，各个版本的 <code>tar</code> 和 <code>cpio</code> 变得稍微不兼容。 POSIX® 创建了 <code>pax</code> ，它尝试读取和写入许多不同的 <code>cpio</code> 和 <code>tar</code> 格式，以及自己的新格式。</p>
+<p>一种备份工具，试图结合 <code>tar</code> 和 <code>cpio</code> 提供的功能是 <a href="https://man.freebsd.org/cgi/man.cgi?query=pax&amp;sektion=1&amp;format=html">pax(1)</a>。多年来，各个版本的 <code>tar</code> 和 <code>cpio</code> 变得稍微不兼容。 POSIX® 创建了 <code>pax</code>，它尝试读取和写入许多不同的 <code>cpio</code> 和 <code>tar</code> 格式，以及自己的新格式。</p>
 </div>
 <div class="paragraph">
 <p>前面示例的 <code>pax</code> 等效方式如下：</p>
@@ -24307,13 +24299,13 @@ scsibus1:
 <div class="sect3">
 <h4 id="backups-tapebackups">20.9.3. 使用数据磁带进行备份<a class="anchor" href="#backups-tapebackups"></a></h4>
 <div class="paragraph">
-<p>尽管磁带技术不断发展，但现代备份系统往往将离线备份与本地可移动介质相结合。 FreeBSD 支持使用 SCSI 的任何磁带驱动器，如 LTO 或 DAT 。对于 SATA 和 USB 磁带驱动器的支持有限。</p>
+<p>尽管磁带技术不断发展，但现代备份系统往往将离线备份与本地可移动介质相结合。FreeBSD 支持使用 SCSI 的任何磁带驱动器，如 LTO 或 DAT。对于 SATA 和 USB 磁带驱动器的支持有限。</p>
 </div>
 <div class="paragraph">
-<p>对于 SCSI 磁带设备， FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sa&amp;sektion=4&amp;format=html">sa(4)</a> 驱动程序和 .dev/sa0 、 .dev/nsa0 和 .dev/esa0 设备。物理设备名称是 .dev/sa0 。当使用 .dev/nsa0 时，备份应用程序在写入文件后不会倒回磁带，这允许将多个文件写入磁带。使用 .dev/esa0 在设备关闭后弹出磁带。</p>
+<p>对于 SCSI 磁带设备，FreeBSD 使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=sa&amp;sektion=4&amp;format=html">sa(4)</a> 驱动程序和 <span class="filename">/dev/sa0</span>、<span class="filename">/dev/nsa0</span> 和 <span class="filename">/dev/esa0</span> 设备。物理设备名称是 <span class="filename">/dev/sa0</span>。当使用 <span class="filename">/dev/nsa0</span> 时，备份应用程序在写入文件后不会倒回磁带，这允许将多个文件写入磁带。使用 <span class="filename">/dev/esa0</span> 在设备关闭后弹出磁带。</p>
 </div>
 <div class="paragraph">
-<p>在 FreeBSD 中， <code>mt</code> 用于控制磁带驱动器的操作，例如在磁带上寻找文件或向磁带写入磁带控制标记。例如，在写入新文件之前，可以通过跳过前三个文件来保留磁带上的文件。</p>
+<p>在 FreeBSD 中，<code>mt</code> 用于控制磁带驱动器的操作，例如在磁带上寻找文件或向磁带写入磁带控制标记。例如，在写入新文件之前，可以通过跳过前三个文件来保留磁带上的文件。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24321,7 +24313,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>该实用程序支持许多操作。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mt&amp;sektion=1&amp;format=html">mt(1)</a> 。</p>
+<p>该实用程序支持许多操作。有关详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mt&amp;sektion=1&amp;format=html">mt(1)</a>。</p>
 </div>
 <div class="paragraph">
 <p>使用 <code>tar</code> 将单个文件写入磁带，需要指定磁带设备的名称和要备份的文件：</p>
@@ -24340,7 +24332,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>要备份 UFS 文件系统，请使用 <code>dump</code> 命令。以下示例备份了 <code>/usr</code> 目录，备份完成后不会倒回磁带：</p>
+<p>要备份 UFS 文件系统，请使用 <code>dump</code> 命令。以下示例备份了 <span class="filename">/usr</span> 目录，备份完成后不会倒回磁带：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24359,10 +24351,10 @@ scsibus1:
 <div class="sect3">
 <h4 id="backups-programs-amanda">20.9.4. 第三方备份工具<a class="anchor" href="#backups-programs-amanda"></a></h4>
 <div class="paragraph">
-<p>FreeBSD Ports Collection 提供了许多第三方工具，可以用于安排备份的创建、简化磁带备份，并使备份更加方便。其中许多应用程序是基于客户端 / 服务器的，可以用于自动化单个系统或网络中所有计算机的备份。</p>
+<p>FreeBSD Ports Collection 提供了许多第三方工具，可以用于安排备份的创建、简化磁带备份，并使备份更加方便。其中许多应用程序是基于客户端/服务器的，可以用于自动化单个系统或网络中所有计算机的备份。</p>
 </div>
 <div class="paragraph">
-<p>常用的工具包括 Amanda 、 Bacula 、 rsync 和 duplicity 。</p>
+<p>常用的工具包括 Amanda、Bacula、rsync 和 duplicity。</p>
 </div>
 </div>
 <div class="sect3">
@@ -24376,18 +24368,18 @@ scsibus1:
 <div class="ulist">
 <ul>
 <li>
-<p><code>gpart show</code> 命令用于显示磁盘分区表的信息。</p>
+<p><code>gpart show</code></p>
 </li>
 <li>
-<p><code>more /etc/fstab</code> 命令用于在终端中显示 <code>/etc/fstab</code> 文件的内容。</p>
+<p><code>more /etc/fstab</code></p>
 </li>
 <li>
-<p><code>dmesg</code> 是一个 Linux 命令，用于显示内核环缓冲区的内容。它可以显示系统启动时的内核消息，包括硬件检测、设备驱动程序加载和其他内核相关的信息。</p>
+<p><code>dmesg</code></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>将这份打印件和安装介质的副本存放在安全的地方。如果需要进行紧急恢复操作，启动安装介质并选择“ Live CD ”以访问救援 Shell 。这个救援模式可以用来查看系统的当前状态，如果需要的话，还可以重新格式化磁盘并从备份中恢复数据。</p>
+<p>将这份打印件和安装介质的副本存放在安全的地方。如果需要进行紧急恢复操作，启动安装介质并选择 <code>Live CD</code> 以访问救援 Shell。这个救援模式可以用来查看系统的当前状态，如果需要的话，还可以重新格式化磁盘并从备份中恢复数据。</p>
 </div>
 <div class="paragraph">
 <p>接下来，测试救援 shell 和备份。记录下操作步骤，并将这些记录与介质、打印件和备份一起存储。这些记录可以防止在紧急恢复过程中因压力而意外破坏备份。</p>
@@ -24400,10 +24392,10 @@ scsibus1:
 <div class="sect2">
 <h3 id="disks-virtual">20.10. 内存磁盘<a class="anchor" href="#disks-virtual"></a></h3>
 <div class="paragraph">
-<p>除了物理磁盘外， FreeBSD 还支持创建和使用内存磁盘。内存磁盘的一个可能用途是在不先将其刻录到 CD 或 DVD 上，然后挂载 CD/DVD 媒体的情况下访问 ISO 文件系统的内容。</p>
+<p>除了物理磁盘外，FreeBSD 还支持创建和使用内存磁盘。内存磁盘的一个可能用途是在不先将其刻录到 CD 或 DVD 上，然后挂载 CD/DVD 媒体的情况下访问 ISO 文件系统的内容。</p>
 </div>
 <div class="paragraph">
-<p>在 FreeBSD 中， <a href="https://man.freebsd.org/cgi/man.cgi?query=md&amp;sektion=4&amp;format=html">md(4)</a> 驱动程序用于提供对内存磁盘的支持。 <span class="filename">GENERIC</span> 内核包含了这个驱动程序。当使用自定义内核配置文件时，请确保包含以下行：</p>
+<p>在 FreeBSD 中，<a href="https://man.freebsd.org/cgi/man.cgi?query=md&amp;sektion=4&amp;format=html">md(4)</a> 驱动程序用于提供对内存磁盘的支持。<span class="filename">GENERIC</span> 内核包含了这个驱动程序。当使用自定义内核配置文件时，请确保包含以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -24411,9 +24403,9 @@ scsibus1:
 </div>
 </div>
 <div class="sect3">
-<h4 id="disks-mdconfig">20.10.1. 附加和分离现有图片<a class="anchor" href="#disks-mdconfig"></a></h4>
+<h4 id="disks-mdconfig">20.10.1. 附加和分离现有镜像<a class="anchor" href="#disks-mdconfig"></a></h4>
 <div class="paragraph">
-<p>要挂载现有的文件系统镜像，使用 <code>mdconfig</code> 命令指定 ISO 文件的名称和一个空闲的单元号。然后，使用该单元号将其挂载到现有的挂载点上。一旦挂载成功， ISO 中的文件将会出现在挂载点上。以下示例将_diskimage.iso_附加到内存设备 <span class="filename">/dev/md0</span> ，然后将该内存设备挂载到 <span class="filename">/mnt</span> ：</p>
+<p>要挂载现有的文件系统镜像，使用 <code>mdconfig</code> 命令指定 ISO 文件的名称和一个空闲的设备号。然后，使用该设备号将其挂载到现有的挂载点上。一旦挂载成功，ISO 中的文件将会出现在挂载点上。以下示例将 <em>diskimage.iso</em> 附加到内存设备 <span class="filename">/dev/md0</span>，然后将该内存设备挂载到 <span class="filename">/mnt</span>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24422,7 +24414,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>请注意，使用 <code>-t cd9660</code> 来挂载 ISO 格式的文件。如果没有使用 <code>-u</code> 指定单元号， <code>mdconfig</code> 将自动分配一个未使用的内存设备，并输出分配的单元号的名称，例如 <span class="filename">md4</span> 。有关此命令及其选项的更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mdconfig&amp;sektion=8&amp;format=html">mdconfig(8)</a> 。</p>
+<p>请注意，使用 <code>-t cd9660</code> 来挂载 ISO 格式的文件。如果没有使用 <code>-u</code> 指定设备号，<code>mdconfig</code> 将自动分配一个未使用的内存设备，并输出分配的单元号的名称，例如 <span class="filename">md4</span>。有关此命令及其选项的更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mdconfig&amp;sektion=8&amp;format=html">mdconfig(8)</a>。</p>
 </div>
 <div class="paragraph">
 <p>当内存磁盘不再使用时，应该将其资源释放回系统。首先，卸载文件系统，然后使用 <code>mdconfig</code> 将磁盘从系统中分离并释放其资源。继续本示例：</p>
@@ -24434,7 +24426,7 @@ scsibus1:
 </div>
 </div>
 <div class="paragraph">
-<p>要确定系统是否仍连接有任何内存磁盘，请输入 <code>mdconfig -l</code> 。</p>
+<p>要确定系统是否仍连接有任何内存磁盘，请输入 <code>mdconfig -l</code>。</p>
 </div>
 </div>
 <div class="sect3">
@@ -24461,7 +24453,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 </div>
 </div>
 <div class="paragraph">
-<p>要创建一个新的基于文件的内存磁盘，首先需要分配一个磁盘区域来使用。以下示例创建一个名为 [newimage] 的空白 5MB 文件：</p>
+<p>要创建一个新的基于文件的内存磁盘，首先需要分配一个磁盘区域来使用。以下示例创建一个名为 <span class="filename">newimage</span> 的空白 5MB 文件：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24489,7 +24481,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 </div>
 </div>
 <div class="paragraph">
-<p>使用 <code>mdconfig</code> 命令创建一个基于文件或内存的文件系统需要多个命令。 FreeBSD 还提供了 <code>mdmfs</code> 命令，它可以自动配置一个内存磁盘，使用 UFS 文件系统进行格式化，并挂载它。例如，在使用 <code>dd</code> 命令创建了名为_newimage_的文件后，下面这个命令相当于运行上面显示的 <code>bsdlabel</code> 、 <code>newfs</code> 和 <code>mount</code> 命令：</p>
+<p>使用 <code>mdconfig</code> 命令创建一个基于文件或内存的文件系统需要多个命令。FreeBSD 还提供了 <code>mdmfs</code> 命令，它可以自动配置一个内存磁盘，使用 UFS 文件系统进行格式化，并挂载它。例如，在使用 <code>dd</code> 命令创建了名为 <em>newimage</em> 的文件后，下面这个命令相当于运行上面显示的 <code>bsdlabel</code>、<code>newfs</code> 和 <code>mount</code> 命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24505,7 +24497,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 </div>
 </div>
 <div class="paragraph">
-<p>如果未指定单元号， <code>mdmfs</code> 将自动选择一个未使用的内存设备。有关 <code>mdmfs</code> 的更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mdmfs&amp;sektion=8&amp;format=html">mdmfs(8)</a> 。</p>
+<p>如果未指定设备号，<code>mdmfs</code> 将自动选择一个未使用的内存设备。有关 <code>mdmfs</code> 的更多详细信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=mdmfs&amp;sektion=8&amp;format=html">mdmfs(8)</a>。</p>
 </div>
 </div>
 </div>
@@ -24515,13 +24507,13 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 <p>FreeBSD 提供了一个与 <a href="./#soft-updates">Soft Updates</a> 配合使用的功能：文件系统快照。</p>
 </div>
 <div class="paragraph">
-<p>UFS 快照允许用户创建指定文件系统的镜像，并将其视为文件。 快照文件必须在执行操作的文件系统中创建，并且用户每个文件系统最多可以创建 20 个快照。 活动快照在超级块中记录，因此它们在卸载和重新挂载操作以及系统重新启动时是持久的。 当不再需要快照时，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rm&amp;sektion=1&amp;format=html">rm(1)</a> 命令将其删除。 尽管可以以任何顺序删除快照，但可能无法获取所有已释放块的使用空间，因为另一个快照可能会占用一些已释放的块。</p>
+<p>UFS 快照允许用户创建指定文件系统的镜像，并将其视为文件。快照文件必须在执行操作的文件系统中创建，并且用户每个文件系统最多可以创建 20 个快照。 活动快照在超级块中记录，因此它们在卸载和重新挂载操作以及系统重新启动时是持久的。当不再需要快照时，可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=rm&amp;sektion=1&amp;format=html">rm(1)</a> 命令将其删除。 尽管可以以任何顺序删除快照，但可能无法获取所有已释放块的使用空间，因为另一个快照可能会占用一些已释放的块。</p>
 </div>
 <div class="paragraph">
-<p>在创建快照文件后， <a href="https://man.freebsd.org/cgi/man.cgi?query=mksnap_ffs&amp;sektion=8&amp;format=html">mksnap_ffs(8)</a> 会设置不可更改的 <code>snapshot</code> 文件标志。 <a href="https://man.freebsd.org/cgi/man.cgi?query=unlink&amp;sektion=1&amp;format=html">unlink(1)</a> 对于快照文件有一个例外，因为它允许将其删除。</p>
+<p>在创建快照文件后，<a href="https://man.freebsd.org/cgi/man.cgi?query=mksnap_ffs&amp;sektion=8&amp;format=html">mksnap_ffs(8)</a> 会设置不可更改的 <code>snapshot</code> 文件标志。<a href="https://man.freebsd.org/cgi/man.cgi?query=unlink&amp;sektion=1&amp;format=html">unlink(1)</a> 对于快照文件有一个例外，因为它允许将其删除。</p>
 </div>
 <div class="paragraph">
-<p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> 创建快照。要将 /var 的快照放置在文件 /var/snapshot/snap 中，请使用以下命令：</p>
+<p>使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> 创建快照。要将 <span class="filename">/var</span> 的快照放置在文件 <span class="filename">/var/snapshot/snap</span> 中，请使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24537,7 +24529,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 </div>
 </div>
 <div class="paragraph">
-<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=find&amp;sektion=1&amp;format=html">find(1)</a> 命令在文件系统上找到快照文件，例如 <span class="filename">/var</span> 。</p>
+<p>可以使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=find&amp;sektion=1&amp;format=html">find(1)</a> 命令在文件系统上找到快照文件，例如 <span class="filename">/var</span>。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24556,10 +24548,10 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 <p>文件系统完整性检查器 <a href="https://man.freebsd.org/cgi/man.cgi?query=fsck&amp;sektion=8&amp;format=html">fsck(8)</a> 可以在快照上运行。假设文件系统在挂载时是干净的，这应该始终提供一个干净且不变的结果。</p>
 </li>
 <li>
-<p>在快照上运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 将生成一个与文件系统和快照的时间戳一致的转储文件。 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 还可以使用 <code>-L</code> 选项一次性拍摄快照、创建转储镜像并删除快照。</p>
+<p>在快照上运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 将生成一个与文件系统和快照的时间戳一致的转储文件。<a href="https://man.freebsd.org/cgi/man.cgi?query=dump&amp;sektion=8&amp;format=html">dump(8)</a> 还可以使用 <code>-L</code> 选项一次性拍摄快照、创建转储镜像并删除快照。</p>
 </li>
 <li>
-<p>快照可以作为文件系统的冻结镜像进行挂载。要挂载快照，请运行： <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> <span class="filename">/var/snapshot/snap</span> 。</p>
+<p>快照可以作为文件系统的冻结镜像进行挂载。要使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=mount&amp;sektion=8&amp;format=html">mount(8)</a> 挂载 <span class="filename">/var/snapshot/snap</span> 快照，请运行：</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="shell"><span class="c"># mdconfig -a -t vnode -o readonly -f /var/snapshot/snap -u 4</span>
@@ -24570,7 +24562,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 </ul>
 </div>
 <div class="paragraph">
-<p>冻结的文件 <code>/var</code> 现在可以通过 <code>/mnt</code> 访问。一开始，所有内容都将保持与创建快照时相同的状态。唯一的例外是，任何早期的快照将显示为长度为零的文件。要卸载快照，请使用：</p>
+<p>冻结的文件 <span class="filename">/var</span> 现在可以通过 <span class="filename">/mnt</span> 访问。一开始，所有内容都将保持与创建快照时相同的状态。唯一的例外是，任何早期的快照将显示为长度为零的文件。要卸载快照，请使用：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24579,7 +24571,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 </div>
 </div>
 <div class="paragraph">
-<p>有关 <code>softupdates</code> 和文件系统快照的更多信息，包括技术论文，请访问马歇尔·柯克·麦库西克的网站： <a href="http://www.mckusick.com/" class="bare">http://www.mckusick.com/</a> 。</p>
+<p>有关 <code>softupdates</code> 和文件系统快照的更多信息，包括技术论文，请访问 Marshall Kirk McKusick’s 的网站：http://www.mckusick.com/[<a href="http://www.mckusick.com/" class="bare">http://www.mckusick.com/</a>]。</p>
 </div>
 </div>
 <div class="sect2">
@@ -24588,7 +24580,7 @@ Filesystem 1K-blocks Used Avail Capacity  Mounted on
 <p>磁盘配额可以用于限制用户或用户组在每个文件系统上分配的磁盘空间或文件数量。这可以防止某个用户或用户组占用所有可用的磁盘空间。</p>
 </div>
 <div class="paragraph">
-<p>本节介绍了如何配置 UFS 文件系统的磁盘配额。要在 ZFS 文件系统上配置配额，请参考 <a href="./#zfs-zfs-quota">数据集、用户和组配额</a> 。</p>
+<p>本节介绍了如何配置 UFS 文件系统的磁盘配额。要在 ZFS 文件系统上配置配额，请参考 <a href="./#zfs-zfs-quota">“数据集、用户和组配额”</a>。</p>
 </div>
 <div class="sect3">
 <h4 id="_启用磁盘配额">20.12.1. 启用磁盘配额<a class="anchor" href="#_启用磁盘配额"></a></h4>
@@ -24602,7 +24594,7 @@ kern.features.ufs_quota: 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中， <code>1</code> 表示支持配额。如果值是 <code>0</code> ，请将以下行添加到自定义内核配置文件中，并按照 <a href="./#kernelconfig">配置 FreeBSD 内核</a> 中的说明重新构建内核。</p>
+<p>在这个例子中，<code>1</code> 表示支持配额。如果值是 <code>0</code>，请将以下行添加到自定义内核配置文件中，并按照 <a href="./#kernelconfig">配置 FreeBSD 内核</a> 中的说明重新构建内核。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -24610,7 +24602,7 @@ kern.features.ufs_quota: 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>接下来，在 [/etc/rc.conf](/etc/rc.conf) 中启用磁盘配额：</p>
+<p>接下来，在 <span class="filename">/etc/rc.conf</span> 中启用磁盘配额：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -24626,7 +24618,7 @@ kern.features.ufs_quota: 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>最后，编辑 [/etc/fstab] 文件以按文件系统启用磁盘配额。要在文件系统上启用每个用户的配额，请在 [/etc/fstab] 文件中的文件系统条目的选项字段中添加&#34;userquota&#34;。例如：</p>
+<p>最后，编辑 <span class="filename">/etc/fstab</span> 文件以按文件系统启用磁盘配额。要在文件系统上启用每个用户的配额，请在 <span class="filename">/etc/fstab</span> 文件中的文件系统条目的选项字段中添加 <code>userquota</code>。例如：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -24634,7 +24626,7 @@ kern.features.ufs_quota: 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>要启用组配额，请使用 <code>groupquota</code> 。要同时启用用户和组配额，请使用逗号分隔选项：</p>
+<p>要启用组配额，请使用 <code>groupquota</code>。要同时启用用户和组配额，请使用逗号分隔选项：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -24642,13 +24634,13 @@ kern.features.ufs_quota: 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>默认情况下，配额文件存储在文件系统的根目录中，文件名为 quota.user 和 quota.group 。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a> 。不建议指定配额文件的替代位置。</p>
+<p>默认情况下，配额文件存储在文件系统的根目录中，文件名为 <span class="filename">quota.user</span> 和 <span class="filename">quota.group</span>。有关更多信息，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=fstab&amp;sektion=5&amp;format=html">fstab(5)</a>。不建议指定配额文件的替代位置。</p>
 </div>
 <div class="paragraph">
-<p>配置完成后，重新启动系统， [/etc/rc] 将自动运行适当的命令，为 [/etc/fstab] 中启用的所有配额创建初始配额文件。</p>
+<p>配置完成后，重新启动系统，<span class="filename">/etc/rc</span> 将自动运行适当的命令，为 <span class="filename">/etc/fstab</span> 中启用的所有配额创建初始配额文件。</p>
 </div>
 <div class="paragraph">
-<p>在正常的操作过程中，通常不需要手动运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotacheck&amp;sektion=8&amp;format=html">quotacheck(8)</a> 、 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotaon&amp;sektion=8&amp;format=html">quotaon(8)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotaoff&amp;sektion=8&amp;format=html">quotaoff(8)</a> 。然而，应该阅读这些手册页以熟悉它们的操作。</p>
+<p>在正常的操作过程中，通常不需要手动运行 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotacheck&amp;sektion=8&amp;format=html">quotacheck(8)</a>、<a href="https://man.freebsd.org/cgi/man.cgi?query=quotaon&amp;sektion=8&amp;format=html">quotaon(8)</a> 或 <a href="https://man.freebsd.org/cgi/man.cgi?query=quotaoff&amp;sektion=8&amp;format=html">quotaoff(8)</a>。然而，应该阅读这些手册页以熟悉它们的操作。</p>
 </div>
 </div>
 <div class="sect3">
@@ -24668,16 +24660,16 @@ kern.features.ufs_quota: 1</code></pre>
 <p>系统现在可以使用 <code>edquota</code> 来分配配额限制。</p>
 </div>
 <div class="paragraph">
-<p>有几种选项可用于限制用户或组分配的磁盘空间量以及他们可以创建的文件数量。分配可以基于磁盘空间（块配额）、文件数量（ inode 配额）或两者的组合进行限制。每个限制进一步分为两个类别：硬限制和软限制。</p>
+<p>有几种选项可用于限制用户或组分配的磁盘空间量以及他们可以创建的文件数量。分配可以基于磁盘空间（块配额）、文件数量（inode 配额）或两者的组合进行限制。每个限制进一步分为两个类别：硬限制和软限制。</p>
 </div>
 <div class="paragraph">
-<p>硬限制不能超过。一旦用户达到硬限制，该用户在该文件系统上将无法再进行进一步的分配。例如，如果用户在文件系统上的硬限制是 500 kbytes ，并且当前正在使用 490 kbytes ，那么用户只能再分配额外的 10 kbytes 。尝试分配额外的 11 kbytes 将失败。</p>
+<p>硬限制不能超过。一旦用户达到硬限制，该用户在该文件系统上将无法再进行进一步的分配。例如，如果用户在文件系统上的硬限制是 500 kbytes ，并且当前正在使用 490 kbytes，那么用户只能再分配额外的 10 kbytes。尝试分配额外的 11 kbytes 将失败。</p>
 </div>
 <div class="paragraph">
 <p>软限制可以在有限的时间内超过，这被称为宽限期，默认为一周。如果用户超过限制的时间超过宽限期，软限制将变为硬限制，不再允许进一步的分配。当用户再次低于软限制时，宽限期将被重置。</p>
 </div>
 <div class="paragraph">
-<p>在下面的示例中，正在编辑 <code>test</code> 账户的配额。当调用 <code>edquota</code> 时，会打开由 <code>EDITOR</code> 指定的编辑器，以便编辑配额限制。默认编辑器设置为 vi 。</p>
+<p>在下面的示例中，正在编辑 <code>test</code> 账户的配额。当调用 <code>edquota</code> 时，会打开由 <code>EDITOR</code> 指定的编辑器，以便编辑配额限制。默认编辑器设置为 vi。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24690,7 +24682,7 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 </div>
 </div>
 <div class="paragraph">
-<p>通常，每个启用了配额的文件系统通常有两行。一行表示块限制，另一行表示 inode 限制。更改值以修改配额限制。例如，要将 <span class="filename">/usr</span> 的块限制提高到软限制 <code>500</code> 和硬限制 <code>600</code> ，请按照以下方式更改该行中的值：</p>
+<p>通常，每个启用了配额的文件系统通常有两行。一行表示块限制，另一行表示 inode 限制。更改值以修改配额限制。例如，要将 <span class="filename">/usr</span> 的块限制提高到软限制 <code>500</code> 和硬限制 <code>600</code>，请按照以下方式更改该行中的值：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -24701,7 +24693,7 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 <p>新的配额限制在退出编辑器后生效。</p>
 </div>
 <div class="paragraph">
-<p>有时候，对一系列用户设置配额限制是可取的。首先，将所需的配额限制分配给一个用户。然后，使用 <code>-p</code> 选项将该配额复制到指定范围的用户 ID （ UID ）。以下命令将复制 UID 为 <code>10 , 000</code> 到 <code>19 , 999</code> 的用户的配额限制：</p>
+<p>有时候，对一系列用户设置配额限制是可取的。首先，将所需的配额限制分配给一个用户。然后，使用 <code>-p</code> 选项将该配额复制到指定范围的用户 ID（UID）。以下命令将复制 UID 为 <code>10,000</code> 到 <code>19,999</code> 的用户的配额限制：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24709,13 +24701,13 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 </div>
 </div>
 <div class="paragraph">
-<p>有关更多信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=edquota&amp;sektion=8&amp;format=html">edquota(8)</a> 。</p>
+<p>有关更多信息，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=edquota&amp;sektion=8&amp;format=html">edquota(8)</a>。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_检查配额限制和磁盘使用情况">20.12.3. 检查配额限制和磁盘使用情况<a class="anchor" href="#_检查配额限制和磁盘使用情况"></a></h4>
 <div class="paragraph">
-<p>要检查单个用户或组的配额和磁盘使用情况，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=quota&amp;sektion=1&amp;format=html">quota(1)</a> 。用户只能查看自己的配额和所属组的配额。只有超级用户才能查看所有用户和组的配额。要获取启用了配额的文件系统的所有配额和磁盘使用情况的摘要，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=repquota&amp;sektion=8&amp;format=html">repquota(8)</a> 。</p>
+<p>要检查单个用户或组的配额和磁盘使用情况，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=quota&amp;sektion=1&amp;format=html">quota(1)</a>。用户只能查看自己的配额和所属组的配额。只有超级用户才能查看所有用户和组的配额。要获取启用了配额的文件系统的所有配额和磁盘使用情况的摘要，请使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=repquota&amp;sektion=8&amp;format=html">repquota(8)</a>。</p>
 </div>
 <div class="paragraph">
 <p>通常情况下，用户没有使用任何磁盘空间的文件系统在 <code>quota</code> 命令的输出中不会显示，即使用户对该文件系统有配额限制。使用 <code>-v</code> 选项可以显示这些文件系统。以下是一个用户在两个文件系统上设置了配额限制时，使用 <code>quota -v</code> 命令的示例输出。</p>
@@ -24729,16 +24721,16 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 </div>
 </div>
 <div class="paragraph">
-<p>在这个例子中，用户当前超过了在 <code>/usr</code> 目录下的 50 kbytes 的软限制，超出了 15 kbytes ，并且还剩下 5 天的宽限期。星号 <code>*</code> 表示用户当前超过了配额限制。</p>
+<p>在这个例子中，用户当前超过了在 <span class="filename">/usr</span> 目录下的 50 kbytes 的软限制，超出了 15 kbytes，并且还剩下 5 天的宽限期。星号 <code>*</code> 表示用户当前超过了配额限制。</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_nfs_上的配额限制">20.12.4. NFS 上的配额限制<a class="anchor" href="#_nfs_上的配额限制"></a></h4>
 <div class="paragraph">
-<p>配额由 NFS 服务器上的配额子系统强制执行。 <a href="https://man.freebsd.org/cgi/man.cgi?query=rpc.rquotad&amp;sektion=8&amp;format=html">rpc.rquotad(8)</a> 守护进程将配额信息提供给 NFS 客户端上的 <code>quota</code> 命令，使得这些机器上的用户可以查看他们的配额统计信息。</p>
+<p>配额由 NFS 服务器上的配额子系统强制执行。<a href="https://man.freebsd.org/cgi/man.cgi?query=rpc.rquotad&amp;sektion=8&amp;format=html">rpc.rquotad(8)</a> 守护进程将配额信息提供给 NFS 客户端上的 <code>quota</code> 命令，使得这些机器上的用户可以查看他们的配额统计信息。</p>
 </div>
 <div class="paragraph">
-<p>在 NFS 服务器上，通过从 <strong class="filename">/etc/inetd.conf</strong> 文件中的这一行中删除 <code>#</code> 来启用 <code>rpc.rquotad</code> 。</p>
+<p>在 NFS 服务器上，通过从 <strong class="filename">/etc/inetd.conf</strong> 文件中的这一行中删除 <code>#</code> 来启用 <code>rpc.rquotad</code>。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -24746,7 +24738,7 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 </div>
 </div>
 <div class="paragraph">
-<p>然后，重新启动 <code>inetd</code> ：</p>
+<p>然后，重新启动 <code>inetd</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24758,10 +24750,10 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 <div class="sect2">
 <h3 id="disks-encrypting">20.13. 加密磁盘分区<a class="anchor" href="#disks-encrypting"></a></h3>
 <div class="paragraph">
-<p>FreeBSD 提供了出色的在线保护措施，防止未经授权的数据访问。文件权限和强制访问控制（ MAC ）可以在操作系统处于活动状态且计算机已经启动时，防止未经授权的用户访问数据。然而，如果攻击者可以物理访问计算机并将计算机的硬盘移动到另一个系统以复制和分析数据，操作系统强制执行的权限就变得无关紧要了。</p>
+<p>FreeBSD 提供了出色的在线保护措施，防止未经授权的数据访问。文件权限和强制访问控制（MAC）可以在操作系统处于活动状态且计算机已经启动时，防止未经授权的用户访问数据。然而，如果攻击者可以物理访问计算机并将计算机的硬盘移动到另一个系统以复制和分析数据，操作系统强制执行的权限就变得无关紧要了。</p>
 </div>
 <div class="paragraph">
-<p>无论攻击者如何获得硬盘或关闭电脑， FreeBSD 中内置的基于 GEOM 的加密子系统能够保护计算机文件系统上的数据，即使是对于拥有大量资源和高度动机的攻击者也是如此。与加密单个文件的加密方法不同，内置的 <code>gbde</code> 和 <code>geli</code> 实用程序可以用于透明地加密整个文件系统。明文永远不会接触到硬盘的盘片。</p>
+<p>无论攻击者如何获得硬盘或关闭电脑，FreeBSD 中内置的基于 GEOM 的加密子系统能够保护计算机文件系统上的数据，即使是对于拥有大量资源和高度动机的攻击者也是如此。与加密单个文件的加密方法不同，内置的 <code>gbde</code> 和 <code>geli</code> 实用程序可以用于透明地加密整个文件系统。明文永远不会接触到硬盘的盘片。</p>
 </div>
 <div class="paragraph">
 <p>本章介绍了如何在 FreeBSD 上创建加密文件系统。首先使用 <code>gbde</code> 演示了该过程，然后使用 <code>geli</code> 演示了相同的示例。</p>
@@ -24772,7 +24764,7 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 <p><a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=4&amp;format=html">gbde(4)</a> 设施的目标是为攻击者提供一个巨大的挑战，以防止其获取冷存储设备的内容。然而，如果计算机在运行时被入侵并且存储设备被主动连接，或者攻击者拥有有效的密码短语，那么它对存储设备的内容提供不了任何保护。因此，在系统运行时提供物理安全性并保护加密机制使用的密码短语非常重要。</p>
 </div>
 <div class="paragraph">
-<p>该设施提供了几个屏障来保护存储在每个磁盘扇区中的数据。它使用 128 位 AES 在 CBC 模式下对磁盘扇区的内容进行加密。磁盘上的每个扇区都使用不同的 AES 密钥进行加密。有关加密设计的更多信息，包括如何从用户提供的密码短语派生扇区密钥，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=4&amp;format=html">gbde(4)</a> 。</p>
+<p>该设施提供了几个屏障来保护存储在每个磁盘扇区中的数据。它使用 128 位 AES 在 CBC 模式下对磁盘扇区的内容进行加密。磁盘上的每个扇区都使用不同的 AES 密钥进行加密。有关加密设计的更多信息，包括如何从用户提供的密码短语派生扇区密钥，请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=4&amp;format=html">gbde(4)</a>。</p>
 </div>
 <div class="paragraph">
 <p>FreeBSD 提供了一个用于 gbde 的内核模块，可以使用以下命令加载：</p>
@@ -24786,61 +24778,18 @@ Quotas <span class="k">for </span>user <span class="nb">test</span>:
 <p>如果使用自定义内核配置文件，请确保其中包含以下行：</p>
 </div>
 <div class="paragraph">
-<p><code>options GEOM_BDE</code> 可选项</p>
+<p><code>options GEOM_BDE</code></p>
 </div>
 <div class="paragraph">
-<p>下面的示例演示了向系统添加新的硬盘，该硬盘将容纳一个加密分区，并将其挂载为 <span class="filename">/private</span> 。</p>
+<p>下面的示例演示了向系统添加新的硬盘，该硬盘将容纳一个加密分区，并将其挂载为 <span class="filename">/private</span>。</p>
 </div>
 <div class="olist arabic procedure">
 <div class="title">过程：使用 gbde 加密分区</div>
 <ol class="arabic">
 <li>
-<p>在计算机上安装并配置 gbde 软件。</p>
-</li>
-<li>
-<p>打开终端或命令提示符，并使用管理员权限登录。</p>
-</li>
-<li>
-<p>使用以下命令创建一个新的 gbde 加密容器：
-<code>`
-gbde init /dev/daX
-</code>`
-其中， /dev/daX 是要加密的分区设备名称。</p>
-</li>
-<li>
-<p>输入一个密码来保护加密容器，并确保密码足够强大和安全。</p>
-</li>
-<li>
-<p>使用以下命令打开加密容器：
-<code>`
-gbde attach /dev/daX
-</code>`</p>
-</li>
-<li>
-<p>输入之前设置的密码来解锁加密容器。</p>
-</li>
-<li>
-<p>现在，您可以像使用普通分区一样使用加密分区了。</p>
-</li>
-<li>
-<p>当您不再需要使用加密分区时，使用以下命令关闭加密容器：
-<code>`
-gbde detach /dev/daX
-</code>`
-这将锁定加密容器并保护您的数据。</p>
-</li>
-</ol>
-</div>
+<p>添加新的硬盘</p>
 <div class="paragraph">
-<p>请注意，使用 gbde 加密分区时，请确保备份重要数据，并妥善保管加密容器的密码。
-. 添加新的硬盘</p>
-</div>
-<div class="paragraph">
-<p>+
-按照 <a href="#disks-adding">添加磁盘</a> 中所述的方法将新驱动器安装到系统中。对于本示例，已添加了一个新的硬盘分区，表示为 <span class="filename">/dev/ad4s1c</span> ，而 <span class="filename">/dev/ad0s1*</span> 表示现有的标准 FreeBSD 分区。</p>
-</div>
-<div class="paragraph">
-<p>+</p>
+<p>按照 <a href="#disks-adding">添加磁盘</a> 中所述的方法将新驱动器安装到系统中。对于本示例，已添加了一个新的硬盘分区，表示为 <span class="filename">/dev/ad4s1c</span>，而 <span class="filename">/dev/ad0s1*</span> 表示现有的标准 FreeBSD 分区。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24850,8 +24799,7 @@ gbde detach /dev/daX
 /dev/ad0s1a     /dev/ad0s1d     /dev/ad4</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>创建一个目录来存放 <code>gbde</code> 锁文件。</p>
 <div class="listingblock">
@@ -24860,13 +24808,13 @@ gbde detach /dev/daX
 </div>
 </div>
 <div class="paragraph">
-<p>gbde 锁定文件包含了 gbde 访问加密分区所需的信息。如果没有访问锁定文件的权限， gbde 将无法解密加密分区中的数据，除非进行大量的手动干预，而该软件不支持此操作。每个加密分区都使用一个单独的锁定文件。</p>
+<p>gbde 锁定文件包含了 gbde 访问加密分区所需的信息。如果没有访问锁定文件的权限，gbde 将无法解密加密分区中的数据，除非进行大量的手动干预，而该软件不支持此操作。每个加密分区都使用一个单独的锁定文件。</p>
 </div>
 </li>
 <li>
 <p>初始化 <code>gbde</code> 分区</p>
 <div class="paragraph">
-<p>在使用之前，必须初始化 gbde 分区。这个初始化只需要执行一次。该命令将打开默认编辑器，以便在模板中设置各种配置选项。对于与 UFS 文件系统一起使用，请将 sector_size 设置为 2048 ：</p>
+<p>在使用之前，必须初始化 gbde 分区。这个初始化只需要执行一次。该命令将打开默认编辑器，以便在模板中设置各种配置选项。对于与 UFS 文件系统一起使用，请将 sector_size 设置为 2048：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24883,7 +24831,7 @@ sector_size	<span class="o">=</span>	2048
 </div>
 </div>
 <div class="paragraph">
-<p>编辑保存后，用户将被要求两次输入用于保护数据的密码短语。两次输入的密码短语必须相同。 Gbde 保护数据的能力完全取决于密码短语的质量。有关如何选择既安全又容易记住的密码短语的提示，请参阅 <a href="http://world.std.com/" class="bare">http://world.std.com/</a> \~ reinhold/diceware.html[<a href="http://world.std.com/" class="bare">http://world.std.com/</a> ~ reinhold/diceware.htm] 。</p>
+<p>编辑保存后，用户将被要求两次输入用于保护数据的密码短语。两次输入的密码短语必须相同。Gbde 保护数据的能力完全取决于密码短语的质量。有关如何选择既安全又容易记住的密码短语的提示，请参阅 <a href="http://world.std.com/~reinhold/diceware.html">http://world.std.com/~reinhold/diceware.htm</a>。</p>
 </div>
 <div class="paragraph">
 <p>这个初始化操作创建了一个用于 gbde 分区的锁文件。在这个例子中，它被存储为 <span class="filename">/etc/gbde/ad4s1c.lock</span> 。锁文件必须以 &#34;.lock&#34; 结尾，以便被 <span class="filename">/etc/rc.d/gbde</span> 启动脚本正确地检测到。</p>
@@ -24966,7 +24914,7 @@ Filesystem        Size   Used  Avail Capacity  Mounted on
 </ol>
 </div>
 <div class="paragraph">
-<p>每次启动后，必须手动重新连接加密文件系统到内核，检查错误并挂载，然后才能使用这些文件系统。要配置这些步骤，请将以下行添加到 <code>/etc/rc.conf</code> 文件中：</p>
+<p>每次启动后，必须手动重新连接加密文件系统到内核，检查错误并挂载，然后才能使用这些文件系统。要配置这些步骤，请将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -24986,7 +24934,7 @@ gbde_lockdir=&#34;/etc/gbde&#34;</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>sysinstall 与 gbde 加密设备不兼容。在启动 sysinstall 之前，必须将所有的 .bde 设备从内核中分离，否则在设备的初始探测过程中， sysinstall 会崩溃。要分离示例中使用的加密设备，请使用以下命令：</p>
+<p>sysinstall 与 gbde 加密设备不兼容。在启动 sysinstall 之前，必须将所有的 <span class="filename">*.bde</span> 设备从内核中分离，否则在设备的初始探测过程中，sysinstall 会崩溃。要分离示例中使用的加密设备，请使用以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25009,7 +24957,7 @@ gbde_lockdir=&#34;/etc/gbde&#34;</pre>
 <p>当可用时，利用 <a href="https://man.freebsd.org/cgi/man.cgi?query=crypto&amp;sektion=9&amp;format=html">crypto(9)</a> 框架并自动使用加密硬件。</p>
 </li>
 <li>
-<p>支持多种加密算法，如 AES 、 Blowfish 和 3DES 。</p>
+<p>支持多种加密算法，如 AES、Blowfish 和 3DES。</p>
 </li>
 <li>
 <p>允许对根分区进行加密。在系统启动期间，将要求输入用于访问加密根分区的密码短语。</p>
@@ -25032,53 +24980,15 @@ gbde_lockdir=&#34;/etc/gbde&#34;</pre>
 <p>更多功能和使用示例可以在 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 中找到。</p>
 </div>
 <div class="paragraph">
-<p>下面的示例描述了如何生成一个密钥文件，该文件将作为加密提供者在 <code>/private</code> 下挂载的主密钥的一部分。密钥文件将提供一些用于加密主密钥的随机数据。主密钥还将受到密码短语的保护。提供者的扇区大小将为 4kB 。该示例描述了如何连接到 <code>geli</code> 提供者，创建一个文件系统，挂载它，使用它，并最终如何卸载它。</p>
+<p>下面的示例描述了如何生成一个密钥文件，该文件将作为加密提供者在 <span class="filename">/private</span> 下挂载的主密钥的一部分。密钥文件将提供一些用于加密主密钥的随机数据。主密钥还将受到密码短语的保护。提供者的扇区大小将为 4kB 。该示例描述了如何连接到 <code>geli</code> 提供者，创建一个文件系统，挂载它，使用它，并最终如何卸载它。</p>
 </div>
 <div class="olist arabic procedure">
 <div class="title">过程：使用 <code>geli</code> 加密分区</div>
 <ol class="arabic">
 <li>
-<p>在计算机上安装并配置 <code>geli</code> 工具。</p>
-</li>
-<li>
-<p>确保要加密的分区没有被挂载。</p>
-</li>
-<li>
-<p>使用以下命令创建一个新的加密设备：
-<code>`
-# geli init -s 4096 /dev/adaXsY
-</code>`
-其中 <code>/dev/adaXsY</code> 是要加密的分区的路径。</p>
-</li>
-<li>
-<p>设置加密设备的密码：
-<code>`
-# geli configure -b -k /boot/encryption.key /dev/adaXsY
-</code>`
-这将在 <code>/boot/encryption.key</code> 文件中存储加密设备的密钥。</p>
-</li>
-<li>
-<p>使用以下命令将加密设备解锁并挂载到指定的挂载点：
-<code>`
-# geli attach -k /boot/encryption.key /dev/adaXsY
-</code>`
-这将要求您输入之前设置的密码。</p>
-</li>
-<li>
-<p>现在，您可以将加密设备作为普通分区来使用，例如格式化它并将文件系统挂载到指定的挂载点。</p>
-</li>
-</ol>
-</div>
+<p>加载 <code>geli</code> 支持</p>
 <div class="paragraph">
-<p>请注意，加密分区的解锁只在当前会话中有效。在重新启动计算机之前，您需要重新执行步骤 5 以重新解锁和挂载加密设备。
-. 加载 <code>geli</code> 支持</p>
-</div>
-<div class="paragraph">
-<p>+
-支持 <code>geli</code> 的功能作为可加载的内核模块提供。要配置系统在启动时自动加载该模块，请将以下行添加到 <span class="filename">/boot/loader.conf</span> 文件中：</p>
-</div>
-<div class="paragraph">
-<p>+</p>
+<p>支持 <code>geli</code> 的功能作为可加载的内核模块提供。要配置系统在启动时自动加载该模块，请将以下行添加到 <span class="filename">/boot/loader.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -25086,11 +24996,7 @@ gbde_lockdir=&#34;/etc/gbde&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>+
-现在加载内核模块：</p>
-</div>
-<div class="paragraph">
-<p>+</p>
+<p>现在加载内核模块：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25098,11 +25004,7 @@ gbde_lockdir=&#34;/etc/gbde&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>+
-对于自定义内核，请确保内核配置文件包含以下行：</p>
-</div>
-<div class="paragraph">
-<p>+</p>
+<p>对于自定义内核，请确保内核配置文件包含以下行：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -25110,12 +25012,11 @@ gbde_lockdir=&#34;/etc/gbde&#34;</pre>
 device crypto</pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>生成主密钥</p>
 <div class="paragraph">
-<p>以下命令生成一个主密钥，所有数据都将使用该密钥进行加密。该密钥是不可更改的。与直接使用该密钥不同，它会被一个或多个用户密钥加密。用户密钥由来自文件 <span class="filename">/root/da2.key</span> 的可选随机字节和 / 或口令组成。在这种情况下，密钥文件的数据源是 <span class="filename">/dev/random</span> 。此命令还将提供者 (<span class="filename">/dev/da2.eli</span>) 的扇区大小配置为 4kB ，以提高性能。</p>
+<p>以下命令生成一个主密钥，所有数据都将使用该密钥进行加密。该密钥是不可更改的。与直接使用该密钥不同，它会被一个或多个用户密钥加密。用户密钥由来自文件 <span class="filename">/root/da2.key</span> 的可选随机字节或者口令组成。在这种情况下，密钥文件的数据源是 <span class="filename">/dev/random</span>。此命令还将提供者 (<span class="filename">/dev/da2.eli</span>) 的扇区大小配置为 4kB ，以提高性能。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25207,7 +25108,7 @@ geli_da2_flags=&#34;-k /root/da2.key&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>这将 <span class="filename">/dev/da2</span> 配置为具有 <span class="filename">/root/da2.key</span> 作为主密钥的 <code>geli</code> 提供程序。系统将在关闭系统之前自动从内核中分离该提供程序。在启动过程中，脚本将在连接提供程序之前提示输入密码。在密码提示之前和之后可能会显示其他内核消息。如果启动过程似乎停滞不前，请仔细查找其他消息中的密码提示。一旦输入正确的密码，提供程序将被连接。然后文件系统通常会被挂载，通过 <span class="filename">/etc/fstab</span> 中的条目进行。有关如何配置文件系统在启动时挂载的说明，请参阅交叉引用 :basics[mount-unmount ,“挂载和卸载文件系统”] 。</p>
+<p>这将 <span class="filename">/dev/da2</span> 配置为具有 <span class="filename">/root/da2.key</span> 作为主密钥的 <code>geli</code> 提供程序。系统将在关闭系统之前自动从内核中分离该提供程序。在启动过程中，脚本将在连接提供程序之前提示输入密码。在密码提示之前和之后可能会显示其他内核消息。如果启动过程似乎停滞不前，请仔细查找其他消息中的密码提示。一旦输入正确的密码，提供程序将被连接。然后文件系统通常会被挂载，通过 <span class="filename">/etc/fstab</span> 中的条目进行。有关如何配置文件系统在启动时挂载的说明，请参阅<a href="./#mount-unmount">“挂载和卸载文件系统”</a> 。</p>
 </div>
 </div>
 </div>
@@ -25248,11 +25149,11 @@ geli_da2_flags=&#34;-k /root/da2.key&#34;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>默认情况下， <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 使用 128 位密钥长度的 AES 算法。通常情况下，默认设置就足够了。如果需要的话，可以在 <span class="filename">/etc/fstab</span> 中的选项字段中更改这些默认值。可能的标志有：</p>
+<p>默认情况下，<a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 使用 128 位密钥长度的 AES 算法。通常情况下，默认设置就足够了。如果需要的话，可以在 <span class="filename">/etc/fstab</span> 中的选项字段中更改这些默认值。可能的标志有：</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">aalgo 是一个用于算法学习和实践的在线平台。它提供了一个交互式的编程环境，让用户可以在浏览器中编写和运行算法代码。用户可以通过 aalgo 学习各种常见的算法和数据结构，并通过解决实际问题来提高他们的编程技能。 aalgo 还提供了一系列的练习题和挑战，帮助用户巩固所学的知识并提升他们的算法解决能力。无论是初学者还是有经验的开发者，都可以通过 aalgo 来提升他们的算法和编程能力。</dt>
+<dt class="hdlist1">aalgo</dt>
 <dd>
 <p>数据完整性验证算法用于确保加密数据没有被篡改。请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 以获取支持的算法列表。</p>
 </dd>
@@ -25260,11 +25161,11 @@ geli_da2_flags=&#34;-k /root/da2.key&#34;</pre>
 <dd>
 <p>用于保护数据的加密算法。请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 以获取支持的算法列表。</p>
 </dd>
-<dt class="hdlist1">密钥长度</dt>
+<dt class="hdlist1">keylen</dt>
 <dd>
 <p>用于加密算法的密钥长度。请参阅 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> 以了解每个加密算法支持的密钥长度。</p>
 </dd>
-<dt class="hdlist1">扇区大小</dt>
+<dt class="hdlist1">sectorsize</dt>
 <dd>
 <p>在加密之前，块数据的大小会被分割。较大的扇区大小可以提高性能，但会增加存储开销。推荐的大小是 4096 字节。</p>
 </dd>
@@ -25286,7 +25187,7 @@ geli_da2_flags=&#34;-k /root/da2.key&#34;</pre>
 <p>系统重新启动后，可以使用 <code>swapinfo</code> 命令来验证加密交换空间的正常运行。</p>
 </div>
 <div class="paragraph">
-<p>如果正在使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=8&amp;format=html">gbde(8)</a> ：</p>
+<p>如果正在使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=gbde&amp;sektion=8&amp;format=html">gbde(8)</a>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25296,7 +25197,7 @@ Device          1K-blocks     Used    Avail Capacity
 </div>
 </div>
 <div class="paragraph">
-<p>如果正在使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a> ：</p>
+<p>如果正在使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=geli&amp;sektion=8&amp;format=html">geli(8)</a>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25308,9 +25209,9 @@ Device          1K-blocks     Used    Avail Capacity
 </div>
 </div>
 <div class="sect2">
-<h3 id="disks-hast">20.15. 高可用存储（ Highly Available Storage ， HAST ）<a class="anchor" href="#disks-hast"></a></h3>
+<h3 id="disks-hast">20.15. 高可用存储（Highly Available Storage，HAST）<a class="anchor" href="#disks-hast"></a></h3>
 <div class="paragraph">
-<p>高可用性是严肃的商业应用程序的主要要求之一，而高可用性存储是这种环境中的关键组成部分。在 FreeBSD 中，高可用性存储（ HAST ）框架允许通过 TCP/IP 网络在多个物理分离的机器上透明地存储相同的数据。 HAST 可以理解为基于网络的 RAID1 （镜像），类似于在 GNU/Linux 平台上使用的 DRBD® 存储系统。结合 FreeBSD 的其他高可用性功能（如 CARP ）， HAST 使得构建一个抵抗硬件故障的高可用性存储集群成为可能。</p>
+<p>高可用性是严肃的商业应用程序的主要要求之一，而高可用性存储是这种环境中的关键组成部分。在 FreeBSD 中，高可用性存储（HAST）框架允许通过 TCP/IP 网络在多个物理分离的机器上透明地存储相同的数据。HAST 可以理解为基于网络的 RAID1（镜像），类似于在 GNU/Linux 平台上使用的 DRBD® 存储系统。结合 FreeBSD 的其他高可用性功能（如 CARP），HAST 使得构建一个抵抗硬件故障的高可用性存储集群成为可能。</p>
 </div>
 <div class="paragraph">
 <p>以下是 HAST 的主要特点：</p>
@@ -25330,7 +25231,7 @@ Device          1K-blocks     Used    Avail Capacity
 <p>可以在已部署的环境中使用，以增加额外的冗余性。</p>
 </li>
 <li>
-<p>与 CARP 、 Heartbeat 或其他工具一起，它可以用于构建强大和耐用的存储系统。</p>
+<p>与 CARP、Heartbeat 或其他工具一起，它可以用于构建强大和耐用的存储系统。</p>
 </li>
 </ul>
 </div>
@@ -25356,13 +25257,13 @@ Device          1K-blocks     Used    Avail Capacity
 <div class="ulist">
 <ul>
 <li>
-<p>了解 UNIX® 和 FreeBSD 基础知识（参见： basics[basics , FreeBSD Basics] ）。</p>
+<p>了解 UNIX® 和 FreeBSD 基础知识（<a href="./#basics">FreeBSD Basics</a>）。</p>
 </li>
 <li>
-<p>了解如何配置网络接口和其他核心的 FreeBSD 子系统（参见： config[config-tuning , Configuration and Tuning] ）。</p>
+<p>了解如何配置网络接口和其他核心的 FreeBSD 子系统（<a href="./#config-tuning">Configuration and Tuning</a>）。</p>
 </li>
 <li>
-<p>对 FreeBSD 网络有很好的理解（参考： partiv[network-communication ,&#34;网络通信&#34;] ）。</p>
+<p>对 FreeBSD 网络有很好的理解（<a href="./#network-communication">“网络通信”</a>）。</p>
 </li>
 </ul>
 </div>
@@ -25372,30 +25273,30 @@ Device          1K-blocks     Used    Avail Capacity
 <div class="sect3">
 <h4 id="_hast_操作">20.15.1. HAST 操作<a class="anchor" href="#_hast_操作"></a></h4>
 <div class="paragraph">
-<p>HAST 提供了两台物理机之间的同步块级复制：<em>主节点_和_备节点</em>。这两台机器一起被称为一个集群。</p>
+<p>HAST 提供了两台物理机之间的同步块级复制：<em>主节点</em> 和_ 备节点_。这两台机器一起被称为一个集群。</p>
 </div>
 <div class="paragraph">
-<p>由于 HAST 以主 - 备配置工作，所以在任何给定的时间内只允许集群中的一个节点处于活动状态。主节点，也称为“活动节点”，负责处理所有对 HAST 管理设备的 I/O 请求。备节点会自动从主节点同步。</p>
+<p>由于 HAST 以主-备配置工作，所以在任何给定的时间内只允许集群中的一个节点处于活动状态。主节点，也称为“活动节点”，负责处理所有对 HAST 管理设备的 I/O 请求。备节点会自动从主节点同步。</p>
 </div>
 <div class="paragraph">
 <p>HAST 系统的物理组件包括主节点上的本地磁盘和远程次节点上的磁盘。</p>
 </div>
 <div class="paragraph">
-<p>HAST 在块级别上同步操作，对文件系统和应用程序透明。 HAST 在 [/dev/hast/] 目录下提供常规的 GEOM 提供程序，供其他工具或应用程序使用。使用 HAST 提供的设备和原始磁盘或分区之间没有区别。</p>
+<p>HAST 在块级别上同步操作，对文件系统和应用程序透明。 HAST 在 <span class="filename">/dev/hast/</span> 目录下提供常规的 GEOM 提供程序，供其他工具或应用程序使用。使用 HAST 提供的设备和原始磁盘或分区之间没有区别。</p>
 </div>
 <div class="paragraph">
 <p>每个写入、删除或刷新操作都会通过 TCP/IP 同时发送到本地磁盘和远程磁盘。每个读取操作都会从本地磁盘提供，除非本地磁盘不是最新的或发生了 I/O 错误。在这种情况下，读取操作会被发送到辅助节点。</p>
 </div>
 <div class="paragraph">
-<p>HAST 试图提供快速的故障恢复。因此，在节点故障后减少同步时间非常重要。为了提供快速同步， HAST 管理一个磁盘上的脏扩展位图，并且只在定期同步期间同步这些扩展，初始同步除外。</p>
+<p>HAST 试图提供快速的故障恢复。因此，在节点故障后减少同步时间非常重要。为了提供快速同步，HAST 管理一个磁盘上的脏扩展位图，并且只在定期同步期间同步这些扩展，初始同步除外。</p>
 </div>
 <div class="paragraph">
-<p>处理同步的方法有很多种。 HAST 实现了几种复制模式来处理不同的同步方法：</p>
+<p>处理同步的方法有很多种。HAST 实现了几种复制模式来处理不同的同步方法：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>_memsync_模式：当本地写操作完成并且远程节点确认数据到达之后，但在实际存储数据之前，该模式将报告写操作已完成。在发送确认之后，远程节点上的数据将直接存储。该模式旨在减少延迟，但仍提供良好的可靠性。该模式是默认模式。</p>
+<p><em>memsync</em>：当本地写操作完成并且远程节点确认数据到达之后，但在实际存储数据之前，该模式将报告写操作已完成。在发送确认之后，远程节点上的数据将直接存储。该模式旨在减少延迟，但仍提供良好的可靠性。该模式是默认模式。</p>
 </li>
 <li>
 <p><em>fullsync</em>：当本地写操作和远程写操作都完成时，该模式将报告写操作已完成。这是最安全但也是最慢的复制模式。</p>
@@ -25414,10 +25315,10 @@ Device          1K-blocks     Used    Avail Capacity
 <div class="ulist">
 <ul>
 <li>
-<p>这个人 :hastd[8] 守护进程提供数据同步功能。当启动这个守护进程时，它会自动加载 <code>geom_gate.ko</code> 模块。</p>
+<p><a href="https://man.freebsd.org/cgi/man.cgi?query=hastd&amp;sektion=8&amp;format=html">hastd(8)</a> 守护进程提供数据同步功能。当启动这个守护进程时，它会自动加载 <code>geom_gate.ko</code> 模块。</p>
 </li>
 <li>
-<p>用户空间管理实用程序， <a href="https://man.freebsd.org/cgi/man.cgi?query=hastctl&amp;sektion=8&amp;format=html">hastctl(8)</a> 。</p>
+<p>用户空间管理实用程序，<a href="https://man.freebsd.org/cgi/man.cgi?query=hastctl&amp;sektion=8&amp;format=html">hastctl(8)</a>。</p>
 </li>
 <li>
 <p><a href="https://man.freebsd.org/cgi/man.cgi?query=hast.conf&amp;sektion=5&amp;format=html">hast.conf(5)</a> 配置文件。在启动 hastd 之前，此文件必须存在。</p>
@@ -25425,7 +25326,7 @@ Device          1K-blocks     Used    Avail Capacity
 </ul>
 </div>
 <div class="paragraph">
-<p>喜欢将 <code>GEOM_GATE</code> 支持静态构建到内核中的用户应该将以下行添加到自定义内核配置文件中，然后按照 <a href="./#kernelconfig">Configuring the FreeBSD Kernel</a> 中的说明重新构建内核。</p>
+<p>如果用户希望静态地在内核中内置 <code>GEOM_GATE</code> 支持，应该将以下行添加到自定义内核配置文件中，然后按照 <a href="./#kernelconfig">配置 FreeBSD 内核</a> 中的说明重新构建内核。</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -25433,10 +25334,10 @@ Device          1K-blocks     Used    Avail Capacity
 </div>
 </div>
 <div class="paragraph">
-<p>以下示例描述了如何使用 HAST 在两个节点之间配置主备操作来复制数据。节点将被称为 <code>hasta</code> ， IP 地址为 <code>172.16.0.1</code> ，以及 <code>hastb</code> ， IP 地址为 <code>172.16.0.2</code> 。两个节点都将有一个专用硬盘 <span class="filename">/dev/ad6</span> ，大小相同，用于 HAST 操作。 HAST 池，有时也称为资源或 GEOM 提供者，在 <span class="filename">/dev/hast/</span> 中将被称为 <code>test</code> 。</p>
+<p>以下示例描述了如何使用 HAST 在两个节点之间配置主备操作来复制数据。节点将被称为 <code>hasta</code>，IP 地址为 <code>172.16.0.1</code>，以及 <code>hastb</code>，IP 地址为 <code>172.16.0.2</code>。两个节点都将有一个专用硬盘 <span class="filename">/dev/ad6</span>，大小相同，用于 HAST 操作。HAST 池，有时也称为资源或 GEOM 提供者，在 <span class="filename">/dev/hast/</span> 中将被称为 <code>test</code>。</p>
 </div>
 <div class="paragraph">
-<p>HAST 的配置是通过使用 [/etc/hast.conf] 文件完成的。这个文件在两个节点上应该是相同的。最简单的配置如下：</p>
+<p>HAST 的配置是通过使用 <span class="filename">/etc/hast.conf</span> 文件完成的。这个文件在两个节点上应该是相同的。最简单的配置如下：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -25453,7 +25354,7 @@ Device          1K-blocks     Used    Avail Capacity
 </div>
 </div>
 <div class="paragraph">
-<p>有关更高级的配置，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=hast.conf&amp;sektion=5&amp;format=html">hast.conf(5)</a> 。</p>
+<p>有关更高级的配置，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=hast.conf&amp;sektion=5&amp;format=html">hast.conf(5)</a>。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -25463,14 +25364,14 @@ Device          1K-blocks     Used    Avail Capacity
 </td>
 <td class="content">
 <div class="paragraph">
-<p>如果主机是可解析的，并且在 /etc/hosts 或本地 DNS 中定义了，也可以在 <code>remote</code> 语句中使用主机名。</p>
+<p>如果主机是可解析的，并且在 <span class="filename">/etc/hosts</span> 或本地 DNS 中定义了，也可以在 <code>remote</code> 语句中使用主机名。</p>
 </div>
 </td>
 </tr>
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>一旦配置在两个节点上存在，就可以创建 HAST 池。在两个节点上运行以下命令，将初始元数据放置在本地磁盘上并启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastd&amp;sektion=8&amp;format=html">hastd(8)</a> ：</p>
+<p>一旦配置在两个节点上存在，就可以创建 HAST 池。在两个节点上运行以下命令，将初始元数据放置在本地磁盘上并启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastd&amp;sektion=8&amp;format=html">hastd(8)</a>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25493,7 +25394,7 @@ Device          1K-blocks     Used    Avail Capacity
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>HAST 节点的“ primary ”或“ secondary ”角色由管理员或像 Heartbeat 这样的软件使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastctl&amp;sektion=8&amp;format=html">hastctl(8)</a> 选择。在主节点上，执行以下命令：</p>
+<p>HAST 节点的 <code>primary</code> 或 <code>secondary</code> 角色由管理员或像 Heartbeat 这样的软件使用 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastctl&amp;sektion=8&amp;format=html">hastctl(8)</a> 选择。在主节点上，执行以下命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25501,7 +25402,7 @@ Device          1K-blocks     Used    Avail Capacity
 </div>
 </div>
 <div class="paragraph">
-<p>在辅助节点上运行以下命令， <code>hastb</code> ：</p>
+<p>在辅助节点上运行以下命令，<code>hastb</code>：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25517,10 +25418,10 @@ Device          1K-blocks     Used    Avail Capacity
 </div>
 </div>
 <div class="paragraph">
-<p>检查输出中的 <code>status</code> 行。如果它显示为 <code>degraded</code> ，则配置文件存在问题。每个节点上应该显示为 <code>complete</code> ，表示节点之间的同步已经开始。当 <code>hastctl status</code> 报告 0 字节的 <code>dirty</code> extents 时，同步完成。</p>
+<p>检查输出中的 <code>status</code> 行。如果它显示为 <code>degraded</code>，则配置文件存在问题。每个节点上应该显示为 <code>complete</code>，表示节点之间的同步已经开始。当 <code>hastctl status</code> 报告 0 字节的 <code>dirty</code> extents 时，同步完成。</p>
 </div>
 <div class="paragraph">
-<p>下一步是在 GEOM 提供程序上创建文件系统并挂载它。这必须在“ primary ”节点上完成。根据硬盘的大小，创建文件系统可能需要几分钟的时间。此示例在 <code>/dev/hast/test</code> 上创建了一个 UFS 文件系统。</p>
+<p>下一步是在 GEOM 提供程序上创建文件系统并挂载它。这必须在 <code>primary</code> 节点上完成。根据硬盘的大小，创建文件系统可能需要几分钟的时间。此示例在 <span class="filename">/dev/hast/test</span> 上创建了一个 UFS 文件系统。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25530,7 +25431,7 @@ Device          1K-blocks     Used    Avail Capacity
 </div>
 </div>
 <div class="paragraph">
-<p>一旦 HAST 框架正确配置完成，最后一步是确保在系统启动时自动启动 HAST 。将以下行添加到 <code>/etc/rc.conf</code> 文件中：</p>
+<p>一旦 HAST 框架正确配置完成，最后一步是确保在系统启动时自动启动 HAST。将以下行添加到 <span class="filename">/etc/rc.conf</span> 文件中：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -25543,16 +25444,16 @@ Device          1K-blocks     Used    Avail Capacity
 <p>这个示例的目标是构建一个强大的存储系统，能够抵抗任何给定节点的故障。如果主节点发生故障，备用节点将无缝接管，检查和挂载文件系统，并继续工作，不会丢失任何一位数据。</p>
 </div>
 <div class="paragraph">
-<p>为了完成这个任务，使用 Common Address Redundancy Protocol (CARP) 来提供 IP 层的自动故障转移。 CARP 允许同一网络段上的多个主机共享一个 IP 地址。根据 <a href="./#carp">“ Common Address Redundancy Protocol (CARP) ”</a> 中提供的文档，在集群的两个节点上设置 CARP 。在这个例子中，每个节点都有自己的管理 IP 地址和一个共享的 IP 地址为_172.16.0.254_。集群的主要 HAST 节点必须是主要的 CARP 节点。</p>
+<p>为了完成这个任务，使用 Common Address Redundancy Protocol (CARP) 来提供 IP 层的自动故障转移。CARP 允许同一网络段上的多个主机共享一个 IP 地址。根据 <a href="./#carp">“通用地址冗余协议（CARP)”</a> 中提供的文档，在集群的两个节点上设置 CARP 。在这个例子中，每个节点都有自己的管理 IP 地址和一个共享的 IP 地址为 <em>172.16.0.254</em>。集群的主要 HAST 节点必须是主要的 CARP 节点。</p>
 </div>
 <div class="paragraph">
-<p>在前一节中创建的 HAST 池现在已经准备好导出到网络上的其他主机。可以通过 NFS 或 Samba 将其导出，使用共享的 IP 地址_172.16.0.254_。唯一尚未解决的问题是主节点故障时的自动故障转移。</p>
+<p>在前一节中创建的 HAST 池现在已经准备好导出到网络上的其他主机。可以通过 NFS 或 Samba 将其导出，使用共享的 IP 地址 <em>172.16.0.254</em>。唯一尚未解决的问题是主节点故障时的自动故障转移。</p>
 </div>
 <div class="paragraph">
-<p>当 CARP 接口上下线时， FreeBSD 操作系统会生成一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 事件，这样就可以监视 CARP 接口的状态变化。 CARP 接口的状态变化表示其中一个节点失败或重新上线。这些状态变化事件使得可以运行一个脚本来自动处理 HAST 故障切换。</p>
+<p>当 CARP 接口上下线时，FreeBSD 操作系统会生成一个 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 事件，这样就可以监视 CARP 接口的状态变化。CARP 接口的状态变化表示其中一个节点失败或重新上线。这些状态变化事件使得可以运行一个脚本来自动处理 HAST 故障切换。</p>
 </div>
 <div class="paragraph">
-<p>要捕获 CARP 接口上的状态变化，请在每个节点的 <code>/etc/devd.conf</code> 配置文件中添加以下配置：</p>
+<p>要捕获 CARP 接口上的状态变化，请在每个节点的 <span class="filename">/etc/devd.conf</span> 配置文件中添加以下配置：</p>
 </div>
 <div class="literalblock programlisting">
 <div class="content">
@@ -25586,7 +25487,7 @@ notify 30 {
 </tbody></table>
 </div>
 <div class="paragraph">
-<p>在两个节点上重新启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> ，以使新配置生效：</p>
+<p>在两个节点上重新启动 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a>，以使新配置生效：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25594,7 +25495,7 @@ notify 30 {
 </div>
 </div>
 <div class="paragraph">
-<p>当指定的接口状态发生上升或下降变化时，系统会生成一个通知，允许 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 子系统运行指定的自动故障转移脚本 <span class="filename">/usr/local/sbin/carp-hast-switch</span> 。有关此配置的进一步说明，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd.conf&amp;sektion=5&amp;format=html">devd.conf(5)</a> 。</p>
+<p>当指定的接口状态发生上升或下降变化时，系统会生成一个通知，允许 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd&amp;sektion=8&amp;format=html">devd(8)</a> 子系统运行指定的自动故障转移脚本 <span class="filename">/usr/local/sbin/carp-hast-switch</span>。有关此配置的进一步说明，请参考 <a href="https://man.freebsd.org/cgi/man.cgi?query=devd.conf&amp;sektion=5&amp;format=html">devd.conf(5)</a>。</p>
 </div>
 <div class="paragraph">
 <p>这是一个自动故障转移脚本的示例：</p>
@@ -25753,12 +25654,12 @@ esac</pre>
 <p>HAST 通常应该没有问题。然而，与任何其他软件产品一样，有时候它可能无法按照预期工作。问题的根源可能不同，但经验法则是确保集群节点之间的时间同步。</p>
 </div>
 <div class="paragraph">
-<p>在排除 HAST 问题时，应通过使用 <code>-d</code> 参数启动 <code>hastd</code> 来增加 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastd&amp;sektion=8&amp;format=html">hastd(8)</a> 的调试级别。可以多次指定此参数以进一步增加调试级别。还可以考虑使用 <code>-F</code> ，它会在前台启动 <code>hastd</code> 。</p>
+<p>在排除 HAST 问题时，应通过使用 <code>-d</code> 参数启动 <code>hastd</code> 来增加 <a href="https://man.freebsd.org/cgi/man.cgi?query=hastd&amp;sektion=8&amp;format=html">hastd(8)</a> 的调试级别。可以多次指定此参数以进一步增加调试级别。还可以考虑使用 <code>-F</code>，它会在前台启动 <code>hastd</code>。</p>
 </div>
 <div class="sect4">
 <h5 id="disks-hast-sb">20.15.3.1. 从分裂脑状态中恢复<a class="anchor" href="#disks-hast-sb"></a></h5>
 <div class="paragraph">
-<p>当集群的节点无法相互通信且都配置为主节点时，会发生“分裂脑”现象。这是一种危险的情况，因为它允许两个节点对数据进行不兼容的更改。系统管理员必须手动纠正这个问题。</p>
+<p>当集群的节点无法相互通信且都配置为主节点时，会发生 <em>分裂脑（Split-brain）</em> 现象。这是一种危险的情况，因为它允许两个节点对数据进行不兼容的更改。系统管理员必须手动纠正这个问题。</p>
 </div>
 <div class="paragraph">
 <p>管理员必须要么决定哪个节点有更重要的更改，要么手动执行合并操作。然后，让 HAST 对具有损坏数据的节点执行完全同步。为此，请在需要重新同步的节点上执行以下命令：</p>
@@ -49670,7 +49571,7 @@ CiG/y3cmKQ/ZfH7BBvlZVtZKQsI=
     
     <hr />
     <div class="last-modified">
-      <p><strong>上次修改时间</strong>: March 22, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=e4a5121" target="_blank">github actions</a></p>
+      <p><strong>上次修改时间</strong>: March 25, 2024 by <a href="https://cgit.freebsd.org/doc/commit/?id=cb52b44" target="_blank">fiercex</a></p>
     </div>
     
     <div class="buttons">
