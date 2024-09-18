@@ -35,7 +35,7 @@ po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件�
 |network|✅|✅|
 |第二部分|||
 |partii|✅|✅|
-|desktop|✅||
+|desktop|✅|✅|
 |multimedia|✅||
 |kernelconfig|✅|✅|
 |printing|✅||
@@ -60,7 +60,7 @@ po4a 可以将 asciidoctor 文档中的文本块进行提取，生成 po 文件�
 |usb|✅||
 |第四部分|||
 |partiv|✅|✅|
-|serialcomms|✅||
+|serialcomms|✅|✅|
 |ppp-and-slip|✅||
 |mail|✅||
 |network-servers|✅|✅|
