@@ -1,17 +1,17 @@
 ---
-description: 'This chapter covers some of the ways serial communications can be used on FreeBSD'
+description: '本章介绍了在 FreeBSD 上使用串行通信的一些方法。'
 next: books/handbook/ppp-and-slip
-part: 'Part IV. Network Communication'
+part: 第四部分：网络通信
 path: /books/handbook/
 prev: books/handbook/partiv
 showBookMenu: true
 tags: ["serial", "communications", "terminal", "modem", "console"]
-title: 'Chapter 29. Serial Communications'
+title: '第 29 章 串行通信'
 weight: 34
 ---
 
 [[serialcomms]]
-= Serial Communications
+= 串行通信
 :doctype: book
 :toc: macro
 :toclevels: 2
@@ -49,386 +49,386 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[serial-synopsis]]
-== Synopsis
+== 简介
 
-UNIX(R) has always had support for serial communications as the very first UNIX(R) machines relied on serial lines for user input and output. Things have changed a lot from the days when the average terminal consisted of a 10-character-per-second serial printer and a keyboard. This chapter covers some of the ways serial communications can be used on FreeBSD.
+UNIX(R) 一直以来都支持串行通信，因为最早的 UNIX(R) 机器依赖串行线路进行用户输入和输出。从平均终端只包含一个每秒 10 个字符的串行打印机和一个键盘的时代以来，情况发生了很大变化。本章介绍了在 FreeBSD 上使用串行通信的一些方法。
 
-After reading this chapter, you will know:
+阅读完本章后，您将了解：
 
-* How to connect terminals to a FreeBSD system.
-* How to use a modem to dial out to remote hosts.
-* How to allow remote users to login to a FreeBSD system with a modem.
-* How to boot a FreeBSD system from a serial console.
+* 如何将终端连接到 FreeBSD 系统。
+* 如何使用调制解调器拨打远程主机。
+* 如何允许远程用户通过调制解调器登录到 FreeBSD 系统。
+* 如何从串行控制台启动 FreeBSD 系统。
 
-Before reading this chapter, you should:
+在阅读本章之前，你应该：
 
-* Know how to crossref:kernelconfig[kernelconfig, configure and install a custom kernel].
-* Understand crossref:basics[basics, FreeBSD permissions and processes].
-* Have access to the technical manual for the serial hardware to be used with FreeBSD.
+* 了解如何 crossref:kernelconfig[kernelconfig,配置和安装自定义内核]。
+* 了解 crossref:basics[basics,FreeBSD 的权限和进程]。
+* 可以访问与 FreeBSD 一起使用的串行硬件的技术手册。
 
 [[serial]]
-== Serial Terminology and Hardware
+== 串行术语和硬件
 
-The following terms are often used in serial communications:
+以下术语常用于串行通信：
 
 bps::
-Bits per Second (bps) is the rate at which data is transmitted.
+每秒比特数（bps）是数据传输的速率。
 
 DTE::
-Data Terminal Equipment (DTE) is one of two endpoints in a serial communication. An example would be a computer.
+数据终端设备（DTE）是串行通信中的两个端点之一。一个例子就是计算机。
 
 DCE::
-Data Communications Equipment (DCE) is the other endpoint in a serial communication. Typically, it is a modem or serial terminal.
+数据通信设备（DCE）是串行通信中的另一端点。通常情况下，它是一个调制解调器或串行终端。
 
 RS-232::
-The original standard which defined hardware serial communications. It has since been renamed to TIA-232.
+最初定义硬件串行通信的标准。后来更名为 TIA-232。
 
-When referring to communication data rates, this section does not use the term _baud_. Baud refers to the number of electrical state transitions made in a period of time, while bps is the correct term to use.
+在涉及通信数据速率时，本节不使用术语“波特（baud）”。波特是指在一段时间内进行的电气状态转换的数量，而 bps 是正确的术语。
 
-To connect a serial terminal to a FreeBSD system, a serial port on the computer and the proper cable to connect to the serial device are needed. Users who are already familiar with serial hardware and cabling can safely skip this section.
+要将串行终端连接到 FreeBSD 系统，需要计算机上的串行端口和连接到串行设备的适当电缆。已经熟悉串行硬件和电缆的用户可以安全地跳过本节。
 
 [[term-cables-null]]
-=== Serial Cables and Ports
+=== 串行电缆和端口
 
-There are several different kinds of serial cables. The two most common types are null-modem cables and standard RS-232 cables. The documentation for the hardware should describe the type of cable required.
+有几种不同类型的串行电缆。其中最常见的两种类型是空模拟电缆和标准 RS-232 电缆。硬件的文档应该描述所需的电缆类型。
 
-These two types of cables differ in how the wires are connected to the connector. Each wire represents a signal, with the defined signals summarized in <<serialcomms-signal-names>>. A standard serial cable passes all of the RS-232C signals straight through. For example, the "Transmitted Data" pin on one end of the cable goes to the "Transmitted Data" pin on the other end. This is the type of cable used to connect a modem to the FreeBSD system, and is also appropriate for some terminals.
+这两种类型的电缆在连接线缆到连接器的方式上有所不同。每根线代表一个信号，定义的信号总结在 <<serialcomms-signal-names>> 中。标准的串行电缆直接传递所有的 RS-232C 信号。例如，电缆一端的“传输数据”引脚连接到另一端的“传输数据”引脚。这种类型的电缆用于将调制解调器连接到 FreeBSD 系统，并且也适用于某些终端。
 
-A null-modem cable switches the "Transmitted Data" pin of the connector on one end with the "Received Data" pin on the other end. The connector can be either a DB-25 or a DB-9.
+空模拟电缆将一个端口上的“传输数据”引脚与另一个端口上的“接收数据”引脚进行切换。连接器可以是 DB-25 或 DB-9。
 
-A null-modem cable can be constructed using the pin connections summarized in <<nullmodem-db25>>, <<nullmodem-db9>>, and <<nullmodem-db9-25>>. While the standard calls for a straight-through pin 1 to pin 1 "Protective Ground" line, it is often omitted. Some terminals work using only pins 2, 3, and 7, while others require different configurations. When in doubt, refer to the documentation for the hardware.
+可以使用在 <<nullmodem-db25>>、<<nullmodem-db9>> 和 <<nullmodem-db9-25>> 中总结的引脚连接来构建一个空调制电缆。虽然标准要求使用直通的引脚 1 到引脚 1 的“保护地”线，但通常会省略。一些终端只使用引脚 2 、 3 和 7 ，而其他终端则需要不同的配置。如果有疑问，请参考硬件的文档。
 
 [[serialcomms-signal-names]]
-.RS-232C Signal Names
+.RS-232C 信号名称
 [cols="1,1", frame="none", options="header"]
 |===
-<| Acronyms
-<| Names
+<| 首字母缩略词
+<| 名称
 
 |RD
-|Received Data
+|接收到的数据
 
 |TD
-|Transmitted Data
+|传输的数据
 
 |DTR
-|Data Terminal Ready
+|数据终端就绪
 
 |DSR
-|Data Set Ready
+|数据集准备完毕
 
 |DCD
-|Data Carrier Detect
+|数据载波检测
 
 |SG
 |Signal Ground
 
 |RTS
-|Request to Send
+|请求发送
 
 |CTS
-|Clear to Send
+|发送准备
 |===
 
 [[nullmodem-db25]]
-.DB-25 to DB-25 Null-Modem Cable
+.DB-25 到 DB-25 空调制模电缆
 [cols="1,1,1,1,1", frame="none", options="header"]
 |===
-<| Signal
-<| Pin #
+<| 信号
+<| 引脚号码
 | 
-<| Pin #
-<| Signal
+<| 引脚号码
+<| 信号
 
 |SG
 |7
-|connects to
+|连接到
 |7
 |SG
 
 |TD
 |2
-|connects to
+|连接到
 |3
 |RD
 
 |RD
 |3
-|connects to
+|连接到
 |2
 |TD
 
 |RTS
 |4
-|connects to
+|连接到
 |5
 |CTS
 
 |CTS
 |5
-|connects to
+|连接到
 |4
 |RTS
 
 |DTR
 |20
-|connects to
+|连接到
 |6
 |DSR
 
 |DTR
 |20
-|connects to
+|连接到
 |8
 |DCD
 
 |DSR
 |6
-|connects to
+|连接到
 |20
 |DTR
 
 |DCD
 |8
-|connects to
+|连接到
 |20
 |DTR
 |===
 
 [[nullmodem-db9]]
-.DB-9 to DB-9 Null-Modem Cable
+.DB-9 到 DB-9 的空模线缆
 [cols="1,1,1,1,1", frame="none", options="header"]
 |===
-<| Signal
-<| Pin #
+<| 信号
+<| 引脚号码
 | 
-<| Pin #
-<| Signal
+<| 引脚号码
+<| 信号
 
 |RD
 |2
-|connects to
+|连接到
 |3
 |TD
 
 |TD
 |3
-|connects to
+|连接到
 |2
 |RD
 
 |DTR
 |4
-|connects to
+|连接到
 |6
 |DSR
 
 |DTR
 |4
-|connects to
+|连接到
 |1
 |DCD
 
 |SG
 |5
-|connects to
+|连接到
 |5
 |SG
 
 |DSR
 |6
-|connects to
+|连接到
 |4
 |DTR
 
 |DCD
 |1
-|connects to
+|连接到
 |4
 |DTR
 
 |RTS
 |7
-|connects to
+|连接到
 |8
 |CTS
 
 |CTS
 |8
-|connects to
+|连接到
 |7
 |RTS
 |===
 
 [[nullmodem-db9-25]]
-.DB-9 to DB-25 Null-Modem Cable
+.DB-9 到 DB-25 空模拟电缆
 [cols="1,1,1,1,1", frame="none", options="header"]
 |===
-<| Signal
-<| Pin #
+<| 信号
+<| 引脚号码
 | 
-<| Pin #
-<| Signal
+<| 引脚号码
+<| 信号
 
 |RD
 |2
-|connects to
+|连接到
 |2
 |TD
 
 |TD
 |3
-|connects to
+|连接到
 |3
 |RD
 
 |DTR
 |4
-|connects to
+|连接到
 |6
 |DSR
 
 |DTR
 |4
-|connects to
+|连接到
 |8
 |DCD
 
 |SG
 |5
-|connects to
+|连接到
 |7
 |SG
 
 |DSR
 |6
-|connects to
+|连接到
 |20
 |DTR
 
 |DCD
 |1
-|connects to
+|连接到
 |20
 |DTR
 
 |RTS
 |7
-|connects to
+|连接到
 |5
 |CTS
 
 |CTS
 |8
-|connects to
+|连接到
 |4
 |RTS
 |===
 
 [NOTE]
 ====
-When one pin at one end connects to a pair of pins at the other end, it is usually implemented with one short wire between the pair of pins in their connector and a long wire to the other single pin.
+当一个端口的一根引脚连接到另一个端口的一对引脚时，通常会使用一根短线连接这对引脚的连接器，以及一根长线连接到另一个单独的引脚。
 ====
 
-Serial ports are the devices through which data is transferred between the FreeBSD host computer and the terminal. Several kinds of serial ports exist. Before purchasing or constructing a cable, make sure it will fit the ports on the terminal and on the FreeBSD system.
+串口是在 FreeBSD 主机和终端之间传输数据的设备。存在几种类型的串口。在购买或制作电缆之前，请确保它适配终端和 FreeBSD 系统上的串口。
 
-Most terminals have DB-25 ports. Personal computers may have DB-25 or DB-9 ports. A multiport serial card may have RJ-12 or RJ-45/ ports. See the documentation that accompanied the hardware for specifications on the kind of port or visually verify the type of port.
+大多数终端设备都有 DB-25 端口。个人电脑可能有 DB-25 或 DB-9 端口。多端口串行卡可能有 RJ-12 或 RJ-45 端口。请查看随附硬件的文档，以了解端口类型的规格，或者通过目视确认端口类型。
 
-In FreeBSD, each serial port is accessed through an entry in [.filename]#/dev#. There are two different kinds of entries:
+在 FreeBSD 中，每个串口通过 [.filename]#/dev# 中的一个条目进行访问。有两种不同类型的条目：
 
-* Call-in ports are named [.filename]#/dev/ttyuN# where _N_ is the port number, starting from zero. If a terminal is connected to the first serial port ([.filename]#COM1#), use [.filename]#/dev/ttyu0# to refer to the terminal. If the terminal is on the second serial port ([.filename]#COM2#), use [.filename]#/dev/ttyu1#, and so forth. Generally, the call-in port is used for terminals. Call-in ports require that the serial line assert the "Data Carrier Detect" signal to work correctly.
-* Call-out ports are named [.filename]#/dev/cuauN# on FreeBSD versions 8.X and higher and [.filename]#/dev/cuadN# on FreeBSD versions 7.X and lower. Call-out ports are usually not used for terminals, but are used for modems. The call-out port can be used if the serial cable or the terminal does not support the "Data Carrier Detect" signal.
+* 呼叫端口的命名方式为 [.filename]#/dev/ttyuN# ，其中 _N_ 为端口号，从零开始计数。如果终端连接到第一个串口（[.filename]#COM1#），则使用 [.filename]#/dev/ttyu0# 来引用该终端。如果终端连接到第二个串口（[.filename]#COM2#），则使用 [.filename]#/dev/ttyu1# ，依此类推。通常，呼叫端口用于终端。呼叫端口要求串行线路正确工作时要断言“数据载波检测”信号。
+* 在 FreeBSD 8.X 及更高版本上，呼叫输出端口被命名为 [.filename]#/dev/cuauN#，而在 FreeBSD 7.X 及更低版本上被命名为 [.filename]#/dev/cuadN#。呼叫输出端口通常不用于终端，而是用于调制解调器。如果串行电缆或终端不支持“数据载波检测”信号，可以使用呼叫输出端口。
 
-FreeBSD also provides initialization devices ([.filename]#/dev/ttyuN.init# and [.filename]#/dev/cuauN.init# or [.filename]#/dev/cuadN.init#) and locking devices ([.filename]#/dev/ttyuN.lock# and [.filename]#/dev/cuauN.lock# or [.filename]#/dev/cuadN.lock#). The initialization devices are used to initialize communications port parameters each time a port is opened, such as `crtscts` for modems which use `RTS/CTS` signaling for flow control. The locking devices are used to lock flags on ports to prevent users or programs changing certain parameters. Refer to man:termios[4], man:uart[4], and man:stty[1] for information on terminal settings, locking and initializing devices, and setting terminal options, respectively.
+FreeBSD 还提供了初始化设备（[.filename]#/dev/ttyuN.init# 和 [.filename]#/dev/cuauN.init# 或 [.filename]#/dev/cuadN.init#）和锁定设备（ [.filename]#/dev/ttyuN.lock# 和 [.filename]#/dev/cuauN.lock# 或 [.filename]#/dev/cuadN.lock#）。初始化设备用于在每次打开端口时初始化通信端口参数，例如对于使用 `RTS/CTS` 信号进行流量控制的调制解调器，可以使用 `crtscts`。锁定设备用于锁定端口上的标志，以防止用户或程序更改某些参数。有关终端设置、锁定和初始化设备以及设置终端选项的信息，请参阅 man:termios[4] 、man:uart[4] 和 man:stty[1]。
 
 [[serial-hw-config]]
-=== Serial Port Configuration
+=== 串口配置
 
-By default, FreeBSD supports four serial ports which are commonly known as [.filename]#COM1#, [.filename]#COM2#, [.filename]#COM3#, and [.filename]#COM4#. FreeBSD also supports dumb multi-port serial interface cards, such as the BocaBoard 1008 and 2016, as well as more intelligent multi-port cards such as those made by Digiboard. However, the default kernel only looks for the standard [.filename]#COM# ports.
+默认情况下，FreeBSD 支持四个串口，通常被称为 COM1、COM2、COM3 和 COM4。FreeBSD 还支持一些简单的多串口接口卡，如 BocaBoard 1008 和 2016，以及一些更智能的多串口卡，如 Digiboard 制造的卡。然而，默认内核只会寻找标准的 COM 端口。
 
-To see if the system recognizes the serial ports, look for system boot messages that start with `uart`:
+要查看系统是否识别串口，请查找以 `uart` 开头的系统引导消息。
 
 [source, shell]
 ....
 # grep uart /var/run/dmesg.boot
 ....
 
-If the system does not recognize all of the needed serial ports, additional entries can be added to [.filename]#/boot/device.hints#. This file already contains `hint.uart.0.\*` entries for [.filename]#COM1# and `hint.uart.1.*` entries for [.filename]#COM2#. When adding a port entry for [.filename]#COM3# use `0x3E8`, and for [.filename]#COM4# use `0x2E8`. Common IRQ addresses are `5` for [.filename]#COM3# and `9` for [.filename]#COM4#.
+如果系统无法识别所有所需的串口，可以将其他条目添加到 [.filename]#/boot/device.hints# 文件中。该文件已经包含了针对 COM1 的 `hint.uart.0.*` 条目和针对 [.filename]#COM1# 的 `hint.uart.1.*` 条目。当为 [.filename]#COM3# 添加串口条目时，请使用 `0x3E8` ，而对于 [.filename]#COM4#，请使用 `0x2E8`。常见的 IRQ 地址是 [.filename]#COM3# 的 `5` 和 [.filename]#COM4# 的 `9`。
 
-To determine the default set of terminal I/O settings used by the port, specify its device name. This example determines the settings for the call-in port on [.filename]#COM2#:
+要确定端口使用的默认终端 I/O 设置集，请指定其设备名称。此示例确定了 [.filename]#COM2# 上呼入端口的设置。
 
 [source, shell]
 ....
 # stty -a -f /dev/ttyu1
 ....
 
-System-wide initialization of serial devices is controlled by [.filename]#/etc/rc.d/serial#. This file affects the default settings of serial devices. To change the settings for a device, use `stty`. By default, the changed settings are in effect until the device is closed and when the device is reopened, it goes back to the default set. To permanently change the default set, open and adjust the settings of the initialization device. For example, to turn on `CLOCAL` mode, 8 bit communication, and `XON/XOFF` flow control for [.filename]#ttyu5#, type:
+系统范围内的串行设备初始化由 [.filename]#/etc/rc.d/serial# 控制。该文件影响串行设备的默认设置。要更改设备的设置，请使用 `stty` 命令。默认情况下，更改的设置在设备关闭之前有效，当设备重新打开时，它会恢复到默认设置。要永久更改默认设置，请打开并调整初始化设备的设置。例如，要为 [.filename]#ttyu5# 打开 `CLOCAL` 模式、 8 位通信和 `XON/XOFF` 流控制，请输入：
 
 [source, shell]
 ....
 # stty -f /dev/ttyu5.init clocal cs8 ixon ixoff
 ....
 
-To prevent certain settings from being changed by an application, make adjustments to the locking device. For example, to lock the speed of [.filename]#ttyu5# to 57600 bps, type:
+为了防止应用程序更改某些设置，请对锁定设备进行调整。例如，要将 [.filename]#ttyu5# 的速度锁定为 57600 bps ，请输入：
 
 [source, shell]
 ....
 # stty -f /dev/ttyu5.lock 57600
 ....
 
-Now, any application that opens [.filename]#ttyu5# and tries to change the speed of the port will be stuck with 57600 bps.
+现在，任何打开 [.filename]#ttyu5# 并尝试更改端口速度的应用程序都将被困在 57600 bps。
 
 [[term]]
-== Terminals
+== 终端
 
-Terminals provide a convenient and low-cost way to access a FreeBSD system when not at the computer's console or on a connected network. This section describes how to use terminals with FreeBSD.
+终端提供了一种方便且低成本的方式，用于在未连接到计算机控制台或网络的情况下访问 FreeBSD 系统。本节介绍了如何在 FreeBSD 中使用终端。
 
-The original UNIX(R) systems did not have consoles. Instead, users logged in and ran programs through terminals that were connected to the computer's serial ports.
+最初的 UNIX(R) 系统没有控制台。相反，用户通过连接到计算机的串口登录并运行程序。
 
-The ability to establish a login session on a serial port still exists in nearly every UNIX(R)-like operating system today, including FreeBSD. By using a terminal attached to an unused serial port, a user can log in and run any text program that can normally be run on the console or in an `xterm` window.
+在几乎所有类 UNIX(R) 操作系统中，包括 FreeBSD ，仍然存在在串行端口上建立登录会话的能力。通过使用连接到未使用的串行端口的终端，用户可以登录并运行任何通常可以在控制台或 `xterm` 窗口中运行的文本程序。
 
-Many terminals can be attached to a FreeBSD system. An older spare computer can be used as a terminal wired into a more powerful computer running FreeBSD. This can turn what might otherwise be a single-user computer into a powerful multiple-user system.
+FreeBSD 系统可以连接多个终端。可以使用一台旧的备用计算机作为终端，通过有线连接到运行 FreeBSD 的更强大的计算机上。这可以将原本可能是单用户计算机转变为功能强大的多用户系统。
 
-FreeBSD supports three types of terminals:
+FreeBSD 支持三种类型的终端：
 
-Dumb terminals::
-Dumb terminals are specialized hardware that connect to computers over serial lines. They are called "dumb" because they have only enough computational power to display, send, and receive text. No programs can be run on these devices. Instead, dumb terminals connect to a computer that runs the needed programs.
+哑终端::
+哑终端是一种专门通过串行线连接到计算机的硬件。它们被称为“哑终端”，是因为它们只有足够的计算能力来显示、发送和接收文本。这些设备上无法运行任何程序。相反，哑终端连接到运行所需程序的计算机上。
 +
-There are hundreds of kinds of dumb terminals made by many manufacturers, and just about any kind will work with FreeBSD. Some high-end terminals can even display graphics, but only certain software packages can take advantage of these advanced features.
+有许多制造商生产的数百种哑终端，几乎任何一种终端都可以与 FreeBSD 配合使用。一些高端终端甚至可以显示图形，但只有特定的软件包才能利用这些高级功能。
 +
-Dumb terminals are popular in work environments where workers do not need access to graphical applications.
+在工作环境中，工人不需要访问图形应用程序时，哑终端非常受欢迎。
 
-Computers Acting as Terminals::
-Since a dumb terminal has just enough ability to display, send, and receive text, any spare computer can be a dumb terminal. All that is needed is the proper cable and some _terminal emulation_ software to run on the computer.
+计算机作为终端的角色::
+由于哑终端只具备足够的能力来显示、发送和接收文本，任何多余的计算机都可以成为哑终端。所需的只是正确的电缆和一些在计算机上运行的“终端仿真”软件。
 +
-This configuration can be useful. For example, if one user is busy working at the FreeBSD system's console, another user can do some text-only work at the same time from a less powerful personal computer hooked up as a terminal to the FreeBSD system.
+这个配置非常有用。例如，如果一个用户正在忙于在 FreeBSD 系统的控制台上工作，另一个用户可以同时使用一台性能较弱的个人电脑作为终端连接到 FreeBSD 系统上进行纯文本工作。
 +
-There are at least two utilities in the base-system of FreeBSD that can be used to work through a serial connection: man:cu[1] and man:tip[1].
+在 FreeBSD 的基本系统中，至少有两个工具可以通过串行连接进行使用：man:cu[1] 和 man:tip[1]。
 +
-For example, to connect from a client system that runs FreeBSD to the serial connection of another system:
+例如，要从运行 FreeBSD 的客户端系统连接到另一个系统的串行连接：
 +
 [source, shell]
 ....
 # cu -l /dev/cuauN
 ....
 +
-Ports are numbered starting from zero. This means that [.filename]#COM1# is [.filename]#/dev/cuau0#.
+端口从零开始编号。这意味着 [.filename]#COM1# 对应的是 [.filename]#/dev/cuau0# 。
 +
-Additional programs are available through the Ports Collection, such as package:comms/minicom[].
+通过 Ports Collection 可以获得其他的程序，例如 package:comms/minicom[] 。
 
-X Terminals::
-X terminals are the most sophisticated kind of terminal available. Instead of connecting to a serial port, they usually connect to a network like Ethernet. Instead of being relegated to text-only applications, they can display any Xorg application.
+X 终端::
+X 终端是最复杂的终端类型。它们通常不连接串行端口，而是连接到像以太网这样的网络。它们不仅仅局限于纯文本应用程序，还可以显示任何 Xorg 应用程序。
 +
-This chapter does not cover the setup, configuration, or use of X terminals.
+本章不涵盖 X 终端的设置、配置或使用。
 
 [[term-config]]
-=== Terminal Configuration
+=== 终端配置
 
-This section describes how to configure a FreeBSD system to enable a login session on a serial terminal. It assumes that the system recognizes the serial port to which the terminal is connected and that the terminal is connected with the correct cable.
+本节介绍了如何配置 FreeBSD 系统以在串行终端上启用登录会话。它假设系统能够识别终端所连接的串行端口，并且终端使用了正确的连接线缆。
 
-In FreeBSD, `init` reads [.filename]#/etc/ttys# and starts a `getty` process on the available terminals. The `getty` process is responsible for reading a login name and starting the `login` program. The ports on the FreeBSD system which allow logins are listed in [.filename]#/etc/ttys#. For example, the first virtual console, [.filename]#ttyv0#, has an entry in this file, allowing logins on the console. This file also contains entries for the other virtual consoles, serial ports, and pseudo-ttys. For a hardwired terminal, the serial port's [.filename]#/dev# entry is listed without the `/dev` part. For example, [.filename]#/dev/ttyv0# is listed as `ttyv0`.
+在 FreeBSD 中，`init` 读取 [.filename]#/etc/ttys# 文件并在可用的终端上启动一个 `getty` 进程。 `getty` 进程负责读取登录名并启动 `login` 程序。允许登录的 FreeBSD 系统上的端口在 [.filename]#/etc/ttys# 文件中列出。例如，第一个虚拟控制台 [.filename]#ttyv0# 在该文件中有一个条目，允许在控制台上登录。该文件还包含其他虚拟控制台、串口和伪终端的条目。对于硬连线终端，串口的 [.filename]#/dev# 条目被列为不带 `/dev` 部分的形式。例如，[.filename]#/dev/ttyv0# 被列为 `ttyv0`。
 
-The default [.filename]#/etc/ttys# configures support for the first four serial ports, [.filename]#ttyu0# through [.filename]#ttyu3#:
+默认的 [.filename]#/etc/ttys# 配置支持前四个串口，即 [.filename]#ttyu0# 到 [.filename]#ttyu3#。
 
 [.programlisting]
 ....
@@ -438,13 +438,13 @@ ttyu2   "/usr/libexec/getty std.9600"   dialup  off secure
 ttyu3   "/usr/libexec/getty std.9600"   dialup  off secure
 ....
 
-When attaching a terminal to one of those ports, modify the default entry to set the required speed and terminal type, to turn the device `on` and, if needed, to change the port's `secure` setting. If the terminal is connected to another port, add an entry for the port.
+当连接终端到其中一个端口时，修改默认条目以设置所需的速度和终端类型，打开设备，并且如果需要，更改端口的安全设置。如果终端连接到另一个端口，添加一个端口的条目。
 
-<<ex-etc-ttys>> configures two terminals in [.filename]#/etc/ttys#. The first entry configures a Wyse-50 connected to [.filename]#COM2#. The second entry configures an old computer running Procomm terminal software emulating a VT-100 terminal. The computer is connected to the sixth serial port on a multi-port serial card.
+<<ex-etc-ttys>> 配置了两个终端在 [.filename]#/etc/ttys# 中。第一个条目配置了一个连接到 [.filename]#COM2# 的 Wyse-50 终端。第二个条目配置了一台运行 Procomm 终端软件模拟 VT-100 终端的旧计算机。该计算机连接到多端口串行卡的第六个串行端口。
 
 [example]
 [[ex-etc-ttys]]
-.Configuring Terminal Entries
+.配置终端条目
 ====
 
 [.programlisting]
@@ -453,40 +453,40 @@ ttyu1  "/usr/libexec/getty std.38400"  wy50   on insecure
 ttyu5   "/usr/libexec/getty std.19200"  vt100  on insecure
 ....
 
-The first field specifies the device name of the serial terminal.
+第一个字段指定了串行终端的设备名称。
 
-The second field tells `getty` to initialize and open the line, set the line speed, prompt for a user name, and then execute the `login` program. The optional _getty type_ configures characteristics on the terminal line, like bps rate and parity. The available getty types are listed in [.filename]#/etc/gettytab#. In almost all cases, the getty types that start with `std` will work for hardwired terminals as these entries ignore parity. There is a `std` entry for each bps rate from 110 to 115200. Refer to man:gettytab[5] for more information. When setting the getty type, make sure to match the communications settings used by the terminal. For this example, the Wyse-50 uses no parity and connects at 38400 bps. The computer uses no parity and connects at 19200 bps.
+第二个字段告诉 `getty` 初始化并打开线路，设置线路速度，提示用户输入用户名，然后执行 `login` 程序。可选的 _getty 类型_ 配置终端线路的特性，如 bps 速率和奇偶校验。可用的 getty 类型在 [.filename]#/etc/gettytab# 中列出。在几乎所有情况下，以 `std` 开头的 getty 类型适用于硬连线终端，因为这些条目忽略奇偶校验。每个 bps 速率从 110 到 115200 都有一个 `std` 条目。有关更多信息，请参阅 man:gettytab[5]。在设置 getty 类型时，请确保与终端使用的通信设置匹配。对于此示例，Wyse-50 不使用奇偶校验，并以 38400 bps 连接。计算机不使用奇偶校验，并以 19200 bps 连接。
 
-The third field is the type of terminal. For dial-up ports, `unknown` or `dialup` is typically used since users may dial up with practically any type of terminal or software. Since the terminal type does not change for hardwired terminals, a real terminal type from [.filename]#/etc/termcap# can be specified. For this example, the Wyse-50 uses the real terminal type while the computer running Procomm is set to emulate a VT-100.
+第三个字段是终端的类型。对于拨号端口，通常使用 `unknown` 或 `dialup`，因为用户可以使用几乎任何类型的终端或软件进行拨号。由于有线终端的终端类型不会改变，可以指定来自 [.filename]#/etc/termcap# 的真实终端类型。在这个例子中， Wyse-50 使用真实的终端类型，而运行 Procomm 的计算机设置为模拟 VT-100 。
 
-The fourth field specifies if the port should be enabled. To enable logins on this port, this field must be set to `on`.
+第四个字段指定端口是否应该被启用。要在该端口上启用登录，此字段必须设置为 `on`。
 
-The final field is used to specify whether the port is secure. Marking a port as `secure` means that it is trusted enough to allow `root` to login from that port. Insecure ports do not allow `root` logins. On an insecure port, users must login from unprivileged accounts and then use `su` or a similar mechanism to gain superuser privileges, as described in crossref:basics[users-superuser,“The Superuser Account”]. For security reasons, it is recommended to change this setting to `insecure`.
+最后一个字段用于指定端口是否安全。将端口标记为 `secure` 表示该端口足够可信，允许 `root` 从该端口登录。不安全的端口不允许 `root` 登录。在不安全的端口上，用户必须从非特权帐户登录，然后使用 `su` 或类似的机制获取超级用户权限，如 crossref:basics[users-superuser,“超级用户帐户”] 中所述。出于安全原因，建议将此设置更改为 `insecure`。
 ====
 
-After making any changes to [.filename]#/etc/ttys#, send a SIGHUP (hangup) signal to the `init` process to force it to re-read its configuration file:
+在对 [.filename]#/etc/ttys# 文件进行任何更改后，向 `init` 进程发送 SIGHUP（hangup）信号，强制其重新读取配置文件。
 
 [source, shell]
 ....
 # kill -HUP 1
 ....
 
-Since `init` is always the first process run on a system, it always has a process ID of `1`.
+由于 `init` 始终是系统上运行的第一个进程，因此它的进程 ID 始终为 `1` 。
 
-If everything is set up correctly, all cables are in place, and the terminals are powered up, a `getty` process should now be running on each terminal and login prompts should be available on each terminal.
+如果一切设置正确，所有电缆都已连接好，终端已经启动，那么每个终端现在应该运行着一个 `getty` 进程，并且每个终端上都应该有登录提示符可用。
 
 [[term-debug]]
-=== Troubleshooting the Connection
+=== 连接故障排除
 
-Even with the most meticulous attention to detail, something could still go wrong while setting up a terminal. Here is a list of common symptoms and some suggested fixes.
+即使在对细节极为细致入微的情况下，设置终端时仍然可能出现问题。以下是一些常见症状和一些建议的解决方法。
 
-If no login prompt appears, make sure the terminal is plugged in and powered up. If it is a personal computer acting as a terminal, make sure it is running terminal emulation software on the correct serial port.
+如果没有出现登录提示，请确保终端已插好并已开机。如果终端是个人电脑充当的，确保它在正确的串口上运行终端仿真软件。
 
-Make sure the cable is connected firmly to both the terminal and the FreeBSD computer. Make sure it is the right kind of cable.
+确保电缆牢固地连接到终端和 FreeBSD 计算机上。确保它是正确类型的电缆。
 
-Make sure the terminal and FreeBSD agree on the bps rate and parity settings. For a video display terminal, make sure the contrast and brightness controls are turned up. If it is a printing terminal, make sure paper and ink are in good supply.
+确保终端和 FreeBSD 在波特率和奇偶校验设置上达成一致。对于视频显示终端，请确保对比度和亮度控制已调高。如果是打印终端，请确保纸张和墨水充足。
 
-Use `ps` to make sure that a `getty` process is running and serving the terminal. For example, the following listing shows that a `getty` is running on the second serial port, [.filename]#ttyu1#, and is using the `std.38400` entry in [.filename]#/etc/gettytab#:
+使用 `ps` 命令确保 `getty` 进程正在运行并为终端提供服务。例如，以下列表显示 `getty` 正在第二个串口 [.filename]#ttyu1# 上运行，并且正在使用 [.filename]#/etc/gettytab# 中的 `std.38400` 条目：
 
 [source, shell]
 ....
@@ -494,43 +494,43 @@ Use `ps` to make sure that a `getty` process is running and serving the terminal
 22189  d1  Is+    0:00.03 /usr/libexec/getty std.38400 ttyu1
 ....
 
-If no `getty` process is running, make sure the port is enabled in [.filename]#/etc/ttys#. Remember to run `kill -HUP 1` after modifying [.filename]#/etc/ttys#.
+如果没有运行 `getty` 进程，请确保端口在 [.filename]#/etc/ttys# 中已启用。在修改 [.filename]#/etc/ttys# 后记得运行 `kill -HUP 1` 命令。
 
-If the `getty` process is running but the terminal still does not display a login prompt, or if it displays a prompt but will not accept typed input, the terminal or cable may not support hardware handshaking. Try changing the entry in [.filename]#/etc/ttys# from `std.38400` to `3wire.38400`, then run `kill -HUP 1` after modifying [.filename]#/etc/ttys#. The `3wire` entry is similar to `std`, but ignores hardware handshaking. The bps may also need to be reduced or software flow control enabled when using `3wire` to prevent buffer overflows.
+如果 `getty` 进程正在运行，但终端仍然没有显示登录提示符，或者显示了提示符但无法接受键入的输入，那么终端或电缆可能不支持硬件握手。尝试将 [.filename]#/etc/ttys# 中的条目从 `std.38400` 更改为 `3wire.38400` ，然后在修改 [.filename]#/etc/ttys# 后运行 `kill -HUP 1` 命令。 `3wire` 条目类似于 `std` ，但忽略了硬件握手。当使用 `3wire` 时，可能还需要降低波特率或启用软件流控制以防止缓冲区溢出。
 
-If garbage appears instead of a login prompt, make sure the terminal and FreeBSD agree on the bps rate and parity settings. Check the `getty` processes to make sure the correct _getty_ type is in use. If not, edit [.filename]#/etc/ttys# and run `kill -HUP 1`.
+如果登录提示符显示垃圾字符，请确保终端和 FreeBSD 在波特率和奇偶校验设置上达成一致。检查 `getty` 进程，确保使用了正确的 _getty_ 类型。如果没有，请编辑 [.filename]#/etc/ttys# 并运行 `kill -HUP 1` 。
 
-If characters appear doubled and the password appears when typed, switch the terminal, or the terminal emulation software, from "half duplex" or "local echo" to "full duplex."
+如果字符出现重复，并且在键入时密码出现，请将终端或终端仿真软件从“half duplex”或“local echo”切换到“full duplex”。
 
 [[dialup]]
-== Dial-in Service
+== 拨入服务
 
-Configuring a FreeBSD system for dial-in service is similar to configuring terminals, except that modems are used instead of terminal devices. FreeBSD supports both external and internal modems.
+为了配置一个用于拨入服务的 FreeBSD 系统，与配置终端类似，只是使用调制解调器而不是终端设备。 FreeBSD 支持外部和内部调制解调器。
 
-External modems are more convenient because they often can be configured via parameters stored in non-volatile RAM and they usually provide lighted indicators that display the state of important RS-232 signals, indicating whether the modem is operating properly.
+外部调制解调器更方便，因为它们通常可以通过存储在非易失性 RAM 中的参数进行配置，并且它们通常提供带有指示灯的指示器，显示重要的 RS-232 信号的状态，以指示调制解调器是否正常运行。
 
-Internal modems usually lack non-volatile RAM, so their configuration may be limited to setting DIP switches. If the internal modem has any signal indicator lights, they are difficult to view when the system's cover is in place.
+内置调制解调器通常缺乏非易失性 RAM ，因此它们的配置可能仅限于设置 DIP 开关。如果内置调制解调器有任何信号指示灯，当系统盖盖上时时很难查看。
 
-When using an external modem, a proper cable is needed. A standard RS-232C serial cable should suffice.
+使用外部调制解调器时，需要使用适当的电缆。标准的 RS-232C 串行电缆应该足够。
 
-FreeBSD needs the RTS and CTS signals for flow control at speeds above 2400 bps, the CD signal to detect when a call has been answered or the line has been hung up, and the DTR signal to reset the modem after a session is complete. Some cables are wired without all of the needed signals, so if a login session does not go away when the line hangs up, there may be a problem with the cable. Refer to <<term-cables-null>> for more information about these signals.
+FreeBSD 在超过 2400 bps 的速度下需要 RTS 和 CTS 信号进行流控制，需要 CD 信号来检测呼叫是否已接听或线路是否已挂断，并且需要 DTR 信号在会话结束后重置调制解调器。有些电缆没有连接所有必需的信号，所以如果登录会话在线路挂断后仍然存在，可能是电缆存在问题。有关这些信号的更多信息，请参考 <<term-cables-null>> 。
 
-Like other UNIX(R)-like operating systems, FreeBSD uses the hardware signals to find out when a call has been answered or a line has been hung up and to hangup and reset the modem after a call. FreeBSD avoids sending commands to the modem or watching for status reports from the modem.
+与其他类 UNIX(R) 操作系统一样， FreeBSD 使用硬件信号来判断呼叫是否已接听或线路是否已挂断，并在呼叫结束后挂断和重置调制解调器。 FreeBSD 避免向调制解调器发送命令或监视调制解调器的状态报告。
 
-FreeBSD supports the NS8250, NS16450, NS16550, and NS16550A-based RS-232C (CCITT V.24) communications interfaces. The 8250 and 16450 devices have single-character buffers. The 16550 device provides a 16-character buffer, which allows for better system performance. Bugs in plain 16550 devices prevent the use of the 16-character buffer, so use 16550A devices if possible. As single-character-buffer devices require more work by the operating system than the 16-character-buffer devices, 16550A-based serial interface cards are preferred. If the system has many active serial ports or will have a heavy load, 16550A-based cards are better for low-error-rate communications.
+FreeBSD 支持 NS8250 、 NS16450 、 NS16550 和 NS16550A 基于 RS-232C (CCITT V.24) 通信接口。8250 和 16450 设备具有单字符缓冲区。 16550 设备提供了一个 16 字符缓冲区，可以提高系统性能。普通的 16550 设备存在缺陷，无法使用 16 字符缓冲区，因此如果可能的话，请使用 16550A 设备。由于单字符缓冲区设备需要操作系统进行更多的工作，所以更倾向于使用基于 16550A 的串行接口卡。如果系统有许多活动的串行端口或将承受重负载，基于 16550A 的卡对于低误码率通信更好。
 
-The rest of this section demonstrates how to configure a modem to receive incoming connections, how to communicate with the modem, and offers some troubleshooting tips.
+本节的其余部分演示了如何配置调制解调器以接收传入连接，如何与调制解调器通信，并提供一些故障排除技巧。
 
 [[dialup-ttys]]
-=== Modem Configuration
+=== 调制解调器配置
 
-As with terminals, `init` spawns a `getty` process for each configured serial port used for dial-in connections. When a user dials the modem's line and the modems connect, the "Carrier Detect" signal is reported by the modem. The kernel notices that the carrier has been detected and instructs `getty` to open the port and display a `login:` prompt at the specified initial line speed. In a typical configuration, if garbage characters are received, usually due to the modem's connection speed being different than the configured speed, `getty` tries adjusting the line speeds until it receives reasonable characters. After the user enters their login name, `getty` executes `login`, which completes the login process by asking for the user's password and then starting the user's shell.
+与终端一样，`init` 为每个配置的串口生成一个 `getty` 进程，用于拨入连接。当用户拨号并且调制解调器连接成功时，调制解调器会报告“Carrier Detect”信号。内核注意到已检测到载波，并指示 `getty` 打开端口并在指定的初始线速度下显示一个 `login:` 提示符。在典型的配置中，如果接收到垃圾字符，通常是由于调制解调器的连接速度与配置的速度不同， `getty` 会尝试调整线速度，直到接收到合理的字符为止。用户输入登录名后，`getty` 执行 `login` ，通过询问用户的密码，然后启动用户的 shell 来完成登录过程。
 
-There are two schools of thought regarding dial-up modems. One configuration method is to set the modems and systems so that no matter at what speed a remote user dials in, the dial-in RS-232 interface runs at a locked speed. The benefit of this configuration is that the remote user always sees a system login prompt immediately. The downside is that the system does not know what a user's true data rate is, so full-screen programs like Emacs will not adjust their screen-painting methods to make their response better for slower connections.
+关于拨号调制解调器有两种观点。一种配置方法是设置调制解调器和系统，以便无论远程用户以何种速度拨入，拨入的 RS-232 接口都以固定速度运行。这种配置的好处是远程用户总是能立即看到系统登录提示。缺点是系统不知道用户的真实数据速率，因此像 Emacs 这样的全屏程序不会调整其屏幕绘制方法，以使其在较慢的连接下响应更好。
 
-The second method is to configure the RS-232 interface to vary its speed based on the remote user's connection speed. As `getty` does not understand any particular modem's connection speed reporting, it gives a `login:` message at an initial speed and watches the characters that come back in response. If the user sees junk, they should press kbd:[Enter] until they see a recognizable prompt. If the data rates do not match, `getty` sees anything the user types as junk, tries the next speed, and gives the `login:` prompt again. This procedure normally only takes a keystroke or two before the user sees a good prompt. This login sequence does not look as clean as the locked-speed method, but a user on a low-speed connection should receive better interactive response from full-screen programs.
+第二种方法是配置 RS-232 接口，根据远程用户的连接速度来变化速度。由于 `getty` 不了解任何特定调制解调器的连接速度报告，它会以初始速度发送 `login:` 消息，并监视响应中返回的字符。如果用户看到乱码，他们应该按下 kbd:[Enter] 直到看到一个可识别的提示符。如果数据速率不匹配，`getty` 会将用户输入的任何内容视为乱码，尝试下一个速度，并再次给出 `login:` 提示符。在用户看到一个良好的提示符之前，这个过程通常只需要按下一个或两个按键。这个登录序列看起来不像锁定速度的方法那样干净，但是低速连接的用户应该能够从全屏程序中获得更好的交互响应。
 
-When locking a modem's data communications rate at a particular speed, no changes to [.filename]#/etc/gettytab# should be needed. However, for a matching-speed configuration, additional entries may be required in order to define the speeds to use for the modem. This example configures a 14.4 Kbps modem with a top interface speed of 19.2 Kbps using 8-bit, no parity connections. It configures `getty` to start the communications rate for a V.32bis connection at 19.2 Kbps, then cycles through 9600 bps, 2400 bps, 1200 bps, 300 bps, and back to 19.2 Kbps. Communications rate cycling is implemented with the `nx=` (next table) capability. Each line uses a `tc=` (table continuation) entry to pick up the rest of the settings for a particular data rate.
+在锁定调制解调器的数据通信速率时，不需要对 [.filename]#/etc/gettytab# 进行任何更改。然而，对于匹配速度的配置，可能需要添加额外的条目来定义调制解调器使用的速率。此示例配置了一个速率为 14.4 Kbps 的调制解调器，顶部接口速率为 19.2 Kbps ，使用 8 位，无奇偶校验连接。它配置 `getty` 以 19.2 Kbps 启动 V.32bis 连接的通信速率，然后循环使用 9600 bps 、 2400 bps 、 1200 bps 、 300 bps ，最后回到 19.2 Kbps 。通信速率循环是通过 `nx=` (next table) 功能实现的。每行使用 `tc=` (table continuation) 条目来获取特定数据速率的其余设置。
 
 [.programlisting]
 ....
@@ -549,7 +549,7 @@ uq|V19200|High Speed Modem at 19200,8-bit:\
         :nx=V9600:tc=std.19200:
 ....
 
-For a 28.8 Kbps modem, or to take advantage of compression on a 14.4 Kbps modem, use a higher communications rate, as seen in this example:
+对于一个 28.8 Kbps 的调制解调器，或者为了利用 14.4 Kbps 调制解调器上的压缩功能，可以使用更高的通信速率，如下面的示例所示：
 
 [.programlisting]
 ....
@@ -569,39 +569,39 @@ vq|VH57600|Very High Speed Modem at 57600,8-bit:\
         :nx=VH9600:tc=std.57600:
 ....
 
-For a slow CPU or a heavily loaded system without 16550A-based serial ports, this configuration may produce `uart` "silo" errors at 57.6 Kbps.
+对于 CPU 速度较慢或负载较重的系统，如果没有基于 16550A 的串口，这种配置可能会在 57.6 Kbps 时产生 `uart` "silo" 错误。
 
-The configuration of [.filename]#/etc/ttys# is similar to <<ex-etc-ttys>>, but a different argument is passed to `getty` and `dialup` is used for the terminal type. Replace _xxx_ with the process `init` will run on the device:
+[.filename]#/etc/ttys# 的配置与 <<ex-etc-ttys>> 类似，但是传递给 `getty` 的参数不同，并且使用 `dialup` 作为终端类型。将 _xxx_ 替换为 `init` 将在设备上运行的进程。
 
 [.programlisting]
 ....
 ttyu0   "/usr/libexec/getty xxx"   dialup on
 ....
 
-The `dialup` terminal type can be changed. For example, setting `vt102` as the default terminal type allows users to use VT102 emulation on their remote systems.
+`dialup` 终端类型可以进行更改。例如，将 `vt102` 设置为默认终端类型，允许用户在远程系统上使用 VT102 仿真。
 
-For a locked-speed configuration, specify the speed with a valid type listed in [.filename]#/etc/gettytab#. This example is for a modem whose port speed is locked at 19.2 Kbps:
+对于锁定速度的配置，请使用 [.filename]#/etc/gettytab# 中列出的有效类型指定速度。以下示例是针对一个端口速度锁定在 19.2 Kbps 的调制解调器：
 
 [.programlisting]
 ....
 ttyu0   "/usr/libexec/getty std.19200"   dialup on
 ....
 
-In a matching-speed configuration, the entry needs to reference the appropriate beginning "auto-baud" entry in [.filename]#/etc/gettytab#. To continue the example for a matching-speed modem that starts at 19.2 Kbps, use this entry:
+在匹配速度配置中，该条目需要引用 [.filename]#/etc/gettytab# 中适当的起始 "auto-baud" 条目。继续以一个以 19.2 Kbps 启动的匹配速度调制解调器为例，使用以下条目：
 
 [.programlisting]
 ....
 ttyu0   "/usr/libexec/getty V19200"   dialup on
 ....
 
-After editing [.filename]#/etc/ttys#, wait until the modem is properly configured and connected before signaling `init`:
+在编辑 [.filename]#/etc/ttys# 文件后，在向 `init` 发送信号之前，请等待调制解调器正确配置并连接。
 
 [source, shell]
 ....
 # kill -HUP 1
 ....
 
-High-speed modems, like V.32, V.32bis, and V.34 modems, use hardware (`RTS/CTS`) flow control. Use `stty` to set the hardware flow control flag for the modem port. This example sets the `crtscts` flag on [.filename]#COM2#'s dial-in and dial-out initialization devices:
+高速调制解调器，如 V.32、V.32bis 和 V.34 调制解调器，使用硬件（`RTS/CTS`）流控制。使用 `stty` 命令为调制解调器端口设置硬件流控制标志。以下示例在 [.filename]#COM2# 的拨入和拨出初始化设备上设置了 `crtscts` 标志：
 
 [source, shell]
 ....
@@ -609,76 +609,76 @@ High-speed modems, like V.32, V.32bis, and V.34 modems, use hardware (`RTS/CTS`)
 # stty -f /dev/cuau1.init crtscts
 ....
 
-=== Troubleshooting
+=== 故障排除
 
-This section provides a few tips for troubleshooting a dial-up modem that will not connect to a FreeBSD system.
+本节提供了一些解决无法连接到 FreeBSD 系统的拨号调制解调器的技巧。
 
-Hook up the modem to the FreeBSD system and boot the system. If the modem has status indication lights, watch to see whether the modem's DTR indicator lights when the `login:` prompt appears on the system's console. If it lights up, that should mean that FreeBSD has started a `getty` process on the appropriate communications port and is waiting for the modem to accept a call.
+将调制解调器连接到 FreeBSD 系统并启动系统。如果调制解调器具有状态指示灯，请观察当系统控制台上出现 `login:` 提示时，调制解调器的 DTR 指示灯是否亮起。如果它亮起，那应该意味着 FreeBSD 已经在适当的通信端口上启动了一个 `getty` 进程，并且正在等待调制解调器接受呼叫。
 
-If the DTR indicator does not light, login to the FreeBSD system through the console and type `ps ax` to see if FreeBSD is running a `getty` process on the correct port:
+如果 DTR 指示灯没有亮起，请通过控制台登录 FreeBSD 系统，并输入 `ps ax` 命令查看 FreeBSD 是否在正确的端口上运行了 `getty` 进程：
 
 [source, shell]
 ....
   114 ??  I      0:00.10 /usr/libexec/getty V19200 ttyu0
 ....
 
-If the second column contains a `d0` instead of a `??` and the modem has not accepted a call yet, this means that `getty` has completed its open on the communications port. This could indicate a problem with the cabling or a misconfigured modem because `getty` should not be able to open the communications port until the carrier detect signal has been asserted by the modem.
+如果第二列包含的是 `d0` 而不是 `??` ，并且调制解调器尚未接受呼叫，这意味着 `getty` 已经完成了对通信端口的打开。这可能表明存在电缆问题或调制解调器配置错误，因为在调制解调器断开检测信号被断言之前，`getty` 不应该能够打开通信端口。
 
-If no `getty` processes are waiting to open the port, double-check that the entry for the port is correct in [.filename]#/etc/ttys#. Also, check [.filename]#/var/log/messages# to see if there are any log messages from `init` or `getty`.
+如果没有 `getty` 进程等待打开端口，请再次检查在 [.filename]#/etc/ttys# 中端口的条目是否正确。此外，请检查 [.filename]#/var/log/messages# 以查看是否有来自 `init` 或 `getty` 的日志消息。
 
-Next, try dialing into the system. Be sure to use 8 bits, no parity, and 1 stop bit on the remote system. If a prompt does not appear right away, or the prompt shows garbage, try pressing kbd:[Enter] about once per second. If there is still no `login:` prompt, try sending a `BREAK`. When using a high-speed modem, try dialing again after locking the dialing modem's interface speed.
+接下来，请尝试拨入系统。确保在远程系统上使用 8 位、无奇偶校验和 1 个停止位。如果没有立即出现提示符，或者提示符显示乱码，请尝试每秒按下 kbd:[Enter] 键一次。如果仍然没有出现 `login:` 提示符，请尝试发送 `BREAK` 信号。当使用高速调制解调器时，在锁定拨号调制解调器的接口速度后再次拨号。
 
-If there is still no `login:` prompt, check [.filename]#/etc/gettytab# again and double-check that:
+如果仍然没有出现 `login:` 提示符，请再次检查 [.filename]#/etc/gettytab# ，并仔细确认以下内容：
 
-* The initial capability name specified in the entry in [.filename]#/etc/ttys# matches the name of a capability in [.filename]#/etc/gettytab#.
-* Each `nx=` entry matches another [.filename]#gettytab# capability name.
-* Each `tc=` entry matches another [.filename]#gettytab# capability name.
+* 在 [.filename]#/etc/ttys# 文件中指定的初始能力名称与 [.filename]#/etc/gettytab# 文件中的能力名称匹配。
+* 每个 `nx=` 条目都与 [.filename]#gettytab# 的能力名称相匹配。
+* 每个 `tc=` 条目都与另一个 [.filename]#gettytab# 能力名称匹配。
 
-If the modem on the FreeBSD system will not answer, make sure that the modem is configured to answer the phone when DTR is asserted. If the modem seems to be configured correctly, verify that the DTR line is asserted by checking the modem's indicator lights.
+如果 FreeBSD 系统上的调制解调器不会应答，请确保调制解调器配置为在 DTR 被断开时接听电话。如果调制解调器似乎已正确配置，请通过检查调制解调器的指示灯来验证 DTR 线是否被断开。
 
-If it still does not work, try sending an email to the {freebsd-questions} describing the modem and the problem.
+如果仍然无法解决问题，请尝试发送电子邮件到 {freebsd-questions}，描述调制解调器和问题。
 
 [[dialout]]
-== Dial-out Service
+== 拨出服务
 
-The following are tips for getting the host to connect over the modem to another computer. This is appropriate for establishing a terminal session with a remote host.
+以下是通过调制解调器将主机连接到另一台计算机的提示。这适用于与远程主机建立终端会话。
 
-This kind of connection can be helpful to get a file on the Internet if there are problems using PPP. If PPP is not working, use the terminal session to FTP the needed file. Then use zmodem to transfer it to the machine.
+如果使用 PPP 存在问题，这种连接方式可以帮助获取互联网上的文件。如果 PPP 无法正常工作，可以使用终端会话来通过 FTP 获取所需文件。然后使用 zmodem 将其传输到计算机上。
 
 [[hayes-unsupported]]
-=== Using a Stock Hayes Modem
+=== 使用一台 Stock Hayes 调制解调器
 
-A generic Hayes dialer is built into `tip`. Use `at=hayes` in [.filename]#/etc/remote#.
+`tip` 内置了一个通用的 Hayes 拨号器。在 [.filename]#/etc/remote# 文件中使用 `at=hayes` 。
 
-The Hayes driver is not smart enough to recognize some of the advanced features of newer modems messages like `BUSY`, `NO DIALTONE`, or `CONNECT 115200`. Turn those messages off when using `tip` with `ATX0&W`.
+Hayes 驱动程序不够智能，无法识别一些较新调制解调器消息的高级功能，例如 `BUSY`、`NO DIALTONE` 或 `CONNECT 115200`。在使用 `tip` 和 `ATX0&W` 时，请关闭这些消息。
 
-The dial timeout for `tip` is 60 seconds. The modem should use something less, or else `tip` will think there is a communication problem. Try `ATS7=45&W`.
+`tip` 的拨号超时时间为 60 秒。调制解调器应该使用更短的时间，否则 `tip` 会认为存在通信问题。尝试使用 `ATS7=45&W`。
 
 [[direct-at]]
-=== Using `AT` Commands
+=== 使用 `AT` 命令
 
-Create a "direct" entry in [.filename]#/etc/remote#. For example, if the modem is hooked up to the first serial port, [.filename]#/dev/cuau0#, use the following line:
+在 [.filename]#/etc/remote# 中创建一个"direct"条目。例如，如果调制解调器连接到第一个串口， [.filename]#/dev/cuau0# ，请使用以下行：
 
 [.programlisting]
 ....
 cuau0:dv=/dev/cuau0:br#19200:pa=none
 ....
 
-Use the highest bps rate the modem supports in the `br` capability. Then, type `tip cuau0` to connect to the modem.
+在 `br` 功能中使用调制解调器支持的最高 bps 速率。然后，键入 `tip cuau0` 以连接到调制解调器。
 
-Or, use `cu` as `root` with the following command:
+或者，使用以下命令将 `cu` 作为 `root` 使用：
 
 [source, shell]
 ....
 # cu -lline -sspeed
 ....
 
-_line_ is the serial port, such as [.filename]#/dev/cuau0#, and _speed_ is the speed, such as `57600`. When finished entering the AT commands, type `~.` to exit.
+_line_ 是串口，例如 [.filename]#/dev/cuau0# ，而 _speed_ 是速度，例如 `57600` 。输入完 AT 命令后，输入 `~.` 退出。
 
 [[gt-failure]]
-=== The `@` Sign Does Not Work
+=== `@` 符号不起作用
 
-The `@` sign in the phone number capability tells `tip` to look in [.filename]#/etc/phones# for a phone number. But, the `@` sign is also a special character in capability files like [.filename]#/etc/remote#, so it needs to be escaped with a backslash:
+电话号码功能中的 `@` 符号告诉 `tip` 在 [.filename]#/etc/phones# 文件中查找电话号码。但是，在像 [.filename]#/etc/remote# 这样的功能文件中， `@` 符号也是一个特殊字符，因此需要用反斜杠进行转义：
 
 [.programlisting]
 ....
@@ -686,9 +686,9 @@ pn=\@
 ....
 
 [[dial-command-line]]
-=== Dialing from the Command Line
+=== 从命令行拨号
 
-Put a "generic" entry in [.filename]#/etc/remote#. For example:
+在 [.filename]#/etc/remote# 中添加一个 "generic" 条目。例如：
 
 [.programlisting]
 ....
@@ -698,14 +698,14 @@ tip57600|Dial any phone number at 57600 bps:\
         :dv=/dev/cuau0:br#57600:at=hayes:pa=none:du:
 ....
 
-This should now work:
+现在应该可以工作了。
 
 [source, shell]
 ....
 # tip -115200 5551234
 ....
 
-Users who prefer `cu` over `tip`, can use a generic `cu` entry:
+喜欢使用 `cu` 而不是 `tip` 的用户可以使用通用的 `cu` 条目：
 
 [.programlisting]
 ....
@@ -713,7 +713,7 @@ cu115200|Use cu to dial any number at 115200bps:\
         :dv=/dev/cuau1:br#57600:at=hayes:pa=none:du:
 ....
 
-and type:
+并且类型：
 
 [source, shell]
 ....
@@ -721,14 +721,14 @@ and type:
 ....
 
 [[set-bps]]
-=== Setting the bps Rate
+=== 设置波特率
 
-Put in an entry for `tip1200` or `cu1200`, but go ahead and use whatever bps rate is appropriate with the `br` capability. `tip` thinks a good default is 1200 bps which is why it looks for a `tip1200` entry. 1200 bps does not have to be used, though.
+为 `tip1200` 或 `cu1200` 添加一个条目，但请根据 `br` 功能使用适当的 bps 速率。 `tip` 认为默认的速率是 1200 bps ，这就是为什么它会寻找 `tip1200` 条目的原因。然而，并不一定非要使用 1200 bps 。
 
 [[terminal-server]]
-=== Accessing a Number of Hosts Through a Terminal Server
+=== 通过终端服务器访问多台主机
 
-Rather than waiting until connected and typing `CONNECT _host_` each time, use ``tip``'s `cm` capability. For example, these entries in [.filename]#/etc/remote# will let you type `tip pain` or `tip muffin` to connect to the hosts `pain` or `muffin`, and `tip deep13` to connect to the terminal server.
+不必每次等待连接并输入 `CONNECT _host_` ，可以使用 ``tip`` 的 `cm` 功能。例如，在 [.filename]#/etc/remote# 中添加以下条目，可以通过输入 `tip pain` 或 `tip muffin` 连接到主机 `pain` 或 `muffin` ，以及通过输入 `tip deep13` 连接到终端服务器。
 
 [.programlisting]
 ....
@@ -741,11 +741,11 @@ deep13:Gizmonics Institute terminal server:\
 ....
 
 [[tip-multiline]]
-=== Using More Than One Line with `tip`
+=== 使用多行显示 `tip` 提示信息
 
-This is often a problem where a university has several modem lines and several thousand students trying to use them.
+这通常是一个问题，当一所大学拥有多条调制解调器线路，并有几千名学生试图使用它们时。
 
-Make an entry in [.filename]#/etc/remote# and use `@` for the `pn` capability:
+在 [.filename]#/etc/remote# 中添加一条条目，并使用 ` @ ` 作为 `pn` 功能的标识符：
 
 [.programlisting]
 ....
@@ -755,7 +755,7 @@ dialout:\
         :dv=/dev/cuau3:br#9600:at=courier:du:pa=none:
 ....
 
-Then, list the phone numbers in [.filename]#/etc/phones#:
+然后，在 [.filename]#/etc/phones# 中列出电话号码：
 
 [.programlisting]
 ....
@@ -765,16 +765,16 @@ big-university 5551113
 big-university 5551114
 ....
 
-`tip` will try each number in the listed order, then give up. To keep retrying, run `tip` in a `while` loop.
+`tip` 会按照列表中的顺序尝试每个数字，然后放弃。要保持重试，可以在一个 `while` 循环中运行 `tip` 。
 
 [[multi-controlp]]
-=== Using the Force Character
+=== 使用 Force 字符
 
-kbd:[Ctrl+P] is the default "force" character, used to tell `tip` that the next character is literal data. The force character can be set to any other character with the `~s` escape, which means "set a variable."
+kbd:[Ctrl+P] 是默认的 "force" 字符，用于告诉 `tip` 下一个字符是字面数据。可以使用 `~s` 转义将强制字符设置为任何其他字符，该转义意味着 "set a variable."。
 
-Type `~sforce=_single-char_` followed by a newline. _single-char_ is any single character. If _single-char_ is left out, then the force character is the null character, which is accessed by typing kbd:[Ctrl+2] or kbd:[Ctrl+Space]. A pretty good value for _single-char_ is kbd:[Shift+Ctrl+6], which is only used on some terminal servers.
+在新行后面输入 `~sforce=_single-char_`。_single-char_ 是任意一个字符。如果省略 _single-char_，则强制字符为空字符，可以通过键入 kbd:[Ctrl+2] 或 kbd:[Ctrl+Space] 来访问。一个很好的 _single-char_ 值是 kbd:[Shift+Ctrl+6]，这只在某些终端服务器上使用。
 
-To change the force character, specify the following in [.filename]#~/.tiprc#:
+要更改 force 字符，请在 [.filename]#~/.tiprc# 中指定以下内容：
 
 [.programlisting]
 ....
@@ -782,11 +782,11 @@ force=single-char
 ....
 
 [[uppercase]]
-=== Upper Case Characters
+=== 大写字母
 
-This happens when kbd:[Ctrl+A] is pressed, which is ``tip``'s "raise character", specially designed for people with broken caps-lock keys. Use `~s` to set `raisechar` to something reasonable. It can be set to be the same as the force character, if neither feature is used.
+当按下 kbd:[Ctrl+A] 时，会发生这种情况，这是 ``tip`` 的 "raise character"，专为那些键盘上的大写锁定键损坏的人设计的。使用 `~s` 来设置 `raisechar` 为合理的值。如果两个特性都没有使用，它可以被设置为与强制字符相同。
 
-Here is a sample [.filename]#~/.tiprc# for Emacs users who need to type kbd:[Ctrl+2] and kbd:[Ctrl+A]:
+这是一个给需要在 Emacs 中输入 kbd:[Ctrl+2] 和 kbd:[Ctrl+A] 的用户的示例 [.filename]#~/.tiprc# 文件：
 
 [.programlisting]
 ....
@@ -794,107 +794,107 @@ force=^^
 raisechar=^^
 ....
 
-The `^^` is kbd:[Shift+Ctrl+6].
+`^^` 是 kbd:[Shift+Ctrl+6]。
 
 [[tip-filetransfer]]
-=== File Transfers with `tip`
+=== 使用 `tip` 进行文件传输
 
-When talking to another UNIX(R)-like operating system, files can be sent and received using `~p` (put) and `~t` (take). These commands run `cat` and `echo` on the remote system to accept and send files. The syntax is: `~p` local-file [ remote-file ] `~t` remote-file [ local-file ]
+当与另一个类 UNIX(R) 操作系统进行通信时，可以使用 `~p`（put）和 `~t`（take）命令发送和接收文件。这些命令在远程系统上运行 `cat` 和 `echo` 命令来接受和发送文件。语法如下：`~p` 本地文件 [ 远程文件 ] `~t` 远程文件 [ 本地文件 ] 。
 
-There is no error checking, so another protocol, like zmodem, should probably be used.
+没有错误检查，所以可能应该使用另一种协议，比如 zmodem。
 
 [[zmodem-tip]]
-=== Using zmodem with `tip`?
+=== 使用 `tip` 与 zmodem 一起使用？
 
-To receive files, start the sending program on the remote end. Then, type `~C rz` to begin receiving them locally.
+要接收文件，请在远程端启动发送程序。然后，输入 `~C rz` 以开始在本地接收文件。
 
-To send files, start the receiving program on the remote end. Then, type `~C sz _files_` to send them to the remote system.
+要发送文件，请在远程端启动接收程序。然后，输入 `~C sz _files_` 将文件发送到远程系统。
 
 [[serialconsole-setup]]
-== Setting Up the Serial Console
+== 设置串行控制台
 
-FreeBSD has the ability to boot a system with a dumb terminal on a serial port as a console. This configuration is useful for system administrators who wish to install FreeBSD on machines that have no keyboard or monitor attached, and developers who want to debug the kernel or device drivers.
+FreeBSD 具有通过串口作为控制台来启动系统的能力。这种配置对于希望在没有键盘或显示器连接的机器上安装 FreeBSD 的系统管理员以及希望调试内核或设备驱动程序的开发人员非常有用。
 
-As described in crossref:boot[boot,The FreeBSD Booting Process], FreeBSD employs a three stage bootstrap. The first two stages are in the boot block code which is stored at the beginning of the FreeBSD slice on the boot disk. The boot block then loads and runs the boot loader as the third stage code.
+如 crossref:boot[boot, FreeBSD 引导过程] 中所描述的，FreeBSD 采用了三阶段的引导过程。前两个阶段是存储在引导磁盘上 FreeBSD 分区的开头的引导块代码。然后，引导块加载并运行引导加载程序作为第三阶段的代码。
 
-In order to set up booting from a serial console, the boot block code, the boot loader code, and the kernel need to be configured.
+为了设置从串行控制台启动，需要配置引导块代码、引导加载程序代码和内核。
 
 [[serialconsole-howto-fast]]
-=== Quick Serial Console Configuration
+=== 快速串行控制台配置
 
-This section provides a fast overview of setting up the serial console. This procedure can be used when the dumb terminal is connected to [.filename]#COM1#.
+本节提供了设置串行控制台的快速概述。当哑终端连接到 [.filename]#COM1# 时，可以使用此过程。
 
 [.procedure]
-.Procedure: Configuring a Serial Console on [.filename]#COM1#
-. Connect the serial cable to [.filename]#COM1# and the controlling terminal.
-. To configure boot messages to display on the serial console, issue the following command as the superuser:
+.过程：在 [.filename]#COM1# 上配置串行控制台
+. 将串行电缆连接到 [.filename]#COM1# 和控制终端。
+. 要配置启动消息在串行控制台上显示，以超级用户身份执行以下命令：
 +
 [source, shell]
 ....
 # echo 'console="comconsole"' >> /boot/loader.conf
 ....
 
-. Edit [.filename]#/etc/ttys# and change `off` to `on` and `dialup` to `vt100` for the [.filename]#ttyu0# entry. Otherwise, a password will not be required to connect via the serial console, resulting in a potential security hole.
-. Reboot the system to see if the changes took effect.
+. 编辑 [.filename]#/etc/ttys# 文件，将 `off` 改为 `on` ，将 `dialup` 改为 `vt100` ，针对 [.filename]#ttyu0# 条目。否则，通过串行控制台连接时将不需要密码，可能导致安全漏洞。
+. 重新启动系统以查看更改是否生效。
 
-If a different configuration is required, see the next section for a more in-depth configuration explanation.
+如果需要不同的配置，请参阅下一节以获取更详细的配置说明。
 
 [[serialconsole-howto]]
-=== In-Depth Serial Console Configuration
+=== 深入的串行控制台配置
 
-This section provides a more detailed explanation of the steps needed to setup a serial console in FreeBSD.
+本节提供了在 FreeBSD 中设置串行控制台所需步骤的更详细解释。
 
 [.procedure]
-.Procedure: Configuring a Serial Console
-. Prepare a serial cable.
+.过程：配置串行控制台
+. 准备一根串行电缆。
 +
-Use either a null-modem cable or a standard serial cable and a null-modem adapter. See <<term-cables-null>> for a discussion on serial cables.
-. Unplug the keyboard.
+使用空模拟电缆或标准串行电缆和空模拟适配器。有关串行电缆的讨论，请参见 <<term-cables-null>> 。
+. 拔下键盘。
 +
-Many systems probe for the keyboard during the Power-On Self-Test (POST) and will generate an error if the keyboard is not detected. Some machines will refuse to boot until the keyboard is plugged in.
+许多系统在开机自检（POST）期间会检测键盘，并且如果未检测到键盘，将生成错误。一些机器在键盘未连接时将拒绝启动。
 +
-If the computer complains about the error, but boots anyway, no further configuration is needed.
+如果计算机在出现错误时抱怨，但仍能正常启动，那么无需进行进一步配置。
 +
-If the computer refuses to boot without a keyboard attached, configure the BIOS so that it ignores this error. Consult the motherboard's manual for details on how to do this.
+如果计算机在没有连接键盘的情况下拒绝启动，请配置 BIOS 以忽略此错误。请参考主板的手册以获取详细信息。
 +
 [TIP]
 ====
-Try setting the keyboard to "Not installed" in the BIOS. This setting tells the BIOS not to probe for a keyboard at power-on so it should not complain if the keyboard is absent. If that option is not present in the BIOS, look for an "Halt on Error" option instead. Setting this to "All but Keyboard" or to "No Errors" will have the same effect.
+尝试在 BIOS 中将键盘设置为 "Not installed"。该设置告诉 BIOS 在开机时不要探测键盘，因此如果键盘不存在，它就不会发出警告。如果 BIOS 中没有这个选项，请寻找一个名为 "Halt on Error" 的选项。将其设置为 "All but Keyboard" 或 "No Errors" 将产生相同的效果。
 ====
 +
-If the system has a PS/2(R) mouse, unplug it as well. PS/2(R) mice share some hardware with the keyboard and leaving the mouse plugged in can fool the keyboard probe into thinking the keyboard is still there.
+如果系统上有 PS/2(R) 鼠标，请将其拔出。PS/2(R) 鼠标与键盘共享一些硬件，如果鼠标仍然插着，可能会让键盘探测程序误以为键盘仍然存在。
 +
 [NOTE]
 ====
-While most systems will boot without a keyboard, quite a few will not boot without a graphics adapter. Some systems can be configured to boot with no graphics adapter by changing the "graphics adapter" setting in the BIOS configuration to "Not installed". Other systems do not support this option and will refuse to boot if there is no display hardware in the system. With these machines, leave some kind of graphics card plugged in, even if it is just a junky mono board. A monitor does not need to be attached.
+虽然大多数系统可以在没有键盘的情况下启动，但有些系统在没有图形适配器的情况下无法启动。一些系统可以通过在 BIOS 配置中将 "graphics adapter" 设置为 "Not installed" 来配置为无图形适配器启动。其他系统不支持此选项，如果系统中没有显示硬件，将拒绝启动。对于这些机器，即使只是一个糟糕的单色板，也要插入某种图形卡。不需要连接显示器。
 ====
 
-. Plug a dumb terminal, an old computer with a modem program, or the serial port on another UNIX(R) box into the serial port.
-. Add the appropriate `hint.uart.*` entries to [.filename]#/boot/device.hints# for the serial port. Some multi-port cards also require kernel configuration options. Refer to man:uart[4] for the required options and device hints for each supported serial port.
-. Create [.filename]#boot.config# in the root directory of the `a` partition on the boot drive.
+. 将一个哑终端、一个带有调制解调器程序的旧计算机，或者另一台 UNIX(R) 系统的串行端口插入串行端口。
+. 在串口上，向 [.filename]#/boot/device.hints# 添加适当的 `hint.uart.*` 条目。一些多串口卡还需要内核配置选项。请参考 man:uart[4] 获取所需的选项和每个支持的串口的设备提示。
+. 在引导驱动器的 `a` 分区的根目录中创建名为 `boot.config` 的文件。
 +
-This file instructs the boot block code how to boot the system. In order to activate the serial console, one or more of the following options are needed. When using multiple options, include them all on the same line:
+这个文件指示引导块代码如何引导系统。为了激活串行控制台，需要一个或多个以下选项。当使用多个选项时，请将它们都包含在同一行中：
 +
 `-h`:::
-Toggles between the internal and serial consoles. Use this to switch console devices. For instance, to boot from the internal (video) console, use `-h` to direct the boot loader and the kernel to use the serial port as its console device. Alternatively, to boot from the serial port, use `-h` to tell the boot loader and the kernel to use the video display as the console instead.
+在内部和串行控制台之间切换。使用此选项来切换控制台设备。例如，要从内部（视频）控制台启动，请使用 `-h` 将引导加载程序和内核指定使用串行端口作为控制台设备。或者，要从串行端口启动，请使用 `-h` 告诉引导加载程序和内核使用视频显示作为控制台。
 
 `-D`:::
-Toggles between the single and dual console configurations. In the single configuration, the console will be either the internal console (video display) or the serial port, depending on the state of `-h`. In the dual console configuration, both the video display and the serial port will become the console at the same time, regardless of the state of `-h`. However, the dual console configuration takes effect only while the boot block is running. Once the boot loader gets control, the console specified by `-h` becomes the only console.
+在单一和双重控制台配置之间切换。在单一配置中，控制台将根据 `-h` 的状态，选择内部控制台（视频显示）或串口。在双重控制台配置中，无论 `-h` 的状态如何，视频显示和串口将同时成为控制台。然而，双重控制台配置仅在引导块运行时生效。一旦引导加载程序获得控制权，由 `-h` 指定的控制台将成为唯一的控制台。
 
 `-P`:::
-Makes the boot block probe the keyboard. If no keyboard is found, the `-D` and `-h` options are automatically set.
+使引导块探测键盘。如果未找到键盘，则自动设置 `-D` 和 `-h` 选项。
 +
 [NOTE]
 ====
-Due to space constraints in the current version of the boot blocks, `-P` is capable of detecting extended keyboards only. Keyboards with less than 101 keys and without F11 and F12 keys may not be detected. Keyboards on some laptops may not be properly found because of this limitation. If this is the case, do not use `-P`.
+由于当前版本的引导块空间限制，`-P` 只能检测到扩展键盘。少于 101 个键且没有 F11 和 F12 键的键盘可能无法被检测到。由于这个限制，某些笔记本电脑上的键盘可能无法正确识别。如果是这种情况，请不要使用 `-P` 。
 ====
 +
-Use either `-P` to select the console automatically or `-h` to activate the serial console. Refer to man:boot[8] and man:boot.config[5] for more details.
+使用 `-P` 来自动选择控制台，或者使用 `-h` 来激活串行控制台。更多详细信息请参考 man:boot[8] 和 man:boot.config[5] 。
 +
-The options, except for `-P`, are passed to the boot loader. The boot loader will determine whether the internal video or the serial port should become the console by examining the state of `-h`. This means that if `-D` is specified but `-h` is not specified in [.filename]#/boot.config#, the serial port can be used as the console only during the boot block as the boot loader will use the internal video display as the console.
-. Boot the machine.
+除了 `-P` 之外的选项都会传递给引导加载程序。引导加载程序将通过检查 `-h` 的状态来确定内部视频还是串口应该成为控制台。这意味着如果在 [.filename]#/boot.config# 中指定了 `-D` 但未指定 `-h` ，则串口只能在引导块期间用作控制台，因为引导加载程序将使用内部视频显示作为控制台。
+. 启动机器。
 +
-When FreeBSD starts, the boot blocks echo the contents of [.filename]#/boot.config# to the console. For example:
+当 FreeBSD 启动时，引导块会将 [.filename]#/boot.config# 的内容回显到控制台。例如：
 +
 [source, shell]
 ....
@@ -902,36 +902,36 @@ When FreeBSD starts, the boot blocks echo the contents of [.filename]#/boot.conf
 Keyboard: no
 ....
 +
-The second line appears only if `-P` is in [.filename]#/boot.config# and indicates the presence or absence of the keyboard. These messages go to either the serial or internal console, or both, depending on the option in [.filename]#/boot.config#:
+如果在 [.filename]#/boot.config# 中存在 `-P` ，则第二行才会出现，并指示键盘的存在或不存在。这些消息会发送到串行或内部控制台，或者两者都会发送，具体取决于 [.filename]#/boot.config# 中的选项。
 +
 [.informaltable]
 [cols="1,1", frame="none", options="header"]
 |===
-<| Options
-<| Message goes to
+<| 选项
+<| 消息发送至
 
-|none
-|internal console
+|无
+|内部控制台
 
 |`-h`
-|serial console
+|串行控制台
 
 |`-D`
-|serial and internal consoles
+|串行和内部控制台
 
 |`-Dh`
-|serial and internal consoles
+|串行和内部控制台
 
-|`-P`, keyboard present
-|internal console
+|`-P` ，键盘存在
+|内部控制台
 
-|`-P`, keyboard absent
-|serial console
+|`-P` ，键盘缺失
+|串行控制台
 |===
 +
-After the message, there will be a small pause before the boot blocks continue loading the boot loader and before any further messages are printed to the console. Under normal circumstances, there is no need to interrupt the boot blocks, but one can do so in order to make sure things are set up correctly.
+在消息之后，启动块将会有一个小的暂停，然后继续加载引导加载程序，并在打印任何进一步的消息到控制台之前。在正常情况下，没有必要中断启动块，但可以这样做以确保设置正确。
 +
-Press any key, other than kbd:[Enter], at the console to interrupt the boot process. The boot blocks will then prompt for further action:
+在控制台上按下除 kbd:[Enter] 键以外的任意键，以中断引导过程。然后引导块将提示进一步的操作：
 +
 [source, shell]
 ....
@@ -940,38 +940,38 @@ Default: 0:ad(0,a)/boot/loader
 boot:
 ....
 +
-Verify that the above message appears on either the serial or internal console, or both, according to the options in [.filename]#/boot.config#. If the message appears in the correct console, press kbd:[Enter] to continue the boot process.
+根据 [.filename]#/boot.config# 中的选项，验证上述消息是否出现在串行或内部控制台上，或者两者都有。如果消息出现在正确的控制台上，请按下 kbd:[Enter] 键继续引导过程。
 +
-If there is no prompt on the serial terminal, something is wrong with the settings. Enter `-h` then kbd:[Enter] or kbd:[Return] to tell the boot block (and then the boot loader and the kernel) to choose the serial port for the console. Once the system is up, go back and check what went wrong.
+如果串行终端上没有提示符，说明设置有问题。输入 `-h` 然后按下键盘上的 kbd:[Enter] 或 kbd:[Return] 键，告诉引导块（然后是引导加载程序和内核）选择串行端口作为控制台。系统启动后，返回并检查出了什么问题。
 
-During the third stage of the boot process, one can still switch between the internal console and the serial console by setting appropriate environment variables in the boot loader. See man:loader[8] for more information.
+在引导过程的第三阶段，可以通过在引导加载程序中设置适当的环境变量来在内部控制台和串行控制台之间切换。有关更多信息，请参阅 man:loader[8] 。
 
 [NOTE]
 ====
-This line in [.filename]#/boot/loader.conf# or [.filename]#/boot/loader.conf.local# configures the boot loader and the kernel to send their boot messages to the serial console, regardless of the options in [.filename]#/boot.config#:
+无论 [.filename]#/boot.config# 中的选项如何，此行在 [.filename]#/boot/loader.conf# 或 [.filename]#/boot/loader.conf.local# 中配置引导加载程序和内核将其引导消息发送到串行控制台。
 
 [.programlisting]
 ....
 console="comconsole"
 ....
 
-That line should be the first line of [.filename]#/boot/loader.conf# so that boot messages are displayed on the serial console as early as possible.
+这行应该是 [.filename]#/boot/loader.conf# 的第一行，以便尽早在串行控制台上显示引导消息。
 
-If that line does not exist, or if it is set to `console="vidconsole"`, the boot loader and the kernel will use whichever console is indicated by `-h` in the boot block. See man:loader.conf[5] for more information.
+如果该行不存在，或者设置为 `console ="vidconsole"` ，引导加载程序和内核将使用引导块中通过 `-h` 指定的控制台。有关更多信息，请参阅 man:loader.conf[5] 。
 
-At the moment, the boot loader has no option equivalent to `-P` in the boot block, and there is no provision to automatically select the internal console and the serial console based on the presence of the keyboard.
+目前，引导加载程序没有与引导块中的 `-P` 选项相当的选项，并且没有根据键盘的存在自动选择内部控制台和串行控制台的功能。
 ====
 
 [TIP]
 ====
-While it is not required, it is possible to provide a `login` prompt over the serial line. To configure this, edit the entry for the serial port in [.filename]#/etc/ttys# using the instructions in <<term-config>>. If the speed of the serial port has been changed, change `std.9600` to match the new setting.
+虽然不是必需的，但可以通过串行线提供“登录”提示。要配置此功能，请按照 <<term-config>> 中的说明编辑 [.filename]#/etc/ttys# 中串行端口的条目。如果串行端口的速度已更改，请将 `std.9600` 更改为与新设置匹配的值。
 ====
 
-=== Setting a Faster Serial Port Speed
+=== 设置更快的串口速度
 
-By default, the serial port settings are 9600 baud, 8 bits, no parity, and 1 stop bit. To change the default console speed, use one of the following options:
+默认情况下，串口设置为 9600 波特率， 8 位数据位，无奇偶校验， 1 个停止位。要更改默认控制台速度，请使用以下选项之一：
 
-* Edit [.filename]#/etc/make.conf# and set `BOOT_COMCONSOLE_SPEED` to the new console speed. Then, recompile and install the boot blocks and the boot loader:
+* 编辑 [.filename]#/etc/make.conf# 文件，并将 `BOOT_COMCONSOLE_SPEED` 设置为新的控制台速度。然后，重新编译并安装引导块和引导加载程序：
 +
 [source, shell]
 ....
@@ -981,15 +981,15 @@ By default, the serial port settings are 9600 baud, 8 bits, no parity, and 1 sto
 # make install
 ....
 +
-If the serial console is configured in some other way than by booting with `-h`, or if the serial console used by the kernel is different from the one used by the boot blocks, add the following option, with the desired speed, to a custom kernel configuration file and compile a new kernel:
+如果串行控制台的配置方式与使用 `-h` 引导不同，或者内核使用的串行控制台与引导块使用的不同，可以将以下选项添加到自定义内核配置文件中，并编译一个新的内核，以设置所需的速度：
 +
 [.programlisting]
 ....
 options CONSPEED=19200
 ....
 
-* Add the `-S__19200__` boot option to [.filename]#/boot.config#, replacing `_19200_` with the speed to use.
-* Add the following options to [.filename]#/boot/loader.conf#. Replace `_115200_` with the speed to use.
+* 将 `-S__19200__` 引导选项添加到 [.filename]#/boot.config# 文件中，将 `_19200_` 替换为要使用的速度。
+* 将以下选项添加到 [.filename]#/boot/loader.conf# 文件中。将 `_115200_` 替换为要使用的速度。
 +
 [.programlisting]
 ....
@@ -1000,9 +1000,9 @@ console="comconsole,vidconsole"
 ....
 
 [[serialconsole-ddb]]
-=== Entering the DDB Debugger from the Serial Line
+=== 通过串行线进入 DDB 调试器
 
-To configure the ability to drop into the kernel debugger from the serial console, add the following options to a custom kernel configuration file and compile the kernel using the instructions in crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel]. Note that while this is useful for remote diagnostics, it is also dangerous if a spurious BREAK is generated on the serial port. Refer to man:ddb[4] and man:ddb[8] for more information about the kernel debugger.
+要配置从串行控制台进入内核调试器的能力，请将以下选项添加到自定义内核配置文件中，并按照 crossref:kernelconfig[kernelconfig, Configuring the FreeBSD Kernel] 中的说明编译内核。请注意，虽然这对于远程诊断很有用，但如果串口上生成了一个虚假的 BREAK 信号，也是很危险的。有关内核调试器的更多信息，请参阅 man:ddb[4] 和 man:ddb[8]。
 
 [.programlisting]
 ....
